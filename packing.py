@@ -22,7 +22,7 @@ class Pipedo:
 
         return cubed
 
-#    def crate_factory(self):
+    def crate_factory(self):
 
 
 caixa = Pipedo([[100, 5, 90], [210, 10, 170], [60, 5, 90]])
