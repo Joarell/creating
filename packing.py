@@ -2,9 +2,9 @@ class Pipedo:
     """Object class for the artworks and crates.
     All methods are defined here:
     manual_labor
-    cubing
-    crate_factory
-    crate_puzzle """
+        cubing
+        crate_factory
+        crate_puzzle """
 
     def __init__(self, dimensions):
         self.dimensions = dimensions
@@ -28,7 +28,7 @@ class Pipedo:
 
 
     def crate_factory(self):
-        
+
         work_list = self.dimensions
         work = float()
         s = 0
@@ -42,16 +42,17 @@ class Pipedo:
                 pass
             s += 1
             biggest_work
-            
+
 
         work_list.pop(work_list.index(biggest_work))
         return biggest_work
- 
-       
-    
-    
+
+
+
+
     def crate_puzzle(self):
-       
+
+
         work_list = self.dimensions
         crate_template = self.crate_factory()
         default_crate = crate_template
@@ -67,33 +68,54 @@ class Pipedo:
             long2 = work[0]
             hight2 = work[2]
 
-            if crate_template[0] and crate_template[2] > work[0] and work[2]:
-                crate = Labor()
-                crate.manual_labor(crate_template, work)
+            if long2 > long1 or hight2 > hight1:
+                hight2 = work[0]
+                long2 = work[2]
+
+                if long2 > long1 or hight2 > hight1:
+                    crate_template = default_crate
+                    crate_template[1] = 10
+
+                else:
+                    crate_packed = Labor()
+                    crate_template = crate_packed.manual_labor(crate_template, work)
+                    crate_template[1] = default_crate[1] + 10
+                    print(f'Actual crate dimensions: {crate_template}')
+
+
+            elif crate_template[0] and crate_template[2] > work[0] and work[2]:
+                crate_packed = Labor()
+                crate_template = crate_packed.manual_labor(crate_template, work)
+                crate_template[1] = default_crate[1] + 10
                 print(f'Actual crate dimensions: {crate_template}')
 
-            elif crate_template[0] and crate_template[2] < work[0] and work[2]: 
-                #replacement of long and hight of the work to next verification
-                work[0] = hight2[2]
-                work[2] = long2[0]
-                if crate_template[0] and crate_template[2] > work[0] and work[2]:
-                   crate = manual_labor(crate_template, work)
-            
+            if len(work_list) == 0:
+                 default_crate[1] += crate_template[1] + 23
+                 default_crate[0] += 23
+                 default_crate[2] += 28
+                 
+
             else:
-               pass
-
-            new_crate = default_crate
-            new_crate[1] += 10
-            crate_template = new_crate
+                pass
 
 
-        return crate_template
 
-       
+            
+        VCP = f'A caixa deve ser enviada pelo aeroporto de Viracopos, medida final: {default_crate}'
+        GRU = f'A caixa deve ser enviada pelo aeroporto de Guarulhos, medida final: {default_crate}'
+
+
+        if default_crate[0] > 300 or default_crate[2] > 160:
+            return VCP
+        else:
+            return GRU
+
+
+
 class Labor:
     def __init__(self):
         pass
-    
+
     #This method provides the calculation of the dimensions of the works to the crate.
     @staticmethod
     def manual_labor(c, w):
@@ -101,7 +123,7 @@ class Labor:
         zipp = zip(c, w)
         for c, w in zipp:
             crated.append(c - w)
-        
+
         return crated
 
 
@@ -110,4 +132,6 @@ class Labor:
 
 caixa = Pipedo([[100, 5, 90], [210, 10, 170], [60, 5, 90]])
 print("A cubagem total é de:" + '{:05.3f}' .format(caixa.cubing()) + "kgs cubados.")
-print(f"A medida final da caixa será de:{caixa.crate_puzzle()}")
+print(caixa.crate_puzzle())
+
+
