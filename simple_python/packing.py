@@ -67,20 +67,26 @@ class Pipedo:
             long2 = work[0]
             hight2 = work[2]
 
+            #It's verification how the current work will be put or not into the crate.
             if long2 > long1 or hight2 > hight1:
                 hight2 = work[0]
                 long2 = work[2]
-               
-                if long2 > long1 or hight2 > hight1:
+                work[0] = long2
+                work[2] = hight2
+           
+                if long2 < long1 or hight2 < hight1:
                     crate_packed = Labor()
                     crate_template = crate_packed.manual_labor(crate_template, work)
                     crate_template[1] = default_crate[1] + 10
                     print(f'Actual crate dimensions: {crate_template}')
 
                 else:
-                    default_crate[1] = crate_template[1]
                     crate_template = default_crate
-                   # crate_template[1] += 10
+                    long1 = crate_template[0]
+                    hight1 = crate_template[2]
+                    crate_template = crate_packed.manual_labor(crate_template, work)
+                    crate_template[1] = default_crate[1] + 10
+                    crate_template[1] += 10
                     print(f'Actual crate dimensions: {crate_template}')
 
 
@@ -128,7 +134,6 @@ class Labor:
             crated.append(c - w)
 
         return crated
-
 
 
 
