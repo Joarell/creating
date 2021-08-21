@@ -149,7 +149,6 @@ nnoremap <Leader>dc :call vimspector#Continue()<cr>
 nnoremap <Leader>dw :call vimspector#OmniFuncWatch()<cr>
 nnoremap <Leader>re :call vimspector#Restart()<cr>
 nnoremap <Leader>u  :VimspectorUpdate<cr>
-"nnoremenu WinBar.✕ :call vimspector#Reset( { 'interactive': v:true } )<CR>
 
 
 "================ Font ==========================
