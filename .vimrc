@@ -37,6 +37,9 @@ let mapleader=","
 nnoremap <Leader>n :NERDTree <cr>
 nnoremap <silent><F3> :MaximizerToggle<CR>
 nnoremap <Leader>s :w<cr>
+nnoremap <Leader>h :Stdheader<cr>
+nnoremap <Leader>q :qa!<cr>
+nnoremap <Leader>m :mksession!
 
 " =============== Vundle Initialization ===============
 " This loads all the plugins specified in ~/.vim/vundles.vim
@@ -144,10 +147,10 @@ let g:maximizer_set_default_mapping = 1
 nnoremap <Leader>rc :call vimspector#Reset()<cr>
 nnoremap <Leader>dc :call vimspector#Continue()<cr>
 nnoremap <Leader>dw :call vimspector#OmniFuncWatch()<cr>
-"nnoremap <Leader>ds :call GotoWindow(g:vimspector_session_window.stack_trace)<cr>
-"nnoremap <Leader>do :call GotoWindow(g:vimspector_session_window.output)<cr>
 nnoremap <Leader>re :call vimspector#Restart()<cr>
 nnoremap <Leader>u  :VimspectorUpdate<cr>
+"nnoremenu WinBar.✕ :call vimspector#Reset( { 'interactive': v:true } )<CR>
+
 
 "================ Font ==========================
 " testing extra-powerline-symbols
@@ -171,17 +174,10 @@ let g:airline#extensions#tabline#left_alt_sep = ("\uE0CE")
 let g:airline_section_z = airline#section#create(["\uE0A1" . '%{line(".")}' . "\uE0A3" . '%{col(".")}'])
 let g:vim_debug_disable_mappings = 1
 
-
-
-
-
-
-
-
-
-
-
-
+" ========================== Cursor config ========================
+let &t_SI = "\<esc>[5 q"  " blinking I-beam in insert mode
+let &t_SR = "\<esc>[3 q"  " blinking underline in replace mode
+let &t_EI = "\<esc>[ q"  " default cursor (usually blinking block) otherwise]]]"
 
 
 
