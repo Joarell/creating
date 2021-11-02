@@ -40,6 +40,7 @@ nnoremap <Leader>s :w<cr>
 nnoremap <Leader>h :Stdheader<cr>
 nnoremap <Leader>q :qa!<cr>
 nnoremap <Leader>m :mksession!
+nnoremap <Leader>s :w! <cr>
 
 " =============== Vundle Initialization ===============
 " This loads all the plugins specified in ~/.vim/vundles.vim
@@ -149,6 +150,8 @@ nnoremap <Leader>dc :call vimspector#Continue()<cr>
 nnoremap <Leader>dw :call vimspector#OmniFuncWatch()<cr>
 nnoremap <Leader>re :call vimspector#Restart()<cr>
 nnoremap <Leader>u  :VimspectorUpdate<cr>
+nnoremap <Leader>c :!clang -Wall -Werror -Wextra -g <C-r>% -o test
+nnoremap <Leader>ca :!clang -Wall -Werror -Wextra -g <C-r>% libft.a -o test
 
 
 "================ Font ==========================
