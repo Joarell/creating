@@ -41,6 +41,8 @@ nnoremap <Leader>h :Stdheader<cr>
 nnoremap <Leader>q :qa!<cr>
 nnoremap <Leader>m :mksession!
 nnoremap <Leader>s :w! <cr>
+nnoremap <Leader>gj :diffget //3<cr>
+nnoremap <Leade>gf :diffget //2<cr>
 
 " =============== Vundle Initialization ===============
 " This loads all the plugins specified in ~/.vim/vundles.vim
