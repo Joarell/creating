@@ -39,7 +39,6 @@ class Pipedo:
             else:
                 pass
             s += 1
-        biggest_work
 
         work_list.pop(work_list.index(biggest_work))
         return biggest_work
@@ -54,7 +53,7 @@ class Pipedo:
         while len(work_list) > 0:
             work = self.crate_factory()
 
-            # Each variabel for each dimensions for crate and work
+            # Each variable for each dimensions for crate and work
             long1 = crate_template[0]
             hight1 = crate_template[2]
             long2 = work[0]
@@ -90,8 +89,6 @@ class Pipedo:
                 default_crate[1] += 23
                 default_crate[2] += 28
 
-            else:
-                pass
 
         VCP = f'A caixa deve ser enviada pelo aeroporto de Viracopos, medida final: {default_crate}'
         GRU = f'A caixa deve ser enviada pelo aeroporto de Guarulhos, medida final: {default_crate}'
