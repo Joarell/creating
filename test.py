@@ -31,14 +31,19 @@ dim = yank[0]
 print(f'The work code is: {code[0]}')
 print(f'The dimensions are: {dim}')
 
-yank = int()
 yank = code[0].split(',')
-yank = yank[0]
-print(code)
+yank1 = code[1].split(',')
+yank = yank[1].split('x')
+yank1 = yank1[1].split('x')
 
-i = 0
-while yank != "":
-    print(f'Work code: {yank}')
-    i += 1
-    yank = code[i].split(',')
-    yank = yank[0]
+
+def get_dimentions(dim):
+    dim = [int(i) for i in dim]
+    return (dim)
+
+# i = 0
+# while yank != "":
+#     print(f'Work code: {yank}')
+#     i += 1
+#     yank = code[i].split(',')
+#     yank = yank[0]
