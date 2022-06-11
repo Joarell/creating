@@ -9,13 +9,13 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
 endif
 let s:shortmess_save = &shortmess
 set shortmess=aoO
-badd +17 app_node/app.js
-badd +3 ~/e-crate/app_node/test.js
-badd +0 term://~/e-crate//210961:/bin/zsh
+badd +9 app_node/test.js
+badd +7 term://~/e-crate//223096:/bin/zsh
+badd +1 ~/e-crate/app_node/big_work.js
 argglobal
 %argdel
-$argadd app_node/app.js
-edit app_node/app.js
+$argadd app_node/test.js
+edit ~/e-crate/app_node/big_work.js
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -40,15 +40,15 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 exe 'vert 1resize ' . ((&columns * 30 + 137) / 274)
-exe '2resize ' . ((&lines * 60 + 37) / 74)
+exe '2resize ' . ((&lines * 53 + 37) / 74)
 exe 'vert 2resize ' . ((&columns * 202 + 137) / 274)
-exe '3resize ' . ((&lines * 9 + 37) / 74)
+exe '3resize ' . ((&lines * 17 + 37) / 74)
 exe 'vert 3resize ' . ((&columns * 202 + 137) / 274)
 exe 'vert 4resize ' . ((&columns * 40 + 137) / 274)
 argglobal
 enew
 file NvimTree_1
-balt app_node/app.js
+balt term://~/e-crate//223096:/bin/zsh
 setlocal fdm=manual
 setlocal fde=
 setlocal fmr={{{,}}}
@@ -59,7 +59,7 @@ setlocal fdn=20
 setlocal nofen
 wincmd w
 argglobal
-balt ~/e-crate/app_node/test.js
+balt app_node/test.js
 setlocal fdm=manual
 setlocal fde=
 setlocal fmr={{{,}}}
@@ -70,19 +70,18 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 17 - ((16 * winheight(0) + 30) / 60)
+let s:l = 2 - ((1 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 17
+keepjumps 2
 normal! 0
 wincmd w
 argglobal
-if bufexists(fnamemodify("term://~/e-crate//210961:/bin/zsh", ":p")) | buffer term://~/e-crate//210961:/bin/zsh | else | edit term://~/e-crate//210961:/bin/zsh | endif
+if bufexists(fnamemodify("term://~/e-crate//223096:/bin/zsh", ":p")) | buffer term://~/e-crate//223096:/bin/zsh | else | edit term://~/e-crate//223096:/bin/zsh | endif
 if &buftype ==# 'terminal'
-  silent file term://~/e-crate//210961:/bin/zsh
+  silent file term://~/e-crate//223096:/bin/zsh
 endif
-balt term://~/e-crate//210961:/bin/zsh
 setlocal fdm=manual
 setlocal fde=
 setlocal fmr={{{,}}}
@@ -91,16 +90,17 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 17 - ((4 * winheight(0) + 4) / 9)
+let s:l = 23 - ((8 * winheight(0) + 8) / 17)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 17
+keepjumps 23
 normal! 03|
 wincmd w
 argglobal
 enew
 file __Tagbar__.1
+balt app_node/test.js
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -112,9 +112,9 @@ setlocal nofen
 wincmd w
 2wincmd w
 exe 'vert 1resize ' . ((&columns * 30 + 137) / 274)
-exe '2resize ' . ((&lines * 60 + 37) / 74)
+exe '2resize ' . ((&lines * 53 + 37) / 74)
 exe 'vert 2resize ' . ((&columns * 202 + 137) / 274)
-exe '3resize ' . ((&lines * 9 + 37) / 74)
+exe '3resize ' . ((&lines * 17 + 37) / 74)
 exe 'vert 3resize ' . ((&columns * 202 + 137) / 274)
 exe 'vert 4resize ' . ((&columns * 40 + 137) / 274)
 tabnext 1
