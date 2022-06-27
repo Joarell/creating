@@ -1,6 +1,6 @@
 function labor(c, w)
 {
-	let layer = [];
+	const layer = [];
 	let i = 0;
 	for (i in c && w)
 	{
@@ -16,4 +16,4 @@ function labor(c, w)
 	return layer;
 }
 
-module.export = { labor };
+module.exports = { labor };
