@@ -1,4 +1,4 @@
-let cube_size = require ("./cubing.js");
+let bigger = require ("./cubing.js");
 const work_list =
 {
 	1298: "200, 05, 100",
@@ -8,7 +8,6 @@ const work_list =
 	777: "50, 03, 50"
 }
 
-// This function is needed to get the string values from the Object and parse them to int.
 function split_int(dimensions)
 {
 	dimensions = dimensions.split(",");
@@ -23,14 +22,13 @@ function split_int(dimensions)
 	return work_dimensions;
 }
 
-// This function is resonsible to get the dimensions from the list.
-function get_dimensions(w_list, work)
+function get_dimensions(w_list)
 {
 	let i = 0;
-	let hold = 0; 
+	let hold = 0;
 	let dimensions = [];
 
-	while (i < work)
+	while (i < Object.keys(w_list).length)
 	{
 		hold = (Object.values(w_list)[i]);
 		dimensions.push(split_int(hold));
@@ -39,45 +37,26 @@ function get_dimensions(w_list, work)
 	return dimensions;
 }
 
-// function get_code(w_list)
+
+// function sort(work_list)
 // {
-// 	let code = 0;
-// 	let works = [];
+// 	let works = get_dimensions(work_list);
+// 	let cube_w1 = 0;
+// 	let cube_w0 = 0;
 //
-// 	while (code < Object.keys(w_list).length)
+// 	for (i in works)
 // 	{
-// 		works.push(Object.keys(w_list)[code]);
-// 		code++;
+// 		cube_w1 = bigger.cubing(works[j]);
+// 		cube_w0 = bigger.cubing(works[j - 1]);
+// 		whiel (i >= 0 && cube_w0 > cube_w1)
+// 		{
+//
+// 		}
+// 		j++;
+// 		i = j - 1;
 // 	}
-// 	return works;
 // }
 
-function sort(w_list)
-{
-	let work = 0;
-	let i = 0;
-	let j = 1;
-	let key = 0;
-
-	for (i in w_list)
-	{
-		key = get_dimensions(Object.values(w_list)[j]);
-		work = get_dimensions(Object.values(w_list)[i]);
-		key = cube_size.cubing(key);
-		work = cube_size.cubing(work);
-
-		i = j - 1;
-		whiel (i >= 0 && work > key)
-		{
-			w_list
-		}
-	}
-}
-
-// let first = Object.values(work_list)[0];
-// let test = Object.values(work_list)[0];
-// console.log(get_dimensions(work_list));
-// test = test.split(",")
-// let first = get_code(work_list);
-console.log(get_dimensions(Object.values(work_list)[0], 1));
-console.log(cube_size(get_dimensions(Object.values(work_list)[0])));
+let first = get_dimensions(work_list);
+first = bigger.cubing(first[0]);
+console.log(first);
