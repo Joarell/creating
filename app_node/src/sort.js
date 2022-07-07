@@ -8,6 +8,7 @@ const work_list =
 	777: "50, 03, 50"
 }
 
+//This function is responsible to get only the sizes of the Object split with ",".
 function split_int(dimensions)
 {
 	dimensions = dimensions.split(",");
@@ -23,6 +24,7 @@ function split_int(dimensions)
 }
 
 
+//This function get only the sizes of the works
 function get_dimensions(w_list)
 {
 	let i = 0;
@@ -39,7 +41,8 @@ function get_dimensions(w_list)
 }
 
 
-function cube_all(work_list)
+//This function provides the airfreight cube to each sizes of the works in the Object list.
+function cube_all(w_list)
 {
 	let result = [];
 	let i = 0;
@@ -54,27 +57,44 @@ function cube_all(work_list)
 }
 
 
-function sort(work_list)
+//This function returns the code and cubed values in new arrays to each code baased on the its sizes.
+function zipper(codes, cubes, index)
 {
-	let works = get_dimensions(work_list);
-	let cube_w1 = 0;
-	let cube_w0 = 0;
+	let new_arranje = [];
+	
+	new_arranje.push(codes[index]);
+	new_arranje.push(cubes[index]);
+	return new_arranje;
+}
 
-	for (i in works)
+
+//This function act sorting the smallest workt to the biggest one.
+function sort(works)
+{
+	let i = 0;
+	let j = 1;
+	let new_a = [];
+
+	while (i < Object.values(works).length)
 	{
-		cube_w1 = cub.cubing(works[j]);
-		cube_w0 = cub.cubing(works[j - 1]);
-		whiel (i >= 0 && cube_w0 > cube_w1)
-		{
-
-		}
-		j++;
+		new_a.push(zipper(Object.keys(works), cube_all(works), i));
+		i++;
+	}
+	for (n in works)
+	{
 		i = j - 1;
+		while (i > 0 && new_a[i][1] > new_a[j][1])
+		{
+			new_a[i + 1] = new_a[i];
+			i--;
+		}
+		new_a[i + 1] = new_a[j];
+		j++;
 	}
 }
 
 // let first = get_codes(work_list);
 // console.log(first);
 console.log(Object.keys(work_list));
-first = cube_all(work_list);
+first = sort(work_list);
 console.log(first);
