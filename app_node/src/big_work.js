@@ -1,6 +1,7 @@
 let cube = require("./cubing.js");
  
 
+//This function returns the biggest cubed work.
 function big_work(work_list)
 {
 	let i = 0;

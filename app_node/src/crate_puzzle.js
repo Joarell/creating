@@ -1,7 +1,9 @@
+//This function returns if the work feats or not in to the crate sizes.
 function labor(c, w)
 {
 	const layer = [];
 	let i = 0;
+
 	for (i in c && w)
 	{
 		if (i == 1)
