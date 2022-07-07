@@ -1,12 +1,4 @@
 let cub = require ("./cubing.js");
-const work_list =
-{
-	1298: "200, 05, 100",
-	123: "100, 05, 100",
-	5908: "150, 05, 90",
-	8899: "120, 03, 100",
-	777: "50, 03, 50"
-}
 
 //This function is responsible to get only the sizes of the Object split with ",".
 function split_int(dimensions)
@@ -69,32 +61,31 @@ function zipper(codes, cubes, index)
 
 
 //This function act sorting the smallest workt to the biggest one.
-function sort(works)
+function i_sort(works)
 {
 	let i = 0;
 	let j = 1;
 	let new_a = [];
+	let swap = [];
 
 	while (i < Object.values(works).length)
 	{
 		new_a.push(zipper(Object.keys(works), cube_all(works), i));
 		i++;
 	}
-	for (n in works)
+	while(j < new_a.length)
 	{
 		i = j - 1;
-		while (i > 0 && new_a[i][1] > new_a[j][1])
+		swap = new_a[j];
+		while (i >= 0 && new_a[i][1] > swap[1])
 		{
 			new_a[i + 1] = new_a[i];
 			i--;
 		}
-		new_a[i + 1] = new_a[j];
+		new_a[i + 1] = swap;
 		j++;
 	}
+	return new_a;
 }
 
-// let first = get_codes(work_list);
-// console.log(first);
-console.log(Object.keys(work_list));
-first = sort(work_list);
-console.log(first);
+module.exports = { get_dimensions, i_sort };
