@@ -5,15 +5,15 @@ const sort = require('./src/sort.js');
 
 // Test: cube module.
 const work = [100, 5, 100];
-console.log(cub.cubing(work));
+console.log("The cubed value is:", cub.cubing(work));
 
 // Test: big work module.
 const w_list = [[150, 5, 100], [200, 5, 180]];
-console.log(big.big_work(w_list));
+console.log("That is the biggest cubed work on the list:", big.big_work(w_list));
 
 //Test: crate_puzzle.
 const crate = [200, 10, 100];
-console.log(layer.labor(crate, work));
+console.log("This is the result from the puzzle function:", layer.puzzle(5, 2));
 
 //Test: i_sort
 const work_list =
@@ -24,6 +24,7 @@ const work_list =
 	8899: "120, 03, 100",
 	777: "50, 03, 50"
 }
-console.log(Object.keys(work_list));
 first = sort.get_dimensions(work_list);
-console.log(first);
+console.log("Here is all works dimensions from the list:", first);
+first = sort.i_sort(work_list);
+console.log("The sorted list is:", first);
