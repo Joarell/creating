@@ -1,5 +1,5 @@
 //This function returns if the work feats or not in to the crate sizes.
-function labor(c, w)
+function puzzle(c, w)
 {
 	const layer = [];
 	let i = 0;
@@ -18,4 +18,4 @@ function labor(c, w)
 	return layer;
 }
 
-module.exports = { labor };
+module.exports = { puzzle };
