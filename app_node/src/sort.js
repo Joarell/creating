@@ -60,7 +60,7 @@ function zipper(codes, cubes, index)
 }
 
 
-//This function acts sorting the smallest workt to the biggest one.
+//This function acts sorting the smallest work to the biggest one.
 function i_sort(works)
 {
 	let i = 0;
