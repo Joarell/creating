@@ -48,8 +48,9 @@
         "request": "launch"
       }
     },
+    // This is a comment.
     "run legacy vscode-python": {
-      "adapter": "vscode-python", 
+      "adapter": "vscode-python", /* coment goes here too */
       "configuration": {
         "request": "launch",
         "type": "python",
