@@ -20,43 +20,49 @@ const work_list = {
 let sort_list = require("./sort.js");
 
 
+const GRU = 1600;
 sort_list = sort_list.i_sort(work_list);
 let biggest = sort_list.pop();
 biggest = biggest[1];
-const tmp = [];
-const gru = 1600;
+let crate_done = [];
+let tmp = [];
 
-function layer_done(work_done)
+function layer_done(work_done, layer)
 {
-	const layer = [];
+	let layers = [];
 	let i = 0;
 
 	for (i in work_done)
 	{
-		layer.unshift(work_done[i][0]);
+		layers.unshift(work_done[i][0]);
 	}
-	return layer;
+	layers.push(layer);
+	return crate_done.push(layers);
 }
 
 
-function labor(layer_dim, works)
+function labor(crate_dim, works, layer)
 { 
-	let layer;
+	let filled;
 	let len;
 
 	if (works <= 0)
 	{
-		return tmp;
+		layer_done(tmp, layer);
+		tmp.splice(0, tmp.length);
+		return solve_list(works, layer + 1);
 	}
 	len = works.length;
-	layer = works[len - 1];
-	while (layer_dim < layer[1])
+	filled = works[len - 1];
+	while (crate_dim < filled[1])
 	{
-		layer = works[len - 1];
+		filled = works[len - 1];
 		len--;
 		if (len < 0)
 		{
-			return tmp;
+			layer_done(tmp, layer);
+			tmp.splice(0, tmp.length);
+			return solve_list(works, layer + 1);
 		}
 	}
 	if (len == 0)
@@ -67,24 +73,22 @@ function labor(layer_dim, works)
 	{
 		tmp.unshift(works.splice(len - 1, 1));
 	}
-	labor(layer_dim - layer[1], works);
+	labor(crate_dim - filled[1], works, layer);
 }
 
 
-function solve_crate(work_list)
+function solve_list(work_list, layer)
 {	
-
-	if (work_list == 0)	
+	while (work_list.length > 0 && layer <= 5)	
 	{
-		return;		
+		labor(biggest, work_list, layer);
+		layer++;
 	}
-	solve_crate(labor(biggest, work_list));
+	return tmp;		
 }
 
-labor(biggest, sort_list);
-labor(biggest, sort_list);
-
-console.log("This are the works on the layer:", layer_done(tmp));
+solve_list(sort_list, 1);
+// console.log("This are the works on the layer:", layer_done(tmp));
+console.log(crate_done);
 console.log("This is the layer", biggest);
 console.log("All the last elements of the list:", sort_list);
-
