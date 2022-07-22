@@ -1,9 +1,12 @@
 //Aqui precismos realizar algumas tratativas para a conclusão do algorítmo:
 
 //	1 - Obter a lista de obras com os códigos e dimensões;
-//	2 - Tratar a lista retornarndo para uma váriável os valores cubados do menor parao maior com a função "sort";
+//	2 - Tratar a lista retornarndo para uma váriável os valores cubados do menor parao maior com a função "sort"; - DONE
 //	3 - Desenvoler a algoritmo de backtrack para construção e acondicionamento das obras dentro da caixa.
-//	4 - *Deletar o modulo layer_puzzle*******************
+//	4 - *Deletar o modulo layer_puzzle******************* - DONE
+//	5 - Definir a flexibilidade do algoritmo para se adaptar a peguenas mudanças nas dimensões da caixa para acomodar todas as obras - (Backtrack);
+//	6 - Definir o percentual mínimo e mutabilidade da caixa para a adaptação necessária;
+//	7 - 
 
 const work_list = {
 
@@ -20,7 +23,20 @@ let sort_list = require("./sort.js");
 sort_list = sort_list.i_sort(work_list);
 let biggest = sort_list.pop();
 biggest = biggest[1];
-const actual_l = [];
+const tmp = [];
+const gru = 1600;
+
+function layer_done(work_done)
+{
+	const layer = [];
+	let i = 0;
+
+	for (i in work_done)
+	{
+		layer.unshift(work_done[i][0]);
+	}
+	return layer;
+}
 
 
 function labor(layer_dim, works)
@@ -28,9 +44,9 @@ function labor(layer_dim, works)
 	let layer;
 	let len;
 
-	if (layer_dim <= 0)
+	if (works <= 0)
 	{
-		return actual_l;
+		return tmp;
 	}
 	len = works.length;
 	layer = works[len - 1];
@@ -40,21 +56,35 @@ function labor(layer_dim, works)
 		len--;
 		if (len < 0)
 		{
-			return actual_l;
+			return tmp;
 		}
 	}
 	if (len == 0)
 	{
-		actual_l.unshift(works.splice(0, 1));
+		tmp.unshift(works.splice(0, 1));
 	}
 	else
 	{
-		actual_l.unshift(works.splice(len - 1, 1));
+		tmp.unshift(works.splice(len - 1, 1));
 	}
 	labor(layer_dim - layer[1], works);
 }
 
-labor(biggest, sort_list)
-console.log("This are the works on the layer:", actual_l);
+
+function solve_crate(work_list)
+{	
+
+	if (work_list == 0)	
+	{
+		return;		
+	}
+	solve_crate(labor(biggest, work_list));
+}
+
+labor(biggest, sort_list);
+labor(biggest, sort_list);
+
+console.log("This are the works on the layer:", layer_done(tmp));
 console.log("This is the layer", biggest);
 console.log("All the last elements of the list:", sort_list);
+
