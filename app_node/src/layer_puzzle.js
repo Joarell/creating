@@ -1,13 +1,4 @@
-//Aqui precismos realizar algumas tratativas para a conclusão do algorítmo:
-
-//	1 - Obter a lista de obras com os códigos e dimensões; - DONE
-//	2 - Tratar a lista retornarndo para uma váriável os valores cubados do menor parao maior com a função "sort"; - DONE
-//	3 - Desenvoler a algoritmo de backtrack para construção e acondicionamento das obras dentro da caixa. - DONE
-//	4 - *Deletar o modulo layer_puzzle******************* - DONE
-//	5 - Definir a flexibilidade do algoritmo para se adaptar a peguenas mudanças nas dimensões da caixa para acomodar todas as obras - (Backtrack);
-//	6 - Definir o percentual/valor máximo de mutabilidade da caixa para a adaptação necessária;
-//	7 - Definir a divisão de caixas mediante o limite de camadas;
-//	8 -
+//	8 - Eliminar as variavies globais;
 
 const work_list = {
 
@@ -25,15 +16,15 @@ const work_list = {
 
 let sort_list = require("./sort.js");
 sort_list = sort_list.i_sort(work_list);
-let biggest = sort_list.pop();
-let crate_done = [];
-let tmp = [];
-const GRU = 1600;
 
+let crate_finished = [];
+let standard_layer = sort_list.pop();
 
-crate_done.push(biggest);
-crate_done.push(1);
-biggest = biggest[1];
+//The crate_finished is a global variabel responsible to get all layers to each crate designed in the labor recursion.
+crate_finished.push(standard_layer);
+crate_finished.unshift(1);
+standard_layer = standard_layer[1];
+
 
 //This function returns the optimize arrays to each layer.
 function layer_done(work_done, layer)
@@ -45,8 +36,8 @@ function layer_done(work_done, layer)
 	{
 		packed.unshift(work_done[i][0]);
 	}
-	packed.push(layer);
-	return crate_done.push(packed);
+	packed.unshift(layer);
+	return packed;
 }
 
 
@@ -55,6 +46,8 @@ function next_work(crate_dim, works, len)
 {
 	let sizes;
 	
+	if (len == 0)
+		return len;
 	len--;
 	sizes = works[len][1];
 	while (len >= -1)
@@ -71,40 +64,57 @@ function next_work(crate_dim, works, len)
 
 
 //This function is responsible to feat the works in to the crate layers.
-function labor(crate_dim, works, layer)
+function labor(crate_dim, works, layer, crate)
 { 
 	let filled;
 	let len;
 
 	len = next_work(crate_dim, works, works.length);
-	filled = works[len][1];
+	if (len > 0)
+		filled = works[len][1];
 	if (len == 0)
 	{
-		tmp.unshift(works.splice(0, 1));
-		layer_done(tmp, layer);
-		tmp.splice(0, tmp.length);
-		return solve_list(works, layer + 1);
+		crate.unshift(works.splice(0, 1));
+		crate = layer_done(crate, layer);
+		return solve_start_line(works, layer + 1, crate);
 	}
 	else
 	{
-		tmp.unshift(works.splice(len, 1));
+		crate.unshift(works.splice(len, 1));
 	}
-	labor(crate_dim - filled, works, layer);
+	labor(crate_dim - filled, works, layer, crate);
 }
 
 
 //This function is responsible to the limit of the crate layers.
-function solve_list(work_list, layer)
+function solve_start_line(work_list, layer, crate)
 {	
-	while (work_list.length > 0 && layer <= 5)	
+	let empt = [];
+
+	if (work_list.length < 0 || layer >= 5)	
 	{
-		labor(biggest, work_list, layer);
+		return crate_finished;		
 	}
-	return crate_done;		
+	if(crate.length > 1)
+		crate_finished.push(crate);
+	labor(standard_layer, work_list, layer, empt);
 }
 
-solve_list(sort_list, 2);
 
-console.log(crate_done);
-console.log("This is the layer", biggest);
-console.log("All the last elements of the list:", sort_list);
+//This function returns the all the crates needed accordingly the work list provided.
+function solve_list(sort_list)
+{
+	let new_crate = 0;
+	let crates = [crate_finished];
+
+	while(sort_list.length > 0)
+	{
+		new_crate++;
+		crates.push(solve_start_line(sort_list, 2, crates));
+		crates.unshift(new_crate);
+	}
+	return crates;
+}
+
+
+module.exports = { solve_list };
