@@ -1,5 +1,6 @@
 let cub = require ("./cubing.js");
 
+
 //This function is responsible to get only the sizes of the Object split with ",".
 function split_int(dimensions)
 {
