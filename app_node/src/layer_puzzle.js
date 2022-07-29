@@ -1,5 +1,3 @@
-//	8 - Eliminar as variavies globais;
-
 const work_list = {
 
 	1298: "200, 05, 100",
@@ -10,20 +8,17 @@ const work_list = {
 	8980: "30, 03, 30",
 	71234: "30, 03, 30",
 	1111: "30, 03, 30",
-	2313: "30, 03, 30"
+	2313: "30, 03, 30",
+	1112: "60, 05, 90",
+	1897: "180, 05, 100",
+	9897: "75, 05, 80",
+	09884: "100, 05, 120",
+	8745: "130, 05, 100",
+	8877: "160, 05, 160"
 }
 
 
 let sort_list = require("./sort.js");
-sort_list = sort_list.i_sort(work_list);
-
-let crate_finished = [];
-let standard_layer = sort_list.pop();
-
-//The crate_finished is a global variabel responsible to get all layers to each crate designed in the labor recursion.
-crate_finished.push(standard_layer);
-crate_finished.unshift(1);
-standard_layer = standard_layer[1];
 
 
 //This function returns the optimize arrays to each layer.
@@ -41,7 +36,8 @@ function layer_done(work_done, layer)
 }
 
 
-//This function returns the available work to be set in to the actual crate dimension.
+//This function returns the available work to be set in to the actual crate
+//dimension.
 function next_work(crate_dim, works, len)
 {
 	let sizes;
@@ -75,46 +71,51 @@ function labor(crate_dim, works, layer, crate)
 	if (len == 0)
 	{
 		crate.unshift(works.splice(0, 1));
-		crate = layer_done(crate, layer);
-		return solve_start_line(works, layer + 1, crate);
+		return crate = layer_done(crate, layer);
+		// return solve_start_line(works, layer + 1, crate);
 	}
-	else
-	{
-		crate.unshift(works.splice(len, 1));
-	}
-	labor(crate_dim - filled, works, layer, crate);
+	crate.unshift(works.splice(len, 1));
+	return labor(crate_dim - filled, works, layer, crate);
 }
 
 
-//This function is responsible to the limit of the crate layers.
-function solve_start_line(work_list, layer, crate)
-{	
-	let empt = [];
-
-	if (work_list.length < 0 || layer >= 5)	
-	{
-		return crate_finished;		
-	}
-	if(crate.length > 1)
-		crate_finished.push(crate);
-	labor(standard_layer, work_list, layer, empt);
-}
-
-
-//This function returns the all the crates needed accordingly the work list provided.
-function solve_list(sort_list)
+//This function returns the all the crates needed accordingly the work list.
+function solve_list(the_list)
 {
+	sort_list = sort_list.i_sort(the_list);
+	let crate_finished = [];
+	let crates = [];
+	let standard_layer = 0;
 	let new_crate = 0;
-	let crates = [crate_finished];
+	let layer = 2;
+	let tmp = [];
 
 	while(sort_list.length > 0)
 	{
-		new_crate++;
-		crates.push(solve_start_line(sort_list, 2, crates));
-		crates.unshift(new_crate);
+		if (layer == 2)
+		{
+			standard_layer = sort_list.pop();
+			crate_finished.push(standard_layer);
+			crate_finished.unshift(1);
+			standard_layer = standard_layer[1];
+		}
+		else if (layer == 4)
+		{
+			new_crate++;
+			crates.unshift(crate_finished);
+			crates.unshift(new_crate);
+			crate_finished.splice(0, crate_finished.length);
+			layer = 1;
+		}
+		crate_finished.push(labor(standard_layer, sort_list, layer, tmp));
+		tmp.splice(0, tmp.length);
+		layer++;
 	}
+	if (crates == 0)
+		return crate_finished;
 	return crates;
 }
 
 
 module.exports = { solve_list };
+console.log(solve_list(work_list));
