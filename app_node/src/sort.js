@@ -2,7 +2,7 @@ let cub = require ("./cubing.js");
 
 
 //This function is responsible to get only the sizes of the Object split with ",".
-function split_int(dimensions)
+function splitInt(dimensions, codes)
 {
 	dimensions = dimensions.split(",");
 	let work_dimensions = [];
@@ -13,21 +13,24 @@ function split_int(dimensions)
 		work_dimensions.push(parseInt(dimensions[i]));
 		i++;
 	}
+	work_dimensions.unshift(codes);
 	return work_dimensions;
 }
 
 
-//This function get only the sizes of the works
-function get_dimensions(w_list)
+//This function get the codes and sizes of the works from the list proveided.
+function getDimensions(w_list)
 {
 	let i = 0;
 	let hold = 0;
+	let code = 0;
 	let dimensions = [];
 
 	while (i < Object.values(w_list).length)
 	{
 		hold = (Object.values(w_list)[i]);
-		dimensions.push(split_int(hold));
+		code = (Object.keys(w_list)[i]);
+		dimensions.push(splitInt(hold, code));
 		i++;
 	}
 	return dimensions;
@@ -35,11 +38,11 @@ function get_dimensions(w_list)
 
 
 //This function provides the airfreight cube to each sizes of the works in the Object list.
-function cube_all(w_list)
+function cubeAll(w_list)
 {
 	let result = [];
 	let i = 0;
-	let dimensions = get_dimensions(w_list);
+	let dimensions = getDimensions(w_list);
 
 	while(i < Object.values(w_list).length)
 	{
@@ -47,6 +50,25 @@ function cube_all(w_list)
 		i++;
 	}
 	return result;
+}
+
+
+//This function acts sorting the smallest work to the biggest one.
+function quickSort(works)
+{
+	if (works.length <= 1)
+		return works;
+
+	let left = [];
+	let right = [];
+	let i = 0;
+	let pivot = [works[0]];
+
+	while (i++ < works.length - 1)
+	{
+		works[i][1] <= pivot[0][1] ? left.push(works[i]) : right.push(works[i]);
+	}
+	return (quickSort(left).concat(pivot, quickSort(right)));
 }
 
 
@@ -61,32 +83,20 @@ function zipper(codes, cubes, index)
 }
 
 
-//This function acts sorting the smallest work to the biggest one.
-function i_sort(works)
+//This function applies the zipper function to each code and dimensions to provide a new array
+//sorted with the quickSort function.
+function newArraySorted(works)
 {
-	let i = 0;
-	let j = 1;
 	let new_a = [];
-	let swap = [];
-
+	let i = 0;
+	
+	
 	while (i < Object.values(works).length)
 	{
-		new_a.push(zipper(Object.keys(works), cube_all(works), i));
+		new_a.push(zipper(Object.keys(works), cubeAll(works), i));
 		i++;
 	}
-	while(j < new_a.length)
-	{
-		i = j - 1;
-		swap = new_a[j];
-		while (i >= 0 && new_a[i][1] > swap[1])
-		{
-			new_a[i + 1] = new_a[i];
-			i--;
-		}
-		new_a[i + 1] = swap;
-		j++;
-	}
-	return new_a;
+	return quickSort(new_a);
 }
 
-module.exports = { get_dimensions, i_sort };
+module.exports = { getDimensions, newArraySorted };
