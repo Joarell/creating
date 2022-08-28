@@ -1,6 +1,6 @@
 const work_list = {
 
-	1298: "200, 05, 100",
+	1298: "200, 05, 100", //first
 	123: "100, 05, 100",
 	5908: "150, 05, 90",
 	8899: "120, 03, 100",
@@ -10,19 +10,20 @@ const work_list = {
 	1111: "30, 03, 30",
 	2313: "30, 03, 30",
 	1112: "60, 05, 90",
-	1897: "180, 05, 100",
+	1897: "180, 05, 100", //second
 	9897: "75, 05, 80",
 	09884: "100, 05, 120",
 	8745: "130, 05, 100",
-	8877: "160, 05, 160"
+	8877: "160, 05, 160" //third
 }
 
 
 let sort_list = require("./sort.js");
+let next_work = require("./next_work.js");
 
 
 //This function returns the optimize arrays to each layer.
-function layer_done(work_done, layer)
+function layerDone(work_done, layer)
 {
 	let packed = [];
 	let i = 0;
@@ -36,43 +37,19 @@ function layer_done(work_done, layer)
 }
 
 
-//This function returns the available work to be set in to the actual crate
-//dimension.
-function next_work(crate_dim, works, len)
-{
-	let sizes;
-	
-	if (len == 0)
-		return len;
-	len--;
-	sizes = works[len][1];
-	while (len >= -1)
-	{
-		if (crate_dim >= sizes)
-			return len;
-		len--;
-		if (len < 0)
-			return len;
-		sizes = works[len][1];
-	}
-	return len;
-}
-
-
 //This function is responsible to feat the works in to the crate layers.
 function labor(crate_dim, works, layer, crate)
 { 
 	let filled;
 	let len;
 
-	len = next_work(crate_dim, works, works.length);
+	len = nextWork(crate_dim, works, works.length);
 	if (len > 0)
 		filled = works[len][1];
 	if (len == 0)
 	{
 		crate.unshift(works.splice(0, 1));
-		return crate = layer_done(crate, layer);
-		// return solve_start_line(works, layer + 1, crate);
+		return crate = layerDone(crate, layer);
 	}
 	crate.unshift(works.splice(len, 1));
 	return labor(crate_dim - filled, works, layer, crate);
@@ -80,9 +57,9 @@ function labor(crate_dim, works, layer, crate)
 
 
 //This function returns the all the crates needed accordingly the work list.
-function solve_list(the_list)
+function solveList(the_list)
 {
-	sort_list = sort_list.i_sort(the_list);
+	sort_list = sort_list.newArraySorted(the_list);
 	let crate_finished = [];
 	let crates = [];
 	let standard_layer = 0;
@@ -117,5 +94,5 @@ function solve_list(the_list)
 }
 
 
-module.exports = { solve_list };
-console.log(solve_list(work_list));
+module.exports = { solveList };
+console.log(solveList(work_list));
