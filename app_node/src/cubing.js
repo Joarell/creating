@@ -1,7 +1,7 @@
 //This function returns the cubed value to the work.
 function cubing(dimensions)
 {
-	const cubed = dimensions[0] * dimensions[1] * dimensions[2]/1000000;
+	const cubed = dimensions[1] * dimensions[2] * dimensions[3]/1000000;
 	return Math.floor(cubed * 1000)/1000;
 }
 
