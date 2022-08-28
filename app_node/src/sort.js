@@ -44,7 +44,7 @@ function cubeAll(w_list)
 	let i = 0;
 	let dimensions = getDimensions(w_list);
 
-	while(i < Object.values(w_list).length)
+	while(i < dimensions.length)
 	{
 		result.push(cub.cubing(dimensions[i]));
 		i++;
@@ -54,7 +54,7 @@ function cubeAll(w_list)
 
 
 //This function acts sorting the smallest work to the biggest one.
-function quickSort(works)
+function quickSort(works, position)
 {
 	if (works.length <= 1)
 		return works;
@@ -66,9 +66,9 @@ function quickSort(works)
 
 	while (i++ < works.length - 1)
 	{
-		works[i][1] <= pivot[0][1] ? left.push(works[i]) : right.push(works[i]);
+		works[i][position] <= pivot[0][position] ? left.push(works[i]) : right.push(works[i]);
 	}
-	return (quickSort(left).concat(pivot, quickSort(right)));
+	return (quickSort(left, position).concat(pivot, quickSort(right, position)));
 }
 
 
@@ -81,7 +81,6 @@ function zipper(codes, cubes, index)
 	new_arranje.push(cubes[index]);
 	return new_arranje;
 }
-
 
 //This function applies the zipper function to each code and dimensions to provide a new array
 //sorted with the quickSort function.
@@ -96,7 +95,7 @@ function newArraySorted(works)
 		new_a.push(zipper(Object.keys(works), cubeAll(works), i));
 		i++;
 	}
-	return quickSort(new_a);
+	return quickSort(new_a, 1);
 }
 
-module.exports = { getDimensions, newArraySorted };
+module.exports = { getDimensions, newArraySorted, quickSort };
