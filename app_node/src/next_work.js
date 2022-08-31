@@ -46,32 +46,29 @@ function cubVersionList(works)
 }
 
 
-//This function is responsible to provide the standard crate dimension.
+//This function is responsible to provide the standard crate dimension based on
+//the last half of the list.
 function standardLayer(works)
 {
 	let crate_dim = [];
-	let list;
-	let sort_list;
 	let i;
 	let x;
 	let y;
 	
-	list = sort.getDimensions(works);
-	sort_list = sort.quickSort(cubVersionList(list), 4);
-	i = sort_list.length;
-	x = sort_list[i - 1][1];
-	y = sort_list[i - 1][3];
+	i = works.length;
+	x = works[i - 1][1];
+	y = works[i - 1][3];
 
-	while (i-- > (sort_list.length / 2))
+	while (i-- > (works.length / 2))
 	{
-		if (sort_list[i][1] > x)
-			x = sort_list[i][1];
-		if (sort_list[i][3] > y)
-			y = sort_list[i][3];
+		if (works[i][1] > x)
+			x = works[i][1];
+		if (works[i][3] > y)
+			y = works[i][3];
 	}
 	crate_dim.push(x);
 	crate_dim.push(y);
 	return (crate_dim);
 }
 
-module.exports = { standardLayer, nextWork };
+module.exports = { standardLayer, nextWork, cubVersionList };
