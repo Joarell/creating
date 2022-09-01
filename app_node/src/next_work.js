@@ -4,7 +4,7 @@ let sort = require("./sort.js");
 
 //This function returns the available work to be set in to the actual crate
 //dimension.
-function nextWork(crate_dim, works, len)
+function nextWorkNinety(crate_dim, works, len)
 {
 	let sizes;
 	
@@ -71,4 +71,4 @@ function standardLayer(works)
 	return (crate_dim);
 }
 
-module.exports = { standardLayer, nextWork, cubVersionList };
+module.exports = { standardLayer, nextWorkNinety, cubVersionList };
