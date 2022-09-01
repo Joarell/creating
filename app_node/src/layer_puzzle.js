@@ -22,36 +22,55 @@ let next_work = require("./next_work.js");
 let sort = require("./sort.js");
 
 
-//This function returns the optimize arrays to each layer.
-function layerDone(work_done, layer)
+function workSwapNinety(work)
 {
-	let packed = [];
-	let i = 0;
+	let x;
+	let y;
+	let tmp = [];
 
-	for (i in work_done)
-	{
-		packed.unshift(work_done[i][0]);
-	}
-	packed.unshift(layer);
-	return packed;
+	x = work[0];
+	y = work[1];
+	work.splice(0, work.length);
+	work.push(y);
+	work.push(x);
+
+	return (work);
 }
 
-
-function featingCrate(crate_sizes, piece_sizes, crate)
+function featingCrate(crate_sizes, piece_sizes)
 {
 	let result = [];
 	let x;
 	let y;
+	let arrange = 1;
 
-	if (crate_sizes[0] >= piece_sizes[0] && !crate[1])
+	while (arrange--)
 	{
-		x = crate_sizes[0] - piece_sizes[0];
-		y = crate_sizes[1];
-	}
-	else
-	{
-		x = crate_sizes[0];
-		y = crate_sizes[1] - piece_sizes[1];
+		if ((crate_sizes[0] >= piece_sizes[0] && crate_sizes[1] > piece_sizes[1]) ||
+		(crate_sizes[0] > piece_sizes[0]
+		&& crate_sizes[0] < crate_sizes[1]))
+		{
+			x = crate_sizes[0];
+			y = crate_sizes[1] - piece_sizes[1];
+		}
+		else if ((crate_sizes[0] > piece_sizes[0] && crate_sizes[1] == piece_sizes[1]))
+		{
+			if(crate_sizes[0] > crate_sizes[1])
+			{
+				x = crate_sizes[0] - piece_sizes[0];
+				y = crate_sizes[1];
+			}
+			else
+			{
+				x = crate_sizes[0];
+				y = crate_sizes[1] - piece_sizes[1];
+			}
+		}
+		else
+		{
+			workSwapNinety(piece_sizes);
+			arrange++;
+		}
 	}
 	result.push(x);
 	result.push(y);
@@ -66,19 +85,18 @@ function labor(crate_dim, works, layer, crate)
 	let len;
 	let new_size;
 
-	len = next_work.nextWork(crate_dim, works, works.length);
+	len = next_work.nextWorkNinety(crate_dim, works, works.length);
 	if (len > 0)
 	{
 		piece.push(works[len][1]);
 		piece.push(works[len][3]);
 	}
-	else if (len == 0)
+	else if (len <= 0)
 	{
 		crate.push(works.splice(0, 1));
-		crate = layerDone(crate, layer);
-		return works;
+		return ;
 	}
-	new_size = featingCrate(crate_dim, piece, crate);
+	new_size = featingCrate(crate_dim, piece);
 	crate_dim.splice(0, 2);
 	crate_dim.push(new_size[0]);
 	crate_dim.push(new_size[1]);
@@ -93,7 +111,7 @@ function solveList(the_list)
 	let crate_finished = [];
 	let crates = [];
 	let standard_layer = [];
-	let new_crate;
+	let n_crate = 0;
 	let layer;
 	let new_list;
 	let tmp = [];
@@ -106,24 +124,33 @@ function solveList(the_list)
 		if (layer === 1)
 		{
 			standard_layer = next_work.standardLayer(new_list);
-			crate_finished.push(layer);
 		}
-		else if (layer === 4)
+		else if (layer === 5 )
 		{
-			new_crate++;
-			crates.push(new_crate);
-			crates.push(crate_finished);
+			n_crate++;
+			crates.push(n_crate);
+			crate_finished.pop();
+			crates[1] = crates.concat(crate_finished);
 			crate_finished.splice(0, crate_finished.length);
 			layer = 1;
+			standard_layer = next_work.standardLayer(new_list);
 		}
 		tmp.push(standard_layer[0]);
 		tmp.push(standard_layer[1]);
-		crate_finished.push(labor(tmp, new_list, layer, crate_finished));
+		labor(tmp, new_list, layer, crate_finished);
 		layer++;
 		tmp.splice(0, 2);
 	}
-	if (crates.length === 0)
+	if (crates.length == 0)
 		return crate_finished;
+	else if (crate_finished.length > 0)
+	{
+		n_crate++;
+		crate_finished.pop();
+		crates.push(n_crate);
+		crates = crates.concat(crate_finished);
+	}
+	console.log(crates);
 	return crates;
 }
 
