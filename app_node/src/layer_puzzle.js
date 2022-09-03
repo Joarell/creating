@@ -1,32 +1,13 @@
-const work_list = {
-
-	1298: "200, 05, 100", //first
-	123: "100, 05, 100",
-	5908: "150, 05, 90",
-	8899: "120, 03, 100",
-	777: "50, 03, 50",
-	8980: "30, 03, 30",
-	71234: "30, 03, 30",
-	1111: "30, 03, 30",
-	2313: "30, 03, 30",
-	1112: "60, 05, 90",
-	1897: "180, 05, 100", //second
-	9897: "75, 05, 80",
-	09884: "100, 05, 120",
-	8745: "130, 05, 100",
-	8877: "160, 05, 160" //third
-}
-
-
 let next_work = require("./next_work.js");
 let sort = require("./sort.js");
 
 
+//This function returns the the swap of the work dimensions.
+//It emulates turning 90 degrees angle to fit into the empty crate size.
 function workSwapNinety(work)
 {
 	let x;
 	let y;
-	let tmp = [];
 
 	x = work[0];
 	y = work[1];
@@ -37,6 +18,9 @@ function workSwapNinety(work)
 	return (work);
 }
 
+
+//This function returns the new empty size into the crate after subtract the
+//dimensions between crate and piece sizes.
 function featingCrate(crate_sizes, piece_sizes)
 {
 	let result = [];
@@ -44,16 +28,18 @@ function featingCrate(crate_sizes, piece_sizes)
 	let y;
 	let arrange = 1;
 
+	if((crate_sizes[0] === piece_sizes[0] && crate_sizes[1] === piece_sizes[1]) ||
+	(crate_sizes[1] === piece_sizes[0] && crate_sizes[0] === piece_sizes[1]))
+		return	result = [0, 0];
 	while (arrange--)
 	{
 		if ((crate_sizes[0] >= piece_sizes[0] && crate_sizes[1] > piece_sizes[1]) ||
-		(crate_sizes[0] > piece_sizes[0]
-		&& crate_sizes[0] < crate_sizes[1]))
+		(crate_sizes[0] > piece_sizes[0] && crate_sizes[0] < crate_sizes[1]))
 		{
 			x = crate_sizes[0];
 			y = crate_sizes[1] - piece_sizes[1];
 		}
-		else if ((crate_sizes[0] > piece_sizes[0] && crate_sizes[1] == piece_sizes[1]))
+		else if ((crate_sizes[0] > piece_sizes[0] && crate_sizes[1] === piece_sizes[1]))
 		{
 			if(crate_sizes[0] > crate_sizes[1])
 			{
@@ -78,12 +64,11 @@ function featingCrate(crate_sizes, piece_sizes)
 }
 
 
-//This function is responsible to feat the works in to the crate layers.
+//This function is responsible to fit the works in to the crate layers.
 function labor(crate_dim, works, layer, crate)
 { 
 	let piece = [];
 	let len;
-	let new_size;
 
 	len = next_work.nextWorkNinety(crate_dim, works, works.length);
 	if (len <= 0)
@@ -93,67 +78,66 @@ function labor(crate_dim, works, layer, crate)
 	}
 	piece.push(works[len][1]);
 	piece.push(works[len][3]);
-	new_size = featingCrate(crate_dim, piece);
-	crate_dim.splice(0, 2);
-	crate_dim.push(new_size[0]);
-	crate_dim.push(new_size[1]);
+	crate_dim = Array.from(featingCrate(crate_dim, piece));
 	crate.push(works.splice(len, 1));
 	return labor(crate_dim, works, layer, crate);
 }
 
 
-//This function returns the all the crates needed accordingly the work list.
-function solveList(the_list)
+//This function provides the crate with all possble works in.
+function crateArrange(standard_size, list, layer)
 {
-	let crate_finished = [];
-	let crates = [];
-	let standard_layer = [];
-	let n_crate = 0;
-	let layer;
-	let new_list;
-	let tmp = [];
+	let tmp;
+	let crate_defined = [];
 
-	new_list = sort.getDimensions(the_list);
-	new_list = sort.quickSort(next_work.cubVersionList(new_list), 4);
-	layer = 1;
-	while(new_list.length > 0)
+	while (layer++ <= 3 && list.length > 0)
 	{
-		if (layer === 1)
-		{
-			standard_layer = next_work.standardLayer(new_list);
-			crate_finished.unshift(layer);
-		}
-		else if (layer === 5 )
-		{
-			crates.push(n_crate);
-			crate_finished.splice(crate_finished.length - 1, 1);
-			crates[n_crate] = crates.concat(crate_finished);
-			crate_finished.splice(0, crate_finished.length);
-			layer = 1;
-			standard_layer = next_work.standardLayer(new_list);
-			n_crate++;
-		}
-		tmp.push(standard_layer[0]);
-		tmp.push(standard_layer[1]);
-		labor(tmp, new_list, layer, crate_finished);
-		layer++;
-		crate_finished.push(layer);
-		tmp.splice(0, 2);
+		crate_defined.push(layer);
+		tmp = Array.from(standard_size);
+		labor(tmp, list, layer, crate_defined);
 	}
-	if (crates.length == 0)
-		return crate_finished;
-	else if (crate_finished.length > 0)
-	{
-		crate_finished.pop();
-		crates.push(n_crate);
-		crates[n_crate] = crates.concat(crate_finished);
-	}
-	console.log(crates);
-	return crates;
+	return (crate_defined);
 }
 
 
-module.exports = { solveList };
-let arrange = solveList(work_list);
-console.log(arrange);
+//This function returns the all the crates needed accordingly the work list.
+function solveListProcedure(the_list)
+{
+	let crates_done = [];
+	let standard_layer = [];
+	let new_list;
 
+	new_list = sort.getDimensions(the_list);
+	new_list = sort.quickSort(next_work.cubVersionList(new_list), 4);
+	layer = 0;
+	while (new_list.length > 0)
+	{
+		standard_layer = next_work.standardLayer(new_list);
+		crates_done.push(standard_layer);
+		crates_done = crates_done.concat(crateArrange(standard_layer, new_list, layer));
+		layer = 0;
+	}
+	return (crates_done);
+}
+
+module.exports = { solveListProcedure };
+
+const work_list = {
+
+	1298: "200, 05, 100", //first
+	123: "100, 05, 100",
+	5908: "150, 05, 90",
+	8899: "120, 03, 100",
+	777: "50, 03, 50",
+	8980: "30, 03, 30",
+	71234: "30, 03, 30",
+	1111: "30, 03, 30",
+	2313: "30, 03, 30",
+	1112: "60, 05, 90",
+	1897: "180, 05, 100", //second
+	9897: "75, 05, 80",
+	09884: "100, 05, 120",
+	8745: "130, 05, 100",
+	8877: "160, 05, 160" //third
+}
+console.log(solveListProcedure(work_list));
