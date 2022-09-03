@@ -54,6 +54,7 @@ function cubeAll(w_list)
 
 
 //This function acts sorting the smallest work to the biggest one.
+//The "position" argument provides the correct array position where the value is to be sorted.
 function quickSort(works, position)
 {
 	if (works.length <= 1)
@@ -81,6 +82,7 @@ function zipper(codes, cubes, index)
 	new_arranje.push(cubes[index]);
 	return new_arranje;
 }
+
 
 //This function applies the zipper function to each code and dimensions to provide a new array
 //sorted with the quickSort function.
