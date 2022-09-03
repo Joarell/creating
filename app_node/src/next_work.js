@@ -2,8 +2,8 @@ let cub_calc = require("./cubing.js");
 let sort = require("./sort.js");
 
 
-//This function returns the available work to be set in to the actual crate
-//dimension.
+//This function returns the available work to be set in to the actual crate dimension
+//and it emalutes turning 90 degrees motion to try each work can fit into the crate
 function nextWorkNinety(crate_dim, works, len)
 {
 	let sizes;
@@ -54,6 +54,7 @@ function standardLayer(works)
 	let i;
 	let x;
 	let y;
+	let swap;
 	
 	i = works.length;
 	x = works[i - 1][1];
@@ -63,8 +64,14 @@ function standardLayer(works)
 	{
 		if (works[i][1] > x)
 			x = works[i][1];
-		if (works[i][3] > y)
+		if (works[i][3] > y && works[i][1] > y && works[i][3] > x)
 			y = works[i][3];
+	}
+	if (y > x)
+	{
+		swap = x;
+		x = y;
+		y = swap;
 	}
 	crate_dim.push(x);
 	crate_dim.push(y);
