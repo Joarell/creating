@@ -39,18 +39,10 @@ function featingCrate(crate_sizes, piece_sizes)
 			x = crate_sizes[0];
 			y = crate_sizes[1] - piece_sizes[1];
 		}
-		else if ((crate_sizes[0] > piece_sizes[0] && crate_sizes[1] === piece_sizes[1]))
+		else if ((crate_sizes[0] > piece_sizes[0] && crate_sizes[1] <= piece_sizes[1]))
 		{
-			if(crate_sizes[0] > crate_sizes[1])
-			{
-				x = crate_sizes[0] - piece_sizes[0];
-				y = crate_sizes[1];
-			}
-			else
-			{
-				x = crate_sizes[0];
-				y = crate_sizes[1] - piece_sizes[1];
-			}
+			x = crate_sizes[0] - piece_sizes[0];
+			y = crate_sizes[1];
 		}
 		else
 		{
