@@ -1,4 +1,4 @@
-let cub = require ("./cubing.js");
+const cub = require ("./cubing.js");
 
 
 //This function is responsible to get only the sizes of the Object split with ",".

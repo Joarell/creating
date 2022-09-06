@@ -2,6 +2,7 @@ const cub_calc = require("./cubing.js");
 const sort = require("./sort.js");
 
 
+//This functions returns a new list with the largest works found in the previus one.
 function noCanvasOut(list, len, others)
 {
 	if (len === 0)
@@ -94,7 +95,7 @@ function largestWorks(list, size)
 			y.push(list[len][3])
 		len++;
 	}
-	if(x)
+	if(x != 0)
 	{
 		x = x.reduce((sum, value) => {
 			return (sum + value);

@@ -1,4 +1,4 @@
-let cube = require("./cubing.js");
+const cube = require("./cubing.js");
  
 
 //This function returns the biggest cubed work.
