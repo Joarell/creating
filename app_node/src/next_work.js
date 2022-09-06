@@ -1,5 +1,16 @@
-let cub_calc = require("./cubing.js");
-let sort = require("./sort.js");
+const cub_calc = require("./cubing.js");
+const sort = require("./sort.js");
+
+
+function noCanvasOut(list, len, others)
+{
+	if (len === 0)
+		return ;
+	len--;
+	if (list[len][2] > 11)
+		others.push(list.splice(len, 1));
+	return noCanvasOut(list, len, others);
+}
 
 
 //This function returns the available work to be set in to the actual crate dimension
@@ -46,6 +57,66 @@ function cubVersionList(works)
 }
 
 
+//This function validates the limit of a pax (passanger) flight. The actual PAX limit is: 300 x 200 x 160 -cm 
+function limit(list, new_size)
+{
+	const x = 300;
+	let len;
+
+	if (new_size[0] > x)
+	{
+		len = list.length;
+		while (new_size[0] > x)
+		{
+			new_size[0] - list[len][1];
+			len--;
+		}
+	}
+	return (new_size);
+}
+
+
+//This function provides the standard size of the crate base on the largest works on the list.
+function largestWorks(list, size)
+{
+	let x;
+	let y;
+	let len;
+
+	x = [];
+	y = [];
+	len = 0;
+	while (len < list.length)
+	{
+		if(size[1] < 100)
+			x.push(list[len][1])
+		else
+			y.push(list[len][3])
+		len++;
+	}
+	if(x)
+	{
+		x = x.reduce((sum, value) => {
+			return (sum + value);
+		}, 0);
+		size.splice(0, 1);
+		size.unshift(x + 10);
+		limit(list, size);
+		return (size);
+	}
+	else
+	{
+		y = y.reduce((sum, value) => {
+			return (sum + value);
+		}, 0);
+		size.splice(1, 1);
+		size.push(y + 10);
+		limit(list, size);
+		return (size);
+	}
+}
+
+
 //This function is responsible to provide the standard crate dimension based on
 //the last half of the list.
 function standardLayer(works)
@@ -59,7 +130,6 @@ function standardLayer(works)
 	i = works.length;
 	x = works[i - 1][1];
 	y = works[i - 1][3];
-
 	while (i-- > (works.length / 2))
 	{
 		if (works[i][1] > x)
@@ -78,4 +148,4 @@ function standardLayer(works)
 	return (crate_dim);
 }
 
-module.exports = { standardLayer, nextWorkNinety, cubVersionList };
+module.exports = { standardLayer, nextWorkNinety, cubVersionList, noCanvasOut, largestWorks };
