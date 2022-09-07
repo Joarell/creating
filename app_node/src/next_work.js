@@ -16,7 +16,7 @@ function noCanvasOut(list, len, others)
 
 //This function returns the available work to be set in to the actual crate dimension
 //and it emalutes turning 90 degrees motion to try each work can fit into the crate
-function nextWorkNinety(crate_dim, works, len)
+function nextWorkNinety(crate_dim, works, len, spinning)
 {
 	let sizes;
 	
@@ -34,7 +34,11 @@ function nextWorkNinety(crate_dim, works, len)
 			sizes = [works[len][3]];
 			sizes.push(works[len][1]);
 			if (crate_dim[0] >= sizes[0] && crate_dim[1] >= sizes[1])
+			{
+				spinning.splice(0, 1);
+				spinning.push(1);
 				return len;
+			}
 		}
 		len--;
 		if (len < 0)
@@ -95,7 +99,7 @@ function largestWorks(list, size)
 			y.push(list[len][3])
 		len++;
 	}
-	if(x != 0)
+	if (x != 0)
 	{
 		x = x.reduce((sum, value) => {
 			return (sum + value);
@@ -124,19 +128,26 @@ function standardLayer(works)
 {
 	let crate_dim = [];
 	let i;
-	let x;
-	let y;
+	let x = [];
+	let y = [];
 	let swap;
 	
 	i = works.length;
-	x = works[i - 1][1];
-	y = works[i - 1][3];
+	x.push(works[i - 1][1]);
+	y.push(works[i - 1][3]);
+	swap = 0;
 	while (i-- > (works.length / 2))
 	{
-		if (works[i][1] > x)
-			x = works[i][1];
-		if (works[i][3] > y && works[i][1] > y && works[i][3] > x)
-			y = works[i][3];
+		if (works[i][1] > x[0])
+			x[0] = works[i][1];
+		if (works[i][3] > y[0])
+			y[0] = works[i][3];
+		else if ((i < works.length - 1) && (works[i][3] >= works[i + 1][3] ||
+		works[i][3] >= works[i + 1][1]) && (works[i][3] > swap))
+		{
+			swap = y[0];
+			y[0] = works[i][3];
+		}
 	}
 	if (y > x)
 	{
@@ -144,8 +155,8 @@ function standardLayer(works)
 		x = y;
 		y = swap;
 	}
-	crate_dim.push(x);
-	crate_dim.push(y);
+	crate_dim.push(x[0]);
+	crate_dim.push(y[0]);
 	return (crate_dim);
 }
 
