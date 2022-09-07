@@ -57,10 +57,13 @@ function fitingCrate(crate_sizes, piece_sizes)
 //This function is responsible to fit the works in to the crate layers.
 function labor(crate_dim, works, layer, crate)
 { 
-	let piece = [];
+	let piece;
 	let len;
+	let spin;
 
-	len = next_work.nextWorkNinety(crate_dim, works, works.length);
+	spin = [0];
+	piece = [];
+	len = next_work.nextWorkNinety(crate_dim, works, works.length, spin);
 	if (len <= 0)
 	{
 		crate.push(works.splice(0, 1));
@@ -70,6 +73,8 @@ function labor(crate_dim, works, layer, crate)
 	piece.push(works[len][3]);
 	crate_dim = Array.from(fitingCrate(crate_dim, piece));
 	crate.push(works.splice(len, 1));
+	if (spin[0] != 0)
+		crate[crate.length - 1][0].push("S");
 	return labor(crate_dim, works, layer, crate);
 }
 
