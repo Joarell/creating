@@ -35,8 +35,7 @@ function nextWorkNinety(crate_dim, works, len, spinning)
 			sizes.push(works[len][1]);
 			if (crate_dim[0] >= sizes[0] && crate_dim[1] >= sizes[1])
 			{
-				spinning.splice(0, 1);
-				spinning.push(1);
+				spinning[0] = 1;
 				return len;
 			}
 		}
@@ -140,8 +139,6 @@ function standardLayer(works)
 	{
 		if (works[i][1] > x[0])
 			x[0] = works[i][1];
-		if (works[i][3] > y[0])
-			y[0] = works[i][3];
 		else if ((i < works.length - 1) && (works[i][3] >= works[i + 1][3] ||
 		works[i][3] >= works[i + 1][1]) && (works[i][3] > swap))
 		{
