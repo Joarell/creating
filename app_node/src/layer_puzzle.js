@@ -28,18 +28,18 @@ function fitingCrate(crate_sizes, piece_sizes)
 	let y;
 	let arrange = 1;
 
-	if((crate_sizes[0] === piece_sizes[0] && crate_sizes[1] === piece_sizes[1]) ||
+	if ((crate_sizes[0] === piece_sizes[0] && crate_sizes[1] === piece_sizes[1]) ||
 	(crate_sizes[1] === piece_sizes[0] && crate_sizes[0] === piece_sizes[1]))
 		return	(result = [0, 0]);
 	while (arrange--)
 	{
-		if ((crate_sizes[0] >= piece_sizes[0] && crate_sizes[1] > piece_sizes[1]) ||
-		(crate_sizes[0] > piece_sizes[0] && crate_sizes[0] < crate_sizes[1]))
+		if (crate_sizes[0] >= piece_sizes[0] && crate_sizes[1] > piece_sizes[1] &&
+		crate_sizes[1] - piece_sizes[1] > crate_sizes[0] / 4)
 		{
 			x = crate_sizes[0];
 			y = crate_sizes[1] - piece_sizes[1];
 		}
-		else if ((crate_sizes[0] > piece_sizes[0] && crate_sizes[1] <= piece_sizes[1]))
+		else if ((crate_sizes[0] >= piece_sizes[0] && crate_sizes[1] >= piece_sizes[1]))
 		{
 			x = crate_sizes[0] - piece_sizes[0];
 			y = crate_sizes[1];
@@ -64,9 +64,8 @@ function labor(crate_dim, works, layer, crate)
 	spin = [0];
 	piece = [];
 	len = next_work.nextWorkNinety(crate_dim, works, works.length, spin);
-	if (len <= 0)
+	if (len === -1 || works.length === 0)
 	{
-		crate.push(works.splice(0, 1));
 		return ;
 	}
 	piece.push(works[len][1]);
@@ -93,8 +92,8 @@ function arrayCleaner(list)
 }
 
 
-//This function provides the crate with all possible works inside.
-function crateArrange(standard_size, list, layer)
+//This function return the crate with all possible works on the list.
+function crateArrange(standard_size, list, layer)//(need some fix)
 {
 	let tmp = [];
 	let crate_defined = [];
@@ -143,27 +142,3 @@ function solveListProcedure(the_list)
 }
 
 module.exports = { solveListProcedure };
-const work_list = {
-
-	1298: "200, 05, 100", //first
-	123: "100, 05, 100",
-	5908: "150, 05, 90",
-	8899: "120, 03, 100",
-	777: "50, 03, 50",
-	8980: "30, 03, 30",
-	71234: "30, 03, 30",
-	1111: "30, 03, 30",
-	2313: "30, 03, 30",
-	1112: "60, 05, 90",
-	1897: "180, 05, 100", //second
-	9897: "75, 05, 80",
-	09884: "100, 05, 120",
-	8745: "130, 05, 100",
-	8877: "160, 05, 160", //third
-	7777: "100, 05, 160",
-	8888: "45, 45, 45",
-	90890: "50, 50, 50",
-	12345: "100, 10, 190"
-}
-
-console.log(solveListProcedure(work_list));
