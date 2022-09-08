@@ -39,7 +39,7 @@ function fitingCrate(crate_sizes, piece_sizes)
 			x = crate_sizes[0];
 			y = crate_sizes[1] - piece_sizes[1];
 		}
-		else if ((crate_sizes[0] >= piece_sizes[0] && crate_sizes[1] >= piece_sizes[1]))
+		else if ((crate_sizes[0] > piece_sizes[0] && crate_sizes[1] >= piece_sizes[1]))
 		{
 			x = crate_sizes[0] - piece_sizes[0];
 			y = crate_sizes[1];
@@ -65,9 +65,7 @@ function labor(crate_dim, works, layer, crate)
 	piece = [];
 	len = next_work.nextWorkNinety(crate_dim, works, works.length, spin);
 	if (len === -1 || works.length === 0)
-	{
 		return ;
-	}
 	piece.push(works[len][1]);
 	piece.push(works[len][3]);
 	crate_dim = Array.from(fitingCrate(crate_dim, piece));
