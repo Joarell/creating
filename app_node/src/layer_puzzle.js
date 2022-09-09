@@ -139,4 +139,4 @@ function solveListProcedure(the_list)
 	return (crates_done);
 }
 
-module.exports = { solveListProcedure };
+module.exports = { solveListProcedure, arrayCleaner };
