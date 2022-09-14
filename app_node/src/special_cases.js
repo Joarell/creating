@@ -2,35 +2,39 @@ const next_work = require("./next_work.js");
 const sort = require("./sort.js");
 const clean = require("./layer_puzzle.js");
 
-
-//This functions is only a complement to the arrageCrate function.
-function arranLayer(arr, aux)
+function defineCrate(works_sizes)
 {
-	let swap;
+	let sizes;
+	let x;
+	let y;
+	let z;
+	let i;
 
-	if (arr[1].length === aux.length && arr[1][0][3] + aux[0][3] < 145)
+	i = 0;
+	sizes = [];
+	while (i++ < works_sizes.length - 1)
 	{
-		x = aux.length * package;
-		y = arr[1][0][3] + aux[0][3];
-		if (arr[1][0][1] >= aux[0][1])
-			z = arr[1][0][1];
-		else
-			z = aux[0][1];
-		if (x < z)
-		{
-			swap = x;
-			x = z;
-			z = swap;
-		}
-		arr[0] = [x, z, y];
-		arr.push(aux);
+		if (!Array.isArray(works_sizes[i]))
+			sizes.push(works_sizes[i]);
 	}
-	return (arr);
-}	
+	i = 0;
+	//a composição da medida y deve ser restringida pela medida da altura. Compreendendo o valor limite de 145.
+	//Caso contrário, as obras deverão ser diviidas em duas secções ou mais dentro da caixa, afim de acomodar as obras de mesma QUANTIDADE.
+	while ( )
+	if (sizes.length % 2 === 0)
+	{
+		while (i < works_sizes.length - 1)
+		{
+			if (works_sizes[i][2] > z && works_sizes[i][2] < 175)
+				z = works_sizes[i][2];
+			i += 2;
+		}
 
+	}
+}
 
 //This functions provides the best arragemento to crates with the same sizes.
-function arrangeCrate(work_list, arr)
+function arrangeCrate(work_list, arr, mesures)
 {
 	let aux;
 	let x;
@@ -40,6 +44,7 @@ function arrangeCrate(work_list, arr)
 
 	package = 5;
 	aux = [];
+	defineCrate(mesures);
 	while (aux.length === 0 || aux[0][0][4] === work_list[0][4])
 	{
 		aux.push(work_list.splice(0, 1));
@@ -64,32 +69,34 @@ function arrangeCrate(work_list, arr)
 //This function is the second part to solve all the equal works with the 
 //same sizes. The design argument is regarding to consolidate or not the works
 //in side de same crate.
-function solveSameSizes(works, design)
+function solveSameSizes(works)
 {
 	let crate = [];
-	let x;
-	let y;
-	let z;
+	let len;
+	let counter = [];
+	let i;
+	let last;
 
-	let sum = (list, index, len, result) => {
-		let a;
-		let b;
-
-		if (len > list.length - 1)
-			return (result);
-		a = list[len][index];
-		b = list[len + 2][index];
-		len++;
-		return sum(list, len, result + (a + b))
-	}
-	if (design)
+	i = 0;
+	len = 0;
+	last = 0;
+	while(len <= works.length)
 	{
-		while (works.length > 0)
-			arrangeCrate(works, crate);
-		return (crate);
+		if (counter.length === 0 || len === works.length ||
+		(counter[i][1] != works[len][1]))
+		{
+			if (counter.length != 0)
+			{
+				i += 2;
+				counter.push(len - last);
+			}
+			if (works[len])
+				counter.push(works[len]);
+			last += len;
+		}
+		len++;
 	}
-	else
-		arrangeCrate(works, crate);
+	arrangeCrate(works, crate, counter);
 	return (crate);
 }
 
@@ -109,7 +116,8 @@ function checking (arr, works, length)
 }
 
 
-//This function finds the works 4 works or more with the same sizes.
+//This function finds the works 4 works or more with the same sizes based on
+//the cube values.
 function sameSizes(list)
 {
 	let len;
@@ -139,6 +147,7 @@ function sameSizes(list)
 module.exports = { sameSizes };
 
 let test = {
+
 	121231: "50, 5, 50",
 	123: "50, 5, 50",
 	9898: "50, 5, 50",
