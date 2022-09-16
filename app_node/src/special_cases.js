@@ -2,12 +2,114 @@ const next_work = require("./next_work.js");
 const sort = require("./sort.js");
 const clean = require("./layer_puzzle.js");
 
-function defineCrate(works_sizes)
+
+//This function is a extension from splitSectionCrate function.
+function splitSectionCrateFour(list, dimensions)
 {
-	let sizes;
 	let x;
 	let y;
 	let z;
+	let definition;
+	let major;
+	let i;
+
+	x = dimensions[0] * 5;
+	i = 0;
+	z = list[i][1];
+	major = list[i + 1][1];
+	while (i <= dimensions.length)
+	{
+		if (list[i][1] < list[i + 1][1])
+		{
+			z = major;
+			major = list[i + 1][1];
+		}
+		i++;
+	}
+	i = 0;
+	while (i <= dimensions.length)
+	{
+		if (z != list[i][1] || major != list[i][1]) 
+			y = list[i][3];
+		if (y < list[i][3])
+			y = list[i][3];
+		i++;
+	}
+	if (major > z)
+	{
+		i = list.filter(value => list[1] === major);
+		y += i[3];
+	}
+	else
+	{
+		i = list.filter(value => list[1] === z);
+		y += i[3];
+	}
+	z += major;
+	if (z > x)
+	{
+		i = x;
+		x = z;
+		z = i;
+	}
+	dimensions.slice(0, 4);
+	return definition = [x, z, y];
+}
+
+
+//This function returns the sizes of the crate dealing with all works with the
+//sizes.
+function splitSectionCrate(list, dimensions)
+{
+	let x;
+	let y;
+	let z;
+	let definition;
+	let i;
+
+	if(dimensions.length < 2)
+	{
+		x = list[0] * 5;
+		z = list[0][1];
+		y = list[0][3];		
+		if (z > x)
+		{
+			i = x;
+			x = z;
+			z = i;
+		}
+		dimensions.splice(0, 1);
+		return definition = [x, z, y];
+	}
+	else if (dimensions.length === 2 || dimensions[2] != 1)
+	{
+		x = dimensions[0] * 5;
+		list[0][1] > list[2][1] ? z = list[0][1] : z = list[2][1];
+		if ( list[0][3] + list[2][3] < 145)
+			y = list[0][3] + list[2][3];		
+		else
+		{
+			z = list[0][1] + list[2][1];
+			list[0][3] > list[2][3] ? y = list[0][3] : y = list[2][3];
+		}
+		if (z > x)
+		{
+			i = x;
+			x = z;
+			z = i;
+		}
+		dimensions.slice(0, 2);
+		return definition = [x, z, y];
+	}
+	else if (dimensions.length >= 4 && dimensions[4] != 1 && dimensions[3] != 1)
+		splitSectionCrateFour(list, dimensions);
+}
+
+
+//This function provides de map of each sizes found at solveSameSizes function.
+function defineCrate(works_sizes)
+{
+	let sizes;
 	let i;
 
 	i = 0;
@@ -18,50 +120,22 @@ function defineCrate(works_sizes)
 			sizes.push(works_sizes[i]);
 	}
 	i = 0;
-	//a composição da medida y deve ser restringida pela medida da altura. Compreendendo o valor limite de 145.
-	//Caso contrário, as obras deverão ser diviidas em duas secções ou mais dentro da caixa, afim de acomodar as obras de mesma QUANTIDADE.
-	while ( )
-	if (sizes.length % 2 === 0)
+	while (i <= sizes.length)
 	{
-		while (i < works_sizes.length - 1)
-		{
-			if (works_sizes[i][2] > z && works_sizes[i][2] < 175)
-				z = works_sizes[i][2];
-			i += 2;
-		}
-
+		if (i + 1 <= sizes.length && sizes[i] != sizes[i + 1])
+			sizes[i].push(1);
+		i++;		
 	}
+	splitSectionCrate(works_sizes, sizes);
 }
+
 
 //This functions provides the best arragemento to crates with the same sizes.
 function arrangeCrate(work_list, arr, mesures)
 {
 	let aux;
-	let x;
-	let y;
-	let z;
-	let package;
-
-	package = 5;
-	aux = [];
 	defineCrate(mesures);
-	while (aux.length === 0 || aux[0][0][4] === work_list[0][4])
-	{
-		aux.push(work_list.splice(0, 1));
-		if (work_list.length === 0)
-			break ;
-	}
-	aux = Array.from(clean.arrayCleaner(aux));
-	if (arr.length === 0)
-	{
-		x = aux.length * package;
-		y = aux[0][3];
-		z = aux[0][1];
-		arr.push([x, z, y]);
-		arr.push(aux);
-	}
-	else
-		arranLayer(arr, aux);
+
 	return (arr);
 }
 
@@ -140,7 +214,11 @@ function sameSizes(list)
 		len++;
 	}
 	if (equals.length > 3)
-		return (clean.arrayCleaner(equals));
+	{
+		clean.arrayCleaner(equals);
+		equals = solveSameSizes(equals);
+		return (equals);
+	}
 	return (0);
 }
 
@@ -165,4 +243,3 @@ console.log(test);
 let result = sameSizes(test);
 console.log(test);
 console.log(result);
-console.log(solveSameSizes(result, 1));
