@@ -98,7 +98,7 @@ function splitSectionCrate(list, dimensions)
 			x = z;
 			z = i;
 		}
-		dimensions.slice(0, 2);
+		dimensions.splice(0, 2);
 		return definition = [x, z, y];
 	}
 	else if (dimensions.length >= 4 && dimensions[4] != 1 && dimensions[3] != 1)
@@ -106,10 +106,11 @@ function splitSectionCrate(list, dimensions)
 }
 
 
-//This function provides de map of each sizes found at solveSameSizes function.
+//This function provides de map of each sizes found at howManySizes function.
 function defineCrate(works_sizes)
 {
 	let sizes;
+	let crate;
 	let i;
 
 	i = 0;
@@ -122,11 +123,11 @@ function defineCrate(works_sizes)
 	i = 0;
 	while (i <= sizes.length)
 	{
-		if (i + 1 <= sizes.length && sizes[i] != sizes[i + 1])
+		if (i + 1 < sizes.length && sizes[i] != sizes[i + 1])
 			sizes[i].push(1);
 		i++;		
 	}
-	splitSectionCrate(works_sizes, sizes);
+	return crate = splitSectionCrate(works_sizes, sizes);
 }
 
 
@@ -134,7 +135,8 @@ function defineCrate(works_sizes)
 function arrangeCrate(work_list, arr, mesures)
 {
 	let aux;
-	defineCrate(mesures);
+
+	arr.push(defineCrate(mesures));
 
 	return (arr);
 }
@@ -143,7 +145,7 @@ function arrangeCrate(work_list, arr, mesures)
 //This function is the second part to solve all the equal works with the 
 //same sizes. The design argument is regarding to consolidate or not the works
 //in side de same crate.
-function solveSameSizes(works)
+function howManySizes(works)
 {
 	let crate = [];
 	let len;
@@ -156,8 +158,12 @@ function solveSameSizes(works)
 	last = 0;
 	while(len <= works.length)
 	{
-		if (counter.length === 0 || len === works.length ||
-		(counter[i][1] != works[len][1]))
+		if (len === works.length)
+		{
+			counter.push(len - last);
+			break ;
+		}
+		else if (counter.length === 0 || counter[i][1] != works[len][1])
 		{
 			if (counter.length != 0)
 			{
@@ -177,7 +183,7 @@ function solveSameSizes(works)
 
 //This function check if all sizes of the works is really equal to take it 
 //of the list.
-function checking (arr, works, length)
+function checking(arr, works, length)
 {
 	if (length > works.length - 1 || works[length][4] != arr[0][4])
 		return ;
@@ -215,8 +221,8 @@ function sameSizes(list)
 	}
 	if (equals.length > 3)
 	{
-		clean.arrayCleaner(equals);
-		equals = solveSameSizes(equals);
+		equals = clean.arrayCleaner(equals);
+		equals.unshift(howManySizes(equals));
 		return (equals);
 	}
 	return (0);
@@ -243,3 +249,11 @@ console.log(test);
 let result = sameSizes(test);
 console.log(test);
 console.log(result);
+
+const jin = [];
+
+	data [0] = "mic";
+	data [1] = "guitar";
+	data [2] = "music";
+	data [3] = "cake";
+console.log(jin);
