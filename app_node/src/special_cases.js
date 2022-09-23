@@ -131,17 +131,6 @@ function defineCrate(works_sizes)
 }
 
 
-//This functions provides the best arragemento to crates with the same sizes.
-function arrangeCrate(work_list, arr, mesures)
-{
-	let aux;
-
-	arr.push(defineCrate(mesures));
-
-	return (arr);
-}
-
-
 //This function is the second part to solve all the equal works with the 
 //same sizes. The design argument is regarding to consolidate or not the works
 //in side de same crate.
@@ -176,8 +165,8 @@ function howManySizes(works)
 		}
 		len++;
 	}
-	arrangeCrate(works, crate, counter);
-	return (crate);
+	crate.push(defineCrate(counter));
+	return (clean.arrayLess(crate));
 }
 
 
@@ -185,11 +174,17 @@ function howManySizes(works)
 //of the list.
 function checking(arr, works, length)
 {
+	let cleaner;
+
 	if (length > works.length - 1 || works[length][4] != arr[0][4])
 		return ;
 	if (works[length][1] === arr[0][1] && works[length][2] === arr[0][2]
 	&& works[length][3] === arr[0][3])
-		arr.push(works.splice(length, 1));
+	{
+		cleaner = works.splice(length, 1);
+		cleaner = clean.arrayLess(cleaner);
+		arr.push(cleaner);
+	}
 	else
 		length++;
 	return checking (arr, works, length);
@@ -203,26 +198,24 @@ function sameSizes(list)
 	let len;
 	let equals = [];
 	let checked = [];
+	let remainder = [];
 
 	len = 0;
 	while (len <= list.length - 1)
 	{
-		checked.push(list[len]);
-		checking(checked, list, 1);
-		if (checked.length < 3)
-			checked.splice(0, 1);
+		checked = list.splice(0, 1);
+		checking(checked, list, 0);
+		if (checked.length <= 3)
+			remainder = remainder.concat(checked);
 		else
-		{
-			checked.splice(0, 1);
 			equals = equals.concat(checked);
-		}
 		checked.splice(0, checked.length);
 		len++;
 	}
 	if (equals.length > 3)
 	{
-		equals = clean.arrayCleaner(equals);
 		equals.unshift(howManySizes(equals));
+		list.push(remainder);
 		return (equals);
 	}
 	return (0);
@@ -236,7 +229,9 @@ let test = {
 	123: "50, 5, 50",
 	9898: "50, 5, 50",
 	98888: "50, 5, 50",
-	101010: "40, 5, 50",
+	010: "40, 5, 50",
+	9999: "40, 5, 50",
+	7888: "40, 5, 50",
 	11111: "60, 5, 60",
 	22222: "60, 5, 60",
 	33333: "60, 5, 60",
@@ -247,13 +242,5 @@ test = (sort.getDimensions(test));
 test = sort.quickSort(next_work.cubVersionList(test), 4);
 console.log(test);
 let result = sameSizes(test);
-console.log(test);
+console.log(clean.arrayLess(test));
 console.log(result);
-
-const jin = [];
-
-	data [0] = "mic";
-	data [1] = "guitar";
-	data [2] = "music";
-	data [3] = "cake";
-console.log(jin);
