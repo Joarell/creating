@@ -78,7 +78,7 @@ function labor(crate_dim, works, layer, crate)
 
 //This function eliminates the extra array provided by labor and
 //noCanvasOut functions.
-function arrayCleaner(list)
+function arrayLess(list)
 {
 	len = list.length;
 	while (len--)
@@ -102,7 +102,7 @@ function crateArrange(standard_size, list, layer)//(need some fix)
 		tmp = Array.from(standard_size);
 		labor(tmp, list, layer, crate_defined);
 	}
-	return (arrayCleaner(crate_defined));
+	return (arrayLess(crate_defined));
 }
 
 
@@ -122,7 +122,7 @@ function solveListProcedure(the_list)
 	{
 		if (largests != 0)
 		{
-			largests = arrayCleaner(largests);
+			largests = arrayLess(largests);
 			standard_layer = next_work.standardLayer(largests);
 			standard_layer = next_work.largestWorks(largests, standard_layer);
 			crates_done = crates_done.concat(crateArrange(standard_layer, largests, layer));
@@ -139,4 +139,4 @@ function solveListProcedure(the_list)
 	return (crates_done);
 }
 
-module.exports = { solveListProcedure, arrayCleaner };
+module.exports = { solveListProcedure, arrayLess };
