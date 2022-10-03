@@ -1,18 +1,15 @@
 const cube = require("./cubing.js");
- 
+
 
 //This function returns the biggest cubed work.
-function big_work(work_list)
-{
+function big_work(work_list) {
 	let i = 0;
 	let cubed = 0;
 	great = 0;
 
-	for (i in work_list)
-	{
+	for (i in work_list) {
 		cubed = cube.cubing(work_list[i]);
-		if (cubed > great)
-		{
+		if (cubed > great) {
 			great = cubed;
 		}
 	}

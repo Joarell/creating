@@ -1,7 +1,6 @@
 //This function returns the sizes of the crate dealing with all works with the
 //sizes if the dimensions length if equal to four.
-function splitSectionCrateFour(list, dimensions)
-{
+function splitSectionCrateFour(list, dimensions) {
 	let x;
 	let y;
 	let z;
@@ -15,37 +14,31 @@ function splitSectionCrateFour(list, dimensions)
 	i = 0;
 	z = list[i][1];
 	major = list[i + 1][1];
-	while (i <= dimensions.length)
-	{
-		if (list[i][1] < list[i + 1][1])
-		{
+	while (i <= dimensions.length) {
+		if (list[i][1] < list[i + 1][1]) {
 			z = major;
 			major = list[i + 1][1];
 		}
 		i++;
 	}
 	i = 0;
-	while (i <= dimensions.length)
-	{
-		if (z != list[i][1] || major != list[i][1]) 
+	while (i <= dimensions.length) {
+		if (z != list[i][1] || major != list[i][1])
 			y = list[i][3];
 		if (y < list[i][3])
 			y = list[i][3];
 		i++;
 	}
-	if (major > z)
-	{
+	if (major > z) {
 		i = list.filter(value => list[1] === major);
 		y += i[3];
 	}
-	else
-	{
+	else {
 		i = list.filter(value => list[1] === z);
 		y += i[3];
 	}
 	z += major;
-	if (z > x)
-	{
+	if (z > x) {
 		i = x;
 		x = z;
 		z = i;
@@ -57,8 +50,7 @@ function splitSectionCrateFour(list, dimensions)
 
 //This function returns the sizes of the crate dealing with all works with the
 //sizes if the dimensions length if equal to two.
-function splitSectionTwo(list, dimensions)
-{
+function splitSectionTwo(list, dimensions) {
 	let x;
 	let y;
 	let z;
@@ -72,14 +64,12 @@ function splitSectionTwo(list, dimensions)
 	x = dimensions[0] * package;
 	list[0][1] > list[2][1] ? z = list[0][1] : z = list[2][1];
 	if (list[0][3] + list[2][3] < max_hight)
-		y = list[0][3] + list[2][3];		
-	else
-	{
+		y = list[0][3] + list[2][3];
+	else {
 		z = list[0][1] + list[2][1];
 		list[0][3] > list[2][3] ? y = list[0][3] : y = list[2][3];
 	}
-	if (z > x)
-	{
+	if (z > x) {
 		swap = x;
 		x = z;
 		z = swap;
@@ -92,8 +82,7 @@ function splitSectionTwo(list, dimensions)
 
 //This function returns the sizes of the crate dealing with all works with the
 //sizes if the dimensions length if equal to one.
-function splitSectionCrateOne(list, dimensions)
-{
+function splitSectionCrateOne(list, dimensions) {
 	let x;
 	let y;
 	let z;
@@ -104,9 +93,8 @@ function splitSectionCrateOne(list, dimensions)
 	package = 5;
 	x = list[0][2] * package;
 	z = list[0][1];
-	y = list[0][3];		
-	if (z > x)
-	{
+	y = list[0][3];
+	if (z > x) {
 		swap = x;
 		x = z;
 		z = swap;
@@ -119,8 +107,7 @@ function splitSectionCrateOne(list, dimensions)
 
 //This function does the redirection to the correct function splitSectin base on
 //the list and dimensions provided.
-function manager(list, dimensions)
-{
+function manager(list, dimensions) {
 	if (dimensions.length === 1)
 		return (splitSectionCrateOne(list, dimensions));
 	else if (dimensions.length <= 3)

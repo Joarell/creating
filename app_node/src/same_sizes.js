@@ -1,7 +1,7 @@
 const next_work = require("./next_work.js");
 const sort = require("./sort.js");
 const clean = require("./layer_puzzle.js");
-const arrange = require("./special_cases.js");
+const arrange = require("./labor_same_sizes.js");
 
 
 //This function provides de map of each sizes found at howManySizes function.
