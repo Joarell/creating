@@ -152,7 +152,7 @@ function splitSectionCrateOne(list, dimensions) {
 	let package;
 
 	package = 5;
-	x = list[0][2] * package;
+	x = list[1] * package;
 	z = list[0][1];
 	y = list[0][3];
 	if (z > x) {
