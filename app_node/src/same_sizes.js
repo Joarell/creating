@@ -33,19 +33,39 @@ function defineCrate(works_sizes) {
 function zeroSizes(work_list, sizes) {
 	let crate;
 	let tmp;
+	let len;
+	let dump;
+	let drain;
 
 	tmp = [];
 	crate = [];
-	while (work_list.length > 0) {
-		if (sizes.length > 0 && work_list[0][0] === sizes[0][0]) {
-			if (sizes.length > 0 || work_list.length === 0)
-				crate = crate.concat(clean.arrayLess(tmp));
-			crate.push(defineCrate(sizes));
-			tmp.splice(0, tmp.length);
-		}
-		tmp.push(work_list.splice(0, 1))
+	len = work_list.length - 1;
+	drain = (t, c) => {
+		if (t.length <= 0)
+			return (c);
+		c.push(clean.arrayLess(t.splice(0, 1)));
+		return (drain(t, c));
 	}
-	return (crate = crate.concat(clean.arrayLess(tmp)));
+	dump = (w, s, l) => {
+		if (w[len][1] === s[0][1])
+			return (tmp = clean.arrayLess(tmp));
+		if (w[len][1] != s[0][1])
+			tmp.push(work_list.splice(len, 1))
+		return (dump(w, s, len--));
+	}
+	while (work_list.length > 0) {
+		if (sizes.length > 0 && work_list[0][0] === sizes[0][0])
+			crate.push(defineCrate(sizes));
+		if (sizes.length != 0)
+			dump(work_list, sizes, len);
+		else {
+			tmp.push(work_list.splice(0, len + 1));
+			tmp = clean.arrayLess(tmp);
+		}
+		if (tmp.length > 0)
+			drain (tmp, crate);
+	}
+	return (crate);
 }
 
 
@@ -125,10 +145,11 @@ function sameSizes(list) {
 	}
 	if (equals.length > 3) {
 		equals.unshift(howManySizes(equals));
-		list.push(clean.arrayLess(remainder));
+		if (remainder.length > 0)
+			list.push(clean.arrayLess(remainder));
 		return (clean.arrayLess(equals));
 	}
-	return (0);
+	return (list);
 }
 
 module.exports = { sameSizes };
