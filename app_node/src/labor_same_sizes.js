@@ -1,4 +1,30 @@
-//
+//This function verify which is the better value to "x", toward to reduce the 
+//height measure or depth. 
+function swapSizes (sizes) {
+	let x;
+	let z;
+	let y;
+	let swap;
+
+	x = sizes[0];
+	z = sizes[1];
+	y = sizes[2];
+	if (z > x) {
+		swap = x;
+		x = z;
+		z = swap;
+	}
+	if (y > x) {
+		swap = x;
+		x = y;
+		y = swap;
+	}
+	sizes = [x, z, y];
+	return (sizes);
+}
+
+
+//This function returns the new crate with more works in side if it's possible.
 function largeCrate(list, sizes, dimensions) {
 	let new_crate;
 	let len;
@@ -18,7 +44,7 @@ function largeCrate(list, sizes, dimensions) {
 			sizes.splice(sizes.length - 1, 1);
 		}
 		len -= 2;
-		if (x - list[len - 2][1] < 0)
+		if (list.length <= 0 || sizes.length <= 0 || (x - list[len - 2][1] < 0))
 			break;
 	}
 	if (x < dimensions[0]) {
@@ -27,7 +53,7 @@ function largeCrate(list, sizes, dimensions) {
 		new_crate = [x, z, y];
 		dimensions = new_crate;
 	}
-	return (dimensions);
+	return (swapSizes(dimensions));
 }
 
 
@@ -69,42 +95,30 @@ function splitSectionCrateFour(list, dimensions) {
 	let y;
 	let z;
 	let definition;
-	let tmp;
 	let i;
 	let package;
 
 	i = 0;
 	package = 5;
-	z = list[i][1];
 	x = dimensions[0] * package;
+	z = list[i][1];
+	y = list[i][3];
 	tmp = list[i][1];
-	while (i <= dimensions.length) {
+	while (i < list.length - 2) {
 		if (list[i][1] < list[i + 2][1]) {
-			z = tmp;
-			tmp = list[i + 2][1];
+			z = list[i + 2][1];
+			y = list[i + 2][3];
 		}
 		i += 2;
 	}
-	if (tmp > z)
-		z = tmp;
-	i = 0;
-	while (i < list.length) {
-		if (z === list[i][1]) {
-			y = list[i][3];
-			list.splice(i, 2);
-			if (i > dimensions.length)
-				dimensions.splice(dimensions.length - 1, 1);
-			else
-				dimensions.splice(i, 1);
-		}
-		i += 2;
+	if (i > dimensions.length){
+		dimensions.splice(dimensions.length - 1, 1);
+		list.splice(i, 2);
 	}
-	if (z > x) {
-		i = x;
-		x = z;
-		z = i;
-	}
+	else
+		dimensions.splice(i, 1);
 	definition = [x, z, y];
+	definition = swapSizes(definition);
 	return (doubleCheck(list, dimensions, definition));
 }
 
@@ -116,7 +130,6 @@ function splitSectionTwo(list, dimensions) {
 	let y;
 	let z;
 	let definition;
-	let swap;
 	let package;
 	let max_hight;
 
@@ -130,14 +143,10 @@ function splitSectionTwo(list, dimensions) {
 		z = list[0][1] + list[2][1];
 		list[0][3] > list[2][3] ? y = list[0][3] : y = list[2][3];
 	}
-	if (z > x) {
-		swap = x;
-		x = z;
-		z = swap;
-	}
 	list.splice(0, 4);
 	dimensions.splice(0, 2);
-	return (definition = [x, z, y]);
+	definition = [x, z, y];
+	return (swapSizes(definition));
 }
 
 
@@ -148,32 +157,37 @@ function splitSectionCrateOne(list, dimensions) {
 	let y;
 	let z;
 	let definition;
-	let swap;
 	let package;
 
 	package = 5;
 	x = list[1] * package;
 	z = list[0][1];
 	y = list[0][3];
-	if (z > x) {
-		swap = x;
-		x = z;
-		z = swap;
-	}
 	list.splice(0, 2);
 	dimensions.splice(0, 2);
-	return definition = [x, z, y];
+	definition = [x, z, y];
+	return (swapSizes(definition));
 }
 
 
 //This function does the redirection to the correct function splitSectin base on
 //the list and dimensions provided.
 function manager(list, dimensions) {
+	let copy;
+	let result;
+
 	if (dimensions.length === 1)
 		return (splitSectionCrateOne(list, dimensions));
-	else if (dimensions.length <= 3)
+	else if (dimensions.length <= 3) {
+		if (dimensions.length === 3) {
+			copy = Array.from(dimensions);
+			result = splitSectionCrateFour(list, copy);
+		}
+		else if (copy === dimensions)
+			return (splitSectionTwo(list, dimensions));
 		return (splitSectionTwo(list, dimensions));
-	else
+	}
+	else (dimensions.length >= 4)
 		return (splitSectionCrateFour(list, dimensions));
 }
 
