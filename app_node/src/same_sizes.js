@@ -40,14 +40,16 @@ function zeroSizes(work_list, sizes) {
 	tmp = [];
 	crate = [];
 	len = work_list.length - 1;
+	//this arrow function drops the tmp content to crate variable.
 	drain = (t, c) => {
 		if (t.length <= 0)
 			return (c);
-		c.push(clean.arrayLess(t.splice(0, 1)));
+		c.unshift(clean.arrayLess(t.splice(0, 1)));
 		return (drain(t, c));
 	}
+	//this arrow function drops the work_list content to tmp variable.
 	dump = (w, s, l) => {
-		if (w[len][1] === s[0][1])
+		if (w[len][1] === s[s.length - 2][1])
 			return (tmp = clean.arrayLess(tmp));
 		if (w[len][1] != s[0][1])
 			tmp.push(work_list.splice(len, 1))
@@ -55,7 +57,7 @@ function zeroSizes(work_list, sizes) {
 	}
 	while (work_list.length > 0) {
 		if (sizes.length > 0 && work_list[0][0] === sizes[0][0])
-			crate.push(defineCrate(sizes));
+			crate.unshift(defineCrate(sizes));
 		if (sizes.length != 0)
 			dump(work_list, sizes, len);
 		else {
@@ -145,41 +147,11 @@ function sameSizes(list) {
 	}
 	if (equals.length > 3) {
 		equals.unshift(howManySizes(equals));
-		if (remainder.length > 0)
-			list.push(clean.arrayLess(remainder));
+		while (remainder.length > 0)
+			list.push(clean.arrayLess(remainder.splice(0, 1)));
 		return (clean.arrayLess(equals));
 	}
 	return (list);
 }
 
 module.exports = { sameSizes };
-
-let test = {
-
-	121231: "50, 5, 50",
-	123: "50, 5, 50",
-	9898: "50, 5, 50",
-	98888: "50, 5, 50",
-	010: "40, 5, 50",
-	9999: "40, 5, 50",
-	7888: "40, 5, 50",
-	89393: "40, 5, 50",
-	11111: "60, 5, 60",
-	22222: "60, 5, 60",
-	33333: "60, 5, 60",
-	90909: "100, 05, 90",
-	12345: "89, 05, 88",
-	98099: "120, 03, 100",
-	34733: "130, 05, 50",
-	18988: "130, 05, 50",
-	38388: "130, 05, 50",
-	75784: "130, 05, 50",
-	44444: "60, 5, 60",
-}
-
-test = sort.getDimensions(test);
-test = sort.quickSort(next_work.cubVersionList(test), 4);
-console.log(test);
-let result = sameSizes(test);
-console.log(result);
-console.log(test);
