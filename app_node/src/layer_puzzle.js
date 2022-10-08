@@ -13,34 +13,33 @@ function workSwapNinety(work) {
 	work.splice(0, work.length);
 	work.push(y);
 	work.push(x);
-
 	return (work);
 }
 
 
 //This function returns the new empty size into the crate after subtract the
 //dimensions between crate and piece sizes.
-function fitingCrate(crate_sizes, piece_sizes) {
+function fitingCrate(c_sizes, p_sizes) {
 	let result;
 	let x;
 	let y;
 	let arrange = 1;
 
-	if ((crate_sizes[0] === piece_sizes[0] && crate_sizes[1] === piece_sizes[1]) ||
-		(crate_sizes[1] === piece_sizes[0] && crate_sizes[0] === piece_sizes[1]))
+	if ((c_sizes[0] === p_sizes[0] && c_sizes[1] === p_sizes[1]) ||
+		(c_sizes[1] === p_sizes[0] && c_sizes[0] === p_sizes[1]))
 		return (result = [0, 0]);
 	while (arrange--) {
-		if (crate_sizes[0] >= piece_sizes[0] && crate_sizes[1] > piece_sizes[1] &&
-			crate_sizes[1] - piece_sizes[1] > crate_sizes[0] / 4) {
-			x = crate_sizes[0];
-			y = crate_sizes[1] - piece_sizes[1];
+		if (c_sizes[0] >= p_sizes[0] && c_sizes[1] > p_sizes[1] &&
+			c_sizes[1] - p_sizes[1] > c_sizes[0] / 4) {
+			x = c_sizes[0];
+			y = c_sizes[1] - p_sizes[1];
 		}
-		else if ((crate_sizes[0] > piece_sizes[0] && crate_sizes[1] >= piece_sizes[1])) {
-			x = crate_sizes[0] - piece_sizes[0];
-			y = crate_sizes[1];
+		else if ((c_sizes[0] >= p_sizes[0] && c_sizes[1] >= p_sizes[1])) {
+			x = c_sizes[0] - p_sizes[0];
+			y = c_sizes[1];
 		}
 		else {
-			workSwapNinety(piece_sizes);
+			workSwapNinety(p_sizes);
 			arrange++;
 		}
 	}
@@ -81,8 +80,9 @@ function arrayLess(list) {
 }
 
 
-//This function return the crate with all possible works on the list.
-function crateArrange(standard_size, list, layer)//(need some fix)
+//This function return the crate with possible works on the list and the reset
+//size of the crate until 4 layers.
+function crateArrange(standard_size, list, layer)
 {
 	let tmp = [];
 	let crate_defined = [];
@@ -96,33 +96,4 @@ function crateArrange(standard_size, list, layer)//(need some fix)
 }
 
 
-//This function returns the all the crates needed accordingly the work list.
-function solveListProcedure(the_list) {
-	let crates_done = [];
-	let standard_layer = [];
-	let new_list;
-	let largests = []
-
-	new_list = sort.getDimensions(the_list);
-	new_list = sort.quickSort(next_work.cubVersionList(new_list), 4);
-	next_work.noCanvasOut(new_list, new_list.length, largests);
-	layer = 0;
-	while (new_list.length > 0) {
-		if (largests != 0) {
-			largests = arrayLess(largests);
-			standard_layer = next_work.standardLayer(largests);
-			standard_layer = next_work.largestWorks(largests, standard_layer);
-			crates_done = crates_done.concat(crateArrange(standard_layer, largests, layer));
-			crates_done.push(standard_layer);
-		}
-		else {
-			standard_layer = next_work.standardLayer(new_list);
-			crates_done = crates_done.concat(crateArrange(standard_layer, new_list, layer));
-			crates_done.push(standard_layer);
-			layer = 0;
-		}
-	}
-	return (crates_done);
-}
-
-module.exports = { solveListProcedure, arrayLess };
+module.exports = { crateArrange, arrayLess, labor, fitingCrate, crateArrange, };
