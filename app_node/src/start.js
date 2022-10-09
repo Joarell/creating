@@ -1,37 +1,52 @@
 const next_work = require("./next_work.js");
-const sort = require("./sort.js");
-const start = require("./layer_puzzle.js");
-const same_size_check = require("./same_sizes.js");
+const prepare = require("./procedures.js");
 
 
-//This function provides a new list with cubed values, handling with the 
-//object sizes to int, and sort them based on the cube values.
-function firstThingFirst(work_list) {
-	let new_list;
+function whichAirport(final_list) {
+	let gru;
+	let vcp;
+	let i;
+	let g_crates;
+	let v_crates;
+	let g_cub;
+	let v_cub;
+	let limit_pax;
 
-	new_list = sort.getDimensions(work_list);
-	new_list = sort.quickSort(next_work.cubVersionList(new_list), 4);
-	return (new_list);
+
+	i = 0;
+	g_crates = 0;
+	v_crates = 0;
+	limit_pax = [300, 200, 160];
+	while (i < final_list.length) {
+		if (final_list[i][0] === "Final" && final_list[i][1] <= limit_pax[0] &&
+			final_list[i][2] <= limit_pax[1] && final_list[i][3] <= limit_pax[2]) {
+			g_crates++;
+			g_cub += final_list[i][4]
+		}
+		else if (final_list[i][0] === "Final") {
+			v_crates++;
+			v_cub += final_list[i][4]
+		}
+		i++;
+	}
+	if (v_crates.length === 0 && g_crates.length > 0) {
+		gru = ["GRU", g_crates, "cub", g_cub];
+		return (final_list.push(gru));
+	}
+	else if (v_crates.length > 0 && g_crates.length === 0) {
+		vcp = ["VCP", v_crates, "cub", v_cub];
+		return (final_list.push(vcp));
+	}
+	else if (v_crates && g_crates > 0) {
+		gru = ["GRU", g_crates, "cub", g_cub];
+		vcp = ["VCP", v_crates, "cub", v_cub];
+		final_list.push(gru);
+		final_list.push(gru);
+		return (final_list);
+	}
+	else
+		return (final_list);
 }
-
-
-//This function is required when the list has sculptures or furniture.
-//Just to split the list between canvas from every thing else.
-function handleLargest(large_works, colector, layer) {
-	large_works = start.arrayLess(large_works);
-	layer = next_work.standardLayer(large_works);
-	layer = next_work.largestWorks(large_works, layer);
-	colector = colector.concat(start.crateArrange(layer, large_works, 0));
-	colector.push(layer);
-	return ;
-}
-
-
-// function finishedDimensions (crates) {
-
-// }
-
-
 //This function is responsible to handle all the steps in order to solve the
 //art work list.
 function boss(the_list) {
@@ -43,27 +58,26 @@ function boss(the_list) {
 
 	largests = [];
 	std_layer = [];
-	proc_list = firstThingFirst(the_list);
-	crates = same_size_check.sameSizes(proc_list);
+	proc_list = prepare.firstThingFirst(the_list);
+	crates = prepare.sameSizesChecker(proc_list);
 	layer = proc_list.length;
-	if (crates.length != 0) {
-		next_work.noCanvasOut(proc_list, layer, largests);
-		if (largests.length != 0)
-			handleLargest(largests, crates, std_layer);
+	next_work.noCanvasOut(proc_list, layer, largests);
+	if (largests.length != 0) {
+		if (crates.length > 0)
+			crates = crates.concat(prepare.handleLargest(largests, crates, std_layer));
+		else
+			crates = prepare.handleLargest(largests, crates, std_layer);
 	}
-	else 
+	else
 		next_work.noCanvasOut(proc_list, layer, largests)
-	layer = 0;
-	while (proc_list.length > 0) {
-		std_layer = next_work.standardLayer(proc_list);
-		crates = crates.concat(start.crateArrange(std_layer, proc_list, layer));
-		crates.push(std_layer);
-		layer = 0;
-	}
-	return (crates);
+	crates = prepare.lastStep(std_layer, proc_list, 0, crates);
+	prepare.finishedDimensions(crates);
+	return (whichAirport(crates));
 }
 
 let test = {
+	88800: "70, 70, 70",
+	230202: "70, 70, 70",
 	1298: "200, 05, 100", //first
 	123: "100, 05, 100",
 	5908: "150, 05, 90",
