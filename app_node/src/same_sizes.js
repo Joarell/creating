@@ -65,7 +65,7 @@ function zeroSizes(work_list, sizes) {
 			tmp = clean.arrayLess(tmp);
 		}
 		if (tmp.length > 0)
-			drain (tmp, crate);
+			drain(tmp, crate);
 	}
 	return (crate);
 }
@@ -136,13 +136,15 @@ function sameSizes(list) {
 	checked = [];
 	remainder = [];
 	while (len <= list.length - 1) {
-		checked = list.splice(0, 1);
-		checking(checked, list, 0);
-		if (checked.length <= 3)
-			remainder = remainder.concat(checked);
-		else
-			equals = equals.concat(checked);
-		checked.splice(0, checked.length);
+		if (list[len][2] <= 10) {
+			checked = list.splice(0, 1);
+			checking(checked, list, 0);
+			if (checked.length <= 3)
+				remainder = remainder.concat(checked);
+			else
+				equals = equals.concat(checked);
+			checked.splice(0, checked.length);
+		}
 		len++;
 	}
 	if (equals.length > 3) {
@@ -151,6 +153,7 @@ function sameSizes(list) {
 			list.push(clean.arrayLess(remainder.splice(0, 1)));
 		return (clean.arrayLess(equals));
 	}
+	list.unshift(0);
 	return (list);
 }
 

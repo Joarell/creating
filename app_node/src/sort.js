@@ -48,9 +48,9 @@ function cubeAll(w_list) {
 }
 
 
-//This function acts sorting the smallest work to the biggest one.
-//The "position" argument provides the correct array position where the value is to be sorted.
-function quickSort(works, position) {
+//This function acts sorting the smallest work to the biggest one. The "index"
+//argument provides the correct array index where the value is to be sorted.
+function quickSort(works, index) {
 	if (works.length <= 1)
 		return works;
 
@@ -60,8 +60,8 @@ function quickSort(works, position) {
 	let pivot = [works[0]];
 
 	while (i++ < works.length - 1)
-		works[i][position] <= pivot[0][position] ? left.push(works[i]) : right.push(works[i]);
-	return (quickSort(left, position).concat(pivot, quickSort(right, position)));
+		works[i][index] <= pivot[0][index] ? left.push(works[i]) : right.push(works[i]);
+	return (quickSort(left, index).concat(pivot, quickSort(right, index)));
 }
 
 

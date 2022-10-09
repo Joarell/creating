@@ -2,7 +2,8 @@ const cub_calc = require("./cubing.js");
 const sort = require("./sort.js");
 
 
-//This functions returns a new list with the largest works found in the previus one.
+//This functions returns a new list with the largest works found in the previous
+//one.
 function noCanvasOut(list, len, others) {
 	if (len === 0)
 		return;
@@ -13,8 +14,9 @@ function noCanvasOut(list, len, others) {
 }
 
 
-//This function returns the available work to be set in to the actual crate dimension
-//and it emalutes turning 90 degrees motion to try each work can fit into the crate
+//This function returns the available work to be set in to the actual crate 
+//dimension and it emalutes turning 90 degrees motion to try each work can fit
+//into the crate.
 function nextWorkNinety(crate_dim, works, len, spinning) {
 	let sizes;
 
@@ -54,7 +56,8 @@ function cubVersionList(works) {
 }
 
 
-//This function validates the limit of a pax (passanger) flight. The actual PAX limit is: 300 x 200 x 160 -cm 
+//This function validates the limit of a pax (passanger) flight. The actual PAX
+//limit is: 300 x 200 x 160 -cm 
 function limit(list, new_size) {
 	const x = 300;
 	let len;
@@ -70,7 +73,8 @@ function limit(list, new_size) {
 }
 
 
-//This function provides the standard size of the crate base on the largest works on the list.
+//This function provides the standard size of the crate base on the largest 
+//works on the list.
 function largestWorks(list, size) {
 	let x;
 	let y;
