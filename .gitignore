@@ -1,2 +1,7 @@
 works.txt
 .vscode
+node_modules
+tests
+package-lock.json
+package.json
+.gitignore
