@@ -79,7 +79,7 @@ function defineCrateSizes(inner_size, layers) {
 }
 
 
-//This is the function responsible to add the final sizes to each crate in the
+//This is the function is responsible to add the final sizes to each crate in the
 // crates_done list.
 function finishedDimensions(crates_done) {
 	let aux;
