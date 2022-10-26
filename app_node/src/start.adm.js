@@ -1,5 +1,7 @@
 const next_work = require("./next.work.checker.js");
+
 const man = require("./procedures.adm.js");
+
 
 function theEnd(list, gru, vcp, g_crates, g_cub, v_crates, v_cub) {
 	if (v_crates.length === 0 && g_crates.length > 0) {
@@ -16,8 +18,7 @@ function theEnd(list, gru, vcp, g_crates, g_cub, v_crates, v_cub) {
 		list.push(gru);
 		list.push(vcp);
 		return (list);
-	}
-	else
+	} else
 		return (list);
 }
 
@@ -32,7 +33,6 @@ function whichAirport(proc_list) {
 	let g_cub;
 	let v_cub;
 	let pax_lim;
-
 
 	i = 0;
 	g_crates = 0;
@@ -73,12 +73,12 @@ function boss(the_list) {
 	next_work.noCanvasOut(proc_list, layer, largests);
 	if (largests.length != 0) {
 		if (crates.length > 0)
-			crates = crates.concat(man.largest(largests, crates, std_layer));
+		crates = crates.concat(man.largest(largests, crates, std_layer));
 		else
-			crates = man.largest(largests, crates, std_layer);
+		crates = man.largest(largests, crates, std_layer);
 	}
 	else
-		next_work.noCanvasOut(proc_list, layer, largests)
+	next_work.noCanvasOut(proc_list, layer, largests)
 	crates = man.lastStep(std_layer, proc_list, 0, crates);
 	return (whichAirport(man.finishedDimensions(crates)));
 }
