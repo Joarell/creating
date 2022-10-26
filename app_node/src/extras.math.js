@@ -1,4 +1,4 @@
-//This is a replic of the pitagoras`s teorem.
+// This is a replic of the pitagoras`s teorem.
 // a**2 = b**2 + c**2
 function pitagoras(a, b, c) {
 	if (a && b && !c) {
