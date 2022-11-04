@@ -1,9 +1,10 @@
 const next_work = require("./next.work.checker.js");
-
 const man = require("./procedures.adm.js");
 
 
-function theEnd(list, gru, vcp, g_crates, g_cub, v_crates, v_cub) {
+//This function returns how many crates each airport will have based on the
+//crates from the list.
+function finishedOp(list, gru, vcp, g_crates, g_cub, v_crates, v_cub) {
 	if (v_crates.length === 0 && g_crates.length > 0) {
 		gru = ["GRU", g_crates, "cub", g_cub];
 		return (list.push(gru));
@@ -21,6 +22,7 @@ function theEnd(list, gru, vcp, g_crates, g_cub, v_crates, v_cub) {
 	} else
 		return (list);
 }
+
 
 //This function provides which will be the airport to ship all the crates, or
 //partially between them based on the provided list.
@@ -52,7 +54,7 @@ function whichAirport(proc_list) {
 		}
 		i++;
 	}
-	return (theEnd(proc_list, gru, vcp, g_crates, g_cub, v_crates, v_cub));
+	return (finishedOp(proc_list, gru, vcp, g_crates, g_cub, v_crates, v_cub));
 }
 
 
@@ -73,12 +75,12 @@ function boss(the_list) {
 	next_work.noCanvasOut(proc_list, layer, largests);
 	if (largests.length != 0) {
 		if (crates.length > 0)
-		crates = crates.concat(man.largest(largests, crates, std_layer));
+			crates = crates.concat(man.largest(largests, crates, std_layer));
 		else
-		crates = man.largest(largests, crates, std_layer);
+			crates = man.largest(largests, crates, std_layer);
 	}
 	else
-	next_work.noCanvasOut(proc_list, layer, largests)
+		next_work.noCanvasOut(proc_list, layer, largests)
 	crates = man.lastStep(std_layer, proc_list, 0, crates);
 	return (whichAirport(man.finishedDimensions(crates)));
 }
