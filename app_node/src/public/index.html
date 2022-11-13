@@ -2,79 +2,64 @@
 <html lang="en">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- this tag is used to autorefresh the page. Rememeter to get rid of it.-->
-	<meta http-equiv="refresh" content="3">
+	<!-- <meta http-equiv="refresh" content="3"> -->
 	<title>AIC</title>
 	<head>
 		<link rel="stylesheet" href="index.css">
 		<title>Layout from scratch - .</title>
 	</head>
 	<body>
-		<<h1>Welcome to the Web Crater AI!</h1>
-		<p>This is a new site!</p>
-		<p>Now we need to add the CSS styling sheet.</p>
+		<div class="header">
+			<h1>Welcome to the Web Crater AI!</h1>
+			<p>This is a new site!</p>
+		</div>
 		<main>
 			<section>
+				<div class="grid-container">
 				<!-- This Dive is responsible to get the dimensions of the artwork list.-->
-				<div class="insertionArea">
-					<h2>Insert Menu</h2>
-					<form id="enterInfo" action="...">
-						<label for="estimate">Estimate:</label>
-						<input type="text" id="estimate" name="estimate" value="PED-131313-23">
-						<label for="cubeMeter">Cubed:</label>
-						<input type="text" id="cubeMeter" name="cubeMeter" value="0.230">
-						<label for="airCubed">Air-cubed:</label>
-						<input type="text" id="airCubed" name="airCubed" value="0.490"><br>
-						<label for="code">Work code:</label>
-						<input type="text" id="code" name="code" value="code">
-						<label for="lenght">L:</label>
-						<input type="text" id="lenght" name="length" value="length">
-						<label for="depth">D:</label>
-						<input type="text" id="depth" name="depth" value="depth">
-						<label for="Height">H:</label>
-						<input type="text" id="height" name="height" value="height">
-					</form>
-					<button type="button" onclick="alert('Working pretty well!')">Delete</button>
-					<button type="button" onclick="alert('Working pretty well!')">Add</button>
-					<button type="button" onclick="alert('Working pretty well!')">Crate!</button>
-					
+					<div class="insertionLeft">
+						<h2>Insert Menu</h2>
+						<form id="enterInfo" action="...">
+							<div class="form">
+								<label for="estimate">Estimate:</label>
+								<input type="text" id="estimate" name="estimate" value="PED-131313-23">
+								<label for="cubeMeter">Cubed:</label>
+								<input type="text" id="estimate" name="cubeMeter" value="0.230">
+								<label for="airCubed">Air-cubed:</label>
+								<input type="text" id="estimate" name="airCubed" value="0.490"><br>
+								<label for="code">Work code:</label>
+								<input type="text" id="estimate" name="code" value="code">
+								<label for="length">L:</label>
+								<input type="text" id="estimate" name="length" value="length">
+								<label for="depth">D:</label>
+								<input type="text" id="estimate" name="depth" value="depth">
+								<label for="Height">H:</label>
+								<input type="text" id="estimate" name="height" value="height">
+							</div>
+						</form>
+						<button type="button" onclick="alert('Working pretty well!')">Delete</button>
+						<button type="button" onclick="alert('Working pretty well!')">Add</button>
+						<button type="button" onclick="alert('Working pretty well!')">Crate!</button>
+					</div>
+					<!--This div provides the overview about the works added before the call of the AI-->
+					<div class="dashBoardCheckLeft">
+						<h2>Find works list added below:</h2>
+						<iframe src="..." title="Work's list:"></iframe>
+					</div>
+					<!--This dive provides the result of the AI with all crates needed to the list provided-->
+					<div class="resultAreaMid">
+						<h2>Find the crates needed below:</h2>
+						<iframe src="..." title="Work's list:"></iframe>
+					</div>
+					<div class="menu">
+						<h3>Menu</h3>
+					</div>
 				</div>
-
-				<!--This div provides the overview about the works added before the call of the AI-->
-				<div class="dashBoardCheck">
-					<h2>Find works list added below:</h2>
-					<iframe src="..." title="Work's list:"></iframe>
-				</div>
-
-				<!--This dive provides the result of the AI with all crates needed to the list provided-->
-				<div class="resultArea">
-					<h2>Find the crates needed below:</h2>
-					<iframe src="..." title="Work's list:"></iframe>
-				</div>
-				<div class="Menu">
-					<h3>Menu</h3>
+				<div class="footer">
+					<p>Footer</p>
 				</div>
 			</section>
 		</main>
 	</body>
 </html>
-<!--
-	Tags to use on the page:
-		main
-		area
-		botton
-		canvas
-		datalist
-		div
-		footer
-		form
-		input
-		label
-		legend
-		link
-		meta
-		p
-		progress
-		section
-		style
-		textarea
--->
+

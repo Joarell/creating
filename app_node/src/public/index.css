@@ -1,7 +1,33 @@
-body {
-	background-color: Aqua;
+* {
+	box-sizing: border-box;
 }
 
-title {
-	texts-align: center;
+.grid-container {
+	display: grid;
+	grid-template-columns: repeat(2, 30em);
+	justify-content: center;
+	row-gap: 10em;
+	column-gap: 20em;
+	grid-template: 
+		"sidebar content"
+		"sidebar content"
+	;
+}
+
+body {
+	background-color: Aqua;
+	font-family: Arial, Helvetica, Sans-serf;
+}
+
+/* Style the header */
+.header {
+	grid-area: header;
+	background-color: #162789;
+	padding: 30px;
+	text-align: center;
+	font-size: 35px;
+}
+
+#estimate {
+	border-radius: 6px;
 }
