@@ -15,7 +15,7 @@ function noCanvasOut(list, len, others) {
 
 
 //This function returns the available work to be set in to the actual crate 
-//dimension and it emalutes turning 90 degrees motion to try each work can fit
+//dimension and it emulates turning 90 degrees motion to try each work can fit
 //into the crate.
 function nextWorkNinety(crate_dim, works, len, spinning) {
 	let sizes;
@@ -44,7 +44,7 @@ function nextWorkNinety(crate_dim, works, len, spinning) {
 }
 
 
-//This function provides the cub calcultion to each works sizes.
+//This function provides the cub calculation to each works sizes.
 function cubVersionList(works) {
 	let i = 0;
 
@@ -56,7 +56,7 @@ function cubVersionList(works) {
 }
 
 
-//This function validates the limit of a pax (passanger) flight. The actual PAX
+//This function validates the limit of a pax (passenger) flight. The actual PAX
 //limit is: 300 x 200 x 160 -cm 
 function limit(list, new_size) {
 	const x = 300;
