@@ -1,5 +1,5 @@
-const next_work = require("./next.work.checker.js");
-const man = require("./procedures.adm.js");
+const next_work = require("./next.work.checker.ts");
+const man = require("./procedures.adm.ts");
 
 
 //This function returns how many crates each airport will have based on the
@@ -63,24 +63,24 @@ function whichAirport(proc_list) {
 function boss(the_list) {
 	let crates;
 	let std_layer;
-	let largests;
+	let largest;
 	let proc_list;
 	let layer;
 
-	largests = [];
+	largest = [];
 	std_layer = [];
 	proc_list = man.firstThingFirst(the_list);
 	crates = man.sameSizesChecker(proc_list);
 	layer = proc_list.length;
-	next_work.noCanvasOut(proc_list, layer, largests);
-	if (largests.length != 0) {
+	next_work.noCanvasOut(proc_list, layer, largest);
+	if (largest.length != 0) {
 		if (crates.length > 0)
-			crates = crates.concat(man.largest(largests, crates, std_layer));
+			crates = crates.concat(man.largest(largest, crates, std_layer));
 		else
-			crates = man.largest(largests, crates, std_layer);
+			crates = man.largest(largest, crates, std_layer);
 	}
 	else
-		next_work.noCanvasOut(proc_list, layer, largests)
+		next_work.noCanvasOut(proc_list, layer, largest)
 	crates = man.lastStep(std_layer, proc_list, 0, crates);
 	return (whichAirport(man.finishedDimensions(crates)));
 }
@@ -100,7 +100,7 @@ let test = {
 	1112: "60, 05, 90",
 	1897: "180, 05, 100", //second
 	9897: "75, 05, 80",
-	09884: "100, 05, 120",
+	9884: "100, 05, 120",
 	8745: "130, 05, 100",
 	8877: "160, 05, 160", //third
 	34733: "130, 05, 50",
@@ -116,7 +116,7 @@ let test = {
 	999299: "40, 5, 50",
 	134144: "40, 5, 50",
 	121231: "50, 5, 50",
-	123: "50, 5, 50",
+	19023: "50, 5, 50",
 	9898: "50, 5, 50",
 	98888: "50, 5, 50",
 	11111: "60, 5, 60",
@@ -127,4 +127,4 @@ let test = {
 console.log(boss(test));
 console.log(test);
 console.log("Finished!")
-console.log("Done!")
+console.log("Done!");
