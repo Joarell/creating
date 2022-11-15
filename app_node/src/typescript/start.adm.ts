@@ -4,7 +4,13 @@ import * as man from "./procedures.adm";
 
 //This function returns how many crates each airport will have based on the
 //crates from the list.
-export function finishedOp(list, gru, vcp, g_crates, g_cub, v_crates, v_cub) {
+export function finishedOp(list, g_crates, g_cub, v_crates, v_cub): Array<string | number> {
+	let gru: Array<number | string> ;
+	let vcp: Array<number | string>;
+	const enum Airport {
+		GRU = 9.60,
+		VCP,
+	}
 	if (v_crates.length === 0 && g_crates.length > 0) {
 		gru = ["GRU", g_crates, "cub", g_cub];
 		return (list.push(gru));
@@ -27,8 +33,6 @@ export function finishedOp(list, gru, vcp, g_crates, g_cub, v_crates, v_cub) {
 //This function provides which will be the airport to ship all the crates, or
 //partially between them based on the provided list.
 export function whichAirport(proc_list: Array<number | string>): Array<number | string>{
-	let gru: number ;
-	let vcp: number;
 	let i: number;
 	let g_crates: number;
 	let v_crates: number ;
@@ -53,7 +57,7 @@ export function whichAirport(proc_list: Array<number | string>): Array<number | 
 		}
 		i++;
 	}
-	return (finishedOp(proc_list, gru, vcp, g_crates, g_cub, v_crates, v_cub));
+	return (finishedOp(proc_list, g_crates, g_cub, v_crates, v_cub));
 }
 
 

@@ -1,5 +1,6 @@
 import * as extra_math  from "./extras.math";
 
+
 //This function is responsible to get only the sizes of the Object split with ",".
 export function splitInt(dimensions, codes) {
 	dimensions = dimensions.split(",");

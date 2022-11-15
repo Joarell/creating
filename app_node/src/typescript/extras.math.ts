@@ -23,7 +23,7 @@ export function pythagoras(a: number, b: number, c: number): number {
 
 
 //This function returns the cubed value to the work.
-export function cubing(dimensions: object): number {
+export function cubing(dimensions: Array<number>): number {
 	const cm_to_m = 1000000;
 
 	const cubed = dimensions[1] * dimensions[2] * dimensions[3] / cm_to_m;
@@ -32,18 +32,20 @@ export function cubing(dimensions: object): number {
 
 
 //This function returns the biggest cubed work.
-export function big_work(work_list: object):number {
-	let i: string;
-	let cubed = 0;
-	let great = 0;
+export function big_work(work_list: Array<number>): number {
+	let cubed: number;
+	let greatest: number;
 
-	for (i in work_list) {
-		cubed = cubing(work_list[i]);
-		if (cubed > great) {
-			great = cubed;
+	cubed = 0;
+	greatest = 0;
+	work_list.forEach(work => {
+		cubed = work;
+		if (cubed > greatest) {
+			greatest = cubed;
 		}
-	}
-	return (great);
+
+	})
+	return (greatest);
 }
 
 export * from "./extras.math";
