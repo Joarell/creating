@@ -14,20 +14,110 @@
 	;
 }
 
-body {
-	background-color: Aqua;
-	font-family: Arial, Helvetica, Sans-serf;
-}
-
 /* Style the header */
 .header {
 	grid-area: header;
-	background-color: #162789;
+	background: linear-gradient(#162789, #03e9f4);
 	padding: 30px;
 	text-align: center;
 	font-size: 35px;
 }
 
-#estimate {
-	border-radius: 6px;
+body {
+	background-color: #03e9f4;
+	font-family: Arial, Helvetica, Sans-serf;
+}
+
+/* -------------------------------------------------------------------------- */
+/*					 This is the div parent.								  */
+/* -------------------------------------------------------------------------- */
+.insertion_left {
+	background: rgba(0,0,0,.5);
+	box-sizing: border-box;
+	box-shadow: 0 15px 25px rgba(0,0,0,.6);
+	padding: 30px;
+	border-radius: 10px;
+}
+
+/* -------------------------------------------------------------------------- */
+/*					 This is the div to estimate input						  */
+/* -------------------------------------------------------------------------- */
+.input_top {
+	margin: -10px 0 20px 0;
+}
+.input_top input {
+	margin:0 30px 0px 20px;
+	width: 40px;
+	background: transparent;
+	font-size: 14px;
+	text-align: center;
+	border-radius: 3px;
+	padding: 1px 0;
+	outline: none;
+	border: none;
+	border-bottom: 1px solid #fff;
+	margin-bottom: 40px;
+}
+
+/* -------------------------------------------------------------------------- */
+/*					 This is the form to input data.						  */
+/* -------------------------------------------------------------------------- */
+.form input, .counter input {
+	background: transparent;
+	width: 2em;
+	font-size: 16px;
+	text-align: center;
+	border-radius: 3px;
+	padding: 1px 0;
+	outline: none;
+	border: none;
+	border-bottom: 1px solid #fff;
+	margin-bottom: 20px;
+}
+.form label, .counter label {
+	position: relative;
+	padding: -10px 5px 5px 5px;
+	font-size: 16px;
+	color: #fff;
+}
+.form input:focus ~ label {
+	top: -10px;
+	top: -20px;
+	left: 0;
+	color: #fff;
+	font-size: 12px;
+}
+
+#input_estimate {
+	width: 100px;
+	margin: 0 200px 0 0;
+}
+
+#input_code {
+	width: 100px;
+	margin: 0 100px 0 0;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*								Buttons setup								  */
+/* -------------------------------------------------------------------------- */
+#button {
+	padding: 30px 20px 30px 20px;
+	border-radius: 50%;
+	margin: 0 30px 10px 50px;
+	align-items: center;
+}
+.button {
+	border-radius: 5px;
+	padding: 0 20px 3px 20px;
+	margin: 0 0 0 50px;
+	align-items: center;
+}
+
+/* -------------------------------------------------------------------------- */
+/*							 Counter setup									  */
+/* -------------------------------------------------------------------------- */
+.counter label{
+	font-size: 12px;
 }

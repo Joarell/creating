@@ -2,7 +2,7 @@
 <html lang="en">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- this tag is used to autorefresh the page. Rememeter to get rid of it.-->
-	<!-- <meta http-equiv="refresh" content="3"> -->
+	<meta http-equiv="refresh" content="3">
 	<title>AIC</title>
 	<head>
 		<link rel="stylesheet" href="index.css">
@@ -10,36 +10,44 @@
 	</head>
 	<body>
 		<div class="header">
-			<h1>Welcome to the Web Crater AI!</h1>
+			<h1>Welcome to the Web Crater AIC!</h1>
 			<p>This is a new site!</p>
 		</div>
 		<main>
 			<section>
 				<div class="grid-container">
 				<!-- This Dive is responsible to get the dimensions of the artwork list.-->
-					<div class="insertionLeft">
-						<h2>Insert Menu</h2>
-						<form id="enterInfo" action="...">
-							<div class="form">
+					<div class="insertion_left">
+						<!-- <h3>Add Works</h3> -->
+							<div class="input_top">
 								<label for="estimate">Estimate:</label>
-								<input type="text" id="estimate" name="estimate" value="PED-131313-23">
+								<input type="text" id="input_estimate" name="estimate" value="PED-131313-23" required="">
 								<label for="cubeMeter">Cubed:</label>
-								<input type="text" id="estimate" name="cubeMeter" value="0.230">
+								<input type="text" name="cubeMeter" value="0.230">
 								<label for="airCubed">Air-cubed:</label>
-								<input type="text" id="estimate" name="airCubed" value="0.490"><br>
+								<input type="text" name="airCubed" value="0.490"><br>
+							</div>
+						<form>
+							<div class="form">
 								<label for="code">Work code:</label>
-								<input type="text" id="estimate" name="code" value="code">
-								<label for="length">L:</label>
-								<input type="text" id="estimate" name="length" value="length">
-								<label for="depth">D:</label>
-								<input type="text" id="estimate" name="depth" value="depth">
-								<label for="Height">H:</label>
-								<input type="text" id="estimate" name="height" value="height">
+								<input type="text" id="input_code" name="code" required="">
+								<label for="length">Length:</label>
+								<input type="text" name="length" required="">
+								<label for="depth">Depth:</label>
+								<input type="text" name="depth" required="">
+								<label for="Height">Height:</label>
+								<input type="text" name="height" required="">
 							</div>
 						</form>
-						<button type="button" onclick="alert('Working pretty well!')">Delete</button>
-						<button type="button" onclick="alert('Working pretty well!')">Add</button>
-						<button type="button" onclick="alert('Working pretty well!')">Crate!</button>
+						<button class="button" onclick="alert('Working pretty well!')">Add</button>
+						<button class="button" onclick="alert('Working pretty well!')">Delete</button>
+						<button class="button" onclick="alert('Working pretty well!')"><</button>
+						<button class="button" onclick="alert('Working pretty well!')">></button>
+						<button id="button" onclick="alert('Working pretty well!')">Crate!</button>
+						<div class="counter">
+							<label for="code">Works counter:</label>
+							<input type="text" name="code">
+						</div>
 					</div>
 					<!--This div provides the overview about the works added before the call of the AI-->
 					<div class="dashBoardCheckLeft">
