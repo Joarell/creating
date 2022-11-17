@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color">
 	<!-- this tag is used to autorefresh the page. Rememeter to get rid of it.-->
 	<meta http-equiv="refresh" content="3">
 	<title>AIC</title>
 	<head>
 		<link rel="stylesheet" href="index.css">
+		<script src="index.js"></script>
 		<title>Layout from scratch - .</title>
 	</head>
 	<body>
@@ -18,45 +20,61 @@
 				<div class="grid-container">
 				<!-- This Dive is responsible to get the dimensions of the artwork list.-->
 					<div class="insertion_left">
-						<!-- <h3>Add Works</h3> -->
+						<div class="title">
+							<h2>Start adding the works sizes:</h2>
+						</div>
+						<div class="IO">
 							<div class="input_top">
 								<label for="estimate">Estimate:</label>
 								<input type="text" id="input_estimate" name="estimate" value="PED-131313-23" required="">
+							</div>
+							<div class="report">
 								<label for="cubeMeter">Cubed:</label>
 								<input type="text" name="cubeMeter" value="0.230">
 								<label for="airCubed">Air-cubed:</label>
-								<input type="text" name="airCubed" value="0.490"><br>
+								<input type="text" name="airCubed" value="0.490">
+								<label for="code">Count:</label>
+								<input type="text" name="code">
 							</div>
-						<form>
-							<div class="form">
+							<div class="code">
 								<label for="code">Work code:</label>
 								<input type="text" id="input_code" name="code" required="">
-								<label for="length">Length:</label>
-								<input type="text" name="length" required="">
-								<label for="depth">Depth:</label>
-								<input type="text" name="depth" required="">
-								<label for="Height">Height:</label>
-								<input type="text" name="height" required="">
 							</div>
-						</form>
-						<button class="button" onclick="alert('Working pretty well!')">Add</button>
-						<button class="button" onclick="alert('Working pretty well!')">Delete</button>
-						<button class="button" onclick="alert('Working pretty well!')"><</button>
-						<button class="button" onclick="alert('Working pretty well!')">></button>
-						<button id="button" onclick="alert('Working pretty well!')">Crate!</button>
-						<div class="counter">
-							<label for="code">Works counter:</label>
-							<input type="text" name="code">
+							<div class="sizes">
+								<label for="length">Length:</label>
+								<input type="text" name="length" maxlength="3" required="">
+								<label for="depth">Depth:</label>
+								<input type="text" name="depth" maxlength="3" required="">
+								<label for="Height">Height:</label>
+								<input type="text" name="height" maxlength="3" required="">
+							</div>
+							<button class="set_btn" onclick="alert('Working pretty well!')">
+								Insert
+								<span aria-hidden class="cyber_btn"></span>
+								<span aria-hidden class="c_btn"></span>
+							</button>
+							<button class="set_btn" onclick="alert('Working pretty well!')">
+								Remove
+								<span aria-hidden class="cyber_btn"></span>
+								<span aria-hidden class="c_btn"></span>
+							</button>
 						</div>
 					</div>
 					<!--This div provides the overview about the works added before the call of the AI-->
-					<div class="dashBoardCheckLeft">
-						<h2>Find works list added below:</h2>
+					<div class="box-right">
+						<div class="title">
+							<h2>Find works list added below:</h2>
+						</div>
 						<iframe src="..." title="Work's list:"></iframe>
+						<button class="button" onclick="alert('Working pretty well!')">
+							<mark><strong>Crate!</strong></mark>
+						</button>
 					</div>
 					<!--This dive provides the result of the AI with all crates needed to the list provided-->
-					<div class="resultAreaMid">
-						<h2>Find the crates needed below:</h2>
+					<div class="result-left">
+						<div class="title">
+							<h2>Find the crates needed below:</h2>
+						</div>
 						<iframe src="..." title="Work's list:"></iframe>
 					</div>
 					<div class="menu">
