@@ -5,9 +5,8 @@
 .grid-container {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
-	margin: 1rem 1rem 1rem 1rem;
-	column-gap: 4rem;
-	row-gap: 4rem;
+	column-gap: 1rem;
+	row-gap: 1rem;
 }
 
 /* Style the header */
@@ -23,7 +22,7 @@ body {
 	background-color: #03e9f4;
 	font-family: Arial, Helvetica, Sans-serf;
 	background-position: center;
-	min-width: 40.7rem;
+	min-width: 39.5rem;
 }
 
 p {
@@ -40,20 +39,51 @@ h2 {
 	font-size: 2rem;
 }
 
-.IO, .box-right, .result-left, .press {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-	padding: 2rem 2rem;
-	row-gap: 1rem;
+iframe {
+	height: auto;
+	width: 35rem;
 }
 
-.title {
-	padding: 0 2rem;
+select {
+	font-size: 1rem;
+	background: transparent;
+	text-align: center;
+	border-radius: 3rem;
+	outline: none;
+	border: none;
+	border: 0.01rem solid #fff;
+	color: #fff;
+	padding: 0 0.4rem;
 }
+
+option {
+	font-size: 1rem;
+	background: transparent;
+	text-align: center;
+	border-radius: 3rem;
+	outline: none;
+	border: none;
+	color: #000;
+	font-weight: 600;
+}
+
+.IO, .result-left {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+}
+.code {
+	flex-grow: 0;
+	flex-shrink: 0.1rem;
+	flex-basis: 1rem;
+}
+
 /* -------------------------------------------------------------------------- */
 /*					 This is the div parent.								  */
 /* -------------------------------------------------------------------------- */
-.insertion_left, .box-right, .result-left {
+.insertion_left, .box-right, .result-left, .button {
+	padding: 2rem 2rem;
+	margin: 1rem 1rem;
 	font-size: 1rem;
 	font-weight: 600;
 	background: rgba(255, 255, 255,.2);
@@ -69,16 +99,21 @@ h2 {
 /* -------------------------------------------------------------------------- */
 .input_top .report, input{
 	font-size: 1rem;
+	font-weight: 550;
 	background: transparent;
 	text-align: center;
 	border-radius: 3rem;
 	outline: none;
 	border: none;
-	border-bottom: 0.01rem solid #fff;
+	border: 0.01rem solid #fff;
 	color: #fff;
 }
-#input_estimate, #input_code {
-	width: auto;
+#input_code {
+	min-width: 6rem;
+	font-size: 1rem;
+}
+#input_estimate {
+	min-width: 10rem;
 	font-size: 1rem;
 }
 
@@ -94,7 +129,7 @@ h2 {
 	padding: 0.01rem 0;
 	outline: none;
 	border: none;
-	border-bottom: 0.01rem solid #fff;
+	border: 0.01rem solid #fff;
 	margin-bottom: 2rem;
 }
 .code .sizes, label {
@@ -140,14 +175,14 @@ mark {
 	transform: translateX(-12rem) skew(-20deg);
 }
 .button {
-	background: yellow;
+	background: transparent;
 	box-sizing: border-box;
 	box-shadow: 0 1.05rem 2.05rem rgba(0,0,0,.6);
 	border-radius: 0.4rem;
 	position: absolute;
 	border: transparent;
-	padding: 2rem 1rem;
-	margin: 15rem 2rem;
+	padding: 2.09rem 1.01rem;
+	margin: 1.2rem 0 0 1.2rem;
 	border-radius: 50%;
 	transition: all 0.3s;
 	cursor: pointer;
@@ -157,17 +192,32 @@ mark {
 	text-transform: uppercase;
 }
 .button:active{
-	box-shadow: 0 0 0 0;
-	transform: translateY(0.2rem);
+	box-shadow: 0 0;
+}
+.crate_btn {
+	width: 8rem;
+	height: 8rem;
+}
+.shape_btn {
+	cx: 4rem;
+	cy: 4rem;
+	r: 3rem;
+	stroke: Red;
+	stroke-width: 0.5rem;
+	fill: yellow;
 }
 
 /* Add button style */
+.set_btn:hover {
+	background: transparent;
+	border: transparent;
+}
 .set_btn {
 	color: #fff;
 	background: transparent;
 	border: transparent;
-	margin: 0 0.5rem;
-	padding: 1rem 0.2rem;
+	margin: 1rem 0.5rem;
+	padding: 1rem 5rem;
 	border-radius: 1rem;
 	box-shadow: 0 1.05rem 2.05rem rgba(0,0,0,.2);
 	font-weight: 900;
@@ -180,5 +230,16 @@ mark {
 
 
 /* -------------------------------------------------------------------------- */
-/*								Boxes setup									  */
+/*								Add works pane								  */
 /* -------------------------------------------------------------------------- */
+.title {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	flex-grow: 0;
+	flex-shrink: 1rem;
+	flex-basis: 3rem;
+	/* grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr)); */
+	/* column-gap: 1rem; */
+	/* row-gap: 1rem; */
+}

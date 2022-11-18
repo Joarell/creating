@@ -6,6 +6,18 @@
 	<meta http-equiv="refresh" content="3">
 	<title>AIC</title>
 	<head>
+		<link
+			rel="icon"
+			type="image/svg+xml"
+			href="/favicon.svg"
+			media="(prefers-color-schem: dark)"
+		>
+		<link
+			rel="icon"
+			type="image/svg+xml"
+			href="/favicon-light-mode.svg"
+			media="(prefers-color-schem: light)"
+		>
 		<link rel="stylesheet" href="index.css">
 		<script src="index.js"></script>
 		<title>Layout from scratch - .</title>
@@ -27,20 +39,24 @@
 							<div class="input_top">
 								<label for="estimate">Estimate:</label>
 								<input type="text" id="input_estimate" name="estimate" value="PED-131313-23" required="">
-							</div>
-							<div class="report">
+							<!-- </div> -->
+							<!-- <div class="report"> -->
 								<label for="cubeMeter">Cubed:</label>
 								<input type="text" name="cubeMeter" value="0.230">
 								<label for="airCubed">Air-cubed:</label>
 								<input type="text" name="airCubed" value="0.490">
-								<label for="code">Count:</label>
-								<input type="text" name="code">
+								<label for="airCubed">Metric:</label>
+								<select class="metric" name="metrics">
+									<option value="cm">cm - centimeters</option>
+									<option value="in">in - inches</option>
+								</select>
+								<option type="text" name="metric" value="cm">
 							</div>
 							<div class="code">
 								<label for="code">Work code:</label>
 								<input type="text" id="input_code" name="code" required="">
-							</div>
-							<div class="sizes">
+							<!-- </div> -->
+							<!-- <div class="sizes"> -->
 								<label for="length">Length:</label>
 								<input type="text" name="length" maxlength="3" required="">
 								<label for="depth">Depth:</label>
@@ -48,34 +64,45 @@
 								<label for="Height">Height:</label>
 								<input type="text" name="height" maxlength="3" required="">
 							</div>
-							<button class="set_btn" onclick="alert('Working pretty well!')">
-								Insert
-								<span aria-hidden class="cyber_btn"></span>
-								<span aria-hidden class="c_btn"></span>
-							</button>
-							<button class="set_btn" onclick="alert('Working pretty well!')">
-								Remove
-								<span aria-hidden class="cyber_btn"></span>
-								<span aria-hidden class="c_btn"></span>
-							</button>
+							<div class="press">
+								<button class="set_btn" onclick="alert('Working pretty well!')">
+									Insert
+									<span aria-hidden class="cyber_btn"></span>
+									<span aria-hidden class="c_btn"></span>
+								</button>
+								<button class="set_btn" onclick="alert('Working pretty well!')">
+									Remove
+									<span aria-hidden class="cyber_btn"></span>
+									<span aria-hidden class="c_btn"></span>
+								</button>
+							</div>
 						</div>
 					</div>
 					<!--This div provides the overview about the works added before the call of the AI-->
 					<div class="box-right">
-						<div class="title">
-							<h2>Find works list added below:</h2>
+						<h2>Find works list added below:</h2>
+						<div>
+							<label for="code">Count:</label>
+							<input type="text" name="code"><br>
 						</div>
-						<iframe src="..." title="Work's list:"></iframe>
-						<button class="button" onclick="alert('Working pretty well!')">
-							<mark><strong>Crate!</strong></mark>
-						</button>
+						<div class="title">
+							<iframe src="..." title="Work's list:"></iframe>
+							<div class="press_btn">
+								<button class="button" onclick="alert('Working pretty well!')">
+									<mark><strong>Crate!</strong></mark>
+								</button>
+								<svg class="crate_btn">
+									<circle class="shape_btn"/>
+								</svg>
+							</div>
+						</div>
 					</div>
 					<!--This dive provides the result of the AI with all crates needed to the list provided-->
 					<div class="result-left">
 						<div class="title">
 							<h2>Find the crates needed below:</h2>
+							<iframe src="..." title="Work's list:"></iframe>
 						</div>
-						<iframe src="..." title="Work's list:"></iframe>
 					</div>
 					<div class="menu">
 						<h3>Menu</h3>

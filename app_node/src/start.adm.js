@@ -1,5 +1,5 @@
-const next_work = require("./next.work.checker.ts");
-const man = require("./procedures.adm.ts");
+const next_work = require("./next.work.checker");
+const man = require("./procedures.adm");
 
 
 //This function returns how many crates each airport will have based on the
