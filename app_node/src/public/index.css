@@ -1,13 +1,22 @@
+/* -------------------------------------------------------------------------- */
+/*					 Here is the "Global settings.							  */
+/* -------------------------------------------------------------------------- */
 * {
 	box-sizing: border-box;
 }
 
-.grid-container {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
-	column-gap: 1rem;
-	row-gap: 1rem;
+:root {
+	--fonts: 4rem;
+	--color1: #03e9f4; 
+	--color2: #162789; 
+	--color3: #FC007A; 
+	--font-weight: 600;
+	--colg: 5rem;
+	--rowg: 1rem;
+	--border: 3rem;
+	counter-reset: headings;
 }
+
 
 /* Style the header */
 .header {
@@ -15,75 +24,70 @@
 	grid-area: header;
 	background: linear-gradient(#162789, #03e9f4);
 	text-align: center;
-	font-size: 4rem;
+	font-size: var(--font-size);
 }
 
 body {
 	background-color: #03e9f4;
 	font-family: Arial, Helvetica, Sans-serf;
 	background-position: center;
-	min-width: 39.5rem;
+	min-width: 20.5rem;
 }
 
 p {
-	font-size: 4rem;
+	font-size: var(--fonts);
 }
 
 h1 {
-	font-size: 4rem;
+	counter-increment: headings;
+	font-size: var(--fonts);
 	margin: auto;
 	padding: auto;
 }
 
-h2 {
-	font-size: 2rem;
+h2::before {
+	font-size: calc(var(fonts) - 2);
 }
 
 iframe {
 	height: auto;
-	width: 35rem;
+	width: 150vw;
+	border-radius: 0.5rem;
 }
 
 select {
-	font-size: 1rem;
-	background: transparent;
-	text-align: center;
-	border-radius: 3rem;
-	outline: none;
-	border: none;
-	border: 0.01rem solid #fff;
-	color: #fff;
-	padding: 0 0.4rem;
+	margin-right: 1.3rem;
 }
 
-option {
-	font-size: 1rem;
+option, select {
+	color: #313131;
+	border-radius: var(--border);
+	font-size: calc(var(--fonts) - 3);
+	font-weight: 500;
 	background: transparent;
-	text-align: center;
-	border-radius: 3rem;
-	outline: none;
-	border: none;
-	color: #000;
-	font-weight: 600;
+	padding: 0.3rem 0.3rem;
 }
 
-.IO, .result-left {
+
+/* -------------------------------------------------------------------------- */
+/*					 Starting to edit the elements of the page.				  */
+/* -------------------------------------------------------------------------- */
+.grid-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+	column-gap: var(--colg);
+	row-gap: var(--rowg);
+	padding: 0 10vw;
+}
+
+.IO {
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: column;
 }
-.code {
-	flex-grow: 0;
-	flex-shrink: 0.1rem;
-	flex-basis: 1rem;
-}
 
-/* -------------------------------------------------------------------------- */
-/*					 This is the div parent.								  */
-/* -------------------------------------------------------------------------- */
-.insertion_left, .box-right, .result-left, .button {
+.insertion_left, .box-right, .result-left {
 	padding: 2rem 2rem;
-	margin: 1rem 1rem;
 	font-size: 1rem;
 	font-weight: 600;
 	background: rgba(255, 255, 255,.2);
@@ -94,26 +98,44 @@ option {
 	border: 0.1rem solid rgba(255, 255, 255, 0.18);
 }
 
+@media only screen and (max-width: 600px) {
+	.grid-container {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		column-gap: 1rem;
+		padding: 0 1vw;
+	}
+	iframe {
+		width: 80vw;
+	}
+	.insertion_left {
+		padding: 1rem 1rem;
+	}
+	.metric {
+		padding-left: 1rem;
+		margin: 0 6rem 2rem 0;
+	}
+}
+
 /* -------------------------------------------------------------------------- */
 /*					 This is the div to estimate input						  */
 /* -------------------------------------------------------------------------- */
-.input_top .report, input{
+input, select {
 	font-size: 1rem;
 	font-weight: 550;
 	background: transparent;
 	text-align: center;
 	border-radius: 3rem;
 	outline: none;
-	border: none;
 	border: 0.01rem solid #fff;
 	color: #fff;
 }
 #input_code {
-	min-width: 6rem;
+	min-width: 9.6rem;
 	font-size: 1rem;
 }
 #input_estimate {
-	min-width: 10rem;
+	min-width: 10.5rem;
 	font-size: 1rem;
 }
 
@@ -165,7 +187,7 @@ mark {
 	top: 0;
 	left: -7rem;
 	width: 100%;
-	height: 10rem;
+	height: 100%;
 	background: linear-gradient(
 		90deg, transparent, #ffffff75,
 		transparent
@@ -179,10 +201,8 @@ mark {
 	box-sizing: border-box;
 	box-shadow: 0 1.05rem 2.05rem rgba(0,0,0,.6);
 	border-radius: 0.4rem;
-	position: absolute;
 	border: transparent;
-	padding: 2.09rem 1.01rem;
-	margin: 1.2rem 0 0 1.2rem;
+	position: absolute;
 	border-radius: 50%;
 	transition: all 0.3s;
 	cursor: pointer;
@@ -190,6 +210,7 @@ mark {
 	overflow: hidden;
 	z-index: 0;
 	text-transform: uppercase;
+	padding: 2.1rem 1.4rem;
 }
 .button:active{
 	box-shadow: 0 0;
@@ -205,6 +226,8 @@ mark {
 	stroke: Red;
 	stroke-width: 0.5rem;
 	fill: yellow;
+	/* background: linear-gradient(#00E1FD, #FC007A ); */
+	/* fill: linear-gradient(#00E1FD, #FC007A ); */
 }
 
 /* Add button style */
@@ -214,13 +237,13 @@ mark {
 }
 .set_btn {
 	color: #fff;
+	margin: 1rem 1rem;
+	padding: 1rem 3rem;
 	background: transparent;
 	border: transparent;
-	margin: 1rem 0.5rem;
-	padding: 1rem 5rem;
 	border-radius: 1rem;
 	box-shadow: 0 1.05rem 2.05rem rgba(0,0,0,.2);
-	font-weight: 900;
+	font-weight: 700;
 	font-size: 1.5rem;
 }
 .set_btn:active {
@@ -228,6 +251,18 @@ mark {
 	transform: translateY(0.1rem);
 }
 
+.press, .press_btn {
+	display: flex;
+	flex-grow: 0.5rem;
+	flex-wrap: wrap;
+	flex-basis: 0.5rem;
+	flex-shrink: 0.5rem;
+	justify-content: space-around;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+	padding: 0 0.5rem;
+}
 
 /* -------------------------------------------------------------------------- */
 /*								Add works pane								  */
@@ -239,7 +274,4 @@ mark {
 	flex-grow: 0;
 	flex-shrink: 1rem;
 	flex-basis: 3rem;
-	/* grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr)); */
-	/* column-gap: 1rem; */
-	/* row-gap: 1rem; */
 }
