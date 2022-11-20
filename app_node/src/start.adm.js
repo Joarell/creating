@@ -4,57 +4,80 @@ const man = require("./procedures.adm");
 
 //This function returns how many crates each airport will have based on the
 //crates from the list.
-function finishedOp(list, gru, vcp, g_crates, g_cub, v_crates, v_cub) {
-	if (v_crates.length === 0 && g_crates.length > 0) {
-		gru = ["GRU", g_crates, "cub", g_cub];
-		return (list.push(gru));
-	}
-	else if (v_crates.length > 0 && g_crates.length === 0) {
-		vcp = ["VCP", v_crates, "cub", v_cub];
-		return (list.push(vcp));
-	}
-	else if (v_crates && g_crates > 0) {
-		gru = ["GRU", g_crates, "cub", g_cub];
-		vcp = ["VCP", v_crates, "cub", v_cub];
-		list.push(gru);
-		list.push(vcp);
-		return (list);
-	} else
-		return (list);
+function finishedOp(list, airports, cubs) {
+	let gru;
+	let vcp;
+
+	gru = ["GRU", airports[0].GRU.length, "cub", cubs[0].gru_cub];
+	vcp = ["VCP", airports[1].VCP.length, "cub", cubs[1].vcp_cub];
+	list.push(gru);
+	list.push(vcp);
+
+	return (list);
+}
+
+
+//This function returns the cub value to each airport.
+function sumCub(goals) {
+	let g_cub;
+	let v_cub;
+	let result;
+
+	g_cub = goals[0].GRU.reduce((sum, value) => {
+		return (sum + value[4]);
+	}, 0);
+	v_cub = goals[1].VCP.reduce((sum, value) => {
+		return (sum + value[4]);
+	}, 0);
+	result = [{gru_cub: g_cub}, {vcp_cub: v_cub}];
+	return (result);
+}
+
+
+//This function returns which airport each crates should be delivered.
+function getAirport (crates) {
+	let gru;
+	let vcp;
+	let pax_lim;
+	let trail;
+
+	pax_lim = [300, 200, 160];
+	gru = crates.filter(g_crates =>{
+		if (g_crates[1] <= pax_lim[0] && g_crates[2] <= pax_lim[1] &&
+			g_crates[3] <= pax_lim[2])
+		return (g_crates);
+	});
+	vcp = crates.filter(v_crates =>{
+		if (v_crates[1] >= pax_lim[0] || v_crates[2] >= pax_lim[1] ||
+			v_crates[3] >= pax_lim[2])
+		return (v_crates);
+	});
+	trail = [{GRU: gru}, {VCP: vcp}]
+	return(trail);
+}
+
+
+//This function filters only the final crates that has the string "Final".
+function finalFilter(list) {
+	const found = list.filter(word => {
+		if (word[0] === "Final")
+			return (word);
+	});
+	return (found);
 }
 
 
 //This function provides which will be the airport to ship all the crates, or
 //partially between them based on the provided list.
 function whichAirport(proc_list) {
-	let gru;
-	let vcp;
-	let i;
-	let g_crates;
-	let v_crates;
-	let g_cub;
-	let v_cub;
-	let pax_lim;
+	let final_crates;
+	let airports;
+	let cub_a_values;
 
-	i = 0;
-	g_crates = 0;
-	g_cub = 0;
-	v_crates = 0;
-	v_cub = 0;
-	pax_lim = [300, 200, 160];
-	while (i < proc_list.length) {
-		if (proc_list[i][0] === "Final" && proc_list[i][1] <= pax_lim[0] &&
-			proc_list[i][2] <= pax_lim[1] && proc_list[i][3] <= pax_lim[2]) {
-			g_crates++;
-			g_cub += proc_list[i][4]
-		}
-		else if (proc_list[i][0] === "Final") {
-			v_crates++;
-			v_cub += proc_list[i][4]
-		}
-		i++;
-	}
-	return (finishedOp(proc_list, gru, vcp, g_crates, g_cub, v_crates, v_cub));
+	final_crates = (finalFilter(proc_list));
+	airports = getAirport(final_crates);
+	cub_a_values = sumCub(airports);
+	return (finishedOp(proc_list, airports, cub_a_values));
 }
 
 
