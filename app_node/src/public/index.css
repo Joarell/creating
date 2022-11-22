@@ -35,7 +35,11 @@ body {
 }
 
 p {
-	font-size: var(--fonts);
+	background: transparent;
+	text-align: left;
+	outline: none;
+	color: #fff;
+	font-size: calc(var(--fonts) - 3);
 }
 
 h1 {
@@ -50,13 +54,10 @@ h2::before {
 }
 
 iframe {
-	height: auto;
+	height: 15vh;
 	width: 150vw;
+	border: none;
 	border-radius: 0.5rem;
-}
-
-select {
-	margin-right: 1.3rem;
 }
 
 option, select {
@@ -98,6 +99,11 @@ option, select {
 	border: 0.1rem solid rgba(255, 255, 255, 0.18);
 }
 
+#metric {
+	margin-left: 5.5rem;
+}
+
+/* Responsiveness part mechanism */
 @media only screen and (max-width: 600px) {
 	.grid-container {
 		display: grid;
@@ -113,7 +119,7 @@ option, select {
 	}
 	.metric {
 		padding-left: 1rem;
-		margin: 0 6rem 2rem 0;
+		margin: 0 0 2rem 0;
 	}
 }
 
@@ -210,7 +216,7 @@ mark {
 	overflow: hidden;
 	z-index: 0;
 	text-transform: uppercase;
-	padding: 2.1rem 1.4rem;
+	padding: 2.2rem 1.4rem;
 }
 .button:active{
 	box-shadow: 0 0;
