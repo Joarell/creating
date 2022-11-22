@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color">
+<!-- this tag is used to autorefresh the page. Rememeter to get rid of it.-->
+<!-- <meta http-equiv="refresh" content="3"> -->
+<title>AIC</title>
+
+<head>
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)">
+	<link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)">
+	<link rel="stylesheet" href="index.css">
+	<title>Layout from scratch - .</title>
+</head>
+
+<body>
+	<div class="header">
+		<h1>Welcome to the Web Crater AIC!</h1>
+		<p>This is a new site!</p>
+	</div>
+	<main>
+		<section>
+			<div class="grid-container">
+				<!-- This Dive is responsible to get the dimensions of the artwork list.-->
+				<div class="insertion_left">
+					<div class="title">
+						<h2>Please, insert the works sizes:</h2>
+					</div>
+					<div class="IO">
+						<div class="input_top">
+							<label for="estimate">Estimate:</label>
+							<input type="text" id="input_estimate" name="estimate" value="PED-131313-23" required="">
+						</div>
+						<div class="code">
+							<label for="code">Work code:</label>
+							<input type="text" id="input_code" name="code" required="">
+						</div>
+						<div class="sizes">
+							<label for="length">Length:</label>
+							<input type="text" id="input_len" name="length" maxlength="3" required="">
+							<label for="depth">Depth:</label>
+							<input type="text" id="input_dep" name="depth" maxlength="3" required="">
+							<label for="Height">Height:</label>
+							<input type="text" id="input_hig" name="height" maxlength="3" required="">
+							<label for="airCubed"id="metric">Metric:</label>
+							<select class="metric">
+								<option>cm - centimeters</option>
+								<option>in - inches</option>
+							</select>
+						</div>
+						<div class="press">
+							<button class="set_btn" onclick="addWorks()">
+								Insert
+								<span aria-hidden class="cyber_btn"></span>
+								<span aria-hidden class="c_btn"></span>
+							</button>
+							<button class="set_btn" onclick="removeWorks()">
+								Remove
+								<span aria-hidden class="cyber_btn"></span>
+								<span aria-hidden class="c_btn"></span>
+							</button>
+							<div class="press_btn">
+								<button class="button" onclick="hiThere()" target="myTest">
+									<mark><strong>Crate!</strong></mark>
+								</button>
+								<svg class="crate_btn">
+									<circle class="shape_btn"/>
+								</svg>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--This div provides the overview about the works added before the call of the AI-->
+				<div class="box-right">
+					<h2>Find works list added below:</h2>
+					<div>
+						<p id="count">Count works: 0 </p>
+						<label for="cubeMeter">Cubed:</label>
+						<input type="text" name="cubeMeter" value="0.230">
+						<label for="airCubed">Air-cubed:</label>
+						<input type="text" name="airCubed" value="0.490">
+					</div>
+					<div class="title">
+						<iframe src="result_pane.html" title="Work's list"></iframe>
+					</div>
+				</div>
+				<div class="menu">
+					<h3>Menu</h3>
+				</div>
+			</div>
+			<div class="footer">
+				<p>Footer</p>
+			</div>
+		</section>
+	</main>
+	<script src="index.js"></script>
+</body>
+
+</html>

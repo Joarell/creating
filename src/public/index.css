@@ -1,0 +1,283 @@
+/* -------------------------------------------------------------------------- */
+/*					 Here is the "Global settings.							  */
+/* -------------------------------------------------------------------------- */
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	--fonts: 4rem;
+	--color1: #03e9f4; 
+	--color2: #162789; 
+	--color3: #FC007A; 
+	--font-weight: 600;
+	--colg: 5rem;
+	--rowg: 1rem;
+	--border: 3rem;
+	counter-reset: headings;
+}
+
+
+/* Style the header */
+.header {
+	place-items: center;
+	grid-area: header;
+	background: linear-gradient(#162789, #03e9f4);
+	text-align: center;
+	font-size: var(--font-size);
+}
+
+body {
+	background-color: #03e9f4;
+	font-family: Arial, Helvetica, Sans-serf;
+	background-position: center;
+	min-width: 20.5rem;
+}
+
+p {
+	background: transparent;
+	text-align: left;
+	outline: none;
+	color: #fff;
+	font-size: calc(var(--fonts) - 3);
+}
+
+h1 {
+	counter-increment: headings;
+	font-size: var(--fonts);
+	margin: auto;
+	padding: auto;
+}
+
+h2::before {
+	font-size: calc(var(fonts) - 2);
+}
+
+iframe {
+	height: 15vh;
+	width: 150vw;
+	border: none;
+	border-radius: 0.5rem;
+}
+
+option, select {
+	color: #313131;
+	border-radius: var(--border);
+	font-size: calc(var(--fonts) - 3);
+	font-weight: 500;
+	background: transparent;
+	padding: 0.3rem 0.3rem;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*					 Starting to edit the elements of the page.				  */
+/* -------------------------------------------------------------------------- */
+.grid-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+	column-gap: var(--colg);
+	row-gap: var(--rowg);
+	padding: 0 10vw;
+}
+
+.IO {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+}
+
+.insertion_left, .box-right, .result-left {
+	padding: 2rem 2rem;
+	font-size: 1rem;
+	font-weight: 600;
+	background: rgba(255, 255, 255,.2);
+	box-sizing: border-box;
+	box-shadow: 0 0.08rem 3.2rem 0 rgba( 31, 38, 135, 0.37 );
+	backdrop-filter: blur( 0.8rem);
+	border-radius: 1rem;
+	border: 0.1rem solid rgba(255, 255, 255, 0.18);
+}
+
+#metric {
+	margin-left: 5.5rem;
+}
+
+/* Responsiveness part mechanism */
+@media only screen and (max-width: 600px) {
+	.grid-container {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		column-gap: 1rem;
+		padding: 0 1vw;
+	}
+	iframe {
+		width: 80vw;
+	}
+	.insertion_left {
+		padding: 1rem 1rem;
+	}
+	.metric {
+		padding-left: 1rem;
+		margin: 0 0 2rem 0;
+	}
+}
+
+/* -------------------------------------------------------------------------- */
+/*					 This is the div to estimate input						  */
+/* -------------------------------------------------------------------------- */
+input, select {
+	font-size: 1rem;
+	font-weight: 550;
+	background: transparent;
+	text-align: center;
+	border-radius: 3rem;
+	outline: none;
+	border: 0.01rem solid #fff;
+	color: #fff;
+}
+#input_code {
+	min-width: 9.6rem;
+	font-size: 1rem;
+}
+#input_estimate {
+	min-width: 10.5rem;
+	font-size: 1rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/*					 This is the form to input data.						  */
+/* -------------------------------------------------------------------------- */
+.code .sizes, input {
+	background: transparent;
+	width: 3em;
+	font-weight: 1rem;
+	text-align: center;
+	border-radius: 0.3rem;
+	padding: 0.01rem 0;
+	outline: none;
+	border: none;
+	border: 0.01rem solid #fff;
+	margin-bottom: 2rem;
+}
+.code .sizes, label {
+	position: relative;
+	padding: -10px 5px 5px 5px;
+	color: #fff;
+}
+.code .sizes, input:focus + label {
+	top: -1rem;
+	left: 0;
+	color: #fff;
+	font-size: 1.2rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/*								Buttons setup								  */
+/* -------------------------------------------------------------------------- */
+/* Main button */
+mark {
+	background-color: Red;
+}
+.button:hover::before {
+	transform:translateX(30rem) skew(-20deg);
+}
+.button:hover {
+	background: red;
+	transition: all 0.3s;
+}
+.button::before {
+	content: "";
+	position: absolute;
+	display: block;
+	top: 0;
+	left: -7rem;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		90deg, transparent, #ffffff75,
+		transparent
+	);
+	transition: all 3s;
+	z-index: -1;
+	transform: translateX(-12rem) skew(-20deg);
+}
+.button {
+	background: transparent;
+	box-sizing: border-box;
+	box-shadow: 0 1.05rem 2.05rem rgba(0,0,0,.6);
+	border-radius: 0.4rem;
+	border: transparent;
+	position: absolute;
+	border-radius: 50%;
+	transition: all 0.3s;
+	cursor: pointer;
+	box-sizing: border-box;
+	overflow: hidden;
+	z-index: 0;
+	text-transform: uppercase;
+	padding: 2.2rem 1.4rem;
+}
+.button:active{
+	box-shadow: 0 0;
+}
+.crate_btn {
+	width: 8rem;
+	height: 8rem;
+}
+.shape_btn {
+	cx: 4rem;
+	cy: 4rem;
+	r: 3rem;
+	stroke: Red;
+	stroke-width: 0.5rem;
+	fill: yellow;
+	/* background: linear-gradient(#00E1FD, #FC007A ); */
+	/* fill: linear-gradient(#00E1FD, #FC007A ); */
+}
+
+/* Add button style */
+.set_btn:hover {
+	background: transparent;
+	border: transparent;
+}
+.set_btn {
+	color: #fff;
+	margin: 1rem 1rem;
+	padding: 1rem 3rem;
+	background: transparent;
+	border: transparent;
+	border-radius: 1rem;
+	box-shadow: 0 1.05rem 2.05rem rgba(0,0,0,.2);
+	font-weight: 700;
+	font-size: 1.5rem;
+}
+.set_btn:active {
+	box-shadow: 0 0 0 0;
+	transform: translateY(0.1rem);
+}
+
+.press, .press_btn {
+	display: flex;
+	flex-grow: 0.5rem;
+	flex-wrap: wrap;
+	flex-basis: 0.5rem;
+	flex-shrink: 0.5rem;
+	justify-content: space-around;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+	padding: 0 0.5rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/*								Add works pane								  */
+/* -------------------------------------------------------------------------- */
+.title {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	flex-grow: 0;
+	flex-shrink: 1rem;
+	flex-basis: 3rem;
+}
