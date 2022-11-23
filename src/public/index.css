@@ -27,6 +27,7 @@
 	font-size: var(--font-size);
 }
 
+
 body {
 	background-color: #03e9f4;
 	font-family: Arial, Helvetica, Sans-serf;
@@ -34,13 +35,7 @@ body {
 	min-width: 20.5rem;
 }
 
-p {
-	background: transparent;
-	text-align: left;
-	outline: none;
-	color: #fff;
-	font-size: calc(var(--fonts) - 3);
-}
+
 
 h1 {
 	counter-increment: headings;
@@ -49,9 +44,11 @@ h1 {
 	padding: auto;
 }
 
+
 h2::before {
 	font-size: calc(var(fonts) - 2);
 }
+
 
 iframe {
 	height: 15vh;
@@ -60,6 +57,7 @@ iframe {
 	border-radius: 0.5rem;
 }
 
+
 option, select {
 	color: #313131;
 	border-radius: var(--border);
@@ -67,6 +65,14 @@ option, select {
 	font-weight: 500;
 	background: transparent;
 	padding: 0.3rem 0.3rem;
+}
+
+p {
+	background: transparent;
+	text-align: left;
+	outline: none;
+	color: #fff;
+	font-size: calc(var(--fonts) - 3);
 }
 
 
@@ -100,7 +106,7 @@ option, select {
 }
 
 #metric {
-	margin-left: 5.5rem;
+	margin-left: 8rem;
 }
 
 /* Responsiveness part mechanism */
@@ -114,8 +120,12 @@ option, select {
 	iframe {
 		width: 80vw;
 	}
+	/* The flex display needs to be added to solve some layout problems. */
 	.insertion_left {
 		padding: 1rem 1rem;
+	}
+	#metric {
+		margin: 0 0;
 	}
 	.metric {
 		padding-left: 1rem;
@@ -136,10 +146,12 @@ input, select {
 	border: 0.01rem solid #fff;
 	color: #fff;
 }
+
 #input_code {
 	min-width: 9.6rem;
 	font-size: 1rem;
 }
+
 #input_estimate {
 	min-width: 10.5rem;
 	font-size: 1rem;
@@ -160,11 +172,13 @@ input, select {
 	border: 0.01rem solid #fff;
 	margin-bottom: 2rem;
 }
+
 .code .sizes, label {
 	position: relative;
 	padding: -10px 5px 5px 5px;
 	color: #fff;
 }
+
 .code .sizes, input:focus + label {
 	top: -1rem;
 	left: 0;
@@ -179,13 +193,16 @@ input, select {
 mark {
 	background-color: Red;
 }
+
 .button:hover::before {
 	transform:translateX(30rem) skew(-20deg);
 }
+
 .button:hover {
 	background: red;
 	transition: all 0.3s;
 }
+
 .button::before {
 	content: "";
 	position: absolute;
@@ -202,6 +219,7 @@ mark {
 	z-index: -1;
 	transform: translateX(-12rem) skew(-20deg);
 }
+
 .button {
 	background: transparent;
 	box-sizing: border-box;
@@ -218,13 +236,16 @@ mark {
 	text-transform: uppercase;
 	padding: 2.2rem 1.4rem;
 }
+
 .button:active{
 	box-shadow: 0 0;
 }
+
 .crate_btn {
 	width: 8rem;
 	height: 8rem;
 }
+
 .shape_btn {
 	cx: 4rem;
 	cy: 4rem;
@@ -241,6 +262,7 @@ mark {
 	background: transparent;
 	border: transparent;
 }
+
 .set_btn {
 	color: #fff;
 	margin: 1rem 1rem;
@@ -252,6 +274,7 @@ mark {
 	font-weight: 700;
 	font-size: 1.5rem;
 }
+
 .set_btn:active {
 	box-shadow: 0 0 0 0;
 	transform: translateY(0.1rem);
