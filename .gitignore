@@ -5,3 +5,4 @@ tests
 package-lock.json
 package.json
 .gitignore
+.vimspector.json
