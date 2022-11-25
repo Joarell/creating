@@ -6,9 +6,9 @@
 //		Depth;
 //		Height;
 
-let list = {};
+let list = new Object();
 let add = 0;
-let estimate = {};
+let estimate = new Object();
 
 
 //This function is the main function of the webapp. It solves the art work list
@@ -66,8 +66,8 @@ function insertWorks () {
 	z = document.getElementById("input_dep").value;
 	y = document.getElementById("input_hig").value;
 	//TODO - check if all inputs are valid;
-	work = { code, x, z, y };
-	list["work"] = work;
+	work = { x, z, y };
+	list[code] = work;
 	cleanFields();
 	return (list);
 }
