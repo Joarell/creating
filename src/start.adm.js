@@ -35,6 +35,7 @@ function sumCub(goals) {
 
 
 //This function returns which airport each crates should be delivered.
+//The variable "pax_lim" has the limits of the PAX airplane door.
 function getAirport (crates) {
 	let gru;
 	let vcp;
@@ -42,12 +43,12 @@ function getAirport (crates) {
 	let trail;
 
 	pax_lim = [300, 200, 160];
-	gru = crates.filter(g_crates =>{
+	gru = crates.filter(g_crates => {
 		if (g_crates[1] <= pax_lim[0] && g_crates[2] <= pax_lim[1] &&
 			g_crates[3] <= pax_lim[2])
 		return (g_crates);
 	});
-	vcp = crates.filter(v_crates =>{
+	vcp = crates.filter(v_crates => {
 		if (v_crates[1] >= pax_lim[0] || v_crates[2] >= pax_lim[1] ||
 			v_crates[3] >= pax_lim[2])
 		return (v_crates);
