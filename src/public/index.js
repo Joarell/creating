@@ -5,6 +5,7 @@
 //		Length;
 //		Depth;
 //		Height;
+//	Resolve the global variables;
 
 let list = [];
 let estimate = new Object();
@@ -64,7 +65,7 @@ function displayAirCub (n_list) {
 	let element;
 	let std_msg;
 
-	std_msg = "Air-Cubed: "
+	std_msg = "Air-Cubed: ";
 	element = document.getElementById("cub-air");
 	result = n_list.reduce((sum, value) => {
 		return (sum + value.cubeAir);
