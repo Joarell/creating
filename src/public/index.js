@@ -5,7 +5,6 @@
 //		Length;
 //		Depth;
 //		Height;
-//	Resolve the global variables;
 
 let list = [];
 let estimate = new Object();
