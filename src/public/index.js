@@ -34,12 +34,12 @@ class Work {
 		return (Math.floor(this.cubed() * 1000) / 1000);
 	}
 	cubed () {
-		const cm_to_m = 1000000;
+		const cmToM = 1000000;
 		const x = parseInt(this.x);
 		const z = parseInt(this.z);
 		const y = parseInt(this.y);
 
-		return ((x * z * y) / cm_to_m);
+		return ((x * z * y) / cmToM);
 	}
 }
 
