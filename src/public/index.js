@@ -69,7 +69,7 @@ function displayAirCub (n_list) {
 	result = n_list.reduce((sum, value) => {
 		return (sum + value.cubeAir);
 	}, 0);
-	element.innerText = std_msg + (Math.floor(result * 1000) / 1000) + " Kg";
+	element.innerText = std_msg + (Math.floor(result * 1000) / 1000);
 	return (element);
 }
 
