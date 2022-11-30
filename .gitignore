@@ -1,8 +1,9 @@
+.eslintrc.js
+.eslintrc.json
 works.txt
 .vscode
 node_modules
 tests
 package-lock.json
 package.json
-.gitignore
 .vimspector.json

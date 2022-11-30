@@ -1,3 +1,4 @@
+import ArtWork from './classes.def.mjs';
 //TODO - Create some protection against blank and invalid inputs before pussh any button.
 //	Fields:
 //		Estimate;
@@ -5,46 +6,17 @@
 //		Length;
 //		Depth;
 //		Height;
+//	Resolve the global variables in side the code.
 
 let list = [];
 let estimate = new Object();
 let add = 1;
-
-//This is the calls "work" to each work added on the list;
-class Work {
-	constructor (code, x, z, y) {
-		this.code = code;
-		this.x = x;
-		this.z = z;
-		this.y = y;
-	}
-	get cubeAir () {
-		return (Math.floor(this.cAir() * 1000) / 1000);
-	}
-	cAir () {
-		const cons = 6000;
-		const x = parseInt(this.x);
-		const z = parseInt(this.z);
-		const y = parseInt(this.y);
-
-		return ((x * z * y) / cons);
-	}
-	get cub () {
-		return (Math.floor(this.cubed() * 1000) / 1000);
-	}
-	cubed () {
-		const cmToM = 1000000;
-		const x = parseInt(this.x);
-		const z = parseInt(this.z);
-		const y = parseInt(this.y);
-
-		return ((x * z * y) / cmToM);
-	}
-}
-
+globalThis.add = add;
+globalThis.addWorks = addWorks();
+console.log(globalThis.add);
 
 //This function do the calculation of the cub of all works in meters.
-function displayCub (n_list) {
+export function displayCub (n_list) {
 	let result;
 	let element;
 
@@ -59,7 +31,7 @@ function displayCub (n_list) {
 
 //This function do the calculation of the cub of all works based on the air 
 //companies.
-function displayAirCub (n_list) {
+export function displayAirCub (n_list) {
 	let result;
 	let element;
 	let std_msg;
@@ -76,7 +48,7 @@ function displayAirCub (n_list) {
 
 //This function is the main function of the webapp. It solves the art work list
 //to possible crates.
-function crate () {
+export function crate () {
 	let e_code;
 
 	e_code = document.getElementById("input_estimate").value;
@@ -88,11 +60,12 @@ function crate () {
 
 
 //This function adds the new work and counts.
-function addWorks () {
+export function addWorks () {
 	let counter;
 	
+	alert("Art work added!");
 	counter = document.getElementById("count");
-	counter.innerText = "Counting: " + add++;
+	counter.innerText = "Counting: " + globalThis.add++;
 	insertWorks();
 	displayAirCub(list);
 	displayCub(list);
@@ -101,18 +74,11 @@ function addWorks () {
 
 
 //This function remove the new work and counts.
-function removeWorks () {
+export function removeWorks () {
 	let message;
 	let counter;
-	let report;
 	
-	// add -= 1;
-	message = prompt("Please enter the code to be removed: ");
-	if (message == null || message == "") {
-		report = "Remove canceled!";
-	} else {
-	// 	try
-	}
+	add -= 1;
 	counter = document.getElementById("count");
 	counter.innerText = message + add;
 	//TODO - This function needs to ask the artwork code in order to remove it
@@ -122,7 +88,7 @@ function removeWorks () {
 
 
 //This function is responsible to add the size works to the list.
-function insertWorks () {
+export function insertWorks () {
 	let x;
 	let z;
 	let y;
@@ -133,17 +99,19 @@ function insertWorks () {
 	z = document.getElementById("input_dep").value;
 	y = document.getElementById("input_hig").value;
 	//TODO - check if all inputs are valid;
-	list.push(new Work(code, x, y, z));
+	list.push(new ArtWork(code, x, y, z));
 	cleanFields();
 	return (list);
 }
 
 
 //This function cleans all fields and puts the cursor in the code input box.
-function cleanFields () {
+export function cleanFields () {
 	document.getElementById("input_code").value = "";
 	document.getElementById("input_code").select();
 	document.getElementById("input_len").value = "";
 	document.getElementById("input_dep").value = "";
 	document.getElementById("input_hig").value = "";
 }
+
+// export { displayAirCub, displayCub, crate, addWorks, removeWorks, cleanFields };
