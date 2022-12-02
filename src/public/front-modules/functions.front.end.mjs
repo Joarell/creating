@@ -8,12 +8,11 @@ import ArtWork from './classes.def.mjs';
 //		Height;
 //	Resolve the global variables in side the code.
 
-let list = [];
-let estimate = new Object();
-let add = 1;
-globalThis.add = add;
-globalThis.addWorks = addWorks();
-console.log(globalThis.add);
+export let estimate = {};
+const list = [];
+let add = 0;
+console.log(list);
+console.log(estimate);
 
 //This function do the calculation of the cub of all works in meters.
 export function displayCub (n_list) {
@@ -52,7 +51,6 @@ export function crate () {
 	let e_code;
 
 	e_code = document.getElementById("input_estimate").value;
-	console.log(e_code);
 	estimate["reference"] = e_code;
 	estimate["list"] = list;
 	//In this point the function should call the modules to solve the list.
@@ -63,9 +61,8 @@ export function crate () {
 export function addWorks () {
 	let counter;
 	
-	alert("Art work added!");
 	counter = document.getElementById("count");
-	counter.innerText = "Counting: " + globalThis.add++;
+	counter.innerText = "Counting: " + list.length;
 	insertWorks();
 	displayAirCub(list);
 	displayCub(list);
@@ -113,5 +110,3 @@ export function cleanFields () {
 	document.getElementById("input_dep").value = "";
 	document.getElementById("input_hig").value = "";
 }
-
-// export { displayAirCub, displayCub, crate, addWorks, removeWorks, cleanFields };
