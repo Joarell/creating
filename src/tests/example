@@ -1,0 +1,27 @@
+// import { describe, it, before, beforeEach, after, afterEach } from 'node:test';
+// import { deepStrictEqual } from 'node:assert'
+//
+// function sum( num1, num2) {
+// 	return num1 + num2;
+// }
+//
+// describe('Testing the front-end functions', () => {
+// 	beforeEach(() => {
+// 		// geralmente, para limpar o estado
+// 		console.log('It runs before each test.');
+// 	});
+// 
+// 	afterEach(() => console.log('It\'s done! Now it\'s my time!'));
+// 	it.todo('It should return the air plane cube calc');
+// 	before(() => {
+// 		// geralmente, para limpar o estado
+// 		console.log('It runs before the next test.');
+// 	});
+// 	it('It should return the air plane cube calc', () => {
+// 		const expected = 6;
+// 		const current = sum(3, 3);
+// 		deepStrictEqual(current, expected);
+// 	});
+// 	it.skip('It should skip!');
+// 	it('Only this one', { only: true} );
+// })
