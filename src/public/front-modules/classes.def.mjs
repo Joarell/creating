@@ -14,7 +14,11 @@ export default class ArtWork {
 		const x = parseInt(this.x);
 		const z = parseInt(this.z);
 		const y = parseInt(this.y);
-		if (x && y && z )
+		const regx = /^\d{1,3}$/g.test(x);
+		const regz = /^\d{1,3}$/g.test(z);
+		const regy = /^\d{1,3}$/g.test(y);
+
+		if (regx && regz && regy)
 			return ((x * z * y) / cons);
 		return (false);
 	}
@@ -28,7 +32,11 @@ export default class ArtWork {
 		const x = parseInt(this.x);
 		const z = parseInt(this.z);
 		const y = parseInt(this.y);
-		if (x && y && z )
+		const regx = /^\d{1,3}$/g.test(x);
+		const regz = /^\d{1,3}$/g.test(z);
+		const regy = /^\d{1,3}$/g.test(y);
+		
+		if (regx && regz && regy)
 			return ((x * z * y) / cmToM);
 		return (false);
 	}
