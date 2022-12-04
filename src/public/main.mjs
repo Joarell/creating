@@ -1,26 +1,47 @@
 import ArtWork from './front-modules/classes.def.mjs';
 import * as Module from './front-modules/functions.front.end.mjs'
 
-// Module.addWorks();
-// Module.crate();
-// Module.removeWorks();
+Module.crate();
+Module.removeWorks();
 
 
-//This is the thats validate all inputs of the fields provided by the user.
-export function checkAndAcceptWork (x, z , y) {
-	//verify if all data were provided by the user and then call the module functions.
-	if (!(x, z, y)) {
-		const length = document.getElementById("input_len");
-		const depth = document.getElementById("input_dep");
-		const height = document.getElementById("input_hig");
+// ╭────────────────────────────────────────────────────────────────────────╮
+// │ This function validates all inputs of the fields provided by the user. │
+// ╰────────────────────────────────────────────────────────────────────────╯
+export function checkAndAcceptWork(code, x, z, y) {
+	const cod = document.getElementById("input_estimate");
+	const length = document.getElementById("input_len");
+	const depth = document.getElementById("input_dep");
+	const height = document.getElementById("input_hig");
+
+	// The if statement below allows calls from the tests for the momment.
+	if (!(Boolean(code) && Boolean(x) && Boolean(z) && Boolean(y))) {
+		if (regValid(intParser([length, depth, height])))
+			Module.list.push(new ArtWork(cod, length, depth, height));
+			Module.addWorks(Module.list);
 	}
 	else {
-		regValidation (intParser ([x , z, y]))
+		if (regValid(intParser([x, z, y])) != false)
+			Module.addWorks(new ArtWork(code, x, z, y));
 	}
+	return (Module.cleanInputs());
 }
 
 
-//This is the regular expression function to validate if all inputs are numbers.
+// ╭──────────────────────────────────────────────────────╮
+// │ This function converts all string inputs in intager. │
+// ╰──────────────────────────────────────────────────────╯
+export function intParser(dimensions) {
+	const result = dimensions.map(size => {
+		return parseInt(size);
+	});
+	return (result);
+}
+
+
+// ╭───────────────────────────────────────────────────────────────────────╮
+// │ // Regular expression function to validate if all inputs are numbers. │
+// ╰───────────────────────────────────────────────────────────────────────╯
 export function regValid(sizes_parsed) {
 	const regx = /^\d{1,3}$/g.test(sizes_parsed[0]);
 	const regz = /^\d{1,3}$/g.test(sizes_parsed[1]);
@@ -35,13 +56,5 @@ export function regValid(sizes_parsed) {
 			return (false);
 		}
 	}
-	return (result);
-}
-
-//This function converts all string inputs in intager.
-export function intParser(dimensions) {
-	const result = dimensions.map(size => {
-		return parseInt(size);
-	});
 	return (result);
 }
