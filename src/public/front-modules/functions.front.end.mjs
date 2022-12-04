@@ -11,7 +11,7 @@
 
 // TODO: Resolve the global variables in side the code.
 // NOTE:
-// Try to develog a clusert to the gloval variable "list".
+// Develop a closure to the global variable "list".
 
 export const list = [];
 
@@ -19,6 +19,7 @@ export const list = [];
 // │ This function do the calculation of the cub of all works in meters. │
 // ╰─────────────────────────────────────────────────────────────────────╯
 export function displayCub (n_list) {
+	// TODO: Not tested yet;
 	let result;
 	let element;
 
@@ -35,6 +36,7 @@ export function displayCub (n_list) {
 // │ Returns a calculation of the cub of all works based on the air companies.│
 // ╰──────────────────────────────────────────────────────────────────────────╯
 export function displayAirCub (n_list) {
+	// TODO: Not tested yet;
 	let result;
 	let element;
 	let std_msg;
@@ -54,6 +56,7 @@ export function displayAirCub (n_list) {
 // │                         list to possible crates.                         │
 // ╰──────────────────────────────────────────────────────────────────────────╯
 export function crate () {
+	// TODO: Not tested yet;
 	const estimate = {};
 	const e_code = document.getElementById("input_estimate").value;
 
@@ -70,6 +73,7 @@ export function crate () {
 // │ This function adds the new work and counts. │
 // ╰─────────────────────────────────────────────╯
 export function addWorks () {
+	// TODO: Not tested yet;
 	let counter;
 	
 	counter = document.getElementById("count");
@@ -84,9 +88,10 @@ export function addWorks () {
 // │ This function remove the new work and counts. │
 // ╰───────────────────────────────────────────────╯
 export function removeWorks () {
+	// TODO: Not tested yet;
 	// TODO: - This function needs to ask the artwork code in order to remove it
 	//from the list using a "alert".
-	// FIX: after remove the work it does some procedures below:
+	// FIX: after remove the work it should do some procedures below:
 	displayAirCub(list);
 	displayCub(list);
 }
@@ -96,6 +101,7 @@ export function removeWorks () {
 //│ This function cleans all fields and puts the cursor in the code input box.│
 //╰───────────────────────────────────────────────────────────────────────────╯
 export function cleanInputs () {
+	// TODO: Not tested yet;
 	document.getElementById("input_code").value = "";
 	document.getElementById("input_code").select();
 	document.getElementById("input_len").value = "";

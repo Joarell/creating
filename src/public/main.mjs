@@ -10,6 +10,7 @@ Module.removeWorks();
 // │ This function validates all inputs of the fields provided by the user. │
 // ╰────────────────────────────────────────────────────────────────────────╯
 export function checkAndAcceptWork(code, x, z, y) {
+	// TODO: Not tested yet;
 	const cod = document.getElementById("input_estimate");
 	const length = document.getElementById("input_len");
 	const depth = document.getElementById("input_dep");
