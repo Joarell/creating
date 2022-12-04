@@ -11,8 +11,7 @@
 
 // TODO: Resolve the global variables in side the code.
 // NOTE:
-//	Maybe creat a linked list is the solution to store the works and
-//	solve the global variables problem.
+// Try to develog a clusert to the gloval variable "list".
 
 export const list = [];
 
