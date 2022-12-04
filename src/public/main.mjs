@@ -4,6 +4,7 @@ import * as Module from './front-modules/functions.front.end.mjs'
 Module.crate();
 Module.removeWorks();
 // TODO: design the remove function;
+// the remove function already exist in the function module;
 
 // ╭────────────────────────────────────────────────────────────────────────╮
 // │ This function validates all inputs of the fields provided by the user. │
