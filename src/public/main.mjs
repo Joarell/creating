@@ -3,7 +3,7 @@ import * as Module from './front-modules/functions.front.end.mjs'
 
 Module.crate();
 Module.removeWorks();
-
+// TODO: design the remove function;
 
 // ╭────────────────────────────────────────────────────────────────────────╮
 // │ This function validates all inputs of the fields provided by the user. │
