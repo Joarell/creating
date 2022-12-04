@@ -1,20 +1,24 @@
-import ArtWork from './classes.def.mjs';
-//TODO - Create some protection against blank and invalid inputs before pussh any button.
-//	Fields:
-//		Estimate;
-//		Work code;
-//		Length;
-//		Depth;
-//		Height;
-//	Resolve the global variables in side the code.
+// ╭──────────────────────────────────────────────────────────────────────────╮
+// │ ╭──────────────────────────────────────────────────────────────────────╮ │
+// │ │ INFO:             These are the first layer of the app:              │ │
+// │ │                        function displayAirCub                        │ │
+// │ │                            function crate                            │ │
+// │ │                          function addWorks                           │ │
+// │ │                         function removeWorks                         │ │
+// │ │                         function cleanInputs                         │ │
+// │ ╰──────────────────────────────────────────────────────────────────────╯ │
+// ╰──────────────────────────────────────────────────────────────────────────╯
 
-export let estimate = {};
-const list = [];
-let add = 0;
-console.log(list);
-console.log(estimate);
+// TODO: Resolve the global variables in side the code.
+// NOTE:
+//	Maybe creat a linked list is the solution to store the works and
+//	solve the global variables problem.
 
-//This function do the calculation of the cub of all works in meters.
+export const list = [];
+
+// ╭─────────────────────────────────────────────────────────────────────╮
+// │ This function do the calculation of the cub of all works in meters. │
+// ╰─────────────────────────────────────────────────────────────────────╯
 export function displayCub (n_list) {
 	let result;
 	let element;
@@ -28,8 +32,9 @@ export function displayCub (n_list) {
 }
 
 
-//This function do the calculation of the cub of all works based on the air 
-//companies.
+// ╭──────────────────────────────────────────────────────────────────────────╮
+// │ Returns a calculation of the cub of all works based on the air companies.│
+// ╰──────────────────────────────────────────────────────────────────────────╯
 export function displayAirCub (n_list) {
 	let result;
 	let element;
@@ -45,65 +50,53 @@ export function displayAirCub (n_list) {
 }
 
 
-//This function is the main function of the webapp. It solves the art work list
-//to possible crates.
+// ╭──────────────────────────────────────────────────────────────────────────╮
+// │ This function is the main function of the webapp. It solves the art work │
+// │                         list to possible crates.                         │
+// ╰──────────────────────────────────────────────────────────────────────────╯
 export function crate () {
-	let e_code;
+	const estimate = {};
+	const e_code = document.getElementById("input_estimate").value;
 
-	e_code = document.getElementById("input_estimate").value;
 	estimate["reference"] = e_code;
 	estimate["list"] = list;
-	//In this point the function should call the modules to solve the list.
+	// TODO:In this point the function must call the modules to solve the list;
+	// Async call to save the original list on the DB;
+	// Return the crates;
+	// Save the crates on the DB;
 }
 
 
-//This function adds the new work and counts.
+// ╭─────────────────────────────────────────────╮
+// │ This function adds the new work and counts. │
+// ╰─────────────────────────────────────────────╯
 export function addWorks () {
 	let counter;
 	
 	counter = document.getElementById("count");
 	counter.innerText = "Counting: " + list.length;
-	insertWorks();
 	displayAirCub(list);
 	displayCub(list);
 	return (counter);
 }
 
 
-//This function remove the new work and counts.
+// ╭───────────────────────────────────────────────╮
+// │ This function remove the new work and counts. │
+// ╰───────────────────────────────────────────────╯
 export function removeWorks () {
-	let message;
-	let counter;
-	
-	add -= 1;
-	counter = document.getElementById("count");
-	counter.innerText = message + add;
-	//TODO - This function needs to ask the artwork code in order to remove it
-	//from the list.
-	return (counter);
+	// TODO: - This function needs to ask the artwork code in order to remove it
+	//from the list using a "alert".
+	// FIX: after remove the work it does some procedures below:
+	displayAirCub(list);
+	displayCub(list);
 }
 
 
-//This function is responsible to add the size works to the list.
-export function insertWorks () {
-	let x;
-	let z;
-	let y;
-	let code;
-
-	code = document.getElementById("input_code").value;
-	x = document.getElementById("input_len").value;
-	z = document.getElementById("input_dep").value;
-	y = document.getElementById("input_hig").value;
-	//TODO - check if all inputs are valid;
-	list.push(new ArtWork(code, x, y, z));
-	cleanFields();
-	return (list);
-}
-
-
-//This function cleans all fields and puts the cursor in the code input box.
-export function cleanFields () {
+//╭───────────────────────────────────────────────────────────────────────────╮
+//│ This function cleans all fields and puts the cursor in the code input box.│
+//╰───────────────────────────────────────────────────────────────────────────╯
+export function cleanInputs () {
 	document.getElementById("input_code").value = "";
 	document.getElementById("input_code").select();
 	document.getElementById("input_len").value = "";
