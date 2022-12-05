@@ -9,9 +9,8 @@
 // │ ╰──────────────────────────────────────────────────────────────────────╯ │
 // ╰──────────────────────────────────────────────────────────────────────────╯
 
-// TODO: Resolve the global variables in side the code.
-// NOTE:
-// Develop a closure to the global variable "list".
+// TODO: resolve the global variables in side the code.
+// NOTE: develop a closure to the global variable "list".
 
 export const list = [];
 
