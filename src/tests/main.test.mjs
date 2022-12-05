@@ -1,6 +1,7 @@
-import { intParser, regValid } from '../public/main.mjs';
+import { regValid, intParser, checkWork } from '../public/main.mjs';
 import { describe, it } from 'node:test'
 import assert from 'node:assert';
+import ArtWork from '../public/front-modules/classes.def.mjs';
 
 describe ("Main tests to call all other functions in the front end", () => {
 	it("Test-1: it should return true to parse string to int.", () => {
@@ -57,29 +58,29 @@ describe ("Main tests to call all other functions in the front end", () => {
 		assert.strictEqual(current, expected);
 	});
 
-	it("Test-7: it should return true to parse string to int.", () => {
+	it("Test-7: it should return 1 to parse string to int.", () => {
 		let sizes = [1, 2, 3];
 		sizes = regValid(sizes) ;
 		const current = sizes[0];
-		const expected = true;
+		const expected = 1;
 
 		assert.strictEqual(current, expected);
 	});
 
-	it("Test-8: it should return true to parse string to int.", () => {
+	it("Test-8: it should return 2 to parse string to int.", () => {
 		let sizes = [1, 2, 3];
 		sizes = regValid(sizes) ;
 		const current = sizes[1];
-		const expected = true;
+		const expected = 2;
 
 		assert.strictEqual(current, expected);
 	});
 
-	it("Test-9: it should return true to parse string to int.", () => {
+	it("Test-9: it should return 3 to parse string to int.", () => {
 		let sizes = [1, 2, 3];
 		sizes = regValid(sizes) ;
 		const current = sizes[2];
-		const expected = true;
+		const expected = 3;
 
 		assert.strictEqual(current, expected);
 	});
@@ -106,6 +107,41 @@ describe ("Main tests to call all other functions in the front end", () => {
 		const expected = false;
 
 		assert.strictEqual(current, expected);
+	});
+
+	it("Test-13: it should return a ArtWork objectt.", () => {
+		const current = checkWork(["1111", "10", "03", "10"]);
+		const expected = new ArtWork( "1111", 10, 3, 10,);
+		
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("Test-14: it should return a false", () => {
+		const current = checkWork(["1111", "a", "03", "10"]);
+		const expected = false;
+		
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("Test-15: it should return a false", () => {
+		const current = checkWork(["1111", "10", "b", "10"]);
+		const expected = false;
+		
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("Test-16: it should return a false", () => {
+		const current = checkWork(["1111", "10", "03", "c"]);
+		const expected = false;
+		
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("Test-17: it should return a false", () => {
+		const current = checkWork(["1111", "a", "b", "c"]);
+		const expected = false;
+		
+		assert.deepStrictEqual(current, expected);
 	});
 });
 
