@@ -1,32 +1,21 @@
+"use strict"
 import ArtWork from './front-modules/classes.def.mjs';
 import * as Module from './front-modules/functions.front.end.mjs'
 
-Module.crate();
-Module.removeWorks();
 // TODO: design the remove function;
-// the remove function already exist in the function module;
+// TODO: add the correct error message on false cases to each function;
 
 // ╭────────────────────────────────────────────────────────────────────────╮
 // │ This function validates all inputs of the fields provided by the user. │
 // ╰────────────────────────────────────────────────────────────────────────╯
-export function checkAndAcceptWork(code, x, z, y) {
-	// TODO: Not tested yet;
-	const cod = document.getElementById("input_estimate");
-	const length = document.getElementById("input_len");
-	const depth = document.getElementById("input_dep");
-	const height = document.getElementById("input_hig");
+export function checkWork(work) {
+	const proc = regValid(intParser([work[1], work[2], work[3]]));
 
-	// The if statement below allows calls from the tests for the momment.
-	if (!(Boolean(code) && Boolean(x) && Boolean(z) && Boolean(y))) {
-		if (regValid(intParser([length, depth, height])))
-			Module.list.push(new ArtWork(cod, length, depth, height));
-			Module.addWorks(Module.list);
+	if (proc.length > 0) {
+		Module.list.push(new ArtWork(work[0], proc[0], proc[1], proc[2]));
+		return (new ArtWork(work[0], proc[0], proc[1], proc[2]));
 	}
-	else {
-		if (regValid(intParser([x, z, y])) != false)
-			Module.addWorks(new ArtWork(code, x, z, y));
-	}
-	return (Module.cleanInputs());
+	return (false);
 }
 
 
@@ -48,15 +37,36 @@ export function regValid(sizes_parsed) {
 	const regx = /^\d{1,3}$/g.test(sizes_parsed[0]);
 	const regz = /^\d{1,3}$/g.test(sizes_parsed[1]);
 	const regy = /^\d{1,3}$/g.test(sizes_parsed[2]);
-	const result = [regx, regz, regy];
+	const checked = [regx, regz, regy];
 	let i;
 
 	i = 3;
 	while (--i > -1) {
-		if (result[i] === false) {
+		if (checked[i] === false) {
 			// alert(`${sizes_parsed[i]} is not a number. Please try again!`);
 			return (false);
 		}
 	}
-	return (result);
+	return (sizes_parsed);
+}
+
+
+// ╭───────────────────────────────────────────────────────────────────────╮
+// │ This function start the verification of the inputs in the first step. │
+// │ Secondly, calls the other functions from the function.front-modules.  │
+// ╰───────────────────────────────────────────────────────────────────────╯
+export function inOut () {
+// TODO: Not tested yet;
+	const cod = document.getElementById("input_estimate");
+	const length = document.getElementById("input_len");
+	const depth = document.getElementById("input_dep");
+	const height = document.getElementById("input_hig");
+	let tmp;
+
+	tmp = checkWork([cod, length, depth, height]);
+	if (tmp !== false) {
+		Module.list.push(tmp);
+		Module.addWorks(Module.list);
+	}
+	return (Module.cleanInputs());
 }
