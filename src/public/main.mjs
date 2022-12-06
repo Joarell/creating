@@ -1,21 +1,21 @@
-"use strict"
 import ArtWork from './front-modules/classes.def.mjs';
-import * as Module from './front-modules/functions.front.end.mjs'
+import * as module from './front-modules/functions.front.end.mjs'
 
-// TODO: design the remove function;
+
+export const crate = () => {
+	module.crate();
+}
+
 // TODO: add the correct error message on false cases to each function;
 
 // ╭────────────────────────────────────────────────────────────────────────╮
 // │ This function validates all inputs of the fields provided by the user. │
 // ╰────────────────────────────────────────────────────────────────────────╯
 export function checkWork(work) {
-	const proc = regValid(intParser([work[1], work[2], work[3]]));
+	const checked = regValid(intParser([work[1], work[2], work[3]]));
 
-	if (proc.length > 0) {
-		Module.list.push(new ArtWork(work[0], proc[0], proc[1], proc[2]));
-		return (new ArtWork(work[0], proc[0], proc[1], proc[2]));
-	}
-	return (false);
+	return (Array.isArray(checked) ? 
+		new ArtWork(work[0], checked[0], checked[1], checked[2]) : false);
 }
 
 
@@ -55,18 +55,35 @@ export function regValid(sizes_parsed) {
 // │ This function start the verification of the inputs in the first step. │
 // │ Secondly, calls the other functions from the function.front-modules.  │
 // ╰───────────────────────────────────────────────────────────────────────╯
-export function inOut () {
-// TODO: Not tested yet;
-	const cod = document.getElementById("input_estimate");
-	const length = document.getElementById("input_len");
-	const depth = document.getElementById("input_dep");
-	const height = document.getElementById("input_hig");
+export function inOut() {
+	const cod = document.getElementById("input_code").value;
+	const length = document.getElementById("input_len").value;
+	const depth = document.getElementById("input_dep").value;
+	const height = document.getElementById("input_hig").value;
 	let tmp;
 
 	tmp = checkWork([cod, length, depth, height]);
 	if (tmp !== false) {
-		Module.list.push(tmp);
-		Module.addWorks(Module.list);
+		module.list.push(tmp);
+		module.countWorks(module.list);
 	}
-	return (Module.cleanInputs());
+	return (module.cleanInputs());
+}
+
+
+// ╭─────────────────────────────────────────────────────────────────╮
+// │ This is the function to find the work in the list to remove it. │
+// ╰─────────────────────────────────────────────────────────────────╯
+export function catchRemove() {
+	const work = prompt("Please enter the work code to be removed:", "code?");
+	let found;
+	
+	found = module.list.findIndex((item) => {
+		if (item.code === work)
+			return (item.code);
+	});
+	found < 0 ?
+		alert("ArtWork not found, please try again!") :
+		module.removeWorks(module.list, found);
+	return(module.cleanInputs());
 }
