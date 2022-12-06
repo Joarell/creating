@@ -12,7 +12,10 @@
 	<meta name="theme-color">
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)"> -->
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
-	<script type="module" src="main.mjs"></script>
+	<script type="module">
+		import { inOut, crate, catchRemove } from './main.mjs';
+		globalThis.fns = { inOut, crate, catchRemove };
+	</script>
 	<link rel="stylesheet" href="index.css">
 	<title>Layout from scratch - .</title>
 </head>
@@ -53,18 +56,18 @@
 							<input type="text" id="input_hig" name="height" maxlength="3" required>
 						</div>
 						<div class="press">
-							<button class="set_btn" onclick="checkAndAcceptWork()">
+							<button class="set_btn" onclick="globalThis.fns.inOut()">
 								Insert
 								<span aria-hidden class="cyber_btn"></span>
 								<span aria-hidden class="c_btn"></span>
 							</button>
-							<button class="set_btn" onclick="Module.removeWorks()">
+							<button class="set_btn" onclick="globalThis.fns.catchRemove()">
 								Remove
 								<span aria-hidden class="cyber_btn"></span>
 								<span aria-hidden class="c_btn"></span>
 							</button>
 							<div class="press_btn">
-								<button class="button" onclick="Module.crate()" target="myTest">
+								<button class="button" onclick="globalThis.fns.crate()">
 									<mark><strong>Crate!</strong></mark>
 								</button>
 								<svg class="crate_btn">
