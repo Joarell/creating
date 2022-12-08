@@ -13,11 +13,10 @@
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)"> -->
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
 	<script type="module">
-		import { inOut, crate, catchRemove } from './main.mjs';
-		globalThis.fns = { inOut, crate, catchRemove };
+		import { catchWork, crate, catchRemove } from './main.mjs';
+		globalThis.fns = { catchWork, crate, catchRemove };
 	</script>
 	<link rel="stylesheet" href="index.css">
-	<title>Layout from scratch - .</title>
 </head>
 
 <body>
@@ -56,7 +55,7 @@
 							<input type="text" id="input_hig" name="height" maxlength="3" required>
 						</div>
 						<div class="press">
-							<button class="set_btn" onclick="globalThis.fns.inOut()">
+							<button class="set_btn" onclick="globalThis.fns.catchWork()">
 								Insert
 								<span aria-hidden class="cyber_btn"></span>
 								<span aria-hidden class="c_btn"></span>
@@ -86,7 +85,7 @@
 						<p id="cub-air">Air-Cubed: 0</p>
 					</div>
 					<div class="title">
-						<iframe src="result_pane.html" title="Work's list"></iframe>
+						<iframe title="Work's list" src="result_pane.html"></iframe>
 					</div>
 				</div>
 				<div class="menu">
