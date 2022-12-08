@@ -1,11 +1,11 @@
 // ╭──────────────────────────────────────────────────────────────────────────╮
 // │ ╭──────────────────────────────────────────────────────────────────────╮ │
 // │ │ INFO:            These are the second layer of the app:              │ │
-// │ │                        function displayAirCub                        │ │
-// │ │                            function crate                            │ │
-// │ │                          function addWorks                           │ │
-// │ │                         function removeWorks                         │ │
-// │ │                         function cleanInputs                         │ │
+// │ │                        function displayAirCub();                     │ │
+// │ │                            function crate();                         │ │
+// │ │                          function addWorks();                        │ │
+// │ │                         function removeWorks();                      │ │
+// │ │                         function cleanInputs();                      │ │
 // │ ╰──────────────────────────────────────────────────────────────────────╯ │
 // ╰──────────────────────────────────────────────────────────────────────────╯
 
@@ -83,10 +83,8 @@ export function countWorks() {
 // │ This function remove the new work and counts. │
 // ╰───────────────────────────────────────────────╯
 export function removeWorks(n_list, index) {
-	// TODO: - Not tested yet;
+	alert(`The work ${n_list[index].code} was removed from the list`);
 	n_list.splice(index, 1);
-	console.log(list);
-	alert("The work was removed from the list");
 	return (countWorks() && displayAirCub(n_list) && displayCub(n_list));
 }
 
