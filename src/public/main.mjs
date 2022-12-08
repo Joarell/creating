@@ -1,12 +1,24 @@
+//╭───────────────────────────────────────────────────────────────────────────╮
+//│ ╭───────────────────────────────────────────────────────────────────────╮ │
+//│ │ INFO:          These are the functions to the first layer:            │ │
+//│ │                           Function checWork();                        │ │
+//│ │                           Function regValid();                        │ │
+//│ │                          Function catchWork();                        │ │
+//│ │                         Function catchRemove();                       │ │
+//│ ╰───────────────────────────────────────────────────────────────────────╯ │
+//╰───────────────────────────────────────────────────────────────────────────╯
+
+// import { elementTable } from './front-modules/elements.mjs';
 import ArtWork from './front-modules/classes.def.mjs';
 import * as module from './front-modules/functions.front.end.mjs'
 
 
+// ╭────────────────────────────────────────────╮
+// │ This is the trigger to the "crate" button. │
+// ╰────────────────────────────────────────────╯
 export const crate = () => {
 	module.crate();
 }
-
-// TODO: add the correct error message on false cases to each function;
 
 // ╭────────────────────────────────────────────────────────────────────────╮
 // │ This function validates all inputs of the fields provided by the user. │
@@ -34,17 +46,26 @@ export function intParser(dimensions) {
 // │ // Regular expression function to validate if all inputs are numbers. │
 // ╰───────────────────────────────────────────────────────────────────────╯
 export function regValid(sizes_parsed) {
-	const regx = /^\d{1,3}$/g.test(sizes_parsed[0]);
-	const regz = /^\d{1,3}$/g.test(sizes_parsed[1]);
-	const regy = /^\d{1,3}$/g.test(sizes_parsed[2]);
-	const checked = [regx, regz, regy];
 	let i;
+	const regex = /^\d{1,3}$/;
 
 	i = 3;
 	while (--i > -1) {
-		if (checked[i] === false) {
-			// alert(`${sizes_parsed[i]} is not a number. Please try again!`);
-			return (false);
+		if (regex.test(sizes_parsed[i]) === false) {
+			switch (i) {
+				case 2:
+					alert(`The provide HEIGHT is not a valid number.\
+					Please, try again!`);
+					return (false);
+				case 1:
+					alert(`The provide DEPTH is not a valid number.\
+					Please, try again!`);
+					return (false);
+				case 0:
+					alert(`The provide LENGTH is not a valid number.\
+					Please, try again!`);
+					return (false);
+			}
 		}
 	}
 	return (sizes_parsed);
@@ -55,13 +76,18 @@ export function regValid(sizes_parsed) {
 // │ This function start the verification of the inputs in the first step. │
 // │ Secondly, calls the other functions from the function.front-modules.  │
 // ╰───────────────────────────────────────────────────────────────────────╯
-export function inOut() {
+export function catchWork() {
 	const cod = document.getElementById("input_code").value;
 	const length = document.getElementById("input_len").value;
 	const depth = document.getElementById("input_dep").value;
 	const height = document.getElementById("input_hig").value;
 	let tmp;
 
+	switch (cod && length && depth && height) {
+		case "":
+			alert(`Oops! Do not forget to fill each field. Please, try again!`);
+			return (module.cleanInputs());
+	}
 	tmp = checkWork([cod, length, depth, height]);
 	if (tmp !== false) {
 		module.list.push(tmp);
@@ -83,7 +109,8 @@ export function catchRemove() {
 			return (item.code);
 	});
 	found < 0 ?
-		alert("ArtWork not found, please try again!") :
+		alert(`${work} was not found in the list. Please, try again!`) :
 		module.removeWorks(module.list, found);
 	return(module.cleanInputs());
 }
+
