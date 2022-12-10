@@ -40,4 +40,7 @@ export default class ArtWork {
 			return ((x * z * y) / cmToM);
 		return (false);
 	}
+	get vector() {
+		return ([this.code, this.x, this.z, this.y]);
+	}
 }

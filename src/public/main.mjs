@@ -8,7 +8,6 @@
 //│ ╰───────────────────────────────────────────────────────────────────────╯ │
 //╰───────────────────────────────────────────────────────────────────────────╯
 
-// import { elementTable } from './front-modules/elements.mjs';
 import ArtWork from './front-modules/classes.def.mjs';
 import * as module from './front-modules/functions.front.end.mjs'
 
@@ -42,9 +41,9 @@ export function intParser(dimensions) {
 }
 
 
-// ╭───────────────────────────────────────────────────────────────────────╮
-// │ // Regular expression function to validate if all inputs are numbers. │
-// ╰───────────────────────────────────────────────────────────────────────╯
+// ╭────────────────────────────────────────────────────────────────────╮
+// │ Regular expression function to validate if all inputs are numbers. │
+// ╰────────────────────────────────────────────────────────────────────╯
 export function regValid(sizes_parsed) {
 	let i;
 	const regex = /^\d{1,3}$/;
@@ -92,6 +91,7 @@ export function catchWork() {
 	if (tmp !== false) {
 		module.list.push(tmp);
 		module.countWorks(module.list);
+		elementList(module.list);
 	}
 	return (module.cleanInputs());
 }
@@ -114,3 +114,40 @@ export function catchRemove() {
 	return(module.cleanInputs());
 }
 
+
+// ╭────────────────────────────────────────────────────╮
+// │ Retunns the HTML table with all works in the list. │
+// ╰────────────────────────────────────────────────────╯
+export function elementList(nList) {
+	let i;
+	const table = document.createElement("tr");
+
+	i = 0;
+	while (i <= nList.length) {
+		table.innerHTML += nList[i].vector.map(
+			item => `<th>${item}</th>`
+		).join("");
+		i++;
+	}
+	console.log(table);
+	return (table);
+}
+
+
+export function elementTable () {
+	const frameDiv = document.createElement("div");
+	const table = document.createElement("table");
+	const target = document.getElementById("frame-list");
+
+	table.innerHTML = `
+		<th>CODE</th>
+		<th>LENGTH</th>
+		<th>DEPTH</th>
+		<th>HEIGHT</th>
+	`;
+	frameDiv.appendChild(table);
+	target.appendChild(frameDiv);
+	return (target);
+}
+
+elementTable();

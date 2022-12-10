@@ -68,7 +68,6 @@ export function crate() {
 // │ This function adds the new work and counts. │
 // ╰─────────────────────────────────────────────╯
 export function countWorks() {
-	// TODO: Not tested yet;
 	let counter;
 	
 	counter = document.getElementById("count");
@@ -93,7 +92,6 @@ export function removeWorks(n_list, index) {
 //│ This function cleans all fields and puts the cursor in the code input box.│
 //╰───────────────────────────────────────────────────────────────────────────╯
 export function cleanInputs() {
-	// TODO: Not tested yet;
 	document.getElementById("input_code").value = "";
 	document.getElementById("input_code").select();
 	document.getElementById("input_len").value = "";

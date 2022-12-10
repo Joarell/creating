@@ -6,6 +6,7 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="dashboard controls" content="Main Page">
 	<meta name="author" content="Joseph Joarell">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,17 +14,19 @@
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)"> -->
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
 	<script type="module">
-		import { catchWork, crate, catchRemove } from './main.mjs';
-		globalThis.fns = { catchWork, crate, catchRemove };
+		import { elementTable, catchWork, crate, catchRemove } from './main.mjs';
+		globalThis.fns = { elementTable, catchWork, crate, catchRemove };
 	</script>
 	<link rel="stylesheet" href="index.css">
 </head>
 
 <body>
-	<div class="header">
-		<h1>Welcome to the Web Crater AIC!</h1>
-		<p>This is a new site!</p>
-	</div>
+	<header>
+		<div class="header">
+			<h1>Welcome to the Web Crater AIC!</h1>
+			<p>This is a new site!</p>
+		</div>
+	</header>
 	<main>
 		<section>
 			<div class="grid-container">
@@ -55,7 +58,7 @@
 							<input type="text" id="input_hig" name="height" maxlength="3" required>
 						</div>
 						<div class="press">
-							<button class="set_btn" onclick="globalThis.fns.catchWork()">
+							<button class="set_btn" id="insert" onclick="globalThis.fns.catchWork()">
 								Insert
 								<span aria-hidden class="cyber_btn"></span>
 								<span aria-hidden class="c_btn"></span>
@@ -85,16 +88,18 @@
 						<p id="cub-air">Air-Cubed: 0</p>
 					</div>
 					<div class="title">
-						<iframe title="Work's list" src="result_pane.html"></iframe>
+						<iframe id="frame-list" title="Work's list"> </iframe>
 					</div>
 				</div>
 				<div class="menu">
 					<h3>Menu</h3>
 				</div>
 			</div>
-			<div class="footer">
-				<p>Footer</p>
-			</div>
+			<footer>
+				<div class="footer">
+					<p>Footer</p>
+				</div>
+			</footer>
 		</section>
 	</main>
 </body>
