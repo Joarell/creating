@@ -3,6 +3,7 @@ import { describe, it } from 'node:test'
 import assert from 'node:assert';
 import ArtWork from '../public/front-modules/classes.def.mjs';
 
+
 describe ("Main tests to call all other functions in the front end", () => {
 	it("Test-1: it should return true to parse string to int.", () => {
 		let sizes = ["1", "2", "3"];
@@ -142,6 +143,14 @@ describe ("Main tests to call all other functions in the front end", () => {
 		const expected = false;
 		
 		assert.deepStrictEqual(current, expected);
+	});
+
+	it("Test-18: it should return false to parse string to int.", () => {
+		let sizes = ["lap-190", 1, 2, 3];
+		const current = checkWork(sizes);
+		const expected = false;
+
+		assert.strictEqual(current, expected);
 	});
 });
 

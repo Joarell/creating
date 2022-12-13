@@ -10,6 +10,8 @@
 
 import ArtWork from './front-modules/classes.def.mjs';
 import * as module from './front-modules/functions.front.end.mjs'
+import { createDB, addNewWork } from './front-modules/link.storage.mjs';
+
 
 
 // ╭────────────────────────────────────────────╮
@@ -24,7 +26,15 @@ export const crate = () => {
 // ╰────────────────────────────────────────────────────────────────────────╯
 export function checkWork(work) {
 	const checked = regValid(intParser([work[1], work[2], work[3]]));
+	const regex = /[^-a-z-A-Z-0-9]/g;
+	const estimate = document.getElementById("input_estimate").value;
 
+	switch (regex.test(work[0]) || regex.test(estimate)) {
+		case true:
+			alert(`Found special character NOT allowed on "Work code",\
+			or "Estimate" input. Please, try again!`);
+			return (false);
+	}
 	return (Array.isArray(checked) ? 
 		new ArtWork(work[0], checked[0], checked[1], checked[2]) : false);
 }
@@ -46,11 +56,11 @@ export function intParser(dimensions) {
 // ╰────────────────────────────────────────────────────────────────────╯
 export function regValid(sizes_parsed) {
 	let i;
-	const regex = /^\d{1,3}$/;
+	const regex = /\D+[^0-9]{1,3}/;
 
 	i = 3;
 	while (--i > -1) {
-		if (regex.test(sizes_parsed[i]) === false) {
+		if (regex.test(sizes_parsed[i]) === true) {
 			switch (i) {
 				case 2:
 					alert(`The provide HEIGHT is not a valid number.\
@@ -91,11 +101,20 @@ export function catchWork() {
 	if (tmp !== false) {
 		module.list.push(tmp);
 		module.countWorks(module.list);
-		elementList(module.list);
+		// sessionStorage.setItem(
+		// 	JSON.stringify(module.list[0].code),
+		// 	JSON.stringify(module.list[0])
+		// );
+		createDB();
+		addNewWork(module.list[0], module.list.length);
+		alert("Work added");
 	}
 	return (module.cleanInputs());
 }
-
+localStorage.setItem("number", 1);
+localStorage.setItem("number", 2);
+localStorage.setItem("number", 3);
+localStorage.setItem("number", 4);
 
 // ╭─────────────────────────────────────────────────────────────────╮
 // │ This is the function to find the work in the list to remove it. │
@@ -113,41 +132,3 @@ export function catchRemove() {
 		module.removeWorks(module.list, found);
 	return(module.cleanInputs());
 }
-
-
-// ╭────────────────────────────────────────────────────╮
-// │ Retunns the HTML table with all works in the list. │
-// ╰────────────────────────────────────────────────────╯
-export function elementList(nList) {
-	let i;
-	const table = document.createElement("tr");
-
-	i = 0;
-	while (i <= nList.length) {
-		table.innerHTML += nList[i].vector.map(
-			item => `<th>${item}</th>`
-		).join("");
-		i++;
-	}
-	console.log(table);
-	return (table);
-}
-
-
-export function elementTable () {
-	const frameDiv = document.createElement("div");
-	const table = document.createElement("table");
-	const target = document.getElementById("frame-list");
-
-	table.innerHTML = `
-		<th>CODE</th>
-		<th>LENGTH</th>
-		<th>DEPTH</th>
-		<th>HEIGHT</th>
-	`;
-	frameDiv.appendChild(table);
-	target.appendChild(frameDiv);
-	return (target);
-}
-
-elementTable();

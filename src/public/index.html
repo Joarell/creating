@@ -14,8 +14,8 @@
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)"> -->
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
 	<script type="module">
-		import { elementTable, catchWork, crate, catchRemove } from './main.mjs';
-		globalThis.fns = { elementTable, catchWork, crate, catchRemove };
+		import { catchWork, crate, catchRemove } from './main.mjs';
+		globalThis.fns = { catchWork, crate, catchRemove };
 	</script>
 	<link rel="stylesheet" href="index.css">
 </head>
@@ -73,7 +73,7 @@
 									<mark><strong>Crate!</strong></mark>
 								</button>
 								<svg class="crate_btn">
-									<circle class="shape_btn" />
+									<circle class="shape_btn"/>
 								</svg>
 							</div>
 						</div>
@@ -88,7 +88,7 @@
 						<p id="cub-air">Air-Cubed: 0</p>
 					</div>
 					<div class="title">
-						<iframe id="frame-list" title="Work's list"> </iframe>
+						<iframe id="frame-list" title="Work's list" src="./result_pane.html"> </iframe>
 					</div>
 				</div>
 				<div class="menu">
