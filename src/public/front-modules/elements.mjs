@@ -1,12 +1,8 @@
-// globalThis.works = elementTable();
-
-// import ArtWork from "./classes.def.mjs";
-// ╭─────────────────────────────────────────────────────────────╮
-// │ // Returns the observer function to store the artwork list. │
-// ╰─────────────────────────────────────────────────────────────╯
-// export function observerList (n_list) {
-//
-// }
+globalThis.onstorage = () => {
+	if (!sessionStorage.getItem("codes"))
+		sessionStorage.setItem( "codes", []);
+	elementTable();
+}
 
 
 // ╭────────────────────────────────────────────────────╮
@@ -14,15 +10,28 @@
 // ╰────────────────────────────────────────────────────╯
 export function elementTable () {
 	let i;
-	const list = localStorage.getItem('list');
+	let work;
+	let metric;
 	const plot = document.getElementById("sizes");
 
-	i = 0;
-	console.log(list);
-	while (i <= list.length) {
-		plot.innerHTML += list[i].vector.map(
-			item => `<th>${item}</th>`
-		).join("");
-		i++;
+	if(localStorage.getItem("metrica") === "in - inches")
+		metric = "in";
+	else
+		metric = "cm";
+	i = 1;
+	for (i in localStorage.key(i)) {
+		if (localStorage.key(i) !== "metrica" && localStorage.key(i)){
+			work = JSON.parse(localStorage.getItem(localStorage.key(i)));
+			work = Object.values(work);
+			plot.innerHTML += work.map((item, index) => {
+				if (index === 3){
+					return(
+						`<th>${item}</th>
+						<th>${metric}</th>`
+					);
+				}
+				return(`<th>${item}</th>`);
+			}, 0).join("");
+		}
 	}
 }
