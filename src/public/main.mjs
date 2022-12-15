@@ -13,6 +13,31 @@ import * as module from './front-modules/functions.front.end.mjs'
 import { createDB, addNewWork } from './front-modules/link.storage.mjs';
 
 
+// ╭────────────────────────────────────────────────────────╮
+// │ Defines the measure of the works selected by the user. │
+// ╰────────────────────────────────────────────────────────╯
+if (!localStorage.getItem("metrica")){
+	localStorage.setItem(
+		"metrica",
+		document.getElementById("metrica").value
+	);
+}
+globalThis.document.getElementById("metrica").addEventListener("change", () =>{
+	if (!localStorage.getItem("metrica")){
+		localStorage.setItem(
+			"metrica",
+			document.getElementById("metrica").value
+		);
+	}
+	else {
+		alert("Attention! You changed the measurement of the artworks.");
+		localStorage.setItem(
+			"metrica",
+			document.getElementById("metrica").value
+		);
+	}
+}, false);
+
 
 // ╭────────────────────────────────────────────╮
 // │ This is the trigger to the "crate" button. │
@@ -21,6 +46,7 @@ export const crate = () => {
 	module.crate();
 }
 
+
 // ╭────────────────────────────────────────────────────────────────────────╮
 // │ This function validates all inputs of the fields provided by the user. │
 // ╰────────────────────────────────────────────────────────────────────────╯
@@ -28,7 +54,15 @@ export function checkWork(work) {
 	const checked = regValid(intParser([work[1], work[2], work[3]]));
 	const regex = /[^-a-z-A-Z-0-9]/g;
 	const estimate = document.getElementById("input_estimate").value;
-
+	let i;
+	
+	i = 0;
+	for (i in localStorage.key(i)){
+		if(work[0] === localStorage.key(i)){
+			alert(`${work[0]} already added to the list. Please, try again`);
+			return(false);
+		}
+	}
 	switch (regex.test(work[0]) || regex.test(estimate)) {
 		case true:
 			alert(`Found special character NOT allowed on "Work code",\
@@ -81,10 +115,11 @@ export function regValid(sizes_parsed) {
 }
 
 
-// ╭───────────────────────────────────────────────────────────────────────╮
-// │ This function start the verification of the inputs in the first step. │
-// │ Secondly, calls the other functions from the function.front-modules.  │
-// ╰───────────────────────────────────────────────────────────────────────╯
+//╭───────────────────────────────────────────────────────────────────────────╮
+//│   This function start the verification of the inputs in the first step.   │
+//│Secondly, calls the other functions from the modules when all verifications│
+//│                           were done and right.                            │
+//╰───────────────────────────────────────────────────────────────────────────╯
 export function catchWork() {
 	const cod = document.getElementById("input_code").value;
 	const length = document.getElementById("input_len").value;
@@ -101,20 +136,12 @@ export function catchWork() {
 	if (tmp !== false) {
 		module.list.push(tmp);
 		module.countWorks(module.list);
-		// sessionStorage.setItem(
-		// 	JSON.stringify(module.list[0].code),
-		// 	JSON.stringify(module.list[0])
-		// );
-		createDB();
-		addNewWork(module.list[0], module.list.length);
-		alert("Work added");
+		localStorage.setItem(tmp.code, JSON.stringify(tmp));
+		document.getElementById('frame-list').contentWindow.document.reload();
 	}
 	return (module.cleanInputs());
 }
-localStorage.setItem("number", 1);
-localStorage.setItem("number", 2);
-localStorage.setItem("number", 3);
-localStorage.setItem("number", 4);
+
 
 // ╭─────────────────────────────────────────────────────────────────╮
 // │ This is the function to find the work in the list to remove it. │
