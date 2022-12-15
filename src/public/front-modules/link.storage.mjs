@@ -70,23 +70,3 @@ export function addNewWork(work, version){
 		// console.log(request.result.version);
 	}
 }
-
-
-// ╭────────────────────────────────╮
-// │ Adds new works to the database │
-// ╰────────────────────────────────╯
-// export function populateList(nList) {
-// 	// let i;
-// 	//
-// 	// i = 0;
-// 	// while (i <= nList.length) {
-// 	// 	nList[i].map( => {
-// 	// 		console.log(work);
-// 	// 		localStorage.setItem(
-// 	// 			JSON.stringify(work.code),
-// 	// 			JSON.stringify(work));
-// 	// 	});
-// 	// 	i++;
-// 	// }
-//
-// }
