@@ -4,24 +4,25 @@
 // │ │                        function displayAirCub();                     │ │
 // │ │                            function crate();                         │ │
 // │ │                          function addWorks();                        │ │
-// │ │                         function removeWorks();                      │ │
 // │ │                         function cleanInputs();                      │ │
 // │ ╰──────────────────────────────────────────────────────────────────────╯ │
 // ╰──────────────────────────────────────────────────────────────────────────╯
 
-export const list = [];
+import ArtWork from "./classes.def.mjs";
+
 
 // ╭─────────────────────────────────────────────────────────────────────╮
 // │ This function do the calculation of the cub of all works in meters. │
 // ╰─────────────────────────────────────────────────────────────────────╯
-export function displayCub(n_list) {
+export function displayCub() {
 	let result;
 	let element;
 
 	element = document.getElementById("cub-meter");
-	result = n_list.reduce((sum, value) => {
-		return (sum + value.cub);
-	}, 0);
+	result = parseArtWork();
+	result = result.reduce((sum, val) => {
+		return (sum + val.cub);
+	}, 0)
 	element.innerText = "Cubed: " + (Math.floor(result * 1000) / 1000) + "m³";
 	return (element);
 }
@@ -30,16 +31,17 @@ export function displayCub(n_list) {
 // ╭──────────────────────────────────────────────────────────────────────────╮
 // │ Returns a calculation of the cub of all works based on the air companies.│
 // ╰──────────────────────────────────────────────────────────────────────────╯
-export function displayAirCub(n_list) {
+export function displayAirCub() {
 	let result;
 	let element;
 	let std_msg;
 
 	std_msg = "Air-Cubed: ";
 	element = document.getElementById("cub-air");
-	result = n_list.reduce((sum, value) => {
-		return (sum + value.cubeAir);
-	}, 0);
+	result = parseArtWork();
+	result = result.reduce((sum, val) => {
+		return (sum + val.cubeAir);
+	}, 0)
 	element.innerText = std_msg + (Math.floor(result * 1000) / 1000);
 	return (element);
 }
@@ -49,6 +51,7 @@ export function displayAirCub(n_list) {
 // │ This function is the main function of the webapp. It solves the art work │
 // │                         list to possible crates.                         │
 // ╰──────────────────────────────────────────────────────────────────────────╯
+// FIX: Not working yet.
 export function crate() {
 	// TODO: Not tested yet;
 	const estimate = {};
@@ -69,22 +72,12 @@ export function crate() {
 // ╰─────────────────────────────────────────────╯
 export function countWorks() {
 	let counter;
+	let result;
 	
+	result = parseArtWork();
 	counter = document.getElementById("count");
-	counter.innerText = "Counting: " + list.length;
-	displayAirCub(list);
-	displayCub(list);
+	counter.innerText = "Counting: " + result.length;
 	return (counter);
-}
-
-
-// ╭───────────────────────────────────────────────╮
-// │ This function remove the new work and counts. │
-// ╰───────────────────────────────────────────────╯
-export function removeWorks(n_list, index) {
-	alert(`The work ${n_list[index].code} was removed from the list`);
-	n_list.splice(index, 1);
-	return (countWorks() && displayAirCub(n_list) && displayCub(n_list));
 }
 
 
@@ -97,4 +90,27 @@ export function cleanInputs() {
 	document.getElementById("input_len").value = "";
 	document.getElementById("input_dep").value = "";
 	document.getElementById("input_hig").value = "";
+}
+
+// ╭──────────────────────────────────────────────────────╮
+// │ Converts the localStorage data in to ArtWork object. │
+// ╰──────────────────────────────────────────────────────╯
+function parseArtWork(){
+	const db = localStorage;
+	let temp;
+	let i;
+	
+	i = 0;
+	temp = [];
+	while(db.key(i)){
+		if(db.key(i) !== "metrica")
+			temp.push(JSON.parse(db.getItem(db.key(i))));
+		i++;
+	}
+	if(temp[0] !== null){
+		temp = temp.map((work) => {
+			return(new ArtWork(work.code, work.x, work.z, work.y));
+		})
+		return(temp);
+	}
 }
