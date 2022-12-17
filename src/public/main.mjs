@@ -11,6 +11,7 @@
 import ArtWork from './front-modules/classes.def.mjs';
 import * as mod from './front-modules/functions.front.end.mjs'
 
+
 // ╭───────────────────────────────────────────────────────────────────╮
 // │ Calls to each change on the localStorage to update the list pane. │
 // ╰───────────────────────────────────────────────────────────────────╯
@@ -41,7 +42,7 @@ globalThis.document.getElementById("metrica").addEventListener("change", () =>{
 			document.getElementById("metrica").value
 		);
 	}
-},false);
+}, false);
 
 
 // ╭────────────────────────────────────────────╮
