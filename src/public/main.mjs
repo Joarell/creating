@@ -9,23 +9,28 @@
 //╰───────────────────────────────────────────────────────────────────────────╯
 
 import ArtWork from './front-modules/classes.def.mjs';
-import * as module from './front-modules/functions.front.end.mjs'
-import { createDB, addNewWork } from './front-modules/link.storage.mjs';
+import * as mod from './front-modules/functions.front.end.mjs'
 
+// ╭───────────────────────────────────────────────────────────────────╮
+// │ Calls to each change on the localStorage to update the list pane. │
+// ╰───────────────────────────────────────────────────────────────────╯
+globalThis.onload = () => {
+	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
+}
+globalThis.onstorage = () => {
+	alert("updated");
+	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
+}
 
 // ╭────────────────────────────────────────────────────────╮
 // │ Defines the measure of the works selected by the user. │
 // ╰────────────────────────────────────────────────────────╯
-if (!localStorage.getItem("metrica")){
-	localStorage.setItem(
-		"metrica",
-		document.getElementById("metrica").value
-	);
-}
+if (!localStorage.getItem("metrica"))
+	localStorage.setItem( "metrica", document.getElementById("metrica").value);
+
 globalThis.document.getElementById("metrica").addEventListener("change", () =>{
 	if (!localStorage.getItem("metrica")){
-		localStorage.setItem(
-			"metrica",
+		localStorage.setItem("metrica",
 			document.getElementById("metrica").value
 		);
 	}
@@ -36,14 +41,14 @@ globalThis.document.getElementById("metrica").addEventListener("change", () =>{
 			document.getElementById("metrica").value
 		);
 	}
-}, false);
+},false);
 
 
 // ╭────────────────────────────────────────────╮
 // │ This is the trigger to the "crate" button. │
 // ╰────────────────────────────────────────────╯
 export const crate = () => {
-	module.crate();
+	mod.crate();
 }
 
 
@@ -130,16 +135,16 @@ export function catchWork() {
 	switch (cod && length && depth && height) {
 		case "":
 			alert(`Oops! Do not forget to fill each field. Please, try again!`);
-			return (module.cleanInputs());
+			return (mod.cleanInputs());
 	}
 	tmp = checkWork([cod, length, depth, height]);
 	if (tmp !== false) {
-		module.list.push(tmp);
-		module.countWorks(module.list);
 		localStorage.setItem(tmp.code, JSON.stringify(tmp));
-		document.getElementById('frame-list').contentWindow.document.reload();
+		mod.countWorks();
+		mod.displayAirCub();
+		mod.displayCub();
 	}
-	return (module.cleanInputs());
+	return (mod.cleanInputs());
 }
 
 
@@ -148,14 +153,14 @@ export function catchWork() {
 // ╰─────────────────────────────────────────────────────────────────╯
 export function catchRemove() {
 	const work = prompt("Please enter the work code to be removed:", "code?");
-	let found;
 	
-	found = module.list.findIndex((item) => {
-		if (item.code === work)
-			return (item.code);
-	});
-	found < 0 ?
-		alert(`${work} was not found in the list. Please, try again!`) :
-		module.removeWorks(module.list, found);
-	return(module.cleanInputs());
+	if(localStorage.getItem(work)){
+		localStorage.removeItem(work);
+		mod.countWorks();
+		mod.displayAirCub();
+		mod.displayCub();
+	}
+	else
+		alert(`"${work}" was not found in the list. Please, try again!`);
+	return(mod.cleanInputs());
 }
