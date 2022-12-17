@@ -1,7 +1,10 @@
 const extra_math = require("./extras.math.js");
 
 
-//This function is responsible to get only the sizes of the Object split with ",".
+//╭──────────────────────────────────────────────────────────────────╮
+//│ This function is responsible to get only the sizes of the Object │
+//│                         split with ",".                          │
+//╰──────────────────────────────────────────────────────────────────╯
 function splitInt(dimensions, codes) {
 	dimensions = dimensions.split(",");
 	let work_dimensions = [];
@@ -16,8 +19,11 @@ function splitInt(dimensions, codes) {
 }
 
 
-//This function get the codes and sizes of the works from the list proveided.
-function getDimensions(w_list) {
+//╭─────────────────────────────────────────────────────────────╮
+//│ This function get the codes and sizes of the works from the │
+//│                       list proveided.                       │
+//╰─────────────────────────────────────────────────────────────╯
+export function getDimensions(w_list) {
 	let i = 0;
 	let hold = 0;
 	let code = 0;
@@ -33,8 +39,10 @@ function getDimensions(w_list) {
 }
 
 
-//This function provides the airfreight cube to each sizes of the works in the 
-//Object list.
+//╭───────────────────────────────────────────────────────────────────────╮
+//│ This function provides the airfreight cube to each sizes of the works │
+//│                          in the Object list.                          │
+//╰───────────────────────────────────────────────────────────────────────╯
 function cubeAll(w_list) {
 	let result = [];
 	let i = 0;
@@ -48,9 +56,11 @@ function cubeAll(w_list) {
 }
 
 
-//This function acts sorting the smallest work to the biggest one. The "index"
-//argument provides the correct array index where the value is to be sorted.
-function quickSort(works, index) {
+//╭────────────────────────────────────────────────────────────────────────────╮
+//│This function acts sorting the smallest work to the biggest one. The "index"│
+//│ argument provides the correct array index where the value is to be sorted. │
+//╰────────────────────────────────────────────────────────────────────────────╯
+export function quickSort(works, index) {
 	if (works.length <= 1)
 		return works;
 
@@ -65,8 +75,10 @@ function quickSort(works, index) {
 }
 
 
-//This function returns the code and cubed values in new arrays to each code
-//baased on the its sizes.
+//╭───────────────────────────────────────────────────────────────────────────╮
+//│This function returns the code and cubed values in new arrays to each code │
+//│                         baased on the its sizes.                          │
+//╰───────────────────────────────────────────────────────────────────────────╯
 function zipper(codes, cubes, index) {
 	let new_arranje = [];
 
@@ -76,9 +88,11 @@ function zipper(codes, cubes, index) {
 }
 
 
-//This function applies the zipper function to each code and dimensions to 
-//provide a new array sorted with the quickSort function.
-function newArraySorted(works) {
+//╭──────────────────────────────────────────────────────────────────────────╮
+//│ This function applies the zipper function to each code and dimensions to │
+//│         provide a new array sorted with the quickSort function.          │
+//╰──────────────────────────────────────────────────────────────────────────╯
+export function newArraySorted(works) {
 	let new_a = [];
 	let i = 0;
 
@@ -89,5 +103,3 @@ function newArraySorted(works) {
 	}
 	return quickSort(new_a, 1);
 }
-
-module.exports = { getDimensions, newArraySorted, quickSort };
