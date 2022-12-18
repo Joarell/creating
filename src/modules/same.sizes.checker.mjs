@@ -9,8 +9,8 @@
 // │ ╰───────────────────────────────────────────────────────────────────╯ │
 // ╰───────────────────────────────────────────────────────────────────────╯
 
-import * as clean from "./layer.puzzle.man.js";
-import * as arrange from "./labor.same.sizes.man.js";
+import * as clean from "./layer.puzzle.man.mjs";
+import * as arrange from "./labor.same.sizes.man.mjs";
 
 
 // ╭───────────────────────────────────────────────────────────────╮

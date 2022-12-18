@@ -51,7 +51,6 @@ function largeCrate(list, sizes, dimensions) {
 	let z;
 	let y;
 
-	height = 145;
 	len = list.length;
 	x = dimensions[0];
 	z = dimensions[1];
@@ -84,19 +83,20 @@ function doubleCheck(list, sizes, dimensions) {
 	let x;
 	let z;
 	let y;
-	let package;
+	let pack;
 	let height;
+	let i;
 
 	i = 0;
 	x = false;
 	z = false;
 	y = false;
-	package = 5;
+	pack = 5;
 	height = 145;
 	if (list[i][1] >= dimensions[0]) {
 		x = true;
 	}
-	if (list[i][2] >= dimensions[1] * package) {
+	if (list[i][2] >= dimensions[1] * pack) {
 		z = true;
 	}
 	if (list[i][3] + dimensions[2] <= height) {
@@ -119,14 +119,13 @@ function splitSectionCrateFour(list, dimensions) {
 	let z;
 	let definition;
 	let i;
-	let package;
+	let pack;
 
 	i = 0;
-	package = 5;
-	x = dimensions[0] * package;
+	pack = 5;
+	x = dimensions[0] * pack;
 	z = list[i][1];
 	y = list[i][3];
-	tmp = list[i][1];
 	while (i < list.length - 2) {
 		if (list[i][1] < list[i + 2][1]) {
 			z = list[i + 2][1];
@@ -155,12 +154,12 @@ function splitSectionTwo(list, dimensions) {
 	let y;
 	let z;
 	let definition;
-	let package;
+	let pack;
 	let max_hight;
 
-	package = 5;
+	pack = 5;
 	max_hight = 145;
-	x = dimensions[0] * package;
+	x = dimensions[0] * pack;
 	list[0][1] > list[2][1] ? z = list[0][1] : z = list[2][1];
 	if (list[0][3] + list[2][3] < max_hight)
 		y = list[0][3] + list[2][3];
@@ -184,10 +183,10 @@ function splitSectionCrateOne(list, dimensions) {
 	let y;
 	let z;
 	let definition;
-	let package;
+	let pack;
 
-	package = 5;
-	x = list[1] * package;
+	pack = 5;
+	x = list[1] * pack;
 	z = list[0][1];
 	y = list[0][3];
 	list.splice(0, 2);

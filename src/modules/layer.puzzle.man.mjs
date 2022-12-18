@@ -9,7 +9,7 @@
 // │ ╰──────────────────────────────────────────────────────────────╯ │
 // ╰──────────────────────────────────────────────────────────────────╯
 
-import * as next_work from "./next.work.checker.js";
+import * as next_work from "./next.work.checker.mjs";
 
 
 // ╭─────────────────────────────────────────────────────────────────────╮
@@ -88,7 +88,8 @@ export function labor(crate_dim, works, layer, crate) {
 // │ Eliminates the extra array provided by labor and noCanvasOut functions. │
 // ╰─────────────────────────────────────────────────────────────────────────╯
 export function arrayLess(list) {
-	len = list.length;
+	let len = list.length;
+
 	while (len--) {
 		list = list.concat(list[len]);
 		list.splice(len, 1);

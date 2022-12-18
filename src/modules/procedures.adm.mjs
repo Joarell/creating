@@ -12,11 +12,11 @@
 // │ ╰──────────────────────────────────────────────────────────────────────╯ │
 // ╰──────────────────────────────────────────────────────────────────────────╯
 
-import * as next_work from "./next.work.checker.js";
-import * as sort from "./sort.system.js";
-import * as start from "./layer.puzzle.man.js";
-import * as same_size_check from "./same.sizes.checker.js";
-import * as extra_math from "./extras.math.js";
+import * as next_work from "./next.work.checker.mjs";
+import * as sort from "./sort.system.mjs";
+import * as start from "./layer.puzzle.man.mjs";
+import * as same_size_check from "./same.sizes.checker.mjs";
+import * as extra_math from "./extras.math.mjs";
 
 
 // ╭───────────────────────────────────────────────────────────────────────╮
