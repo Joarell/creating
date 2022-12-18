@@ -1,13 +1,23 @@
-const next_work = require("./next.work.checker.js");
-const sort = require("./sort.system.js");
-const clean = require("./layer.puzzle.man.js");
-const arrange = require("./labor.same.sizes.man.js");
+// ╭───────────────────────────────────────────────────────────────────────╮
+// │ ╭───────────────────────────────────────────────────────────────────╮ │
+// │ │ These are functions to suport with the works with the smae sizes. │ │
+// │ │                      function defineCrate();                      │ │
+// │ │                       function zeroSizes();                       │ │
+// │ │                     function howManySizes();                      │ │
+// │ │                       function checking();                        │ │
+// │ │                       function sameSizes();                       │ │
+// │ ╰───────────────────────────────────────────────────────────────────╯ │
+// ╰───────────────────────────────────────────────────────────────────────╯
+
+import * as clean from "./layer.puzzle.man.js";
+import * as arrange from "./labor.same.sizes.man.js";
 
 
-//This function provides de map of each sizes found at howManySizes function.
+// ╭───────────────────────────────────────────────────────────────╮
+// │ Provides de map of each sizes found at howManySizes function. │
+// ╰───────────────────────────────────────────────────────────────╯
 function defineCrate(works_sizes) {
 	let sizes;
-	let crate;
 	let i;
 	let result;
 
@@ -29,7 +39,9 @@ function defineCrate(works_sizes) {
 }
 
 
-//This funciont is responsible to check if all works were put int to the crate.
+// ╭────────────────────────────────────────────────╮
+// │ Checks if all works were put int to the crate. │
+// ╰────────────────────────────────────────────────╯
 function zeroSizes(work_list, sizes) {
 	let crate;
 	let tmp;
@@ -71,9 +83,11 @@ function zeroSizes(work_list, sizes) {
 }
 
 
-//This function is the second part to solve all the equal works with the 
-//same sizes. The design argument is regarding to consolidate or not the works
-//in side de same crate.
+// ╭──────────────────────────────────────────────────────────────────────────╮
+// │ //This function is the second part to solve all the equal works with the │
+// │ //same sizes. The design argument is regarding to consolidate or not the │
+// │                      //works in side de same crate.                      │
+// ╰──────────────────────────────────────────────────────────────────────────╯
 function howManySizes(works) {
 	let len;
 	let counter;
@@ -104,8 +118,10 @@ function howManySizes(works) {
 }
 
 
-//This function check if all sizes of the works is really equal to take it 
-//of the list.
+// ╭──────────────────────────────────────────────────────────────────────────╮
+// │ This function check if all sizes of the works is really equal to take it │
+// │                               of the list.                               │
+// ╰──────────────────────────────────────────────────────────────────────────╯
 function checking(arr, works, length) {
 	let cleaner;
 
@@ -123,9 +139,11 @@ function checking(arr, works, length) {
 }
 
 
-//This function finds the works 4 works or more with the same sizes based on
-//the cube values.
-function sameSizes(list) {
+// ╭─────────────────────────────────────────────────────────────────────────╮
+// │ This function finds the works 4 works or more with the same sizes based │
+// │                           on the cube values.                           │
+// ╰─────────────────────────────────────────────────────────────────────────╯
+export function sameSizes(list) {
 	let len;
 	let equals;
 	let checked;
@@ -156,5 +174,3 @@ function sameSizes(list) {
 	list.unshift(0);
 	return (list);
 }
-
-module.exports = { sameSizes };

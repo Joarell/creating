@@ -1,13 +1,29 @@
-const next_work = require("./next.work.checker.js");
-const sort = require("./sort.system.js");
-const start = require("./layer.puzzle.man.js");
-const same_size_check = require("./same.sizes.checker.js");
-const extra_math = require("./extras.math.js");
+// ╭──────────────────────────────────────────────────────────────────────────╮
+// │ ╭──────────────────────────────────────────────────────────────────────╮ │
+// │ │ These are the functions to deal with all procedures with all modules │ │
+// │ │                     to solve the art work list.                      │ │
+// │ │                     function firstThingFirst();                      │ │
+// │ │                     function sameSizesChecker();                     │ │
+// │ │                         function largest();                          │ │
+// │ │                          function invert();                          │ │
+// │ │                     function defineCrateSizes();                     │ │
+// │ │                    function finishedDimensions();                    │ │
+// │ │                         function lastStep();                         │ │
+// │ ╰──────────────────────────────────────────────────────────────────────╯ │
+// ╰──────────────────────────────────────────────────────────────────────────╯
+
+import * as next_work from "./next.work.checker.js";
+import * as sort from "./sort.system.js";
+import * as start from "./layer.puzzle.man.js";
+import * as same_size_check from "./same.sizes.checker.js";
+import * as extra_math from "./extras.math.js";
 
 
-//This function provides a new list with cubed values, handling with the 
-//object sizes to int, and sort them based on the cube values.
-function firstThingFirst(work_list) {
+// ╭───────────────────────────────────────────────────────────────────────╮
+// │ Provides a new list with cubed values, handling with the object sizes │
+// │            to int, and sort them based on the cube values.            │
+// ╰───────────────────────────────────────────────────────────────────────╯
+export function firstThingFirst(work_list) {
 	let new_list;
 
 	new_list = sort.getDimensions(work_list);
@@ -16,8 +32,10 @@ function firstThingFirst(work_list) {
 }
 
 
-//This function check if were find works with the same sizes on the list.
-function sameSizesChecker(list) {
+// ╭─────────────────────────────────────────────────────────────────────────╮
+// │ This function check if were find works with the same sizes on the list. │
+// ╰─────────────────────────────────────────────────────────────────────────╯
+export function sameSizesChecker(list) {
 	let works_crate;
 
 	works_crate = same_size_check.sameSizes(list);
@@ -30,9 +48,11 @@ function sameSizesChecker(list) {
 }
 
 
-//This function is required when the list has sculptures or furniture.
-//Just to split the list between canvas from every thing else.
-function largest(large_works, layer) {
+// ╭──────────────────────────────────────────────────────────────────────────╮
+// │ This function is required when the list has sculptures or furniture. Just│
+// │          to split the list between canvas from every thing else.         │
+// ╰──────────────────────────────────────────────────────────────────────────╯
+export function largest(large_works, layer) {
 	let colector;
 
 	large_works = start.arrayLess(large_works);
@@ -44,8 +64,10 @@ function largest(large_works, layer) {
 }
 
 
-//This function is responsible to invert the position of the each item in the
-//list.
+// ╭─────────────────────────────────────────────────────────────────────────╮
+// │ This function is responsible to invert the position of the each item in │
+// │                                the list.                                │
+// ╰─────────────────────────────────────────────────────────────────────────╯
 function invert(sizes, len, new_list) {
 
 	if (len < 0)
@@ -55,9 +77,11 @@ function invert(sizes, len, new_list) {
 }
 
 
-//This function returns the ultimate crate size.
-//23, 23, and 28 are external dimensions added due to padding and wood of the
-//crate after it was done.
+// ╭──────────────────────────────────────────────────────────────────────────╮
+// │    This function returns the ultimate crate size. 23, 23, and 28 are     │
+// │ the external dimensions added due to padding and wood of the crate after │
+// │                               it was done.                               │
+// ╰──────────────────────────────────────────────────────────────────────────╯
 function defineCrateSizes(inner_size, layers) {
 	let x;
 	let z;
@@ -79,9 +103,11 @@ function defineCrateSizes(inner_size, layers) {
 }
 
 
-//This is the function is responsible to add the final sizes to each crate in the
-// crates_done list.
-function finishedDimensions(crates_done) {
+// ╭──────────────────────────────────────────────────────────────────────────╮
+// │ This is the function is responsible to add the final sizes to each crate │
+// │                         in the crates_done list.                         │
+// ╰──────────────────────────────────────────────────────────────────────────╯
+export function finishedDimensions(crates_done) {
 	let aux;
 	let map;
 	let result;
@@ -104,9 +130,11 @@ function finishedDimensions(crates_done) {
 }
 
 
-//This function is responsible to handle all last works on the list and return
-//the finished solved list.
-function lastStep(layer_size, list, len, storage) {
+// ╭───────────────────────────────────────────────────────────────────────╮
+// │ This function is responsible to handle all last works on the list and │
+// │                   return the finished solved list.                    │
+// ╰───────────────────────────────────────────────────────────────────────╯
+export function lastStep(layer_size, list, len, storage) {
 	if (list.length <= 0)
 		return (storage);
 	layer_size = next_work.standardLayer(list);
@@ -114,5 +142,3 @@ function lastStep(layer_size, list, len, storage) {
 	storage.push(layer_size);
 	return (lastStep(layer_size, list, len = 0, storage));
 }
-
-module.exports = { firstThingFirst, sameSizesChecker, largest, lastStep, finishedDimensions };

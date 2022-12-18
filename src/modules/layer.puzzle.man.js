@@ -1,9 +1,21 @@
-const next_work = require("./next.work.checker.js");
-const sort = require("./sort.system.js");
+// ╭──────────────────────────────────────────────────────────────────╮
+// │ ╭──────────────────────────────────────────────────────────────╮ │
+// │ │ This is the main module to solve the list filling the crate. │ │
+// │ │                  function workSwapNinety();                  │ │
+// │ │                   function fitingCrate();                    │ │
+// │ │                       function labor()                       │ │
+// │ │                    function arrayLess();                     │ │
+// │ │                   function crateArrange();                   │ │
+// │ ╰──────────────────────────────────────────────────────────────╯ │
+// ╰──────────────────────────────────────────────────────────────────╯
+
+import * as next_work from "./next.work.checker.js";
 
 
-//This function returns the the swap of the work dimensions.
-//It emulates turning 90 degrees angle to fit into the empty crate size.
+// ╭─────────────────────────────────────────────────────────────────────╮
+// │ Returns the the swap of the work dimensions. It emulates turning 90 │
+// │           degrees angle to fit into the empty crate size.           │
+// ╰─────────────────────────────────────────────────────────────────────╯
 function workSwapNinety(work) {
 	let x;
 	let y;
@@ -17,9 +29,11 @@ function workSwapNinety(work) {
 }
 
 
-//This function returns the new empty size into the crate after subtract the
-//dimensions between crate and piece sizes.
-function fitingCrate(c_sizes, p_sizes) {
+// ╭─────────────────────────────────────────────────────────────────────────╮
+// │ Returns the new empty size into the crate after subtract the dimensions │
+// │                     between crate and piece sizes.                      │
+// ╰─────────────────────────────────────────────────────────────────────────╯
+export function fitingCrate(c_sizes, p_sizes) {
 	let result;
 	let x;
 	let y;
@@ -47,8 +61,10 @@ function fitingCrate(c_sizes, p_sizes) {
 }
 
 
-//This function is responsible to fit the works in to the crate layers.
-function labor(crate_dim, works, layer, crate) {
+// ╭───────────────────────────────────────────────────────────────────────╮
+// │ This function is responsible to fit the works in to the crate layers. │
+// ╰───────────────────────────────────────────────────────────────────────╯
+export function labor(crate_dim, works, layer, crate) {
 	let piece;
 	let len;
 	let spin;
@@ -68,9 +84,10 @@ function labor(crate_dim, works, layer, crate) {
 }
 
 
-//This function eliminates the extra array provided by labor and
-//noCanvasOut functions.
-function arrayLess(list) {
+// ╭─────────────────────────────────────────────────────────────────────────╮
+// │ Eliminates the extra array provided by labor and noCanvasOut functions. │
+// ╰─────────────────────────────────────────────────────────────────────────╯
+export function arrayLess(list) {
 	len = list.length;
 	while (len--) {
 		list = list.concat(list[len]);
@@ -80,9 +97,11 @@ function arrayLess(list) {
 }
 
 
-//This function return the crate with possible works on the list and the reset
-//size of the crate until 4 layers.
-function crateArrange(standard_size, list, layer)
+// ╭────────────────────────────────────────────────────────────────────────╮
+// │ This function return the crate with possible works on the list and the │
+// │                reset size of the crate until 4 layers.                 │
+// ╰────────────────────────────────────────────────────────────────────────╯
+export function crateArrange(standard_size, list, layer)
 {
 	let tmp = [];
 	let crate_defined = [];
@@ -94,6 +113,3 @@ function crateArrange(standard_size, list, layer)
 	}
 	return (arrayLess(crate_defined));
 }
-
-
-module.exports = { crateArrange, arrayLess, labor, fitingCrate, crateArrange, };

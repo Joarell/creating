@@ -1,9 +1,24 @@
-const next_work = require("./next.work.checker");
-const man = require("./procedures.adm");
+// ╭─────────────────────────────────────────────────────────────────────────╮
+// │ ╭─────────────────────────────────────────────────────────────────────╮ │
+// │ │ These are the funstions to start and finishes the processo to solve │ │
+// │ │                         the art works list.                         │ │
+// │ │                       function finishedOp();                        │ │
+// │ │                         function sumCub();                          │ │
+// │ │                       function getAirport();                        │ │
+// │ │                       function finalFilter();                       │ │
+// │ │                      function whichAirport();                       │ │
+// │ │                          function boss();                           │ │
+// │ ╰─────────────────────────────────────────────────────────────────────╯ │
+// ╰─────────────────────────────────────────────────────────────────────────╯
+
+import * as next_work from "./next.work.checker";
+import * as man from "./procedures.adm";
 
 
-//This function returns how many crates each airport will have based on the
-//crates from the list.
+// ╭────────────────────────────────────────────────────────────────────╮
+// │ Returns how many crates each airport will have based on the crates │
+// │                           from the list.                           │
+// ╰────────────────────────────────────────────────────────────────────╯
 function finishedOp(list, airports, cubs) {
 	let gru;
 	let vcp;
@@ -17,7 +32,9 @@ function finishedOp(list, airports, cubs) {
 }
 
 
-//This function returns the cub value to each airport.
+// ╭────────────────────────────────────────╮
+// │ Returns the cub value to each airport. │
+// ╰────────────────────────────────────────╯
 function sumCub(goals) {
 	let g_cub;
 	let v_cub;
@@ -34,8 +51,10 @@ function sumCub(goals) {
 }
 
 
-//This function returns which airport each crates should be delivered.
-//The variable "pax_lim" has the limits of the PAX airplane door.
+// ╭─────────────────────────────────────────────────────────────────────╮
+// │ Returns which airport each crates should be delivered. The variable │
+// │         "pax_lim" has the limits of the PAX airplane door.          │
+// ╰─────────────────────────────────────────────────────────────────────╯
 function getAirport (crates) {
 	let gru;
 	let vcp;
@@ -58,7 +77,9 @@ function getAirport (crates) {
 }
 
 
-//This function filters only the final crates that has the string "Final".
+// ╭────────────────────────────────────────────────────────────╮
+// │ Filters only the final crates that has the string "Final". │
+// ╰────────────────────────────────────────────────────────────╯
 function finalFilter(list) {
 	const found = list.filter(word => {
 		if (word[0] === "Final")
@@ -68,8 +89,10 @@ function finalFilter(list) {
 }
 
 
-//This function provides which will be the airport to ship all the crates, or
-//partially between them based on the provided list.
+// ╭─────────────────────────────────────────────────────────────────────────╮
+// │ Provides which will be the airport to ship all the crates, or partially │
+// │                between them based on the provided list.                 │
+// ╰─────────────────────────────────────────────────────────────────────────╯
 function whichAirport(proc_list) {
 	let final_crates;
 	let airports;
@@ -82,9 +105,11 @@ function whichAirport(proc_list) {
 }
 
 
-//This function is responsible to handle all the steps in order to solve the
-//art work list.
-function boss(the_list) {
+// ╭────────────────────────────────────────────────────────────────────────╮
+// │ This function is responsible to handle all the steps in order to solve │
+// │                           the art work list.                           │
+// ╰────────────────────────────────────────────────────────────────────────╯
+export default function boss(the_list) {
 	let crates;
 	let std_layer;
 	let largest;

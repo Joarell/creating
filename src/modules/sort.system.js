@@ -1,4 +1,17 @@
-const extra_math = require("./extras.math.js");
+// ╭─────────────────────────────────────────────────────────────────────────╮
+// │ ╭─────────────────────────────────────────────────────────────────────╮ │
+// │ │ Here you find the first module and functions to prepare all data to │ │
+// │ │                    prepare towards to anothers.                     │ │
+// │ │                        function splitInt();                         │ │
+// │ │                      function getDimensions();                      │ │
+// │ │                         function cubeAll();                         │ │
+// │ │                        function quickSort();                        │ │
+// │ │                         function zipper();                          │ │
+// │ │                     function newArraySorted();                      │ │
+// │ ╰─────────────────────────────────────────────────────────────────────╯ │
+// ╰─────────────────────────────────────────────────────────────────────────╯
+
+import * as extra_math from "./extras.math.js";
 
 
 //╭──────────────────────────────────────────────────────────────────╮
@@ -6,11 +19,13 @@ const extra_math = require("./extras.math.js");
 //│                         split with ",".                          │
 //╰──────────────────────────────────────────────────────────────────╯
 function splitInt(dimensions, codes) {
-	dimensions = dimensions.split(",");
-	let work_dimensions = [];
-	let i = 0;
+	let work_dimensions;
+	let i;
 
-	while (i != 3) {
+	i = 0;
+	work_dimensions = [];
+	dimensions = dimensions.split(",");
+	while (i !== 3) {
 		work_dimensions.push(parseInt(dimensions[i]));
 		i++;
 	}
@@ -70,7 +85,9 @@ export function quickSort(works, index) {
 	let pivot = [works[0]];
 
 	while (i++ < works.length - 1)
-		works[i][index] <= pivot[0][index] ? left.push(works[i]) : right.push(works[i]);
+		works[i][index] <= pivot[0][index] ?
+		left.push(works[i]) :
+		right.push(works[i]);
 	return (quickSort(left, index).concat(pivot, quickSort(right, index)));
 }
 

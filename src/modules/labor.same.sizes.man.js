@@ -1,5 +1,22 @@
-//This function verify which is the better value to "x", toward to reduce the 
-//height measure or depth. 
+// ╭─────────────────────────────────────────────────────────────────────╮
+// │ ╭─────────────────────────────────────────────────────────────────╮ │
+// │ │ These are the functions to support the manager function on this │ │
+// │ │                             module.                             │ │
+// │ │                      function swapSizes();                      │ │
+// │ │                     function largeCrate();                      │ │
+// │ │                     function doubleCheck();                     │ │
+// │ │                function splitSectionCrateFour();                │ │
+// │ │                   function splitSectionTwo();                   │ │
+// │ │                function splitSectionCrateOne();                 │ │
+// │ │                       function manager();                       │ │
+// │ ╰─────────────────────────────────────────────────────────────────╯ │
+// ╰─────────────────────────────────────────────────────────────────────╯
+
+
+// ╭──────────────────────────────────────────────────────────────────────╮
+// │ Verify which is the better value to "x", toward to reduce the height │
+// │                          measure or depth.                           │
+// ╰──────────────────────────────────────────────────────────────────────╯
 function swapSizes (sizes) {
 	let x;
 	let z;
@@ -24,7 +41,9 @@ function swapSizes (sizes) {
 }
 
 
-//This function returns the new crate with more works in side if it's possible.
+// ╭─────────────────────────────────────────────────────────────────╮
+// │ Returns the new crate with more works in side if it's possible. │
+// ╰─────────────────────────────────────────────────────────────────╯
 function largeCrate(list, sizes, dimensions) {
 	let new_crate;
 	let len;
@@ -57,8 +76,10 @@ function largeCrate(list, sizes, dimensions) {
 }
 
 
-//This function call the largerCrate funtion to define a new crate to arrange
-// more works in side.
+// ╭──────────────────────────────────────────────────────────────────────────╮
+// │ Call the largerCrate funtion to define a new crate to arrange more works │
+// │                                 in side.                                 │
+// ╰──────────────────────────────────────────────────────────────────────────╯
 function doubleCheck(list, sizes, dimensions) {
 	let x;
 	let z;
@@ -88,8 +109,10 @@ function doubleCheck(list, sizes, dimensions) {
 }
 
 
-//This function returns the sizes of the crate dealing with all works with the
-//sizes if the dimensions length if equal to four.
+// ╭─────────────────────────────────────────────────────────────────────────╮
+// │ Returns the sizes of the crate dealing with all works with the sizes if │
+// │                 the dimensions length if equal to four.                 │
+// ╰─────────────────────────────────────────────────────────────────────────╯
 function splitSectionCrateFour(list, dimensions) {
 	let x;
 	let y;
@@ -123,8 +146,10 @@ function splitSectionCrateFour(list, dimensions) {
 }
 
 
-//This function returns the sizes of the crate dealing with all works with the
-//sizes if the dimensions length if equal to two.
+// ╭─────────────────────────────────────────────────────────────────────────╮
+// │ Returns the sizes of the crate dealing with all works with the sizes if │
+// │                 the dimensions length if equal to two.                  │
+// ╰─────────────────────────────────────────────────────────────────────────╯
 function splitSectionTwo(list, dimensions) {
 	let x;
 	let y;
@@ -150,8 +175,10 @@ function splitSectionTwo(list, dimensions) {
 }
 
 
-//This function returns the sizes of the crate dealing with all works with the
-//sizes if the dimensions length if equal to one.
+// ╭─────────────────────────────────────────────────────────────────────────╮
+// │ Returns the sizes of the crate dealing with all works with the sizes if │
+// │                 the dimensions length if equal to one.                  │
+// ╰─────────────────────────────────────────────────────────────────────────╯
 function splitSectionCrateOne(list, dimensions) {
 	let x;
 	let y;
@@ -170,9 +197,11 @@ function splitSectionCrateOne(list, dimensions) {
 }
 
 
-//This function does the redirection to the correct function splitSectin base on
-//the list and dimensions provided.
-function manager(list, dimensions) {
+// ╭─────────────────────────────────────────────────────────────────────────╮
+// │ It does the redirection to the correct function splitSectin base on the │
+// │                      list and dimensions provided.                      │
+// ╰─────────────────────────────────────────────────────────────────────────╯
+export function manager(list, dimensions) {
 	let copy;
 	let result;
 
@@ -190,5 +219,3 @@ function manager(list, dimensions) {
 	else (dimensions.length >= 4)
 		return (splitSectionCrateFour(list, dimensions));
 }
-
-module.exports = { manager };

@@ -1,10 +1,22 @@
-const extra_math = require("./extras.math.js");
-const sort = require("./sort.system.js");
+// ╭──────────────────────────────────────────────────────────────────╮
+// │ ╭──────────────────────────────────────────────────────────────╮ │
+// │ │ These are functions to get wich is the type of the art work. │ │
+// │ │                   function noCanvasOut();                    │ │
+// │ │                  function nextWorkNinety();                  │ │
+// │ │                  function cubVersionList();                  │ │
+// │ │                      function limit();                       │ │
+// │ │                   function largestWorks();                   │ │
+// │ │                  function standardLayer();                   │ │
+// │ ╰──────────────────────────────────────────────────────────────╯ │
+// ╰──────────────────────────────────────────────────────────────────╯
+
+import * as extra_math from "./extras.math.js";
 
 
-//This functions returns a new list with the largest works found in the previous
-//one.
-function noCanvasOut(list, len, others) {
+// ╭──────────────────────────────────────────────────────────────────────╮
+// │ Returns a new list with the largest works found in the previous one. │
+// ╰──────────────────────────────────────────────────────────────────────╯
+export function noCanvasOut(list, len, others) {
 	if (len === 0)
 		return;
 	len--;
@@ -14,10 +26,12 @@ function noCanvasOut(list, len, others) {
 }
 
 
-//This function returns the available work to be set in to the actual crate 
-//dimension and it emulates turning 90 degrees motion to try each work can fit
-//into the crate.
-function nextWorkNinety(crate_dim, works, len, spinning) {
+// ╭──────────────────────────────────────────────────────────────────────────╮
+// │ Returns the available work to be set in to the actual crate dimension and│
+// │    it emulates turning 90 degrees motion to try each work can fit into   │
+// │                                the crate.                                │
+// ╰──────────────────────────────────────────────────────────────────────────╯
+export function nextWorkNinety(crate_dim, works, len, spinning) {
 	let sizes;
 
 	if (len == 0)
@@ -44,8 +58,10 @@ function nextWorkNinety(crate_dim, works, len, spinning) {
 }
 
 
-//This function provides the cub calculation to each works sizes.
-function cubVersionList(works) {
+// ╭───────────────────────────────────────────────────╮
+// │ Provides the cub calculation to each works sizes. │
+// ╰───────────────────────────────────────────────────╯
+export function cubVersionList(works) {
 	let i = 0;
 
 	while (i <= works.length - 1) {
@@ -56,8 +72,10 @@ function cubVersionList(works) {
 }
 
 
-//This function validates the limit of a pax (passenger) flight. The actual PAX
-//limit is: 300 x 200 x 160 -cm 
+// ╭───────────────────────────────────────────────────────────────────────╮
+// │ Validates the limit of a pax (passenger) flight. The actual PAX limit │
+// │                        is: 300 x 200 x 160 -cm                        │
+// ╰───────────────────────────────────────────────────────────────────────╯
 function limit(list, new_size) {
 	const x = 300;
 	let len;
@@ -73,9 +91,11 @@ function limit(list, new_size) {
 }
 
 
-//This function provides the standard size of the crate base on the largest 
-//works on the list.
-function largestWorks(list, size) {
+// ╭──────────────────────────────────────────────────────────────────────────╮
+// │ This function provides the standard size of the crate base on the largest│
+// │                            works on the list.                            │
+// ╰──────────────────────────────────────────────────────────────────────────╯
+export function largestWorks(list, size) {
 	let x;
 	let y;
 	let len;
@@ -111,9 +131,11 @@ function largestWorks(list, size) {
 }
 
 
-//This function is responsible to provide the standard crate dimension based on
-//the last half of the list.
-function standardLayer(works) {
+// ╭──────────────────────────────────────────────────────────────────────╮
+// │ This function is responsible to provide the standard crate dimension │
+// │                 based on the last half of the list.                  │
+// ╰──────────────────────────────────────────────────────────────────────╯
+export function standardLayer(works) {
 	let crate_dim = [];
 	let i;
 	let x = [];
@@ -142,5 +164,3 @@ function standardLayer(works) {
 	crate_dim.push(y[0]);
 	return (crate_dim);
 }
-
-module.exports = { standardLayer, nextWorkNinety, cubVersionList, noCanvasOut, largestWorks };

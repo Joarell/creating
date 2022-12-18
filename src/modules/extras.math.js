@@ -1,6 +1,18 @@
-// This is a replic of the pitagoras`s teorem.
-// a**2 = b**2 + c**2
-function pitagoras(a, b, c) {
+// ╭───────────────────────────────────────────────────────────────────╮
+// │ ╭───────────────────────────────────────────────────────────────╮ │
+// │ │ On this module has math functions to solve the artwork list.  │ │
+// │ │                    function pitagoras();                      │ │
+// │ │                      function cubing();                       │ │
+// │ │                     function big_work();                      │ │
+// │ ╰───────────────────────────────────────────────────────────────╯ │
+// ╰───────────────────────────────────────────────────────────────────╯
+
+
+// ╭─────────────────────────────────────────────╮
+// │ This is a replic of the pitagoras`s teorem. │
+// │             a**2 = b**2 + c**2              │
+// ╰─────────────────────────────────────────────╯
+export function pitagoras(a, b, c) {
 	if (a && b && !c) {
 		a = a ** 2;
 		b = b ** 2;
@@ -22,8 +34,10 @@ function pitagoras(a, b, c) {
 }
 
 
-//This function returns the cubed value to the work.
-function cubing(dimensions) {
+// ╭────────────────────────────────────────────────────╮
+// │ This function returns the cubed value to the work. │
+// ╰────────────────────────────────────────────────────╯
+export function cubing(dimensions) {
 	let cm_to_m;
 
 	cm_to_m = 1000000;
@@ -32,8 +46,10 @@ function cubing(dimensions) {
 }
 
 
-//This function returns the biggest cubed work.
-function big_work(work_list) {
+// ╭───────────────────────────────────────────────╮
+// │ This function returns the biggest cubed work. │
+// ╰───────────────────────────────────────────────╯
+export function big_work(work_list) {
 	let i = 0;
 	let cubed = 0;
 	great = 0;
@@ -46,5 +62,3 @@ function big_work(work_list) {
 	}
 	return great;
 }
-
-module.exports = { pitagoras, big_work, cubing };
