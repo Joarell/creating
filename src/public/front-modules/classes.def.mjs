@@ -14,9 +14,9 @@ export default class ArtWork {
 		const x = parseInt(this.x);
 		const z = parseInt(this.z);
 		const y = parseInt(this.y);
-		const regx = /^\d{1,3}$/g.test(x);
-		const regz = /^\d{1,3}$/g.test(z);
-		const regy = /^\d{1,3}$/g.test(y);
+		const regx = /\D+[^0-9]{1,3}/.test(x);
+		const regz = /\D+[^0-9]{1,3}/.test(z);
+		const regy = /\D+[^0-9]{1,3}/.test(y);
 
 		if (regx && regz && regy)
 			return ((x * z * y) / cons);
@@ -32,15 +32,19 @@ export default class ArtWork {
 		const x = parseInt(this.x);
 		const z = parseInt(this.z);
 		const y = parseInt(this.y);
-		const regx = /^\d{1,3}$/g.test(x);
-		const regz = /^\d{1,3}$/g.test(z);
-		const regy = /^\d{1,3}$/g.test(y);
+		const regx = /\D+[^0-9]{1,3}/.test(x);
+		const regz = /\D+[^0-9]{1,3}/.test(z);
+		const regy = /\D+[^0-9]{1,3}/.test(y);
 		
 		if (regx && regz && regy)
 			return ((x * z * y) / cmToM);
 		return (false);
 	}
-	get vector() {
-		return ([this.code, this.x, this.z, this.y]);
+	get vector () {
+		const x = parseInt(this.x);
+		const z = parseInt(this.z);
+		const y = parseInt(this.y);
+
+		return ([this.code, x, z, y]);
 	}
 }

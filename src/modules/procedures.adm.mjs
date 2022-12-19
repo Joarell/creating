@@ -138,6 +138,8 @@ export function lastStep(layer_size, list, len, storage) {
 	if (list.length <= 0)
 		return (storage);
 	layer_size = next_work.standardLayer(list);
+	if(storage === undefined)
+		storage = [];
 	storage = storage.concat(start.crateArrange(layer_size, list, len));
 	storage.push(layer_size);
 	return (lastStep(layer_size, list, len = 0, storage));

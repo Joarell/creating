@@ -153,6 +153,8 @@ export function sameSizes(list) {
 	equals = [];
 	checked = [];
 	remainder = [];
+	if(list.length < 4)
+		return(list);
 	while (len <= list.length - 1) {
 		if (list[len][2] <= 10) {
 			checked = list.splice(0, 1);

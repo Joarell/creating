@@ -11,6 +11,7 @@
 // │ ╰─────────────────────────────────────────────────────────────────────╯ │
 // ╰─────────────────────────────────────────────────────────────────────────╯
 
+import ArtWork from "../public/front-modules/classes.def.mjs";
 import * as extra_math from "./extras.math.mjs";
 
 
@@ -39,18 +40,10 @@ function splitInt(dimensions, codes) {
 //│                       list proveided.                       │
 //╰─────────────────────────────────────────────────────────────╯
 export function getDimensions(w_list) {
-	let i = 0;
-	let hold = 0;
-	let code = 0;
-	let dimensions = [];
-
-	while (i < Object.values(w_list).length) {
-		hold = (Object.values(w_list)[i]);
-		code = (Object.keys(w_list)[i]);
-		dimensions.push(splitInt(hold, code));
-		i++;
-	}
-	return dimensions;
+	const dimensions = w_list.map((work) => {
+		return(work.vector);
+	});
+	return (dimensions);
 }
 
 
