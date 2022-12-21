@@ -45,13 +45,19 @@ globalThis.document.getElementById("metrica").addEventListener("change", () =>{
 }, false);
 
 
-// ╭────────────────────────────────────────────╮
-// │ This is the trigger to the "crate" button. │
-// ╰────────────────────────────────────────────╯
+// ╭──────────────────────────────────────────────────────╮
+// │ This is the trigger to the "crate" and clear button. │
+// ╰──────────────────────────────────────────────────────╯
 export const crate = () => {
 	mod.crate();
 }
+export const clearAll = () => {
+	const del = confirm("Do you really want to delete the whole list?");
 
+	if (del === true)
+		localStorage.clear();
+	mod.cleanInputs();
+}
 
 // ╭────────────────────────────────────────────────────────────────────────╮
 // │ This function validates all inputs of the fields provided by the user. │
@@ -161,6 +167,8 @@ export function catchRemove() {
 		mod.displayAirCub();
 		mod.displayCub();
 	}
+	else if(work === null)
+		return(mod.cleanInputs());
 	else
 		alert(`"${work}" was not found in the list. Please, try again!`);
 	return(mod.cleanInputs());
