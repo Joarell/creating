@@ -11,10 +11,10 @@ export function createDB() {
 		let object;
 	
 		if (!db.objectStoreNames.contains(list)){
-			object = db.createObjectStore(list, {keyPath: "code"});
+			object = db.createObjectStore(list, {keyPath: "reference"});
 			object.createIndex(
-				"code",
-				"code",
+				"reference",
+				"reference",
 				{ unique: true }
 			);
 		}
@@ -28,10 +28,10 @@ export function createDB() {
 		let object;
 	
 		if (!db.objectStoreNames.contains(list)){
-			object = db.createObjectStore(list, {keyPath: "code"});
+			object = db.createObjectStore(list, {keyPath: "reference"});
 			object.createIndex(
-				"code",
-				"code",
+				"reference",
+				"reference",
 				{ unique: true }
 			);
 		}
@@ -42,7 +42,7 @@ export function createDB() {
 // ╭─────────────────────────────────╮
 // │ Adds new works to the database. │
 // ╰─────────────────────────────────╯
-export function addNewWork(work, version){
+export function addNewWork(work, version) {
 	const dataName = "Estimates";
 	const list = document.getElementById("input_estimate").value;
 	const request = indexedDB.open(dataName, version + 1); //take the version with: request.result.version
