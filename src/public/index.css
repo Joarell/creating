@@ -51,8 +51,7 @@ h2::before {
 
 
 iframe {
-	height: 15vh;
-	width: 150vw;
+	width: 13vw;
 	border: none;
 	border-radius: 0.5rem;
 }
@@ -109,6 +108,16 @@ p {
 	margin-left: 8rem;
 }
 
+.box-right {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	column-gap: 10rem;
+}
+
+.grid-row-span-2 {
+	grid-row: span 4;
+}
+
 /* Responsiveness part mechanism */
 @media only screen and (max-width: 600px) {
 	.grid-container {
@@ -121,8 +130,11 @@ p {
 		width: 80vw;
 	}
 	/* The flex display needs to be added to solve some layout problems. */
-	.insertion_left {
-		padding: 1rem 1rem;
+	.insertion_left ~ *{
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		/* padding: 1rem 1rem; */
 	}
 	#metric {
 		margin: 0 0;

@@ -14,8 +14,8 @@
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)"> -->
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
 	<script type="module">
-		import { catchWork, crate, catchRemove } from './main.mjs';
-		globalThis.fns = { catchWork, crate, catchRemove };
+		import { clearAll, catchWork, crate, catchRemove } from './main.mjs';
+		globalThis.fns = { clearAll, catchWork, crate, catchRemove };
 	</script>
 	<link rel="stylesheet" href="index.css">
 </head>
@@ -50,11 +50,12 @@
 							<input type="text" id="input_code" name="code" required>
 						</div>
 						<div class="sizes">
-							<label for="length">Length:</label>
+							<!-- TODO: add hover to length, depth, and height on each field. -->
+							<label for="length">L:</label>
 							<input type="text" id="input_len" name="length" maxlength="3" required>
-							<label for="depth">Depth:</label>
+							<label for="depth">D:</label>
 							<input type="text" id="input_dep" name="depth" maxlength="3" required>
-							<label for="Height">Height:</label>
+							<label for="Height">H:</label>
 							<input type="text" id="input_hig" name="height" maxlength="3" required>
 						</div>
 						<div class="press">
@@ -81,15 +82,18 @@
 				</div>
 				<!--This div provides the overview about the works added before the call of the AI-->
 				<div class="box-right">
-					<h2>Find works list added below:</h2>
+					<h2 id="panel">Find works added:</h2>
+					<div class="title grid-row-span-2">
+						<iframe id="frame-list" title="Work's list" src="./result_pane.html"></iframe>
+					</div>
 					<div>
 						<p id="count">Count works: 0 </p>
 						<p id="cub-meter">Cubed: 0</p>
 						<p id="cub-air">Air-Cubed: 0</p>
 					</div>
-					<div class="title">
-						<iframe id="frame-list" title="Work's list" src="./result_pane.html"> </iframe>
-					</div>
+					<button class="set_btn" id="clear" onclick="globalThis.fns.clearAll()">
+						Clear
+					</button>
 				</div>
 				<div class="menu">
 					<h3>Menu</h3>
