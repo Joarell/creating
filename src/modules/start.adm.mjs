@@ -11,7 +11,7 @@
 // │ ╰─────────────────────────────────────────────────────────────────────╯ │
 // ╰─────────────────────────────────────────────────────────────────────────╯
 
-import ArtWork from "../public/front-modules/classes.def.mjs"
+// import ArtWork from "../public/front-modules/classes.def.mjs"
 import * as next_work from "./next.work.checker.mjs";
 import * as man from "./procedures.adm.mjs";
 
