@@ -10,7 +10,7 @@
 // ╰──────────────────────────────────────────────────────────────────────────╯
 
 import ArtWork from "./classes.def.mjs";
-
+import * as dB from "./link.storage.mjs";
 
 // ╭─────────────────────────────────────────────────────────────────────╮
 // │ This function do the calculation of the cub of all works in meters. │
@@ -59,11 +59,11 @@ export function crate() {
 	const e_code = document.getElementById("input_estimate").value;
 
 	estimate["reference"] = e_code;
-	estimate["list"] = list;
-	console.log(e_code);
+	estimate["list"] = parseArtWork();
+	dB.createDB();
 	// TODO: In this point the function must call the modules to solve the list;
 	// TODO: Async call to save the original list on the DB;
-	// TODO: Return the crates;
+	// TODO: Return the cratese
 	// TODO: Save the crates on the DB;
 }
 
