@@ -1,4 +1,6 @@
-//This is the calls "work" to each work added on the list;
+// ╭────────────────────────────────────────────────────────────╮
+// │ //This is the calls "work" to each work added on the list; │
+// ╰────────────────────────────────────────────────────────────╯
 export default class ArtWork {
 	constructor (code, x, z, y) {
 		this.code = code;
@@ -14,9 +16,9 @@ export default class ArtWork {
 		const x = parseInt(this.x);
 		const z = parseInt(this.z);
 		const y = parseInt(this.y);
-		const regx = /\D+[^0-9]{1,3}/.test(x);
-		const regz = /\D+[^0-9]{1,3}/.test(z);
-		const regy = /\D+[^0-9]{1,3}/.test(y);
+		const regx = /[0-9]{1,3}/.test(x);
+		const regz = /[0-9]{1,3}/.test(z);
+		const regy = /[0-9]{1,3}/.test(y);
 
 		if (regx && regz && regy)
 			return ((x * z * y) / cons);
@@ -32,9 +34,9 @@ export default class ArtWork {
 		const x = parseInt(this.x);
 		const z = parseInt(this.z);
 		const y = parseInt(this.y);
-		const regx = /\D+[^0-9]{1,3}/.test(x);
-		const regz = /\D+[^0-9]{1,3}/.test(z);
-		const regy = /\D+[^0-9]{1,3}/.test(y);
+		const regx = /[0-9]{1,3}/.test(x);
+		const regz = /[0-9]{1,3}/.test(z);
+		const regy = /[0-9]{1,3}/.test(y);
 		
 		if (regx && regz && regy)
 			return ((x * z * y) / cmToM);

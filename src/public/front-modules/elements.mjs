@@ -31,11 +31,11 @@ export function elementTable () {
 			plot.innerHTML += work.map((item, index) => {
 				if (index === 3){
 					return(
-						`<th>${item}</th>
-						<th>${metric}</th>`
+						`<td>${item}</td>
+						<td>${metric}</td>`
 					);
 				}
-				return(`<th>${item}</th>`);
+				return(`<td>${item}</td>`);
 			}, 0).join("");
 		}
 		i++;

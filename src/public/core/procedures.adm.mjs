@@ -82,15 +82,17 @@ function invert(sizes, len, new_list) {
 // │ the external dimensions added due to padding and wood of the crate after │
 // │                               it was done.                               │
 // ╰──────────────────────────────────────────────────────────────────────────╯
-function defineCrateSizes(inner_size, layers) {
+function defineCrateSizes(inner_size, layers, weight) {
 	let x;
 	let z;
 	let y;
 	let external_size;
 
 	x = 23 + inner_size[0];
-	if (layers > 0)
-		z = 23 * layers;		
+	if (weight > 10)
+		z = 23 * layers + weight;
+	if (layers > 1)
+		z = 23 * layers;
 	else
 		z = 23 + inner_size[1];
 	if (inner_size.length > 2)
@@ -111,18 +113,27 @@ export function finishedDimensions(crates_done) {
 	let aux;
 	let map;
 	let result;
+	let depth;
 
 	result = [];
 	map = [];
 	aux = 0;
+	depth = 0;
 	while (crates_done.length > 0) {
 		if (crates_done[0] > aux)
 			aux = crates_done[0];
-		if (crates_done[0].length === 3)
-			map.push(defineCrateSizes(crates_done[0], 0));
-		else if (crates_done[0].length === 2) {
-			map.push(defineCrateSizes(crates_done[0], aux));
-			aux = 0;
+		if(crates_done[0][2] > 10 && crates_done[0][2] > depth)
+			depth = crates_done[0][2];
+		switch(crates_done[0].length){
+			case 3:
+				map.push(defineCrateSizes(crates_done[0], 0, depth));
+				depth = 0;
+				break;
+			case 2:
+				map.push(defineCrateSizes(crates_done[0], aux, depth));
+				aux = 0;
+				depth = 0;
+				break;
 		}
 		map.push(start.arrayLess(crates_done.splice(0, 1)));
 	}

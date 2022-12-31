@@ -11,7 +11,6 @@
 // │ ╰─────────────────────────────────────────────────────────────────────╯ │
 // ╰─────────────────────────────────────────────────────────────────────────╯
 
-import ArtWork from "../public/front-modules/classes.def.mjs";
 import * as extra_math from "./extras.math.mjs";
 
 
@@ -19,20 +18,20 @@ import * as extra_math from "./extras.math.mjs";
 //│ This function is responsible to get only the sizes of the Object │
 //│                         split with ",".                          │
 //╰──────────────────────────────────────────────────────────────────╯
-function splitInt(dimensions, codes) {
-	let work_dimensions;
-	let i;
-
-	i = 0;
-	work_dimensions = [];
-	dimensions = dimensions.split(",");
-	while (i !== 3) {
-		work_dimensions.push(parseInt(dimensions[i]));
-		i++;
-	}
-	work_dimensions.unshift(codes);
-	return work_dimensions;
-}
+// function splitInt(dimensions, codes) {
+// 	let work_dimensions;
+// 	let i;
+//
+// 	i = 0;
+// 	work_dimensions = [];
+// 	dimensions = dimensions.split(",");
+// 	while (i !== 3) {
+// 		work_dimensions.push(parseInt(dimensions[i]));
+// 		i++;
+// 	}
+// 	work_dimensions.unshift(codes);
+// 	return work_dimensions;
+// }
 
 
 //╭─────────────────────────────────────────────────────────────╮

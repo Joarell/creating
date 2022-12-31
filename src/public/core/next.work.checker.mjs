@@ -110,7 +110,7 @@ export function largestWorks(list, size) {
 			y.push(list[len][3])
 		len++;
 	}
-	if (x != 0) {
+	if (x !== 0) {
 		x = x.reduce((sum, value) => {
 			return (sum + value);
 		}, 0);

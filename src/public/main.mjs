@@ -36,7 +36,7 @@ globalThis.document.getElementById("metrica").addEventListener("change", () =>{
 		);
 	}
 	else {
-		alert("Attention! You changed the measurement of the artworks.");
+		confirm("Attention! You are going to change the measurement of the artworks.");
 		localStorage.setItem(
 			"metrica",
 			document.getElementById("metrica").value
@@ -54,8 +54,12 @@ export const crate = () => {
 export const clearAll = () => {
 	const del = confirm("Do you really want to delete the whole list?");
 
-	if (del === true)
+	if (del === true){
+		mod.countWorks();
+		mod.displayAirCub();
+		mod.displayCub();
 		localStorage.clear();
+	}
 	mod.cleanInputs();
 }
 
@@ -102,11 +106,11 @@ export function intParser(dimensions) {
 // ╰────────────────────────────────────────────────────────────────────╯
 export function regValid(sizes_parsed) {
 	let i;
-	const regex = /\D+[^0-9]{1,3}/;
+	const regex = /[0-9]{1,3}/;
 
 	i = 3;
 	while (--i > -1) {
-		if (regex.test(sizes_parsed[i]) === true) {
+		if (regex.test(sizes_parsed[i]) === false) {
 			switch (i) {
 				case 2:
 					alert(`The provide HEIGHT is not a valid number.\

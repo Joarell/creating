@@ -51,7 +51,8 @@ h2::before {
 
 
 iframe {
-	width: 13vw;
+	width: 16vw;
+	height: 16vw;
 	border: none;
 	border-radius: 0.5rem;
 }
@@ -74,6 +75,17 @@ p {
 	font-size: calc(var(--fonts) - 3);
 }
 
+tr, td {
+	text-align: center;
+	padding: 0.25rem 0.5rem;
+	padding: 0.25rem 0.5rem;
+}
+
+tbody:nth-child(even) {
+	border-color: 2rem solid var(--color2);
+	border-radius: 0.5rem;
+	background: linear-gradient(270deg, var(--color3), var(--color1));
+}
 
 /* -------------------------------------------------------------------------- */
 /*					 Starting to edit the elements of the page.				  */
@@ -111,7 +123,7 @@ p {
 .box-right {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	column-gap: 10rem;
+	column-gap: 5rem;
 }
 
 .grid-row-span-2 {
@@ -119,7 +131,7 @@ p {
 }
 
 /* Responsiveness part mechanism */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 480px) {
 	.grid-container {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
@@ -178,7 +190,7 @@ input, select {
 	font-weight: 1rem;
 	text-align: center;
 	border-radius: 0.3rem;
-	padding: 0.01rem 0;
+	padding: 0.01rem 1rem 0 0;
 	outline: none;
 	border: none;
 	border: 0.01rem solid #fff;
@@ -191,7 +203,7 @@ input, select {
 	color: #fff;
 }
 
-.code .sizes, input:focus + label {
+.code .sizes, input:focus {
 	top: -1rem;
 	left: 0;
 	color: #fff;
@@ -265,8 +277,6 @@ mark {
 	stroke: Red;
 	stroke-width: 0.5rem;
 	fill: yellow;
-	/* background: linear-gradient(#00E1FD, #FC007A ); */
-	/* fill: linear-gradient(#00E1FD, #FC007A ); */
 }
 
 /* Add button style */
@@ -305,14 +315,14 @@ mark {
 	padding: 0 0.5rem;
 }
 
+
+#input_len, #input_dep, #input_hig {
+	margin-right: 1rem;
+}
+
+#clear {
+	margin-top: 4rem;
+}
 /* -------------------------------------------------------------------------- */
 /*								Add works pane								  */
 /* -------------------------------------------------------------------------- */
-.title {
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction: row;
-	flex-grow: 0;
-	flex-shrink: 1rem;
-	flex-basis: 3rem;
-}

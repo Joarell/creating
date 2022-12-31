@@ -4,22 +4,12 @@
 export function createDB() {
 	const dataName = "Estimates";
 	const list = document.getElementById("input_estimate").value;
-	const request = indexedDB.open(dataName); //take the version with: request.result.version
+	let request = indexedDB.open(dataName);
+	const version = request.result.version;
 
-	request.onupgradeneeded = (event) => {
-		const db = event.target.result;
-		let object;
-	
-		if (!db.objectStoreNames.contains(list)){
-			object = db.createObjectStore(list, {keyPath: "reference"});
-			object.createIndex(
-				"reference",
-				"reference",
-				{ unique: true }
-			);
-		}
-		alert('ok');
-	}
+	console.log(version);
+	if(version)
+		request = indexedDB.open(dataName, version + 1);
 	request.onerror = (event) => {
 		alert(`ATTENTION: ${event.error}`);
 	}

@@ -11,7 +11,6 @@
 // │ ╰─────────────────────────────────────────────────────────────────────╯ │
 // ╰─────────────────────────────────────────────────────────────────────────╯
 
-// import ArtWork from "../public/front-modules/classes.def.mjs"
 import * as next_work from "./next.work.checker.mjs";
 import * as man from "./procedures.adm.mjs";
 
@@ -124,18 +123,13 @@ export function boss(the_list) {
 	layer = proc_list.length;
 	next_work.noCanvasOut(proc_list, layer, largest);
 	if (largest.length !== 0) {
-		if (crates.length > 0)
-			crates = crates.concat(man.largest(largest, crates, std_layer));
+		if (crates && crates.length > 0)
+			crates = crates.concat(man.largest(largest, crates));
 		else
-			crates = man.largest(largest, crates, std_layer);
+			crates = man.largest(largest, crates);
 	}
 	else
 		next_work.noCanvasOut(proc_list, layer, largest)
 	crates = man.lastStep(std_layer, proc_list, 0, crates);
 	return (whichAirport(man.finishedDimensions(crates)));
 }
-
-// let test = [new ArtWork("00001", "10", "10","10")];
-// test.push(new ArtWork("00002", "100", "10","100"));
-// console.log(test);
-// console.log(boss(test));
