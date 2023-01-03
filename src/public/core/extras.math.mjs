@@ -17,19 +17,19 @@ export function pitagoras(a, b, c) {
 		a = a ** 2;
 		b = b ** 2;
 		c = a - b;
-		return (Math.floor(Math.sqrt(c)));
+		return (Math.floor(Math.sqrt(c) * 100)/100);
 	}
 	else if (a && !b && c) {
 		a = a ** 2;
 		c = c ** 2;
 		b = a - c;
-		return (Math.floor(Math.sqrt(b)));
+		return (Math.floor(Math.sqrt(b) * 100)/100);
 	}
 	else {
 		b = b ** 2;
 		c = c ** 2;
 		a = b + c;
-		return (Math.floor(Math.sqrt(a)));
+		return (Math.floor(Math.sqrt(a) * 100)/100);
 	}
 }
 
@@ -61,4 +61,12 @@ export function big_work(work_list) {
 		}
 	}
 	return great;
+}
+
+
+// ╭─────────────────────────────────╮
+// │ converts centimeters to inches. │
+// ╰─────────────────────────────────╯
+export function convertCmToIn(sizes){
+
 }
