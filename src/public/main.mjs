@@ -16,6 +16,9 @@ import * as mod from './front-modules/functions.front.end.mjs'
 // │ Calls to each change on the localStorage to update the list pane. │
 // ╰───────────────────────────────────────────────────────────────────╯
 globalThis.onload = () => {
+	if (sessionStorage.getItem("reference") > 0)
+		document.getElementById("input_estimate").value = sessionStorage
+		.getItem("reference");
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
 }
 globalThis.onstorage = () => {
@@ -23,12 +26,12 @@ globalThis.onstorage = () => {
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
 }
 
+
 // ╭────────────────────────────────────────────────────────╮
 // │ Defines the measure of the works selected by the user. │
 // ╰────────────────────────────────────────────────────────╯
 if (!localStorage.getItem("metrica"))
 	localStorage.setItem( "metrica", document.getElementById("metrica").value);
-
 globalThis.document.getElementById("metrica").addEventListener("change", () =>{
 	if (!localStorage.getItem("metrica")){
 		localStorage.setItem("metrica",
@@ -36,7 +39,9 @@ globalThis.document.getElementById("metrica").addEventListener("change", () =>{
 		);
 	}
 	else {
-		confirm("Attention! You are going to change the measurement of the artworks.");
+		confirm(
+			"Attention! You are going to change the measurement of the artworks."
+		);
 		localStorage.setItem(
 			"metrica",
 			document.getElementById("metrica").value
@@ -85,6 +90,9 @@ export function checkWork(work) {
 			or "Estimate" input. Please, try again!`);
 			return (false);
 	}
+	if(!sessionStorage.getItem("reference"))
+		sessionStorage.setItem("reference", document
+		.getElementById("input_estimate").value);
 	return (Array.isArray(checked) ? 
 		new ArtWork(work[0], checked[0], checked[1], checked[2]) : false);
 }
@@ -106,7 +114,7 @@ export function intParser(dimensions) {
 // ╰────────────────────────────────────────────────────────────────────╯
 export function regValid(sizes_parsed) {
 	let i;
-	const regex = /[0-9]{1,3}/;
+	const regex = /^[0-9]{1,3}/;
 
 	i = 3;
 	while (--i > -1) {
