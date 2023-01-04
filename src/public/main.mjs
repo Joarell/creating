@@ -12,63 +12,6 @@ import ArtWork from './front-modules/classes.def.mjs';
 import * as mod from './front-modules/functions.front.end.mjs'
 
 
-// ╭───────────────────────────────────────────────────────────────────╮
-// │ Calls to each change on the localStorage to update the list pane. │
-// ╰───────────────────────────────────────────────────────────────────╯
-globalThis.onload = () => {
-	// FIX: update the reference if the user changes it.
-	if (sessionStorage.getItem("reference") > 0)
-		document.getElementById("input_estimate").value = sessionStorage
-		.getItem("reference");
-	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
-}
-globalThis.onstorage = () => {
-	alert("updated");
-	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
-}
-
-
-// ╭────────────────────────────────────────────────────────╮
-// │ Defines the measure of the works selected by the user. │
-// ╰────────────────────────────────────────────────────────╯
-if (!localStorage.getItem("metrica"))
-	localStorage.setItem( "metrica", document.getElementById("metrica").value);
-globalThis.document.getElementById("metrica").addEventListener("change", () =>{
-	if (!localStorage.getItem("metrica")){
-		localStorage.setItem("metrica",
-			document.getElementById("metrica").value
-		);
-	}
-	else {
-		confirm(
-			"Attention! You are going to change the measurement of the artworks."
-		);
-		localStorage.setItem(
-			"metrica",
-			document.getElementById("metrica").value
-		);
-	}
-}, false);
-
-
-// ╭──────────────────────────────────────────────────────╮
-// │ This is the trigger to the "crate" and clear button. │
-// ╰──────────────────────────────────────────────────────╯
-export const crate = () => {
-	mod.crate();
-}
-export const clearAll = () => {
-	const del = confirm("Do you really want to delete the whole list?");
-
-	if (del === true){
-		mod.countWorks();
-		mod.displayAirCub();
-		mod.displayCub();
-		localStorage.clear();
-	}
-	mod.cleanInputs();
-}
-
 // ╭────────────────────────────────────────────────────────────────────────╮
 // │ This function validates all inputs of the fields provided by the user. │
 // ╰────────────────────────────────────────────────────────────────────────╯
@@ -91,9 +34,7 @@ export function checkWork(work) {
 			or "Estimate" input. Please, try again!`);
 			return (false);
 	}
-	if(!sessionStorage.getItem("reference"))
-		sessionStorage.setItem("reference", document
-		.getElementById("input_estimate").value);
+	checkReference();
 	return (Array.isArray(checked) ? 
 		new ArtWork(work[0], checked[0], checked[1], checked[2]) : false);
 }
@@ -185,4 +126,27 @@ export function catchRemove() {
 	else
 		alert(`"${work}" was not found in the list. Please, try again!`);
 	return(mod.cleanInputs());
+}
+
+
+// ╭─────────────────────────────────────────────────────────────────╮
+// │ This functions checks if the reference has changed by the user. │
+// ╰─────────────────────────────────────────────────────────────────╯
+export function checkReference() {
+	const ref = sessionStorage.getItem("reference");
+	const actual = document.getElementById("input_estimate").value;
+	
+	if (ref){
+		if (ref !== actual){
+			if (confirm("ATTENTION! The reference has changed")){
+				sessionStorage.removeItem("reference");
+				sessionStorage.setItem("reference", actual);
+				document.getElementById("input_estimate").value = actual;
+			}
+			else
+				document.getElementById("input_estimate").value = ref;
+		}
+	}
+	else
+		sessionStorage.setItem("reference", actual);
 }
