@@ -13,9 +13,11 @@
 	<meta name="theme-color">
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)"> -->
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
+	<!-- <script type="module" src="front-modules/checkout.mjs"></script> -->
 	<script type="module">
-		import { clearAll, catchWork, crate, catchRemove } from './main.mjs';
-		globalThis.fns = { clearAll, catchWork, crate, catchRemove };
+		import { crate, clearAll } from './front-modules/checkout.mjs';
+		import { catchWork, catchRemove } from './main.mjs';
+		globalThis.fns = { catchWork, crate, catchRemove, crate, clearAll };
 	</script>
 	<link rel="stylesheet" href="index.css">
 </head>

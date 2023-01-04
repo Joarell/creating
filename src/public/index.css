@@ -329,17 +329,6 @@ mark {
 	}
 }
 
-@media only screen and (max-width: 1720px) {
-	iframe {
-		width: 35vw;
-		height: 19vw;
-		border: none;
-		border-radius: 0.5rem;
-	}
-	#metric {
-		margin-left: 5rem;
-	}
-}
 
 @media only screen and (max-width: 880px) {
 	.grid-container, .press {
@@ -348,7 +337,7 @@ mark {
 		padding: 0 1vw;
 	}
 	iframe {
-		width: 80vw;
+		width: 35vw;
 		height: 80vw;
 	}
 	.metric {
@@ -365,5 +354,17 @@ mark {
 	}
 	.grid-row-span-2 {
 		grid-row: span 1;
+	}
+}
+
+@media only screen and (max-width: 1720px) {
+	iframe {
+		width: 35vw;
+		height: 19vw;
+		border: none;
+		border-radius: 0.5rem;
+	}
+	#metric {
+		margin-left: 5rem;
 	}
 }
