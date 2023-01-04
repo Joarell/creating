@@ -13,6 +13,7 @@ import ArtWork from "./classes.def.mjs";
 import * as dB from "./link.storage.mjs";
 import { boss } from "../core/start.adm.mjs";
 
+
 // ╭─────────────────────────────────────────────────────────────────────╮
 // │ This function do the calculation of the cub of all works in meters. │
 // ╰─────────────────────────────────────────────────────────────────────╯
