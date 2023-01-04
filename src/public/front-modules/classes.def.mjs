@@ -43,9 +43,9 @@ export default class ArtWork {
 		return (false);
 	}
 	get vector () {
-		const x = parseInt(this.x);
-		const z = parseInt(this.z);
-		const y = parseInt(this.y);
+		const x = parseFloat(this.x);
+		const z = parseFloat(this.z);
+		const y = parseFloat(this.y);
 
 		return ([this.code, x, z, y]);
 	}
