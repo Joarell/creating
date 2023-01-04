@@ -7,6 +7,8 @@
 // │ ╰───────────────────────────────────────────────────────────────╯ │
 // ╰───────────────────────────────────────────────────────────────────╯
 
+import ArtWork from "../front-modules/classes.def.mjs";
+
 
 // ╭─────────────────────────────────────────────╮
 // │ This is a replic of the pitagoras`s teorem. │
@@ -65,8 +67,46 @@ export function big_work(work_list) {
 
 
 // ╭─────────────────────────────────╮
-// │ converts centimeters to inches. │
+// │ Converts centimeters to inches. │
 // ╰─────────────────────────────────╯
 export function convertCmToIn(sizes){
+	let converted;
+	const inch = 0.39;
 
+	converted = sizes.map((size) => {
+		let i;
+		const dimensions = [size.code];
+
+		i = 0;
+		while (++i <= 3)
+			dimensions.push(Math.floor((size.vector[i] * inch) * 100) / 100);
+		return (dimensions);
+	});
+	converted = converted.map((sizes) => {
+		return(new ArtWork(sizes[0], `${sizes[1]}`, `${sizes[2]}`, `${sizes[3]}`));
+	});
+	return (converted);
+}
+
+
+// ╭─────────────────────────────────╮
+// │ Converts iches to centimenters. │
+// ╰─────────────────────────────────╯
+export function convertInToCm(sizes){
+	let converted;
+	const inch = 0.39;
+
+	converted = sizes.map((size) => {
+		let i;
+		const dimensions = [size.code];
+
+		i = 0;
+		while (++i <= 3)
+			dimensions.push(Math.floor((size.vector[i] / inch) * 100) / 100);
+		return (dimensions);
+	});
+	converted = converted.map((sizes) => {
+		return(new ArtWork(sizes[0], `${sizes[1]}`, `${sizes[2]}`, `${sizes[3]}`));
+	});
+	return (converted);
 }
