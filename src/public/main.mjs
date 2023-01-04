@@ -16,6 +16,7 @@ import * as mod from './front-modules/functions.front.end.mjs'
 // │ Calls to each change on the localStorage to update the list pane. │
 // ╰───────────────────────────────────────────────────────────────────╯
 globalThis.onload = () => {
+	// FIX: update the reference if the user changes it.
 	if (sessionStorage.getItem("reference") > 0)
 		document.getElementById("input_estimate").value = sessionStorage
 		.getItem("reference");

@@ -1,6 +1,6 @@
-/* -------------------------------------------------------------------------- */
-/*					 Here is the "Global settings.							  */
-/* -------------------------------------------------------------------------- */
+/*-----------------------------------------------------------------------------
+					 Here is the "Global settings.
+------------------------------------------------------------------------------*/
 * {
 	box-sizing: border-box;
 }
@@ -45,14 +45,14 @@ h1 {
 }
 
 
-h2::before {
+h2 {
 	font-size: calc(var(fonts) - 2);
 }
 
 
 iframe {
-	width: 16vw;
-	height: 16vw;
+	width: 20vw;
+	height: 15vw;
 	border: none;
 	border-radius: 0.5rem;
 }
@@ -67,6 +67,7 @@ option, select {
 	padding: 0.3rem 0.3rem;
 }
 
+
 p {
 	background: transparent;
 	text-align: left;
@@ -75,11 +76,13 @@ p {
 	font-size: calc(var(--fonts) - 3);
 }
 
+
 tr, td {
 	text-align: center;
 	padding: 0.25rem 0.5rem;
 	padding: 0.25rem 0.5rem;
 }
+
 
 tbody:nth-child(even) {
 	border-color: 2rem solid var(--color2);
@@ -87,15 +90,30 @@ tbody:nth-child(even) {
 	background: linear-gradient(270deg, var(--color3), var(--color1));
 }
 
-/* -------------------------------------------------------------------------- */
-/*					 Starting to edit the elements of the page.				  */
-/* -------------------------------------------------------------------------- */
+
+/*-----------------------------------------------------------------------------
+					 Starting to edit the elements of the page.
+------------------------------------------------------------------------------*/
+.box-right {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	column-gap: 3rem;
+}
+
+#clear {
+	margin: 2rem 0rem;
+}
+
 .grid-container {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
 	column-gap: var(--colg);
 	row-gap: var(--rowg);
 	padding: 0 10vw;
+}
+
+.grid-row-span-2 {
+	grid-row: span 3;
 }
 
 .IO {
@@ -117,49 +135,17 @@ tbody:nth-child(even) {
 }
 
 #metric {
-	margin-left: 8rem;
+	margin-left: 15rem;
 }
 
-.box-right {
+.press {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	column-gap: 5rem;
+	grid-template-columns: repeat(3, 1fr);
 }
 
-.grid-row-span-2 {
-	grid-row: span 4;
-}
-
-/* Responsiveness part mechanism */
-@media only screen and (max-width: 480px) {
-	.grid-container {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-		column-gap: 1rem;
-		padding: 0 1vw;
-	}
-	iframe {
-		width: 80vw;
-	}
-	/* The flex display needs to be added to solve some layout problems. */
-	.insertion_left ~ *{
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		/* padding: 1rem 1rem; */
-	}
-	#metric {
-		margin: 0 0;
-	}
-	.metric {
-		padding-left: 1rem;
-		margin: 0 0 2rem 0;
-	}
-}
-
-/* -------------------------------------------------------------------------- */
-/*					 This is the div to estimate input						  */
-/* -------------------------------------------------------------------------- */
+/*-----------------------------------------------------------------------------
+					 This is the div to estimate input
+------------------------------------------------------------------------------*/
 input, select {
 	font-size: 1rem;
 	font-weight: 550;
@@ -181,9 +167,9 @@ input, select {
 	font-size: 1rem;
 }
 
-/* -------------------------------------------------------------------------- */
-/*					 This is the form to input data.						  */
-/* -------------------------------------------------------------------------- */
+/*-----------------------------------------------------------------------------
+					 This is the form to input data.
+------------------------------------------------------------------------------*/
 .code .sizes, input {
 	background: transparent;
 	width: 3em;
@@ -210,9 +196,9 @@ input, select {
 	font-size: 1.2rem;
 }
 
-/* -------------------------------------------------------------------------- */
-/*								Buttons setup								  */
-/* -------------------------------------------------------------------------- */
+/*-----------------------------------------------------------------------------
+								Buttons setup
+------------------------------------------------------------------------------*/
 /* Main button */
 mark {
 	background-color: Red;
@@ -254,11 +240,10 @@ mark {
 	border-radius: 50%;
 	transition: all 0.3s;
 	cursor: pointer;
-	box-sizing: border-box;
 	overflow: hidden;
 	z-index: 0;
 	text-transform: uppercase;
-	padding: 2.2rem 1.4rem;
+	padding: 2.1rem 1.2rem;
 }
 
 .button:active{
@@ -287,7 +272,7 @@ mark {
 
 .set_btn {
 	color: #fff;
-	margin: 1rem 1rem;
+	margin: 2rem 2rem;
 	padding: 1rem 3rem;
 	background: transparent;
 	border: transparent;
@@ -302,7 +287,7 @@ mark {
 	transform: translateY(0.1rem);
 }
 
-.press, .press_btn {
+.press_btn {
 	display: flex;
 	flex-grow: 0.5rem;
 	flex-wrap: wrap;
@@ -315,7 +300,6 @@ mark {
 	padding: 0 0.5rem;
 }
 
-
 #input_len, #input_dep, #input_hig {
 	margin-right: 1rem;
 }
@@ -323,6 +307,63 @@ mark {
 #clear {
 	margin-top: 4rem;
 }
-/* -------------------------------------------------------------------------- */
-/*								Add works pane								  */
-/* -------------------------------------------------------------------------- */
+
+
+/*-----------------------------------------------------------------------------
+								Add works pane
+------------------------------------------------------------------------------*/
+
+
+/*-----------------------------------------------------------------------------
+								Responsive settings
+------------------------------------------------------------------------------*/
+@media only screen and (max-width: 1990px) {
+	iframe {
+		width: 15vw;
+		height: 15vw;
+		border: none;
+		border-radius: 0.5rem;
+	}
+	#metric {
+		margin-left: 10rem;
+	}
+}
+
+@media only screen and (max-width: 1720px) {
+	iframe {
+		width: 35vw;
+		height: 19vw;
+		border: none;
+		border-radius: 0.5rem;
+	}
+	#metric {
+		margin-left: 5rem;
+	}
+}
+
+@media only screen and (max-width: 880px) {
+	.grid-container, .press {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		padding: 0 1vw;
+	}
+	iframe {
+		width: 80vw;
+		height: 80vw;
+	}
+	.metric {
+		padding-left: 1rem;
+		margin: 0 0 2rem 0;
+	}
+	.box-right {
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+		column-gap: 5rem;
+	}
+	#metric, #metrica {
+		margin: 0rem 1rem 2rem 0rem;
+	}
+	.grid-row-span-2 {
+		grid-row: span 1;
+	}
+}
