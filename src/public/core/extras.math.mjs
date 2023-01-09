@@ -66,47 +66,23 @@ export function big_work(work_list) {
 }
 
 
-// ╭─────────────────────────────────╮
-// │ Converts centimeters to inches. │
-// ╰─────────────────────────────────╯
-export function convertCmToIn(sizes){
-	let converted;
+// ╭─────────────────────────────────────────────────────────────────╮
+// │ Converts the sizes to inches if metric is equal to "in", and to │
+// │             centimeters if metric is equal to "cm".             │
+// ╰─────────────────────────────────────────────────────────────────╯
+export function convertion(sizes, metric){
 	const inch = 0.39;
+	const dim = [sizes.code];
 
-	converted = sizes.map((size) => {
-		let i;
-		const dimensions = [size.code];
-
-		i = 0;
-		while (++i <= 3)
-			dimensions.push(Math.floor((size.vector[i] * inch) * 100) / 100);
-		return (dimensions);
-	});
-	converted = converted.map((sizes) => {
-		return(new ArtWork(sizes[0], `${sizes[1]}`, `${sizes[2]}`, `${sizes[3]}`));
-	});
-	return (converted);
-}
-
-
-// ╭─────────────────────────────────╮
-// │ Converts iches to centimenters. │
-// ╰─────────────────────────────────╯
-export function convertInToCm(sizes){
-	let converted;
-	const inch = 0.39;
-
-	converted = sizes.map((size) => {
-		let i;
-		const dimensions = [size.code];
-
-		i = 0;
-		while (++i <= 3)
-			dimensions.push(Math.floor((size.vector[i] / inch) * 100) / 100);
-		return (dimensions);
-	});
-	converted = converted.map((sizes) => {
-		return(new ArtWork(sizes[0], `${sizes[1]}`, `${sizes[2]}`, `${sizes[3]}`));
-	});
-	return (converted);
+	if (metric === "cm"){
+		dim.push(Math.floor((sizes.x / inch) * 100) / 100);
+		dim.push(Math.floor((sizes.z / inch) * 100) / 100);
+		dim.push(Math.floor((sizes.y / inch) * 100) / 100);
+	}
+	else {
+		dim.push(Math.floor((sizes.x * inch) * 100) / 100);
+		dim.push(Math.floor((sizes.z * inch) * 100) / 100);
+		dim.push(Math.floor((sizes.y * inch) * 100) / 100);
+	}
+	return (dim = new ArtWork(dim[0], dim[1], dim [2], dim [3]));
 }
