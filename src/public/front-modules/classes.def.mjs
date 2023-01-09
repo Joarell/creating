@@ -49,4 +49,27 @@ export default class ArtWork {
 
 		return ([this.code, x, z, y]);
 	}
+	// TODO: not tested yet.
+	convertion(metric){
+		const inch = 0.39;
+		const dimensions = [];
+		const x = parseFloat(this.x);
+		const z = parseFloat(this.z);
+		const y = parseFloat(this.y);
+
+		if (metric === "cm"){
+			dimensions.push(Math.floor((x / inch) * 100) / 100);
+			dimensions.push(Math.floor((z / inch) * 100) / 100);
+			dimensions.push(Math.floor((y / inch) * 100) / 100);
+			return (dimensions);
+		}
+		else if (metric === "in"){
+			dimensions.push(Math.floor((x * inch) * 100) / 100);
+			dimensions.push(Math.floor((z * inch) * 100) / 100);
+			dimensions.push(Math.floor((y * inch) * 100) / 100);
+			return (dimensions);
+		}
+		else
+			return("incorrect value");
+	}
 }
