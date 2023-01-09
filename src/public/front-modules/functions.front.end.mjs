@@ -55,19 +55,22 @@ export function displayAirCub() {
 // │                         list to possible crates.                         │
 // ╰──────────────────────────────────────────────────────────────────────────╯
 export function crate() {
+	let crates;
 	const estimate = {};
 	const e_code = document.getElementById("input_estimate").value;
-	const crates = boss(parseArtWork());
 
-	estimate["reference"] = e_code;
-	estimate["list"] = parseArtWork();
-	estimate["solved"] = crates;
-	// console.log(estimate.solved);
-	dB.createDB();
-	// TODO: In this point the function must call the modules to solve the list;
-	// TODO: Async call to save the original list on the DB;
-	// TODO: Return the cratese
-	// TODO: Save the crates on the DB;
+	if(confirm("Ready to crate all works?")) {
+		crates = checkMetric();
+		estimate["reference"] = e_code;
+		estimate["list"] = parseArtWork();
+		estimate["solved"] = crates;
+		return (dB.createDB());
+		// TODO: In this point the function must call the modules to solve the list;
+		// TODO: Async call to save the original list on the DB;
+		// TODO: Return the crates
+		// TODO: Save the crates on the DB;
+	}
+	return (alert("Aborting!!!"));
 }
 
 
@@ -96,6 +99,7 @@ export function cleanInputs() {
 	document.getElementById("input_hig").value = "";
 }
 
+
 // ╭──────────────────────────────────────────────────────╮
 // │ Converts the localStorage data in to ArtWork object. │
 // ╰──────────────────────────────────────────────────────╯
@@ -115,6 +119,37 @@ function parseArtWork(){
 		temp = temp.map((work) => {
 			return(new ArtWork(work.code, work.x, work.z, work.y));
 		})
-		return(temp);
 	}
+	else
+		return (false);
+	return (temp);
+}
+
+
+// ╭───────────────────────────────────────────────────────────╮
+// │ Checks the works is in inches and converts to centimeters │
+// ╰───────────────────────────────────────────────────────────╯
+function checkMetric() {
+	let list;
+	const works = localStorage;
+
+	list = parseArtWork();
+	if (works.length === 1)
+		return(alert("Oops! Sounds like you not added any work yet.\
+		Please, try again!"));
+	else if(works.getItem("metrica") === "cm - centimeters")
+		return (boss(list));
+	else {
+		list = list.map((sizes) => {
+			let j;
+			const tmp = [sizes.code];
+			const converted = sizes.convertion("cm");
+
+			j = 0;
+			for (j in converted)
+				tmp.push(converted[j]);
+			return (tmp);
+		});
+	}
+	return(boss(list));
 }
