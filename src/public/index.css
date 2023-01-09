@@ -203,10 +203,10 @@ tbody:nth-child(even) {
 	to { opacity: 1; }
 }
 /*-----------------------------------------------------------------------------
-					 This is the div to estimate input
+					 This is the div to side menu
 ------------------------------------------------------------------------------*/
 .menu-nav {
-	padding: 2rem 2rem;
+	padding: 1rem 1rem;
 	font-size: 1rem;
 	font-weight: 600;
 	background: var(--backgrou-transp);
@@ -222,9 +222,40 @@ tbody:nth-child(even) {
 	align-items: center;
 	justify-content: left;
 	position: fixed;
-	margin: 15% 2%;}
+	margin: 15% 5%;}
+
+.currency {
+	background: url("./icons/icons8-exchange-64.png");
+	display: block;
+	background-size: 2rem;
+	padding: 1rem 1rem;
+	margin: 0.4rem 0;
+}
 
 
+.converter {
+	background: url("./icons/icons8-ruler-64.png");
+	display: block;
+	background-size: 2rem;
+	padding: 1rem 1rem;
+	margin: 0.4rem 0;
+}
+
+.updater {
+	background: url("./icons/icons8-update-64.png");
+	display: block;
+	background-size: 2rem;
+	padding: 1rem 1rem;
+	margin: 0.4rem 0;
+}
+
+.done {
+	background: url("./icons/icons8-task-completed-64.png");
+	display: block;
+	background-size: 2rem;
+	padding: 1rem 1rem;
+	margin: 0.4rem 0;
+}
 /*-----------------------------------------------------------------------------
 					 This is the div to estimate input
 ------------------------------------------------------------------------------*/
@@ -248,7 +279,6 @@ input, select {
 	min-width: 10.5rem;
 	font-size: 1rem;
 }
-
 
 /*-----------------------------------------------------------------------------
 					 This is the form to input data.

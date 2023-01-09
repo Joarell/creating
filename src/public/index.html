@@ -13,7 +13,6 @@
 	<meta name="theme-color">
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)"> -->
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
-	<!-- <script type="module" src="front-modules/checkout.mjs"></script> -->
 	<script type="module">
 		import { crate, clearAll } from './front-modules/checkout.mjs';
 		import { catchWork, catchRemove } from './main.mjs';
@@ -30,93 +29,92 @@
 	</header>
 	<div class="menu-nav" style="">
 		<ul class="option">
-			<li><a href="#">Currency</a></li>
-			<li><a href="#">Convert sizes</a></li>
-			<li><a href="#">Update</a></li>
+			<li><a href="#"><i class="currency"></i></a></li>
+			<li><a href="#"><i class="converter"></i></a></li>
+			<li><a href="#"><i class="updater"></i></a></li>
+			<li><a href="#"><i class="done"></i></a></li>
 		</ul>
 	</div>
 	<main>
-		<section>
-			<div class="grid-container">
-				<!-- This Dive is responsible to get the dimensions of the artwork list.-->
-				<div class="insertion_left">
-					<div class="title">
-						<h2>Please, insert the works sizes:</h2>
-					</div>
-					<div class="IO">
-						<div class="input_top">
-							<label for="estimate">Estimate:</label>
-							<input type="text" id="input_estimate" name="estimate" required="">
-							<label for="airCubed" id="metric">Metric:</label>
-							<select name="measure" class="metric" id="metrica">
-								<option>cm - centimeters</option>
-								<option>in - inches</option>
-							</select>
-						</div>
-						<div class="code">
-							<label for="code">Work code:</label>
-							<input type="text" id="input_code" name="code" required>
-						</div>
-						<div class="sizes">
-							<!-- TODO: add hover to length, depth, and height on each field. -->
-							<label class="input_len" for="length">L:</label>
-							<span class="popup-text">Length</span>
-							<input type="text" id="input_len" name="length" maxlength="3" required>
-							<label class="input_dep" for="depth">D:</label>
-							<span class="popup-text">Depth</span>
-							<input type="text" id="input_dep" name="depth" maxlength="3" required>
-							<label class="input_hig" for="Height">H:</label>
-							<span class="popup-text">Height</span>
-							<input type="text" id="input_hig" name="height" maxlength="3" required>
-						</div>
-						<div class="press">
-							<button class="set_btn" id="insert" onclick="globalThis.fns.catchWork()">
-								Insert
-								<span aria-hidden class="cyber_btn"></span>
-								<span aria-hidden class="c_btn"></span>
-							</button>
-							<button class="set_btn" onclick="globalThis.fns.catchRemove()">
-								Remove
-								<span aria-hidden class="cyber_btn"></span>
-								<span aria-hidden class="c_btn"></span>
-							</button>
-							<div class="press_btn">
-								<button class="button" onclick="globalThis.fns.crate()">
-									<mark><strong>Crate!</strong></mark>
-								</button>
-								<svg class="crate_btn">
-									<circle class="shape_btn"/>
-								</svg>
-							</div>
-						</div>
-					</div>
+		<div class="grid-container">
+			<!-- This Dive is responsible to get the dimensions of the artwork list.-->
+			<div class="insertion_left">
+				<div class="title">
+					<h2>Please, insert the works sizes:</h2>
 				</div>
-				<!--This div provides the overview about the works added before the call of the AI-->
-				<div class="box-right">
-					<h2 id="panel">Find works added:</h2>
-					<div class="title grid-row-span-2">
-						<iframe id="frame-list" title="Work's list" src="./result_pane.html"></iframe>
+				<div class="IO">
+					<div class="input_top">
+						<label for="estimate">Estimate:</label>
+						<input type="text" id="input_estimate" name="estimate" required="">
+						<label for="airCubed" id="metric">Metric:</label>
+						<select name="measure" class="metric" id="metrica">
+							<option>cm - centimeters</option>
+							<option>in - inches</option>
+						</select>
 					</div>
-					<div>
-						<p id="count">Count works: 0 </p>
-						<p id="cub-meter">Cubed: 0</p>
-						<p id="cub-air">Air-Cubed: 0</p>
+					<div class="code">
+						<label for="code">Work code:</label>
+						<input type="text" id="input_code" name="code" required>
 					</div>
-					<button class="set_btn" id="clear" onclick="globalThis.fns.clearAll()">
-						Clear
-					</button>
-				</div>
-				<div class="result">
-					<h2 id="panel">Find the crates needed below:</h2>
-					<iframe id="restul-pane" title="List done" src=""></iframe>
+					<div class="sizes">
+						<!-- TODO: add hover to length, depth, and height on each field. -->
+						<label class="input_len" for="length">L:</label>
+						<span class="popup-text">Length</span>
+						<input type="text" id="input_len" name="length" maxlength="3" required>
+						<label class="input_dep" for="depth">D:</label>
+						<span class="popup-text">Depth</span>
+						<input type="text" id="input_dep" name="depth" maxlength="3" required>
+						<label class="input_hig" for="Height">H:</label>
+						<span class="popup-text">Height</span>
+						<input type="text" id="input_hig" name="height" maxlength="3" required>
+					</div>
+					<div class="press">
+						<button class="set_btn" id="insert" onclick="globalThis.fns.catchWork()">
+							Insert
+							<span aria-hidden class="cyber_btn"></span>
+							<span aria-hidden class="c_btn"></span>
+						</button>
+						<button class="set_btn" onclick="globalThis.fns.catchRemove()">
+							Remove
+							<span aria-hidden class="cyber_btn"></span>
+							<span aria-hidden class="c_btn"></span>
+						</button>
+						<div class="press_btn">
+							<button class="button" onclick="globalThis.fns.crate()">
+								<mark><strong>Crate!</strong></mark>
+							</button>
+							<svg class="crate_btn">
+								<circle class="shape_btn"/>
+							</svg>
+						</div>
+					</div>
 				</div>
 			</div>
-			<footer>
-				<div class="footer">
-					<p>Footer</p>
+			<!--This div provides the overview about the works added before the call of the AI-->
+			<div class="box-right">
+				<h2 id="panel">Find works added:</h2>
+				<div class="title grid-row-span-2">
+					<iframe id="frame-list" title="Work's list" src="./result_pane.html"></iframe>
 				</div>
-			</footer>
-		</section>
+				<div>
+					<p id="count">Count works: 0 </p>
+					<p id="cub-meter">Cubed: 0</p>
+					<p id="cub-air">Air-Cubed: 0</p>
+				</div>
+				<button class="set_btn" id="clear" onclick="globalThis.fns.clearAll()">
+					Clear
+				</button>
+			</div>
+			<div class="result">
+				<h2 id="panel">Find the crates needed below:</h2>
+				<iframe id="restul-pane" title="List done" src=""></iframe>
+			</div>
+		</div>
+		<footer>
+			<div class="footer">
+				<p>Footer</p>
+			</div>
+		</footer>
 	</main>
 </body>
 
