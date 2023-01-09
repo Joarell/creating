@@ -10,10 +10,12 @@
 	--color1: #03e9f4; 
 	--color2: #162789; 
 	--color3: #FC007A; 
+	--color4: #FFF; 
 	--font-weight: 600;
 	--colg: 5rem;
-	--rowg: 1rem;
+	--rowg: 3rem;
 	--border: 3rem;
+	--backgrou-transp: #ffffff33
 	counter-reset: headings;
 }
 
@@ -25,6 +27,7 @@
 	background: linear-gradient(#162789, #03e9f4);
 	text-align: center;
 	font-size: var(--font-size);
+	height: 10rem;
 }
 
 
@@ -34,7 +37,6 @@ body {
 	background-position: center;
 	min-width: 20.5rem;
 }
-
 
 
 h1 {
@@ -51,8 +53,8 @@ h2 {
 
 
 iframe {
-	width: 20vw;
-	height: 15vw;
+	width: 100%;
+	height: 100%;
 	border: none;
 	border-radius: 0.5rem;
 }
@@ -72,21 +74,34 @@ p {
 	background: transparent;
 	text-align: left;
 	outline: none;
-	color: #fff;
+	color: var(--color4);
 	font-size: calc(var(--fonts) - 3);
 }
 
 
+section, ul, li, a {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+span {
+	padding-bottom: 5rem;
+}
+
 tr, td {
 	text-align: center;
-	padding: 0.25rem 0.5rem;
-	padding: 0.25rem 0.5rem;
+	padding: 0.5rem 0.5rem;
+	padding: 0.5rem 0.5rem;
+	border-radius: 0.3rem;
 }
 
 
 tbody:nth-child(even) {
+	text-align: center;
 	border-color: 2rem solid var(--color2);
-	border-radius: 0.5rem;
+	border-radius: 5rem;
 	background: linear-gradient(270deg, var(--color3), var(--color1));
 }
 
@@ -104,16 +119,16 @@ tbody:nth-child(even) {
 	margin: 2rem 0rem;
 }
 
-.grid-container {
+.grid-container{
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(50rem, 1fr));
 	column-gap: var(--colg);
 	row-gap: var(--rowg);
-	padding: 0 10vw;
+	padding: 0 14vw;
 }
 
 .grid-row-span-2 {
-	grid-row: span 3;
+	grid-row: span 2;
 }
 
 .IO {
@@ -122,26 +137,93 @@ tbody:nth-child(even) {
 	flex-direction: column;
 }
 
-.insertion_left, .box-right, .result-left {
+.insertion_left, .box-right, .result-left, .result {
 	padding: 2rem 2rem;
 	font-size: 1rem;
 	font-weight: 600;
-	background: rgba(255, 255, 255,.2);
+	background: var(--backgrou-transp);
 	box-sizing: border-box;
-	box-shadow: 0 0.08rem 3.2rem 0 rgba( 31, 38, 135, 0.37 );
+	box-shadow: 0 0.08rem 3.2rem 0 #1F26875E;
 	backdrop-filter: blur( 0.8rem);
 	border-radius: 1rem;
-	border: 0.1rem solid rgba(255, 255, 255, 0.18);
+	border: 0.1rem solid #FFFFFF2E;
 }
 
 #metric {
-	margin-left: 15rem;
+	margin-left: 32%;
 }
 
 .press {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
+	width: 100%;
+	height: 100%;
 }
+
+/*-----------------------------------------------------------------------------
+							Popup hover settings
+------------------------------------------------------------------------------*/
+.popup-text {
+	visibility: hidden;
+	border-radius: var(--border);
+	background: linear-gradient(270deg, var(--color3), var(--color1));
+	color: var(--color4);
+	padding: 0.2rem 0.5rem;
+	position: absolute;
+}
+
+.input_len:hover + .popup-text{
+	visibility: visible;
+	display: inline;
+	margin-bottom: 5rem;
+	-webkit-animation: fadeIn 1s;
+	animation: fadeIn 1s;
+}
+
+.input_dep:hover + .popup-text {
+	visibility: visible;
+	-webkit-animation: fadeIn 1s;
+	animation: fadeIn 1s;
+}
+
+.input_hig:hover + .popup-text {
+	visibility: visible;
+	-webkit-animation: fadeIn 1s;
+	animation: fadeIn 1s;
+}
+
+
+@-webkit-keyframes fadeIn {
+	from { opacity: 0 ;}
+	to { opacity: 1; }
+}
+
+@keyframes fadeIn {
+	from { opacity: 0 ;}
+	to { opacity: 1; }
+}
+/*-----------------------------------------------------------------------------
+					 This is the div to estimate input
+------------------------------------------------------------------------------*/
+.menu-nav {
+	padding: 2rem 2rem;
+	font-size: 1rem;
+	font-weight: 600;
+	background: var(--backgrou-transp);
+	box-sizing: border-box;
+	box-shadow: 0 0.08rem 3.2rem 0 #1F26875E;
+	backdrop-filter: blur( 0.8rem);
+	border-radius: 1rem;
+	border: 0.1rem solid #FFFFFF2E;
+}
+
+.menu-nav {
+	display: flex;
+	align-items: center;
+	justify-content: left;
+	position: fixed;
+	margin: 15% 2%;}
+
 
 /*-----------------------------------------------------------------------------
 					 This is the div to estimate input
@@ -167,6 +249,7 @@ input, select {
 	font-size: 1rem;
 }
 
+
 /*-----------------------------------------------------------------------------
 					 This is the form to input data.
 ------------------------------------------------------------------------------*/
@@ -179,20 +262,20 @@ input, select {
 	padding: 0.01rem 1rem 0 0;
 	outline: none;
 	border: none;
-	border: 0.01rem solid #fff;
+	border: 0.1rem solid var(--color4);
 	margin-bottom: 2rem;
 }
 
 .code .sizes, label {
 	position: relative;
-	padding: -10px 5px 5px 5px;
-	color: #fff;
+	padding: -1em 0.5em 0.5em 0.5rem;
+	color: var(--color4);
 }
 
 .code .sizes, input:focus {
 	top: -1rem;
 	left: 0;
-	color: #fff;
+	color: var(--color4);
 	font-size: 1.2rem;
 }
 
@@ -233,7 +316,7 @@ mark {
 .button {
 	background: transparent;
 	box-sizing: border-box;
-	box-shadow: 0 1.05rem 2.05rem rgba(0,0,0,.6);
+	box-shadow: 0 1.05rem 2.05rem #00000099;
 	border-radius: 0.4rem;
 	border: transparent;
 	position: absolute;
@@ -243,7 +326,7 @@ mark {
 	overflow: hidden;
 	z-index: 0;
 	text-transform: uppercase;
-	padding: 2.1rem 1.2rem;
+	padding: 2.5rem 1.7rem;
 }
 
 .button:active{
@@ -258,9 +341,9 @@ mark {
 .shape_btn {
 	cx: 4rem;
 	cy: 4rem;
-	r: 3rem;
+	r: 3.5rem;
 	stroke: Red;
-	stroke-width: 0.5rem;
+	stroke-width: 0.75rem;
 	fill: yellow;
 }
 
@@ -271,13 +354,13 @@ mark {
 }
 
 .set_btn {
-	color: #fff;
+	color: var(--color4);
 	margin: 2rem 2rem;
 	padding: 1rem 3rem;
 	background: transparent;
 	border: transparent;
 	border-radius: 1rem;
-	box-shadow: 0 1.05rem 2.05rem rgba(0,0,0,.2);
+	box-shadow: 0 1.05rem 2.05rem #00000033;
 	font-weight: 700;
 	font-size: 1.5rem;
 }
@@ -310,19 +393,25 @@ mark {
 
 
 /*-----------------------------------------------------------------------------
-								Add works pane
+								Result pane 
 ------------------------------------------------------------------------------*/
+.restult {
+	grid-column: auto; 
+	padding: 50rem;
+}
 
 
 /*-----------------------------------------------------------------------------
 								Responsive settings
 ------------------------------------------------------------------------------*/
 @media only screen and (max-width: 1990px) {
-	iframe {
-		width: 15vw;
-		height: 15vw;
-		border: none;
-		border-radius: 0.5rem;
+	#panel {
+		display: grid;
+		grid-template-columns: repeat(1fr);
+		padding: 0 1vw;
+	}
+	.grid-row-span-2 {
+		grid-row: span 3;
 	}
 	#metric {
 		margin-left: 10rem;
@@ -330,14 +419,17 @@ mark {
 }
 
 
-@media only screen and (max-width: 880px) {
+@media only screen and (max-width: 800px) {
 	.grid-container, .press {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
 		padding: 0 1vw;
 	}
+	.grid-row-span-2 {
+		grid-row: span 4;
+	}
 	iframe {
-		width: 35vw;
+		width: 78vw;
 		height: 80vw;
 	}
 	.metric {
@@ -351,20 +443,5 @@ mark {
 	}
 	#metric, #metrica {
 		margin: 0rem 1rem 2rem 0rem;
-	}
-	.grid-row-span-2 {
-		grid-row: span 1;
-	}
-}
-
-@media only screen and (max-width: 1720px) {
-	iframe {
-		width: 35vw;
-		height: 19vw;
-		border: none;
-		border-radius: 0.5rem;
-	}
-	#metric {
-		margin-left: 5rem;
 	}
 }
