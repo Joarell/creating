@@ -1,0 +1,9 @@
+.header {
+	position: relative;
+	place-items: center;
+	grid-area: header;
+	background: linear-gradient(to bottom, #162789, #03e9f4);
+	text-align: center;
+	font-size: var(--font-size);
+	height: 10rem;
+}
