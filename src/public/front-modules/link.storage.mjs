@@ -29,6 +29,7 @@ export function createDB() {
 	}
 }
 
+
 // ╭─────────────────────────────────╮
 // │ Adds new works to the database. │
 // ╰─────────────────────────────────╯
