@@ -8,6 +8,7 @@
 // ╰───────────────────────────────────────────────────────────────────────╯
 
 import * as mod from './functions.front.end.mjs'
+import { createDB } from './link.storage.mjs';
 
 
 // ╭───────────────────────────────────────────────────────────────────╮
@@ -19,6 +20,7 @@ globalThis.onload = () => {
 	if (ref)
 		document.getElementById("input_estimate").value = sessionStorage
 		.getItem("reference");
+	createDB();
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
 }
 globalThis.onstorage = () => {
