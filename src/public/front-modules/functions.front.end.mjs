@@ -10,7 +10,7 @@
 // ╰──────────────────────────────────────────────────────────────────────────╯
 
 import ArtWork from "./classes.def.mjs";
-import * as dB from "./link.storage.mjs";
+import * as db from "./link.storage.mjs";
 import { boss } from "../core/start.adm.mjs";
 
 
@@ -63,14 +63,11 @@ export function crate() {
 		crates = checkMetric();
 		estimate["reference"] = e_code;
 		estimate["list"] = parseArtWork();
-		estimate["solved"] = crates;
-		return (dB.createDB());
-		// TODO: In this point the function must call the modules to solve the list;
-		// TODO: Async call to save the original list on the DB;
+		estimate["crates"] = crates;
+		return (db.addNewWorks(estimate));
 		// TODO: Return the crates
 		// TODO: Save the crates on the DB;
 	}
-	return (alert("Aborting!!!"));
 }
 
 
