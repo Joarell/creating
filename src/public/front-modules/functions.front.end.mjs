@@ -54,7 +54,7 @@ export function displayAirCub() {
 // │ This function is the main function of the webapp. It solves the art work │
 // │                         list to possible crates.                         │
 // ╰──────────────────────────────────────────────────────────────────────────╯
-export function crate() {
+export async function crate() {
 	let crates;
 	const estimate = {};
 	const e_code = document.getElementById("input_estimate").value;
@@ -64,7 +64,9 @@ export function crate() {
 		estimate["reference"] = e_code;
 		estimate["list"] = parseArtWork();
 		estimate["crates"] = crates;
-		return (db.addNewWorks(estimate));
+		db.addNewWorks(estimate);
+		sessionStorage.setItem("crate", "pressed");
+		// return(globalThis.location.reload());
 		// TODO: Return the crates
 		// TODO: Save the crates on the DB;
 	}
