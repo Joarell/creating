@@ -1,10 +1,35 @@
-version: "3"
+version: "3.8"
 
 services:
   app:
+    container_name: web_crater
     build: .
     command: npm start
     ports:
       - "3000:3000"
     volumes:
       - .:/usr/app
+  db:
+    container_name: postgres_container
+    image: postgres:alpine
+    env_file: .env
+    # environment:
+    #   USER: "user:${PGUSER}"
+    #   PASSW: "password:${PGPASSWORD}"
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    volumes:
+      - db-data:/etc/postgresql/data
+    # networks:
+    #   - backend
+
+volumes:
+  db-data:
+    name: "testin-started"
+
+# networks:
+#   backend:
+#     external: true
+#     name: none
