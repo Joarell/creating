@@ -23,7 +23,7 @@ export function elementTable () {
 	else
 		metric = "cm";
 	i = 0;
-	createHeader();
+	createHeader(plot);
 	while (localStorage.key(i)) {
 		if(localStorage.key(i) !== "metrica"){
 			work = JSON.parse(localStorage.getItem(localStorage.key(i)));
@@ -42,16 +42,16 @@ export function elementTable () {
 	}
 }
 
+
 // ╭──────────────────────────────────────────────────────────────────────────╮
 // │ // This is the header creator when the page or localStorage are updated. │
 // ╰──────────────────────────────────────────────────────────────────────────╯
-function createHeader(){
-	const element = document.getElementById("sizes");
+export function createHeader(table){
 	const head = document.createElement("tr");
 	
-	if(element.parentNode){
-		while(element.firstChild)
-			element.removeChild(element.firstChild)
+	if(table.parentNode){
+		while(table.firstChild)
+			table.removeChild(table.firstChild)
 	}
 	head.innerHTML =`
 		<tr>
@@ -61,5 +61,5 @@ function createHeader(){
 			<th>HEIGHT</th>
 		</tr>
 	`
-	return(element.appendChild(head));
+	return(table.appendChild(head));
 }

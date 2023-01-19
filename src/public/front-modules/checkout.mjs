@@ -24,7 +24,6 @@ globalThis.onload = () => {
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
 }
 globalThis.onstorage = () => {
-	alert("updated");
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
 }
 
