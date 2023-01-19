@@ -5,5 +5,4 @@ works.txt
 .vscode
 node_modules
 package-lock.json
-package.json
 .vimspector.json
