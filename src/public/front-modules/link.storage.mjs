@@ -14,7 +14,6 @@
 // ╰───────────────────────────────╯
 export function createDB() {
 	const dataName = "Results";
-	// const list = document.getElementById("input_estimate").value;
 	const request = globalThis.indexedDB.open(dataName);
 
 	request.onerror = (event) => {
@@ -49,7 +48,6 @@ export function addNewWorks(works) {
 		object = db.transaction("Results", "readwrite").objectStore("Results");
 		object.put(works);
 		gettinData(list);
-		return(globalThis.location.reload());
 	}
 }
 
@@ -61,7 +59,7 @@ export function deleteData(reference) {
 	const request = globalThis.indexedDB.open("Results");
 
 	request.onerror = (event) => {
-		alert(`ATTENTION: ${event.target.errorCode}`);
+		alert(`OPS!: ${event.target.errorCode}`);
 	}
 	request.onsuccess = (event) => {
 		const db = event.target.result;
@@ -74,17 +72,14 @@ export function deleteData(reference) {
 // ╭────────────────────────────────────╮
 // │ Returns the estimate on indexedDB. │
 // ╰────────────────────────────────────╯
-export function gettinData(reference){
+export async function gettinData(reference){
 	const request = globalThis.indexedDB.open("Results");
 
 	request.onerror = (event) => {
-		alert(`ATTETNTION: ${event.target.errorCode}`);
+		alert(`WARNING: ${event.target.errorCode}`);
 	};
 	request.onsuccess = (event) => {
-		const db = event.target.result;
-		const data = db.transaction("Results", "readonly");
-		const info = data.objectStore("Results").get(reference);
-		
-		return(info.result);
-	};
+		const db = event.target.result.transaction("Results");
+		return (db.objectStore("Results").get(reference));
+	}
 }
