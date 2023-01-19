@@ -11,6 +11,7 @@
 	--color2: #162789; 
 	--color3: #FC007A; 
 	--color4: #FFF; 
+	--color5: #554
 	--font-weight: 600;
 	--colg: 5rem;
 	--rowg: 3rem;
@@ -203,15 +204,13 @@ label:hover + .popup-text {
 	border-radius: var(--border);
 	background: linear-gradient(270deg, var(--color3), var(--color1));
 	color: var(--color4);
-	margin-right: 28rem;
-	padding: 0.2rem 0.5rem;
+	padding: 0.3rem 0.5rem;
 	position: absolute;
-	z-index: auto;
-	margin: -2.5rem 0 0 -10rem ;
+	margin: -3rem 0 0 -8rem ;
+	overflow: hidden;
 }
 
 .menu-nav {
-	padding: 1rem 1rem;
 	font-size: 1rem;
 	font-weight: 600;
 	background: var(--backgrou-transp);
@@ -224,55 +223,44 @@ label:hover + .popup-text {
 
 .menu-nav {
 	display: flex;
+	flex-shrink: 0;
+	flex-basis: auto;
 	align-items: center;
-	justify-content: left;
 	position: fixed;
 	margin: 0% 9%;
 }
 
+.currency, .converter, .updater, .done, .consult {
+	display: block;
+	padding: 1.9rem 1.9rem;
+	transform: scale(0.5);
+	position: center;
+}
+
 .currency {
 	background: url("./icons/icons8-exchange-64.png");
-	display: block;
-	background-size: 2rem;
-	padding: 1rem 1rem;
-	margin: 0.4rem 0;
 }
 
 .converter {
 	background: url("./icons/icons8-ruler-64.png");
-	display: block;
-	background-size: 2rem;
-	padding: 1rem 1rem;
-	margin: 0.4rem 0;
 }
 
 .updater {
 	background: url("./icons/icons8-update-64.png");
-	display: block;
-	background-size: 2rem;
-	padding: 1rem 1rem;
-	margin: 0.4rem 0;
 }
 
 .done {
 	background: url("./icons/icons8-task-completed-64.png");
-	display: block;
-	background-size: 2rem;
-	padding: 1rem 1rem;
-	margin: 0.4rem 0;
 }
 
 .consult {
 	background: url("./icons/lupa.png");
-	display: block;
-	background-size: 2rem;
-	padding: 1rem 1rem;
-	margin: 0.4rem 0;
 }
 
 li:hover + .text{
+	display: flex;
+
 	visibility: visible;
-	display: inline;
 	-webkit-animation: fadeIn 1s;
 	animation: fadeIn 1s;
 }
