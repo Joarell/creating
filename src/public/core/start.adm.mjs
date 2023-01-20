@@ -20,13 +20,13 @@ import * as man from "./procedures.adm.mjs";
 // │                           from the list.                           │
 // ╰────────────────────────────────────────────────────────────────────╯
 function finishedOp(list, airports, cubs) {
-	let gru;
-	let vcp;
+	let pax;
+	let cargo;
 
-	gru = ["GRU", airports[0].GRU.length, "cub", cubs[0].gru_cub];
-	vcp = ["VCP", airports[1].VCP.length, "cub", cubs[1].vcp_cub];
-	list.push(gru);
-	list.push(vcp);
+	pax = ["PAX", airports[0].PAX.length, "cub", cubs[0].gru_cub];
+	cargo = ["CARGO", airports[1].CARGO.length, "cub", cubs[1].vcp_cub];
+	list.push(pax);
+	list.push(cargo);
 
 	return (list);
 }
@@ -40,10 +40,10 @@ function sumCub(goals) {
 	let v_cub;
 	let result;
 
-	g_cub = goals[0].GRU.reduce((sum, value) => {
+	g_cub = goals[0].PAX.reduce((sum, value) => {
 		return (sum + value[4]);
 	}, 0);
-	v_cub = goals[1].VCP.reduce((sum, value) => {
+	v_cub = goals[1].CARGO.reduce((sum, value) => {
 		return (sum + value[4]);
 	}, 0);
 	result = [{gru_cub: g_cub}, {vcp_cub: v_cub}];
@@ -56,23 +56,23 @@ function sumCub(goals) {
 // │         "pax_lim" has the limits of the PAX airplane door.          │
 // ╰─────────────────────────────────────────────────────────────────────╯
 function getAirport (crates) {
-	let gru;
-	let vcp;
+	let pax;
+	let cargo;
 	let pax_lim;
 	let trail;
 
 	pax_lim = [300, 200, 160];
-	gru = crates.filter(g_crates => {
+	pax = crates.filter(g_crates => {
 		if (g_crates[1] <= pax_lim[0] && g_crates[2] <= pax_lim[1] &&
 			g_crates[3] <= pax_lim[2])
 		return (g_crates);
 	});
-	vcp = crates.filter(v_crates => {
+	cargo = crates.filter(v_crates => {
 		if (v_crates[1] >= pax_lim[0] || v_crates[2] >= pax_lim[1] ||
 			v_crates[3] >= pax_lim[2])
 		return (v_crates);
 	});
-	trail = [{GRU: gru}, {VCP: vcp}]
+	trail = [{PAX: pax}, {CARGO: cargo}]
 	return(trail);
 }
 
@@ -109,6 +109,7 @@ function whichAirport(proc_list) {
 // │ This function is responsible to handle all the steps in order to solve │
 // │                           the art work list.                           │
 // ╰────────────────────────────────────────────────────────────────────────╯
+// FIX: The function noCanvasOut is no working properly
 export function boss(the_list) {
 	let crates;
 	let std_layer;

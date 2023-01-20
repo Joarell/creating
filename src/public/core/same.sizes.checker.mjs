@@ -83,11 +83,11 @@ function zeroSizes(work_list, sizes) {
 }
 
 
-// ╭──────────────────────────────────────────────────────────────────────────╮
-// │ //This function is the second part to solve all the equal works with the │
-// │ //same sizes. The design argument is regarding to consolidate or not the │
-// │                      //works in side de same crate.                      │
-// ╰──────────────────────────────────────────────────────────────────────────╯
+// ╭────────────────────────────────────────────────────────────────────────╮
+// │ This function is the second part to solve all the equal works with the │
+// │ same sizes. The design argument is regarding to consolidate or not the │
+// │                      works in side de same crate.                      │
+// ╰────────────────────────────────────────────────────────────────────────╯
 function howManySizes(works) {
 	let len;
 	let counter;
@@ -143,15 +143,16 @@ function checking(arr, works, length) {
 // │ This function finds the works 4 works or more with the same sizes based │
 // │                           on the cube values.                           │
 // ╰─────────────────────────────────────────────────────────────────────────╯
+// FIX: The function is not mapping the same works properly
 export function sameSizes(list) {
 	let len;
 	let equals;
 	let checked;
 	let remainder;
+	const copy = [...list];
 
 	len = 0;
 	equals = [];
-	checked = [];
 	remainder = [];
 	if(list.length < 4)
 		return(list);
@@ -163,7 +164,6 @@ export function sameSizes(list) {
 				remainder = remainder.concat(checked);
 			else
 				equals = equals.concat(checked);
-			checked.splice(0, checked.length);
 		}
 		len++;
 	}
@@ -173,6 +173,6 @@ export function sameSizes(list) {
 			list.push(clean.arrayLess(remainder.splice(0, 1)));
 		return (clean.arrayLess(equals));
 	}
-	list.unshift(0);
-	return (list);
+	// list.unshift(0);
+	return (copy);
 }
