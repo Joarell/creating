@@ -65,7 +65,8 @@ export async function crate() {
 		estimate["list"] = parseArtWork();
 		estimate["crates"] = crates;
 		db.addNewWorks(estimate);
-		sessionStorage.setItem("crate", "pressed");
+		localStorage.setItem("pane1", "populate");
+		localStorage.setItem("pane2", "populate");
 		// return(globalThis.location.reload());
 		// TODO: Return the crates
 		// TODO: Save the crates on the DB;
@@ -106,11 +107,17 @@ function parseArtWork(){
 	const db = localStorage;
 	let temp;
 	let i;
+	const test = (store) =>{
+		if(store !== "metrica" && store !== "pane1" && store !== "pane2"
+			&& store !== "refNumb")
+			return (true);
+		return (false);
+	}
 	
 	i = 0;
 	temp = [];
 	while(db.key(i)){
-		if(db.key(i) !== "metrica")
+		if(test(db.key(i)))
 			temp.push(JSON.parse(db.getItem(db.key(i))));
 		i++;
 	}

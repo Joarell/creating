@@ -17,6 +17,12 @@ export function elementTable () {
 	let work;
 	let metric;
 	const plot = document.getElementById("sizes");
+	const test = (store) =>{
+		if(store !== "metrica" && store !== "pane1" && store !== "pane2"
+			&& store !== "refNumb")
+			return (true);
+		return (false);
+	}
 
 	if(localStorage.getItem("metrica") === "in - inches")
 		metric = "in";
@@ -25,7 +31,7 @@ export function elementTable () {
 	i = 0;
 	createHeader(plot);
 	while (localStorage.key(i)) {
-		if(localStorage.key(i) !== "metrica"){
+		if(test(localStorage.key(i))){
 			work = JSON.parse(localStorage.getItem(localStorage.key(i)));
 			work = Object.values(work);
 			plot.innerHTML += work.map((item, index) => {

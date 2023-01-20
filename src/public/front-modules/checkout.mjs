@@ -15,11 +15,11 @@ import { createDB } from './link.storage.mjs';
 // │ Calls to each change on the localStorage to update the list pane. │
 // ╰───────────────────────────────────────────────────────────────────╯
 globalThis.onload = () => {
-	const ref = sessionStorage.getItem("reference");
+	const ref = localStorage.getItem("refNumb");
 	
 	if (ref)
-		document.getElementById("input_estimate").value = sessionStorage
-		.getItem("reference");
+		document.getElementById("input_estimate").value = localStorage
+		.getItem("refNumb");
 	createDB();
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
 }
