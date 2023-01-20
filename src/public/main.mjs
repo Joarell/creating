@@ -135,14 +135,14 @@ export function catchRemove() {
 // │ This functions checks if the reference has changed by the user. │
 // ╰─────────────────────────────────────────────────────────────────╯
 export function checkReference() {
-	const ref = sessionStorage.getItem("reference");
+	const ref = localStorage.getItem("refNumb");
 	const actual = document.getElementById("input_estimate").value;
 	
 	if (ref){
 		if (ref !== actual){
-			if (confirm("ATTENTION! The reference has changed")){
-				sessionStorage.removeItem("reference");
-				sessionStorage.setItem("reference", actual);
+			if (confirm("ATTENTION! The refNumb has changed")){
+				localStorage.removeItem("refNumb");
+				localStorage.setItem("refNumb", actual);
 				document.getElementById("input_estimate").value = actual;
 			}
 			else
@@ -150,5 +150,5 @@ export function checkReference() {
 		}
 	}
 	else
-		sessionStorage.setItem("reference", actual);
+		localStorage.setItem("refNumb", actual);
 }
