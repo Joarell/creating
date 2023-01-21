@@ -78,8 +78,14 @@ export async function gettinData(reference){
 	request.onerror = (event) => {
 		alert(`WARNING: ${event.target.errorCode}`);
 	};
-	request.onsuccess = (event) => {
-		const db = event.target.result.transaction("Results");
-		return (db.objectStore("Results").get(reference));
-	}
+	request.onsuccess = () => {
+		const db = request
+			.result
+			.transaction("Results")
+			.objectStore("Results").get(reference);
+		
+		db.onsuccess = () => {
+			return(db.result);
+		};
+	};
 }

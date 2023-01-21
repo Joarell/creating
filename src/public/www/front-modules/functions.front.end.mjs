@@ -11,7 +11,7 @@
 
 import ArtWork from "./classes.def.mjs";
 import * as db from "./link.storage.mjs";
-import { boss } from "../core/start.adm.mjs";
+import { boss } from "../../core/start.adm.mjs";
 
 
 // ╭─────────────────────────────────────────────────────────────────────╮
