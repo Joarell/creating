@@ -4,8 +4,7 @@ import express from 'express';
 
 const app = express();
 const port = process.env.PORT || 3000;
-const HOST = '127.0.0.1';
-
+const HOST = 'localhost';
 
 
 app.use( express.static("./www"));

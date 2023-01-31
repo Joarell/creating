@@ -67,8 +67,6 @@ export async function crate() {
 		db.addNewWorks(estimate);
 		localStorage.setItem("pane1", "populate");
 		localStorage.setItem("pane2", "populate");
-		// return(globalThis.location.reload());
-		// TODO: Return the crates
 		// TODO: Save the crates on the DB;
 	}
 }
