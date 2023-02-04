@@ -14,6 +14,7 @@ services:
   db:
     container_name: postgres_container
     image: postgres:15.1-alpine
+    # command: apk add neovim
     env_file: .env
     ports:
       - "5432:5432"
