@@ -47,7 +47,7 @@ export function addNewWorks(works) {
 	
 		object = db.transaction("Results", "readwrite").objectStore("Results");
 		object.put(works);
-		gettinData(list);
+		gettingData(list);
 	}
 }
 
@@ -72,20 +72,29 @@ export function deleteData(reference) {
 // ╭────────────────────────────────────╮
 // │ Returns the estimate on indexedDB. │
 // ╰────────────────────────────────────╯
-export async function gettinData(reference){
+export async function gettingData(reference) {
+	let obj;
+	let db;
 	const request = globalThis.indexedDB.open("Results");
 
 	request.onerror = (event) => {
 		alert(`WARNING: ${event.target.errorCode}`);
 	};
 	request.onsuccess = () => {
-		const db = request
+		db = request
 			.result
 			.transaction("Results")
 			.objectStore("Results").get(reference);
 		
-		db.onsuccess = () => {
-			return(db.result);
-		};
+		return (db.onsuccess = () => {
+			obj = db.result;
+			// const {list} = obj;
+			// const {reference} = obj;
+			// const {crates} = obj;
+
+			console.log(JSON.stringify(obj));
+			console.table(obj);
+		});
 	};
 }
+await gettingData("PED-2022");
