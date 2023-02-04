@@ -1,5 +1,8 @@
 REVOKE ALL PRIVILEGES ON ... FROM user_gp;
-GRANT SELECT, INSERT, UPDATE ON crater.solved, crater.crates, crater.arrengement TO user_gp;
+GRANT SELECT, INSERT, UPDATE
+ON crater.solved, crater.crates, crater.arrengement TO user_gp;
+GRANT USAGE ON SCHEMA data TO user_gp;
+ALTER SCHEMA data OWNER TO otto_infinity;
 
 
 CREATE ROLE user_gp INHERIT;
@@ -57,9 +60,20 @@ CREATE TABLE IF NOT EXISTS data.arrengement (
 	user_name VARCHAR(200) NOT NULL,
 	user_id INT NOT NULL,
 	update_state TIMESTAMP DEFAULT NOW(),
-	foreign key (estimate) references data.solved (reference_id) ON DELETE cascade,
-	foreign key (user_id) references crater.users (id),
-	primary key(estimate)
+	FOREIGN KEY (estimate) references data.solved (reference_id) ON DELETE cascade,
+	FOREIGN KEY (user_id) references crater.users (id),
+	PRIMARY KEY(estimate)
+);
+
+
+CREATE TABLE IF NOT EXISTS data.done (
+	reference VARCHAR(20) PRIMARY KEY,
+	crates JSONB NOT NULL,
+	works JSONB NOT NULL,
+	user_name VARCHAR(200) NOT NULL,
+	user_id INT NOT NULL,
+	update_state TIMESTAMP DEFAULT NOW(),
+	FOREIGN KEY (user_id) references crater.users (id)
 );
 
 
@@ -72,6 +86,39 @@ CREATE POLICY user_actions (
 
 );
 
+
+INSERT INTO data.done( reference, crates, works, user_name, user_id)
+VALUES (
+'PED-TEST1',
+'{
+	"crates":[
+		["Final", 223, 46, 228, 2.338],
+		["Final", 211, 113, 118, 2.813]
+	]
+}',
+'{
+	"list":[
+		{"code":"0901", "x":90, "z": 90, "y":100},
+		{"code":"0902", "x":90, "z": 90, "y":110},
+		{"code":"0903", "x":90, "z": 90, "y":120},
+		{"code":"0904", "x":90, "z": 90, "y":130},
+		{"code":"0905", "x":90, "z": 90, "y":140},
+		{"code":"0906", "x":90, "z": 90, "y":150},
+		{"code":"0907", "x":90, "z": 90, "y":160},
+		{"code":"0908", "x":90, "z": 90, "y":170}
+	]
+}',
+'JEV',
+1);
+
+
+INSERT INTO crater.users (
+	first_name,
+	last_name,
+	birth_date,
+	email,
+	pass_frase
+) VALUES ('Jeve', 'Chaga', DATE '1990-08-12', 'jeve@test.com', 'tested');
 
 INSERT INTO crater.users (
 	first_name,
