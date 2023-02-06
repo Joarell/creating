@@ -9,7 +9,7 @@
 // │ ╰──────────────────────────────────────────────────────────────────────╯ │
 // ╰──────────────────────────────────────────────────────────────────────────╯
 
-import ArtWork from "./classes.def.mjs";
+import ArtWork from "./Art.classe.def.mjs";
 import * as db from "./link.storage.mjs";
 import { boss } from "../../core/start.adm.mjs";
 
