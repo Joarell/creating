@@ -21,51 +21,6 @@ CREATE TABLE IF NOT EXISTS crater.users (
 );
 
 
-CREATE TABLE IF NOT EXISTS data.solved(
-	reference_id VARCHAR(20),
-	works_qt INT NOT NULL,
-	crates_qt INT NOT NULL,
-	total_cub NUMERIC(7,3) NOT NULL,
-	user_name VARCHAR(200) NOT NULL,
-	user_id INT NOT NULL,
-	creation TIMESTAMP DEFAULT NOW(),
-	PRIMARY KEY(reference_id),
-	FOREIGN KEY (user_id) REFERENCES crater.users (id)
-);
-
-
-CREATE TABLE IF NOT EXISTS data.crates (
-	estimate_id VARCHAR(20),
-	crate_numb INT NOT NULL,
-	lenght_x DECIMAL(6,3) NOT NULL,
-	depth_z DECIMAL(6,3) NOT NULL,
-	height_y DECIMAL(6,3) NOT NULL,
-	unit VARCHAR(3) DEFAULT 'cm',
-	user_name VARCHAR(200) NOT NULL,
-	user_id INT NOT NULL,
-	update_state TIMESTAMP DEFAULT NOW(),
-	FOREIGN KEY (estimate_id) REFERENCES data.solved (reference_id) ON DELETE CASCADE,
-	FOREIGN KEY (user_id) REFERENCES crater.users (id)
-);
-
-
-CREATE TABLE IF NOT EXISTS data.arrengement (
-	estimate VARCHAR(20),
-	crate_id INT,
-	work_code VARCHAR(20) NOT NULL,
-	lenght DECIMAL(6,3) NOT NULL,
-	depth DECIMAL(6,3) NOT NULl,
-	height DECIMAL(6,3) NOT NULL,
-	spining VARCHAR(3) DEFAULT 'NO',
-	user_name VARCHAR(200) NOT NULL,
-	user_id INT NOT NULL,
-	update_state TIMESTAMP DEFAULT NOW(),
-	FOREIGN KEY (estimate) references data.solved (reference_id) ON DELETE cascade,
-	FOREIGN KEY (user_id) references crater.users (id),
-	PRIMARY KEY(estimate)
-);
-
-
 CREATE TABLE IF NOT EXISTS data.done (
 	reference VARCHAR(20) PRIMARY KEY,
 	crates JSONB NOT NULL,
@@ -75,6 +30,51 @@ CREATE TABLE IF NOT EXISTS data.done (
 	update_state TIMESTAMP DEFAULT NOW(),
 	FOREIGN KEY (user_id) references crater.users (id)
 );
+
+
+/* CREATE TABLE IF NOT EXISTS data.solved( */
+/* 	reference_id VARCHAR(20), */
+/* 	works_qt INT NOT NULL, */
+/* 	crates_qt INT NOT NULL, */
+/* 	total_cub NUMERIC(7,3) NOT NULL, */
+/* 	user_name VARCHAR(200) NOT NULL, */
+/* 	user_id INT NOT NULL, */
+/* 	creation TIMESTAMP DEFAULT NOW(), */
+/* 	PRIMARY KEY(reference_id), */
+/* 	FOREIGN KEY (user_id) REFERENCES crater.users (id) */
+/* ); */
+/*  */
+/*  */
+/* CREATE TABLE IF NOT EXISTS data.crates ( */
+/* 	estimate_id VARCHAR(20), */
+/* 	crate_numb INT NOT NULL, */
+/* 	lenght_x DECIMAL(6,3) NOT NULL, */
+/* 	depth_z DECIMAL(6,3) NOT NULL, */
+/* 	height_y DECIMAL(6,3) NOT NULL, */
+/* 	unit VARCHAR(3) DEFAULT 'cm', */
+/* 	user_name VARCHAR(200) NOT NULL, */
+/* 	user_id INT NOT NULL, */
+/* 	update_state TIMESTAMP DEFAULT NOW(), */
+/* 	FOREIGN KEY (estimate_id) REFERENCES data.solved (reference_id) ON DELETE CASCADE, */
+/* 	FOREIGN KEY (user_id) REFERENCES crater.users (id) */
+/* ); */
+/*  */
+/*  */
+/* CREATE TABLE IF NOT EXISTS data.arrengement ( */
+/* 	estimate VARCHAR(20), */
+/* 	crate_id INT, */
+/* 	work_code VARCHAR(20) NOT NULL, */
+/* 	lenght DECIMAL(6,3) NOT NULL, */
+/* 	depth DECIMAL(6,3) NOT NULl, */
+/* 	height DECIMAL(6,3) NOT NULL, */
+/* 	spining VARCHAR(3) DEFAULT 'NO', */
+/* 	user_name VARCHAR(200) NOT NULL, */
+/* 	user_id INT NOT NULL, */
+/* 	update_state TIMESTAMP DEFAULT NOW(), */
+/* 	FOREIGN KEY (estimate) references data.solved (reference_id) ON DELETE cascade, */
+/* 	FOREIGN KEY (user_id) references crater.users (id), */
+/* 	PRIMARY KEY(estimate) */
+/* ); */
 
 
 CREATE TABLE monitoring_table (
