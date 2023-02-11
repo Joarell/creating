@@ -43,10 +43,10 @@ export function addNewWorks(works) {
 	}
 	request.onsuccess = (event) => {
 		const db = event.target.result;
-		let object;
+		const object = db.transaction("Results", "readwrite")
+			.objectStore("Results");
 	
-		object = db.transaction("Results", "readwrite").objectStore("Results");
-		object.put(works);
+		object.add(works);
 		gettingData(list);
 	}
 }
@@ -97,4 +97,4 @@ export async function gettingData(reference) {
 		});
 	};
 }
-await gettingData("PED-2022");
+// await gettingData("PED-2022");
