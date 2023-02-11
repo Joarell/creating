@@ -3,11 +3,11 @@ require('dotenv').config();
 
 module.exports = {
 	development: {
-		username: process.env.PGUSER,
-		password: process.env.PGPASSWORD,
-		database: process.env.PGDATABASE,
-		port: process.env.PORT,
-		host: process.env.PGHOST,
+		username: process.env.PG_USER,
+		password: process.env.PG_PASS,
+		database: process.env.PG_DB,
+		port: process.env.DB_PORT,
+		host: process.env.PG_HOST,
 		dialect: process.env.DB_DIALECT,
 		logging: true,
 		define: {
