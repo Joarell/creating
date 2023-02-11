@@ -17,10 +17,11 @@ import { createDB } from './link.storage.mjs';
 globalThis.onload = () => {
 	const ref = localStorage.getItem("refNumb");
 	
-	if (ref)
+	if (ref) {
 		document.getElementById("input_estimate").value = localStorage
 		.getItem("refNumb");
-	createDB();
+		createDB();
+	}
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
 }
 globalThis.onstorage = () => {
