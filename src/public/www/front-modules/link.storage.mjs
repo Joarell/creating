@@ -41,13 +41,13 @@ export function addNewWorks(works) {
 	request.onerror = (event) => {
 		alert(`ERROR: ${event.target.errorCode}`);
 	}
-	request.onsuccess = (event) => {
+	request.onsuccess = async (event) => {
 		const db = event.target.result;
 		const object = db.transaction("Results", "readwrite")
 			.objectStore("Results");
 	
 		object.add(works);
-		gettingData(list);
+		await movingDataToSesseionStorage(list);
 	}
 }
 
@@ -72,9 +72,10 @@ export function deleteData(reference) {
 // ╭────────────────────────────────────╮
 // │ Returns the estimate on indexedDB. │
 // ╰────────────────────────────────────╯
-export async function gettingData(reference) {
+export async function movingDataToSesseionStorage(reference) {
 	let obj;
 	let db;
+	let values;
 	const request = globalThis.indexedDB.open("Results");
 
 	request.onerror = (event) => {
@@ -86,15 +87,10 @@ export async function gettingData(reference) {
 			.transaction("Results")
 			.objectStore("Results").get(reference);
 		
-		return (db.onsuccess = () => {
+		db.onsuccess = () => {
 			obj = db.result;
-			// const {list} = obj;
-			// const {reference} = obj;
-			// const {crates} = obj;
-
-			console.log(JSON.stringify(obj));
-			console.table(obj);
-		});
+			globalThis.sessionStorage.setItem("test", JSON.stringify(obj));
+			return(obj);
+		};
 	};
 }
-// await gettingData("PED-2022");
