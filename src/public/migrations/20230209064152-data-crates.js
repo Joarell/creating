@@ -1,11 +1,13 @@
 'use strict';
 
+const { DataTypes } = require('sequelize');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
 	async up(queryInterface, Sequelize) {
 		await queryInterface.createTable('data_solved', {
 			reference_id: {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING(100),
 				allowNull: false,
 				primaryKey: true
 			},
@@ -35,11 +37,13 @@ module.exports = {
 				key: 'id' },
 				allowNull: false
 			},
-			update_satate: {
-				field: 'created_at',
-				type: Sequelize.DATEONLY,
+			update_state: {
+				type: Sequelize.STRING(50),
 				allowNull: false,
-				defaultValue: Sequelize.fn('now')
+			},
+			updated_by: {
+				type: Sequelize.STRING(100),
+				allowNull: true,
 			}
 		});
 	},
