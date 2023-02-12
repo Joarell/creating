@@ -11,18 +11,44 @@ services:
     env_file: .env
     ports:
       - "${PORT}:${PORT}"
+    depends_on:
+      - db
+    links:
+      - "db:database"
+    environment:
+      NODE_ENV: development
+      DB_USER: ${PG_USER}
+      DB_PORT: ${DB_PORT}
+      DB_HOST: ${PG_HOST}
+      DB_PASSWORD: ${PG_PASS}
+      DB_NAME: ${PG_DB}
+    networks:
+      - front-tier
+      - back-tier
+
   db:
     container_name: postgres_container
     image: postgres:15.1-alpine
     # command: apk add neovim
     env_file: .env
     environment:
-      POSTGRES_USER: ${PG_USER}
-      POSTGRES_PASSWORD: ${PG_PASS}
+      PGUSER: ${PG_USER}
+      PGPASSWORD: ${PG_PASS}
+      PGHOST: ${PG_HOST}
+      PGPORT: ${DB_PORT}
+      PGDATABASE: ${PG_DB}
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:${DB_PORT}"
     expose:
       - "5432"
     volumes:
       - ./DB/data/:/var/lib/postgresql/data
     restart: unless-stopped
+    networks:
+      - back-tier
+
+networks:
+  front-tier:
+    driver: bridge
+  back-tier:
+    driver: bridge
