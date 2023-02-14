@@ -16,7 +16,7 @@ const pool = new Pool({
 const connected = async () => {
 	try {
 		await pool.connect();
-		console.log("DATABASE connection: success");
+		console.log("DATABASE connection: successed");
 	} catch (err) {
 		console.error("WARINIG", err);
 	}
