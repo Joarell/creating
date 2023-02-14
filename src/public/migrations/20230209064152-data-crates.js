@@ -19,10 +19,6 @@ module.exports = {
 				type: Sequelize.JSONB,
 				allowNull: false
 			},
-			total_cub: {
-				type: Sequelize.DECIMAL(7,3),
-				allowNull: false
-			},
 			user_name: {
 				type: Sequelize.STRING(100),
 				allowNull: false
