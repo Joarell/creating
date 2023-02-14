@@ -10,7 +10,7 @@
 // ╰──────────────────────────────────────────────────────────────────────────╯
 
 import ArtWork from "./Art.classe.def.mjs";
-import * as db from "./link.storage.mjs";
+import { addNewWorksToIndexedDB } from "./link.storage.mjs";
 import { boss } from "../../core/start.adm.mjs";
 
 
@@ -64,10 +64,11 @@ export async function crate() {
 		estimate["reference"] = e_code;
 		estimate["list"] = parseArtWork();
 		estimate["crates"] = crates;
-		db.addNewWorks(estimate);
+		addNewWorksToIndexedDB (estimate);
+
+		// INFO: efemeral trigers to each panel render the result
 		localStorage.setItem("pane1", "populate");
 		localStorage.setItem("pane2", "populate");
-		// TODO: Save the crates on the DB;
 	}
 }
 
