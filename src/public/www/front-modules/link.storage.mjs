@@ -8,7 +8,7 @@
 // │ ╰────────────────────────────────────────────────╯ │
 // ╰────────────────────────────────────────────────────╯
 
-import { getTheCurrentEstimate } from "../API/bridge.link.web.db.mjs";
+import { saveTheCurrentEstimate } from "../API/bridge.link.web.db.mjs";
 
 
 export function createDB() {
@@ -81,7 +81,7 @@ export async function movingDataToSesseionStorage(reference) {
 
 			obj = db.result;
 			globalThis.sessionStorage.setItem(reference, JSON.stringify(obj));
-			getTheCurrentEstimate(reference);
+			saveTheCurrentEstimate(reference);
 		};
 	};
 }
