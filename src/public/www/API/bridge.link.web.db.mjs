@@ -24,7 +24,7 @@ async function getAllEstimatesReferenceClient () {
 };
 
 
-export function getTheCurrentEstimate (estimate) {
+export function saveTheCurrentEstimate (estimate) {
 	const contentStorage = JSON.parse(sessionStorage.getItem(estimate));
 	const { reference, list, crates } = contentStorage;
 	const data = {
@@ -35,4 +35,12 @@ export function getTheCurrentEstimate (estimate) {
 		user_id: 2
 	};
 	return (postDataFromClientSide(JSON.stringify(data)));
+};
+
+
+export function upDateEstimateClient(estimateCode) {
+};
+
+
+export function deleteEstimateClient (estimaateCode) {
 };
