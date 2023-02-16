@@ -1,7 +1,7 @@
 const express = require('express');
 const uuid = require('uuid');
 const take = require('../controllers/estimate.controller.js');
-const valid = require('../middlewares/estimate.add.middleware.js');
+const valid = require('../middlewares/add.middleware.js');
 const router = express.Router();
 
 
@@ -17,26 +17,32 @@ router.get("/search/users", take.getDataUsers);
 router.get("/search/estimates", take.getDataEstimates);
 
 
-router.post("/insert", valid.validationBody, take.addResultToDataBase);
+router.get("/login", take.userLoginValidation);
 
 
-router.put("/estimates", valid.validationBody, take.updateEstimate);
+router.post("/insert", valid.validationBodyEstimate, take.addResultToDataBase);
+
+
+router.post("/insert/users", valid.validationBodyUserAdd, take.inserNewUser);
+
+
+router.put("/estimates", valid.validationBodyEstimate, take.updateEstimate);
 
 
 router.delete("/estimates/remove/:reference_id", take.removeEstimates);
 
 
-router.get("/login", (req, res, _err) => {
-	const { username, password } = req.body;
-	if (username && password !== 'admin')
-		return res.status(401).send('Invalid Username or password');
-	const sessionId = uuid.v4();
-	const sessions = {};
-
-	sessions[sessionId] = { username, userId: 1 };
-	res.set('Set-Cookie', `session=${sessionId}`);
-	res.send('Work done');
-});
+// router.get("/login", (req, res, _err) => {
+// 	const { username, password } = req.body;
+// 	if (username && password !== 'admin')
+// 		return res.status(401).send('Invalid Username or password');
+// 	const sessionId = uuid.v4();
+// 	const sessions = {};
+//
+// 	sessions[sessionId] = { username, userId: 1 };
+// 	res.set('Set-Cookie', `session=${sessionId}`);
+// 	res.send('Work done');
+// });
 
 
 router.get("/currency", async (_req, res) => {
