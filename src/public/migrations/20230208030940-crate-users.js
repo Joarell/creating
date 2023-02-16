@@ -35,7 +35,7 @@ module.exports = {
 				allowNull: false,
 			},
 			pass_frase: {
-				type: Sequelize.TEXT,
+				type: Sequelize.STRING,
 				allowNull: false,
 			},
 			added: {
