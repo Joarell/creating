@@ -1,5 +1,5 @@
-const data = require('../DB_models/db.transactions.js');
-
+const checker = require('../auth/user.check.out');
+const db = require('../DB_models/db.transactions');
 
 const getDataUsers = async (req, res) => {
 	const result = await data.retriveDataUsers();
@@ -32,10 +32,37 @@ const updateEstimate = async (req, res) => {
 	return(res.status(202).send(req.body));
 };
 
+
+const inserNewUser = async (req, res) => {
+	const confirmation = await db.addNewUser(req.body);
+
+	if (confirmation === 500)
+		return (res.status(501).json({msg: "Pass frase procedure failure"}));
+	return(res.status(201).send(req.body));
+};
+
+
+const userLoginValidation = async (req, res) => {
+	const auth = await checker.checkUserAuth(req.body);
+	console.log(auth);
+
+	switch(auth){
+		case 404:
+			return(res.status(404).json({msg: "User not found"}));
+		case 401:
+			return(res.status(401).json({msg: "Wrong password."}));
+		case 200:
+			return(res.status(200).json({msg: "Authorized"}));
+	}
+};
+
+
 module.exports = {
+	inserNewUser,
 	getDataUsers,
 	getDataEstimates,
 	addResultToDataBase,
 	removeEstimates,
-	updateEstimate
+	updateEstimate,
+	userLoginValidation
 };
