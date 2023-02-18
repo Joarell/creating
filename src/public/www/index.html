@@ -18,6 +18,7 @@
 		import {catchWork, catchRemove} from './main.mjs';
 		globalThis.fns = {catchWork, crate, catchRemove, crate, clearAll};
 	</script>
+	<script type="module" src="./side-menu/menu.interface.mjs"></script>
 	<link rel="stylesheet" href="./index.css">
 	<link rel="stylesheet" href="./index-01.css">
 </head>
@@ -28,22 +29,17 @@
 			<h1>Welcome to the Web Crater!</h1>
 		</div>
 	</header>
-	<div class="menu-nav" style="" onclick="respMenu(this)">
+	<div class="menu-nav">
 		<ul class="option">
-			<li><a href="#"><i class="currency"></i></a></li>
+			<li><a href="#" id='currency'><i class='currency' ></i></a></li>
 			<span class="text">Convertion $</span>
 			<li><a href="#"><i class="converter"></i></a></li>
 			<span class="text">Unit converter</span>
 			<li><a href="#"><i class="updater"></i></a></li>
-			<span class="text">Update estimates</span>
-			<li><a href="#"><i class="done"></i></a></li>
 			<span class="text">Estimates done</span>
 			<li><a href="#"><i class="consult"></i></a></li>
 			<span class="text">Search</span>
 		</ul>
-		<div class="bar1"></div>
-		<div class="bar2"></div>
-		<div class="bar3"></div>
 	</div>
 	<main>
 		<div class="grid-container">
