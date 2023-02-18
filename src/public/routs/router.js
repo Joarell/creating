@@ -11,25 +11,28 @@ router.use(express.static("./www/"));
 router.use(express.json());
 
 
-router.get("/search/users", take.getDataUsers);
+router.get("/currency", take.externalAPICurrency );
 
 
-router.get("/search/estimates", take.getDataEstimates);
+router.get("/search/users", take.getDataUsers );
 
 
-router.get("/login", take.userLoginValidation);
+router.get("/search/estimates", take.getDataEstimates );
 
 
-router.post("/insert", valid.validationBodyEstimate, take.addResultToDataBase);
+router.get("/login", take.userLoginValidation );
 
 
-router.post("/insert/users", valid.validationBodyUserAdd, take.inserNewUser);
+router.post("/insert", valid.validationBodyEstimate, take.addResultToDataBase );
 
 
-router.put("/estimates", valid.validationBodyEstimate, take.updateEstimate);
+router.post("/insert/users", valid.validationBodyUserAdd, take.inserNewUser );
 
 
-router.delete("/estimates/remove/:reference_id", take.removeEstimates);
+router.put("/estimates", valid.validationBodyEstimate, take.updateEstimate );
+
+
+router.delete("/estimates/remove/:reference_id", take.removeEstimates );
 
 
 // router.get("/login", (req, res, _err) => {
@@ -43,24 +46,5 @@ router.delete("/estimates/remove/:reference_id", take.removeEstimates);
 // 	res.set('Set-Cookie', `session=${sessionId}`);
 // 	res.send('Work done');
 // });
-
-
-router.get("/currency", async (_req, res) => {
-	let header = new Headers();
-	header.append("apikey", process.env.API_KEY);
-	const getterOptions = {
-		method: 'GET',
-		headers: header,
-		redirect: 'follow'
-	};
-	const url = `https://api.freecurrencyapi.com/v1/latest?apikey=
-	${process.env.API_KEY}`;
-	const result = await fetch(url, getterOptions)
-	.then(response => response.json())
-	.catch(error => (console.error("warning", error)));
-	console.log(result.data);
-
-	res.status(200).send(result.data);
-});
 
 module.exports = router;
