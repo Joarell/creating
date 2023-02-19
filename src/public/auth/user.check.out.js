@@ -1,9 +1,8 @@
-const uuid = require('uuid');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const db = require('../DB_models/db.transactions');
+require('dotenv').config();
 
-async function checkUserAuth (userLogin) {
+async function checkUserAuthDB (userLogin) {
 	const data = await db.retriveDataUsers();
 	const dbUser = data.find(user => {
 		if( userLogin.name === user.name)
@@ -25,5 +24,4 @@ async function checkUserAuth (userLogin) {
 	}
 };
 
-
-module.exports = { checkUserAuth };
+module.exports = { checkUserAuthDB };
