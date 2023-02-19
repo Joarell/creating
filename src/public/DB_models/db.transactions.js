@@ -21,7 +21,7 @@ async function retriveDataEstimates() {
 
 
 async function addNewUser (user) {
-	const { name, email, lastName, passFrase, birthday } = user;
+	const { name, email, lastName, passFrase, birthday, accessToken} = user;
 	const criptPass = await encription.passEncriptProcedure (passFrase);
 
 	if (criptPass === 500)
@@ -31,19 +31,43 @@ async function addNewUser (user) {
 		await pool.query('BEGIN');
 		const content = `
 			INSERT INTO craters.users 
-			(name, last_name, birth_date, email, pass_frase)
+			(name, last_name, birth_date, email, pass_frase, auth_token)
 			VALUES
-			('${name}', '${lastName}', '${birthday}', '${email}', '${criptPass}')
+			('${name}', '${lastName}', '${birthday}', '${email}',
+			'${criptPass}', '${accessToken}')
 		`;
 		await pool.query(content);
 		await pool.query('COMMIT');
+		return (201);
 	}
 	catch (err) {
 		console.error("ALERT", err);
 		await pool.query('ROLLBACK');
-		throw err;
 	}
 }
+
+
+async function addUserNewToken (request) {
+	const { name, token } = request;
+	const dbUser = await retriveDataUsers();
+	const checkUser = db.User.find(user. user.name === name);
+
+	if(!checkUser)
+		return (404);
+	await pool.connect();
+	try {
+		await pool.query('BEGIN');
+		const content = `INSERT INTO users (auth_token)
+		VALUES ('${token}')`;
+		await pool.query(content);
+		await pool.query('COMMIT');
+		return (201);
+	}
+	catch (err) {
+		console.err(`Beware ${err}`);
+		return (500);
+	};
+};
 
 
 async function addResultToDataBase(estimate) {
@@ -64,6 +88,7 @@ async function addResultToDataBase(estimate) {
 		`;
 		await pool.query(content);
 		await pool.query('COMMIT');
+		return (201);
 	}
 	catch (err) {
 		console.error("ALERT", err);
@@ -112,5 +137,6 @@ module.exports = {
 	retriveDataEstimates,
 	addResultToDataBase,
 	delEstimate,
-	updateData
+	updateData,
+	addUserNewToken
 };
