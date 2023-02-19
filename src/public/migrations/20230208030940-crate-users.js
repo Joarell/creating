@@ -38,6 +38,10 @@ module.exports = {
 				type: Sequelize.STRING,
 				allowNull: false,
 			},
+			auth_token: {
+				type: Sequelize.STRING,
+				allowNull: false
+			},
 			added: {
 				field: 'created_at',
 				type: Sequelize.DATEONLY,
