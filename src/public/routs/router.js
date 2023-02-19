@@ -11,25 +11,40 @@ router.use(express.static("./www/"));
 router.use(express.json());
 
 
-router.get("/currency", take.externalAPICurrency );
+router.get("/login", take.userLoginValidation, );
 
 
-router.get("/search/users", take.getDataUsers );
+router.post("/insert",
+	valid.validationBodyEstimate,
+	valid.userTokenCheckOut,
+	take.addResultToDataBase
+);
 
 
-router.get("/search/estimates", take.getDataEstimates );
+router.post("/insert/users", valid.validationBodyUserAdd, take.inserNewUser);
 
 
-router.get("/login", take.userLoginValidation );
+router.post('/token', (req, res) => {
+
+});
 
 
-router.post("/insert", valid.validationBodyEstimate, take.addResultToDataBase );
+router.get("/currency", valid.userTokenCheckOut, take.externalAPICurrency);
 
 
-router.post("/insert/users", valid.validationBodyUserAdd, take.inserNewUser );
+// router.get("/search/users", take.getDataUsers);
 
 
-router.put("/estimates", valid.validationBodyEstimate, take.updateEstimate );
+router.get("/search/estimates",
+	valid.userTokenCheckOut,
+	take.getDataEstimates );
+
+
+router.put("/estimates",
+	valid.validationBodyEstimate,
+	valid.userTokenCheckOut,
+	take.updateEstimate
+);
 
 
 router.delete("/estimates/remove/:reference_id", take.removeEstimates );
