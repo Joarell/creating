@@ -1,4 +1,5 @@
 const db = require('../DB_models/db.transactions');
+const jwt = require('jsonwebtoken');
 
 
 function validationContent (data) {
@@ -56,7 +57,7 @@ const validationBodyUserAdd = async (req, res, next) => {
 
 
 const validationBodyUser = async (req, res, next) => {
-	const { name, email, lastName, passFrase, birthday } = req.body;
+	const { name} = req.body;
 	const prevUsers = await db.retriveDataUsers();
 	const checkUser = prevUsers.find(usr => usr.name === name);
 
@@ -67,4 +68,28 @@ const validationBodyUser = async (req, res, next) => {
 };
 
 
-module.exports = { validationBodyUserAdd, validationBodyEstimate };
+const userTokenCheckOut = async (req, res, next) => {
+	const authToken = req.headers['authorization'];
+	const token = authToken && authToken.split(' ')[1];
+	const dbToken = await db.retriveDataUsers();
+	const user = dbToken.find(user => user.token === authToken);
+
+	if(!token)
+		return (res.status(401).json({msg: "Not authorized"}));
+	jwt.verify(token, process.env.SECRET_TOKEN, (err, user) => {
+		if (err)
+			return (res.status(403).json({msg: "Access denied!"}));
+		req.user = user;
+		next();
+	});
+};
+
+// {
+// 	"Authorizations": "Bearer eyJhbGciOiJIUzI1NiJ9.U2FsdmFkb3I.b8j5EJcaxHRamaaIWfkFQ99GbNQg-HeqZsebtX44n6Y"
+// }
+
+module.exports = { 
+	validationBodyUserAdd,
+	validationBodyEstimate,
+	userTokenCheckOut
+};
