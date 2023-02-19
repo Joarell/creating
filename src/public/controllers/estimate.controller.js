@@ -1,6 +1,7 @@
 const checker = require('../auth/user.check.out');
 const db = require('../DB_models/db.transactions');
 const currency = require('../www/API/currency.external.api');
+const jwt = require('jsonwebtoken');
 
 
 const getDataUsers = async (req, res) => {
@@ -35,17 +36,26 @@ const updateEstimate = async (req, res) => {
 };
 
 
-const inserNewUser = async (req, res) => {
-	const confirmation = await db.addNewUser(req.body);
+const inserNewUser = async (req, res, next) => {
+	const token = jwt.sign(req.body.name, process.env.SECRET_TOKEN);
+	const user = {
+		name: req.body.name,
+		lastName: req.body.lastName,
+		email: req.body.email,
+		passFrase: req.body.passFrase,
+		birthday: req.body.birthday,
+		accessToken: token
+	};
+	const confirmation = await db.addNewUser(user);
 
 	if (confirmation === 500)
 		return (res.status(501).json({msg: "Pass frase procedure failure"}));
-	return(res.status(201).send(req.body));
+	return(res.status(confirmation).send(req.body));
 };
 
 
-const userLoginValidation = async (req, res) => {
-	const auth = await checker.checkUserAuth(req.body);
+const userLoginValidation = async (req, res, next) => {
+	const auth = await checker.checkUserAuthDB(req.body);
 	console.log(auth);
 
 	switch (auth) {
