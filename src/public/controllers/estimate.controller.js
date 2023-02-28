@@ -1,3 +1,6 @@
+
+
+
 const checker = require('../auth/user.check.out');
 const db = require('../DB_models/db.transactions');
 const currency = require('../www/API/currency.external.api');
@@ -36,22 +39,41 @@ const updateEstimate = async (req, res) => {
 };
 
 
-const inserNewUser = async (req, res, next) => {
-	const token = jwt.sign(req.body.name, process.env.SECRET_TOKEN);
-	const user = {
-		name: req.body.name,
-		lastName: req.body.lastName,
-		email: req.body.email,
-		passFrase: req.body.passFrase,
-		birthday: req.body.birthday,
-		accessToken: token
-	};
-	const confirmation = await db.addNewUser(user);
+const inserNewUser = async (req, res) => {
+	const token = jwt.sign(
+		{ data: req.body.name },
+		process.env.SECRET_TOKEN,
+		{ expiresIn: '30s'}
+	);
+	const refToken = jwt.sign(req.body.email, process.env.REF_SECRET_TOKEN);
+	const userData = {...req.body, accessToken: token, refreshToken: refToken};
+	const confirmation = await db.addNewUser(userData);
 
 	if (confirmation === 500)
 		return (res.status(501).json({msg: "Pass frase procedure failure"}));
 	return(res.status(confirmation).send(req.body));
 };
+
+
+const newAccessToken = async (req, res) => {
+	const authRefToken = req.body.token;
+	const dbToken = await db.retriveDataUsers();
+	const getToken = dbToken.find(token => token.refresh_token === authRefToken);
+
+	if(!getToken)
+		return (res.status(401).json({msg: 'Not authorized'}));
+	const newToken = jwt.verify(
+		authRefToken, process.env.REF_SECRET_TOKEN, (err, token) => {
+		if(err)
+			return (res.status(403).json({msg: 'Access denied!'}));
+		return (jwt.sign( {email: token.email},
+				process.env.SECRET_TOKEN,
+				{ expiresIn: '30s' }
+			));
+	});
+	db.addUserNewToken(newToken);
+	return (res.status(200).json({accessToek: newToken}));
+}
 
 
 const userLoginValidation = async (req, res, next) => {
@@ -85,5 +107,6 @@ module.exports = {
 	removeEstimates,
 	updateEstimate,
 	userLoginValidation,
-	externalAPICurrency
+	externalAPICurrency,
+	newAccessToken
 };
