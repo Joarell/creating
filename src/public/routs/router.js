@@ -14,7 +14,7 @@ router.use(express.json());
 router.get("/login", take.userLoginValidation, );
 
 
-router.post("/insert",
+router.post("/insert/estimate",
 	valid.validationBodyEstimate,
 	valid.userTokenCheckOut,
 	take.addResultToDataBase
@@ -24,9 +24,7 @@ router.post("/insert",
 router.post("/insert/users", valid.validationBodyUserAdd, take.inserNewUser);
 
 
-router.post('/token', (req, res) => {
-
-});
+router.post('/token',take.newAccessToken);
 
 
 router.get("/currency", valid.userTokenCheckOut, take.externalAPICurrency);
