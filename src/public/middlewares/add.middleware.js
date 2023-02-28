@@ -1,10 +1,13 @@
+
+
+
 const db = require('../DB_models/db.transactions');
 const jwt = require('jsonwebtoken');
 
 
 function validationContent (data) {
- 	const result = data.some((info) => {
-		let test = [undefined, "", null, NaN].includes(info);
+	const result = data.some((info) => {
+		let test = [undefined, "", null, NaN].includes(info);n
 		return (test);
 	});
 	return (result);
@@ -60,6 +63,7 @@ const validationBodyUser = async (req, res, next) => {
 	const { name} = req.body;
 	const prevUsers = await db.retriveDataUsers();
 	const checkUser = prevUsers.find(usr => usr.name === name);
+	console.log(checkUser);
 
 	if (!checkUser) {
 		return (res.status(409).json({msg: 'The user already exists on DB'}));
@@ -72,7 +76,8 @@ const userTokenCheckOut = async (req, res, next) => {
 	const authToken = req.headers['authorization'];
 	const token = authToken && authToken.split(' ')[1];
 	const dbToken = await db.retriveDataUsers();
-	const user = dbToken.find(user => user.token === authToken);
+	const user = dbToken.find(user => user.auth_token === authToken);
+	console.log(token);
 
 	if(!token)
 		return (res.status(401).json({msg: "Not authorized"}));
@@ -83,10 +88,6 @@ const userTokenCheckOut = async (req, res, next) => {
 		next();
 	});
 };
-
-// {
-// 	"Authorizations": "Bearer eyJhbGciOiJIUzI1NiJ9.U2FsdmFkb3I.b8j5EJcaxHRamaaIWfkFQ99GbNQg-HeqZsebtX44n6Y"
-// }
 
 module.exports = { 
 	validationBodyUserAdd,
