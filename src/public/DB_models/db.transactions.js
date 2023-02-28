@@ -7,15 +7,17 @@ const encription = require('../auth/encriptation.module.js');
 
 
 async function retriveDataUsers() {
-	await pool.connect();
-	const { rows } = await pool.query('SELECT * FROM craters.users');
+	const client  = await pool.connect();
+	const { rows } = await client.query('SELECT * FROM craters.users');
+	client.release();
 	return (rows);
 }
 
 
 async function retriveDataEstimates() {
-	await pool.connect();
+	const client = await pool.connect();
 	const { rows } = await pool.query('SELECT * FROM data_solved');
+	client.release();
 	return (rows);
 }
 
@@ -28,9 +30,9 @@ async function addNewUser (user) {
 
 	if (criptPass === 500)
 		return (criptPass);
-	await pool.connect();
+	const client = await pool.connect();
 	try {
-		await pool.query('BEGIN');
+		await client.query('BEGIN');
 		const content = `
 			INSERT INTO craters.users 
 			(name, last_name, birth_date, email, pass_frase, auth_token,
@@ -46,6 +48,9 @@ async function addNewUser (user) {
 		console.error("ALERT", err);
 		await pool.query('ROLLBACK');
 	}
+	finally {
+		client.release();
+	};
 }
 
 
@@ -56,9 +61,9 @@ async function addUserNewToken (newToken) {
 
 	if(!checkUser)
 		return (404);
-	await pool.connect();
+	const client = await pool.connect();
 	try {
-		await pool.query('BEGIN');
+		await client.query('BEGIN');
 		const content = `INSERT INTO users (auth_token)
 		VALUES ('${token}')`;
 		await pool.query(content);
@@ -68,6 +73,9 @@ async function addUserNewToken (newToken) {
 	catch (err) {
 		console.err(`Beware ${err}`);
 		return (500);
+	}
+	finally {
+		client.release();
 	};
 };
 
@@ -77,10 +85,10 @@ async function addResultToDataBase(estimate) {
 	const list = JSON.stringify({ "list": estimate.list }, null, "");
 	const crates = JSON.stringify({ "crates": estimate.crates }, null, "");
 	const dataUTC = new Date(Date.now()).toLocaleString();
+	const client = await pool.connect();
 
-	await pool.connect();
 	try {
-		await pool.query('BEGIN');
+		await client.query('BEGIN');
 		const content = ` INSERT INTO data_solved 
 			(reference_id, works, crates, user_name, user_id, update_state)
 			VALUES
@@ -96,6 +104,9 @@ async function addResultToDataBase(estimate) {
 		await pool.query('ROLLBACK');
 		throw err;
 	}
+	finally {
+		client.release();
+	};
 }
 
 
@@ -104,10 +115,10 @@ async function updateData (content) {
 	const works = JSON.stringify({ "list": content.works }, null, "");
 	const crates = JSON.stringify({ "crates": content.crates }, null, "");
 	const dataUTC = new Date(Date.now()).toLocaleString();
+	const client = await pool.connect();
 
-	await pool.connect();
 	try {
-		await pool.query('BEGIN');
+		await client.query('BEGIN');
 		const up = `UPDATE data_solved SET 
 			works = '${list}',
 			crates = '${crates}',
@@ -122,14 +133,17 @@ async function updateData (content) {
 		await pool.query('ROLLBACK');
 		throw err;
 	}
+	finally {
+		client.release();
+	};
 };
 
 
 async function delEstimate (ref) {
 	const command = `DELETE FROM data_solved WHERE reference_id = '${ref}'`;
-	pool.connect();
-	pool.query(command);
-	pool.end();
+	const client = pool.connect();
+	client.query(command);
+	client.release();
 }
 
 module.exports = {
