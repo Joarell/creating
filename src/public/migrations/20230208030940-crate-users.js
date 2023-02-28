@@ -40,6 +40,10 @@ module.exports = {
 			},
 			auth_token: {
 				type: Sequelize.STRING,
+				allowNull: true
+			},
+			refresh_token: {
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			added: {
