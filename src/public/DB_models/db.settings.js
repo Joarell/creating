@@ -14,12 +14,15 @@ const pool = new Pool({
 });
 
 const connected = async () => {
+	const client = await pool.connect();
 	try {
-		await pool.connect();
 		console.log("DATABASE connection: successed");
 	} catch (err) {
 		console.error("WARINIG", err);
 	}
+	finally {
+		client.release();
+	};
 };
 connected();
 
