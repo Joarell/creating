@@ -21,7 +21,9 @@ async function retriveDataEstimates() {
 
 
 async function addNewUser (user) {
-	const { name, email, lastName, passFrase, birthday, accessToken} = user;
+	const {
+		name, email, lastName, passFrase, birthday, accessToken, refreshToken
+	} = user;
 	const criptPass = await encription.passEncriptProcedure (passFrase);
 
 	if (criptPass === 500)
@@ -31,10 +33,10 @@ async function addNewUser (user) {
 		await pool.query('BEGIN');
 		const content = `
 			INSERT INTO craters.users 
-			(name, last_name, birth_date, email, pass_frase, auth_token)
-			VALUES
+			(name, last_name, birth_date, email, pass_frase, auth_token,
+			refresh_token) VALUES
 			('${name}', '${lastName}', '${birthday}', '${email}',
-			'${criptPass}', '${accessToken}')
+			'${criptPass}', '${accessToken}', '${refreshToken}')
 		`;
 		await pool.query(content);
 		await pool.query('COMMIT');
@@ -47,10 +49,10 @@ async function addNewUser (user) {
 }
 
 
-async function addUserNewToken (request) {
-	const { name, token } = request;
+async function addUserNewToken (newToken) {
+	const { name, token } = newToken;
 	const dbUser = await retriveDataUsers();
-	const checkUser = db.User.find(user. user.name === name);
+	const checkUser = dbUser.find(user => user.name === name);
 
 	if(!checkUser)
 		return (404);
@@ -79,8 +81,7 @@ async function addResultToDataBase(estimate) {
 	await pool.connect();
 	try {
 		await pool.query('BEGIN');
-		const content = `
-			INSERT INTO data_solved 
+		const content = ` INSERT INTO data_solved 
 			(reference_id, works, crates, user_name, user_id, update_state)
 			VALUES
 			('${reference}', '${list}', '${crates}', '${user_name}', ${user_id},
