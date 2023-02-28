@@ -1,4 +1,5 @@
-
+//TODO: develope a closure class to preserve the access and refresh token
+//on the client side towards future http requets.
 
 
 async function postDataFromClientSide (content) {
@@ -38,7 +39,7 @@ export function saveTheCurrentEstimate (estimate) {
 };
 
 
-export function upDateEstimateClient(estimateCode) {
+export function upDateEstimateClient (estimateCode) {
 };
 
 
