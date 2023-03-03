@@ -1,0 +1,55 @@
+'use strict';
+
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+	async up(queryInterface, Sequelize) {
+		await queryInterface.showAllSchemas({ logging: true })
+			.then(async (data) => {
+				if(!data.includes('craters'))
+					await queryInterface.createSchema('craters');
+
+			});
+		await queryInterface.createTable('suspicious_tokens', {
+			id: {
+				type: Sequelize.INTEGER,
+				allowNull: false,
+				autoIncrement: true,
+				timestamps: true
+			},
+			user_id: {
+				type: Sequelize.INTEGER,
+				references: {
+					model: {
+						tableName: 'users',
+						schema: 'craters'
+					},
+					key: 'id'
+				},
+				allowNull: false
+			},
+			auto_token: {
+				type: Sequelize.STRING,
+				allowNull: false
+			},
+			refresh_token: {
+				type: Sequelize.STRING,
+				allowNull: false
+			},
+			event_date: {
+				field: 'create_at',
+				type: Sequelize.DATEONLY,
+				allowNull: false,
+				defaultValue: Sequelize.fn('now')
+			}
+		},
+		{
+			schema: 'craters'
+		});
+	},
+
+	async down(queryInterface, Sequelize) {
+		await queryInterface.dropTable('suspicious_tokens');
+		await queryInterface.dropTable('craters');
+	}
+};
