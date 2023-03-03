@@ -55,17 +55,6 @@ module.exports = {
 		},
 		{
 			schema: 'craters'
-		},
-		{
-			instanceMethods: {
-				generateHash: (pass) => {
-					const salt = bcrypt.genSaltSync(10);
-					return (bcrypt.hashSync(pass, bcrypt. salt, null));
-				},
-				validPassword: (pass) => {
-						return (bcrypt.compareSync(pass, this.pass));
-				}
-			}
 		});
 	},
 

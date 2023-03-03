@@ -30,7 +30,8 @@ module.exports = {
 						tableName:'users',
 						schema: 'craters'
 					},
-				key: 'id' },
+					key: 'id'
+				},
 				allowNull: false
 			},
 			update_state: {
