@@ -1,8 +1,12 @@
+
+
 const express = require('express');
 const uuid = require('uuid');
 const take = require('../controllers/estimate.controller.js');
 const valid = require('../middlewares/add.middleware.js');
 const router = express.Router();
+const extAPI = require('../controllers/external.API.request.js');
+const userSet = require('../controllers/user.controller.js');
 
 
 // Middleware that is specific to this router
@@ -11,41 +15,39 @@ router.use(express.static("./www/"));
 router.use(express.json());
 
 
-router.get("/login", take.userLoginValidation, );
+router.get("/login", userSet.userLoginValidation, );
 
 
+router.get("/logout", userSet.userLoginValidation, );
+
+
+// FIX: provide the access on the request body
 router.post("/insert/estimate",
 	valid.validationBodyEstimate,
-	valid.userTokenCheckOut,
+	// userSet.userTokenCheckOut,
 	take.addResultToDataBase
 );
 
 
-router.post("/insert/users", valid.validationBodyUserAdd, take.inserNewUser);
+router.post("/insert/users", valid.validationBodyUserAdd, userSet.inserNewUser);
 
 
-router.post('/token',take.newAccessToken);
+router.post('/token', userSet.newAccessToken);
 
 
-router.get("/currency", valid.userTokenCheckOut, take.externalAPICurrency);
+router.get("/currency", valid.userTokenCheckOut, extAPI.externalAPICurrency);
 
 
-// router.get("/search/users", take.getDataUsers);
+router.get("/search/estimates", valid.userTokenCheckOut, take.getDataEstimates);
 
 
-router.get("/search/estimates",
+router.put("/update/estimates", valid.userTokenCheckOut, take.updateEstimate);
+
+
+router.delete("/estimates/remove/:reference_id",
 	valid.userTokenCheckOut,
-	take.getDataEstimates );
-
-
-router.put("/estimates",
-	valid.validationBodyEstimate,
-	valid.userTokenCheckOut,
-	take.updateEstimate
+	take.removeEstimates
 );
-
-
-router.delete("/estimates/remove/:reference_id", take.removeEstimates );
 
 
 // router.get("/login", (req, res, _err) => {
