@@ -1,5 +1,5 @@
-//TODO: develope a closure class to preserve the access and refresh token
-//on the client side towards future http requets.
+// TODO: develope a closure class to preserve the access and refresh token
+// on the client side towards future http requets using Map().
 
 
 async function postDataFromClientSide (content) {
