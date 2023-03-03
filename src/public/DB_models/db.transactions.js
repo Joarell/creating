@@ -1,8 +1,18 @@
-
+// ╭────────────────────────────────────────────────────────────╮
+// │ ╭────────────────────────────────────────────────────────╮ │
+// │ │ INFO: Here you will find the database layer functions: │ │
+// │ │                   retriveDataUsers()                   │ │
+// │ │                 retriveDataEstimates()                 │ │
+// │ │                      addNewUser()                      │ │
+// │ │                   addUserNewToken()                    │ │
+// │ │                 addResultToDataBase()                  │ │
+// │ │                      updateData()                      │ │
+// │ │                     delEstimate()                      │ │
+// │ ╰────────────────────────────────────────────────────────╯ │
+// ╰────────────────────────────────────────────────────────────╯
 
 
 const pool = require('./db.settings');
-require('dotenv').config();
 const encription = require('../auth/encriptation.module.js');
 
 
@@ -33,24 +43,24 @@ async function addNewUser (user) {
 	const client = await pool.connect();
 	try {
 		await client.query('BEGIN');
-		const content = `
+		const userData = `
 			INSERT INTO craters.users 
 			(name, last_name, birth_date, email, pass_frase, auth_token,
 			refresh_token) VALUES
 			('${name}', '${lastName}', '${birthday}', '${email}',
 			'${criptPass}', '${accessToken}', '${refreshToken}')
 		`;
-		await pool.query(content);
+		await pool.query(userData);
 		await pool.query('COMMIT');
 		return (201);
 	}
 	catch (err) {
-		console.error("ALERT", err);
+		console.error(`ALERT, ${err}`);
 		await pool.query('ROLLBACK');
 	}
 	finally {
 		client.release();
-	};
+	}
 }
 
 
@@ -112,7 +122,7 @@ async function addResultToDataBase(estimate) {
 
 async function updateData (content) {
 	const { reference, user_name } = content;
-	const works = JSON.stringify({ "list": content.works }, null, "");
+	const list = JSON.stringify({ "list": content.works }, null, "");
 	const crates = JSON.stringify({ "crates": content.crates }, null, "");
 	const dataUTC = new Date(Date.now()).toLocaleString();
 	const client = await pool.connect();
@@ -141,8 +151,9 @@ async function updateData (content) {
 
 async function delEstimate (ref) {
 	const command = `DELETE FROM data_solved WHERE reference_id = '${ref}'`;
-	const client = pool.connect();
-	client.query(command);
+	const client = await pool.connect();
+
+	await client.query(command);
 	client.release();
 }
 
