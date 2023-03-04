@@ -12,21 +12,21 @@
 // ╰────────────────────────────────────────────────────────────╯
 
 
-const pool = require('./db.settings');
-const encription = require('../auth/encriptation.module.js');
+const pool			= require('./db.settings');
+const encription	= require('../auth/encriptation.module.js');
 
 
 async function retriveDataUsers() {
-	const client  = await pool.connect();
-	const { rows } = await client.query('SELECT * FROM craters.users');
+	const client	= await pool.connect();
+	const { rows }	= await client.query('SELECT * FROM craters.users');
 	client.release();
 	return (rows);
 }
 
 
 async function retriveDataEstimates() {
-	const client = await pool.connect();
-	const { rows } = await pool.query('SELECT * FROM data_solved');
+	const client	= await pool.connect();
+	const { rows }	= await pool.query('SELECT * FROM data_solved');
 	client.release();
 	return (rows);
 }
@@ -37,10 +37,12 @@ async function addNewUser (user) {
 		name, email, lastName, passFrase, birthday, accessToken, refreshToken
 	} = user;
 	const criptPass = await encription.passEncriptProcedure (passFrase);
-
-	if (criptPass === 500)
-		return (criptPass);
 	const client = await pool.connect();
+
+	if (criptPass === 500) {
+		client.release();
+		return (criptPass);
+	}
 	try {
 		await client.query('BEGIN');
 		const userData = `
@@ -66,12 +68,12 @@ async function addNewUser (user) {
 
 async function addUserNewToken (newToken) {
 	const { name, token } = newToken;
-	const dbUser = await retriveDataUsers();
+	const dbUser	= await retriveDataUsers();
 	const checkUser = dbUser.find(user => user.name === name);
+	const client	= await pool.connect();
 
 	if(!checkUser)
 		return (404);
-	const client = await pool.connect();
 	try {
 		await client.query('BEGIN');
 		const content = `INSERT INTO users (auth_token)
@@ -92,10 +94,10 @@ async function addUserNewToken (newToken) {
 
 async function addResultToDataBase(estimate) {
 	const { reference, user_name, user_id } = estimate;
-	const list = JSON.stringify({ "list": estimate.list }, null, "");
-	const crates = JSON.stringify({ "crates": estimate.crates }, null, "");
-	const dataUTC = new Date(Date.now()).toLocaleString();
-	const client = await pool.connect();
+	const list		= JSON.stringify({ "list": estimate.list }, null, "");
+	const crates	= JSON.stringify({ "crates": estimate.crates }, null, "");
+	const dataUTC	= new Date(Date.now()).toLocaleString();
+	const client	= await pool.connect();
 
 	try {
 		await client.query('BEGIN');
@@ -122,10 +124,10 @@ async function addResultToDataBase(estimate) {
 
 async function updateData (content) {
 	const { reference, user_name } = content;
-	const list = JSON.stringify({ "list": content.works }, null, "");
-	const crates = JSON.stringify({ "crates": content.crates }, null, "");
-	const dataUTC = new Date(Date.now()).toLocaleString();
-	const client = await pool.connect();
+	const list		= JSON.stringify({ "list": content.works }, null, "");
+	const crates	= JSON.stringify({ "crates": content.crates }, null, "");
+	const dataUTC	= new Date(Date.now()).toLocaleString();
+	const client	= await pool.connect();
 
 	try {
 		await client.query('BEGIN');
@@ -150,8 +152,8 @@ async function updateData (content) {
 
 
 async function delEstimate (ref) {
-	const command = `DELETE FROM data_solved WHERE reference_id = '${ref}'`;
-	const client = await pool.connect();
+	const command	= `DELETE FROM data_solved WHERE reference_id = '${ref}'`;
+	const client	= await pool.connect();
 
 	await client.query(command);
 	client.release();
