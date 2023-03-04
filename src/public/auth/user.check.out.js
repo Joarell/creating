@@ -3,8 +3,8 @@ const db = require('../DB_models/db.transactions');
 require('dotenv').config();
 
 async function checkUserAuthDB (userLogin) {
-	const data = await db.retriveDataUsers();
-	const dbUser = data.find(user => {
+	const data		= await db.retriveDataUsers();
+	const dbUser	= data.find(user => {
 		if(userLogin.name === user.name)
 			return(user);
 	});

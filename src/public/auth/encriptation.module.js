@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt');
 
 async function passEncriptProcedure (passFrase) {
 	try {
-		const salt = await bcrypt.genSalt(11);
-		const hashedPass = await bcrypt.hash(passFrase, salt);
+		const salt			= await bcrypt.genSalt(11);
+		const hashedPass	= await bcrypt.hash(passFrase, salt);
 
 		return (hashedPass);
 	}

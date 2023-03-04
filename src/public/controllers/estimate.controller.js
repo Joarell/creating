@@ -1,9 +1,9 @@
 
 
 
-const checker = require('../auth/user.check.out');
-const db = require('../DB_models/db.transactions');
-const jwt = require('jsonwebtoken');
+const checker	= require('../auth/user.check.out');
+const db		= require('../DB_models/db.transactions');
+const jwt		= require('jsonwebtoken');
 
 
 const getDataUsers = async (req, res) => {
