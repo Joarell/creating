@@ -1,3 +1,17 @@
+//              ╭────────────────────────────────────────────────╮
+//              │ ╭────────────────────────────────────────────╮ │
+//              │ │ INFO: Here is the routes of the webcrater: │ │
+//              │ │                    /www                    │ │
+//              │ │                   /login                   │ │
+//              │ │                  /logout                   │ │
+//              │ │              /inster/estimate              │ │
+//              │ │               /insert/users                │ │
+//              │ │                   /token                   │ │
+//              │ │                 /currency                  │ │
+//              │ │              /search/estimate              │ │
+//              │ │      /estimates/remove/:reference_id       │ │
+//              │ ╰────────────────────────────────────────────╯ │
+//              ╰────────────────────────────────────────────────╯
 
 
 const express		= require('express');
@@ -18,6 +32,7 @@ router.use(express.json());
 router.get("/login", userSet.userLoginValidation, );
 
 
+// TODO: route not tested yet
 router.get("/logout", userSet.userLoginValidation, );
 
 
