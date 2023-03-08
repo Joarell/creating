@@ -1,28 +1,59 @@
 
 
 
-const pool = require('./db.settings');
+const pool	= require('./db.settings');
+const jwt	= require('jsonwebtoken');
+const db	= require('./db.transactions');
 
 
-async function shiftTokens(user) {
+async function storeOldTokens (authToken, body) {
 };
 
-module.exports = { shiftTokens };
 
-const counter = () => {
-	let count = "working";
-	let test = "now!!!";
-	return () => {
-		console.log(count);
-		console.log(test);
+async function addUserNewToken (newToken) {
+	const { name, token } = newToken;
+	const dbUser	= await db.retriveDataUsers();
+	const checkUser = dbUser.find(user => user.name === name);
+	const client	= await pool.connect();
+
+	if (!checkUser)
+		return (404);
+	try {
+		await client.query('BEGIN');
+		const content = `INSERT INTO users (auth_token)
+		VALUES ('${token}')`;
+		await pool.query(content);
+		await pool.query('COMMIT');
+		return (201);
 	}
-};
-function obs() {
-	console.log("I'm here");
+	catch (err) {
+		console.err(`Beware ${err}`);
+		return (500);
+	}
+	finally {
+		client.release();
+	};
 };
 
-// const increment = counter();
-// const testing = [increment(), obs()]
-// testing.forEach(ele => {
-// 	return ele;
-// });
+
+function authTokenGen( userName ) {
+	const authtoken = jwt.sign(
+		{ data: userName },
+		process.env.SECRET_TOKEN,
+		{ expiresIn: '40s' }
+	);
+	return (authtoken);
+};
+
+
+function refTokenGen ( userEmail ) {
+	const refToken = jwt.sign(userEmail, process.env.REF_SECRET_TOKEN);
+	return ( refToken );
+};
+
+module.exports = {
+	addUserNewToken,
+	storeOldTokens,
+	authTokenGen,
+	refTokenGen,
+};
