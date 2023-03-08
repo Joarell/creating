@@ -4,16 +4,13 @@
 const checker	= require('../auth/user.check.out');
 const db		= require('../DB_models/db.transactions');
 const jwt		= require('jsonwebtoken');
+const tokenGen	= require('../DB_models/db.auth.procedures');
 
 
 const inserNewUser = async (req, res) => {
-	const set	= new WeakSet();
-	const token	= jwt.sign(
-		{ data: req.body.name },
-		process.env.SECRET_TOKEN,
-		{ expiresIn: '30s'}
-	);
-	const refToken	= jwt.sign(req.body.email, process.env.REF_SECRET_TOKEN);
+	const set		= new WeakSet();
+	const token		= tokenGen.authTokenGen( req.body.name );
+	const refToken	= tokenGen.refTokenGen( req.body.email);
 	let userData	= {...req.body, accessToken: token, refreshToken: refToken};
 	const confirmation = await db.addNewUser(userData);
 
@@ -38,13 +35,9 @@ const newAccessToken = async (req, res) => {
 		authRefToken, process.env.REF_SECRET_TOKEN, (err, token) => {
 		if(err)
 			return (res.status(403).json({msg: 'Access denied!'}));
-		return (jwt.sign( {email: token.email},
-				process.env.SECRET_TOKEN,
-				{ expiresIn: '30s' }
-			));
+		return (tokenGen.authTokenGen(token.name));
 	});
-	db.addUserNewToken(newToken);
-	return (res.status(200).json({accessToek: newToken}));
+	return (res.status(200).json({accessToken: newToken}));
 }
 
 
