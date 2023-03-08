@@ -66,32 +66,6 @@ async function addNewUser (user) {
 }
 
 
-async function addUserNewToken (newToken) {
-	const { name, token } = newToken;
-	const dbUser	= await retriveDataUsers();
-	const checkUser = dbUser.find(user => user.name === name);
-	const client	= await pool.connect();
-
-	if(!checkUser)
-		return (404);
-	try {
-		await client.query('BEGIN');
-		const content = `INSERT INTO users (auth_token)
-		VALUES ('${token}')`;
-		await pool.query(content);
-		await pool.query('COMMIT');
-		return (201);
-	}
-	catch (err) {
-		console.err(`Beware ${err}`);
-		return (500);
-	}
-	finally {
-		client.release();
-	};
-};
-
-
 async function addResultToDataBase(estimate) {
 	const { reference, user_name, user_id } = estimate;
 	const list		= JSON.stringify({ "list": estimate.list }, null, "");
@@ -166,5 +140,4 @@ module.exports = {
 	addResultToDataBase,
 	delEstimate,
 	updateData,
-	addUserNewToken
 };
