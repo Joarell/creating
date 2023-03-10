@@ -11,7 +11,11 @@ const inserNewUser = async (req, res) => {
 	const set		= new WeakSet();
 	const token		= tokenGen.authTokenGen( req.body.name );
 	const refToken	= tokenGen.refTokenGen( req.body.email);
-	let userData	= {...req.body, accessToken: token, refreshToken: refToken};
+	let userData	= {
+		...req.body,
+		accessToken: token,
+		refreshToken: refToken
+	};
 	const confirmation = await db.addNewUser(userData);
 
 	set.add(userData);
@@ -22,7 +26,7 @@ const inserNewUser = async (req, res) => {
 };
 
 
-const newAccessToken = async (req, res) => {
+const newAccessToken = async (req, res, next) => {
 	const authRefToken	= req.body.token;
 	const dbToken		= await db.retriveDataUsers();
 	const getToken		= dbToken.find(
@@ -35,9 +39,11 @@ const newAccessToken = async (req, res) => {
 		authRefToken, process.env.REF_SECRET_TOKEN, (err, token) => {
 		if(err)
 			return (res.status(403).json({msg: 'Access denied!'}));
-		return (tokenGen.authTokenGen(token.name));
+		return (res.status(200).json({
+			new_token: tokenGen.authTokenGen(token.name)}
+		));
 	});
-	return (res.status(200).json({accessToken: newToken}));
+	next();
 }
 
 
@@ -56,37 +62,50 @@ const userLoginValidation = async (req, res) => {
 };
 
 
-const userTokenCheckOut = async (req, res, next) => {
+const userTokenMatch = async( req, res, next) => {
+	const authToke	= req.headers['authorization'].split(' ')[1]
+	const { token }	= req.body;
+	const dbTokens	= await db.retriveDataUsers();
+	const match		= [authToke, token ];
+	const user		= dbTokens.find(user => {
+		const a_token = match.includes(user.auth_token);
+		const r_token = match.includes(user.refresh_token);
+		if (a_token && r_token !== undefined)
+			return (user);
+	});
+
+	console.log("user", user);
+	console.log("tokens", match);
+	user !== undefined ? next() : res.status(401).json({msg: "Token Denied"});
+};
+
+
+const userTokenExpTime = async (req, res, next) => {
 	const authToken		= req.headers['authorization'];
 	const token			= authToken && authToken.split(' ')[1];
 	const dbToken		= await db.retriveDataUsers();
 	const user			= dbToken.find(user => user.auth_token === authToken);
-	console.log(token);
 
-	if(!token)
+	if (!token)
 		return (res.status(401).json({msg: "Not authorized"}));
 	jwt.verify(token, process.env.SECRET_TOKEN, (err, user) => {
-		if (err)
+		const time_limit = 10;
+		const hourInSec = 3600;
+		const time = ~~ (
+			(new Date(Date.now()) - new Date(err.expiredAt)) / hourInSec
+		) / 1000;
+
+		if (time > time_limit) {
 			return (res.status(403).json({msg: "Access denied!"}));
+		}
 		next();
 	});
-};
-
-
-const userShiftToken = async (req, res) => {
-	const { name }		= req.body;
-	const dbUserCheck	= await db.retriveDataUsers();
-	let userGetter		= dbUserCheck.find(user => user.name === name);
-
-	if(!userGetter)
-		return (res.status(404).json({msg: "User not found"}));
-	authProcDB.shiftTokens(userGetter);
 };
 
 module.exports = {
 	inserNewUser,
 	newAccessToken,
-	userShiftToken,
 	userLoginValidation,
-	userTokenCheckOut,
-};
+	userTokenExpTime,
+	userTokenMatch,
+}
