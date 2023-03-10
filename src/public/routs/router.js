@@ -1,26 +1,26 @@
-//              ╭────────────────────────────────────────────────╮
-//              │ ╭────────────────────────────────────────────╮ │
-//              │ │ INFO: Here is the routes of the webcrater: │ │
-//              │ │                    /www                    │ │
-//              │ │                   /login                   │ │
-//              │ │                  /logout                   │ │
-//              │ │              /inster/estimate              │ │
-//              │ │               /insert/users                │ │
-//              │ │                   /token                   │ │
-//              │ │                 /currency                  │ │
-//              │ │              /search/estimate              │ │
-//              │ │      /estimates/remove/:reference_id       │ │
-//              │ ╰────────────────────────────────────────────╯ │
-//              ╰────────────────────────────────────────────────╯
+// ╭────────────────────────────────────────────────╮
+// │ ╭────────────────────────────────────────────╮ │
+// │ │ INFO: Here is the routes of the webcrater: │ │
+// │ │                    /www                    │ │
+// │ │                   /login                   │ │
+// │ │                  /logout                   │ │
+// │ │              /inster/estimate              │ │
+// │ │               /insert/users                │ │
+// │ │                   /token                   │ │
+// │ │                 /currency                  │ │
+// │ │              /search/estimate              │ │
+// │ │      /estimates/remove/:reference_id       │ │
+// │ ╰────────────────────────────────────────────╯ │
+// ╰────────────────────────────────────────────────╯
 
 
 const express		= require('express');
 const uuid			= require('uuid');
 const take			= require('../controllers/estimate.controller.js');
 const valid			= require('../middlewares/add.middleware.js');
-const router		= express.Router();
 const extAPI		= require('../controllers/external.API.request.js');
 const userSet		= require('../controllers/user.controller.js');
+const router		= express.Router();
 
 
 // Middleware that is specific to this router
@@ -38,7 +38,7 @@ router.get("/logout", userSet.userLoginValidation, );
 
 // FIX: provide the access on the request body
 router.post("/insert/estimate",
-	userSet.userTokenCheckOut,
+	userSet.userTokenExpTime,
 	valid.validationBodyEstimate,
 	valid.dataEstimateChecker,
 	take.addResultToDataBase
@@ -52,20 +52,34 @@ router.post("/insert/users",
 );
 
 
-router.post('/token', userSet.newAccessToken);
+router.post('/token',
+	userSet.userTokenMatch,
+	userSet.userTokenExpTime,
+	take.shiftTokens,
+	userSet.newAccessToken
+);
 
 
-router.get("/currency", userSet.userTokenCheckOut, extAPI.externalAPICurrency);
+router.get("/currency",
+	userSet.userTokenExpTime,
+	extAPI.externalAPICurrency
+);
 
 
-router.get("/search/estimates", userSet.userTokenCheckOut, take.getDataEstimates);
+router.get("/search/estimates",
+	userSet.userTokenExpTime,
+	take.getDataEstimates
+);
 
 
-router.put("/update/estimates", userSet.userTokenCheckOut, take.updateEstimate);
+router.put("/update/estimates",
+	userSet.userTokenExpTime,
+	take.updateEstimate
+);
 
 
 router.delete("/estimates/remove/:reference_id",
-	userSet.userTokenCheckOut,
+	userSet.userTokenExpTime,
 	take.removeEstimates
 );
 
