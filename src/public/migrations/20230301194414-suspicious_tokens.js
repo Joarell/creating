@@ -15,7 +15,6 @@ module.exports = {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 				autoIncrement: true,
-				timestamps: true
 			},
 			user_id: {
 				type: Sequelize.INTEGER,
@@ -37,8 +36,7 @@ module.exports = {
 				allowNull: false
 			},
 			event_date: {
-				field: 'create_at',
-				type: Sequelize.DATEONLY,
+				type: Sequelize.DATE,
 				allowNull: false,
 				defaultValue: Sequelize.fn('now')
 			}
