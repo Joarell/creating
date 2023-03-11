@@ -4,13 +4,13 @@
 const checker	= require('../auth/user.check.out');
 const db		= require('../DB_models/db.transactions');
 const jwt		= require('jsonwebtoken');
-const tokenGen	= require('../DB_models/db.auth.procedures');
+const tokenMan	= require('../DB_models/db.auth.procedures');
 
 
 const inserNewUser = async (req, res) => {
 	const set		= new WeakSet();
-	const token		= tokenGen.authTokenGen( req.body.name );
-	const refToken	= tokenGen.refTokenGen( req.body.email);
+	const token		= tokenMan.authTokenGen( req.body.name );
+	const refToken	= tokenMan.refTokenGen( req.body.email);
 	let userData	= {
 		...req.body,
 		accessToken: token,
@@ -40,7 +40,7 @@ const newAccessToken = async (req, res, next) => {
 		if(err)
 			return (res.status(403).json({msg: 'Access denied!'}));
 		return (res.status(200).json({
-			new_token: tokenGen.authTokenGen(token.name)}
+			new_token: tokenMan.authTokenGen(token.name)}
 		));
 	});
 	next();
@@ -62,21 +62,36 @@ const userLoginValidation = async (req, res) => {
 };
 
 
-const userTokenMatch = async( req, res, next) => {
-	const authToke	= req.headers['authorization'].split(' ')[1]
-	const { token }	= req.body;
-	const dbTokens	= await db.retriveDataUsers();
-	const match		= [authToke, token ];
-	const user		= dbTokens.find(user => {
-		const a_token = match.includes(user.auth_token);
-		const r_token = match.includes(user.refresh_token);
-		if (a_token && r_token !== undefined)
-			return (user);
-	});
+function tokensSearcher(tokenPairs, users, id){
+	const user		= users.find(user => user.id === id);
+	const a_token	= tokenPairs[0].includes(user.auth_token);
+	const r_token	= tokenPairs[1].includes(user.refresh_token);
+	
+	if (a_token && r_token === true)
+		return (true);
+	if (a_token || r_token === true)
+		return (false);
+	return(404);
+};
 
-	console.log("user", user);
-	console.log("tokens", match);
-	user !== undefined ? next() : res.status(401).json({msg: "Token Denied"});
+
+const userTokenMatch = async( req, res, next) => {
+	const authToken		= req.headers['authorization'].split(' ')[1]
+	const { token }		= req.body;
+	const dbUsers		= await db.retriveDataUsers();
+	const userId		= req.body.id;
+	const result		= tokensSearcher([authToken, token], dbUsers, userId);
+
+	switch(result) {
+		case true:
+			next();
+			break;
+		case false:
+			tokenMan.storeSuspiciousTokens([authToken, token], req.body.id);
+			return(res.status(401).json({msg: "Token blocked"}));
+		case 404:
+			return (res.status(404).json({msg: "User Not found"}));
+	};
 };
 
 
