@@ -12,11 +12,11 @@ module.exports = {
 		logging: true,
 		define: {
 			charset: 'utf8',
+			timezone: '-03:00',
 			dialectOptions: {
-				collate: 'utf8_general_ci'
+				useUTC: false,
 			}
 		},
-		timezone: 'America/Sao_Paulo'
 	},
 	test: {
 		username: process.env.PGUSER,
@@ -33,7 +33,7 @@ module.exports = {
 			}
 		},
 		dialectOptions: { useUTC: false },
-		timezone: 'America/Sao_Paulo'
+		timezone: '-03:00'
 	},
 	production: {
 		username: process.env.PGUSER,
@@ -50,7 +50,7 @@ module.exports = {
 			}
 		},
 		dialectOptions: { useUTC: false },
-		timezone: 'America/Sao_Paulo'
+		timezone: '-03:00'
 	},
 		pool: {
 		max: 5,
