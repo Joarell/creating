@@ -6,7 +6,35 @@ const jwt	= require('jsonwebtoken');
 const db	= require('./db.transactions');
 
 
-async function storeOldTokens (authToken, body) {
+async function storeOldTokens (accessToken, refToken) {
+	const client = await pool.connect();
+	// console.log(accessToken);
+	// console.log(refToken);
+	// console.log(client);
+	
+	return(200);
+};
+
+
+async function storeSuspiciousTokens (tokens, id) {
+	const client = await pool.connect();
+
+	try {
+		await client.query('BEGIN');
+		const content = `INSERT INTO craters.suspicious_tokens ( user_id,
+		auto_token, refresh_token ) 
+		VALUES (${id}, '${tokens[0]}', '${tokens[1]}' )`;
+		await client.query(content);
+		await client.query('COMMIT');
+		return (201);
+	}
+	catch ( err ) {
+		console.error(`WARNING: ${err}`);
+		return (500);
+	}
+	finally {
+		client.release();
+	};
 };
 
 
@@ -20,10 +48,10 @@ async function addUserNewToken (newToken) {
 		return (404);
 	try {
 		await client.query('BEGIN');
-		const content = `INSERT INTO users (auth_token)
+		const content = `INSERT INTO craters.users (auth_token)
 		VALUES ('${token}')`;
-		await pool.query(content);
-		await pool.query('COMMIT');
+		await client.query(content);
+		await client.query('COMMIT');
 		return (201);
 	}
 	catch (err) {
@@ -53,6 +81,7 @@ function refTokenGen ( userEmail ) {
 
 module.exports = {
 	addUserNewToken,
+	storeSuspiciousTokens,
 	storeOldTokens,
 	authTokenGen,
 	refTokenGen,
