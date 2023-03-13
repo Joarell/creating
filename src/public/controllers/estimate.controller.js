@@ -37,7 +37,7 @@ const updateEstimate = async (req, res) => {
 };
 
 
-const shiftTokens = async (req, res ) => {
+const shiftTokens = async (req, res) => {
 	const authToken		= req.headers['authorization'];
 	const result		= await keepTokens.tokenProcedures(authToken, req.body);
 	
