@@ -15,6 +15,7 @@
 
 
 const express		= require('express');
+const cors			= require('cors');
 const uuid			= require('uuid');
 const take			= require('../controllers/estimate.controller.js');
 const valid			= require('../middlewares/add.middleware.js');
@@ -27,6 +28,7 @@ const router		= express.Router();
 // TODO: should send the home page when all be done.
 router.use(express.static("./www/"));
 router.use(express.json());
+router.use(cors({origin: "http://127.0.0.1:3000", Credential: true}));
 
 
 router.get("/login", userSet.userLoginValidation, );
