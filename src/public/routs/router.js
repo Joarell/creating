@@ -56,7 +56,6 @@ router.post('/token',
 	userSet.userTokenMatch,
 	userSet.userTokenExpTime,
 	take.shiftTokens,
-	userSet.newAccessToken
 );
 
 
