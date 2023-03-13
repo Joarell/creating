@@ -6,29 +6,78 @@ const jwt	= require('jsonwebtoken');
 const db	= require('./db.transactions');
 
 
-async function storeOldTokens (accessToken, refToken) {
-	const client = await pool.connect();
-	// console.log(accessToken);
-	// console.log(refToken);
-	// console.log(client);
-	
-	return(200);
+async function getUserData ( authToken, refToken, id ) {
+	const dataUser	= await db.retriveDataUsers();
+	const user		= dataUser.find(user => user.id === id);
+	const checkAuth = user.auth_token === authToken;
+	const checkRef	= user.refresh_token === refToken;
+	const checkId	= user.id === id;
+
+	if((checkAuth && checkRef && checkId) === true)
+		return (user);
+	return (false);
 };
 
 
-async function storeSuspiciousTokens (tokens, id) {
+async function tokenProcedures (accessToken, reqBody) {
+	const a_token		= accessToken.split(' ')[1];
+	const userDB		= await
+		getUserData(a_token, reqBody.token, reqBody.id);
+	
+	if (userDB) {
+		const newAuthToken	= authTokenGen();
+		const newRefToken	= refTokenGen(userDB.email);
+		const expTokens		= [a_token, reqBody.token];
+		const newTokens		= [newAuthToken, newRefToken];
+		return (await storeOldTokensAndGetNew(expTokens, newTokens, userDB));
+	};
+	return (500);
+};
+
+
+async function storeOldTokensAndGetNew (expTokens, newTokens, user) {
+	const client = await pool.connect();
+
+	try {
+		await client.query('BEGIN');
+		const oldTokens = `INSERT INTO craters.expired_tokens (
+			user_id, auth_token, refresh_token)
+			VALUES (${user.id}, '${expTokens[0]}', '${expTokens[1]}')`;
+		const addNewTokens = `UPDATE craters.users SET
+			auth_token = '${newTokens[0]}',
+			refresh_token = '${newTokens[1]}'
+			WHERE id = '${user.id}'
+			RETURNING *`;
+		await client.query(oldTokens);
+		await client.query(addNewTokens);
+		await client.query('COMMIT');
+		return(newTokens);
+	}
+	catch ( err ) {
+		console.error(`WARNING: ${err}`);
+		await client.query ('ROLLBACK');
+		return ({500: `${err}`});
+	}
+	finally {
+		client.release();
+	};
+};
+
+
+async function storeSuspiciousTokens ( tokens, id ) {
 	const client = await pool.connect();
 
 	try {
 		await client.query('BEGIN');
 		const content = `INSERT INTO craters.suspicious_tokens ( user_id,
-		auto_token, refresh_token ) 
-		VALUES (${id}, '${tokens[0]}', '${tokens[1]}' )`;
+			auto_token, refresh_token ) 
+			VALUES (${id}, '${tokens[0]}', '${tokens[1]}')`;
 		await client.query(content);
 		await client.query('COMMIT');
 		return (201);
 	}
 	catch ( err ) {
+		await client.query ('ROLLBACK');
 		console.error(`WARNING: ${err}`);
 		return (500);
 	}
@@ -38,7 +87,7 @@ async function storeSuspiciousTokens (tokens, id) {
 };
 
 
-async function addUserNewToken (newToken) {
+async function addUserNewToken ( newToken ) {
 	const { name, token } = newToken;
 	const dbUser	= await db.retriveDataUsers();
 	const checkUser = dbUser.find(user => user.name === name);
@@ -55,6 +104,7 @@ async function addUserNewToken (newToken) {
 		return (201);
 	}
 	catch (err) {
+		await client.query ('ROLLBACK');
 		console.err(`Beware ${err}`);
 		return (500);
 	}
@@ -82,7 +132,7 @@ function refTokenGen ( userEmail ) {
 module.exports = {
 	addUserNewToken,
 	storeSuspiciousTokens,
-	storeOldTokens,
 	authTokenGen,
 	refTokenGen,
+	tokenProcedures,
 };
