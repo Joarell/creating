@@ -1,4 +1,15 @@
-
+// ╭─────────────────────────────────────────────────────────╮
+// │ ╭─────────────────────────────────────────────────────╮ │
+// │ │ INFO: Here is the functions to handle user requests │ │
+// │ │                dbSuspiciousTokens()                 │ │
+// │ │                  dbTokensCheckOut                   │ │
+// │ │                   inserNewUser()                    │ │
+// │ │                userLoginValidation()                │ │
+// │ │                  userTokenMatch()                   │ │
+// │ │                 userTokenExpTime()                  │ │
+// │ │                  tokensCheckOut()                   │ │
+// │ ╰─────────────────────────────────────────────────────╯ │
+// ╰─────────────────────────────────────────────────────────╯
 
 
 const checker		= require('../auth/user.check.out');
@@ -84,6 +95,9 @@ async function tokensCheckOut(tokenPairs, users, id){
 
 
 const userTokenMatch = async( req, res, next) => {
+	if (!req.headers.authorization)
+		return (res.status(401).json({msg: "Unauthorized"}));
+
 	const authToken	= req.headers['authorization'].split(' ')[1]
 	const { token }	= req.body;
 	const dbUsers	= await db.retriveDataUsers();
@@ -106,24 +120,14 @@ const userTokenMatch = async( req, res, next) => {
 
 
 const userTokenExpTime = async (req, res, next) => {
-	const authToken		= req.headers['authorization'];
-	const token			= authToken && authToken.split(' ')[1];
-	const dbToken		= await db.retriveDataUsers();
-	const user			= dbToken.find(user => user.auth_token === authToken);
+	const authToken	= req.headers['authorization'];
+	const token		= authToken && authToken.split(' ')[1];
+	const dbToken	= await db.retriveDataUsers();
+	const user		= dbToken.find(user => user.auth_token === authToken);
 
-	if (!token)
-		return (res.status(401).json({msg: "Not authorized"}));
+	!token && res.status(401).json({msg: "Not authorized"});
 	jwt.verify(token, process.env.SECRET_TOKEN, (err, user) => {
-		const time_limit = 0.04;
-		const hourInSec = 3600;
-		const time = ~~ (
-			(new Date(Date.now()) - new Date(err.expiredAt)) / hourInSec
-		) / 1000;
-
-		console.log(time);
-		if (time > time_limit)
-			return (res.status(403).json({msg: "Access denied!"}));
-		next();
+		err ? res.status(403).json({msg: "Token access denied!"}) : next();
 	});
 };
 
