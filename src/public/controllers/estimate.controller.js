@@ -37,10 +37,13 @@ const updateEstimate = async (req, res) => {
 };
 
 
-const shiftTokens = async (req, res , next) => {
+const shiftTokens = async (req, res ) => {
 	const authToken		= req.headers['authorization'];
-	const result		= await keepTokens.storeOldTokens(authToken, req.body);
-	result === 403 ? res.status(403).json({msg: "Not authorized!"}) : next();
+	const result		= await keepTokens.tokenProcedures(authToken, req.body);
+	
+	result === 403 ?
+		res.status(403).json({msg: "Not authorized!"}) :
+		res.status(201).json({tokens: result});
 };
 
 
