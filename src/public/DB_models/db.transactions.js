@@ -18,17 +18,35 @@ const encription	= require('../auth/encriptation.module.js');
 
 async function retriveDataUsers() {
 	const client	= await pool.connect();
-	const { rows }	= await client.query('SELECT * FROM craters.users');
-	client.release();
-	return (rows);
+
+	try {
+		const { rows }	= await client.query('SELECT * FROM craters.users');
+		return (rows);
+	}
+	catch ( err ) {
+		console.error(`ALERT, ${err}`);
+		await pool.query('ROLLBACK');
+	}
+	finally {
+		client.release();
+	};
 }
 
 
 async function retriveDataEstimates() {
 	const client	= await pool.connect();
-	const { rows }	= await pool.query('SELECT * FROM data_solved');
-	client.release();
-	return (rows);
+
+	try {
+		const { rows }	= await pool.query('SELECT * FROM data_solved');
+		return (rows);
+	}
+	catch (err) {
+		console.error(`ALERT, ${err}`);
+		await pool.query('ROLLBACK');
+	}
+	finally {
+		client.release();
+	};
 }
 
 
