@@ -26,27 +26,6 @@ const inserNewUser = async (req, res) => {
 };
 
 
-const newAccessToken = async (req, res, next) => {
-	const authRefToken	= req.body.token;
-	const dbToken		= await db.retriveDataUsers();
-	const getToken		= dbToken.find(
-		token => token.refresh_token === authRefToken
-	);
-
-	if(!getToken)
-		return (res.status(401).json({msg: 'Not authorized'}));
-	const newToken = jwt.verify(
-		authRefToken, process.env.REF_SECRET_TOKEN, (err, token) => {
-		if(err)
-			return (res.status(403).json({msg: 'Access denied!'}));
-		return (res.status(200).json({
-			new_token: tokenMan.authTokenGen(token.name)}
-		));
-	});
-	next();
-}
-
-
 const userLoginValidation = async (req, res) => {
 	const auth = await checker.checkUserAuthDB(req.body);
 	console.log(auth);
@@ -119,7 +98,6 @@ const userTokenExpTime = async (req, res, next) => {
 
 module.exports = {
 	inserNewUser,
-	newAccessToken,
 	userLoginValidation,
 	userTokenExpTime,
 	userTokenMatch,
