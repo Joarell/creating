@@ -6,7 +6,7 @@ const jwt	= require('jsonwebtoken');
 const db	= require('./db.transactions');
 
 
-async function getUserData ( authToken, refToken, id ) {
+async function getUserData (authToken, refToken, id) {
 	const dataUser	= await db.retriveDataUsers();
 	const user		= dataUser.find(user => user.id === id);
 	const checkAuth = user.auth_token === authToken;
@@ -29,13 +29,13 @@ async function tokenProcedures (accessToken, reqBody) {
 		const newRefToken	= refTokenGen(userDB.email);
 		const expTokens		= [a_token, reqBody.token];
 		const newTokens		= [newAuthToken, newRefToken];
-		return (await storeOldTokensAndGetNew(expTokens, newTokens, userDB));
+		return (await storeOldTokensGetNew(expTokens, newTokens, userDB));
 	};
 	return (500);
 };
 
 
-async function storeOldTokensAndGetNew (expTokens, newTokens, user) {
+async function storeOldTokensGetNew (expTokens, newTokens, user) {
 	const client = await pool.connect();
 
 	try {
@@ -64,30 +64,7 @@ async function storeOldTokensAndGetNew (expTokens, newTokens, user) {
 };
 
 
-async function storeSuspiciousTokens ( tokens, id ) {
-	const client = await pool.connect();
-
-	try {
-		await client.query('BEGIN');
-		const content = `INSERT INTO craters.suspicious_tokens ( user_id,
-			auto_token, refresh_token ) 
-			VALUES (${id}, '${tokens[0]}', '${tokens[1]}')`;
-		await client.query(content);
-		await client.query('COMMIT');
-		return (201);
-	}
-	catch ( err ) {
-		await client.query ('ROLLBACK');
-		console.error(`WARNING: ${err}`);
-		return (500);
-	}
-	finally {
-		client.release();
-	};
-};
-
-
-async function addUserNewToken ( newToken ) {
+async function addUserNewToken (newToken) {
 	const { name, token } = newToken;
 	const dbUser	= await db.retriveDataUsers();
 	const checkUser = dbUser.find(user => user.name === name);
@@ -114,7 +91,7 @@ async function addUserNewToken ( newToken ) {
 };
 
 
-function authTokenGen( userName ) {
+function authTokenGen(userName) {
 	const authtoken = jwt.sign(
 		{ data: userName },
 		process.env.SECRET_TOKEN,
@@ -124,14 +101,13 @@ function authTokenGen( userName ) {
 };
 
 
-function refTokenGen ( userEmail ) {
+function refTokenGen (userEmail) {
 	const refToken = jwt.sign(userEmail, process.env.REF_SECRET_TOKEN);
 	return ( refToken );
 };
 
 module.exports = {
 	addUserNewToken,
-	storeSuspiciousTokens,
 	authTokenGen,
 	refTokenGen,
 	tokenProcedures,
