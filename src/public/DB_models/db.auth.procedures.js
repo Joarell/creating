@@ -19,15 +19,13 @@ async function getUserData (authToken, refToken, id) {
 };
 
 
-async function tokenProcedures (accessToken, reqBody) {
-	const a_token		= accessToken.split(' ')[1];
-	const userDB		= await
-		getUserData(a_token, reqBody.token, reqBody.id);
+async function tokenProcedures (accessToken, body) {
+	const userDB = await getUserData(accessToken, body.token, body.id);
 	
 	if (userDB) {
 		const newAuthToken	= authTokenGen();
 		const newRefToken	= refTokenGen(userDB.email);
-		const expTokens		= [a_token, reqBody.token];
+		const expTokens		= [accessToken, body.token];
 		const newTokens		= [newAuthToken, newRefToken];
 		return (await storeOldTokensGetNew(expTokens, newTokens, userDB));
 	};
