@@ -14,14 +14,14 @@
 // ╰────────────────────────────────────────────────╯
 
 
-const express		= require('express');
-const cors			= require('cors');
-const uuid			= require('uuid');
-const take			= require('../controllers/estimate.controller.js');
-const valid			= require('../middlewares/add.middleware.js');
-const extAPI		= require('../controllers/external.API.request.js');
-const userSet		= require('../controllers/user.controller.js');
-const router		= express.Router();
+const express	= require('express');
+const cors		= require('cors');
+const uuid		= require('uuid');
+const take		= require('../controllers/estimate.controller.js');
+const valid		= require('../middlewares/add.middleware.js');
+const extAPI	= require('../controllers/external.API.request.js');
+const userSet	= require('../controllers/user.controller.js');
+const router	= express.Router();
 
 
 // Middleware that is specific to this router
@@ -31,11 +31,11 @@ router.use(express.json());
 router.use(cors({origin: "http://127.0.0.1:3000", Credential: true}));
 
 
-router.get("/login", userSet.userLoginValidation, );
+router.get("/login", userSet.userLoginValidation, take.newLogin);
 
 
 // TODO: route not tested yet
-router.get("/logout", userSet.userLoginValidation, );
+router.get("/logout", userSet.userLoginValidation,);
 
 
 // FIX: provide the access on the request body
