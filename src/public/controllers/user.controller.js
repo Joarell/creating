@@ -38,9 +38,8 @@ const inserNewUser = async (req, res) => {
 };
 
 
-const userLoginValidation = async (req, res) => {
+const userLoginValidation = async (req, res, next) => {
 	const auth = await checker.checkUserAuthDB(req.body);
-	console.log(auth);
 
 	switch (auth) {
 		case 404:
@@ -48,7 +47,7 @@ const userLoginValidation = async (req, res) => {
 		case 401:
 			return(res.status(401).json({msg: "Wrong password."}));
 		case 200:
-			return(res.status(200).json({msg: "Authorized"}));
+			next();
 	};
 };
 
@@ -60,7 +59,6 @@ async function dbSuspiciousTokens (tokens) {
 
 	if ((checkedAuthToken && checkedRefToken) === false)
 		return (false);
-	console.log("TEST1");
 	return (true);
 };
 
@@ -72,7 +70,6 @@ async function dbTokensCheckOut (tokens) {
 
 	if ((checkedAuthToken && checkedRefToken) === false)
 		return (false);
-	console.log("TEST2");
 	return (true);
 };
 
@@ -122,11 +119,11 @@ const userTokenMatch = async( req, res, next) => {
 const userTokenExpTime = async (req, res, next) => {
 	const authToken	= req.headers['authorization'];
 	const token		= authToken && authToken.split(' ')[1];
-	const dbToken	= await db.retriveDataUsers();
-	const user		= dbToken.find(user => user.auth_token === authToken);
+	const dbUsers	= await db.retriveDataUsers();
+	const user		= dbUsers.find(user => user.auth_token === authToken);
 
 	!token && res.status(401).json({msg: "Not authorized"});
-	jwt.verify(token, process.env.SECRET_TOKEN, (err, user) => {
+	jwt.verify(token, process.env.SECRET_TOKEN, async (err, user) => {
 		err ? res.status(403).json({msg: "Token access denied!"}) : next();
 	});
 };
