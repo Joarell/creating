@@ -1,8 +1,8 @@
 
 
 
-const checker	= require('../auth/user.check.out');
-const db		= require('../DB_models/db.transactions');
+const checker		= require('../auth/user.check.out');
+const db			= require('../DB_models/db.transactions');
 const keepTokens	= require('../DB_models/db.auth.procedures');
 
 
@@ -38,8 +38,8 @@ const updateEstimate = async (req, res) => {
 
 
 const shiftTokens = async (req, res) => {
-	const authToken		= req.headers['authorization'];
-	const result		= await keepTokens.tokenProcedures(authToken, req.body);
+	const authToken	= req.headers['authorization'].split(' ')[1];
+	const result	= await keepTokens.tokenProcedures(authToken, req.body);
 	
 	result === 403 ?
 		res.status(403).json({msg: "Not authorized!"}) :
@@ -47,11 +47,21 @@ const shiftTokens = async (req, res) => {
 };
 
 
+const newLogin = async (req, res) => {
+	const dbUsers	= await db.retriveDataUsers();
+	const user		= dbUsers.find(user => user.name === req.body.name);
+	const body		= {id: user.id, token: user.refresh_token};
+
+	keepTokens.tokenProcedures(user.auth_token, body);
+	res.status(201).json({msg: "Logged"});
+};
+
 module.exports = {
+	addResultToDataBase,
 	getDataUsers,
 	getDataEstimates,
-	addResultToDataBase,
+	newLogin,
 	removeEstimates,
-	updateEstimate,
 	shiftTokens,
+	updateEstimate,
 };
