@@ -1,3 +1,14 @@
+// ╭────────────────────────────────────────────────────╮
+// │ ╭────────────────────────────────────────────────╮ │
+// │ │ INFO: Here is the estimate checkout functions: │ │
+// │ │                validationData()                │ │
+// │ │              userDataValidation()              │ │
+// │ │            validationBodyUserAdd()             │ │
+// │ │            validationBodyEstimate()            │ │
+// │ │             dataEstimateChecker()              │ │
+// │ │               dataUserChecker()                │ │
+// │ ╰────────────────────────────────────────────────╯ │
+// ╰────────────────────────────────────────────────────╯
 
 
 
@@ -12,27 +23,41 @@ function validationData (data) {
 };
 
 
-const validationBodyEstimate = async (req, res, next) => {
-	const { reference, list, crates, user_name, user_id } = req.body;
-	const valid = validationData([reference, list, crates, user_name, user_id]);
+const userDataValidation = async (req, res, next) => {
+	if (!req.body)
+		return( res.status(406).json({msg: "Missing data"}));
+	const { user_name, user_id } = req.body;
+	const dbUser = await db.retriveDataUsers();
+	const user = dbUser.find(user => user.id === user_id);
 
-	console.log("Test of invalid fields:", valid);
-	if (valid) {
+	if (user_name !== user.name)
+		return (res.status(406).json({msg: "User error!"}));
+	next();
+};
+
+
+const validationBodyEstimate = async (req, res, next) => {
+	if (!req.body)
+		return( res.status(406).json({msg: "Missing data"}));
+	const { reference, list, crates, user_name, user_id } = req.body;
+	const valid		= validationData([
+		reference, list, crates, user_name, user_id
+	]);
+
+	if (valid)
 		return (res.status(206).json({
-			message: `Oops! Please, Check all the information and try again`
-		}));
-	};
-	content = null;
+			message: `Oops! Please, Check all the information` }));
 	next();
 }
 
 
 const dataEstimateChecker = async (req, res, next) => {
+	if (!req.body)
+		return( res.status(406).json({msg: "Missing data"}));
 	const { reference } = req.body;
 	const estimates		= await db.retriveDataEstimates();
 	const checkEstimate = estimates.find(ref => ref.reference_id === reference);
 
-	console.log("Test if the estimate in on DB:", checkEstimate);
 	if (checkEstimate) {
 		return (res.status(409).json({
 			message: `Oops! The estimate already exists!`}));
@@ -42,6 +67,8 @@ const dataEstimateChecker = async (req, res, next) => {
 
 
 const validationBodyUserAdd = async (req, res, next) => {
+	if (!req.body)
+		return( res.status(406).json({msg: "Missing data"}));
 	const { name, email, lastName, passFrase, birthday } = req.body;
 	const data = validationData([name, lastName, email, passFrase, birthday]); 
 
@@ -55,6 +82,8 @@ const validationBodyUserAdd = async (req, res, next) => {
 
 
 const dataUserChecker = async (req, res, next) => {
+	if (!req.body)
+		return(res.status(406).json({msg: "Missing data"}));
 	const { name }	= req.body;
 	const prevUsers = await db.retriveDataUsers();
 	const checkUser = prevUsers.find(usr => usr.name === name);
@@ -70,4 +99,5 @@ module.exports = {
 	validationBodyEstimate,
 	dataEstimateChecker,
 	dataUserChecker,
+	userDataValidation,
 };
