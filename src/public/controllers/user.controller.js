@@ -87,8 +87,7 @@ async function tokensCheckOut(tokenPairs, users, id){
 		return(403);
 	if (a_token && r_token === true)
 		return (true);
-	if (a_token || r_token === true)
-		return (false);
+	return (false);
 };
 
 
@@ -102,11 +101,12 @@ const userTokenMatch = async( req, res, next) => {
 	const userId	= req.body.id;
 	const result	= await tokensCheckOut([authToken, token], dbUsers, userId);
 
+	console.log(result);
 	switch(result) {
 		case true:
 			next();
 			break;
-		case false:
+		case false :
 			dataTokens.storeSuspiciousTokens([authToken, token], req.body.id);
 			return(res.status(401).json({msg: "User blocked"}));
 		case 404:
