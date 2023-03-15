@@ -1,15 +1,7 @@
-// ╭────────────────────────────────────────────────────╮
-// │ ╭────────────────────────────────────────────────╮ │
-// │ │ INFO: Here is the estimate checkout functions: │ │
-// │ │                validationData()                │ │
-// │ │              userDataValidation()              │ │
-// │ │            validationBodyUserAdd()             │ │
-// │ │            validationBodyEstimate()            │ │
 // │ │             dataEstimateChecker()              │ │
 // │ │               dataUserChecker()                │ │
 // │ ╰────────────────────────────────────────────────╯ │
 // ╰────────────────────────────────────────────────────╯
-
 
 
 const db			= require('../DB_models/db.transactions');
@@ -26,11 +18,11 @@ function validationData (data) {
 const userDataValidation = async (req, res, next) => {
 	if (!req.body)
 		return( res.status(406).json({msg: "Missing data"}));
-	const { user_name, user_id } = req.body;
+	const { name, id } = req.body;
 	const dbUser = await db.retriveDataUsers();
-	const user = dbUser.find(user => user.id === user_id);
+	const user = dbUser.find(user => user.id === id);
 
-	if (user_name !== user.name)
+	if (name !== user.name)
 		return (res.status(406).json({msg: "User error!"}));
 	next();
 };
@@ -39,9 +31,9 @@ const userDataValidation = async (req, res, next) => {
 const validationBodyEstimate = async (req, res, next) => {
 	if (!req.body)
 		return( res.status(406).json({msg: "Missing data"}));
-	const { reference, list, crates, user_name, user_id } = req.body;
+	const { reference, list, crates, name, id } = req.body;
 	const valid		= validationData([
-		reference, list, crates, user_name, user_id
+		reference, list, crates, name, id
 	]);
 
 	if (valid)
