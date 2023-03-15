@@ -1,4 +1,15 @@
-
+// ╭──────────────────────────────────────────────────────────────╮
+// │ ╭──────────────────────────────────────────────────────────╮ │
+// │ │            INFO: Here is the API controllers             │ │
+// │ │                      getDataUsers()                      │ │
+// │ │                    getDataEstimates()                    │ │
+// │ │                  addResultToDataBase()                   │ │
+// │ │                    removeEstimates()                     │ │
+// │ │                     updateEstimate()                     │ │
+// │ │                      shiftTokens()                       │ │
+// │ │                        newLogin()                        │ │
+// │ ╰──────────────────────────────────────────────────────────╯ │
+// ╰──────────────────────────────────────────────────────────────╯
 
 
 const checker		= require('../auth/user.check.out');
@@ -51,9 +62,11 @@ const newLogin = async (req, res) => {
 	const dbUsers	= await db.retriveDataUsers();
 	const user		= dbUsers.find(user => user.name === req.body.name);
 	const body		= {id: user.id, token: user.refresh_token};
+	const result	= await keepTokens.tokenProcedures(user.auth_token, body);
 
-	keepTokens.tokenProcedures(user.auth_token, body);
-	res.status(201).json({msg: "Logged"});
+	result !== 500 ?
+	res.status(201).json({msg: "Logged"}) :
+	res.status(500).json({msg: "Server error"});
 };
 
 module.exports = {
