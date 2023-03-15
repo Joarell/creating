@@ -38,8 +38,8 @@ router.get("/login", userSet.userLoginValidation, take.newLogin);
 router.get("/logout", userSet.userLoginValidation,);
 
 
-// FIX: provide the access on the request body
 router.post("/insert/estimate",
+	valid.userDataValidation,
 	userSet.userTokenExpTime,
 	valid.validationBodyEstimate,
 	valid.dataEstimateChecker,
