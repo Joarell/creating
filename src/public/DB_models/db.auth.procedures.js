@@ -99,6 +99,7 @@ function authTokenGen(userName) {
 };
 
 
+// TODO: Define the expiration time
 function refTokenGen (userEmail) {
 	const refToken = jwt.sign(userEmail, process.env.REF_SECRET_TOKEN);
 	return ( refToken );
