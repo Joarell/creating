@@ -39,6 +39,7 @@ router.get("/logout", userSet.userLoginValidation,);
 
 
 router.post("/insert/estimate",
+	userSet.userTokenMatch,
 	valid.userDataValidation,
 	userSet.userTokenExpTime,
 	valid.validationBodyEstimate,
