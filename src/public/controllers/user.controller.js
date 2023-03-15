@@ -76,6 +76,8 @@ async function dbTokensCheckOut (tokens) {
 
 async function tokensCheckOut(tokenPairs, users, id){
 	const user				= users.find(user => user.id === id);
+	if (!user)
+		return(404);
 	const a_token			= tokenPairs[0].includes(user.auth_token);
 	const r_token			= tokenPairs[1].includes(user.refresh_token);
 	const checkedTokens		= await dbTokensCheckOut(tokenPairs);
@@ -87,7 +89,6 @@ async function tokensCheckOut(tokenPairs, users, id){
 		return (true);
 	if (a_token || r_token === true)
 		return (false);
-	return(404);
 };
 
 
@@ -122,7 +123,8 @@ const userTokenExpTime = async (req, res, next) => {
 	const dbUsers	= await db.retriveDataUsers();
 	const user		= dbUsers.find(user => user.auth_token === authToken);
 
-	!token && res.status(401).json({msg: "Not authorized"});
+	if (!token)
+		return(res.status(401).json({msg: "Not authorized"}));
 	jwt.verify(token, process.env.SECRET_TOKEN, async (err, user) => {
 		err ? res.status(403).json({msg: "Token access denied!"}) : next();
 	});
