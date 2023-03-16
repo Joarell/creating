@@ -1,3 +1,10 @@
+// ╭────────────────────────────────────────────────────╮
+// │ ╭────────────────────────────────────────────────╮ │
+// │ │ INFO: Here is the estimate checkout functions: │ │
+// │ │                validationData()                │ │
+// │ │              userDataValidation()              │ │
+// │ │            validationBodyUserAdd()             │ │
+// │ │            validationBodyEstimate()            │ │
 // │ │             dataEstimateChecker()              │ │
 // │ │               dataUserChecker()                │ │
 // │ ╰────────────────────────────────────────────────╯ │
