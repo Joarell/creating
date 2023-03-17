@@ -13,7 +13,6 @@
 
 const db			= require('../DB_models/db.transactions');
 const jwt			= require('jsonwebtoken');
-const authProcDB	= require('../DB_models/db.auth.procedures');
 
 
 function validationData (data) {
@@ -39,7 +38,7 @@ const validationBodyEstimate = async (req, res, next) => {
 	if (!req.body)
 		return( res.status(406).json({msg: "Missing data"}));
 	const { reference, list, crates, name, id } = req.body;
-	const valid		= validationData([
+	const valid = validationData([
 		reference, list, crates, name, id
 	]);
 
