@@ -2,7 +2,7 @@
 // │ ╭─────────────────────────────────────────────────────╮ │
 // │ │ INFO: Here is the functions to handle user requests │ │
 // │ │                dbSuspiciousTokens()                 │ │
-// │ │                  dbTokensCheckOut                   │ │
+// │ │                  dbTokensCheckOut()                 │ │
 // │ │                   inserNewUser()                    │ │
 // │ │                userLoginValidation()                │ │
 // │ │                  userTokenMatch()                   │ │
