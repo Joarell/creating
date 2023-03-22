@@ -16,7 +16,7 @@
 
 const express	= require('express');
 const cors		= require('cors');
-const uuid		= require('uuid');
+// const uuid		= require('uuid');
 const take		= require('../controllers/estimate.controller.js');
 const valid		= require('../middlewares/add.middleware.js');
 const extAPI	= require('../controllers/external.API.request.js');
