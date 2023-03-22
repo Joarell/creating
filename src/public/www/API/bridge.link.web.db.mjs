@@ -1,10 +1,13 @@
+
+
+
 // TODO: develope a closure class to preserve the access and refresh token
 // on the client side towards future http requets using Map().
 
 
 async function postDataFromClientSide (content) {
 	console.log(content);
-	const url = '/insert';
+	const url = '/insert/estimate';
 	await fetch (url, {
 		method: "POST",
 		body: content,
@@ -32,8 +35,8 @@ export function saveTheCurrentEstimate (estimate) {
 		reference: reference,
 		list: list,
 		crates: crates,
-		user_name: 'Jev',
-		user_id: 2
+		name: 'Jev',
+		id: 2
 	};
 	return (postDataFromClientSide(JSON.stringify(data)));
 };
