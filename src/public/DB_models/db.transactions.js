@@ -13,7 +13,7 @@
 
 
 const pool			= require('./db.settings');
-const encription	= require('../auth/encriptation.module.js');
+const encryption	= require('../auth/encriptation.module.js');
 
 
 async function retriveDataUsers() {
@@ -54,7 +54,7 @@ async function addNewUser (user) {
 	const {
 		name, email, lastName, passFrase, birthday, accessToken, refreshToken
 	} = user;
-	const criptPass = await encription.passEncriptProcedure (passFrase);
+	const criptPass = await encryption.passEncriptProcedure (passFrase);
 	const client = await pool.connect();
 
 	if (criptPass === 500) {
