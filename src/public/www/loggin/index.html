@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>Otto Loggin</title>
+<title>Otto Login</title>
 
 <head>
 	<meta charset="utf-8">
@@ -11,8 +11,8 @@
 	<meta name="theme-color">
 	<link rel="stylesheet" href="login.css">
 	<script type="module">
-		import {} from './login.check.mjs';
-		globalThis.fns = {};
+		import { loginInto } from './login.check.mjs';
+		globalThis.fns = { loginInto };
 	</script>
 </head>
 
@@ -22,14 +22,14 @@
 			<h2>Otto Login</h2>
 			<form>
 				<div class="user-box">
-					<input type="text" name="" required="">
+					<input id="user-name" type="text" name="" required="">
 					<label>Username</label>
 				</div>
 				<div class="user-box">
-					<input type="password" name="" required="">
+					<input id="passFrase" type="password" name="" required="">
 					<label>Password</label>
 				</div>
-				<a href="#">
+				<a href="#" onclick="globalThis.fns.loginInto()">
 					<span></span>
 					<span></span>
 					<span></span>
