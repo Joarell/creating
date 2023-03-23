@@ -10,7 +10,7 @@
 //│ ╰───────────────────────────────────────────────────────────────────────╯ │
 //╰───────────────────────────────────────────────────────────────────────────╯
 
-import ArtWork from '../front-modules/Art.classe.def.mjs';
+import ArtWork from '../front-modules/Art.class.def.mjs';
 import * as mod from '../front-modules/functions.front.end.mjs'
 
 
