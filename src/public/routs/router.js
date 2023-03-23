@@ -31,7 +31,7 @@ router.use(express.json());
 router.use(cors({origin: "http://127.0.0.1:3000", Credential: true}));
 
 
-router.get("/login", userSet.userLoginValidation, take.newLogin);
+router.post("/login", userSet.userLoginValidation, take.newLogin);
 
 
 // TODO: route not tested yet
