@@ -4,7 +4,7 @@
 // │ │                  createDB();                   │ │
 // │ │                 addNewWorks();                 │ │
 // │ │                 deleteData();                  │ │
-// │ │                 gettinData();                  │ │
+// │ │          movingDataToSesseionStorage();        │ │
 // │ ╰────────────────────────────────────────────────╯ │
 // ╰────────────────────────────────────────────────────╯
 
@@ -62,6 +62,7 @@ export function deleteDataFromIndexedDB(reference) {
 }
 
 
+// TODO: refectory this function to use the worker script
 export async function movingDataToSesseionStorage(reference) {
 	const request = globalThis.indexedDB.open("Results");
 
@@ -69,19 +70,25 @@ export async function movingDataToSesseionStorage(reference) {
 		alert(`WARNING: ${event.target.errorCode}`);
 	};
 	request.onsuccess = () => {
-		let db;
-		db = request
+		const db = request
 			.result
 			.transaction("Results")
 			.objectStore("Results").get(reference);
 		
 		db.onsuccess = () => {
-			let obj;
 			const reference = document.getElementById("input_estimate").value;
+			const obj = db.result;
 
-			obj = db.result;
 			globalThis.sessionStorage.setItem(reference, JSON.stringify(obj));
 			saveTheCurrentEstimate(reference);
 		};
 	};
 }
+
+const worker = new Worker('./front-modules/worker.storage.mjs');
+worker.postMessage("PID-1290");
+worker.onmessage = (res) => {
+	const result = JSON.stringify(res.data);
+	console.log(res.data.reference);
+	console.log(`It's working: ${result}`);
+};
