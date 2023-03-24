@@ -1,10 +1,6 @@
 
 
 
-globalThis.onload= () => {
-	globalThis.sessionStorage.setItem("test", "tested");
-};
-
 // TODO: change the span from 7 to 20.
 function checkingPass (passFrase) {
 	if (passFrase.length < 7)
@@ -41,13 +37,7 @@ async function loginAuth (userInfo) {
 	}).then(body => body.json())
 	.catch(err => console.error(`Alert ${err}`));
 
-	loginCluster(res);
-};
-
-
-function loginCluster (msg) {
-	const getter = () => {
-		return (msg);
-	};
-	return (console.log(getter()));
+	if (res.msg !== 'Logged')
+		return (alert('Wrong credentials'));
+	globalThis.location.replace('/');
 };
