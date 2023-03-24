@@ -64,8 +64,9 @@ const newLogin = async (req, res) => {
 	const body		= {id: user.id, token: user.refresh_token};
 	const result	= await keepTokens.tokenProcedures(user.auth_token, body);
 
+	console.log(result);
 	result !== 500 ?
-	res.status(201).json({msg: "Logged"}) :
+	res.status(201).json({msg: "Logged", tokens: result}) :
 	res.status(500).json({msg: "Server error"});
 };
 
