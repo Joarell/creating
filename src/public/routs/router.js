@@ -4,7 +4,7 @@
 // │ │                    /www                    │ │
 // │ │                   /login                   │ │
 // │ │                  /logout                   │ │
-// │ │              /inster/estimate              │ │
+// │ │              /insert/estimate              │ │
 // │ │               /insert/users                │ │
 // │ │                   /token                   │ │
 // │ │                 /currency                  │ │
