@@ -1,6 +1,8 @@
 // ╭────────────────────────────────────────────────────────────╮
 // │ //This is the calls "work" to each work added on the list; │
 // ╰────────────────────────────────────────────────────────────╯
+
+
 export default class ArtWork {
 	constructor (code, x, z, y) {
 		this.code = code;
