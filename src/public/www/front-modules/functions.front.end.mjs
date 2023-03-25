@@ -9,7 +9,7 @@
 // │ ╰──────────────────────────────────────────────────────────────────────╯ │
 // ╰──────────────────────────────────────────────────────────────────────────╯
 
-import ArtWork from "./Art.classe.def.mjs";
+import ArtWork from "./Art.class.def.mjs";
 import { addNewWorksToIndexedDB } from "./link.storage.mjs";
 import { boss } from "../../core/start.adm.mjs";
 
@@ -148,7 +148,7 @@ function checkMetric() {
 		list = list.map((sizes) => {
 			let j;
 			const tmp = [sizes.code];
-			const converted = sizes.convertion("cm");
+			const converted = sizes.conversion("cm");
 
 			j = 0;
 			for (j in converted)
