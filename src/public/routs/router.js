@@ -38,7 +38,7 @@ router.post("/login", userSet.userLoginValidation, take.newLogin);
 router.get("/logout", userSet.userLoginValidation,);
 
 
-router.post("/insert/estimate",
+router.post("/estimate",
 	userSet.userTokenMatch,
 	valid.userDataValidation,
 	userSet.userTokenExpTime,
@@ -48,7 +48,7 @@ router.post("/insert/estimate",
 );
 
 
-router.post("/insert/users",
+router.post("/new/users",
 	valid.validationBodyUserAdd,
 	valid.dataUserChecker,
 	userSet.inserNewUser
@@ -67,20 +67,19 @@ router.get("/currency",
 	extAPI.externalAPICurrency
 );
 
-
-router.get("/search/estimates",
+router.get("/estimates",
 	userSet.userTokenExpTime,
 	take.getDataEstimates
 );
 
 
-router.put("/update/estimates",
+router.put("/estimates",
 	userSet.userTokenExpTime,
 	take.updateEstimate
 );
 
 
-router.delete("/estimates/remove/:reference_id",
+router.delete("/estimatese/:reference_id",
 	userSet.userTokenExpTime,
 	take.removeEstimates
 );
