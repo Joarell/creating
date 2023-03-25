@@ -9,6 +9,15 @@ body {
 	background: linear-gradient(#141e30, #243b55);
 }
 
+input:-webkit-autofill {
+	background-color: transparent;
+	background-image: none;
+	color:transparent;
+	-webkit-text-fill-color: #fff;
+	-webkit-box-shadow: #666;
+	transition: background-color 5000s ease-in-out 0s;
+}
+
 .login-box {
 	color: #fff;
 	text-align: center;
