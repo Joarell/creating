@@ -1,6 +1,12 @@
 
 
 
+globalThis.onkeydown = (keyPress) => {
+	if (keyPress.key === 'Enter')
+		loginInto ();
+};
+
+
 // TODO: change the span from 7 to 20.
 function checkingPass (passFrase) {
 	if (passFrase.length < 7)
@@ -38,6 +44,6 @@ async function loginAuth (userInfo) {
 	.catch(err => console.error(`Alert ${err}`));
 
 	if (res.msg !== 'Logged')
-		return (alert('Wrong credentials'));
+		return (alert('Wrong credentials. Please try again!'));
 	globalThis.location.replace('/');
 };
