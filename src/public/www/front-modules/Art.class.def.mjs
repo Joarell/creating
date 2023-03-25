@@ -50,7 +50,7 @@ export default class ArtWork {
 		return ([this.code, x, z, y]);
 	}
 	// TODO: not tested yet.
-	convertion(metric){
+	conversion(metric){
 		const inch = 0.39;
 		const dimensions = [];
 		const x = parseFloat(this.x);
