@@ -45,5 +45,5 @@ async function loginAuth (userInfo) {
 
 	if (res.msg !== 'Logged')
 		return (alert('Wrong credentials. Please try again!'));
-	globalThis.location.replace('/');
+	globalThis.location.replace('../app');
 };
