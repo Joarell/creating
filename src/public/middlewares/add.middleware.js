@@ -11,10 +11,11 @@
 // ╰────────────────────────────────────────────────────╯
 
 
-const db			= require('../DB_models/db.transactions');
-const jwt			= require('jsonwebtoken');
+const db	= require('../DB_models/db.transactions');
+const jwt	= require('jsonwebtoken');
 
 
+// TODO: refactor code: "const isFalse = (data) => !data"
 function validationData (data) {
 	const result = data.map((info) => { return((info ?? '') !== ''); });
 	return (result.includes(false));
