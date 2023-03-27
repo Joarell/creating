@@ -3,8 +3,6 @@ html {
 }
 
 body {
-	/* margin:0; */
-	/* padding:0; */
 	font-family: sans-serif;
 	background: linear-gradient(#141e30, #243b55);
 }
@@ -14,7 +12,7 @@ input:-webkit-autofill {
 	background-image: none;
 	color:transparent;
 	-webkit-text-fill-color: #fff;
-	-webkit-box-shadow: #666;
+	-webkit-box-shadow: #141e30;
 	transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -23,11 +21,14 @@ input:-webkit-autofill {
 	text-align: center;
 	display: flex;
 	flex-wrap: wrap;
-	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	padding: 2rem 0rem;
-	margin: 15% 39%;
+	align-items: center;
+}
+
+.login-box, from > div {
+	padding: 2.5rem 0rem;
+	margin: 15% 41%;
 	background: #00000080;
 	box-sizing: border-box;
 	box-shadow: 0 1.5rem 2.5rem #00000099;
@@ -42,9 +43,9 @@ input:-webkit-autofill {
 .login-box .user-box input {
 	width: 100%;
 	padding: 1rem 0;
-	font-size: 1.6rem;
+	font-size: 1rem;
 	color: #fff;
-	margin-bottom: 3rem;
+	margin-bottom: 2rem;
 	border: none;
 	border-bottom: 0.1rem solid #fff;
 	outline: none;
@@ -55,7 +56,7 @@ input:-webkit-autofill {
 	position: absolute;
 	top: 0;
 	left: 0;
-	padding: 1rem 0;
+	padding: 0.25rem 0;
 	font-size: 1rem;
 	color: #fff;
 	pointer-events: none;
@@ -64,34 +65,34 @@ input:-webkit-autofill {
 
 .login-box .user-box input:focus ~ label,
 .login-box .user-box input:valid ~ label {
-	top: -20px;
+	top: -0.5rem;
 	left: 0;
 	color: #03e9f4;
-	font-size: 12px;
+	font-size: 0.75rem;
 }
 
 .login-box form a {
 	position: relative;
 	display: inline-block;
-	padding:10px 20px;
+	padding:1rem 1.5rem;
 	color: #03e9f4;
-	font-size: 16px;
+	font-size: 1rem;
 	text-decoration: none;
 	text-transform: uppercase;
 	overflow: hidden;
 	transition: .5s;
-	margin-top: 40px;
-	letter-spacing: 4px;
+	margin-top: 1rem;
+	letter-spacing: 0.25rem;
 }
 
 login-box a:hover{
 	background: #03e9f4;
 	color: #fff;
-	border-radius: 5px;
-	box-shadow: 0 0 5px #03e9f4,
-				0 0 25px #03e9f4,
-				0 0 50px #03e9f4,
-				0 0 100px #03e9f4,
+	border-radius: 0.25rem;
+	box-shadow: 0 0 0.25rem #03e9f4,
+				0 0 0.25rem #03e9f4,
+				0 0 5rem #03e9f4,
+				0 0 8rem #03e9f4,
 }
 
 .login-box a span {
@@ -176,14 +177,77 @@ login-box a:hover{
 }
 
 
-@media only screen and ( max-width: 580px) {
-	.login-box {
+/*           iPhone 6+, 7+ and 8+           */
+@media only screen
+	and ( min-width: 414px)
+	and ( max-width: 736px) {
+	.login-box, form > div {
+		color: #fff;
+		text-align: center;
 		display: flex;
-		align-items: center;
+		flex-wrap: wrap;
 		justify-content: center;
 		flex-direction: column;
-		padding: 3rem 0rem;
-		margin: 15% 40%;
+		align-items: center;
+	}
+	
+	.login-box {
+		padding: 2rem 0rem;
+		margin: 15% 20%;
+		background: #00000080;
+		box-sizing: border-box;
+		box-shadow: 0 1.5rem 2.5rem #00000099;
+		border-radius: 1rem;
+		align-self: center;
+	}
+}
+
+
+/*                  iPhone X                 */
+@media only screen
+	and (-webkit-min-device-pixel-ratio: 3)
+	and ( min-width: 375px)
+	and ( max-width: 812px) {
+	.login-box, form > div {
+		color: #fff;
+		text-align: center;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	.login-box {
+		padding: 2rem 0rem;
+		margin: 15% 20%;
+		background: #00000080;
+		box-sizing: border-box;
+		box-shadow: 0 1.5rem 2.5rem #00000099;
+		border-radius: 1rem;
+		align-self: center;
+	}
+}
+
+
+/*                  Galaxy S6                 */
+@media only screen
+	and (-webkit-min-device-pixel-ratio: 4)
+	and ( min-width: 360px)
+	and ( max-width: 640px) {
+	.login-box, form > div {
+		color: #fff;
+		text-align: center;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	.login-box {
+		padding: 2rem 0rem;
+		margin: 15% 20%;
 		background: #00000080;
 		box-sizing: border-box;
 		box-shadow: 0 1.5rem 2.5rem #00000099;
