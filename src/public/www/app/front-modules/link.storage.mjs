@@ -8,7 +8,7 @@
 // │ ╰────────────────────────────────────────────────╯ │
 // ╰────────────────────────────────────────────────────╯
 
-import { saveTheCurrentEstimate } from "../API/bridge.link.web.db.mjs";
+import { saveTheCurrentEstimate } from "./bridge.link.web.db.mjs";
 
 
 export function createDB() {
@@ -88,7 +88,6 @@ export async function movingDataToSesseionStorage(reference) {
 const worker = new Worker('./front-modules/worker.storage.mjs');
 worker.postMessage("PID-1290");
 worker.onmessage = (res) => {
-	const result = JSON.stringify(res.data);
-	console.log(res.data.reference);
-	console.log(`It's working: ${result}`);
+	(res.data) ? console.log(`It's working ${JSON.stringify(res.data)}`) :
+		console.log('Starting...');
 };
