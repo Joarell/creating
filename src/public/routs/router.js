@@ -27,7 +27,7 @@ const path		= require('path');
 
 // Middleware that is specific to this router
 // TODO: should send the home page when all be done.
-router.use(express.static(path.join(__dirname, '../www/loggin/')));
+router.use(express.static(path.join(__dirname, '../www/app/')));
 router.use(express.json());
 router.use(cors({origin: "http://127.0.0.1:3000", Credential: true}));
 
@@ -36,6 +36,13 @@ router.post("/login",
 	userSet.userLoginValidation,
 	take.newLogin
 );
+
+
+router.get("/app", (req, res) => {
+	const app = express();
+	res.render(app.use(express.static(path.join(__dirname, '../www/app/'))));
+});
+
 
 
 // TODO: route not tested yet

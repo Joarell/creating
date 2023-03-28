@@ -1,6 +1,6 @@
 
 
-const currency = require('../www/API/currency.external.api');
+const currency = require('../www/external_API/currency.external.api');
 
 
 const externalAPICurrency = async (req, res) => {
