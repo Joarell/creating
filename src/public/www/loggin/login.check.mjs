@@ -42,8 +42,9 @@ async function loginAuth (userInfo) {
 		cache: 'default'
 	}).then(body => body.json())
 	.catch(err => console.error(`Alert ${err}`));
+	console.log(res);
 
-	if (res.msg !== 'Logged')
+	if (res.msg !== 'logged')
 		return (alert('Wrong credentials. Please try again!'));
 	globalThis.location.replace('../app');
 };
