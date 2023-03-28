@@ -22,20 +22,24 @@ const valid		= require('../middlewares/add.middleware.js');
 const extAPI	= require('../controllers/external.API.request.js');
 const userSet	= require('../controllers/user.controller.js');
 const router	= express.Router();
+const path		= require('path');
 
 
 // Middleware that is specific to this router
 // TODO: should send the home page when all be done.
-router.use(express.static("./www/"));
+router.use(express.static(path.join(__dirname, '../www/loggin/')));
 router.use(express.json());
 router.use(cors({origin: "http://127.0.0.1:3000", Credential: true}));
 
 
-router.post("/login", userSet.userLoginValidation, take.newLogin);
+router.post("/login",
+	userSet.userLoginValidation,
+	take.newLogin
+);
 
 
 // TODO: route not tested yet
-router.get("/logout", userSet.userLoginValidation,);
+router.get("/logout", userSet.userLoginValidation);
 
 
 router.post("/estimate",
@@ -55,7 +59,7 @@ router.post("/new/users",
 );
 
 
-router.post('/token',
+router.post("/token",
 	userSet.userTokenMatch,
 	userSet.userTokenExpTime,
 	take.shiftTokens,
@@ -66,6 +70,7 @@ router.get("/currency",
 	userSet.userTokenExpTime,
 	extAPI.externalAPICurrency
 );
+
 
 router.get("/estimates",
 	userSet.userTokenExpTime,
