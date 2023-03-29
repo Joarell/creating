@@ -1,0 +1,126 @@
+version: "3.8"
+
+
+services:
+
+#  ╭──────────────────────────────────────────────────────────╮
+#  │                 Proxy container settings                 │
+#  ╰──────────────────────────────────────────────────────────╯
+  proxy:
+    container_name: reverse_proxy
+    image: 'jc21/nginx-proxy-manager:latest'
+    ports:
+    # These ports are in format <host-port>:<container-port>
+      - '${PROXY_PORT}:${PROXY_PORT}' # Public HTTP Port
+      - '${HTTPS_PORT}:${HTTPS_PORT}' # Public HTTPS Port
+      - '${ADM_PORT}:${ADM_PORT}' # Admin web Port
+    volumes:
+      - ../proxy/data/:/data
+      - ../proxy/letsencrypt/:/etc/letsencrypt
+    links:
+      - "db:database"
+    depends_on:
+      - "auth_server"
+      - "web_app"
+      - "db"
+    env_file: .env
+    environment:
+      NODE_ENV: development
+      DB_USER: ${PG_USER}
+      DB_PORT: ${DB_PORT}
+      DB_HOST: ${PG_HOST}
+      DB_PASSWORD: ${PG_PASS}
+      DB_NAME: ${PG_DB}
+    restart: unless-stopped
+
+
+#  ╭──────────────────────────────────────────────────────────╮
+#  │               Main app container settings                │
+#  ╰──────────────────────────────────────────────────────────╯
+  web_app:
+    image: node:19.8-alpine
+    container_name: web_app
+    working_dir: /usr/app
+    volumes:
+      - ../www/:/usr/app
+    command: npm start
+    env_file: .env
+    ports:
+      - "${PORT1}:${PORT1}"
+    depends_on:
+      - db
+    links:
+      - "db:database"
+    environment:
+      NODE_ENV: development
+      DB_USER: ${PG_USER}
+      DB_PORT: ${DB_PORT}
+      DB_HOST: ${PG_HOST}
+      DB_PASSWORD: ${PG_PASS}
+      DB_NAME: ${PG_DB}
+    networks:
+      - front-tier
+      - back-tier
+    restart: on-failure
+
+
+#  ╭──────────────────────────────────────────────────────────╮
+#  │    Authorization and authentication container server     │
+#  ╰──────────────────────────────────────────────────────────╯
+  auth_server:
+    image: node:19.8-alpine
+    container_name: auth_server
+    working_dir: /usr/app
+    volumes:
+      - ../:/usr/app
+    command: npm start
+    env_file: .env
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      - db
+    links:
+      - "db:database"
+    environment:
+      NODE_ENV: development
+      DB_USER: ${PG_USER}
+      DB_PORT: ${DB_PORT}
+      DB_HOST: ${PG_HOST}
+      DB_PASSWORD: ${PG_PASS}
+      DB_NAME: ${PG_DB}
+    networks:
+      - front-tier
+      - back-tier
+    restart: on-failure
+
+#  ╭──────────────────────────────────────────────────────────╮
+#  │               Database Postgres container                │
+#  ╰──────────────────────────────────────────────────────────╯
+  db:
+    container_name: postgres_container
+    image: postgres:15.2-alpine
+    env_file: .env
+    environment:
+      PGUSER: ${PG_USER}
+      PGPASSWORD: ${PG_PASS}
+      PGHOST: ${PG_HOST}
+      PGPORT: ${DB_PORT}
+      PGDATABASE: ${PG_DB}
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    expose:
+      - "5432"
+    volumes:
+      - ../DB/data/:/var/lib/postgresql/data
+    networks:
+      - back-tier
+    restart: on-failure
+
+#  ╭──────────────────────────────────────────────────────────╮
+#  │                    Networks settings                     │
+#  ╰──────────────────────────────────────────────────────────╯
+networks:
+  front-tier:
+    driver: bridge
+  back-tier:
+    driver: bridge
