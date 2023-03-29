@@ -1,7 +1,7 @@
 
 
 
-globalThis.onmessage = (estimate) => {
+globalThis.onmessage = async (estimate) => {
 	const request = globalThis.indexedDB.open("Results");
 
 	request.onerror = (event) => {
