@@ -17,7 +17,8 @@
 		"jsonwebtoken": "^9.0.0",
 		"pg": "^8.8.0",
 		"sequelize": "^6.28.0",
-		"uuid": "^9.0.0"
+		"uuid": "^9.0.0",
+		"www": "^0.0.0"
 	},
 	"devDependencies": {
 		"eslint": "^8.32.0",
