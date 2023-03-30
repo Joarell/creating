@@ -1,6 +1,8 @@
 // ╭────────────────────────────────────────────────╮
 // │ ╭────────────────────────────────────────────╮ │
 // │ │ INFO: Here is the routes of the webcrater: │ │
+// │ │               /__cspreport__               │ │
+// │ │                 /new/login                 │ │
 // │ │                    /www                    │ │
 // │ │                   /login                   │ │
 // │ │                  /logout                   │ │
@@ -25,15 +27,14 @@ const router	= express.Router();
 const path		= require('path');
 
 
-// Middleware that is specific to this router
 // TODO: should send the home page when all be done.
-router.use(express.static(path.join(__dirname, "../www/loggin/")));
 router.use(express.json());
 router.use(cors({origin: "http://127.0.0.1:3000", Credential: true}));
+router.use(express.static(path.join(__dirname)));
 
 
-// TODO: route not tested yet
-router.get("/", (req, res) => {
+router.post('/__cspreport__', (req, res) => {
+	// TODO: sotore the info on data base.zz
 });
 
 
@@ -43,8 +44,8 @@ router.post("/new/login",
 );
 
 
-router.get("/app", (req, res) => {
-	res.status(200).redirect("http://localhost:3001");
+router.get("/login", (req, res) => {
+	res.status(200).sendFile(path.join(__dirname + './loggin/index.html'));
 });
 
 
