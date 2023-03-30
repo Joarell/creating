@@ -10,10 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="theme-color">
 	<link rel="stylesheet" href="login.css">
-	<script type="module">
-		import { loginInto } from './login.check.mjs';
-		globalThis.fns = { loginInto };
-	</script>
+	<script type="module" src="./login.check.mjs"></script>
 </head>
 
 <body>
@@ -22,11 +19,11 @@
 			<h2>Otto Login</h2>
 			<form>
 				<div class="user-box">
-					<input id="user-name" type="text" name="username" required="">
+					<input id="user-name" type="text" name="username" required=""></input>
 					<label>Username</label>
 				</div>
 				<div class="user-box">
-					<input id="passFrase" type="password" name="password" required="">
+					<input id="passFrase" type="password" name="password" required=""></input>
 					<label>Password</label>
 				</div>
 				<a href="#" onclick="globalThis.fns.loginInto()">

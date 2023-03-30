@@ -1,6 +1,9 @@
 
 
 
+globalThis.fns = { loginInto };
+
+
 globalThis.onkeydown = (keyPress) => {
 	if (keyPress.key === 'Enter')
 		loginInto ();
@@ -32,7 +35,7 @@ export function loginInto () {
 
 
 async function loginAuth (userInfo) {
-	const url = '/login';
+	const url = '/new/login';
 	const res = await fetch ( url, {
 		method: "POST",
 		body: JSON.stringify(userInfo),
@@ -42,9 +45,10 @@ async function loginAuth (userInfo) {
 		cache: 'default'
 	}).then(body => body.json())
 	.catch(err => console.error(`Alert ${err}`));
+
 	console.log(res);
 
-	if (res.msg !== 'logged')
-		return (alert('Wrong credentials. Please try again!'));
-	globalThis.location.replace('../app');
+	// if (res.msg !== 'logged')
+	// 	return (alert('Wrong credentials. Please try again!'));
+	// globalThis.location.replace('/app');
 };
