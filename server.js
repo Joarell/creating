@@ -4,7 +4,7 @@ const app		= express();
 const port		= process.env.PORT || 3001;
 
 
-app.use((req, res, next ) => {
+app.use((req, res, next) => {
 	res.setHeader(
 		'Report-TO',
 		'{"group":"csp-endpoint", "max_age":10886400, "endpoints":[{"url":"http://localhost:3000/__cspreport__"}], "include_subdomains":true}'
