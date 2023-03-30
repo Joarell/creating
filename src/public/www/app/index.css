@@ -101,6 +101,10 @@ tbody:nth-child(even) {
 }
 
 
+#sizes {
+	width: 50%;
+}
+
 /*-----------------------------------------------------------------------------
 					 Starting to edit the elements of the page.
 ------------------------------------------------------------------------------*/
@@ -237,23 +241,23 @@ label:hover + .popup-text {
 }
 
 .currency {
-	background: url("../icons/icons8-exchange-64.png");
+	background: url("./icons/icons8-exchange-64.png");
 }
 
 .converter {
-	background: url("../icons/icons8-ruler-64.png");
+	background: url("./icons/icons8-ruler-64.png");
 }
 
 .updater {
-	background: url("../icons/icons8-update-64.png");
+	background: url("./icons/icons8-update-64.png");
 }
 
 .done {
-	background: url("../icons/icons8-task-completed-64.png");
+	background: url("./icons/icons8-task-completed-64.png");
 }
 
 .consult {
-	background: url("../icons/lupa.png");
+	background: url("./icons/lupa.png");
 }
 
 li:hover + .text{

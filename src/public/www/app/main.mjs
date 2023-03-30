@@ -10,8 +10,11 @@
 //│ ╰───────────────────────────────────────────────────────────────────────╯ │
 //╰───────────────────────────────────────────────────────────────────────────╯
 
-import ArtWork from '../front-modules/Art.class.def.mjs';
-import * as mod from '../front-modules/functions.front.end.mjs'
+import ArtWork from './front-modules/Art.class.def.mjs';
+import * as mod from './front-modules/functions.front.end.mjs'
+import { crate, clearAll } from './front-modules/checkout.mjs';
+
+globalThis.fns = { catchWork, crate, catchRemove, crate, clearAll };
 
 
 // ╭────────────────────────────────────────────────────────────────────────╮

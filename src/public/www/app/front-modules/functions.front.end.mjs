@@ -11,7 +11,7 @@
 
 import ArtWork from "./Art.class.def.mjs";
 import { addNewWorksToIndexedDB } from "./link.storage.mjs";
-import { boss } from "../../core/start.adm.mjs";
+import { boss } from "../core/start.adm.mjs";
 
 
 // ╭─────────────────────────────────────────────────────────────────────╮
