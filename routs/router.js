@@ -38,14 +38,21 @@ router.post('/__cspreport__', (req, res) => {
 });
 
 
-router.post("/new/login",
+router.post("/start",
 	userSet.userLoginValidation,
 	take.newLogin
 );
 
 
 router.get("/login", (req, res) => {
-	res.status(200).sendFile(path.join(__dirname + './loggin/index.html'));
+	res.status(200).sendFile(path.join(__dirname + '/login/index.html'));
+});
+
+
+router.get("/app",
+	userSet.userTokenExpTime,
+	(req, res) => {
+	res.redirect("http://localhost:3001/app");
 });
 
 
