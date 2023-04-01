@@ -59,12 +59,14 @@ services:
       DB_PORT: ${DB_PORT}
       DB_USER: ${PG_USER}
       NODE_ENV: development
+    expose:
+      - ${PORT}
     image: node:19.8-alpine
     networks:
       - front-tier
       - back-tier
-    ports:
-      - "${PORT}:${PORT}"
+    # ports:
+    #   - "${PORT}:${PORT}"
     restart: on-failure
     volumes:
       - ../:/usr/app
@@ -99,28 +101,29 @@ services:
 #  │                 Proxy container settings                 │
 #  ╰──────────────────────────────────────────────────────────╯
   reverse_proxy:
+    build: 
+      context: ./
     container_name: nginx_proxy
     depends_on:
       - "auth_server"
       - "web_app"
       - "db"
     env_file: .env
-    # environment:
-    #   DB_HOST: ${PG_HOST}
-    #   DB_NAME: ${PG_DB}
-    #   DB_PASSWORD: ${PG_PASS}
-    #   DB_PORT: ${DB_PORT}
-    #   DB_USER: ${PG_USER}
-    #   NODE_ENV: development
-    image: nginx:mainline-alpine
+    expose:
+      - "${PROXY_PORT}"
+    # image: nginx:mainline-alpine
+    networks:
+      - front-tier
+      - back-tier
     ports:
     # These ports are in format <host-port>:<container-port>
       - '${PROXY_PORT}:${PROXY_PORT}' # Public HTTP Port
       - '${HTTPS_PORT}:${HTTPS_PORT}' # Public HTTPS Port
       - '${ADM_PORT}:${ADM_PORT}' # Admin web Port
-    restart: unless-stopped
+      - '${PORT1}:${PROXY_PORT}' # Public HTTP Port
+    restart: always
     volumes:
-      - ../proxy/conf.d/:/etc/nginx
+      - ../proxy/nginx:/var/log/nginx
 
 
 # ╭──────────────────────────────────────────────────────────╮
@@ -139,12 +142,15 @@ services:
       DB_PORT: ${DB_PORT}
       DB_USER: ${PG_USER}
       NODE_ENV: development
+    expose:
+      - ${PORT1}
     image: node:19.8-alpine
     networks:
       - front-tier
       - back-tier
-    ports:
-      - "${PORT1}:${PORT1}"
+
+    # ports:
+    #   - "${PORT1}:${PORT1}"
     restart: on-failure
     volumes:
       - ../www/:/usr/app
