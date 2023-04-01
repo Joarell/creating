@@ -34,7 +34,7 @@ router.use(express.static(path.join(__dirname)));
 
 
 router.post('/__cspreport__', (req, res) => {
-	// TODO: sotore the info on data base.zz
+	// TODO: sotore the info on data base.
 });
 
 
@@ -45,7 +45,7 @@ router.post("/start",
 
 
 router.get("/login", (req, res) => {
-	res.status(200).sendFile(path.join(__dirname + '/login/index.html'));
+	res.status(200).sendFile(path.join(__dirname, '/login'));
 });
 
 
@@ -96,7 +96,7 @@ router.get("/estimates",
 );
 
 
-router.put("/estimates",
+router.put("/new/estimates",
 	userSet.userTokenExpTime,
 	take.updateEstimate
 );
