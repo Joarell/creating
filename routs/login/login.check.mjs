@@ -35,7 +35,7 @@ export function loginInto () {
 
 
 async function loginAuth (userInfo) {
-	const url = '/new/login';
+	const url = '/start';
 	const res = await fetch ( url, {
 		method: "POST",
 		body: JSON.stringify(userInfo),
@@ -47,8 +47,7 @@ async function loginAuth (userInfo) {
 	.catch(err => console.error(`Alert ${err}`));
 
 	console.log(res);
-
-	// if (res.msg !== 'logged')
-	// 	return (alert('Wrong credentials. Please try again!'));
-	// globalThis.location.replace('/app');
+	if (res.msg !== 'loged')
+		return (alert('Wrong credentials. Please try again!'));
+	globalThis.location.replace('/app');
 };
