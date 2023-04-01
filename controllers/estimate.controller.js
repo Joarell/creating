@@ -15,7 +15,6 @@
 const checker		= require('../auth/user.check.out');
 const db			= require('../DB_models/db.transactions');
 const keepTokens	= require('../DB_models/db.auth.procedures');
-const path			= require('path');
 
 
 const getDataUsers = async (req, res) => {
@@ -67,7 +66,7 @@ const newLogin = async (req, res) => {
 
 	console.log(result);
 	result !== 500 ?
-	res.status(201).json({msg: 'logged', tokens: result}) :
+	res.status(201).json({msg: 'loged', tokens: result}) :
 	res.status(500).json({msg: 'Server error'});
 };
 
