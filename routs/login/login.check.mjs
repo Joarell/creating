@@ -47,7 +47,24 @@ async function loginAuth (userInfo) {
 	.catch(err => console.error(`Alert ${err}`));
 
 	console.log(res);
-	if (res.msg !== 'loged')
-		return (alert('Wrong credentials. Please try again!'));
-	globalThis.location.replace('/app');
+	res.msg === 'loged' ?
+		await appAccess(res, userInfo) :
+		// globalThis.location.replace('/app') :
+		alert('Wrong credentials. Please try again!');
+};
+
+
+async function appAccess (data, user) {
+	const url = '/app';
+	const res = await fetch (url ,{
+		method: "POST",
+		body: JSON.stringify({
+			id: user.name,
+			refToken: data[0]
+		}),
+		cache: 'default'
+	}).then(data => data.json())
+	.catch(err => alert(`ALERT: ${err}`));
+
+	console.log(res);
 };
