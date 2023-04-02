@@ -111,7 +111,6 @@ services:
     env_file: .env
     expose:
       - "${PROXY_PORT}"
-    # image: nginx:mainline-alpine
     networks:
       - front-tier
       - back-tier
@@ -135,19 +134,11 @@ services:
     depends_on:
       - db
     env_file: .env
-    environment:
-      DB_HOST: ${PG_HOST}
-      DB_NAME: ${PG_DB}
-      DB_PASSWORD: ${PG_PASS}
-      DB_PORT: ${DB_PORT}
-      DB_USER: ${PG_USER}
-      NODE_ENV: development
     expose:
       - ${PORT1}
     image: node:19.8-alpine
     networks:
       - front-tier
-      - back-tier
 
     # ports:
     #   - "${PORT1}:${PORT1}"
