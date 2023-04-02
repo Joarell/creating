@@ -96,13 +96,13 @@ router.get("/estimates",
 );
 
 
-router.put("/new/estimates",
+router.put("/estimate",
 	userSet.userTokenExpTime,
 	take.updateEstimate
 );
 
 
-router.delete("/estimatese/:reference_id",
+router.delete("/estimates/:reference_id",
 	userSet.userTokenExpTime,
 	take.removeEstimates
 );
