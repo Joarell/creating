@@ -18,8 +18,8 @@ app.use((req, res, next ) => {
 });
 
 app.use(express.static(path.join(__dirname)));
-app.get('/app', (req, res) => {
-	res.status(200).sendFile(path.join(__dirname + './app/index.html'));
+app.get('/', (req, res) => {
+	res.status(200).sendFile(path.join(__dirname, './app'));
 });
 
 app.listen(port, () => {
