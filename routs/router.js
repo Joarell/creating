@@ -44,15 +44,15 @@ router.post("/start",
 );
 
 
-router.get("/login", (req, res) => {
-	res.status(200).sendFile(path.join(__dirname, '/login'));
+router.get("/", (req, res) => {
+	res.status(200).sendFile(path.join(__dirname + './login/index.html'));
 });
 
 
-router.get("/app",
+router.post("/app",
 	userSet.userTokenExpTime,
 	(req, res) => {
-	res.redirect("http://localhost:3001/app");
+	res.redirect("web_app:3001/app");
 });
 
 
