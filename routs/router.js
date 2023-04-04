@@ -29,13 +29,23 @@ const path		= require('path');
 
 // TODO: should send the home page when all be done.
 router.use(express.json());
-router.use(cors({origin: "http://127.0.0.1:3000", Credential: true}));
+// router.use(cors({origin: "http://127.0.0.1:3000", Credential: true}));
 router.use(express.static(path.join(__dirname)));
 
 
 router.post('/__cspreport__', (req, res) => {
+	console.log(req.body);
 	// TODO: sotore the info on data base.
 });
+
+
+router.post('/private/auth',
+	// userSet.userTokenExpTime,
+	(req, res) => {
+		res.status(201).send("ok");
+		console.log('Hi');
+	}
+);
 
 
 router.post("/start",
@@ -44,16 +54,12 @@ router.post("/start",
 );
 
 
+
 router.get("/", (req, res) => {
-	res.status(200).sendFile(path.join(__dirname + './login/index.html'));
+	res.status(200).redirect('./login/');
+	console.log('Running');
 });
 
-
-router.post("/app",
-	userSet.userTokenExpTime,
-	(req, res) => {
-	res.redirect("web_app:3001/app");
-});
 
 
 // TODO: route not tested yet
