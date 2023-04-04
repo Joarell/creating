@@ -1,3 +1,3 @@
 FROM nginx:mainline-alpine
 
-COPY nginx.conf /etc/nginx
+COPY nginx.conf mime.types /etc/nginx/
