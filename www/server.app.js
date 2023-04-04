@@ -17,9 +17,10 @@ app.use((req, res, next ) => {
 	next();
 });
 
-app.use(express.static(path.join(__dirname)));
-app.get('/', (req, res) => {
-	res.status(200).sendFile(path.join(__dirname, './app'));
+app.get('/app', (req, res) => {
+	app.use(express.static(path.join(__dirname)));
+	res.status(200).sendFile(path.join(__dirname));
+	console.log('passed');
 });
 
 app.listen(port, () => {
