@@ -4,8 +4,10 @@
 networks:
   back-tier:
     driver: bridge
+    name: back_end
   front-tier:
     driver: bridge
+    name: front_end
 
 
 services:
@@ -49,8 +51,8 @@ services:
     command: npm start
     container_name: auth_server
     depends_on:
-      - "web_app"
-      - "db"
+      - web_app
+      - db
     env_file: .env
     environment:
       DB_HOST: ${PG_HOST}
@@ -63,14 +65,14 @@ services:
       - ${PORT}
     image: node:19.8-alpine
     networks:
-      - front-tier
+      # - front-tier
       - back-tier
     # ports:
     #   - "${PORT}:${PORT}"
     restart: on-failure
     volumes:
-      - ../:/usr/app
-    working_dir: /usr/app
+      - ../:/usr/api
+    working_dir: /usr/api
 
 
 #  ╭──────────────────────────────────────────────────────────╮
@@ -105,12 +107,10 @@ services:
       context: ./
     container_name: nginx_proxy
     depends_on:
-      - "auth_server"
-      - "web_app"
-      - "db"
+      - auth_server
+      - web_app
+      - db
     env_file: .env
-    expose:
-      - "${PROXY_PORT}"
     networks:
       - front-tier
       - back-tier
@@ -119,10 +119,11 @@ services:
       - '${PROXY_PORT}:${PROXY_PORT}' # Public HTTP Port
       - '${HTTPS_PORT}:${HTTPS_PORT}' # Public HTTPS Port
       - '${ADM_PORT}:${ADM_PORT}' # Admin web Port
-      - '${PORT1}:${PROXY_PORT}' # Public HTTP Port
+      # - '${PORT1}:${PORT1}' # Public HTTP Port
     restart: always
     volumes:
       - ../proxy/nginx:/var/log/nginx
+      - ../www/:/home/crater
 
 
 # ╭──────────────────────────────────────────────────────────╮
@@ -139,13 +140,10 @@ services:
     image: node:19.8-alpine
     networks:
       - front-tier
-
-    # ports:
-    #   - "${PORT1}:${PORT1}"
+  
     restart: on-failure
     volumes:
-      - ../www/:/usr/app
-    working_dir: /usr/app
-
-
-version: "3.8"
+      - ../www/:/app
+    working_dir: /app
+  
+version: "3.9"
