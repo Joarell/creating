@@ -40,10 +40,10 @@ router.post('/__cspreport__', (req, res) => {
 
 
 router.post('/private/auth',
-	// userSet.userTokenExpTime,
+	userSet.userTokenExpTime,
 	(req, res) => {
-		res.status(201).send("ok");
 		console.log('Hi');
+		res.status(201).send("ok!");
 	}
 );
 
@@ -54,12 +54,10 @@ router.post("/start",
 );
 
 
-
 router.get("/", (req, res) => {
 	res.status(200).redirect('./login/');
 	console.log('Running');
 });
-
 
 
 // TODO: route not tested yet
