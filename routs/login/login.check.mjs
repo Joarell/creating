@@ -29,12 +29,12 @@ export function loginInto () {
 	};
 	
 	if (userName && !checkingPass (userPass))
-		return (loginAuth(badge));
+		return (backEndLoginAuth(badge));
 	alert(`Opss! Wrong credentials. Please try again!`);
 };
 
 
-async function loginAuth (userInfo) {
+async function backEndLoginAuth (userInfo) {
 	const url = '/start';
 	const res = await fetch ( url, {
 		method: "POST",
@@ -48,23 +48,26 @@ async function loginAuth (userInfo) {
 
 	console.log(res);
 	res.msg === 'loged' ?
-		await appAccess(res, userInfo) :
-		// globalThis.location.replace('/app') :
+		await appAccessCheckin(res.tokens, userInfo) :
 		alert('Wrong credentials. Please try again!');
 };
 
 
-async function appAccess (data, user) {
-	const url = '/app';
-	const res = await fetch (url ,{
-		method: "POST",
-		body: JSON.stringify({
-			id: user.name,
-			refToken: data[0]
-		}),
-		cache: 'default'
-	}).then(data => data.json())
-	.catch(err => alert(`ALERT: ${err}`));
+async function appAccessCheckin (userAuth, login) {
+	const url		= '/app';
+	const bearer	= JSON.stringify('Bearer ' + userAuth[0]);
+	const checkOut	= await fetch (url ,{
+		method: "GET",
+		headers: {
+			'Authorization': bearer,
+			'Content-Type': 'application/json; charset=UTF-8'
+		},
+		cache: 'default',
+		redirect: 'follow'
+	}).catch(err => alert(`Warning! ${err}`));
+	console.log(checkOut);
 
-	console.log(res);
+	if (checkOut.status <= 400)
+		return (checkOut.url);
+	alert("Not authorized! Please, try again");
 };
