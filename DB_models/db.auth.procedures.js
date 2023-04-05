@@ -102,7 +102,7 @@ function authTokenGen(userName) {
 	const authtoken = jwt.sign(
 		{ data: userName },
 		process.env.SECRET_TOKEN,
-		{ expiresIn: '40s' }
+		{ expiresIn: '60s' }
 	);
 	return (authtoken);
 };
