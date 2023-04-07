@@ -48,26 +48,34 @@ async function backEndLoginAuth (userInfo) {
 
 	console.log(res);
 	res.msg === 'loged' ?
-		await appAccessCheckin(res.tokens, userInfo) :
+		await appAccessCheckin(res.tokens) :
 		alert('Wrong credentials. Please try again!');
 };
 
 
-async function appAccessCheckin (userAuth, login) {
+async function appAccessCheckin (userAuth) {
 	const url		= '/app';
-	const bearer	= JSON.stringify('Bearer ' + userAuth[0]);
+	const header	= {
+		'Authorization': 'Bearer ' + userAuth[0],
+	};
 	const checkOut	= await fetch (url ,{
 		method: "GET",
-		headers: {
-			'Authorization': bearer,
-			'Content-Type': 'application/json; charset=UTF-8'
-		},
+		headers: header,
 		cache: 'default',
-		redirect: 'follow'
+		redirect: 'follow',
+		credentials: 'same-origin',
+		cache: 'default',
+		connection: 'keep-alive',
 	}).catch(err => alert(`Warning! ${err}`));
-	console.log(checkOut);
 
+	console.log(checkOut);
+	console.log(checkOut.status);
+	console.log(checkOut.url);
 	if (checkOut.status <= 400)
-		return (checkOut.url);
-	alert("Not authorized! Please, try again");
+		// console.log('Actived');
+		globalThis.location.assign(checkOut.url);
+	else {
+		alert("Not authorized! Please, try again");
+		globalThis.location.reload();
+	}
 };
