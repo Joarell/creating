@@ -29,7 +29,7 @@ const path		= require('path');
 
 // TODO: should send the home page when all be done.
 router.use(express.json());
-// router.use(cors({origin: "http://127.0.0.1:3000", Credential: true}));
+router.use(cors({origin: "http://localhost:80", Credential: true}));
 router.use(express.static(path.join(__dirname)));
 
 
@@ -42,8 +42,8 @@ router.post('/__cspreport__', (req, res) => {
 router.post('/private/auth',
 	userSet.userTokenExpTime,
 	(req, res) => {
-		console.log('Hi');
-		res.status(201).send("ok!");
+		res.set('Cache-Control', 'max-age=3; must-revalidate');
+		res.status(200).send("ok!");
 	}
 );
 
@@ -64,7 +64,7 @@ router.get("/", (req, res) => {
 router.get("/logout", userSet.userLoginValidation);
 
 
-router.post("/estimate",
+router.post("/estimate/:token",
 	userSet.userTokenMatch,
 	valid.userDataValidation,
 	userSet.userTokenExpTime,
@@ -88,25 +88,21 @@ router.post("/token",
 );
 
 
-router.get("/currency",
-	userSet.userTokenExpTime,
-	extAPI.externalAPICurrency
+router.get("/currency", extAPI.externalAPICurrency
 );
 
 
-router.get("/estimates",
-	userSet.userTokenExpTime,
-	take.getDataEstimates
+router.get("/estimates/:token", take.getDataEstimates
 );
 
 
-router.put("/estimate",
+router.put("/estimate/:token",
 	userSet.userTokenExpTime,
 	take.updateEstimate
 );
 
 
-router.delete("/estimates/:reference_id",
+router.delete("/delete/estimate/:reference_id",
 	userSet.userTokenExpTime,
 	take.removeEstimates
 );
@@ -120,7 +116,7 @@ router.delete("/estimates/:reference_id",
 // 	const sessions = {};
 //
 // 	sessions[sessionId] = { username, userId: 1 };
-// 	res.set('Set-Cookie', `session=${sessionId}`);
+// 	res.set('Set-Cookie', `session = ${sessionId}`);
 // 	res.send('Work done');
 // });
 
