@@ -121,15 +121,15 @@ const userTokenExpTime = async (req, res, next) => {
 	if (!req.headers.authorization)
 		return (res.status(401).json({msg: "Unauthorized"}));
 	const authToken	= req.headers['authorization'].split(' ')[1];
-	const pureToken = authToken.slice(0, authToken.length - 1);
 	const dbUsers	= await db.retriveDataUsers();
 	const user		= dbUsers.find(user => {
-		return (user.auth_token === pureToken);
+		return (user.auth_token === authToken);
 	});
 
+	console.log(authToken);
 	if (!authToken || !user)
 		return(res.status(401).json({msg: "Not authorized"}));
-	jwt.verify(pureToken, process.env.SECRET_TOKEN, async (err, user) => {
+	jwt.verify(authToken, process.env.SECRET_TOKEN, async (err, user) => {
 		err ? res.status(403).json({msg: "Token access denied!"}) : next();
 	});
 };
@@ -139,4 +139,4 @@ module.exports = {
 	userLoginValidation,
 	userTokenExpTime,
 	userTokenMatch,
-}
+};
