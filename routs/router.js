@@ -42,7 +42,9 @@ router.post('/__cspreport__', (req, res) => {
 router.post('/private/auth',
 	userSet.userTokenExpTime,
 	(req, res) => {
-		res.set('Cache-Control', 'max-age=3; must-revalidate');
+		res.set({
+			'Cache-Control': 'max-age=3; must-revalidate',
+		});
 		res.status(200).send("ok!");
 	}
 );
