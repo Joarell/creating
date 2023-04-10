@@ -126,11 +126,12 @@ const userTokenExpTime = async (req, res, next) => {
 		return (user.auth_token === authToken);
 	});
 
-	console.log(authToken);
 	if (!authToken || !user)
 		return(res.status(401).json({msg: "Not authorized"}));
 	jwt.verify(authToken, process.env.SECRET_TOKEN, async (err, user) => {
-		err ? res.status(403).json({msg: "Token access denied!"}) : next();
+		err ? res.status(403).json({msg: "Token access denied!"}) :
+			// res.set({'Set-Cookie': 'SameSite=Strict'});
+		next();
 	});
 };
 
