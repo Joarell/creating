@@ -15,12 +15,13 @@ app.use((req, res, next) => {
 		'Content-Security-Policy-Report-Only',
 		"default-src 'self'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self' https://fonts.google.com"
 	);
+	res.setHeader('Accept', 'text/html, text/css, application/javascript');
 	next();
 });
 
 app.get('/app', (req, res) => {
 	// app.use(express.static(path.join(__dirname)));
-	app.use(express.static('/app'));
+	app.use('/app', express.static(__dirname + '/app'));
 	res.status(200).sendFile(path.join(__dirname));
 	console.log('passed');
 });
