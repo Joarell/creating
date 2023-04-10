@@ -143,7 +143,8 @@ services:
   
     restart: on-failure
     volumes:
-      - ../www/:/app
-    working_dir: /app
+      - ../www/:/crater/app
+    working_dir: /crater/app
+    # TODO: try out another work directory to pass the '/', as a root path.
   
 version: "3.9"
