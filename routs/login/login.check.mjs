@@ -57,22 +57,23 @@ async function appAccessCheckin (userAuth) {
 	const url		= '/app';
 	const header	= {
 		'Authorization': 'Bearer ' + userAuth[0],
+		'www-Authenticate': 'Bearer ' + userAuth[0],
+		'Content-Type': 'application/x-www-form-urlencoded',
+		'Accept': 'text/html; text/css; application/javascript',
 	};
 	const checkOut	= await fetch (url ,{
 		method: "GET",
 		headers: header,
 		cache: 'default',
-		redirect: 'follow',
-		credentials: 'same-origin',
+		credentials: 'include',
 		cache: 'default',
 		connection: 'keep-alive',
-	}).catch(err => alert(`Warning! ${err}`));
+		redirect: 'follow',
+	})
+	.catch(err => alert(`Warning! ${err}`));
 
-	console.log(checkOut);
-	console.log(checkOut.status);
-	console.log(checkOut.url);
+	// console.log(checkOut);
 	if (checkOut.status <= 400)
-		// console.log('Actived');
 		globalThis.location.assign(checkOut.url);
 	else {
 		alert("Not authorized! Please, try again");
