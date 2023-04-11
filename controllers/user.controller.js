@@ -118,19 +118,21 @@ const userTokenMatch = async( req, res, next) => {
 
 
 const userTokenExpTime = async (req, res, next) => {
-	if (!req.headers.authorization)
+	const token	= req.headers.cookie.split('=')[1];
+
+	console.log(token);
+	if (!token)
 		return (res.status(401).json({msg: "Unauthorized"}));
-	const authToken	= req.headers['authorization'].split(' ')[1];
+
 	const dbUsers	= await db.retriveDataUsers();
 	const user		= dbUsers.find(user => {
-		return (user.auth_token === authToken);
+		return (user.auth_token === token);
 	});
 
-	if (!authToken || !user)
+	if (!user)
 		return(res.status(401).json({msg: "Not authorized"}));
-	jwt.verify(authToken, process.env.SECRET_TOKEN, async (err, user) => {
+	jwt.verify(token, process.env.SECRET_TOKEN, async (err, user) => {
 		err ? res.status(403).json({msg: "Token access denied!"}) :
-			// res.set({'Set-Cookie': 'SameSite=Strict'});
 		next();
 	});
 };
