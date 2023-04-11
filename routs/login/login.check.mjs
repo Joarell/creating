@@ -68,4 +68,11 @@ async function appAccessCheckin (userAuth) {
 	});
 	const checkOut	= await fetch(request)
 		.catch(err => alert(`Warning! ${err}`));
+
+	if (checkOut.status <= 400)
+		globalThis.location.assign(checkOut.url);
+	else {
+		alert("Not authorized! Please, try again");
+		globalThis.location.reload();
+	}
 };
