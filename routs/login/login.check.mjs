@@ -42,7 +42,6 @@ async function backEndLoginAuth (userInfo) {
 		headers: {
 			'Content-Type': 'application/json; charset=UTF-8'
 		},
-		cache: 'default'
 	}).then(body => body.json())
 	.catch(err => console.error(`Alert ${err}`));
 
@@ -54,29 +53,19 @@ async function backEndLoginAuth (userInfo) {
 
 
 async function appAccessCheckin (userAuth) {
-	const url		= '/app';
 	const header	= {
-		'Authorization': 'Bearer ' + userAuth[0],
-		'www-Authenticate': 'Bearer ' + userAuth[0],
-		'Content-Type': 'application/x-www-form-urlencoded',
+		'Content-Type': 'application/javascript',
 		'Accept': 'text/html; text/css; application/javascript',
 	};
-	const checkOut	= await fetch (url ,{
+	const request	= new Request('/app', {
 		method: "GET",
+		mode: 'cors',
 		headers: header,
 		cache: 'default',
 		credentials: 'include',
-		cache: 'default',
 		connection: 'keep-alive',
 		redirect: 'follow',
-	})
-	.catch(err => alert(`Warning! ${err}`));
-
-	// console.log(checkOut);
-	if (checkOut.status <= 400)
-		globalThis.location.assign(checkOut.url);
-	else {
-		alert("Not authorized! Please, try again");
-		globalThis.location.reload();
-	}
+	});
+	const checkOut	= await fetch(request)
+		.catch(err => alert(`Warning! ${err}`));
 };
