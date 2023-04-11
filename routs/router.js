@@ -18,7 +18,6 @@
 
 const express	= require('express');
 const cors		= require('cors');
-// const uuid		= require('uuid');
 const take		= require('../controllers/estimate.controller.js');
 const valid		= require('../middlewares/add.middleware.js');
 const extAPI	= require('../controllers/external.API.request.js');
@@ -43,7 +42,7 @@ router.post('/private/auth',
 	userSet.userTokenExpTime,
 	(req, res) => {
 		res.set({
-			'Cache-Control': 'max-age=3; must-revalidate',
+			'Cache-Control': 'max-age=10; must-revalidate',
 		});
 		res.status(200).send("ok!");
 	}
@@ -108,18 +107,5 @@ router.delete("/delete/estimate/:reference_id",
 	userSet.userTokenExpTime,
 	take.removeEstimates
 );
-
-
-// router.get("/login", (req, res, _err) => {
-// 	const { username, password } = req.body;
-// 	if (username && password !== 'admin')
-// 		return res.status(401).send('Invalid Username or password');
-// 	const sessionId = uuid.v4();
-// 	const sessions = {};
-//
-// 	sessions[sessionId] = { username, userId: 1 };
-// 	res.set('Set-Cookie', `session = ${sessionId}`);
-// 	res.send('Work done');
-// });
 
 module.exports = router;
