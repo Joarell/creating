@@ -58,6 +58,7 @@ const shiftTokens = async (req, res) => {
 };
 
 
+// TODO: HTTPS cookie tests.
 const newLogin = async (req, res) => {
 	const dbUsers	= await db.retriveDataUsers();
 	const user		= dbUsers.find(user => user.name === req.body.name);
@@ -65,9 +66,14 @@ const newLogin = async (req, res) => {
 	const result	= await keepTokens.tokenProcedures(user.auth_token, body);
 
 	console.log(result);
-	result !== 500 ?
-	res.status(201).json({msg: 'loged', tokens: result}) :
-	res.status(500).json({msg: 'Server error'});
+	if (result === 500)
+		return(res.status(500).json({msg: 'Server error'}));
+	res.set({
+		'Set-Cookie': `${user.name} = ${result[0]}`,
+		// 'Set-Cookie': 'user = Secure; HttpOnly;',
+		// 'Set-Cookie': 'SameSite=Strict',
+	});
+	res.status(201).json({msg: 'loged', tokens: result})
 };
 
 module.exports = {
