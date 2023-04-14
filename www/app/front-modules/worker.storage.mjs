@@ -9,9 +9,10 @@ globalThis.onmessage = (estimate) => {
 	};
 	request.onsuccess = () => {
 		const db = request
-			.result
-			.transaction("Results")
-			.objectStore("Results").get(estimate.data);
+		.result
+		.transaction("Results")
+		.objectStore("Results")
+		.get(estimate.data);
 	
 		db.onsuccess = () => {
 			globalThis.postMessage(db.result);
