@@ -5,10 +5,7 @@ globalThis.onstorage = () => {
 	const press = localStorage.getItem("pane1");
 	const getter = localStorage.getItem("refNumb");
 
-	if(press){
-		// localStorage.removeItem("pane1");
-		showCrates2(getter);
-	}
+	press && showCrates1(getter);
 }
 
 
@@ -38,7 +35,7 @@ export function createHeader(table){
 // ╭───────────────────────────────────────────────────────────╮
 // │ Returns all crates from the indexedDB or gets from cloud. │
 // ╰───────────────────────────────────────────────────────────╯
-export function showCrates2(estimate){
+export function showCrates1(estimate){
 	const request = globalThis.indexedDB.open("Results");
 
 	request.onerror = (event) => {
