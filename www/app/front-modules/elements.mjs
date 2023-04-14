@@ -1,3 +1,6 @@
+
+
+
 // ╭───────────────────────────────────────────────────────────────────╮
 // │ Calls to each change on the localStorage to update the list pane. │
 // ╰───────────────────────────────────────────────────────────────────╯
@@ -13,11 +16,11 @@ globalThis.onload = () => {
 // │ Retunns the HTML table with all works in the list. │
 // ╰────────────────────────────────────────────────────╯
 export function elementTable () {
-	let i;
+	let i		= 0;
 	let work;
 	let metric;
-	const plot = document.getElementById("sizes");
-	const test = (store) =>{
+	const plot	= document.getElementById("sizes");
+	const test	= (store) =>{
 		if(store !== "metrica" && store !== "pane1" && store !== "pane2"
 			&& store !== "refNumb")
 			return (true);
@@ -28,7 +31,6 @@ export function elementTable () {
 		metric = "in";
 	else
 		metric = "cm";
-	i = 0;
 	createHeader(plot);
 	while (localStorage.key(i)) {
 		if(test(localStorage.key(i))){
