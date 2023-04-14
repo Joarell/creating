@@ -1,21 +1,20 @@
-// ╭──────────────────────────────────────────────────╮
-// │ This is the trigger actived by the crate button. │
-// ╰──────────────────────────────────────────────────╯
-globalThis.onstorage = async () => {
+// ╭────────────────────────────────────────────────────╮
+// │ This is the trigger activated by the crate button. │
+// ╰────────────────────────────────────────────────────╯
+globalThis.onstorage = () => {
 	const press = localStorage.getItem("pane1");
 	const getter = localStorage.getItem("refNumb");
 
 	if(press){
 		localStorage.removeItem("pane1");
-		localStorage.setItem("pane2", "standup");
-		showCrates1(getter);
+		showCrates2(getter);
 	}
 }
 
 
-// ╭──────────────────────────────────────────────────────────────────────────╮
-// │ // This is the header creator when the page or localStorage are updated. │
-// ╰──────────────────────────────────────────────────────────────────────────╯
+// ╭────────────────────────────────────────────────────────────────────────╮
+// │  This is the header creator when the page or localStorage are updated. │
+// ╰────────────────────────────────────────────────────────────────────────╯
 export function createHeader(table){
 	const head = document.createElement("tr");
 	
@@ -39,7 +38,7 @@ export function createHeader(table){
 // ╭───────────────────────────────────────────────────────────╮
 // │ Returns all crates from the indexedDB or gets from cloud. │
 // ╰───────────────────────────────────────────────────────────╯
-export function showCrates1(estimate){
+export function showCrates2(estimate){
 	const request = globalThis.indexedDB.open("Results");
 
 	request.onerror = (event) => {
@@ -50,24 +49,18 @@ export function showCrates1(estimate){
 			.objectStore("Results").get(estimate);
 
 		db.onsuccess = () => {
-			let i;
+			let i = 0;
 			let metric;
-			let crate
-			const pane = document.getElementById("crates-opened");
-			const check = (target) => {
-				if(target[0] === "Final")
-					return (true);
-				return (false);
-			}
+			let crate;
+			const pane = document.getElementById("crates-only");
 			
-			i = 0;
 			createHeader(pane);
 			if(localStorage.getItem("metrica") === "in - inches")
 				metric = "in";
 			else
 				metric = "cm";
-			while(i < db.result.crates.length - 1){
-				if(check(db.result.crates[i])){
+			while(i++ < db.result.crates.length - 1){
+				if(db.result.crates[i].length > 2){
 					crate = db.result.crates[i];
 					pane.innerHTML += crate.map((info, index) => {
 						if (index === 5){
@@ -77,9 +70,7 @@ export function showCrates1(estimate){
 						return(`<td>${info}</td>`);
 					}, 0).join("");
 				}
-				i++;
 			}
 		}
 	}
 }
-

@@ -1,13 +1,14 @@
-// ╭──────────────────────────────────────────────────╮
-// │ This is the trigger actived by the crate button. │
-// ╰──────────────────────────────────────────────────╯
-globalThis.onstorage = () => {
-	const press = localStorage.getItem("pane2");
-	const getter = localStorage.getItem("refNumb");
+// ╭────────────────────────────────────────────────────╮
+// │ This is the trigger activated by the crate button. │
+// ╰────────────────────────────────────────────────────╯
+globalThis.onstorage = async () => {
+	const press		= localStorage.getItem("pane2");
+	const getter	= localStorage.getItem("refNumb");
 
 	if(press){
 		localStorage.removeItem("pane2");
-		showCrates2(getter);
+		localStorage.setItem("pane1", "standup");
+		showCrates1(getter);
 	}
 }
 
@@ -38,7 +39,7 @@ export function createHeader(table){
 // ╭───────────────────────────────────────────────────────────╮
 // │ Returns all crates from the indexedDB or gets from cloud. │
 // ╰───────────────────────────────────────────────────────────╯
-export function showCrates2(estimate){
+export function showCrates1(estimate){
 	const request = globalThis.indexedDB.open("Results");
 
 	request.onerror = (event) => {
@@ -51,8 +52,13 @@ export function showCrates2(estimate){
 		db.onsuccess = () => {
 			let i;
 			let metric;
-			let crate
-			const pane = document.getElementById("crates-only");
+			let crate;
+			const pane = document.getElementById("crates-opened");
+			const check = (target) => {
+				if(target[0] === "Final")
+					return (true);
+				return (false);
+			}
 			
 			i = 0;
 			createHeader(pane);
@@ -60,8 +66,8 @@ export function showCrates2(estimate){
 				metric = "in";
 			else
 				metric = "cm";
-			while(i++ < db.result.crates.length - 1){
-				if(db.result.crates[i].length > 2){
+			while(i < db.result.crates.length - 1){
+				if(check(db.result.crates[i])){
 					crate = db.result.crates[i];
 					pane.innerHTML += crate.map((info, index) => {
 						if (index === 5){
@@ -71,7 +77,9 @@ export function showCrates2(estimate){
 						return(`<td>${info}</td>`);
 					}, 0).join("");
 				}
+				i++;
 			}
 		}
 	}
 }
+
