@@ -6,7 +6,7 @@ globalThis.onstorage = () => {
 	const getter = localStorage.getItem("refNumb");
 
 	if(press){
-		localStorage.removeItem("pane1");
+		// localStorage.removeItem("pane1");
 		showCrates2(getter);
 	}
 }
@@ -70,7 +70,8 @@ export function showCrates2(estimate){
 						return(`<td>${info}</td>`);
 					}, 0).join("");
 				}
-			}
+			};
+			localStorage.removeItem("pane1");
 		}
 	}
 }

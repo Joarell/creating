@@ -6,7 +6,7 @@ globalThis.onstorage = async () => {
 	const getter	= localStorage.getItem("refNumb");
 
 	if(press){
-		localStorage.removeItem("pane2");
+		// localStorage.removeItem("pane2");
 		localStorage.setItem("pane1", "standup");
 		showCrates1(getter);
 	}
@@ -29,7 +29,7 @@ export function createHeader(table){
 			<th>LENGTH</th>
 			<th>DEPTH</th>
 			<th>HEIGHT</th>
-			<th>CUBm³</th>
+			<th>1CUBm³</th>
 		</tr>
 	`
 	return(table.appendChild(head));
@@ -78,7 +78,8 @@ export function showCrates1(estimate){
 					}, 0).join("");
 				}
 				i++;
-			}
+			};
+			localStorage.removeItem("pane2");
 		}
 	}
 }
