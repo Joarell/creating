@@ -12,8 +12,8 @@ import { saveTheCurrentEstimate } from "./bridge.link.web.db.mjs";
 
 
 export function createDB() {
-	const dataName = "Results";
-	const request = globalThis.indexedDB.open(dataName);
+	const dataName	= "Results";
+	const request	= globalThis.indexedDB.open(dataName);
 
 	request.onerror = (event) => {
 		alert(`ATTENTION! ${event.target.errorCode}`);
@@ -30,16 +30,16 @@ export function createDB() {
 
 
 export function addNewWorksToIndexedDB (works) {
-	const dataName = "Results";
-	const list = document.getElementById("input_estimate").value;
-	const request = globalThis.indexedDB.open(dataName);
+	const dataName	= "Results";
+	const list		= document.getElementById("input_estimate").value;
+	const request	= globalThis.indexedDB.open(dataName);
 
 	request.onerror = (event) => {
 		alert(`ERROR: ${event.target.errorCode}`);
 	}
 	request.onsuccess = async (event) => {
-		const db = event.target.result;
-		const object = db.transaction("Results", "readwrite")
+		const db		= event.target.result;
+		const object	= db.transaction("Results", "readwrite")
 			.objectStore("Results");
 	
 		object.add(works);
@@ -86,8 +86,8 @@ export async function movingDataToSesseionStorage(reference) {
 }
 
 const worker = new Worker('./front-modules/worker.storage.mjs');
-worker.postMessage("123900");
-worker.onmessage = (res) => {
-	res.data ? console.log(`It's working ${JSON.stringify(res.data)}`) :
-		console.log('Starting...');
-};
+// worker.postMessage("123900");
+// worker.onmessage = (res) => {
+// 	res.data ? console.log(`It's working ${JSON.stringify(res.data)}`) :
+// 		console.log('Starting...');
+// };
