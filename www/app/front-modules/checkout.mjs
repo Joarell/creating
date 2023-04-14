@@ -1,7 +1,8 @@
 // ╭───────────────────────────────────────────────────────────────────────╮
 // │ ╭───────────────────────────────────────────────────────────────────╮ │
-// │ │ info: Here is some functions to work when the page is loaded, and │ │
+// │ │ INFO: Here is some functions to work when the page is loaded, and │ │
 // │ │          expose another ones to be available to the DOM:          │ │
+// │ │                     browserStoragePrepare();                      │ │
 // │ │                             crate();                              │ │
 // │ │                            clearAll();                            │ │
 // │ ╰───────────────────────────────────────────────────────────────────╯ │
@@ -15,15 +16,26 @@ import { createDB } from './link.storage.mjs';
 // │ Calls to each change on the localStorage to update the list pane. │
 // ╰───────────────────────────────────────────────────────────────────╯
 globalThis.onload = () => {
+	browserStoragePrepare();
+};
+
+
+globalThis.onstorage = () => {
+	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
+}
+
+
+function browserStoragePrepare() {
 	const ref = localStorage.getItem("refNumb");
 	
 	if (ref) {
 		document.getElementById("input_estimate").value = localStorage
-		.getItem("refNumb");
+			.getItem("refNumb");
 		createDB();
 	}
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
 }
+
 globalThis.onstorage = () => {
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
 }
@@ -34,7 +46,7 @@ globalThis.onstorage = () => {
 // ╰────────────────────────────────────────────────────────╯
 if (!localStorage.getItem("metrica"))
 	localStorage.setItem( "metrica", document.getElementById("metrica").value);
-globalThis.document.getElementById("metrica").addEventListener("change", () =>{
+globalThis.document.getElementById("metrica").addEventListener("change", () => {
 	if (!localStorage.getItem("metrica")){
 		localStorage.setItem("metrica",
 			document.getElementById("metrica").value
@@ -42,7 +54,7 @@ globalThis.document.getElementById("metrica").addEventListener("change", () =>{
 	}
 	else {
 		confirm(
-			"Attention! You are going to change the measurement of the artworks."
+			"Attention! You are going to change the measurement of the works."
 		);
 		localStorage.setItem(
 			"metrica",
@@ -56,8 +68,10 @@ globalThis.document.getElementById("metrica").addEventListener("change", () =>{
 // │ This is the trigger to the "crate" and clear button. │
 // ╰──────────────────────────────────────────────────────╯
 export const crate = () => {
+	browserStoragePrepare();
 	mod.crate();
 }
+
 export const clearAll = () => {
 	const del = confirm("Do you really want to delete the whole list?");
 
