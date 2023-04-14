@@ -36,10 +36,6 @@ function browserStoragePrepare() {
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
 }
 
-globalThis.onstorage = () => {
-	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
-}
-
 
 // ╭────────────────────────────────────────────────────────╮
 // │ Defines the measure of the works selected by the user. │
