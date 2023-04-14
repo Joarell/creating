@@ -76,6 +76,7 @@ export const clearAll = () => {
 		mod.displayAirCub();
 		mod.displayCub();
 		localStorage.clear();
+		globalThis.location.reload();
 	}
 	mod.cleanInputs();
 }
