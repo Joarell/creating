@@ -14,7 +14,7 @@ import ArtWork from './front-modules/Art.class.def.mjs';
 import * as mod from './front-modules/functions.front.end.mjs'
 import { crate, clearAll } from './front-modules/checkout.mjs';
 
-globalThis.fns = { catchWork, crate, catchRemove, crate, clearAll };
+globalThis.fns = { catchWork, catchRemove, crate, clearAll };
 
 
 // ╭────────────────────────────────────────────────────────────────────────╮
@@ -155,3 +155,9 @@ export function checkReference() {
 	else
 		localStorage.setItem("refNumb", actual);
 }
+
+
+globalThis.onkeydown = (keyDown) => {
+	if (keyDown.key === "Enter" && keyDown.ctrlKey === true)
+		crate();
+};
