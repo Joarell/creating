@@ -11,10 +11,13 @@
 	<meta name="theme-color">
 	<link rel="stylesheet" href="login.css">
 	<script type="module" src="./login.check.mjs"></script>
+	<script type="module" src="./background.mjs"></script>
 </head>
 
 <body>
 	<main>
+		<!-- TODO: animated background (optional SVG rather than CANVAS). -->
+		<canvas id="art-background"></canvas>
 		<div class="login-box">
 			<h2>Otto Login</h2>
 			<form>
