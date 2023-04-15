@@ -1,10 +1,20 @@
-html {
-	height: 100%;
+:root {
+	--hue: 204;
+	--saturation: 100%;
+	--lightness: 30%;
+	--color1: #03e9f4; 
+	--color2: #162789; 
+	--color3: #FC007A; 
+	--color4: #FFF; 
+	--color5: #554
 }
 
-body {
+body, html, main {
+	height: 100%;
+	margin: 0;
 	font-family: sans-serif;
 	background: linear-gradient(#141e30, #243b55);
+	/* background: #141e30; */
 }
 
 input:-webkit-autofill {
@@ -16,20 +26,49 @@ input:-webkit-autofill {
 	transition: background-color 5000s ease-in-out 0s;
 }
 
-.login-box {
+canvas {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	position:absolute;
+	top: 0;
+	left: 0;
+	z-index: -9999;
+}
+
+::-webkit-scrollbar {
+	width: 1rem;
+}
+
+::-webkit-scrollbar-track {
+	background: white;
+	border-radius: 100vw;
+	margin-block: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+	background: linear-gradient(270deg, var(--color3), var(--color1));
+	border-radius: 100vw;
+	border: .3rem solid white;
+	margin-block: 0.5rem;
+}
+
+/*-----------------------------------------------------------------------------
+					 Starting to edit the elements of the login.
+------------------------------------------------------------------------------*/
+main {
 	color: #fff;
 	text-align: center;
 	display: flex;
 	flex-wrap: wrap;
+	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	align-items: center;
 }
 
 .login-box, from > div {
-	padding: 2.5rem 0rem;
-	margin: 15% 41%;
-	background: #00000080;
+	padding: 2.5rem 4rem;
+	background: hsl(var(--hue) var(--saturation) var(--lightness) / .1);
 	box-sizing: border-box;
 	box-shadow: 0 1.5rem 2.5rem #00000099;
 	border-radius: 1rem;
