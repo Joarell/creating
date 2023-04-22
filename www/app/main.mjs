@@ -93,9 +93,9 @@ export function regValid(sizes_parsed) {
 //╰───────────────────────────────────────────────────────────────────────────╯
 export function catchWork() {
 	const cod = document.getElementById("input_code").value;
-	const length = document.getElementById("input_len").value;
-	const depth = document.getElementById("input_dep").value;
-	const height = document.getElementById("input_hei").value;
+	const length = document.getElementById("input_length").value;
+	const depth = document.getElementById("input_depth").value;
+	const height = document.getElementById("input_heigth").value;
 	let tmp;
 
 	switch (cod && length && depth && height) {
