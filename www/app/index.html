@@ -1,4 +1,4 @@
-<!DOCTYPE html
+<!DOCTYPE html>
 <html lang="en">
 <!-- this tag is used to autorefresh the page. Rememeter to get rid of it.-->
 <!-- <meta http-equiv="refresh" content="3"> -->
@@ -17,6 +17,7 @@
 	<script type="module" src="./side-menu/menu.interface.mjs"></script>
 	<link rel="stylesheet" href="./index.css">
 	<link rel="stylesheet" href="./index-01.css">
+	<link rel="stylesheet" href="./responsive_sheet.css">
 </head>
 
 <body>
@@ -25,7 +26,7 @@
 			<h1>Welcome to the Web Crater!</h1>
 		</div>
 	</header>
-	<div class="menu" className"">
+	<div class="menu" className="">
 		<ul dir="rtl" lang="en" class="menu__option">
 			<li><a href="#"><i class='currency' ></i></a></li>
 			<span class="menu__option--text">Conversion</span>
@@ -41,37 +42,37 @@
 		<div class="container">
 			<!-- This Dive is responsible to get the dimensions of the artwork list.-->
 			<div class="container__insert">
-				<h2 class="container--span title">Insert panel:</h2>
+				<h2 class="container--span title" className"">Insert panel:</h3>
 				<div class="IO">
 					<div class="IO__top">
 						<label for="estimate">Estimate:</label>
 						<input type="text" class="IO__top__estimate" id="input_estimate" name="estimate" required="true">
-						<label for="airCubed" class="IO__top__unit">Metric:</label>
-						<select name="measure" class="IO__top__unit metrica"id="metrica">
-							<option>cm - centimeters</option>
-							<option>in - inches</option>
-						</select>
+						<label for="metrica">cm</label>
+						<input type="radio" name="centimeters" value="centimeters" id="metrica" checked>
+						<label for="metrica">in</label>
+						<input type="radio" name="inches" value="inches" id="metrica" >
+						<div class="IO__top--color"></div>
 					</div>
 					<div class="IO__sizes">
 						<label for="code">Art code:</label>
 						<input type="text" class="IO__sizes__code" id="input_code" name="code" required>
 						<label for="length">L:</label>
 						<span class="IO__sizes--popup">Length</span>
-						<input type="text" class="IO__sizes__len" id="input_len" name="length" maxlength="3" required>
+						<input type="text" class="IO__sizes__len" id="input_length" name="length" maxlength="3" required>
 						<label for="depth">D:</label>
 						<span class="IO__sizes--popup">Depth</span>
-						<input type="text" class="IO__sizes__dep" id="input_dep" name="depth" maxlength="3" required>
+						<input type="text" class="IO__sizes__dep" id="input_depth" name="depth" maxlength="3" required>
 						<label for="Height">H:</label>
 						<span class="IO__sizes--popup">Height</span>
-						<input type="text" class="IO__sizes__hei" id="input_hei" name="height" maxlength="3" required>
+						<input type="text" class="IO__sizes__hei" id="input_heigth" name="height" maxlength="3" required>
 					</div>
 					<div class="IO__press">
 						<button class="IO__press__btn" onclick="globalThis.fns.catchWork()">Insert</button>
 						<button class="IO__press__btn" id="remove" onclick="globalThis.fns.catchRemove()">Remove</button>
 						<div class="IO__press__crate">
+							<span class="IO__crate--shadow1"></span>
+							<span class="IO__crate--shadow2"></span>
 							<button class="IO__crate" onclick="globalThis.fns.crate()">
-								<span class="IO__crate__crate-shadow1"></span>
-								<span class="IO__crate__crate-shadow2"></span>
 								<p class="IO__crate__txt"><strong>Crate!</strong></p>
 							</button>
 							<svg class="IO__press__crate--btn">

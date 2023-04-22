@@ -1,6 +1,7 @@
 /*-----------------------------------------------------------------------------
 					 Here is the "Global settings.
 ------------------------------------------------------------------------------*/
+
 *, *::before, *::after {
 	box-sizing: border-box;
 }
@@ -11,41 +12,34 @@
 	--color2: #162789; 
 	--color3: #FC007A; 
 	--color4: #FFF; 
-	--color5: #554
+	--color5: #554;
+	--color6: #00ff00;
+	--light-blue1: #CCDBDC;
+	--light-blue2: #9AD1D4;
+	--light-blue3: #80CED7;
+	--dark-blue: #003249;
 	--font-weight: 600;
 	--colg: 5rem;
 	--rowg: 3rem;
 	--border: 3rem;
-	--backgrou-transp: #ffffff33
+	--backgrou-transp: #ffffff33;
+	--gradient: linear-gradient(270deg, '#FC007A', '#03E9f4');
 }
 
 :focus::afater {
 	-webkit-transform: scaleX(1);
 	transform:scaleX(1);
-	background: linear-gradient(270deg, var(--color3), var(--color1));
+	background:var(--gradient);
 }
 
-/* Style the header */
-/* .header { */
-/* 	position: relative; */
-/* 	place-items: center; */
-/* 	grid-area: header; */
-/* 	background: linear-gradient(to bottom, #162789, #03e9f4); */
-/* 	text-align: center; */
-/* 	font-size: var(--font-size); */
-/* 	height: 10rem; */
-/* } */
-
-
-html {
-	scroll-behavior: slow;
-}
 
 body {
 	background-color: #03e9f4;
+	/* background-color: grey; */
 	font-family: Arial, Helvetica, Sans-serf;
 	font-size: 0.8rem;
 	background-position: center;
+	scroll-behavior: slow;
 }
 
 
@@ -94,13 +88,25 @@ section, ul, li, a {
 	list-style: none;
 }
 
+
+input, select {
+	font-size: 1rem;
+	font-weight: 550;
+	background: transparent;
+	text-align: center;
+	border-radius: 3rem;
+	outline: none;
+	border: 0.01rem solid #fff;
+	color: #fff;
+}
+
+
 tr, td {
 	text-align: center;
 	padding: 0.5rem 0.5rem;
 	padding: 0.5rem 0.5rem;
 	border-radius: 0.3rem;
 }
-
 
 
 tbody:nth-child(even) {
@@ -115,11 +121,13 @@ tbody:nth-child(even) {
 	width: 1rem;
 }
 
+
 ::-webkit-scrollbar-track {
 	background: white;
 	border-radius: 100vw;
 	margin-block: 0.5rem;
 }
+
 
 ::-webkit-scrollbar-thumb {
 	background: linear-gradient(270deg, var(--color3), var(--color1));
@@ -173,7 +181,7 @@ tbody:nth-child(even) {
 	margin-left: -1rem;
 }
 
-.IO {
+.IO > *{
 	display: flex;
 	flex-wrap: wrap;
 }
@@ -289,6 +297,31 @@ li:hover + .menu__option--text{
 }
 
 /*-----------------------------------------------------------------------------
+					 This is the div to estimate input
+------------------------------------------------------------------------------*/
+.IO__top > *{
+	display: flex;
+	justify-content: space-around;
+}
+
+.IO__top__estimate {
+	width: auto;
+	font-size: 1rem;
+}
+
+.IO__sizes__code {
+	min-width: 9.6rem;
+	font-size: 1rem;
+	margin-right: 4rem;
+}
+
+.IO__sizes__mesure {
+	display: flex;
+	flex-shrink: 3;
+}
+
+
+/*-----------------------------------------------------------------------------
 								Result pane 
 ------------------------------------------------------------------------------*/
 .container--span {
@@ -310,30 +343,6 @@ li:hover + .menu__option--text{
 	flex-grow: 1;
 	counter-increment: works-crated;
 	height: calc(counter(works-crated) * 1rem);
-}
-/*-----------------------------------------------------------------------------
-					 This is the div to estimate input
-------------------------------------------------------------------------------*/
-input, select {
-	font-size: 1rem;
-	font-weight: 550;
-	background: transparent;
-	text-align: center;
-	border-radius: 3rem;
-	outline: none;
-	border: 0.01rem solid #fff;
-	color: #fff;
-}
-
-.IO__sizes__code {
-	min-width: 9.6rem;
-	font-size: 1rem;
-	margin-right: 4rem;
-}
-
-.IO__top__estimate {
-	width: auto;
-	font-size: 1rem;
 }
 
 
@@ -371,11 +380,11 @@ input, select {
 								Buttons setup
 ------------------------------------------------------------------------------*/
 /* Main button */
+
 .IO__crate__txt {
-	background-color: Red;
-	position: center;
-	padding: 0.1rem 0.1rem;
-	color: #000;
+	display: grid;
+	place-items: center;
+	color: black;
 }
 
 .IO__crate:hover::before {
@@ -404,38 +413,98 @@ input, select {
 	transform: translateX(-12rem) skew(-20deg);
 }
 
+
 .IO__crate {
-	background: transparent;
+	grid-row: 1 / 2;
+	grid-column: 1 / 2;
+	background: yellow;
 	box-sizing: border-box;
 	box-shadow: 0 1.05rem 2.05rem #00000099;
-	border-radius: 0.4rem;
+	border-radius: 100%;
 	border: transparent;
 	position: absolute;
 	border-radius: 50%;
 	transition: all 0.3s;
 	cursor: pointer;
 	overflow: hidden;
-	z-index: 1;
+	z-index: 10;
 	text-transform: uppercase;
-	padding: 1.65em  1.35rem 1.69rem 1.45rem;
+	width: 6rem;
+	height: 6rem;
 }
 
-.IO__crate:active{
+
+.IO__crate:active {
 	box-shadow: 0 0;
 }
 
-.IO__press__crate--btn {
-	width: 8rem;
-	height: 8rem;
+
+@keyframes waves {
+	0% {
+		transform: scale(1);
+		opacity: 1;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		transform: scale(2);
+		opacity: 0;
+	}
 }
 
+.IO__press__crate--btn, 
+.IO__crate--shadow1,
+.IO__crate--shadow2 {
+	grid-row: 1 / 2;
+	grid-column: 1 / 2;
+	border-radius: 50%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 1;
+	z-index: -1;
+	width: 6rem;
+	height: 6rem;
+	filter: blur(1px);
+}
+
+
+.IO__crate--shadow1 {
+	box-shadow: .3rem .3rem .6rem var(--light-blue2),
+	-.2rem -.2rem .5rem white;
+	background: linear-gradient(to bottom right, var(--color3) 0%, var(--color1) 100%);
+	transition: all .2s linear;
+	animation: waves 2000ms linear infinite;
+}
+
+
+.IO__crate--shadow2 {
+	box-shadow: .3rem .3rem .6rem var(--light-blue2),
+	-.2rem -.2rem .5rem white;
+	background: linear-gradient(to bottom right, var(--light-blue3) 0%, var(--color1) 100%);
+	transition: all .2s linear;
+	animation: waves 2000ms linear 1000ms infinite;
+}
+
+
+.IO__press__crate--btn {
+	width: 6.8rem;
+	height: 6.8rem;
+}
+
+
 .IO__crate--shape {
+	position: absolute;
 	cx: 4rem;
 	cy: 4rem;
-	r: 3.4rem;
+	r: 5rem;
 	stroke-width: 0.75rem;
-	fill: yellow;
+	fill: var(--color3);
+	filter: blur(1px);
 }
+
 
 /* Add button style */
 .IO__press__btn:hover {
@@ -456,15 +525,14 @@ input, select {
 }
 
 .IO__press__btn:active {
-	box-shadow: 0 0 0 0;
+	box-shadow: 0 0;
 	transform: translateY(0.1rem);
 }
 
 /* Crate button */
-.IO__press__crate {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+.IO__press__crate, .IO__press__crate--btn {
+	display: grid;
+	place-items: center;
 }
 
 .IO__sizes__len, .IO__sizes__dep {
@@ -473,174 +541,57 @@ input, select {
 
 
 /*                       ╭──────────────────────────────╮
-                         │ Crate shadown motion button. │
+                         │       Metric selectors.      │
                          ╰──────────────────────────────╯
 */
 
-
-
-
-/* ╭────────────────────────────────────────────────────────────────────────╮*/
-/* │ ---------------------------------------------------------------------- │*/
-/* │                            Responsive settings                         │*/
-/* │ ---------------------------------------------------------------------- │*/
-/* ╰────────────────────────────────────────────────────────────────────────╯*/
-
-/* TODO: link the screen sizes passing through actual MIN -> next MAX sizes. */
-
-@media only screen 
-	and (max-width: 1080px) {
-	header, .sideMenu{ display: none; }
-
-	.container, .IO__press, .container__status__pane{
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-		column-gap: 2rem;
-		padding: 0 2.5rem;
-	}
-
-	.metrica, .IO__sizes__code, .IO__top__estimate{ margin: 0 4rem 1.5rem 0; }
-
-	.metrica-unit {
-		margin-left: 0;
-		padding-right: 1.5rem;
-	}
-
-	.container__insert, .container__status{ padding: 1rem 2.5rem; }
-
-	.IO__sizes__len, .IO__sizes__dep, .IO__sizes__hei{ margin-right: 1rem; }
-	
-	.title, .counter{ grid-column: span 1; }
-
-	.container__status__pane {
-		padding: 0 0;;
-	}
-
-	.IO__press__btn { margin: 0.5rem 1rem; }
-	
-	.title, .IO__press__crate {
-		padding-left: 0;
-		margin: 0 0 1rem 0;
-	}
+.IO__sizes__mesure {
+	width: 2.4rem;
+	height: 2rem;
+	box-shadow: var(--shadow);
+	border-radius: 1rem;
+	display: flex;
+	align-items: center;
+	position: relative;
 }
 
-
-/*           iPhone 6+, 7+ and 8+           */
-@media only screen
-	and ( min-width: 414px)
-	and ( max-width: 736px) { 
-	header, .sideMenu{ display: none; }
-
-	.clear, .IO__press__btn { margin: 2rem 1rem; }
-
-	.container, .container__status__pane {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
-		padding: 0 0.5rem;
-	}
-
-	.metrica, .IO__sizes__code, .IO__top__estimate{ margin: 0 4rem 1.5rem 0; }
-
-	.IO__top__unit {
-		margin-left: 0;
-		padding-right: 1.5rem;
-	}
-
-	.container__insert, .container__status { padding: 1rem 2.5rem; }
-
-	.IO__sizes__len, .IO__sizes__dep, .IO__sizes__hei{ margin-right: 1rem; }
-
-	.container--span, .counter{ grid-column: span 1; }
-	
-	.container__status__pane {
-		padding: 0 0;;
-	}
-
-	.IO__press__btn { margin: 0.5rem 1rem; }
-
-	.title, .IO__press__crate{
-		padding-left: 0;
-		margin-left: 0;
-	}
+.activated {
+	display: true;
 }
 
-
-/*                  iPhone X                 */
-@media only screen
-	and (-webkit-min-device-pixel-ratio: 3)
-	and ( min-width: 375px)
-	and ( max-width: 812px) {
-	header, .sideMenu{ display: none; }
-
-	.clear, .IO__press__btn { margin: 2rem 1rem; }
-
-	.container, .container__status__pane {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-		padding: 0 0.5rem;
-	}
-
-	.metrica, .IO__sizes__code, .IO__top__estimate{ margin: 0 4rem 1.5rem 0; }
-
-	.IO__top__unit {
-		margin-left: 0;
-		padding-right: 1.5rem;
-	}
-
-	.container__insert, .container__status { padding: 1rem 2.5rem; }
-
-	.IO__sizes__len, .IO__sizes__dep, .IO__sizes__hei{ margin-right: 1rem; }
-
-	.container--span, .counter{ grid-column: span 1; }
-	
-	.container__status__pane {
-		padding: 0 0;;
-	}
-
-	.IO__press__btn { margin: 0.5rem 1rem; }
-
-	.title, .IO__press__crate{
-		padding-left: 0;
-		margin-left: 0;
-	}
+.selector1, .selector2 {
+	display: flex;
+	justify-content: space-evenly;
 }
 
-/*                  Galaxy S6                 */
-@media only screen
-	and (-webkit-min-device-pixel-ratio: 4)
-	and ( min-width: 360px)
-	and ( max-width: 640px) {
-	header, .sideMenu{ display: none; }
+.selector1, .selector2 {
+	width: 3rem;
+	height: 1rem;
+	font-size: var(--fonts);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	color: var(--color1);
+	transition: all .5s ease;
+}
 
-	#clear, .IO__press__btn { margin: 2rem 1rem; }
+#metrica:checked ~ .IO__top--color {
+	transform: translateX(0);
+	transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
 
-	.container, .container__status__pane {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-		padding: 0 0.5rem;
-	}
+.IO__top__units >
+.activated:checked + 
+.selector1, .selector2 {
+	transition: all .5s ease;
+	color: var(--color1);
+}
 
-	.metrica, .IO__sizes__code, .IO__top__estimate{ margin: 0 4rem 1.5rem 0; }
-
-	.IO__top__unit {
-		margin-left: 0;
-		padding-right: 1.5rem;
-	}
-
-	.container__insert, .container__status { padding: 1rem 2.5rem; }
-
-	.IO__sizes__len, .IO__sizes__dep, .IO__sizes__hei{ margin-right: 1rem; }
-
-	.container--span, .counter{ grid-column: span 1; }
-	
-	.container__status__pane {
-		padding: 0 0;;
-	}
-
-	.IO__press__btn { margin: 0.5rem 1rem; }
-
-	.title, .IO__press__crate{
-		padding-left: 0;
-		margin-left: 0;
-	}
+.IO__top--color {
+	position: absolute;
+	width: 2rem;
+	height: 4rew;
+	border-radius: .8rem;
+	box-shadow: var(--shadow);
 }
