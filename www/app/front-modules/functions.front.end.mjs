@@ -91,9 +91,9 @@ export function countWorks() {
 export function cleanInputs() {
 	document.getElementById("input_code").value = "";
 	document.getElementById("input_code").select();
-	document.getElementById("input_len").value = "";
-	document.getElementById("input_dep").value = "";
-	document.getElementById("input_hig").value = "";
+	document.getElementById("input_length").value = "";
+	document.getElementById("input_depth").value = "";
+	document.getElementById("input_height").value = "";
 }
 
 
