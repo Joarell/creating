@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html
 <html lang="en">
 <!-- this tag is used to autorefresh the page. Rememeter to get rid of it.-->
 <!-- <meta http-equiv="refresh" content="3"> -->
@@ -44,14 +44,16 @@
 			<div class="container__insert">
 				<h2 class="container--span title" className"">Insert panel:</h3>
 				<div class="IO">
-					<div class="IO__top">
+					<div class="IO__top" id="units">
 						<label for="estimate">Estimate:</label>
 						<input type="text" class="IO__top__estimate" id="input_estimate" name="estimate" required="true">
-						<label for="metrica">cm</label>
-						<input type="radio" name="centimeters" value="centimeters" id="metrica" checked>
-						<label for="metrica">in</label>
-						<input type="radio" name="inches" value="inches" id="metrica" >
-						<div class="IO__top--color"></div>
+						<div class="IO__top__units">
+							<input type="radio" name="units" value="centimeters" class="cm" id="cm" >
+							<label class="IO__top__units--seg1" for="cm">cm</label>
+							<input type="radio" name="units" value="inches" class="in" id="in">
+							<label class="IO__top__units--seg2" for="in">in</label>
+							<span class="IO__top--color"></span>
+						</div>
 					</div>
 					<div class="IO__sizes">
 						<label for="code">Art code:</label>
@@ -113,4 +115,4 @@
 	</main>
 </body>
 
-</html>
+</html
