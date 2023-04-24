@@ -70,7 +70,7 @@ export function big_work(work_list) {
 // │ Converts the sizes to inches if metric is equal to "in", and to │
 // │             centimeters if metric is equal to "cm".             │
 // ╰─────────────────────────────────────────────────────────────────╯
-export function convertion(sizes, metric){
+export function conversion(sizes, metric){
 	const inch = 0.39;
 	const dim = [sizes.code];
 
