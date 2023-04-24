@@ -95,7 +95,7 @@ export function catchWork() {
 	const cod = document.getElementById("input_code").value;
 	const length = document.getElementById("input_length").value;
 	const depth = document.getElementById("input_depth").value;
-	const height = document.getElementById("input_heigth").value;
+	const height = document.getElementById("input_height").value;
 	let tmp;
 
 	switch (cod && length && depth && height) {
