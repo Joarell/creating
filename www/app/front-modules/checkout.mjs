@@ -45,18 +45,18 @@ document.getElementById("units").addEventListener("change", () => {
 		)){;
 		const storage = localStorage.getItem('metrica');
 		
-		storage === 'centimeters' ? 
-		localStorage.setItem("metrica", "inches") :
-		localStorage.setItem("metrica", 'centimeters');
+		storage === 'cm - centimeters' ? 
+		localStorage.setItem("metrica", "in - inches") :
+		localStorage.setItem("metrica", "cm - centimeters");
 		return ;
 	}
 	setCheckRadio();
 }, false);
 
 
-// // ╭──────────────────────────────────────────────────────╮
-// // │ This is the trigger to the "crate" and clear button. │
-// // ╰──────────────────────────────────────────────────────╯
+ // ╭──────────────────────────────────────────────────────╮
+ // │ This is the trigger to the "crate" and clear button. │
+ // ╰──────────────────────────────────────────────────────╯
 export const crate = () => {
 	browserStoragePrepare();
 	mod.crate();
@@ -92,10 +92,10 @@ function setCheckRadio() {
 	const measure = localStorage.getItem("metrica");
 
 	switch (measure) {
-		case 'centimeters':
+		case 'cm - centimeters':
 			document.getElementById('cm').checked = true;
 			break;
-		case 'inches':
+		case 'in - inches':
 			document.getElementById('in').checked = true;
 			break;
 	}
