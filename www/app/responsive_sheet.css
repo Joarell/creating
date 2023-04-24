@@ -5,6 +5,30 @@
 /* │ ---------------------------------------------------------------------- │*/
 /* ╰────────────────────────────────────────────────────────────────────────╯*/
 
+:root {
+	--fonts: 4rem;
+	--color1: #03e9f4; 
+	--color2: #162789; 
+	--color3: #FC007A; 
+	--color4: #FFF; 
+	--color5: #333;
+	--color6: #00ff00;
+	--light-blue1: #CCDBDC;
+	--light-blue2: #9AD1D4;
+	--light-blue3: ##80CED780CED7;
+	--dark-blue: #003249;
+	--font-weight: 600;
+	--colg: 5rem;
+	--rowg: 3rem;
+	--border: .5rem;
+	--background-transp: #ffffff33;
+	--gradient: linear-gradient(270deg, var(--color3), var(--color1));
+	--shadow1: .3rem .3rem .6rem var(--light-blue2),
+		-.2rem -.2rem .5rem var(--color4);
+	--inner-shadow: inset .2rem .2rem .5rem var(--light-blue2),
+		-.2rem -.2rem .5rem var(--color4);
+}
+
 /* TODO: link the screen sizes passing through actual min -> next max sizes. */
 
 @media only screen 
