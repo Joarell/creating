@@ -1,35 +1,41 @@
-/*-----------------------------------------------------------------------------
-					 Here is the "Global settings.
-------------------------------------------------------------------------------*/
+/* ╭──────────────────────────────────────────────────────────╮
+   │              Here is the "Global settings.               │
+   ╰──────────────────────────────────────────────────────────╯
+*/
 
 *, *::before, *::after {
-	box-sizing: border-box;
-	/* box-sizing: inherit; */
+	box-sizing: inherit;
 }
+
 
 :root {
 	--fonts: 4rem;
-	--color1: #03e9f4; 
-	--color2: #162789; 
-	--color3: #FC007A; 
-	--color4: #FFF; 
-	--color5: #554;
+	--color1: #03e9f4;
+	--color2: #162789;
+	--color3: #FC007A;
+	--color4: #FFF;
+	--color5: #333;
 	--color6: #00ff00;
+	--color7: #6B3A00;
+	--color8: #1F1100;
 	--light-blue1: #CCDBDC;
 	--light-blue2: #9AD1D4;
-	--light-blue3: ##80CED780CED7;
+	--light-blue3: #80CED7
 	--dark-blue: #003249;
+	--dark-blue1: #004666;
 	--font-weight: 600;
 	--colg: 5rem;
 	--rowg: 3rem;
-	--border: .5rem;
+	--bord: .3rem;
 	--background-transp: #ffffff33;
 	--gradient: linear-gradient(270deg, var(--color3), var(--color1));
+	--gradient1: linear-gradient(90deg, var(--dark-blue1), var(--dark-blue));
 	--shadow1: .3rem .3rem .6rem var(--light-blue2),
 		-.2rem -.2rem .5rem var(--color4);
-	--inner-shadow: inset .2rem .2rem .5rem var(--light-blue2),
-		-.2rem -.2rem .5rem var(--color4);
+	--inner-shadow: inset .2rem .2rem .5rem var(--color4),
+		-.2rem -.2rem .5rem var(--light-blue2);
 }
+
 
 :focus::afater {
 	-webkit-transform: scaleX(1);
@@ -39,8 +45,9 @@
 
 
 body {
-	/* background-color: #03e9f4; */
-	background-color: #6b705c;
+	box-sizing: border-box;
+	/* background-color: var(--dark-blue); */
+	background-color: var(--dark-blue1);
 	font-family: Arial, Helvetica, Sans-serf;
 	font-size: 0.8rem;
 	background-position: center;
@@ -61,19 +68,14 @@ h2 {
 }
 
 
-iframe {
-	border: none;
-	border-radius: 0.5rem;
+h1, h2 {
+	color: var(--color4);
 }
 
 
-option, select {
-	color: #313131;
-	border-radius: var(--border);
-	font-size: calc(var(--fonts) - 3);
-	font-weight: 500;
-	background: transparent;
-	padding: 0.3rem 0.3rem;
+iframe {
+	border: none;
+	border-radius: 0.5rem;
 }
 
 
@@ -111,6 +113,7 @@ tr, td {
 	padding: 0.5rem 0.5rem;
 	padding: 0.5rem 0.5rem;
 	border-radius: 0.3rem;
+	color: var(--color4);
 }
 
 
@@ -141,9 +144,10 @@ tbody:nth-child(even) {
 	margin-block: 0.5rem;
 }
 
-/*-----------------------------------------------------------------------------
-					 Starting to edit the elements of the page.
-------------------------------------------------------------------------------*/
+/* ╭──────────────────────────────────────────────────────────╮
+   │        Starting to edit the elements of the page.        │
+   ╰──────────────────────────────────────────────────────────╯
+*/
 .container {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
@@ -167,9 +171,10 @@ tbody:nth-child(even) {
 }
 
 
-/*-----------------------------------------------------------------------------
-					 Right pane settings.
-------------------------------------------------------------------------------*/
+/* ╭──────────────────────────────────────────────────────────╮
+   │                   Right pane settings.                   │
+   ╰──────────────────────────────────────────────────────────╯
+*/
 .container__status__pane {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
@@ -202,12 +207,13 @@ tbody:nth-child(even) {
 	grid-row: span 2;
 }
 
-/*-----------------------------------------------------------------------------
-							Popup hover settings
-------------------------------------------------------------------------------*/
+/* ╭──────────────────────────────────────────────────────────╮
+   │                   Popup hover settings                   │
+   ╰──────────────────────────────────────────────────────────╯
+*/
 .IO__sizes--popup {
 	visibility: hidden;
-	border-radius: var(--border);
+	border-radius: var(--bord);
 	background: linear-gradient(270deg, var(--color3), var(--color1));
 	color: var(--color4);
 	padding: 0.2rem 0.5rem;
@@ -233,13 +239,14 @@ label:hover + .IO__sizes--popup {
 	to { opacity: 1; }
 }
 
-/*-----------------------------------------------------------------------------
-					 This is the div to side menu
-------------------------------------------------------------------------------*/
+/* ╭──────────────────────────────────────────────────────────╮
+   │               This is the div to side menu               │
+   ╰──────────────────────────────────────────────────────────╯
+*/
 
 .menu__option--text {
 	visibility: hidden;
-	border-radius: var(--border);
+	border-radius: var(--bord);
 	background: linear-gradient(270deg, var(--color3), var(--color1));
 	color: var(--color4);
 	padding: 0.3rem 1rem;
@@ -303,9 +310,10 @@ li:hover + .menu__option--text{
 	animation: fadeIn 1s;
 }
 
-/*-----------------------------------------------------------------------------
-					 This is the div to estimate input
-------------------------------------------------------------------------------*/
+/* ╭──────────────────────────────────────────────────────────╮
+   │            This is the div to estimate input             │
+   ╰──────────────────────────────────────────────────────────╯
+*/
 .IO__top > *{
 	display: flex;
 	justify-content: space-around;
@@ -322,9 +330,10 @@ li:hover + .menu__option--text{
 	margin-right: 4rem;
 }
 
-/*-----------------------------------------------------------------------------
-								Result pane 
-------------------------------------------------------------------------------*/
+/* ╭──────────────────────────────────────────────────────────╮
+   │                       Result pane                        │
+   ╰──────────────────────────────────────────────────────────╯
+*/
 .container--span {
 	grid-column: span 2;
 }
@@ -347,9 +356,10 @@ li:hover + .menu__option--text{
 }
 
 
-/*-----------------------------------------------------------------------------
-					 This is the form to input data.
-------------------------------------------------------------------------------*/
+/* ╭──────────────────────────────────────────────────────────╮
+   │             This is the form to input data.              │
+   ╰──────────────────────────────────────────────────────────╯
+*/
 .code .IO__sizes, input {
 	background: transparent;
 	width: 3em;
@@ -377,10 +387,17 @@ li:hover + .menu__option--text{
 }
 
 
-/*-----------------------------------------------------------------------------
-								Buttons setup
-------------------------------------------------------------------------------*/
+/* ╭──────────────────────────────────────────────────────────╮
+   │                      Buttons setup                       │
+   ╰──────────────────────────────────────────────────────────╯
+*/
 /* Main button */
+/* Crate button */
+.IO__press__crate, .IO__press__crate--btn {
+	display: grid;
+	place-items: center;
+}
+
 
 .IO__crate__txt {
 	display: grid;
@@ -418,7 +435,7 @@ li:hover + .menu__option--text{
 .IO__crate {
 	grid-row: 1 / 2;
 	grid-column: 1 / 2;
-	background: yellow;
+	background: gold;
 	box-sizing: border-box;
 	box-shadow: 0 1.05rem 2.05rem #00000099;
 	border-radius: 100%;
@@ -435,8 +452,8 @@ li:hover + .menu__option--text{
 }
 
 
-.IO__crate:active {
-	box-shadow: var(--inner-shadow)
+.IO__crate:active, .IO__press--btn:active {
+	box-shadow: var(--inner-shadow);
 }
 
 
@@ -494,37 +511,19 @@ li:hover + .menu__option--text{
 
 
 /* Add button style */
-.IO__press__btn:hover {
-	background: transparent;
-	border: transparent;
-}
-
-.IO__press__btn {
+.IO__press--btn {
 	color: var(--color4);
 	margin: 2rem 2rem 2rem 0;
 	padding: 1rem 3rem;
 	background: transparent;
 	border: transparent;
 	border-radius: 1rem;
-	box-shadow: 0 1.05rem 2.05rem #00000033;
+		box-shadow: .3rem .3rem .6rem var(--light-blue2),
+			-.2rem -.2rem .5rem white;
 	font-weight: 700;
 	font-size: 1.5rem;
 }
 
-.IO__press__btn:active {
-	box-shadow: 0 0;
-	transform: translateY(0.1rem);
-}
-
-/* Crate button */
-.IO__press__crate, .IO__press__crate--btn {
-	display: grid;
-	place-items: center;
-}
-
-.IO__sizes__len, .IO__sizes__dep {
-	margin-right: 0.5vw;
-}
 
 @keyframes waves {
 	0% {
@@ -535,15 +534,15 @@ li:hover + .menu__option--text{
 		opacity: 1;
 	}
 	100% {
-		transform: scale(2);
+		transform: scale(1.5);
 		opacity: 0;
 	}
 }
 
 
-/*                       ╭──────────────────────────────╮
-                         │       Metric selectors.      │
-                         ╰──────────────────────────────╯
+/* ╭────────────────────────────────────────────────────────╮
+   │                    Metric selectors.                   │
+   ╰────────────────────────────────────────────────────────╯
 */
 
 .IO__top__units {
@@ -551,10 +550,10 @@ li:hover + .menu__option--text{
 	align-items: center;
 	justify-content: space-evenly;
 	position: relative;
-	width: 8.5rem;
+	width: 8rem;
 	height: 1.8rem;
 	box-shadow: var(--shadow1);
-	border-radius: var(--border);
+	border-radius: var(--bord);
 	margin: 0 auto;
 }
 
@@ -594,10 +593,6 @@ li:hover + .menu__option--text{
 .cm, .in {
 	padding: .1rem .1rem;
 	margin: .1rem .1rem;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
 	display: none;
 }
 
@@ -609,10 +604,11 @@ li:hover + .menu__option--text{
 
 .IO__top--color {
 	position: absolute;
-	width: 3.2rem;
-	height: 1.3rem;
-	margin-right: 4.3rem;
-	border-radius: .3rem;
+	width: 3.1rem;
+	height: 1.4rem;
+	margin-right: 4.1rem;
+	border-radius: var(--bord);
+	border: .05rem solid var(--color4);
 	box-shadow: var(--inner-shadow);
 	pointer-events: none;
 }
@@ -623,6 +619,6 @@ li:hover + .menu__option--text{
 	transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)
 }
 #in:checked ~ .IO__top--color {
-	transform: translateX(4.2rem);
+	transform: translateX(4rem);
 	transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)
 }

@@ -48,9 +48,9 @@
 						<label for="estimate">Estimate:</label>
 						<input type="text" class="IO__top__estimate" id="input_estimate" name="estimate" required="true">
 						<div class="IO__top__units">
-							<input type="radio" name="units" value="centimeters" class="cm" id="cm" >
+							<input type="radio" name="units" value="cm - centimeters" class="cm" id="cm" >
 							<label class="IO__top__units--seg1" for="cm">cm</label>
-							<input type="radio" name="units" value="inches" class="in" id="in">
+							<input type="radio" name="units" value="in - inches" class="in" id="in">
 							<label class="IO__top__units--seg2" for="in">in</label>
 							<span class="IO__top--color"></span>
 						</div>
@@ -66,11 +66,11 @@
 						<input type="text" class="IO__sizes__dep" id="input_depth" name="depth" maxlength="3" required>
 						<label for="Height">H:</label>
 						<span class="IO__sizes--popup">Height</span>
-						<input type="text" class="IO__sizes__hei" id="input_heigth" name="height" maxlength="3" required>
+						<input type="text" class="IO__sizes__hei" id="input_height" name="height" maxlength="3" required>
 					</div>
 					<div class="IO__press">
-						<button class="IO__press__btn" onclick="globalThis.fns.catchWork()">Insert</button>
-						<button class="IO__press__btn" id="remove" onclick="globalThis.fns.catchRemove()">Remove</button>
+						<button class="IO__press--btn" onclick="globalThis.fns.catchWork()">Insert</button>
+						<button class="IO__press--btn" id="remove" onclick="globalThis.fns.catchRemove()">Remove</button>
 						<div class="IO__press__crate">
 							<span class="IO__crate--shadow1"></span>
 							<span class="IO__crate--shadow2"></span>
@@ -96,7 +96,7 @@
 					<div class="row-span-2" >
 						<iframe class="row-span-2 frame-list" title="Work's list" src="./panels/result_pane.html"></iframe>
 					</div>
-					<button class="IO__press__btn clear" onclick="globalThis.fns.clearAll()">Clear</button>
+					<button class="IO__press--btn clear" onclick="globalThis.fns.clearAll()">Clear</button>
 				</div>
 			</div>
 			<div class="result container--span">
