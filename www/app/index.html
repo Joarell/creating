@@ -40,7 +40,6 @@
 	</div>
 	<main>
 		<div class="container">
-			<!-- This Dive is responsible to get the dimensions of the artwork list.-->
 			<div class="container__insert">
 				<h2 class="container--span title" className"">Insert panel:</h3>
 				<div class="IO">
@@ -56,47 +55,50 @@
 						</div>
 					</div>
 					<div class="IO__sizes">
-						<label for="code">Art code:</label>
-						<input type="text" class="IO__sizes__code" id="input_code" name="code" required>
-						<label for="length">L:</label>
-						<span class="IO__sizes--popup">Length</span>
-						<input type="text" class="IO__sizes__len" id="input_length" name="length" maxlength="3" required>
-						<label for="depth">D:</label>
-						<span class="IO__sizes--popup">Depth</span>
-						<input type="text" class="IO__sizes__dep" id="input_depth" name="depth" maxlength="3" required>
-						<label for="Height">H:</label>
-						<span class="IO__sizes--popup">Height</span>
-						<input type="text" class="IO__sizes__hei" id="input_height" name="height" maxlength="3" required>
+						<div class="IO__sizes__code">
+							<label for="code">Art code:</label>
+							<input type="text" class="IO__sizes__code" id="input_code" name="code" required>
+						</div>
+						<div class="IO__sizes__mesure">
+							<label for="length">L:</label>
+							<span class="IO__sizes--popup">Length</span>
+							<input type="text" class="IO__sizes__len" id="input_length" name="length" maxlength="3" required>
+							<label for="depth">D:</label>
+							<span class="IO__sizes--popup">Depth</span>
+							<input type="text" class="IO__sizes__dep" id="input_depth" name="depth" maxlength="3" required>
+							<label for="Height">H:</label>
+							<span class="IO__sizes--popup">Height</span>
+							<input type="text" class="IO__sizes__hei" id="input_height" name="height" maxlength="3" required>
+						</div>
 					</div>
 					<div class="IO__press">
 						<button class="IO__press--btn" onclick="globalThis.fns.catchWork()">Insert</button>
 						<button class="IO__press--btn" id="remove" onclick="globalThis.fns.catchRemove()">Remove</button>
-						<div class="IO__press__crate">
-							<span class="IO__crate--shadow1"></span>
-							<span class="IO__crate--shadow2"></span>
-							<button class="IO__crate" onclick="globalThis.fns.crate()">
-								<p class="IO__crate__txt"><strong>Crate!</strong></p>
-							</button>
-							<svg class="IO__press__crate--btn">
-								<circle class="IO__crate--shape" />
-							</svg>
-						</div>
+						<button class="IO__press--btn clear" onclick="globalThis.fns.clearAll()">Clear</button>
 					</div>
 				</div>
 			</div>
 			<!--This div provides the overview about the works added before the call of the AI-->
 			<div class="container__status">
+				<h2 class="container--span title">Report list:</h2>
 				<div class="container__status__pane">
-					<h2 class="container--span title">Report list:</h2>
-					<div class="counter">
-						<p class="text-t-grenn-100" id="count">Count works: 0 </p>
+					<iframe class="container__status__pane__frame" title="Work's list" src="./panels/result_pane.html"></iframe>
+					<div class="container__status__counter">
+						<p id="count">Count works: 0 </p>
 						<p id="cub-meter">Cubed: 0</p>
 						<p id="cub-air">Air-Cubed: 0</p>
 					</div>
-					<div class="row-span-2" >
-						<iframe class="row-span-2 frame-list" title="Work's list" src="./panels/result_pane.html"></iframe>
+					<!-- TODO: refactor the class name to container__status -->
+					<div class="IO__press__crate">
+						<span class="IO__crate--shadow1"></span>
+						<span class="IO__crate--shadow2"></span>
+						<button class="IO__crate" onclick="globalThis.fns.crate()">
+							<p class="IO__crate__txt"><strong>Crate!</strong></p>
+						</button>
+						<svg class="IO__press__crate--btn">
+							<circle class="IO__crate--shape"/>
+						</svg>
 					</div>
-					<button class="IO__press--btn clear" onclick="globalThis.fns.clearAll()">Clear</button>
 				</div>
 			</div>
 			<div class="result container--span">
