@@ -1,6 +1,6 @@
 
 
-.header {
+header {
 	position: relative;
 	place-items: center;
 	grid-area: header;
@@ -8,4 +8,41 @@
 	text-align: center;
 	font-size: var(--font-size);
 	height: 10rem;
+}
+
+
+footer {
+	position: relative;
+	place-items: center;
+	grid-area: header;
+	background: var(--gradient1);
+	text-align: center;
+	font-size: var(--font-size);
+	height: 10rem;
+}
+
+
+/* ╭──────────────────────────────────────────────────────────╮
+   │                     Header settings:                     │
+   ╰──────────────────────────────────────────────────────────╯
+*/
+
+.header--title {
+	margin: 0 0;
+	font-size: 10rem;
+	opacity: 10%;
+	text-align: left;
+}
+
+
+/* ╭──────────────────────────────────────────────────────────╮
+   │                     Footer settings:                     │
+   ╰──────────────────────────────────────────────────────────╯
+*/
+
+.container__footer {
+	margin: 0 0;
+	font-size: 10rem;
+	opacity: 10%;
+	text-align: right;
 }

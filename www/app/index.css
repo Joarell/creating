@@ -20,15 +20,16 @@
 	--color8: #1F1100;
 	--light-blue1: #CCDBDC;
 	--light-blue2: #9AD1D4;
-	--light-blue3: #80CED7
-	--dark-blue: #003249;
-	--dark-blue1: #004666;
+	--light-blue3: #80CED7;
+	--dark-blue: #00547A;
+	--dark-blue1: #003852;
+	--dark-blue2: #002A3D;
 	--font-weight: 600;
 	--colg: 5rem;
 	--rowg: 3rem;
 	--bord: .3rem;
 	--background-transp: #ffffff33;
-	--gradient: linear-gradient(270deg, var(--color3), var(--color1));
+	--gradient: linear-gradient(270deg, var(--dark-blue), var(--dark-blue2));
 	--gradient1: linear-gradient(90deg, var(--dark-blue1), var(--dark-blue));
 	--shadow1: .3rem .3rem .6rem var(--light-blue2),
 		-.2rem -.2rem .5rem var(--color4);
@@ -52,14 +53,12 @@ body {
 	font-size: 0.8rem;
 	background-position: center;
 	scroll-behavior: slow;
+	counter-reset: works-count;
 }
 
 
-h1 {
-	counter-increment: headings;
-	font-size: var(--fonts);
-	margin: auto;
-	padding: auto;
+main {
+	z-index: 10;
 }
 
 
@@ -68,8 +67,9 @@ h2 {
 }
 
 
-h1, h2 {
+h1, h2, h3 {
 	color: var(--color4);
+	opacity: 20%;
 }
 
 
@@ -113,14 +113,16 @@ tr, td, th {
 	padding: .5rem .5rem;
 	border-radius: 0.3rem;
 	color: var(--color4);
+	counter-increment: works-count;
 }
 
 
 tbody:nth-child(even) {
+	/* background: linear-gradient(270deg, var(--color3), var(--color1)); */
+	background: var(--dark-blue);
 	text-align: center;
-	border-color: 2rem solid var(--color2);
-	border-radius: 5rem;
-	background: linear-gradient(270deg, var(--color3), var(--color1));
+	border-radius: var(--bord);
+	border: var(--bord);
 }
 
 
@@ -132,7 +134,7 @@ tbody:nth-child(even) {
 ::-webkit-scrollbar-track {
 	background: white;
 	border-radius: 100vw;
-	margin-block: 0.5rem;
+	margin-block: 0.2rem;
 }
 
 
@@ -140,13 +142,13 @@ tbody:nth-child(even) {
 	background: linear-gradient(270deg, var(--color3), var(--color1));
 	border-radius: 100vw;
 	border: .3rem solid white;
-	margin-block: 0.5rem;
+	margin-block: 0.2rem;
 }
-
 /* ╭──────────────────────────────────────────────────────────╮
    │        Starting to edit the elements of the page.        │
    ╰──────────────────────────────────────────────────────────╯
 */
+
 .container {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
@@ -349,13 +351,18 @@ li:hover + .menu__option--text{
    │                       Result pane                        │
    ╰──────────────────────────────────────────────────────────╯
 */
+
+tr::before,
+td::before,
+th::before {
+	counter-increment: counter(works-count);
+}
+
+
 .container--span {
 	grid-column: span 2;
 }
 
-.crates-opened tbody {
-	counter-reset: works-crated;
-}
 
 .container__results {
 	display: flex;
@@ -365,10 +372,9 @@ li:hover + .menu__option--text{
 
 
 .container__results, .container__results--open, .container__results--crates {
-	flex-shrink: 1;
 	flex-grow: 1;
-	counter-increment: works-crated;
-	height: calc(counter(works-crated) * 1rem);
+	height: calc(counter(works-count) * 3rem);
+	/* height: auto; */
 }
 
 
@@ -400,6 +406,10 @@ li:hover + .menu__option--text{
 	align-items: center;
 	justify-content: space-evenly;
 	position: relative;
+}
+
+
+.IO__top__units {
 	width: 8rem;
 	height: 1.8rem;
 	box-shadow: var(--shadow1);
