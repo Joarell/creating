@@ -1,8 +1,8 @@
-<!DOCTYPE html
+<!DOCTYPE html>
 <html lang="en">
 <!-- this tag is used to autorefresh the page. Rememeter to get rid of it.-->
 <!-- <meta http-equiv="refresh" content="3"> -->
-<title>RTC</title>
+<title>OTC</title>
 
 <head>
 	<meta charset="UTF-8">
@@ -26,49 +26,45 @@
 			<h1 class="header--title">Otto</h1>
 		</div>
 	</header>
-	<div class="menu">
-		<ul dir="rtl" lang="en" class="menu__option">
-			<li><a href="#"><i class='currency' ></i></a></li>
-			<span class="menu__option--text">Conversion</span>
-			<li><a href="#"><i class="converter"></i></a></li>
-			<span class="menu__option--text">Units</span>
-			<li><a href="#"><i class="updater"></i></a></li>
-			<span class="menu__option--text">Done</span>
-			<li><a href="#"><i class="consult"></i></a></li>
-			<span class="menu__option--text">Search</span>
-		</ul>
-	</div>
 	<main>
 		<div class="container">
 			<div class="container__insert">
 				<h2 class="container--span title" className"">Add:</h3>
 				<div class="IO">
 					<div class="IO__top" id="units">
-						<label for="estimate">Estimate:</label>
-						<input type="text" class="IO__top__estimate" id="input_estimate" name="estimate" required="true">
+						<form>
+							<label for="input_estimate">Estimate:</label>
+							<input type="text" class="IO__top__estimate" id="input_estimate" name="estimate" required="true">
+						</form>
 						<div class="IO__top__units">
-							<input type="radio" name="units" value="cm - centimeters" class="cm" id="cm" >
-							<label class="IO__top__units--seg1" for="cm">cm</label>
-							<input type="radio" name="units" value="in - inches" class="in" id="in">
-							<label class="IO__top__units--seg2" for="in">in</label>
-							<span class="IO__top--color"></span>
+							<form class="form-units IO__top__units">
+								<input type="radio" name="centimeter" value="cm - centimeters" class="cm" id="cm" >
+								<label class="IO__top__units--seg1" for="cm">cm</label>
+								<input type="radio" name="inch" value="in - inches" class="in" id="in">
+								<label class="IO__top__units--seg2" for="in">in</label>
+								<span class="IO__top--color"></span>
+							</form>
 						</div>
 					</div>
 					<div class="IO__sizes">
 						<div class="IO__sizes__code">
-							<label for="code">Art code:</label>
-							<input type="text" class="IO__sizes__code" id="input_code" name="code" required>
+							<form>
+								<label for="input_code">Art code:</label>
+								<input type="text" autofocus class="IO__sizes__code" id="input_code" name="art-code" required>
+							</form>
 						</div>
 						<div class="IO__sizes__mesure">
-							<label for="length">L:</label>
-							<span class="IO__sizes--popup">Length</span>
-							<input type="text" class="IO__sizes__len" id="input_length" name="length" maxlength="3" required>
-							<label for="depth">D:</label>
-							<span class="IO__sizes--popup">Depth</span>
-							<input type="text" class="IO__sizes__dep" id="input_depth" name="depth" maxlength="3" required>
-							<label for="Height">H:</label>
-							<span class="IO__sizes--popup">Height</span>
-							<input type="text" class="IO__sizes__hei" id="input_height" name="height" maxlength="3" required>
+							<form>
+								<label for="input_length">L:</label>
+								<span class="IO__sizes--popup">Length</span>
+								<input type="text" inputmode="numeric" class="IO__sizes__len" id="input_length" name="length" maxlength="3" required>
+								<label for="input_depth">D:</label>
+								<span class="IO__sizes--popup">Depth</span>
+								<input type="text" inputmode="numeric" class="IO__sizes__dep" id="input_depth" name="depth" maxlength="3" required>
+								<label for="input_height">H:</label>
+								<span class="IO__sizes--popup">Height</span>
+								<input type="text" inputmode="numeric" class="IO__sizes__hei" id="input_height" name="height" maxlength="3" required>
+							</form>
 						</div>
 					</div>
 					<div class="IO__press">
@@ -80,7 +76,7 @@
 			</div>
 			<!--This div provides the overview about the works added before the call of the AI-->
 			<div class="container__status">
-				<h2 class="container--span title">List:</h2>
+				<h2 class="title">List:</h2>
 				<div class="container__status__pane">
 					<iframe class="container__status__pane__frame" title="Work's list" src="./panels/result_pane.html"></iframe>
 					<div class="container__status__counter">
@@ -101,11 +97,23 @@
 					</div>
 				</div>
 			</div>
-			<div class="result container--span">
-				<h2>Results:</h2>
-				<div class="container__results">
+			<div class="container-bottom">
+				<div class="result container--span">
+					<h2>Results:</h2>
+					<div class="container__results">
 						<iframe class="container__results--open" title="Works set" src="./panels/pane1_crates.html"></iframe>
 						<iframe class="container__results--crates" title="List done" src="./panels/pane2_crates_open.html"></iframe>
+					</div>
+				</div>
+				<div class="menu">
+					<ul dir="rtl" lang="en" class="menu__option">
+						<li><a href="#"><i class='currency' ></i></a></li>
+						<span class="menu__option--text">Conversion</span>
+						<li><a href="#"><i class="converter"></i></a></li>
+						<span class="menu__option--text">Units</span>
+						<li><a href="#"><i class="consult"></i></a></li>
+						<span class="menu__option--text">Search</span>
+					</ul>
 				</div>
 			</div>
 		</div>

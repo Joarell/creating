@@ -25,7 +25,7 @@
 	--dark-blue1: #003852;
 	--dark-blue2: #002A3D;
 	--font-weight: 600;
-	--colg: 5rem;
+	--colg: 4rem;
 	--rowg: 3rem;
 	--bord: .3rem;
 	--background-transp: #ffffff33;
@@ -47,18 +47,12 @@
 
 body {
 	box-sizing: border-box;
-	/* background-color: var(--dark-blue); */
 	background-color: var(--dark-blue1);
 	font-family: Arial, Helvetica, Sans-serf;
 	font-size: 0.8rem;
 	background-position: center;
 	scroll-behavior: slow;
 	counter-reset: works-count;
-}
-
-
-main {
-	z-index: 10;
 }
 
 
@@ -84,7 +78,8 @@ p {
 	text-align: right;
 	outline: none;
 	color: var(--color4);
-	font-size: calc(var(--fonts) - 6);
+	font-size: 1rem;
+	opacity: 30%;
 }
 
 
@@ -118,7 +113,6 @@ tr, td, th {
 
 
 tbody:nth-child(even) {
-	/* background: linear-gradient(270deg, var(--color3), var(--color1)); */
 	background: var(--dark-blue);
 	text-align: center;
 	border-radius: var(--bord);
@@ -139,11 +133,12 @@ tbody:nth-child(even) {
 
 
 ::-webkit-scrollbar-thumb {
-	background: linear-gradient(270deg, var(--color3), var(--color1));
+	background: var(--color1);
 	border-radius: 100vw;
 	border: .3rem solid white;
 	margin-block: 0.2rem;
 }
+
 /* ╭──────────────────────────────────────────────────────────╮
    │        Starting to edit the elements of the page.        │
    ╰──────────────────────────────────────────────────────────╯
@@ -151,33 +146,32 @@ tbody:nth-child(even) {
 
 .container {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
 	column-gap: var(--colg);
 	row-gap: var(--rowg);
-	padding: 0 22rem;
-	margin: 5rem 0;
+	padding: 0 16rem;
+	margin: 5rem auto;
+}
+
+
+.container-bottom {
+	display: grid;
+	grid-template-columns: repeat(3, 24.5rem);
+	column-gap: var(--colg);
+	row-gap: var(--rowg);
 }
 
 
 /* Box shape */
-.container__insert, .container__status, .result-left, .result {
+.container__insert, .container__status, .result-left, .result, .menu{
 	padding: 2rem 2rem;
 	font-size: 1rem;
 	font-weight: 600;
 	background: var(--background-transp);
 	box-sizing: border-box;
 	box-shadow: 0 0.08rem 3.2rem 0 #1F26875E;
-	backdrop-filter: blur( 0.8rem);
 	border-radius: 1rem;
 	border: 0.1rem solid #FFFFFF2E;
-}
-
-
-.IO__top {
-	display: flex;
-	flex-shrink: 0;
-	flex-basis: auto;
-	flex-wrap: wrap;
 }
 
 
@@ -205,6 +199,11 @@ tbody:nth-child(even) {
 }
 
 
+.container__status__counter {
+	padding-bottom: 1rem;
+	line-height: .5rem;
+}
+
 /* ╭──────────────────────────────────────────────────────────╮
    │                   Popup hover settings                   │
    ╰──────────────────────────────────────────────────────────╯
@@ -222,12 +221,11 @@ tbody:nth-child(even) {
 }
 
 
-/* .IO__sizes--popup { */
-/* 	display: flex; */
-/* 	flex-direction: row; */
-/* 	flex-basis: 1fr; */
-/* 	flex-wrap: wrap; */
-/* } */
+.IO__sizes--popup {
+	display: flex;
+	flex-direction: row;
+	flex-basis: 100%;
+}
 
 
 label:hover + .IO__sizes--popup {
@@ -277,8 +275,7 @@ label:hover + .IO__sizes--popup {
 
 .menu {
 	display: flex;
-	flex-flow: column wrap;
-	flex-direction: column;
+	flex-direction: row;
 	justify-content: space-around;
 	align-items: center;
 }
@@ -287,23 +284,17 @@ label:hover + .IO__sizes--popup {
 .menu {
 	font-weight: var(--font-weight);
 	font-size: 1rem;
-	/* background: var(--gradient1); */
 	box-shadow: 0 0.08rem 3.2rem 0 #1F26875E;
 	box-sizing: border-box;
-	width: 4%;
-	height: 25%;
 	border-radius: 1rem;
-	border: 0.1rem solid #FFFFFF2E;
-	position: fixed;
-	margin-left: 12rem;
-	margin-top: 5rem;
 }
 
 
-.currency, .converter, .updater, .done, .consult {
+.currency, .converter, .updater, .consult {
 	display: flex;
+	flex-direction: row;
 	justify-content: space-around;
-	flex-basis: 100%;
+	/* flex-basis: 100%; */
 	transform: scale(0.5);
 }
 
@@ -327,11 +318,6 @@ label:hover + .IO__sizes--popup {
 
 .updater {
 	background: url("./icons/icons8-update-64.png");
-}
-
-
-.done {
-	background: url("./icons/icons8-task-completed-64.png");
 }
 
 
@@ -359,15 +345,15 @@ th::before {
 }
 
 
-.container--span {
-	grid-column: span 2;
-}
-
-
 .container__results {
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--colg);
+}
+
+
+.container--span {
+	grid-column: span 2;
 }
 
 
@@ -383,6 +369,7 @@ th::before {
    │            This is the div to estimate input             │
    ╰──────────────────────────────────────────────────────────╯
 */
+
 .IO__top {
 	display: flex;
 	justify-content: space-around;
@@ -472,6 +459,8 @@ th::before {
 	transform: translateX(0);
 	transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)
 }
+
+
 #in:checked ~ .IO__top--color {
 	transform: translateX(4rem);
 	transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)
@@ -481,11 +470,15 @@ th::before {
    │             This is the form to input data.              │
    ╰──────────────────────────────────────────────────────────╯
 */
-.IO__sizes, .IO__sizes__code, .IO__sizes__mesure {
+
+
+.IO__sizes,
+.IO__sizes__code,
+.IO__sizes__mesure {
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: row;
-	justify-content: flex-start;
+	justify-items: center;
 	flex-basis: 50%;
 }
 
@@ -546,6 +539,7 @@ input:focus {
 	display: grid;
 	place-items: center;
 	color: black;
+	opacity: 100%;
 }
 
 .IO__crate:hover::before {
@@ -577,9 +571,7 @@ input:focus {
 
 
 .IO__crate {
-	grid-row: 1 / 2;
-	grid-column: 1 / 2;
-	background: gold;
+	background: goldenrod;
 	box-sizing: border-box;
 	box-shadow: 0 1.05rem 2.05rem #00000099;
 	border-radius: 100%;
@@ -631,7 +623,11 @@ input:focus {
 .IO__crate--shadow2 {
 	box-shadow: .3rem .3rem .6rem var(--light-blue2),
 	-.2rem -.2rem .5rem white;
-	background: linear-gradient(to bottom right, var(--light-blue3) 0%, var(--color1) 100%);
+	background: linear-gradient(
+		to bottom right,
+		var(--light-blue3) 0%,
+		var(--color1) 100%
+	);
 	transition: all .2s linear;
 	animation: waves 2000ms linear 1000ms infinite;
 }
