@@ -6,8 +6,9 @@ header {
 	grid-area: header;
 	background: var(--gradient);
 	text-align: center;
-	font-size: var(--font-size);
 	height: 10rem;
+	font-family: 'Big Shoulders Stencil Display', cursive;
+	overflow: hidden;
 }
 
 
@@ -17,8 +18,16 @@ footer {
 	grid-area: header;
 	background: var(--gradient1);
 	text-align: center;
-	font-size: var(--font-size);
 	height: 10rem;
+	font-family: 'Big Shoulders Stencil Display', cursive;
+	overflow: hidden;
+}
+
+
+.header--title, .container__footer {
+	margin: 0 0;
+	font-size: var(--font-title);
+	opacity: .05;
 }
 
 
@@ -28,9 +37,6 @@ footer {
 */
 
 .header--title {
-	margin: 0 0;
-	font-size: 10rem;
-	opacity: 10%;
 	text-align: left;
 }
 
@@ -41,8 +47,5 @@ footer {
 */
 
 .container__footer {
-	margin: 0 0;
-	font-size: 10rem;
-	opacity: 10%;
 	text-align: right;
 }
