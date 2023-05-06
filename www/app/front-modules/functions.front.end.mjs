@@ -26,7 +26,7 @@ export function displayCub() {
 	result	= result.reduce((sum, val) => {
 		return (sum + val.cub);
 	}, 0)
-	element.innerText = "Cubed: " + (Math.floor(result * 1000) / 1000) + "m³";
+	element.innerText = "Cub: " + (Math.floor(result * 1000) / 1000) + "m³";
 	return (element);
 }
 
@@ -39,7 +39,7 @@ export function displayAirCub() {
 	let element;
 	let std_msg;
 
-	std_msg	= "Air-Cubed: ";
+	std_msg	= "Air-Cub: ";
 	element	= document.getElementById("cub-air");
 	result	= parseArtWork();
 	result	= result.reduce((sum, val) => {
