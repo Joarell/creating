@@ -15,9 +15,12 @@
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
 	<script type="module" src="./main.mjs"></script>
 	<script type="module" src="./side-menu/menu.interface.mjs"></script>
-	<link rel="stylesheet" href="./index.css">
-	<link rel="stylesheet" href="./index-01.css">
-	<link rel="stylesheet" href="./responsive_sheet.css">
+	<link rel="stylesheet" href="./index.css"/>
+	<link rel="stylesheet" href="./index-01.css"/>
+	<link rel="stylesheet" href="./responsive_sheet.css"/>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@100;200;300;400;500;600;700;800;900&family=Mitr:wght@200;300;400;500;600;700&family=Saira+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -29,67 +32,67 @@
 	<main>
 		<div class="container">
 			<div class="container__insert">
-				<h2 class="container--span title" className"">Add:</h3>
+				<h2 class="container--span title" className"">+ Add</h3>
 				<div class="IO">
-					<div class="IO__top" id="units">
+					<div class="IO__top info" id="units">
 						<form>
 							<label for="input_estimate">Estimate:</label>
 							<input type="text" class="IO__top__estimate" id="input_estimate" name="estimate" required="true">
 						</form>
-						<div class="IO__top__units">
-							<form class="form-units IO__top__units">
-								<input type="radio" name="centimeter" value="cm - centimeters" class="cm" id="cm" >
-								<label class="IO__top__units--seg1" for="cm">cm</label>
-								<input type="radio" name="inch" value="in - inches" class="in" id="in">
-								<label class="IO__top__units--seg2" for="in">in</label>
-								<span class="IO__top--color"></span>
-							</form>
-						</div>
 					</div>
-					<div class="IO__sizes">
+					<div class="IO__sizes info">
 						<div class="IO__sizes__code">
 							<form>
 								<label for="input_code">Art code:</label>
 								<input type="text" autofocus class="IO__sizes__code" id="input_code" name="art-code" required>
 							</form>
 						</div>
-						<div class="IO__sizes__mesure">
-							<form>
-								<label for="input_length">L:</label>
-								<span class="IO__sizes--popup">Length</span>
-								<input type="text" inputmode="numeric" class="IO__sizes__len" id="input_length" name="length" maxlength="3" required>
-								<label for="input_depth">D:</label>
-								<span class="IO__sizes--popup">Depth</span>
-								<input type="text" inputmode="numeric" class="IO__sizes__dep" id="input_depth" name="depth" maxlength="3" required>
-								<label for="input_height">H:</label>
-								<span class="IO__sizes--popup">Height</span>
-								<input type="text" inputmode="numeric" class="IO__sizes__hei" id="input_height" name="height" maxlength="3" required>
+					</div>
+					<div class="IO__sizes__mesure info">
+						<form>
+							<label for="input_length">L:</label>
+							<span class="IO__sizes--popup">Length</span>
+							<input type="text" inputmode="numeric" class="IO__sizes__len" id="input_length" name="length" maxlength="3" required>
+							<label for="input_depth">D:</label>
+							<span class="IO__sizes--popup">Depth</span>
+							<input type="text" inputmode="numeric" class="IO__sizes__dep" id="input_depth" name="depth" maxlength="3" required>
+							<label for="input_height">H:</label>
+							<span class="IO__sizes--popup">Height</span>
+							<input type="text" inputmode="numeric" class="IO__sizes__hei" id="input_height" name="height" maxlength="3" required>
+						</form>
+						<div class="IO__top__units info">
+							<form class="form-units IO__top__units">
+								<input type="radio" name="units" value="cm - centimeters" class="cm" id="cm">
+								<label class="IO__top__units--seg1" for="cm">cm</label>
+								<input type="radio" name="units" value="in - inches" class="in" id="in">
+								<label class="IO__top__units--seg2" for="in">in</label>
+								<span class="IO__top--color"></span>
 							</form>
 						</div>
 					</div>
-					<div class="IO__press">
-						<button class="IO__press--btn" onclick="globalThis.fns.catchWork()">Insert</button>
-						<button class="IO__press--btn" id="remove" onclick="globalThis.fns.catchRemove()">Remove</button>
-						<button class="IO__press--btn clear" onclick="globalThis.fns.clearAll()">Clear</button>
+					<div class="IO__press info">
+						<button class="IO__press--btn" onclick="globalThis.fns.catchWork()">ADD</button>
+						<button class="IO__press--btn" id="remove" onclick="globalThis.fns.catchRemove()">DEL</button>
+						<button class="IO__press--btn" onclick="globalThis.fns.clearAll()">Clear</button>
 					</div>
 				</div>
 			</div>
 			<!--This div provides the overview about the works added before the call of the AI-->
 			<div class="container__status">
-				<h2 class="title">List:</h2>
+				<h2 class="title">N - List</h2>
 				<div class="container__status__pane">
 					<iframe class="container__status__pane__frame" title="Work's list" src="./panels/result_pane.html"></iframe>
 					<div class="container__status__counter">
 						<p id="count">Count works: 0 </p>
-						<p id="cub-meter">Cubed: 0</p>
-						<p id="cub-air">Air-Cubed: 0</p>
+						<p id="cub-meter">Cub: 0</p>
+						<p id="cub-air">Air-Cub: 0</p>
 					</div>
 					<!-- TODO: refactor the class name to container__status -->
 					<div class="IO__press__crate">
 						<span class="IO__crate--shadow1"></span>
 						<span class="IO__crate--shadow2"></span>
 						<button class="IO__crate" onclick="globalThis.fns.crate()">
-							<p class="IO__crate__txt"><strong>Crate!</strong></p>
+							<p class="IO__crate__txt">Crate!</p>
 						</button>
 						<svg class="IO__press__crate--btn">
 							<circle class="IO__crate--shape"/>
@@ -99,21 +102,37 @@
 			</div>
 			<div class="container-bottom">
 				<div class="result container--span">
-					<h2>Results:</h2>
+					<h2>= Results</h2>
 					<div class="container__results">
 						<iframe class="container__results--open" title="Works set" src="./panels/pane1_crates.html"></iframe>
 						<iframe class="container__results--crates" title="List done" src="./panels/pane2_crates_open.html"></iframe>
+						<div class="result__copy">
+							<button class="IO__press--btn" id="copy1" onclick="">COPY</button>
+						</div>
+						<div class="result__copy">
+							<button class="IO__press--btn" id="copy2" onclick="">COPY</button>
+						</div>
 					</div>
 				</div>
-				<div class="menu">
-					<ul dir="rtl" lang="en" class="menu__option">
-						<li><a href="#"><i class='currency' ></i></a></li>
-						<span class="menu__option--text">Conversion</span>
-						<li><a href="#"><i class="converter"></i></a></li>
-						<span class="menu__option--text">Units</span>
-						<li><a href="#"><i class="consult"></i></a></li>
-						<span class="menu__option--text">Search</span>
-					</ul>
+				<div class="container-interactive">
+					<div class="menu exchange">
+						<ul dir="rtl" lang="en" class="menu__option">
+							<li><a href="#"><i class='currency' ></i></a></li>
+							<span class="menu__option--text">Conversion</span>
+						</ul>
+					</div>
+					<div class="menu units-convertion">
+						<ul dir="rtl" lang="en" class="menu__option">
+							<li><a href="#"><i class="converter"></i></a></li>
+							<span class="menu__option--text">Units</span>
+						</ul>
+					</div>
+					<div class="menu fetch">
+						<ul dir="rtl" lang="en" class="menu__option">
+							<li><a href="#"><i class="consult"></i></a></li>
+							<span class="menu__option--text">Search</span>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
