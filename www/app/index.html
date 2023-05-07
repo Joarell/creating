@@ -35,21 +35,21 @@
 				<h2 class="container--span title" className"">+ Add</h3>
 				<div class="IO">
 					<div class="IO__top info" id="units">
-						<form>
-							<label for="input_estimate">Estimate:</label>
+						<form class="IO__add--form">
+							<label for="input_estimate">Doc:</label>
 							<input type="text" class="IO__top__estimate" id="input_estimate" name="estimate" required="true">
 						</form>
 					</div>
 					<div class="IO__sizes info">
 						<div class="IO__sizes__code">
-							<form>
-								<label for="input_code">Art code:</label>
-								<input type="text" autofocus class="IO__sizes__code" id="input_code" name="art-code" required>
+							<form class="IO__add--form">
+								<label for="input_code">Code:</label>
+								<input type="text" autofocus class="IO__sizes--code" id="input_code" name="art-code" required>
 							</form>
 						</div>
 					</div>
-					<div class="IO__sizes__mesure info">
-						<form>
+					<div class="IO__sizes__mesure IO--span2 info">
+						<form class="IO__add--form">
 							<label for="input_length">L:</label>
 							<span class="IO__sizes--popup">Length</span>
 							<input type="text" inputmode="numeric" class="IO__sizes__len" id="input_length" name="length" maxlength="3" required>
@@ -60,17 +60,17 @@
 							<span class="IO__sizes--popup">Height</span>
 							<input type="text" inputmode="numeric" class="IO__sizes__hei" id="input_height" name="height" maxlength="3" required>
 						</form>
-						<div class="IO__top__units info">
-							<form class="form-units IO__top__units">
+						<div class="IO__sizes__units info">
+							<form class="IO__sizes__units">
 								<input type="radio" name="units" value="cm - centimeters" class="cm" id="cm">
-								<label class="IO__top__units--seg1" for="cm">cm</label>
+								<label class="IO__sizes__units--seg1" for="cm">cm</label>
 								<input type="radio" name="units" value="in - inches" class="in" id="in">
-								<label class="IO__top__units--seg2" for="in">in</label>
-								<span class="IO__top--color"></span>
+								<label class="IO__sizes__units--seg2" for="in">in</label>
+								<span class="IO__sizes--color"></span>
 							</form>
 						</div>
 					</div>
-					<div class="IO__press info">
+					<div class="IO__press IO--span2 info">
 						<button class="IO__press--btn" onclick="globalThis.fns.catchWork()">ADD</button>
 						<button class="IO__press--btn" id="remove" onclick="globalThis.fns.catchRemove()">DEL</button>
 						<button class="IO__press--btn" onclick="globalThis.fns.clearAll()">Clear</button>
@@ -144,4 +144,4 @@
 	</main>
 </body>
 
-</html
+</htm
