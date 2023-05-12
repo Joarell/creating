@@ -14,13 +14,16 @@
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)"> -->
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
 	<script type="module" src="./main.mjs"></script>
+	<script type="module" src="./interactive.mjs"></script>
 	<script type="module" src="./side-menu/menu.interface.mjs"></script>
-	<link rel="stylesheet" href="./index.css"/>
-	<link rel="stylesheet" href="./index-01.css"/>
-	<link rel="stylesheet" href="./responsive_sheet.css"/>
+	<link rel="stylesheet" href="./index.css" />
+	<link rel="stylesheet" href="./index-01.css" />
+	<link rel="stylesheet" href="./responsive_sheet.css" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@100;200;300;400;500;600;700;800;900&family=Mitr:wght@200;300;400;500;600;700&family=Saira+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@100;200;300;400;500;600;700;800;900&family=Mitr:wght@200;300;400;500;600;700&family=Saira+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet">
 </head>
 
 <body>
@@ -33,55 +36,62 @@
 		<div class="container">
 			<div class="container__insert">
 				<h2 class="container--span title" className"">+ Add</h3>
-				<div class="IO">
-					<div class="IO__top info" id="units">
-						<form class="IO__add--form">
-							<label for="input_estimate">Doc:</label>
-							<input type="text" class="IO__top__estimate" id="input_estimate" name="estimate" required="true">
-						</form>
-					</div>
-					<div class="IO__sizes info">
-						<div class="IO__sizes__code">
+					<div class="IO">
+						<div class="IO__top info" id="units">
 							<form class="IO__add--form">
-								<label for="input_code">Code:</label>
-								<input type="text" autofocus class="IO__sizes--code" id="input_code" name="art-code" required>
+								<label for="input_estimate">Doc:</label>
+								<input type="text" class="IO__top__estimate" id="input_estimate" name="estimate"
+									required="true">
 							</form>
 						</div>
-					</div>
-					<div class="IO__sizes__mesure IO--span2 info">
-						<form class="IO__add--form">
-							<label for="input_length">L:</label>
-							<span class="IO__sizes--popup">Length</span>
-							<input type="text" inputmode="numeric" class="IO__sizes__len" id="input_length" name="length" maxlength="3" required>
-							<label for="input_depth">D:</label>
-							<span class="IO__sizes--popup">Depth</span>
-							<input type="text" inputmode="numeric" class="IO__sizes__dep" id="input_depth" name="depth" maxlength="3" required>
-							<label for="input_height">H:</label>
-							<span class="IO__sizes--popup">Height</span>
-							<input type="text" inputmode="numeric" class="IO__sizes__hei" id="input_height" name="height" maxlength="3" required>
-						</form>
-						<div class="IO__sizes__units info">
-							<form class="IO__sizes__units">
-								<input type="radio" name="units" value="cm - centimeters" class="cm" id="cm">
-								<label class="IO__sizes__units--seg1" for="cm">cm</label>
-								<input type="radio" name="units" value="in - inches" class="in" id="in">
-								<label class="IO__sizes__units--seg2" for="in">in</label>
-								<span class="IO__sizes--color"></span>
+						<div class="IO__sizes info">
+							<div class="IO__sizes__code">
+								<form class="IO__add--form">
+									<label for="input_code">Code:</label>
+									<input type="text" autofocus class="IO__sizes--code" id="input_code" name="art-code"
+										required>
+								</form>
+							</div>
+						</div>
+						<div class="IO__sizes__mesure IO--span2 info">
+							<form class="IO__add--form">
+								<label for="input_length">L:</label>
+								<span class="IO__sizes--popup">Length</span>
+								<input type="text" inputmode="numeric" class="IO__sizes__len" id="input_length"
+									name="length" maxlength="3" required>
+								<label for="input_depth">D:</label>
+								<span class="IO__sizes--popup">Depth</span>
+								<input type="text" inputmode="numeric" class="IO__sizes__dep" id="input_depth"
+									name="depth" maxlength="3" required>
+								<label for="input_height">H:</label>
+								<span class="IO__sizes--popup">Height</span>
+								<input type="text" inputmode="numeric" class="IO__sizes__hei" id="input_height"
+									name="height" maxlength="3" required>
 							</form>
+							<div class="IO__sizes__units info">
+								<form class="IO__sizes__units">
+									<input type="radio" name="units" value="cm - centimeters" class="cm" id="cm">
+									<label class="IO__sizes__units--seg1" for="cm">cm</label>
+									<input type="radio" name="units" value="in - inches" class="in" id="in">
+									<label class="IO__sizes__units--seg2" for="in">in</label>
+									<span class="IO__sizes--color"></span>
+								</form>
+							</div>
+						</div>
+						<div class="IO__press IO--span2 info">
+							<button class="IO__press--btn" onclick="globalThis.fns.catchWork()">ADD</button>
+							<button class="IO__press--btn" id="remove"
+								onclick="globalThis.fns.catchRemove()">DEL</button>
+							<button class="IO__press--btn" onclick="globalThis.fns.clearAll()">Clear</button>
 						</div>
 					</div>
-					<div class="IO__press IO--span2 info">
-						<button class="IO__press--btn" onclick="globalThis.fns.catchWork()">ADD</button>
-						<button class="IO__press--btn" id="remove" onclick="globalThis.fns.catchRemove()">DEL</button>
-						<button class="IO__press--btn" onclick="globalThis.fns.clearAll()">Clear</button>
-					</div>
-				</div>
 			</div>
 			<!--This div provides the overview about the works added before the call of the AI-->
 			<div class="container__status">
 				<h2 class="title">N - List</h2>
 				<div class="container__status__pane">
-					<iframe class="container__status__pane__frame" title="Work's list" src="./panels/result_pane.html"></iframe>
+					<iframe class="container__status__pane__frame" title="Work's list"
+						src="./panels/result_pane.html"></iframe>
 					<div class="container__status__counter">
 						<p id="count">Count works: 0 </p>
 						<p id="cub-meter">Cub: 0</p>
@@ -89,14 +99,11 @@
 					</div>
 					<!-- TODO: refactor the class name to container__status -->
 					<div class="IO__press__crate">
-						<span class="IO__crate--shadow1"></span>
-						<span class="IO__crate--shadow2"></span>
-						<button class="IO__crate" onclick="globalThis.fns.crate()">
+						<button name="create" class="IO__crate" onclick="globalThis.fns.crate()">
 							<p class="IO__crate__txt">Crate!</p>
 						</button>
-						<svg class="IO__press__crate--btn">
-							<circle class="IO__crate--shape"/>
-						</svg>
+						<span name="waves" class="IO__crate--shadow1 wave"></span>
+						<span name="waves" class="IO__crate--shadow2 wave"></span>
 					</div>
 				</div>
 			</div>
@@ -104,38 +111,112 @@
 				<div class="result container--span">
 					<h2>= Results</h2>
 					<div class="container__results">
-						<iframe class="container__results--open" title="Works set" src="./panels/pane1_crates.html"></iframe>
-						<iframe class="container__results--crates" title="List done" src="./panels/pane2_crates_open.html"></iframe>
-						<div class="result__copy">
-							<button class="IO__press--btn" id="copy1" onclick="">COPY</button>
+						<div class="container__results result--panels">
+							<iframe class="container__results--open" title="Works set"
+								src="./panels/pane1_crates.html"></iframe>
+							<iframe class="container__results--crates" title="List done"
+								src="./panels/pane2_crates_open.html"></iframe>
 						</div>
 						<div class="result__copy">
-							<button class="IO__press--btn" id="copy2" onclick="">COPY</button>
+							<button class="IO__press--btn copy" id="copy1" onclick="">COPY</button>
+						</div>
+						<div class="result__copy">
+							<button class="IO__press--btn copy" id="copy2" onclick="">COPY</button>
 						</div>
 					</div>
 				</div>
 				<div class="container-interactive">
-					<div class="menu exchange">
-						<ul dir="rtl" lang="en" class="menu__option">
-							<li><a href="#"><i class='currency' ></i></a></li>
-							<span class="menu__option--text">Conversion</span>
-						</ul>
-					</div>
-					<div class="menu units-convertion">
-						<ul dir="rtl" lang="en" class="menu__option">
-							<li><a href="#"><i class="converter"></i></a></li>
-							<span class="menu__option--text">Units</span>
-						</ul>
-					</div>
-					<div class="menu fetch">
-						<ul dir="rtl" lang="en" class="menu__option">
-							<li><a href="#"><i class="consult"></i></a></li>
-							<span class="menu__option--text">Search</span>
-						</ul>
+					<div class="accordion">
+						<div class="menu__option menu accordion-panel" aria-hidden="true" aria-labelledby="search-header" role="region">
+							<h3 class="" id="search-header">
+								<button class="trigger-menu menu search" aria-controls="search--content" aria-expanded="false">
+								<!-- <button class="trigger-menu menu exchange" aria-controls="exchange--content" aria-expanded="true"> -->
+									<span class="menu__option--text">Search</span>
+									<svg aria-hidden="true" class="menu-icon">
+										<use href="#lupa-material"></use>
+									</svg>
+								</button>
+								<span lang="en" class="menu__option--text">Search Estimate</span>
+								<div class="menu__input menu__fetch">
+									<form class="menu__fetch">
+										<input type="text" class="get__estimate" required>
+										<button class="IO__press--btn menu__search-btn" id"search-btn">Submit</button>
+									</form>
+								</div>
+							</h3>
+						</div>
+						<div class="exchange--content menu accordion-panel exchange" id="exchange" aria-hidden="false" aria-labelledby="exchange--content" role="region">
+							<h3 class="" id="exchange-header">
+								<!-- <button class="trigger-menu menu exchange" aria-controls="exchange--content" aria-expanded="false"> -->
+								<button class="trigger-menu menu exchange" aria-controls="exchange--content" aria-expanded="true">
+									<svg aria-hidden="true" class="menu-icon">
+										<use href="#exchange-material"></use>
+									</svg>
+								</button>
+								<span class="menu__option--text">Currency</span>
+								<div class="menu__input" >
+									<form class="menu__currency">
+										<select>
+											<option>Real</option>
+											<option>Dolar</option>
+										</select>
+										<input type="text" name="currency" class="get__currency1 menu__input--form" required>
+										<select>
+											<option>Real</option>
+											<option>Dolar</option>
+										</select>
+										<input type="text" name="currency" class="get__currency menu__input--form" required>
+									</form>
+								</div>
+							</h3>
+						</div>
+						<div class="menu__option menu accordion-panel units-convertion" aria-hidden="true" aria-labelledby="units-header" role="region">
+							<h3 class="" id="units-header">
+								<button class="trigger-menu menu units" aria-controls="units--content" aria-expanded="false">
+								<!-- <button class="trigger-menu menu exchange" aria-controls="exchange--content" aria-expanded="true"> -->
+									<span class="menu__option--text">Units</span>
+									<svg aria-hidden="true" class="menu-icon">
+										<use href="#regua-material"></use>
+									</svg>
+								</button>
+								<span lang="en" class="menu__option--text">Units</span>
+								<div class="menu__input" >
+									<form class="menu__units">
+										<select>
+											<option>centimeters</option>
+											<option>inches</option>
+										</select>
+										<input type="text" name="measure" class="get__mesure1 menu__input--form" required>
+										<select>
+											<option>inches</option>
+											<option>centimeters</option>
+										</select>
+										<input type="text" name="measures" class="get__mesure2 menu__input--form" required>
+									</form>
+								</div>
+							</h3>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<svg width="0" height="0" class="hidden board-icon">
+			<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 96 960 960" id="exchange-material">
+				<path
+					d="M480 1016q-112 0-216-66T100 799v137H40V696h240v60H143q51 77 145.5 138.5T480 956q78 0 147.5-30t121-81.5Q800 793 830 723.5T860 576h60q0 91-34.5 171T791 887q-60 60-140 94.5T480 1016Zm-29-153v-54q-45-12-75.5-38.5T324 698l51-17q12 38 42.5 60t69.5 22q40 0 66.5-19.5T580 692q0-33-25-55.5T463 586q-60-25-90-54t-30-78q0-44 30-75t80-38v-51h55v51q38 4 66 24t45 55l-48 23q-15-28-37-42t-52-14q-39 0-61.5 18T398 454q0 32 26 51t84 43q69 29 98 61t29 83q0 25-9 46t-25.5 36Q584 789 560 798.5T506 811v52h-55ZM40 576q0-91 34.5-171T169 265q60-60 140-94.5T480 136q112 0 216 66t164 151V216h60v240H680v-60h137q-51-77-145-138.5T480 196q-78 0-147.5 30t-121 81.5Q160 359 130 428.5T100 576H40Z">
+				</path>
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 96 960 960" id="lupa-material">
+				<path
+					d="M796 935 533 672q-30 26-69.959 40.5T378 727q-108.162 0-183.081-75Q120 577 120 471t75-181q75-75 181.5-75t181 75Q632 365 632 471.15 632 514 618 554q-14 40-42 75l264 262-44 44ZM377 667q81.25 0 138.125-57.5T572 471q0-81-56.875-138.5T377 275q-82.083 0-139.542 57.5Q180 390 180 471t57.458 138.5Q294.917 667 377 667Z">
+				</path>
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 96 960 960" id="regua-material">
+				<path
+					d="M140 816q-24 0-42-18t-18-42V396q0-23 18-41.5t42-18.5h680q24 0 42 18.5t18 41.5v360q0 24-18 42t-42 18H140Zm0-60h680V396H690v180h-60V396H510v180h-60V396H330v180h-60V396H140v360Zm130-180h60-60Zm180 0h60-60Zm180 0h60-60Zm-150 0Z">
+				</path>
+			</symbol>
+		</svg>
 		<footer>
 			<div>
 				<h3 class="container__footer">ottO</h3>
