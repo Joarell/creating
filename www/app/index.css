@@ -3,6 +3,11 @@
    ╰──────────────────────────────────────────────────────────╯
 */
 
+@import "responsive_sheet.css";
+@import "index-01.css";
+@import "https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@100;200;300;400;500;600;700;800;900&family=Mitr:wght@200;300;400;500;600;700&family=Saira+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap";
+
+
 *, *::before, *::after {
 	box-sizing: inherit;
 }
@@ -249,6 +254,15 @@ tbody:nth-child(even) {
 }
 
 
+span[data-popup]::after {
+	content: attr(data-popup);
+	position: absolute;
+	color: var(--color4);
+	font-size: .7rem;
+	cursor: pointer;
+}
+
+
 .IO__add--form:hover {
 	box-shadow: var(--shadow1);
 }
@@ -347,7 +361,7 @@ tr::before {
 
 
 .container__results div > button { 
-	margin: 1rem 0 0 6rem;
+	margin: .5rem 0 0 6rem;
 }
 
 

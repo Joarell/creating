@@ -17,15 +17,6 @@
 	<script type="module" src="./side-menu/interactive.mjs"></script>
 	<script type="module" src="./side-menu/menu.interface.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
-	<link rel="stylesheet" href="./index-01.css" />
-	<link rel="stylesheet" href="./responsive_sheet.css" />
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@100;200;300;400;500;600;700;800;900&family=Mitr:wght@200;300;400;500;600;700&family=Saira+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap"
-		rel="stylesheet">
-</head>
-
 <body>
 	<header>
 		<div>
@@ -47,7 +38,7 @@
 						<div class="IO__sizes info">
 							<div class="IO__sizes__code">
 								<form class="IO__add--form">
-									<label for="input_code">Code:</label>
+									<label for="input_code">Art:</label>
 									<input type="text" autofocus class="IO__sizes--code" id="input_code" name="art-code"
 										required>
 								</form>
@@ -56,15 +47,13 @@
 						<div class="IO__sizes__mesure IO--span2 info">
 							<form class="IO__add--form">
 								<label for="input_length">L:</label>
-								<span class="IO__sizes--popup">Length</span>
-								<input type="text" inputmode="numeric" class="IO__sizes__len" id="input_length"
-									name="length" maxlength="3" required>
+								<span aria-hidden="true" data-popup="Length" class="IO__sizes--popup"></span>
+								<input type="text" inputmode="numeric" class="IO__sizes__len" id="input_length" name="length" maxlength="3" required>
 								<label for="input_depth">D:</label>
-								<span class="IO__sizes--popup">Depth</span>
-								<input type="text" inputmode="numeric" class="IO__sizes__dep" id="input_depth"
-									name="depth" maxlength="3" required>
+								<span aria-hidden="true" data-popup="Depth" class="IO__sizes--popup"></span>
+								<input type="text" inputmode="numeric" class="IO__sizes__dep" id="input_depth" name="depth" maxlength="3" required>
 								<label for="input_height">H:</label>
-								<span class="IO__sizes--popup">Height</span>
+								<span aria-hidden="ture" data-popup="Height" class="IO__sizes--popup"></span>
 								<input type="text" inputmode="numeric" class="IO__sizes__hei" id="input_height"
 									name="height" maxlength="3" required>
 							</form>
@@ -133,7 +122,7 @@
 								<span lang="en" class="menu__option--text">Search Estimate</span>
 								<div class="menu__input menu__fetch" aria-hidden="true" role="region">
 									<form class="menu__fetch">
-										<input type="text" class="get__estimate" required>
+										<input type="text" class="get__estimate" id="estimate__getter" required>
 										<button class="IO__press--btn menu__search-btn" id"search-btn">Submit</button>
 									</form>
 								</div>
@@ -149,12 +138,12 @@
 								<span class="menu__option--text">Currency</span>
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__currency">
-										<select>
+										<select id="coin">
 											<option>Real</option>
 											<option>Dolar</option>
 										</select>
 										<input type="text" name="currency" class="get__currency1 menu__input--form" required>
-										<select>
+										<select id="coin">
 											<option>Real</option>
 											<option>Dolar</option>
 										</select>
@@ -174,12 +163,12 @@
 								<span lang="en" class="menu__option--text">Units</span>
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__units">
-										<select>
+										<select id="units">
 											<option>centimeters</option>
 											<option>inches</option>
 										</select>
 										<input type="text" name="measure" class="get__mesure1 menu__input--form" required>
-										<select>
+										<select id="units">
 											<option>inches</option>
 											<option>centimeters</option>
 										</select>
