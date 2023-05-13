@@ -14,7 +14,7 @@
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)"> -->
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
 	<script type="module" src="./main.mjs"></script>
-	<script type="module" src="./interactive.mjs"></script>
+	<script type="module" src="./side-menu/interactive.mjs"></script>
 	<script type="module" src="./side-menu/menu.interface.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
 	<link rel="stylesheet" href="./index-01.css" />
@@ -35,7 +35,7 @@
 	<main>
 		<div class="container">
 			<div class="container__insert">
-				<h2 class="container--span title" className"">+ Add</h3>
+				<h2 class="title" className"">+ Add</h3>
 					<div class="IO">
 						<div class="IO__top info" id="units">
 							<form class="IO__add--form">
@@ -79,10 +79,9 @@
 							</div>
 						</div>
 						<div class="IO__press IO--span2 info">
-							<button class="IO__press--btn" onclick="globalThis.fns.catchWork()">ADD</button>
-							<button class="IO__press--btn" id="remove"
-								onclick="globalThis.fns.catchRemove()">DEL</button>
-							<button class="IO__press--btn" onclick="globalThis.fns.clearAll()">Clear</button>
+							<button class="IO__press--btn add--btn" onclick="globalThis.fns.catchWork()">ADD</button>
+							<button class="IO__press--btn del--btn" id="remove" onclick="globalThis.fns.catchRemove()">DEL</button>
+							<button class="IO__press--btn clear--btn" onclick="globalThis.fns.clearAll()">Clear</button>
 						</div>
 					</div>
 			</div>
@@ -107,37 +106,32 @@
 					</div>
 				</div>
 			</div>
-			<div class="container-bottom">
+			<div class="container-bottom resutl">
 				<div class="result container--span">
 					<h2>= Results</h2>
-					<div class="container__results">
-						<div class="container__results result--panels">
-							<iframe class="container__results--open" title="Works set"
-								src="./panels/pane1_crates.html"></iframe>
-							<iframe class="container__results--crates" title="List done"
-								src="./panels/pane2_crates_open.html"></iframe>
-						</div>
-						<div class="result__copy">
-							<button class="IO__press--btn copy" id="copy1" onclick="">COPY</button>
-						</div>
-						<div class="result__copy">
+					<div class="container__results result--panels">
+						<div>
+							<iframe class="container__results--open" title="Works set" src="./panels/pane1_crates.html"></iframe>
 							<button class="IO__press--btn copy" id="copy2" onclick="">COPY</button>
+						</div>
+						<div>
+							<iframe class="container__results--crates" title="List done" src="./panels/pane2_crates_open.html"></iframe>
+							<button class="IO__press--btn copy" id="copy1" onclick="">COPY</button>
 						</div>
 					</div>
 				</div>
 				<div class="container-interactive">
 					<div class="accordion">
-						<div class="menu__option menu accordion-panel" aria-hidden="true" aria-labelledby="search-header" role="region">
+						<div class="menu accordion-panel" aria-labelledby="search-header">
 							<h3 class="" id="search-header">
 								<button class="trigger-menu menu search" aria-controls="search--content" aria-expanded="false">
-								<!-- <button class="trigger-menu menu exchange" aria-controls="exchange--content" aria-expanded="true"> -->
 									<span class="menu__option--text">Search</span>
 									<svg aria-hidden="true" class="menu-icon">
 										<use href="#lupa-material"></use>
 									</svg>
 								</button>
 								<span lang="en" class="menu__option--text">Search Estimate</span>
-								<div class="menu__input menu__fetch">
+								<div class="menu__input menu__fetch" aria-hidden="true" role="region">
 									<form class="menu__fetch">
 										<input type="text" class="get__estimate" required>
 										<button class="IO__press--btn menu__search-btn" id"search-btn">Submit</button>
@@ -145,16 +139,15 @@
 								</div>
 							</h3>
 						</div>
-						<div class="exchange--content menu accordion-panel exchange" id="exchange" aria-hidden="false" aria-labelledby="exchange--content" role="region">
+						<div class="exchange--content menu accordion-panel" id="exchange" aria-hidden="true" aria-labelledby="exchange--content" role="region">
 							<h3 class="" id="exchange-header">
-								<!-- <button class="trigger-menu menu exchange" aria-controls="exchange--content" aria-expanded="false"> -->
-								<button class="trigger-menu menu exchange" aria-controls="exchange--content" aria-expanded="true">
+								<button class="trigger-menu menu exchange" aria-controls="exchange--content" aria-expanded="false">
 									<svg aria-hidden="true" class="menu-icon">
 										<use href="#exchange-material"></use>
 									</svg>
 								</button>
 								<span class="menu__option--text">Currency</span>
-								<div class="menu__input" >
+								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__currency">
 										<select>
 											<option>Real</option>
@@ -170,17 +163,16 @@
 								</div>
 							</h3>
 						</div>
-						<div class="menu__option menu accordion-panel units-convertion" aria-hidden="true" aria-labelledby="units-header" role="region">
+						<div class="menu accordion-panel units-convertion" aria-hidden="true" aria-labelledby="units-header" role="region">
 							<h3 class="" id="units-header">
 								<button class="trigger-menu menu units" aria-controls="units--content" aria-expanded="false">
-								<!-- <button class="trigger-menu menu exchange" aria-controls="exchange--content" aria-expanded="true"> -->
 									<span class="menu__option--text">Units</span>
 									<svg aria-hidden="true" class="menu-icon">
 										<use href="#regua-material"></use>
 									</svg>
 								</button>
 								<span lang="en" class="menu__option--text">Units</span>
-								<div class="menu__input" >
+								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__units">
 										<select>
 											<option>centimeters</option>
