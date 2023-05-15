@@ -71,7 +71,6 @@ body {
 	font-size: 0.8rem;
 	background-position: center;
 	scroll-behavior: slow;
-	counter-reset: works-count;
 }
 
 
@@ -165,6 +164,11 @@ tbody:nth-child(even) {
 	text-align: center;
 	border-radius: var(--bord);
 	border: 5rem solid var(--color4);
+	counter-reset: works-count;
+	/* & { */
+	/* 	counter-increment: counter(works-count); */
+	/* 	--r_height: works-count; */
+	/* } */
 }
 
 
@@ -201,6 +205,12 @@ tbody:nth-child(even) {
 	justify-content: center;
 	animation: fill-pane 1s linear;
 	transition: all .3s ease-in-out;
+}
+
+
+.crates-opened > tbody{
+	counter-increment: counter(works-count);
+	--r_height: calc(1rem * works-count);
 }
 
 
@@ -342,11 +352,6 @@ span + input {
    ╰──────────────────────────────────────────────────────────╯
 */
 
-tr::before {
-	counter-increment: counter(works-count);
-}
-
-
 .menu__search {
 	margin-top: .5rem;
 }
@@ -367,6 +372,7 @@ tr::before {
 
 .result--panels div > iframe {
 	height: 15rem;
+	content: var(--r_height);
 	animation-name: fill-pane;
 	animation-delay: 1s;
 	animation-fill-mode: forwards;
@@ -449,21 +455,17 @@ label:hover + .IO__sizes--popup {
 	cursor: pointer;
 	transition: transform .3s ease-in-out;
 	opacity: .6;
-}
-
-
-.IO__press--btn:hover {
-	transition: all .5s ease-in-out;
-	transform: translateY(.1rem);
-	border-bottom: .05rem solid var(--color4);
-	border-right: .05rem solid var(--color4);
-	box-shadow: var(--shadow1);
-}
-
-
-.IO__press--btn:active {
-	box-shadow: var(--inner-shadow);
-	transition: all .5s ease-in-out;
+	&:hover {
+		transition: all .5s ease-in-out;
+		transform: translateY(.1rem);
+		border-bottom: .05rem solid var(--color4);
+		border-right: .05rem solid var(--color4);
+		box-shadow: var(--shadow1);
+	}
+	&:active {
+		box-shadow: var(--inner-shadow);
+		transition: all .5s ease-in-out;
+	}
 }
 
 
@@ -502,11 +504,23 @@ label:hover + .IO__sizes--popup {
 
 .IO__crate {
 	outline: 0;
-}
-
-.IO__crate:focus-within {
-	outline: 3px solid goldenrod;
-	outline-offset: 2px;
+	&:focus-within {
+		outline: 3px solid goldenrod;
+		outline-offset: 2px;
+	}
+	&:hover {
+		transform: translateY(.1rem);
+		background: goldenrod;
+		box-shadow: var(--shadow1);
+		border: .5rem solid var(--color8);
+		transition: all .5s ease-in-out;
+	}
+	&:active {
+		transition: .5s ease-in-out;
+		box-shadow: var(--inner-shadow);
+		transition: .3s ease-in-out;
+		background: red;
+	}
 }
 
 
@@ -526,23 +540,6 @@ label:hover + .IO__sizes--popup {
 
 .IO__crate:hover::before {
 	transform: translateX(30rem) skew(-20deg);
-}
-
-
-.IO__crate:hover {
-	transform: translateY(.1rem);
-	background: goldenrod;
-	box-shadow: var(--shadow1);
-	border: .5rem solid var(--color8);
-	transition: all .5s ease-in-out;
-}
-
-
-.IO__crate:active {
-	transition: .5s ease-in-out;
-	box-shadow: var(--inner-shadow);
-	transition: .3s ease-in-out;
-	background: red;
 }
 
 
@@ -777,15 +774,13 @@ label:hover + .IO__sizes--popup {
 	cursor: pointer;
 	background: var(--menu-col);
 	fill: var(--__icon-color);
+	&:focus-within {
+		outline: 3px solid var(--__icon-color);
+	}
 }
 
 .trigger-menu {
 	outline: 0;
-}
-
-
-.trigger-menu:focus-within {
-	outline: 3px solid var(--__icon-color);
 }
 
 
@@ -922,12 +917,10 @@ label + input {
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
-}
-
-
-.IO__sizes__units:hover {
-	border: none;
-	box-shadow: var(--shadow1);
+	&:hover {
+		border: none;
+		box-shadow: var(--shadow1);
+	}
 }
 
 
@@ -1021,6 +1014,11 @@ label + input {
 input {
 	width: 3rem;
 	transition: .5s ease-in-out;
+	&:focus {
+		left: 0;
+		color: var(--color4);
+		font-size: 1rem;
+	}
 }
 
 
@@ -1029,11 +1027,3 @@ label {
 	color: var(--iframes-bg);
 	font-size: .8rem;
 }
-
-
-input:focus {
-	left: 0;
-	color: var(--color4);
-	font-size: 1rem;
-}
-
