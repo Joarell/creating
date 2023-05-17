@@ -10,6 +10,17 @@
 //       ╰──────────────────────────────────────────────────────────────╯
 
 
+function unitConvertion (input1, input2, value1, value2) {
+	const result = (input1 === "centimeters" ?
+		centimetersShift(input1, input2, value1, value2) :
+		input1 === "inches" ?
+			inchesShift(input1, input2, value1, value2) :
+			metersShift(input1, input2, value1, value2)
+	);
+	return (result);
+};
+
+
 function measureSetupCheckout(option1, option2){
 	const checked = {
 		checked1 :option1 === "centimeters" && option2 === "inches",
@@ -130,15 +141,3 @@ globalThis.document.getElementById("units2")
 	input1.value = 0
 	input2.value = 0
 });
-
-
-export function unitConvertion (input1, input2, value1, value2) {
-	const result = (input1 === "centimeters" ?
-		centimetersShift(input1, input2, value1, value2) :
-		input1 === "inches" ?
-			inchesShift(input1, input2, value1, value2) :
-			metersShift(input1, input2, value1, value2)
-	);
-	return (result);
-};
-
