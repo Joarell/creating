@@ -44,7 +44,7 @@
 		-.2rem -.2rem .5rem var(--dark-blue2);
 
 	/* main setup */
-	--backgroud: #BEBBBB;
+	--bg-clr: #BEBBBB;
 	--iframes-bg: #96979C;
 	--add-col: #0B8325;
 	--mesure: #2DD751;
@@ -66,11 +66,19 @@
 
 body {
 	box-sizing: border-box;
-	background-color: var(--backgroud);
+	background-color: var(--bg-clr);
 	font-family: Saira Semi Condensed, Mitr, sans-serif;
 	font-size: 0.8rem;
 	background-position: center;
 	scroll-behavior: slow;
+	color-scheme: light;
+	--txt-clr: var(--iframes-bg);
+}
+
+
+body.dark {
+	--bg-clr: var(--back-gray);
+	--txt-clr: var(--color4);
 }
 
 
@@ -599,10 +607,7 @@ label:hover + .IO__sizes--popup {
 	grid-row: 1 / 2;
 	grid-column: 1 / 2;
 	border-radius: 50%;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+	inset: 0;
 	opacity: 1;
 	z-index: -1;
 	width: 6rem;
