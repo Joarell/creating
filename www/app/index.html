@@ -15,6 +15,7 @@
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
 	<script type="module" src="./main.mjs"></script>
 	<script type="module" src="./side-menu/interactive.mjs"></script>
+	<script type="module" src="./side-menu/menu.units.mjs"></script>
 	<script type="module" src="./side-menu/menu.interface.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
 <body>
@@ -169,17 +170,19 @@
 								</button>
 								<span lang="en" class="menu__option--text">Units</span>
 								<div class="menu__input" aria-hidden="true" role="region">
-									<form class="menu__units">
-										<select id="units">
-											<option>centimeters</option>
-											<option>inches</option>
-										</select>
-										<input type="text" name="measure" class="get__mesure1 menu__input--form" required>
-										<select id="units">
+									<form class="menu__units" id="units">
+										<select id="units1">
+											<option>meters</option>
 											<option>inches</option>
 											<option>centimeters</option>
 										</select>
-										<input type="text" name="measures" class="get__mesure2 menu__input--form" required>
+										<input type="text" name="measure" class="get__measure menu__input--form" id="input-unit1" required value=0>
+										<select id="units2">
+											<option>centimeters</option>
+											<option>meters</option>
+											<option>inches</option>
+										</select>
+										<input type="text" name="measures" class="get__measure menu__input--form" id="input-unit2" required value=0>
 									</form>
 								</div>
 							</h3>
@@ -213,4 +216,4 @@
 	</main>
 </body>
 
-</htm
+</html>
