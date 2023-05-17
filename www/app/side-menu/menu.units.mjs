@@ -5,6 +5,7 @@
 //       │ │                      inchesShift()                       │ │
 //       │ │                  measureSetupCheckout()                  │ │
 //       │ │                      metersShift()                       │ │
+//       │ │                   resolveConversion()                    │ │
 //       │ │                     unitConvertion()                     │ │
 //       │ ╰──────────────────────────────────────────────────────────╯ │
 //       ╰──────────────────────────────────────────────────────────────╯
@@ -25,11 +26,24 @@ function measureSetupCheckout(option1, option2){
 	const checked = {
 		checked1 :option1 === "centimeters" && option2 === "inches",
 		checked2 :option1 === "inches" && option2 === "centimeters",
-		checked3 :option1 === "inches" && option2 === "meters",
-		checked4 :option1 === "centimeters" && option2 === "meters",
-		checked5 :option1 === "meters" && option2 === "centimeters",
+		checked3 :option1 === "meters" && option2 === "centimeters",
 	};
 	return (checked);
+};
+
+
+function resolveConversion(input1, input2, unit, type) {
+	const roundDecimal = 1000;
+
+	if (type !== "m")
+		return (input1.value > input2.value ?
+			~~((input1.value / unit) * roundDecimal) / roundDecimal:
+			~~((input2.value * unit) * roundDecimal) / roundDecimal
+		);
+	return (input1.value < input2.value ?
+		~~((input2.value / unit) * roundDecimal) / roundDecimal:
+		~~((input1.value * unit) * roundDecimal) / roundDecimal
+	);
 };
 
 
@@ -41,17 +55,10 @@ function centimetersShift (unit1, unit2, measure1, measure2) {
 	if (unit1 === unit2)
 		return (
 			measure1.value > measure2.value ? measure1.value: measure2.value
-	);
-	else if (cmpSetup.checked1 || cmpSetup.checked2) {
-		return (measure1.value > measure2.value ?
-			~~((measure1.value / inches) * 1000) / 1000:
-			~~((measure2.value * inches) * 1000) / 1000
 		);
-	}
-	return (measure1.value < measure2.value ?
-		~~((measure2.value / meters) * 1000) / 1000:
-		((measure1.value * meters) * 1000) / 1000
-	);
+	else if (cmpSetup.checked1)
+		return(resolveConversion(measure1, measure2, inches, "in"));
+	return(resolveConversion(measure1, measure2, meters, "m"));
 };
 
 
@@ -63,17 +70,10 @@ function inchesShift (unit1, unit2, measure1, measure2) {
 	if (unit1 === unit2)
 		return (
 			measure1.value > measure2.value ? measure1.value: measure2.value
-	);
-	else if (cmpSetup.checked2) {
-		return (measure1.value > measure2.value ?
-			~~((measure1.value / centimeters) * 1000) / 1000:
-			~~((measure2.value * centimeters) * 1000) / 1000
 		);
-	}
-	return (measure1.value < measure2.value ?
-		~~((measure2.value / meters) * 1000) / 1000:
-		((measure1.value * meters) * 1000) / 1000
-	);
+	else if (cmpSetup.checked2)
+		return(resolveConversion(measure1, measure2, centimeters, "cm"));
+	return(resolveConversion(measure1, measure2, meters, "m"));
 };
 
 
@@ -85,17 +85,10 @@ function metersShift (unit1, unit2, measure1, measure2) {
 	if (unit1 === unit2)
 		return (
 			measure1.value > measure2.value ? measure1.value: measure2.value
-	);
-	else if (cmpSetup.checked4 || cmpSetup.checked5) {
-		return (measure1.value > measure2.value ?
-			~~((measure1.value / centimeters) * 1000) / 1000:
-			~~((measure2.value * centimeters) * 1000) / 1000
 		);
-	}
-	return (measure1.value > measure2.value ?
-		~~((measure1.value / inches) * 1000) / 1000:
-		((inches * measure2.value) * 1000) / 1000
-	);
+	else if (cmpSetup.checked3)
+		return(resolveConversion(measure1, measure2, centimeters, "cm"));
+	return(resolveConversion(measure1, measure2, inches, "in"));
 };
 
 
