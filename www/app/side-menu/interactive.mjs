@@ -1,8 +1,8 @@
 
 
-const accordion = globalThis.document.querySelector(".accordion");
 
-accordion.addEventListener("click", event => {
+globalThis.document.querySelector(".accordion")
+	.addEventListener("click", event => {
 	const activePanel = event.target.closest(".accordion-panel");
 
 	if (!activePanel)
