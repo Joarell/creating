@@ -19,19 +19,19 @@ export function pitagoras(a, b, c) {
 		a = a ** 2;
 		b = b ** 2;
 		c = a - b;
-		return (Math.floor(Math.sqrt(c) * 100)/100);
+		return (~~(Math.sqrt(c) * 100)/100);
 	}
 	else if (a && !b && c) {
 		a = a ** 2;
 		c = c ** 2;
 		b = a - c;
-		return (Math.floor(Math.sqrt(b) * 100)/100);
+		return (~~(Math.sqrt(b) * 100)/100);
 	}
 	else {
 		b = b ** 2;
 		c = c ** 2;
 		a = b + c;
-		return (Math.floor(Math.sqrt(a) * 100)/100);
+		return (~~(Math.sqrt(a) * 100)/100);
 	}
 }
 
@@ -42,9 +42,9 @@ export function pitagoras(a, b, c) {
 export function cubing(dimensions) {
 	let cm_to_m;
 
-	cm_to_m = 1000000;
+	cm_to_m = 1_000_000;
 	const cubed = dimensions[1] * dimensions[2] * dimensions[3] / cm_to_m;
-	return Math.floor(cubed * 1000) / 1000;
+	return (~~(cubed * 1000) / 1000);
 }
 
 
@@ -75,14 +75,14 @@ export function conversion(sizes, metric){
 	const dim = [sizes.code];
 
 	if (metric === "cm"){
-		dim.push(Math.floor((sizes.x / inch) * 100) / 100);
-		dim.push(Math.floor((sizes.z / inch) * 100) / 100);
-		dim.push(Math.floor((sizes.y / inch) * 100) / 100);
+		dim.push(~~((sizes.x / inch) * 100) / 100);
+		dim.push(~~((sizes.z / inch) * 100) / 100);
+		dim.push(~~((sizes.y / inch) * 100) / 100);
 	}
 	else {
-		dim.push(Math.floor((sizes.x * inch) * 100) / 100);
-		dim.push(Math.floor((sizes.z * inch) * 100) / 100);
-		dim.push(Math.floor((sizes.y * inch) * 100) / 100);
+		dim.push(~~((sizes.x * inch) * 100) / 100);
+		dim.push(~~((sizes.z * inch) * 100) / 100);
+		dim.push(~~((sizes.y * inch) * 100) / 100);
 	}
 	return (dim = new ArtWork(dim[0], dim[1], dim [2], dim [3]));
 }
