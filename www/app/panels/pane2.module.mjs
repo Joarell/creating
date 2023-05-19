@@ -12,8 +12,8 @@ globalThis.onstorage = () => {
 
 
 globalThis.onload = () => {
-	const getter = localStorage.getItem("refNumb");
-	const press = localStorage.getItem("pane2");
+	const getter =	localStorage.getItem("refNumb");
+	const press =	localStorage.getItem("pane2");
 
 	return ( press === "populate" ?
 		setTimeout(() => {
@@ -66,15 +66,12 @@ export function showCrates2(estimate) {
 			const crates =	db.result.crates;
 			const element =	document.createElement("table");
 			const pane =	document.getElementById("opened-crates");
-			const check = (target) => {
-				return (["PAX", "CARGO"].includes(target[0]) ? false: true);
-			}
 			
 			localStorage.getItem("metrica") === "in - inches" ?
 				metric = "in": metric = "cm";
 			createHeader(element);
-			while(i < db.result.crates.length - 1) {
-				if(check(crates[i]) && crates[i].length > 2) {
+			while(i <= db.result.crates.length - 1) {
+				if(avoidWords(crates[i]) && crates[i].length > 2) {
 					crate = db.result.crates[i];
 					element.innerHTML += crate.map((info, index) => {
 						return (
@@ -90,4 +87,9 @@ export function showCrates2(estimate) {
 			pane.appendChild(element);
 		}
 	}
+};
+
+
+function avoidWords (target) {
+	return (["PAX", "CARGO"].includes(target[0]) ? false: true);
 };
