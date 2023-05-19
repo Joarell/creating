@@ -5,68 +5,67 @@
 // │ Calls to each change on the localStorage to update the list pane. │
 // ╰───────────────────────────────────────────────────────────────────╯
 globalThis.onstorage = () => {
-	elementTable();
+	globalThis.location.reload();
+	setTimeout(() => {
+		elementTable();
+	}, 200);
 }
 globalThis.onload = () => {
 	elementTable();
 }
 
 
+function testAvoidWords (store) {
+	return(["metrica", "pane1", "pane2", "refNumb"].includes(store) ?
+		false: true
+	);
+};
+
+
 // ╭────────────────────────────────────────────────────╮
-// │ Retunns the HTML table with all works in the list. │
+// │ Returns the HTML table with all works in the list. │
 // ╰────────────────────────────────────────────────────╯
 export function elementTable () {
-	let i		= 0;
 	let work;
 	let metric;
-	const plot	= document.getElementById("sizes");
-	const test	= (store) =>{
-		if(store !== "metrica" && store !== "pane1" && store !== "pane2"
-			&& store !== "refNumb")
-			return (true);
-		return (false);
-	}
+	let i =			0;
+	const element =	document.createElement("table");
+	const plot =	document.getElementById("status");
 
-	if(localStorage.getItem("metrica") === "in - inches")
-		metric = "in";
-	else
-		metric = "cm";
-	createHeader(plot);
+	localStorage.getItem("metrica") === "in - inches" ?
+		metric = "in": metric = "cm";
+	createHeader(element);
 	while (localStorage.key(i)) {
-		if(test(localStorage.key(i))){
+		if (testAvoidWords(localStorage.key(i))){
 			work = JSON.parse(localStorage.getItem(localStorage.key(i)));
 			work = Object.values(work);
-			plot.innerHTML += work.map((item, index) => {
-				if (index === 3){
-					return(
-						`<td>${item}</td>
-						<td>${metric}</td>`
-					);
-				}
-				return(`<td>${item}</td>`);
+			element.innerHTML += work.map((item, index) => {
+				return (
+					index === 0 ? `<tr><td>${item}</td>`:
+					index === 3 ? `<td>${item}</td><td>${metric}</td></tr>`:
+					`<td>${item}</td>`
+				);
 			}, 0).join("");
 		}
 		i++;
-	}
+	};
+	plot.appendChild(element);
 }
 
 
-// ╭──────────────────────────────────────────────────────────────────────────╮
-// │ // This is the header creator when the page or localStorage are updated. │
-// ╰──────────────────────────────────────────────────────────────────────────╯
+// ╭───────────────────────────────────────────────────────────────────────╮
+// │ This is the header creator when the page or localStorage are updated. │
+// ╰───────────────────────────────────────────────────────────────────────╯
 export function createHeader(table){
 	const head = document.createElement("tr");
 	
-	if(table.parentNode){
-		while(table.firstChild)
-			table.removeChild(table.firstChild)
-	}
 	head.innerHTML =`
 		<tr>
 			<th>CODE</th>
 			<th>LENGTH</th>
 			<th>DEPTH</th>
 			<th>HEIGHT</th>
+			<th>UNIT</th>
 		</tr>
 	`
 	return(table.appendChild(head));
