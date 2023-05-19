@@ -40,8 +40,10 @@ export function checkWork(work) {
 			return (false);
 	}
 	checkReference();
-	return (Array.isArray(checked) ? 
-		new ArtWork(work[0], checked[0], checked[1], checked[2]) : false);
+	return (
+		Array.isArray(checked) ? 
+		new ArtWork(work[0], checked[0], checked[1], checked[2]) : false
+	);
 }
 
 
@@ -152,8 +154,7 @@ export function checkReference() {
 				document.getElementById("input_estimate").value = ref;
 		}
 	}
-	else
-		localStorage.setItem("refNumb", actual);
+	localStorage.setItem("refNumb", actual);
 }
 
 
