@@ -1,3 +1,11 @@
+
+
+
+*, *::before, *::after {
+	box-sizing: inherit;
+}
+
+
 :root {
 	--hue: 204;
 	--saturation: 100%;
@@ -36,6 +44,18 @@ canvas {
 	z-index: -9999;
 }
 
+
+main {
+	color: #fff;
+	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+
 ::-webkit-scrollbar {
 	width: 1rem;
 }
@@ -53,19 +73,10 @@ canvas {
 	margin-block: 0.5rem;
 }
 
-/*-----------------------------------------------------------------------------
-					 Starting to edit the elements of the login.
-------------------------------------------------------------------------------*/
-main {
-	color: #fff;
-	text-align: center;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-}
-
+/* ╭──────────────────────────────────────────────────────────╮
+   │       Starting to edit the elements of the login.        │
+   ╰──────────────────────────────────────────────────────────╯
+*/
 .login-box, from > div {
 	padding: 2.5rem 4rem;
 	background: hsl(var(--hue) var(--saturation) var(--lightness) / .1);
@@ -106,7 +117,7 @@ main {
 .login-box .user-box input:valid ~ label {
 	top: -0.5rem;
 	left: 0;
-	color: #03e9f4;
+	color: var(--color1);
 	font-size: 0.75rem;
 }
 
@@ -114,7 +125,7 @@ main {
 	position: relative;
 	display: inline-block;
 	padding:1rem 1.5rem;
-	color: #03e9f4;
+	color: var(--color1);
 	font-size: 1rem;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -125,13 +136,13 @@ main {
 }
 
 login-box a:hover{
-	background: #03e9f4;
+	background: var(--color1);
 	color: #fff;
 	border-radius: 0.25rem;
-	box-shadow: 0 0 0.25rem #03e9f4,
-				0 0 0.25rem #03e9f4,
-				0 0 5rem #03e9f4,
-				0 0 8rem #03e9f4,
+	box-shadow: 0 0 0.25rem var(--color1),
+				0 0 0.25rem var(--color1),
+				0 0 5rem var(--color1),
+				0 0 8rem var(--color1),
 }
 
 .login-box a span {
@@ -144,7 +155,7 @@ login-box a:hover{
 	left: -100%;
 	width: 100%;
 	height: 2px;
-	background: linear-gradient(90deg, transparent, #03e9f4);
+	background: linear-gradient(90deg, transparent, var(--color1));
 	animation: btn-anim1 1s linear infinite;
 }
 
@@ -162,7 +173,7 @@ login-box a:hover{
 	right:0;
 	width: 2px;
 	height: 100%;
-	background: linear-gradient(180deg, transparent, #03e9f4);
+	background: linear-gradient(180deg, transparent, var(--color1));
 	animation: btn-anim2 1s linear infinite;
 	animation-delay: .25s;
 }
@@ -181,7 +192,7 @@ login-box a:hover{
 	right: -100%;
 	width: 100%;
 	height: 2px;
-	background: linear-gradient(270deg, transparent, #03e9f4);
+	background: linear-gradient(270deg, transparent, var(--color1));
 	animation: btn-anim3 1s linear infinite;
 	animation-delay: .5s;
 }
@@ -200,7 +211,7 @@ login-box a:hover{
 	left: 0%;
 	width: 2px;
 	height: 100%;
-	background: linear-gradient(360deg, transparent, #03e9f4);
+	background: linear-gradient(360deg, transparent, var(--color1));
 	animation: btn-anim4 1s linear infinite;
 	animation-delay: .75s;
 }
