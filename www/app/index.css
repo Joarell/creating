@@ -100,7 +100,7 @@ iframe {
 	transition: 500ms ease-in-out;
 	animation-name: fill-pane;
 	animation-fill-mode: both;
-	animation-delay: 2s;
+	animation-delay: 1s;
 }
 
 
