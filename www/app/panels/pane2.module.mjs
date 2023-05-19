@@ -1,41 +1,55 @@
 // ╭────────────────────────────────────────────────────╮
 // │ This is the trigger activated by the crate button. │
 // ╰────────────────────────────────────────────────────╯
-globalThis.onstorage = async () => {
-	const press		= localStorage.getItem("pane2");
-	const getter	= localStorage.getItem("refNumb");
+globalThis.onstorage = () => {
+	const press = localStorage.getItem("pane2");
+	const getter = localStorage.getItem("refNumb");
 
-	press && showCrates2(getter);
-}
+	return(press === "populate" ? 
+		globalThis.location.reload() && showCrates2(getter): false
+	);
+};
 
 
-// ╭──────────────────────────────────────────────────────────────────────────╮
-// │ // This is the header creator when the page or localStorage are updated. │
-// ╰──────────────────────────────────────────────────────────────────────────╯
+globalThis.onload = () => {
+	const getter = localStorage.getItem("refNumb");
+	const press = localStorage.getItem("pane2");
+
+	return ( press === "populate" ?
+		setTimeout(() => {
+			showCrates2(getter);
+		}, 200):
+		false
+	)
+};
+
+
+// ╭───────────────────────────────────────────────────────────────────────╮
+// │ This is the header creator when the page or localStorage are updated. │
+// ╰───────────────────────────────────────────────────────────────────────╯
 export function createHeader(table){
-	const head = document.createElement("tr");
+	const head =		document.createElement("tr");
 	
-	if(table.parentNode){
+	if(table.parentNode)
 		while(table.firstChild)
 			table.removeChild(table.firstChild)
-	}
 	head.innerHTML =`
 		<tr>
 			<th>STATUS</th>
 			<th>LENGTH</th>
 			<th>DEPTH</th>
 			<th>HEIGHT</th>
-			<th>1CUBm³</th>
+			<th>CUBm³</th>
 		</tr>
 	`
 	return(table.appendChild(head));
-}
+};
 
 
 // ╭───────────────────────────────────────────────────────────╮
 // │ Returns all crates from the indexedDB or gets from cloud. │
 // ╰───────────────────────────────────────────────────────────╯
-export function showCrates2(estimate){
+export function showCrates2(estimate) {
 	const request = globalThis.indexedDB.open("Results");
 
 	request.onerror = (event) => {
@@ -46,37 +60,34 @@ export function showCrates2(estimate){
 			.objectStore("Results").get(estimate);
 
 		db.onsuccess = () => {
-			let i;
 			let metric;
 			let crate;
-			const pane = document.getElementById("crates-opened");
+			let i =			0;
+			const crates =	db.result.crates;
+			const element =	document.createElement("table");
+			const pane =	document.getElementById("opened-crates");
 			const check = (target) => {
-				if(target[0] === "Final")
-					return (true);
-				return (false);
+				return (["PAX", "CARGO"].includes(target[0]) ? false: true);
 			}
 			
-			i = 0;
-			createHeader(pane);
-			if(localStorage.getItem("metrica") === "in - inches")
-				metric = "in";
-			else
-				metric = "cm";
-			while(i < db.result.crates.length - 1){
-				if(check(db.result.crates[i])){
+			localStorage.getItem("metrica") === "in - inches" ?
+				metric = "in": metric = "cm";
+			createHeader(element);
+			while(i < db.result.crates.length - 1) {
+				if(check(crates[i]) && crates[i].length > 2) {
 					crate = db.result.crates[i];
-					pane.innerHTML += crate.map((info, index) => {
-						if (index === 5){
-							`<td>${info}</td>
-							<td>${metric}</td>`
-						};
-						return(`<td>${info}</td>`);
+					element.innerHTML += crate.map((info, index) => {
+						return (
+						index === 0 ? `<tr><td>${info}</td>`:
+						index === 5 ? `<td>${info}</td><td>${metric}</td></tr>`:
+							`<td>${info}</td>`
+						);
 					}, 0).join("");
 				}
 				i++;
 			};
 			localStorage.removeItem("pane2");
+			pane.appendChild(element);
 		}
 	}
-}
-
+};

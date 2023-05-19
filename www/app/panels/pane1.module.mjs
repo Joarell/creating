@@ -5,20 +5,33 @@ globalThis.onstorage = () => {
 	const press = localStorage.getItem("pane1");
 	const getter = localStorage.getItem("refNumb");
 
-	press && showCrates1(getter);
-}
+	return(press === "populate" ?
+		globalThis.location.reload() && showCrates1(getter): false
+	);
+};
+
+globalThis.onload = () => {
+	const getter = localStorage.getItem("refNumb");
+	const press = localStorage.getItem("pane1");
+
+	return ( press === "populate" ?
+		setTimeout(() => {
+			showCrates1(getter);
+		}, 100):
+		false
+	)
+};
 
 
-// ╭────────────────────────────────────────────────────────────────────────╮
-// │  This is the header creator when the page or localStorage are updated. │
-// ╰────────────────────────────────────────────────────────────────────────╯
+// ╭───────────────────────────────────────────────────────────────────────╮
+// │ This is the header creator when the page or localStorage are updated. │
+// ╰───────────────────────────────────────────────────────────────────────╯
 export function createHeader(table){
 	const head = document.createElement("tr");
 	
-	if(table.parentNode){
+	if(table.parentNode)
 		while(table.firstChild)
 			table.removeChild(table.firstChild)
-	}
 	head.innerHTML =`
 		<tr>
 			<th>STATUS</th>
@@ -28,8 +41,8 @@ export function createHeader(table){
 			<th>CUBm³</th>
 		</tr>
 	`
-	return(table.appendChild(head));
-}
+	return(table.append(head));
+};
 
 
 // ╭───────────────────────────────────────────────────────────╮
@@ -46,29 +59,36 @@ export function showCrates1(estimate){
 			.objectStore("Results").get(estimate);
 
 		db.onsuccess = () => {
-			let i = 0;
 			let metric;
 			let crate;
-			const pane = document.getElementById("crates-only");
+			let i =			0;
+			const crates =	db.result.crates;
+			const element =	document.createElement("table");
+			const pane =	document.getElementById("crates-only");
+			const check = (target => {
+				return (
+					["Final", "PAX", "CARGO"].includes(target[0]) ? true: false
+				);
+			});
 			
-			createHeader(pane);
-			if(localStorage.getItem("metrica") === "in - inches")
-				metric = "in";
-			else
-				metric = "cm";
-			while(i++ < db.result.crates.length - 1){
-				if(db.result.crates[i].length > 2){
+			localStorage.getItem("metrica") === "in - inches" ?
+				metric = "in": metric = "cm";
+			createHeader(element);
+			while(i < db.result.crates.length - 1){
+				if(check(crates[i]) && crates[i].length > 2) {
 					crate = db.result.crates[i];
-					pane.innerHTML += crate.map((info, index) => {
-						if (index === 5){
-							`<td>${info}</td>
-							<td>${metric}</td>`
-						};
-						return(`<td>${info}</td>`);
+					element.innerHTML += crate.map((info, index) => {
+						return (
+						index === 0 ? `<tr><td>${info}</td>`:
+						index === 5 ? `<td>${info}</td><td>${metric}</td></tr>`:
+							`<td>${info}</td>`
+						);
 					}, 0).join("");
 				}
+				i++;
 			};
 			localStorage.removeItem("pane1");
+			pane.appendChild(element);
 		}
 	}
-}
+};
