@@ -36,7 +36,7 @@
 			<div class="container__insert">
 				<h2 class="title" className"">+ Add</h3>
 					<div class="IO">
-						<div class="IO__top info" id="units">
+						<div class="IO__top info" id="estimate">
 							<form class="IO__add--form">
 								<label for="input_estimate">Doc:</label>
 								<input type="text" class="IO__top__estimate" id="input_estimate" name="estimate"
@@ -66,7 +66,7 @@
 									name="height" maxlength="3" required>
 							</form>
 							<div class="IO__sizes__units info">
-								<form class="IO__sizes__units">
+								<form class="IO__sizes__units" id="unit-seg">
 									<input type="radio" name="units" value="cm - centimeters" class="cm" id="cm">
 									<label class="IO__sizes__units--seg1" for="cm">cm</label>
 									<input type="radio" name="units" value="in - inches" class="in" id="in">
@@ -86,8 +86,7 @@
 			<div class="container__status">
 				<h2 class="title">N - List</h2>
 				<div class="container__status__pane">
-					<iframe class="container__status__pane__frame" title="Work's list"
-						src="./panels/result_pane.html"></iframe>
+					<iframe class="container__status__pane__frame" title="Work's list" id="status-frame" src="./panels/result_pane.html"></iframe>
 					<div class="container__status__counter">
 						<p id="count">Count works: 0 </p>
 						<p id="cub-meter">Cub: 0</p>
@@ -146,12 +145,12 @@
 								<span class="menu__option--text">Currency</span>
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__currency">
-										<select id="coin">
+										<select id="coin1">
 											<option>Real</option>
 											<option>Dolar</option>
 										</select>
 										<input type="text" name="currency" class="get__currency1 menu__input--form" required>
-										<select id="coin">
+										<select id="coin2">
 											<option>Real</option>
 											<option>Dolar</option>
 										</select>

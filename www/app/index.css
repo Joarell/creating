@@ -99,8 +99,8 @@ iframe {
 	border-radius: 2rem;
 	transition: 500ms ease-in-out;
 	animation-name: fill-pane;
-	animation-delay: 1s;
-	animation-fill-mode: forwards;
+	animation-fill-mode: both;
+	animation-delay: 2s;
 }
 
 
@@ -173,10 +173,10 @@ tbody:nth-child(even) {
 	border-radius: var(--bord);
 	border: 5rem solid var(--color4);
 	counter-reset: works-count;
-	/* & { */
-	/* 	counter-increment: counter(works-count); */
-	/* 	--r_height: works-count; */
-	/* } */
+	& {
+		counter-increment: counter(works-count);
+		--r_height: works-count;
+	}
 }
 
 
@@ -511,7 +511,7 @@ label:hover + .IO__sizes--popup {
 */
 
 .IO__crate {
-	outline: 0;
+	/* outline: 0; */
 	&:focus-within {
 		outline: 3px solid goldenrod;
 		outline-offset: 2px;
@@ -541,7 +541,6 @@ label:hover + .IO__sizes--popup {
 .IO__crate__txt {
 	display: grid;
 	place-items: center;
-	color: black;
 	opacity: 100%;
 }
 
@@ -570,13 +569,12 @@ label:hover + .IO__sizes--popup {
 
 
 .IO__crate {
-	background: var(--backgroud);
+	background: var(--bg-clr);
 	box-sizing: border-box;
-	border: .1rem solid var(--iframes-bg);
-	border-radius: 100%;
+	border: var(--iframes-bg);
+	border-radius: 50%;
 	box-shadow: var(--inner-shadow);
 	position: absolute;
-	border-radius: 50%;
 	transition: all 0.3s ease;
 	cursor: pointer;
 	overflow: hidden;
@@ -601,15 +599,12 @@ label:hover + .IO__sizes--popup {
 }
 
 
-.IO__press__crate--btn, 
 .IO__crate--shadow1,
 .IO__crate--shadow2 {
 	grid-row: 1 / 2;
 	grid-column: 1 / 2;
 	border-radius: 50%;
-	inset: 0;
-	opacity: 1;
-	z-index: -1;
+	z-index: -10;
 	width: 6rem;
 	height: 6rem;
 	filter: blur(1px);
@@ -643,12 +638,6 @@ label:hover + .IO__sizes--popup {
 	animation: waves 2000ms linear 1000ms infinite;
 	cursor: pointer;
 	/* animation-play-state: var(--state, paused); */
-}
-
-
-.IO__press__crate--btn {
-	width: 6.8rem;
-	height: 6.8rem;
 }
 
 
