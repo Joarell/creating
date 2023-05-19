@@ -15,15 +15,25 @@ import { createDB } from './link.storage.mjs';
 // ╭───────────────────────────────────────────────────────────────────╮
 // │ Calls to each change on the localStorage to update the list pane. │
 // ╰───────────────────────────────────────────────────────────────────╯
+globalThis.onstorage = () => {
+	return (
+		mod.displayCub() &&
+		mod.displayAirCub() &&
+		mod.countWorks()
+	);
+}
+
+globalThis.document.getElementById("input_estimate")
+	.addEventListener("change", () => {
+		createDB();
+});
+
 globalThis.onload = () => {
 	setCheckRadio();
 	browserStoragePrepare();
+	localStorage.setItem("metrica", document.getElementById("cm").value);
 };
 
-
-globalThis.onstorage = () => {
-	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
-}
 // ╭────────────────────────────────────────────────────────╮
 // │ Defines the measure of the works selected by the user. │
 // ╰────────────────────────────────────────────────────────╯
@@ -31,7 +41,7 @@ if (!localStorage.getItem("metrica")) {
 	const metrica = document.getElementById("cm").value;
 	localStorage.setItem("metrica", metrica);
 }
-document.getElementById("units").addEventListener("change", () => {
+document.getElementById("unit-seg").addEventListener("change", () => {
 	const measure = localStorage.getItem("metrica");
 
 	if (!measure || measure === undefined) {
@@ -80,8 +90,7 @@ function browserStoragePrepare() {
 	const ref = localStorage.getItem("refNumb");
 
 	if (ref) {
-		document.getElementById("input_estimate").value = localStorage
-			.getItem("refNumb");
+		document.getElementById("input_estimate").value = ref;
 		createDB();
 	}
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
