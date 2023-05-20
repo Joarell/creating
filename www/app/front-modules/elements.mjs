@@ -16,7 +16,16 @@ globalThis.onload = () => {
 
 
 function testAvoidWords (store) {
-	return(["metrica", "pane1", "pane2", "refNumb"].includes(store) ?
+	return(
+		[
+			"currency",
+			"coin1",
+			"coin2",
+			"metrica",
+			"pane1",
+			"pane2",
+			"refNumb"
+		].includes(store) ?
 		false: true
 	);
 };
