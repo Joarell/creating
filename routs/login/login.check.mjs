@@ -45,7 +45,6 @@ async function backEndLoginAuth (userInfo) {
 	}).then(body => body.json())
 	.catch(err => console.error(`Alert ${err}`));
 
-	console.log(res);
 	res.msg === 'loged' ?
 		await appAccessCheckin(res.tokens) :
 		alert('Wrong credentials. Please try again!');

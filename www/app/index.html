@@ -16,7 +16,7 @@
 	<script type="module" src="./main.mjs"></script>
 	<script type="module" src="./side-menu/interactive.mjs"></script>
 	<script type="module" src="./side-menu/menu.units.mjs"></script>
-	<script type="module" src="./side-menu/menu.interface.mjs"></script>
+	<script type="module" src="./side-menu/menu.currency.conversion.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
 <body>
 	<header>
@@ -86,7 +86,7 @@
 			<div class="container__status">
 				<h2 class="title">N - List</h2>
 				<div class="container__status__pane">
-					<iframe class="container__status__pane__frame" title="Work's list" id="status-frame" src="./panels/result_pane.html"></iframe>
+					<iframe class="container__status__pane__frame" title="Work's list" id="status-frame" src="./panels/result_pane.html" sandbox="allow-same-origin allow-scripts"></iframe>
 					<div class="container__status__counter">
 						<p id="count">Count works: 0 </p>
 						<p id="cub-meter">Cub: 0</p>
@@ -107,11 +107,11 @@
 					<h2>= Results</h2>
 					<div class="container__results result--panels">
 						<div>
-							<iframe class="container__results--open" title="Works set" src="./panels/pane1_crates.html"></iframe>
+							<iframe class="container__results--open" title="Works set" src="./panels/pane1_crates.html" sandbox="allow-same-origin allow-scripts"></iframe>
 							<button class="IO__press--btn copy" id="copy2" onclick="">COPY</button>
 						</div>
 						<div>
-							<iframe class="container__results--crates" title="List done" src="./panels/pane2_crates_open.html"></iframe>
+							<iframe class="container__results--crates" title="List done" src="./panels/pane2_crates_open.html" sandbox="allow-same-origin allow-scripts"></iframe>
 							<button class="IO__press--btn copy" id="copy1" onclick="">COPY</button>
 						</div>
 					</div>
@@ -137,7 +137,7 @@
 						</div>
 						<div class="exchange--content menu accordion-panel" id="exchange" aria-hidden="true" aria-labelledby="exchange--content" role="region">
 							<h3 class="" id="exchange-header">
-								<button class="trigger-menu menu exchange" aria-controls="exchange--content" aria-expanded="false">
+								<button class="trigger-menu menu exchange" id="coin-button" aria-controls="exchange--content" aria-expanded="false">
 									<svg aria-hidden="true" class="menu-icon">
 										<use href="#exchange-material"></use>
 									</svg>
@@ -145,16 +145,12 @@
 								<span class="menu__option--text">Currency</span>
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__currency">
-										<select id="coin1">
-											<option>Real</option>
-											<option>Dolar</option>
+										<select id="coin1" value="USD">
+											<input type="text" name="currency" class="get__currency1 menu__input--form" id="coin1-input" required>
 										</select>
-										<input type="text" name="currency" class="get__currency1 menu__input--form" required>
-										<select id="coin2">
-											<option>Real</option>
-											<option>Dolar</option>
+										<select id="coin2" value="BRL">
+											<input type="text" name="currency" class="get__currency menu__input--form" id="coin2-input" required>
 										</select>
-										<input type="text" name="currency" class="get__currency menu__input--form" required>
 									</form>
 								</div>
 							</h3>
