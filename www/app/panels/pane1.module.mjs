@@ -70,7 +70,6 @@ export function showCrates1(estimate){
 				metric = "in": metric = "cm";
 			createHeader(element);
 			while(i <= crates.length - 1){
-				console.log(crates[i]);
 				if(avoidWords(crates[i]) ) {
 					crate = db.result.crates[i];
 					element.innerHTML += crate.map((info, index) => {
