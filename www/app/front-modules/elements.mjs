@@ -5,22 +5,28 @@
 // │ Calls to each change on the localStorage to update the list pane. │
 // ╰───────────────────────────────────────────────────────────────────╯
 globalThis.onstorage = () => {
-	globalThis.location.reload();
+	const check = localStorage.getItem("added");
+
+	console.log(check);
+	check !== null ? globalThis.location.reload() : false;
+	check !== null ? localStorage.removeItem("added"): false;
+}
+
+globalThis.onload = () => {
 	setTimeout(() => {
 		elementTable();
 	}, 200);
-}
-globalThis.onload = () => {
-	elementTable();
 }
 
 
 function testAvoidWords (store) {
 	return(
 		[
+			"added",
 			"currency",
 			"coin1",
 			"coin2",
+			"currency",
 			"metrica",
 			"pane1",
 			"pane2",
