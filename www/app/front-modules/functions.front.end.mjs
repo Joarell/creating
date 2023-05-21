@@ -19,14 +19,13 @@ import { boss } from "../core/start.adm.mjs";
 // ╰─────────────────────────────────────────────────────────────────────╯
 export function displayCub() {
 	let result;
-	let element;
-
-	element	= document.getElementById("cub-meter");
-	result	= parseArtWork();
-	result	= result.reduce((sum, val) => {
+	const COMA =	1000;
+	const element=	document.getElementById("cub-meter");
+	result =		parseArtWork();
+	result = result.reduce((sum, val) => {
 		return (sum + val.cub);
 	}, 0)
-	element.innerText = "Cub: " + (Math.floor(result * 1000) / 1000) + "m³";
+	element.innerText = "Cub: " + (Math.floor(result * COMA) / COMA) + "m³";
 	return (element);
 }
 
@@ -38,14 +37,15 @@ export function displayAirCub() {
 	let result;
 	let element;
 	let std_msg;
+	const COMA =	1000;
 
-	std_msg	= "Air-Cub: ";
-	element	= document.getElementById("cub-air");
-	result	= parseArtWork();
-	result	= result.reduce((sum, val) => {
+	std_msg =		"Air-Cub: ";
+	element =		document.getElementById("cub-air");
+	result =		parseArtWork();
+	result = result.reduce((sum, val) => {
 		return (sum + val.cubeAir);
 	}, 0)
-	element.innerText = std_msg + (Math.floor(result * 1000) / 1000);
+	element.innerText = std_msg + (Math.floor(result * COMA) / COMA);
 	return (element);
 }
 
@@ -56,8 +56,8 @@ export function displayAirCub() {
 // ╰──────────────────────────────────────────────────────────────────────────╯
 export function crate() {
 	let crates;
-	const estimate	= {};
-	const e_code	= document.getElementById("input_estimate").value;
+	const estimate =	{};
+	const e_code =		document.getElementById("input_estimate").value;
 
 	if (confirm("Ready to crate all works?")) {
 		crates					= checkMetric();
@@ -77,8 +77,8 @@ export function crate() {
 // │ This function adds the new work and counts. │
 // ╰─────────────────────────────────────────────╯
 export function countWorks() {
-	const result		= parseArtWork();
-	let counter			= document.getElementById("count");
+	const result =	parseArtWork();
+	let counter =	document.getElementById("count");
 
 	counter.innerText	= "Counting: " + result.length;
 	return (counter);
@@ -101,31 +101,37 @@ export function cleanInputs() {
 // │ Converts the localStorage data in to ArtWork object. │
 // ╰──────────────────────────────────────────────────────╯
 function parseArtWork(){
-	const db	= localStorage;
-	let temp;
-	let i;
-	const test	= (store) =>{
-		if(store !== "metrica" && store !== "pane1" && store !== "pane2"
-			&& store !== "refNumb")
-			return (true);
-		return (false);
+	const db =		localStorage;
+	let temp =		[];
+	let i =			0;
+	const test = (store) => {
+		return(
+			[
+				"added",
+				"currency",
+				"coin1",
+				"coin2",
+				"currency",
+				"metrica",
+				"pane1",
+				"pane2",
+				"refNumb"
+			].includes(store) ?
+			false: true
+		);
 	}
 	
-	i		= 0;
-	temp	= [];
 	while(db.key(i)){
 		if(test(db.key(i)))
 			temp.push(JSON.parse(db.getItem(db.key(i))));
 		i++;
 	}
-	if(temp[0] !== null){
+	return(temp[0] !== null ?
 		temp = temp.map((work) => {
 			return(new ArtWork(work.code, work.x, work.z, work.y));
-		})
-	}
-	else
-		return (false);
-	return (temp);
+		}):
+		false
+	);
 }
 
 
@@ -133,8 +139,8 @@ function parseArtWork(){
 // │ Checks the works is in inches and converts to centimeters │
 // ╰───────────────────────────────────────────────────────────╯
 function checkMetric() {
-	const works = localStorage;
-	let list	= parseArtWork();
+	const works =	localStorage;
+	let list =		parseArtWork();
 
 	if (works.length === 1)
 		return(alert("Oops! Sounds like you not added any work yet.\
