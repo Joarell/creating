@@ -28,39 +28,24 @@ async function populateCoins() {
 
 
 function conversionCurrency(opt1, opt2, val1, val2) {
-	const list =			JSON.parse(localStorage.getItem("currency"));
-	const ROUND =			1000;
+	const list =		JSON.parse(localStorage.getItem("currency"));
+	const COMA =		1000;
 	const shiftInput1 =	(Number.parseFloat(val1.value) === list[opt1]);
 	const shiftInput2 =	(Number.parseFloat(val2.value) === list[opt2]);
 
 	if (opt1 === opt2)
 		return(shiftInput1 ? val2.value: val1.value);
 	else if (shiftInput1 && shiftInput2)
-		return (~~((list[opt1] * list[opt2]) * ROUND) / ROUND);
+		return (~~((list[opt1] * list[opt2]) * COMA) / COMA);
 	else if (list[opt1] < list[opt2]) {
-		if (shiftInput1) {
-			return (
-				list[opt1] > list[opt2] ?
-				~~(((val2.value / list[opt1]) * list[opt2]) * ROUND) / ROUND:
-				~~(((val2.value / list[opt2]) * list[opt1]) * ROUND) / ROUND
-			);
-		}
-		return (
-			list[opt1] < list[opt2] ?
-			~~(((val1.value * list[opt2]) / list[opt1]) * ROUND) / ROUND:
-			~~(((val1.value * list[opt1]) / list[opt2]) * ROUND) / ROUND
+		return (shiftInput1 === true ?
+			~~(((val2.value / list[opt2]) * list[opt1]) * COMA) / COMA:
+			~~(((val1.value * list[opt2]) / list[opt1]) * COMA) / COMA
 		);
 	}
-	if (shiftInput2)
-		return (
-			list[opt1] > list[opt2] ?
-			~~(((val1.value * list[opt2]) / list[opt1]) * ROUND) / ROUND:
-			~~(((val1.value * list[opt1]) / list[opt2]) * ROUND) / ROUND
-		);
-	return (
-		list[opt1] < list[opt2] ?
-		~~(((val2.value / list[opt1]) * list[opt2]) * ROUND) / ROUND:
-		~~(((val2.value / list[opt2]) * list[opt1]) * ROUND) / ROUND
+	return (shiftInput2 === true ?
+		~~(((val1.value * list[opt2]) / list[opt1]) * COMA) / COMA:
+		~~(((val2.value / list[opt2]) * list[opt1]) * COMA) / COMA
 	);
 };
 
