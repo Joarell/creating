@@ -108,6 +108,7 @@ export function catchWork() {
 	tmp = checkWork([cod, length, depth, height]);
 	if (tmp !== false) {
 		localStorage.setItem(tmp.code, JSON.stringify(tmp));
+		localStorage.setItem("added", "art-work");
 		mod.countWorks();
 		mod.displayAirCub();
 		mod.displayCub();
