@@ -86,7 +86,7 @@ export async function movingDataToSesseionStorage(reference) {
 }
 
 const worker = new Worker('./front-modules/worker.storage.mjs');
-// worker.postMessage("123900");
+// worker.postMessage("TEST");
 // worker.onmessage = (res) => {
 // 	res.data ? console.log(`It's working ${JSON.stringify(res.data)}`) :
 // 		console.log('Starting...');
