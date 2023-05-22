@@ -835,7 +835,8 @@ label:hover + .IO__sizes--popup {
 }
 
 
-.menu__units > select, .menu__currency > select {
+.menu__units > select,
+.menu__currency > select {
 	display: var(--input-menu-display, none);
 	width: var(--input-menu-units-width, 0);
 	border-radius: var(--input-menu-units-radius, 0);
@@ -845,6 +846,7 @@ label:hover + .IO__sizes--popup {
 	box-shadow: var(--shadow1);
 	font-weight: 700;
 }
+
 
 /* ╭──────────────────────────────────────────────────────────╮
    │                   Menu fetch estimate.                   │
@@ -872,6 +874,12 @@ label:hover + .IO__sizes--popup {
 	margin-top: var(--input-menu-margin);
 	padding: auto;
 }
+
+.get__currency, .get__measure {
+	flex-grow: 2;
+	color: var(--back-gray);
+}
+
 
 /* ╭──────────────────────────────────────────────────────────╮
    │            This is the div to estimate input             │
