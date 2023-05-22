@@ -7,7 +7,6 @@
 globalThis.onstorage = () => {
 	const check = localStorage.getItem("added");
 
-	console.log(check);
 	check !== null ? globalThis.location.reload() : false;
 	check !== null ? localStorage.removeItem("added"): false;
 }
