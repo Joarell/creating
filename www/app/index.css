@@ -392,6 +392,26 @@ span + input {
 }
 
 
+.copy-message {
+	position: absolute;
+	margin: -5rem 0rem 0rem -.5rem;
+}
+
+
+.copy-message {
+	visibility: hidden;
+	color: var(--add-col);
+	font-size: 1rem;
+	transition: 3s ease-out;
+}
+
+
+.copy:active > .copy-message {
+	visibility: visible;
+	-webkit-animation: fadeIn 1s;
+	animation: fadeIn 1s;
+}
+
 /* ╭──────────────────────────────────────────────────────────╮
    │                   Popup hover settings                   │
    ╰──────────────────────────────────────────────────────────╯

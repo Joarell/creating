@@ -17,6 +17,7 @@
 	<script type="module" src="./side-menu/interactive.mjs"></script>
 	<script type="module" src="./side-menu/menu.units.mjs"></script>
 	<script type="module" src="./side-menu/menu.currency.conversion.mjs"></script>
+	<script type="module" src="./panels/clip.board.formatter.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
 <body>
 	<header>
@@ -106,13 +107,17 @@
 				<div class="result container--span">
 					<h2>= Results</h2>
 					<div class="container__results result--panels">
-						<div>
+						<div class="copy-pane1">
 							<iframe class="container__results--open" title="Works set" src="./panels/pane1_crates.html" sandbox="allow-same-origin allow-scripts"></iframe>
-							<button class="IO__press--btn copy" id="copy2" onclick="">COPY</button>
+							<button class="IO__press--btn copy" id="copy-pane1">COPY
+								<p class="copy-message" id="copy-message">Copied!</p>
+							</button>
 						</div>
-						<div>
+						<div class="copy-pane2">
 							<iframe class="container__results--crates" title="List done" src="./panels/pane2_crates_open.html" sandbox="allow-same-origin allow-scripts"></iframe>
-							<button class="IO__press--btn copy" id="copy1" onclick="">COPY</button>
+							<button class="IO__press--btn copy" id="copy-pane2">COPY
+								<p class="copy-message">Copied!</p>
+							</button>
 						</div>
 					</div>
 				</div>
