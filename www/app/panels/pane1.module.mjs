@@ -70,7 +70,7 @@ export function showCrates1(estimate){
 				metric = "in": metric = "cm";
 			createHeader(element);
 			while(i <= crates.length - 1){
-				if(avoidWords(crates[i]) ) {
+				if(findKeyWords(crates[i]) ) {
 					crate = db.result.crates[i];
 					element.innerHTML += crate.map((info, index) => {
 						return (
@@ -89,6 +89,6 @@ export function showCrates1(estimate){
 };
 
 
-function avoidWords (target) {
+function findKeyWords (target) {
 	return (["Final", "PAX", "CARGO"].includes(target[0]) ? true: false);
 };
