@@ -1,8 +1,15 @@
+//         ╭──────────────────────────────────────────────────────────╮
+//         │ ╭──────────────────────────────────────────────────────╮ │
+//         │ │ INFO: Here you are goint to find the copy functions: │ │
+//         │ │                    charRemover()                     │ │
+//         │ │                 findCratesAndWorks()                 │ │
+//         │ │                     findCrates()                     │ │
+//         │ │                formatterClipBoard();                 │ │
+//         │ ╰──────────────────────────────────────────────────────╯ │
+//         ╰──────────────────────────────────────────────────────────╯
 
 
-
-export function findCratesAndWorks (target) {
-	const { crates } = target;
+export function findCratesAndWorks ({ crates }) {
 	let polygons;
 
 	crates ?
@@ -12,20 +19,19 @@ export function findCratesAndWorks (target) {
 				polygon: false
 			);
 		}):
-		false;
+	false;
 	return(formatterClipBoard(polygons));
 };
 
 
-export function findCrates (target) {
-	const { crates } = target;
+export function findCrates ({ crates }) {
 	let allCrates;
 
 	crates ?
 		allCrates = crates.filter(crate => {
 			return (["Crate"].includes(crate[0]) ? crate: false);
 		}):
-		false;
+	false;
 	return(formatterClipBoard(allCrates));
 };
 
@@ -41,12 +47,12 @@ function formatterClipBoard(crates) {
 		return(line);
 	});
 	const getString =		JSON.stringify(formatted);
-	const copyFinished =	characterRemover(getString, formatted.length);
+	const copyFinished =	charRemover(getString, formatted.length);
 	navigator.clipboard.writeText(copyFinished);
 }
 
 
-function characterRemover(target, len) {
+function charRemover(target, len) {
 	let result = target;
 
 	while(len--) {
@@ -58,46 +64,3 @@ function characterRemover(target, len) {
 	result = result.replace(']','');
 	return(result);
 };
-
-
-globalThis.document.getElementById("copy-pane1")
-	.addEventListener("click", async () => {
-	const crates =		new Worker('./panels/worker.IDB.crates.mjs');
-	const estimate =	document.getElementById("input_estimate").value;
-	const checker =		sessionStorage.getItem(estimate);
-	
-	if (!checker)
-		return (
-			alert(`Please, press the \"Crate\" button if already added works.`)
-		);
-	crates.postMessage(estimate);
-	crates.onmessage = (test) => {
-		console.log(test.data);
-		return (
-			Array.isArray(test.data.crates) ?
-			findCrates(test.data): 
-			false
-		);
-	};
-});
-
-
-globalThis.document.getElementById("copy-pane2")
-	.addEventListener("click", async () => {
-	const crates =		new Worker('./panels/worker.IDB.crates.mjs');
-	const estimate =	document.getElementById("input_estimate").value;
-	const checker =		sessionStorage.getItem(estimate);
-	
-	if (!checker)
-		return (
-			alert(`Please, press the \"Crate\" button if already added works.`)
-		);
-	crates.postMessage(estimate);
-	crates.onmessage = (test) => {
-		return (
-			Array.isArray(test.data.crates) ?
-			findCratesAndWorks(test.data): 
-			false
-		);
-	};
-});
