@@ -43,15 +43,15 @@ export function statusTable () {
 	let work;
 	let metric;
 	let i =			0;
+	let list =		localStorage;
 	const element =	document.createElement("table");
 	const plot =	document.getElementById("status");
 
-	localStorage.getItem("metrica") === "in - inches" ?
-		metric = "in": metric = "cm";
+	list.getItem("metrica") === "in - inches" ? metric = "in": metric = "cm";
 	createHeader(element);
-	while (localStorage.key(i)) {
-		if (testAvoidWords(localStorage.key(i))){
-			work = JSON.parse(localStorage.getItem(localStorage.key(i)));
+	while (list.key(i)) {
+		if (testAvoidWords(list.key(i))){
+			work = JSON.parse(list.getItem(list.key(i)));
 			work = Object.values(work);
 			element.innerHTML += work.map((item, index) => {
 				return (
