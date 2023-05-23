@@ -19,7 +19,6 @@ globalThis.document.getElementById("copy-pane1")
 		);
 	crates.postMessage(estimate);
 	crates.onmessage = (test) => {
-		console.log(test.data);
 		return (
 			Array.isArray(test.data.crates) ?
 			findCrates(test.data): 
