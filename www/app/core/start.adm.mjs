@@ -41,10 +41,10 @@ function sumCub(goals) {
 	let result;
 
 	g_cub = goals[0].PAX.reduce((sum, value) => {
-		return (sum + value[4]);
+		return ((~~(sum + value[4]) * 1000) / 1000);
 	}, 0);
 	v_cub = goals[1].CARGO.reduce((sum, value) => {
-		return (sum + value[4]);
+		return ((~~(sum + value[4]) * 1000) / 1000);
 	}, 0);
 	result = [{gru_cub: g_cub}, {vcp_cub: v_cub}];
 	return (result);
@@ -78,11 +78,11 @@ function getAirport (crates) {
 
 
 // ╭────────────────────────────────────────────────────────────╮
-// │ Filters only the final crates that has the string "Final". │
+// │ Filters only the final crates that has the string "Crate". │
 // ╰────────────────────────────────────────────────────────────╯
 function finalFilter(list) {
 	const found = list.filter(word => {
-		if (word[0] === "Final")
+		if (word[0] === "Crate")
 			return (word);
 	});
 	return (found);
