@@ -21,9 +21,9 @@ globalThis.fns = { catchWork, catchRemove, crate, clearAll };
 // │ This function validates all inputs of the fields provided by the user. │
 // ╰────────────────────────────────────────────────────────────────────────╯
 export function checkWork(work) {
-	const checked = regValid(intParser([work[1], work[2], work[3]]));
-	const regex = /[^-a-z-A-Z-0-9]/g;
-	const estimate = document.getElementById("input_estimate").value;
+	const checked =		regValid(intParser([work[1], work[2], work[3]]));
+	const regex =		/[^-a-z-A-Z-0-9]/g;
+	const estimate =	document.getElementById("input_estimate").value;
 	let i;
 	
 	i = 0;
@@ -94,12 +94,15 @@ export function regValid(sizes_parsed) {
 //│                           were done and right.                            │
 //╰───────────────────────────────────────────────────────────────────────────╯
 export function catchWork() {
-	const cod = document.getElementById("input_code").value;
-	const length = document.getElementById("input_length").value;
-	const depth = document.getElementById("input_depth").value;
-	const height = document.getElementById("input_height").value;
+	const estimate =	document.getElementById("input_estimate").value;
+	const cod =			document.getElementById("input_code").value;
+	const length =		document.getElementById("input_length").value;
+	const depth =		document.getElementById("input_depth").value;
+	const height =		document.getElementById("input_height").value;
 	let tmp;
 
+	if (!estimate)
+		return(alert("Attention! Please, add the \"Doc:\" reference field!"));
 	switch (cod && length && depth && height) {
 		case "":
 			alert(`Oops! Do not forget to fill each field. Please, try again!`);
@@ -141,8 +144,8 @@ export function catchRemove() {
 // │ This functions checks if the reference has changed by the user. │
 // ╰─────────────────────────────────────────────────────────────────╯
 export function checkReference() {
-	const ref = localStorage.getItem("refNumb");
-	const actual = document.getElementById("input_estimate").value;
+	const ref =		localStorage.getItem("refNumb");
+	const actual =	document.getElementById("input_estimate").value;
 	
 	if (ref){
 		if (ref !== actual){
