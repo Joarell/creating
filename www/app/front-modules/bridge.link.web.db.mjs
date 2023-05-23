@@ -6,7 +6,7 @@
 
 
 async function postDataFromClientSide (content) {
-	console.log(content);
+	// console.log(content);
 	const url = '/insert/estimate';
 	await fetch (url, {
 		method: "POST",
