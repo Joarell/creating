@@ -24,6 +24,17 @@ globalThis.onload = () => {
 };
 
 
+globalThis.addEventListener("load", () => {
+	const pane = document.getElementById("opened-crates").hasChildNodes;
+
+	return (
+		pane ? true: setTimeout(() => {
+			showCrates2(getter);
+		}, 200)
+	)
+});
+
+
 // ╭───────────────────────────────────────────────────────────────────────╮
 // │ This is the header creator when the page or localStorage are updated. │
 // ╰───────────────────────────────────────────────────────────────────────╯

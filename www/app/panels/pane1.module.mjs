@@ -10,6 +10,7 @@ globalThis.onstorage = () => {
 	);
 };
 
+
 globalThis.onload = () => {
 	const getter =	localStorage.getItem("refNumb");
 	const press =	localStorage.getItem("pane1");
@@ -21,6 +22,17 @@ globalThis.onload = () => {
 		false
 	)
 };
+
+
+globalThis.addEventListener("load", () => {
+	const pane = document.getElementById("crates-only").hasChildNodes;
+
+	return (
+		pane ? true: setTimeout(() => {
+			showCrates1(getter);
+		}, 200)
+	)
+});
 
 
 // ╭───────────────────────────────────────────────────────────────────────╮
@@ -90,5 +102,5 @@ export function showCrates1(estimate){
 
 
 function findKeyWords (target) {
-	return (["Final", "PAX", "CARGO"].includes(target[0]) ? true: false);
+	return (["Crate", "PAX", "CARGO"].includes(target[0]) ? true: false);
 };
