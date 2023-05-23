@@ -99,7 +99,7 @@ function defineCrateSizes(inner_size, layers, weight) {
 		y = 28 + inner_size[2];
 	else
 		y = 28 + inner_size[1];
-	external_size = ['Final', x, z, y];
+	external_size = ['Crate', x, z, y];
 	external_size.push(extra_math.cubing(external_size));
 	return (external_size);
 }

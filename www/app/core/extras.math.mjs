@@ -62,7 +62,7 @@ export function big_work(work_list) {
 			great = cubed;
 		}
 	}
-	return great;
+	return (great);
 }
 
 
