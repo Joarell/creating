@@ -3,17 +3,17 @@
 
 export function findCratesAndWorks (target) {
 	const { crates } = target;
-	let allCrates;
+	let polygons;
 
 	crates ?
-		allCrates = crates.filter(crate => {
+		polygons = crates.filter(polygon => {
 			return (
-				["Final"].includes(crate[0]) || crates.length === 5 ?
-				crate: false
+				(["Crate"].includes(polygon[0])) || (polygon.length === 5) ?
+				polygon: false
 			);
 		}):
 		false;
-	return(formatterClipBoard(allCrates));
+	return(formatterClipBoard(polygons));
 };
 
 
@@ -23,7 +23,7 @@ export function findCrates (target) {
 
 	crates ?
 		allCrates = crates.filter(crate => {
-			return (["Final"].includes(crate[0]) ? crate: false);
+			return (["Crate"].includes(crate[0]) ? crate: false);
 		}):
 		false;
 	return(formatterClipBoard(allCrates));
@@ -96,7 +96,7 @@ globalThis.document.getElementById("copy-pane2")
 	crates.onmessage = (test) => {
 		return (
 			Array.isArray(test.data.crates) ?
-			findCrates(test.data): 
+			findCratesAndWorks(test.data): 
 			false
 		);
 	};
