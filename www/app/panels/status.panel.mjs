@@ -13,7 +13,7 @@ globalThis.onstorage = () => {
 
 globalThis.onload = () => {
 	setTimeout(() => {
-		elementTable();
+		statusTable();
 	}, 200);
 }
 
@@ -39,7 +39,7 @@ function testAvoidWords (store) {
 // ╭────────────────────────────────────────────────────╮
 // │ Returns the HTML table with all works in the list. │
 // ╰────────────────────────────────────────────────────╯
-export function elementTable () {
+export function statusTable () {
 	let work;
 	let metric;
 	let i =			0;
