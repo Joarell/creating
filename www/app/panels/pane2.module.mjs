@@ -4,7 +4,13 @@
 globalThis.onstorage = () => {
 	const press = localStorage.getItem("pane2");
 	const getter = localStorage.getItem("refNumb");
+	const copy =	sessionStorage.getItem("copy");
 
+	if (copy) {
+		sessionStorage.removeItem("copy");
+		localStorage.setItem("pane2", "populate");
+		return(globalThis.location.reload() && showCrates1(getter));
+	};
 	return(press === "populate" ? 
 		globalThis.location.reload() && showCrates2(getter): false
 	);

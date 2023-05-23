@@ -22,6 +22,7 @@ function testAvoidWords (store) {
 	return(
 		[
 			"added",
+			"copy",
 			"currency",
 			"coin1",
 			"coin2",
