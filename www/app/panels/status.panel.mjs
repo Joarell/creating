@@ -47,8 +47,8 @@ export function statusTablePopulate(data) {
 	const { reference, list } =	doc;
 
 	localStorage.getItem("metrica") === "in - inches" ?
-		metric = "in":
-		metric = "cm";
+		metric = "in - inches":
+		metric = "cm - centimeters";
 	localStorage.clear();
 	list.map(art => {
 		console.log(art);
@@ -59,7 +59,7 @@ export function statusTablePopulate(data) {
 	localStorage.setItem("metrica", metric);
 	sessionStorage.removeItem("FETCHED");
 	globalThis.location.reload();
-}
+};
 
 
 // ╭────────────────────────────────────────────────────╮
