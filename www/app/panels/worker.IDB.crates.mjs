@@ -1,7 +1,8 @@
 
 
 globalThis.onmessage = (estimate) => {
-	const request = globalThis.indexedDB.open("Results");
+	const dataName	= "Results";
+	const request	= globalThis.indexedDB.open(dataName);
 
 	request.onerror = (event) => {
 		console.log(`WARNING: ${event.target.errorCode}`);
