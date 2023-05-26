@@ -111,7 +111,7 @@ export function catchWork() {
 	tmp = checkWork([cod, length, depth, height]);
 	if (tmp !== false) {
 		localStorage.setItem(tmp.code, JSON.stringify(tmp));
-		localStorage.setItem("added", "art-work");
+		localStorage.setItem("storage", "art-work");
 		mod.countWorks();
 		mod.displayAirCub();
 		mod.displayCub();
@@ -136,6 +136,7 @@ export function catchRemove() {
 		return(mod.cleanInputs());
 	else
 		alert(`"${work}" was not found in the list. Please, try again!`);
+	localStorage.setItem("storage", "art-work");
 	return(mod.cleanInputs());
 }
 
