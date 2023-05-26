@@ -625,8 +625,8 @@ label:hover + .IO__sizes--popup {
 	grid-column: 1 / 2;
 	border-radius: 50%;
 	z-index: -10;
-	width: 6rem;
-	height: 6rem;
+	width: 6.7rem;
+	height: 6.7rem;
 	filter: blur(1px);
 }
 
