@@ -60,10 +60,10 @@ export function crate() {
 	const e_code =		document.getElementById("input_estimate").value;
 
 	if (confirm("Ready to crate all works?")) {
-		crates					= checkMetric();
-		estimate["reference"]	= e_code;
-		estimate["list"]		= parseArtWork();
-		estimate["crates"]		= crates;
+		crates =				checkMetric();
+		estimate["reference"] =	e_code;
+		estimate["list"] =		parseArtWork();
+		estimate["crates"] =	crates;
 		addNewWorksToIndexedDB (estimate);
 
 		// INFO: efemeral triggers to each panel render the result
@@ -77,10 +77,10 @@ export function crate() {
 // │ This function adds the new work and counts. │
 // ╰─────────────────────────────────────────────╯
 export function countWorks() {
-	const result =	parseArtWork();
-	let counter =	document.getElementById("count");
+	const result =		parseArtWork();
+	let counter =		document.getElementById("count");
 
-	counter.innerText	= "Counting: " + result.length;
+	counter.innerText =	"Counting: " + result.length;
 	return (counter);
 }
 
