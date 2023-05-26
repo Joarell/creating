@@ -31,10 +31,10 @@ globalThis.onload = () => {
 
 
 globalThis.addEventListener("load", () => {
-	const pane = document.getElementById("crates-only").hasChildNodes;
+	const pane = document.getElementById("crates-only");
 
 	return (
-		pane ? true: setTimeout(() => {
+		pane.firstChild ? true: setTimeout(() => {
 			showCrates1(getter);
 		}, 200)
 	)
