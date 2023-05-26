@@ -2,12 +2,12 @@
 // │ This is the trigger activated by the crate button. │
 // ╰────────────────────────────────────────────────────╯
 globalThis.onstorage = () => {
-	const press = localStorage.getItem("pane2");
-	const getter = localStorage.getItem("refNumb");
-	const copy =	sessionStorage.getItem("copy");
+	const press =	localStorage.getItem("pane2");
+	const getter =	localStorage.getItem("refNumb");
+	const copy =	sessionStorage.getItem("copy2");
 
 	if (copy) {
-		sessionStorage.removeItem("copy");
+		sessionStorage.removeItem("copy2");
 		localStorage.setItem("pane2", "populate");
 		return(globalThis.location.reload() && showCrates1(getter));
 	};

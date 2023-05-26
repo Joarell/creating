@@ -4,10 +4,10 @@
 globalThis.onstorage = () => {
 	const press =	localStorage.getItem("pane1");
 	const getter =	localStorage.getItem("refNumb");
-	const copy =	sessionStorage.getItem("copy");
+	const copy =	sessionStorage.getItem("copy1");
 
 	if (copy) {
-		sessionStorage.removeItem("copy");
+		sessionStorage.removeItem("copy1");
 		localStorage.setItem("pane1", "populate");
 		return(globalThis.location.reload() && showCrates1(getter));
 	};
@@ -44,7 +44,7 @@ globalThis.addEventListener("load", () => {
 // ╭───────────────────────────────────────────────────────────────────────╮
 // │ This is the header creator when the page or localStorage are updated. │
 // ╰───────────────────────────────────────────────────────────────────────╯
-export function createHeader(table){
+export function createHeader(table) {
 	const head = document.createElement("tr");
 	
 	if(table.parentNode)
