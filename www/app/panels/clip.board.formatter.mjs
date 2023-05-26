@@ -20,7 +20,7 @@ export function findCratesAndWorks ({ crates }) {
 			);
 		}):
 	false;
-	sessionStorage.setItem("copy", "done!");
+	sessionStorage.setItem("copy2", "done!");
 	return(formatterClipBoard(polygons));
 };
 
@@ -33,7 +33,7 @@ export function findCrates ({ crates }) {
 			return (["Crate"].includes(crate[0]) ? crate: false);
 		}):
 	false;
-	sessionStorage.setItem("copy", "done!");
+	sessionStorage.setItem("copy1", "done!");
 	return(formatterClipBoard(allCrates));
 };
 
