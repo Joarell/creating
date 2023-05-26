@@ -1,15 +1,20 @@
-
-
-
 // ╭───────────────────────────────────────────────────────────────────╮
 // │ Calls to each change on the localStorage to update the list pane. │
 // ╰───────────────────────────────────────────────────────────────────╯
 globalThis.onstorage = () => {
-	const check = localStorage.getItem("added");
+	const check =	localStorage.getItem("storage");
+	const newList =	sessionStorage.getItem("FETCHED");
 
 	check !== null ? globalThis.location.reload() : false;
-	check !== null ? localStorage.removeItem("added"): false;
+	check !== null ? localStorage.removeItem("storage") : false;
+	newList !== null ? statusTablePopulate(newList) : false;
 }
+
+globalThis.addEventListener("load", () => {
+	const stPanel = document.getElementById("status").hasChildNodes;
+
+	stPanel ? true : statusTable();
+});
 
 globalThis.onload = () => {
 	setTimeout(() => {
@@ -18,10 +23,9 @@ globalThis.onload = () => {
 }
 
 
-function testAvoidWords (store) {
-	return(
+function testAvoidWords(store) {
+	return (
 		[
-			"added",
 			"copy",
 			"currency",
 			"coin1",
@@ -32,32 +36,53 @@ function testAvoidWords (store) {
 			"pane2",
 			"refNumb"
 		].includes(store) ?
-		false: true
+		false : true
 	);
 };
+
+
+export function statusTablePopulate(data) {
+	let metric;
+	const doc =					JSON.parse(data);
+	const { reference, list } =	doc;
+
+	localStorage.getItem("metrica") === "in - inches" ?
+		metric = "in":
+		metric = "cm";
+	localStorage.clear();
+	list.map(art => {
+		console.log(art);
+		const { code } = art;
+		localStorage.setItem(code, JSON.stringify(art));
+	});
+	localStorage.setItem("refNumb", reference);
+	localStorage.setItem("metrica", metric);
+	sessionStorage.removeItem("FETCHED");
+	globalThis.location.reload();
+}
 
 
 // ╭────────────────────────────────────────────────────╮
 // │ Returns the HTML table with all works in the list. │
 // ╰────────────────────────────────────────────────────╯
-export function statusTable () {
+export function statusTable() {
 	let work;
 	let metric;
-	let i =			0;
-	let list =		localStorage;
-	const element =	document.createElement("table");
-	const plot =	document.getElementById("status");
+	let i = 0;
+	let list = localStorage;
+	const element = document.createElement("table");
+	const plot = document.getElementById("status");
 
-	list.getItem("metrica") === "in - inches" ? metric = "in": metric = "cm";
+	list.getItem("metrica") === "in - inches" ? metric = "in" : metric = "cm";
 	createHeader(element);
 	while (list.key(i)) {
-		if (testAvoidWords(list.key(i))){
+		if (testAvoidWords(list.key(i))) {
 			work = JSON.parse(list.getItem(list.key(i)));
 			work = Object.values(work);
 			element.innerHTML += work.map((item, index) => {
 				return (
-					index === 0 ? `<tr><td>${item}</td>`:
-					index === 3 ? `<td>${item}</td><td>${metric}</td></tr>`:
+					index === 0 ? `<tr><td>${item}</td>` :
+					index === 3 ? `<td>${item}</td><td>${metric}</td></tr>` :
 					`<td>${item}</td>`
 				);
 			}, 0).join("");
@@ -71,10 +96,10 @@ export function statusTable () {
 // ╭───────────────────────────────────────────────────────────────────────╮
 // │ This is the header creator when the page or localStorage are updated. │
 // ╰───────────────────────────────────────────────────────────────────────╯
-export function createHeader(table){
+export function createHeader(table) {
 	const head = document.createElement("tr");
-	
-	head.innerHTML =`
+
+	head.innerHTML = `
 		<tr>
 			<th>CODE</th>
 			<th>LENGTH</th>
@@ -83,5 +108,5 @@ export function createHeader(table){
 			<th>UNIT</th>
 		</tr>
 	`
-	return(table.appendChild(head));
+	return (table.appendChild(head));
 }
