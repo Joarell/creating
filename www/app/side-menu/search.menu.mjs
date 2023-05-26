@@ -17,8 +17,9 @@ export async function checkBrowserDB(doc) {
 		document.getElementById("input_estimate").value = doc;
 		sessionStorage.setItem("FETCHED", JSON.stringify(data));
 	}
-	else
-		return(fetchDB(doc));
+	else if (!data)
+		alert(`Document not found! Please, try again.`);
+	return(fetchDB(doc));
 };
 
 
@@ -42,7 +43,6 @@ function regexChecker(data){
 globalThis.document.getElementById("fetch-btn")
 	.addEventListener("click", () => {
 	const docEstimate =		document.getElementById("estimate_getter").value;
-	const checkStorage =	checkBrowserDB(docEstimate);
 
 	return(!regexChecker(docEstimate) ? checkBrowserDB(docEstimate): false);
 });
