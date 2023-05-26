@@ -38,12 +38,20 @@ export function addNewWorksToIndexedDB (works) {
 		alert(`ERROR: ${event.target.errorCode}`);
 	}
 	request.onsuccess = async (event) => {
-		const db		= event.target.result;
-		const object	= db.transaction("Results", "readwrite")
+		const db =			event.target.result;
+		const object =		db.transaction("Results", "readwrite")
 			.objectStore("Results");
-	
-		object.add(works);
-		movingDataToSesseionStorage(list);
+		const existsInIDB =	object.get(works.reference);
+		
+		existsInIDB.onsuccess = () => {
+			const { result } =		existsInIDB;
+			const { reference } =	result;
+
+			reference === undefined ?
+			object.add(works):
+			(object.delete(reference)) && (object.add(works));
+			movingDataToSesseionStorage(list);
+		};
 	}
 }
 
