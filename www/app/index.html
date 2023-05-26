@@ -15,8 +15,9 @@
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
 	<script type="module" src="./main.mjs"></script>
 	<script type="module" src="./side-menu/interactive.mjs"></script>
-	<script type="module" src="./side-menu/menu.units.mjs"></script>
+	<script type="module" src="./side-menu/search.menu.mjs"></script>
 	<script type="module" src="./side-menu/menu.currency.conversion.mjs"></script>
+	<script type="module" src="./side-menu/menu.units.mjs"></script>
 	<script type="module" src="./panels/clip.board.caller.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
 <body>
@@ -134,8 +135,8 @@
 								<span lang="en" class="menu__option--text">Search Estimate</span>
 								<div class="menu__input menu__fetch" aria-hidden="true" role="region">
 									<form class="menu__fetch">
-										<input type="text" class="get__estimate" id="estimate__getter" required>
-										<button class="IO__press--btn menu__search-btn" id"search-btn">Submit</button>
+										<input type="text" class="get__estimate" id="estimate_getter" autocomplete="on" required>
+										<button type="button" class="IO__press--btn menu__search-btn" id="fetch-btn">Search</button>
 									</form>
 								</div>
 							</h3>
