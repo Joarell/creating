@@ -67,7 +67,7 @@ services:
       NODE_ENV: development
     expose:
       - ${PORT}
-    image: node:19.8-alpine
+    image: node:20.2-alpine3.17
     networks:
       # - front-tier
       - back-tier
@@ -93,7 +93,7 @@ services:
       POSTGRES_USER: ${PG_USER}
     expose:
       - "5432"
-    image: postgres:15.2-alpine
+    image: postgres:15.3-alpine3.18
     networks:
       - back-tier
     ports:
@@ -142,7 +142,7 @@ services:
     env_file: .env
     expose:
       - ${PORT1}
-    image: node:19.8-alpine
+    image: node:20.2-alpine3.17
     networks:
       - front-tier
   
