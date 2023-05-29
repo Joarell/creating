@@ -4,11 +4,9 @@
 export async function checkBrowserDB(doc) {
 	const workerDB =	new Worker('./panels/worker.IDB.crates.mjs');
 	const checkIDB =	new Promise((resolve) => {
-		let data;
-
 		workerDB.postMessage(doc)
 		workerDB.onmessage = (result => {
-			result !== undefined ? resolve(data = result.data): data;
+			result !== undefined ? resolve(result.data): undefined;
 		})
 	});
 	const data =		await checkIDB;
@@ -46,3 +44,20 @@ globalThis.document.getElementById("fetch-btn")
 
 	return(!regexChecker(docEstimate) ? checkBrowserDB(docEstimate): false);
 });
+
+
+// function testClosure (num) {
+// 	let count = num;
+//
+// 	const res = (() => {
+// 		const num = 10;
+//
+// 		console.log(count * num);
+// 		count += 10;
+// 	});
+// 	return (res);
+// };
+// const x = testClosure(3);
+// x();
+// x();
+// x();
