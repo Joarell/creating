@@ -67,8 +67,8 @@ export function crate() {
 		addNewWorksToIndexedDB (estimate);
 
 		// INFO: efemeral triggers to each panel render the result
-		localStorage.setItem("pane1", "populate");
-		localStorage.setItem("pane2", "populate");
+		sessionStorage.setItem("pane1", "populate");
+		sessionStorage.setItem("pane2", "populate");
 	}
 }
 
@@ -109,12 +109,8 @@ function parseArtWork(){
 			[
 				"storage",
 				"currency",
-				"coin1",
-				"coin2",
 				"currency",
 				"metrica",
-				"pane1",
-				"pane2",
 				"refNumb"
 			].includes(store) ?
 			false: true
