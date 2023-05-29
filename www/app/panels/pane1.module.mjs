@@ -2,13 +2,13 @@
 // │ This is the trigger activated by the crate button. │
 // ╰────────────────────────────────────────────────────╯
 globalThis.onstorage = () => {
-	const press =	localStorage.getItem("pane1");
+	const press =	sessionStorage.getItem("pane1");
 	const getter =	localStorage.getItem("refNumb");
 	const copy =	sessionStorage.getItem("copy1");
 
 	if (copy) {
 		sessionStorage.removeItem("copy1");
-		localStorage.setItem("pane1", "populate");
+		sessionStorage.setItem("pane1", "populate");
 		return(globalThis.location.reload() && showCrates1(getter));
 	};
 	return(press === "populate" ?
@@ -19,7 +19,7 @@ globalThis.onstorage = () => {
 
 globalThis.onload = () => {
 	const getter =	localStorage.getItem("refNumb");
-	const press =	localStorage.getItem("pane1");
+	const press =	sessionStorage.getItem("pane1");
 
 	return ( press === "populate" ?
 		setTimeout(() => {
@@ -31,10 +31,10 @@ globalThis.onload = () => {
 
 
 globalThis.addEventListener("load", () => {
-	const pane = document.getElementById("crates-only");
+	const pane = document.getElementById("crates-only").hasChildNodes;
 
 	return (
-		pane.firstChild ? true: setTimeout(() => {
+		pane ? true: setTimeout(() => {
 			showCrates1(getter);
 		}, 200)
 	)
@@ -100,7 +100,7 @@ export function showCrates1(estimate){
 				}
 				i++;
 			};
-			localStorage.removeItem("pane1");
+			sessionStorage.removeItem("pane1");
 			pane.appendChild(element);
 		}
 	}
