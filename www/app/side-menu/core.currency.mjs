@@ -24,7 +24,7 @@ function currencyName(list) {
 
 
 export async function populateCoins() {
-	const coins =		JSON.parse(localStorage.getItem("currency"))
+	const coins =		JSON.parse(sessionStorage.getItem("currency"))
 	const select1 =		document.getElementById("coin1");
 	const select2 =		document.getElementById("coin2");
 	const coinNames =	Object.keys(coins);
@@ -37,7 +37,7 @@ export async function populateCoins() {
 
 
 export function conversionCurrency(opt1, opt2, val1, val2) {
-	const list =		JSON.parse(localStorage.getItem("currency"));
+	const list =		JSON.parse(sessionStorage.getItem("currency"));
 	const COMA =		1000;
 	const shiftInput1 =	(Number.parseFloat(val1.value) === list[opt1]);
 	const shiftInput2 =	(Number.parseFloat(val2.value) === list[opt2]);
@@ -68,14 +68,14 @@ export async function getCurrencyValue() {
 		},
 	}).then(body => body.json()).catch(err => alert(`CurrencyError: ${err}!`));
 	const { rates } =	getCurrecy.response;
-	const storage =		globalThis.localStorage;
+	const storage =		globalThis.sessionStorage;
 
 	return(rates && storage.setItem("currency", JSON.stringify(rates)));
 };
 
 
 export function setValues (coin, place) {
-	const currency = JSON.parse(localStorage.getItem("currency"));
+	const currency = JSON.parse(sessionStorage.getItem("currency"));
 
 	if (!currency)
 		return(false);

@@ -17,9 +17,9 @@ globalThis.document.getElementById("coin-button")
 
 globalThis.document.getElementById("exchange-header")
 	.addEventListener("click", async () => {
-	const storageCurrency =	localStorage.getItem("currency");
-	const coin1 =			JSON.parse(localStorage.getItem("coin1"));
-	const coin2 =			JSON.parse(localStorage.getItem("coin2"));
+	const storageCurrency =	sessionStorage.getItem("currency");
+	const coin1 =			JSON.parse(sessionStorage.getItem("coin1"));
+	const coin2 =			JSON.parse(sessionStorage.getItem("coin2"));
 	const opt1 =			document.getElementById("coin1");
 	const opt2 =			document.getElementById("coin2");
 
@@ -35,7 +35,7 @@ globalThis.document.getElementById("coin1")
 	const coin =	document.getElementById("coin1").value;
 	const input =	document.getElementById("coin1-input");
 
-	localStorage.setItem("coin1", JSON.stringify(coin));
+	sessionStorage.setItem("coin1", JSON.stringify(coin));
 	setValues(coin, input);
 });
 
@@ -45,7 +45,7 @@ globalThis.document.getElementById("coin2")
 	const coin =	document.getElementById("coin2").value;
 	const input =	document.getElementById("coin2-input");
 
-	localStorage.setItem("coin2", JSON.stringify(coin));
+	sessionStorage.setItem("coin2", JSON.stringify(coin));
 	setValues(coin, input);
 });
 
