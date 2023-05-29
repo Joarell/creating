@@ -28,12 +28,8 @@ function testAvoidWords(store) {
 		[
 			"copy",
 			"currency",
-			"coin1",
-			"coin2",
 			"currency",
 			"metrica",
-			"pane1",
-			"pane2",
 			"refNumb"
 		].includes(store) ?
 		false : true
@@ -51,7 +47,6 @@ export function statusTablePopulate(data) {
 		metric = "cm - centimeters";
 	localStorage.clear();
 	list.map(art => {
-		console.log(art);
 		const { code } = art;
 		localStorage.setItem(code, JSON.stringify(art));
 	});
