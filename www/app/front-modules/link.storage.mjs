@@ -44,12 +44,9 @@ export function addNewWorksToIndexedDB (works) {
 		const existsInIDB =	object.get(works.reference);
 		
 		existsInIDB.onsuccess = () => {
-			const { result } =		existsInIDB;
-			const { reference } =	result;
-
-			reference === undefined ?
-			object.add(works):
-			(object.delete(reference)) && (object.add(works));
+			existsInIDB.result === undefined ? object.add(works):
+			(object.delete(existsInIDB.result.reference)) &&
+			(object.add(works));
 			movingDataToSesseionStorage(list);
 		};
 	}
