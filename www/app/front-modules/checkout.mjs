@@ -80,6 +80,7 @@ export const clearAll = () => {
 		mod.displayAirCub();
 		mod.displayCub();
 		localStorage.clear();
+		sessionStorage.clear();
 		globalThis.location.reload();
 	}
 	mod.cleanInputs();
