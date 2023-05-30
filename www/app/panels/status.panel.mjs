@@ -11,7 +11,8 @@ globalThis.onstorage = () => {
 }
 
 globalThis.addEventListener("load", () => {
-	const stPanel = document.getElementById("status").hasChildNodes;
+	const stPanel =	document.getElementById("status").hasChildNodes;
+	// const body =	document.body.firstChild.ownerDocument.body.innerHTML;
 
 	stPanel ? true : statusTable();
 });
@@ -23,22 +24,9 @@ globalThis.onload = () => {
 }
 
 
-function testAvoidWords(store) {
-	return (
-		[
-			"copy",
-			"currency",
-			"currency",
-			"metrica",
-			"refNumb"
-		].includes(store) ?
-		false : true
-	);
-};
-
-
 export function statusTablePopulate(data) {
 	let metric;
+	let codes;
 	const doc =					JSON.parse(data);
 	const { reference, list } =	doc;
 
@@ -46,10 +34,12 @@ export function statusTablePopulate(data) {
 		metric = "in - inches":
 		metric = "cm - centimeters";
 	localStorage.clear();
-	list.map(art => {
+	codes = list.map((art, index) => {
 		const { code } = art;
 		localStorage.setItem(code, JSON.stringify(art));
-	});
+		return ([index, code]);
+	}, 0);
+	sessionStorage.setItem("codes", JSON.stringify(codes));
 	localStorage.setItem("refNumb", reference);
 	localStorage.setItem("metrica", metric);
 	sessionStorage.removeItem("FETCHED");
@@ -61,18 +51,19 @@ export function statusTablePopulate(data) {
 // │ Returns the HTML table with all works in the list. │
 // ╰────────────────────────────────────────────────────╯
 export function statusTable() {
-	let work;
+	const element =	document.createElement("table");
+	const plot =	document.getElementById("status");
+	const list =	localStorage;
+	const codes =	getOrder();
 	let metric;
-	let i = 0;
-	let list = localStorage;
-	const element = document.createElement("table");
-	const plot = document.getElementById("status");
-
-	list.getItem("metrica") === "in - inches" ? metric = "in" : metric = "cm";
+	
+	list.getItem("metrica") === "in - inches" ? metric = "in": metric = "cm";
 	createHeader(element);
-	while (list.key(i)) {
-		if (testAvoidWords(list.key(i))) {
-			work = JSON.parse(list.getItem(list.key(i)));
+	if (codes)
+		codes.map(code => {
+			let work;
+
+			work = JSON.parse(list.getItem(code));
 			work = Object.values(work);
 			element.innerHTML += work.map((item, index) => {
 				return (
@@ -81,11 +72,17 @@ export function statusTable() {
 					`<td>${item}</td>`
 				);
 			}, 0).join("");
-		}
-		i++;
-	};
+		});
 	plot.appendChild(element);
-}
+};
+
+
+function getOrder () {
+	const session =		JSON.parse(sessionStorage.getItem("codes"));
+	const allCodes =	session ? session.map(code => code[1]): false;
+	const result =		allCodes? allCodes.reverse(): false;
+	return (result ? [...new Set(result)]: false);
+};
 
 
 // ╭───────────────────────────────────────────────────────────────────────╮
