@@ -3,7 +3,6 @@
 // │ │ INFO:            These are the second layer of the app:              │ │
 // │ │                        function displayAirCub();                     │ │
 // │ │                            function crate();                         │ │
-// │ │                          function addWorks();                        │ │
 // │ │                         function cleanInputs();                      │ │
 // │ │                         function parseArtWork();                     │ │
 // │ ╰──────────────────────────────────────────────────────────────────────╯ │
