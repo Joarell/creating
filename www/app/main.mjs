@@ -110,6 +110,7 @@ export function catchWork() {
 	}
 	tmp = checkWork([cod, length, depth, height]);
 	if (tmp !== false) {
+		orderWorks(tmp);
 		localStorage.setItem(tmp.code, JSON.stringify(tmp));
 		localStorage.setItem("storage", "art-work");
 		mod.countWorks();
@@ -127,6 +128,7 @@ export function catchRemove() {
 	const work = prompt("Please enter the work code to be removed:", "code?");
 	
 	if(localStorage.getItem(work)){
+		orderRemove(work);
 		localStorage.removeItem(work);
 		mod.countWorks();
 		mod.displayAirCub();
@@ -161,6 +163,32 @@ export function checkReference() {
 	}
 	localStorage.setItem("refNumb", actual);
 }
+
+
+function orderWorks({ code }){
+	const storage =	sessionStorage;
+	const array =	JSON.parse(storage.getItem("codes"));
+	let num;
+
+	if (!array)
+		return(storage.setItem("codes", JSON.stringify([[0, code]])));
+	num = Number.parseInt(array[array.length - 1]);
+	num = num + 1;
+	array.push([num, code]);
+	return(storage.setItem("codes", JSON.stringify(array)));
+};
+
+
+function orderRemove (code) {
+	const session =	sessionStorage;
+	const codes =	JSON.parse(session.getItem("codes"));
+	let i =			0;
+
+	while (codes[i][1] !== code && i <= codes.length)
+		i++;
+	codes.splice(i, 1);
+	session.setItem("codes", JSON.stringify(codes));
+};
 
 
 globalThis.onkeydown = (keyDown) => {
