@@ -10,8 +10,8 @@
 	<meta name="dashboard controls" content="Main Page">
 	<meta name="author" content="Joseph Joarell">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color">
-	<link rel="icon" href="data:,">
+	<meta name="theme-color" media="(prefers-color-scheme: light)" content="#96979C">
+	<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#222725">
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)"> -->
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
 	<script type="module" src="./main.mjs"></script>
@@ -21,6 +21,7 @@
 	<script type="module" src="./side-menu/menu.units.mjs"></script>
 	<script type="module" src="./panels/clip.board.caller.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
+	<link rel="manifest" href="../manifest.json">
 <body>
 	<header>
 		<div>
@@ -97,9 +98,12 @@
 					</div>
 					<!-- TODO: refactor the class name to container__status -->
 					<div class="IO__press__crate">
-						<button name="create" class="IO__crate" onclick="globalThis.fns.crate()">
+						<button name="create" class="IO__crate" onclick="globalThis.fns.crate()" popovertarget="">
 							<p class="IO__crate__txt">Crate!</p>
 						</button>
+						<div id="shortcut" popover>
+							<p>Press or "Ctrl/Cmd + Enter"</p>
+						</div>
 						<span name="waves" class="IO__crate--shadow1 wave"></span>
 						<span name="waves" class="IO__crate--shadow2 wave"></span>
 					</div>
