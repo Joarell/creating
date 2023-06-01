@@ -29,13 +29,13 @@
 		</div>
 	</header>
 	<main>
-		<div>
-			<div id="event-popup" popover>
-				<p>Test!</p>
+		<!-- <div> -->
+		<!-- 	<div id="event-popup" popover> -->
+		<!-- 		<p>Test!</p> -->
 				<!-- Popover content goes in here -->
-			</div>
-			<button type="menu" popovertarget="event-popup"></button>
-		</div>
+		<!-- 	</div> -->
+		<!-- 	<button type="menu" popovertarget="event-popup"></button> -->
+		<!-- </div> -->
 		<div class="container">
 			<div class="container__insert">
 				<h2 class="title" className"">+ Add</h3>
@@ -43,8 +43,7 @@
 						<div class="IO__top info" id="estimate">
 							<form class="IO__add--form">
 								<label for="input_estimate">Doc:</label>
-								<input type="text" autofocus class="IO__top__estimate" id="input_estimate" name="estimate"
-									required="true">
+								<input type="text" autofocus class="IO__top__estimate" id="input_estimate" name="estimate" required="true">
 							</form>
 						</div>
 						<div class="IO__sizes info">
@@ -101,6 +100,7 @@
 						<button name="create" class="IO__crate" onclick="globalThis.fns.crate()" popovertarget="">
 							<p class="IO__crate__txt">Crate!</p>
 						</button>
+						<span aria-hidden="true" data-popup="'Ctrl/Cmd + Enter' to CRATE." class="crate-popup"></span>
 						<div id="shortcut" popover>
 							<p>Press or "Ctrl/Cmd + Enter"</p>
 						</div>

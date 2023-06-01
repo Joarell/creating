@@ -239,12 +239,16 @@ tbody:nth-child(even) {
    ╰──────────────────────────────────────────────────────────╯
 */
 
-.container {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-	column-gap: var(--colg);
-	row-gap: var(--rowg);
-	padding: 8rem 23rem;
+@media only screen
+	and (min-width: 1080px)
+	and (max-width: 3840px) {
+	.container {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+		column-gap: var(--colg);
+		row-gap: var(--rowg);
+		padding: 8rem 23rem;
+	}
 }
 
 
@@ -562,6 +566,20 @@ label:hover + .IO__sizes--popup {
 	display: grid;
 	place-items: center;
 	opacity: 100%;
+}
+
+
+.crate-popup {
+	visibility: hidden;
+	position: initial;
+	z-index: 20;
+}
+
+
+.IO__crate:hover + .crate-popup {
+	visibility: visible;
+	-webkit-animation: fadeIn 1s;
+	animation: fadeIn 2s;
 }
 
 
