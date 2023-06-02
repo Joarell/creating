@@ -1,165 +1,184 @@
-
-/* ╭────────────────────────────────────────────────────────────────────────╮*/
-/* │ ---------------------------------------------------------------------- │*/
-/* │                            responsive settings                         │*/
-/* │ ---------------------------------------------------------------------- │*/
-/* ╰────────────────────────────────────────────────────────────────────────╯*/
-
 /* TODO: link the screen sizes passing through actual min -> next max sizes. */
 
-/* @media only screen  */
-/* 	and (max-width: 1080px) { */
-/* 	header, .sidemenu{ display: none; } */
-/*  */
-/* 	.container, .io__press, .container__status__pane{ */
-/* 		display: grid; */
-/* 		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); */
-/* 		column-gap: 2rem; */
-/* 		padding: 0 2.5rem; */
-/* 	} */
-/*  */
-/* 	.metrica, .io__sizes__code, .io__top__estimate{ margin: 0 4rem 1.5rem 0; } */
-/*  */
-/* 	.metrica-unit { */
-/* 		margin-left: 0; */
-/* 		padding-right: 1.5rem; */
-/* 	} */
-/*  */
-/* 	.container__insert, .container__status{ padding: 1rem 2.5rem; } */
-/*  */
-/* 	.io__sizes__len, .io__sizes__dep, .io__sizes__hei{ margin-right: 1rem; } */
-/* 	 */
-/* 	.title, .counter{ grid-column: span 1; } */
-/*  */
-/* 	.container__status__pane { */
-/* 		padding: 0 0; */
-/* 	} */
-/*  */
-/* 	.io__press__btn { margin: 0.5rem 1rem; } */
-/* 	 */
-/* 	.title, .io__press__crate { */
-/* 		padding-left: 0; */
-/* 		margin: 0 0 1rem 0; */
-/* 	} */
-/* } */
+@media only screen and (min-width: 1080px) {
+	/* main container. */
+	.container {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+		column-gap: var(--colg);
+		row-gap: var(--rowg);
+		padding: 5% 20%;
+	}
 
 
-/*           iphone 6+, 7+ and 8+           */
-/* @media only screen */
-/* 	and ( min-width: 414px) */
-/* 	and ( max-width: 736px) {  */
-/* 	header, .sidemenu{ display: none; } */
-/*  */
-/* 	.clear, .io__press__btn { margin: 2rem 1rem; } */
-/*  */
-/* 	.container, .container__status__pane { */
-/* 		display: grid; */
-/* 		grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr)); */
-/* 		padding: 0 0.5rem; */
-/* 	} */
-/*  */
-/* 	.metrica, .io__sizes__code, .io__top__estimate{ margin: 0 4rem 1.5rem 0; } */
-/*  */
-/* 	.io__top__unit { */
-/* 		margin-left: 0; */
-/* 		padding-right: 1.5rem; */
-/* 	} */
-/*  */
-/* 	.container__insert, .container__status { padding: 1rem 2.5rem; } */
-/*  */
-/* 	.io__sizes__len, .io__sizes__dep, .io__sizes__hei{ margin-right: 1rem; } */
-/*  */
-/* 	.container--span, .counter{ grid-column: span 1; } */
-/* 	 */
-/* 	.container__status__pane { */
-/* 		padding: 0 0; */
-/* 	} */
-/*  */
-/* 	.io__press__btn { margin: 0.5rem 1rem; } */
-/*  */
-/* 	.title, .io__press__crate{ */
-/* 		padding-left: 0; */
-/* 		margin-left: 0; */
-/* 	} */
-/* } */
-/*  */
-/*  */
-/* /*                  iphone x                 */ */
-/* @media only screen */
-/* 	and (-webkit-min-device-pixel-ratio: 3) */
-/* 	and ( min-width: 375px) */
-/* 	and ( max-width: 812px) { */
-/* 	header, .sidemenu{ display: none; } */
-/*  */
-/* 	.clear, .io__press__btn { margin: 2rem 1rem; } */
-/*  */
-/* 	.container, .container__status__pane { */
-/* 		display: grid; */
-/* 		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); */
-/* 		padding: 0 0.5rem; */
-/* 	} */
-/*  */
-/* 	.metrica, .io__sizes__code, .io__top__estimate{ margin: 0 4rem 1.5rem 0; } */
-/*  */
-/* 	.io__top__unit { */
-/* 		margin-left: 0; */
-/* 		padding-right: 1.5rem; */
-/* 	} */
-/*  */
-/* 	.container__insert, .container__status { padding: 1rem 2.5rem; } */
-/*  */
-/* 	.io__sizes__len, .io__sizes__dep, .io__sizes__hei{ margin-right: 1rem; } */
-/*  */
-/* 	.container--span, .counter{ grid-column: span 1; } */
-/* 	 */
-/* 	.container__status__pane { */
-/* 		padding: 0 0; */
-/* 	} */
-/*  */
-/* 	.io__press__btn { margin: 0.5rem 1rem; } */
-/*  */
-/* 	.title, .io__press__crate{ */
-/* 		padding-left: 0; */
-/* 		margin-left: 0; */
-/* 	} */
-/* } */
-/*  */
-/* /*                  galaxy s6                 */ */
-/* @media only screen */
-/* 	and (-webkit-min-device-pixel-ratio: 4) */
-/* 	and ( min-width: 360px) */
-/* 	and ( max-width: 640px) { */
-/* 	header, .sidemenu{ display: none; } */
-/*  */
-/* 	#clear, .io__press__btn { margin: 2rem 1rem; } */
-/*  */
-/* 	.container, .container__status__pane { */
-/* 		display: grid; */
-/* 		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); */
-/* 		padding: 0 0.5rem; */
-/* 	} */
-/*  */
-/* 	.metrica, .io__sizes__code, .io__top__estimate{ margin: 0 4rem 1.5rem 0; } */
-/*  */
-/* 	.io__top__unit { */
-/* 		margin-left: 0; */
-/* 		padding-right: 1.5rem; */
-/* 	} */
-/*  */
-/* 	.container__insert, .container__status { padding: 1rem 2.5rem; } */
-/*  */
-/* 	.io__sizes__len, .io__sizes__dep, .io__sizes__hei{ margin-right: 1rem; } */
-/*  */
-/* 	.container--span, .counter{ grid-column: span 1; } */
-/* 	 */
-/* 	.container__status__pane { */
-/* 		padding: 0 0; */
-/* 	} */
-/*  */
-/* 	.io__press__btn { margin: 0.5rem 1rem; } */
-/*  */
-/* 	.title, .io__press__crate{ */
-/* 		padding-left: 0; */
-/* 		margin-left: 0; */
-/* 	} */
-/* } */
+	/* Right status container. */
+	.container__status__pane {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		column-gap: 2rem;
+		row-gap: 4rem;
+	}
+
+
+	.container__status__pane__frame {
+		grid-row: span 2;
+		grid-column: span 2;
+		height: 100%;
+	}
+
+
+	.IO__add--form {
+		border: .1rem solid var(--iframes-bg);
+		border-radius: 1rem;
+		padding: .8rem .5rem;
+		width: 60%;
+		transition: .5s ease;
+	}
+
+
+	.IO__sizes--code,
+	.IO__top__estimate {
+		width: auto;
+	}
+}
+
+
+/* ╭──────────────────────────────────────────────────────────╮
+   │                    iPhone x portrait                     │
+   ╰──────────────────────────────────────────────────────────╯
+*/
+
+@media only screen
+	and ( min-width: 390px)
+	and ( max-width: 840px) {
+
+	.clear, .IO__press__btn {
+		margin: 2rem 1rem;
+	}
+
+	/* main container. */
+	.container {
+		margin-top: 2rem;
+	}
+
+
+	.container,
+	.container__status__pane,
+	.container__status__pane__frame {
+		display: flex;
+		flex-wrap: wrap;
+		flex-shrink: 1;
+		flex-basis: 100%;
+		gap: 2rem;
+		justify-content: space-between;
+	}
+
+
+	.IO__press,
+	.result--panels {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		justify-content: center;
+		gap: 1rem;
+	}
+
+
+	.IO__sizes--code,
+	.IO__top__estimate {
+		width: 90%;
+		margin-right: .2rem;
+	}
+
+
+	.IO__sizes__mesure {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+
+	.IO__add--form {
+		width: 90%;
+		border: .1rem solid var(--iframes-bg);
+		border-radius: 1rem;
+		padding: .8rem .5rem;
+		transition: .5s ease;
+	}
+
+}
+
+/* ╭──────────────────────────────────────────────────────────╮
+   │                    iPhone x landscape                    │
+   ╰──────────────────────────────────────────────────────────╯
+*/
+
+@media only screen
+	and ( min-width: 841px)
+	and ( max-width: 1700px) {
+
+	.clear, .IO__press__btn {
+		margin: 2rem 1rem;
+	}
+
+
+	/* main container. */
+	.container {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+		column-gap: var(--colg-mobile);
+		row-gap: var(--rowg-mobile);
+		margin-top: 2rem;
+	}
+
+
+	/* Right status container. */
+	.container__status__pane {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 2rem;
+		flex-grow: 4;
+	}
+
+
+	.container__status__pane__frame {
+		flex-shrink: 1;
+		flex-grow: 3;
+	}
+
+
+	.IO__press,
+	.result--panels {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+
+	.IO__sizes--code,
+	.IO__top__estimate {
+		width: 90%;
+		margin-right: .2rem;
+	}
+
+
+	.IO__sizes__mesure {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+
+	.IO__add--form {
+		width: 90%;
+		border: .1rem solid var(--iframes-bg);
+		border-radius: 1rem;
+		padding: .8rem .5rem;
+		transition: .5s ease;
+	}
+
+}

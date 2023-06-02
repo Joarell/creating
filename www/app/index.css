@@ -1,6 +1,6 @@
-/* ╭──────────────────────────────────────────────────────────╮
-   │              Here is the "Global settings.               │
-   ╰──────────────────────────────────────────────────────────╯
+/* ╭─────────────────────────────────────────────────────────╮
+   │              Here is the Global settings.               │
+   ╰─────────────────────────────────────────────────────────╯
 */
 
 @import "responsive_sheet.css";
@@ -31,7 +31,9 @@
 	--dark-blue2: #002A3D;
 	--font-weight: 600;
 	--colg: 3rem;
+	--colg-mobile: 1rem;
 	--rowg: 3rem;
+	--rowg-mobile: 1rem;
 	--bord: .5rem;
 	--background-transp: #ffffff33;
 	--gradient: linear-gradient(270deg, var(--dark-blue), var(--dark-blue2));
@@ -239,19 +241,6 @@ tbody:nth-child(even) {
    ╰──────────────────────────────────────────────────────────╯
 */
 
-@media only screen
-	and (min-width: 1080px)
-	and (max-width: 3840px) {
-	.container {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-		column-gap: var(--colg);
-		row-gap: var(--rowg);
-		padding: 8rem 23rem;
-	}
-}
-
-
 /* Box shape */
 .container__insert,
 .container__status,
@@ -264,15 +253,6 @@ tbody:nth-child(even) {
 	box-sizing: border-box;
 	box-shadow: var(--shadow1);
 	border-radius: 2rem;
-}
-
-
-.IO__add--form {
-	border: .1rem solid var(--iframes-bg);
-	border-radius: 1rem;
-	padding: .8rem .5rem;
-	width: 60%;
-	transition: .5s ease;
 }
 
 
@@ -299,21 +279,6 @@ span + input {
    │                     Status container                     │
    ╰──────────────────────────────────────────────────────────╯
 */
-
-
-.container__status__pane {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	column-gap: 2rem;
-	row-gap: 4rem;
-}
-
-
-.container__status__pane__frame {
-	grid-row: span 2;
-	grid-column: span 2;
-	height: 100%;
-}
 
 
 .container__status__counter {
@@ -383,6 +348,7 @@ span + input {
 
 
 .result--panels div > iframe {
+	display: flex;
 	height: 15rem;
 	content: var(--r_height);
 	animation-name: fill-pane;
@@ -471,7 +437,8 @@ label:hover + .IO__sizes--popup {
    ╰──────────────────────────────────────────────────────────╯
 */
 
-.IO__press {
+.IO__press,
+.IO__add--form {
 	display: flex;
 	justify-content: space-between;
 }
@@ -943,9 +910,6 @@ label + input {
 }
 
 
-.IO__top__estimate {
-	width: auto;
-}
 
 
 /* ╭────────────────────────────────────────────────────────╮
@@ -1043,11 +1007,6 @@ label + input {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-}
-
-
-.IO__sizes--code {
-	width: auto;
 }
 
 
