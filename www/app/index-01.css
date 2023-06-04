@@ -6,9 +6,10 @@ header {
 	grid-area: header;
 	background: var(--gradient);
 	text-align: center;
-	height: 10rem;
+	height: 8rem;
 	font-family: 'Big Shoulders Stencil Display', cursive;
 	overflow: hidden;
+	border-radius: 1rem;
 }
 
 
@@ -18,9 +19,10 @@ footer {
 	grid-area: header;
 	background: var(--gradient1);
 	text-align: center;
-	height: 10rem;
+	height: 8rem;
 	font-family: 'Big Shoulders Stencil Display', cursive;
 	overflow: hidden;
+	border-radius: 1rem;
 }
 
 
@@ -41,6 +43,36 @@ footer {
 }
 
 
+.header-content {
+	display: flex;
+	justify-content: space-between;
+}
+
+
+/* .logout-btn { */
+/* 	border: none; */
+/* 	border-radius: 50%; */
+/* 	background: var(--bg-clr); */
+/* 	padding: .1rem; */
+/* 	& { */
+/* 		display: flex; */
+/* 		justify-content: center; */
+/* 	} */
+/* } */
+
+
+.button-logout {
+	display: flex;
+	/* justify-content: center; */
+	margin: 1.5rem 1.5rem 0 0;
+}
+
+
+.logout-icon {
+	position: sticky;
+	fill: var(--color4);
+}
+
 /* ╭──────────────────────────────────────────────────────────╮
    │                     Footer settings:                     │
    ╰──────────────────────────────────────────────────────────╯
@@ -49,3 +81,9 @@ footer {
 .container__footer {
 	text-align: right;
 }
+
+/* ╭──────────────────────────────────────────────────────────╮
+   │                       Light Button                       │
+   ╰──────────────────────────────────────────────────────────╯
+*/
+

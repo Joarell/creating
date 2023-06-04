@@ -30,9 +30,9 @@
 	--dark-blue1: #003852;
 	--dark-blue2: #002A3D;
 	--font-weight: 600;
-	--colg: 3rem;
+	--colg: 2rem;
 	--colg-mobile: 1rem;
-	--rowg: 3rem;
+	--rowg: 2rem;
 	--rowg-mobile: 1rem;
 	--bord: .5rem;
 	--background-transp: #ffffff33;
@@ -211,8 +211,8 @@ tbody:nth-child(even) {
 .crates-only,
 .crates-opened {
 	display: flex;
-	align-items: center;
-	justify-content: center;
+	align-items: space-evenly;
+	justify-content: space-evenly;
 	animation: fill-pane 1s linear;
 	transition: all .3s ease-in-out;
 }
@@ -318,7 +318,7 @@ span + input {
 .container-bottom {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-	column-gap: var(--colg);
+	column-gap: 2rem;
 	row-gap: var(--rowg);
 	width: 100%;
 	height: 100%;
@@ -338,7 +338,8 @@ span + input {
 	display: flex;
 	flex-basis: 100%;
 	flex-direction: row;
-	gap: 2.5rem;
+	gap: 1.5rem;
+	justify-content: center;
 }
 
 
@@ -349,6 +350,7 @@ span + input {
 
 .result--panels div > iframe {
 	display: flex;
+	width: 20rem;
 	height: 15rem;
 	content: var(--r_height);
 	animation-name: fill-pane;
@@ -438,6 +440,7 @@ label:hover + .IO__sizes--popup {
 */
 
 .IO__press,
+.IO__press-mobile,
 .IO__add--form {
 	display: flex;
 	justify-content: space-between;
@@ -445,9 +448,10 @@ label:hover + .IO__sizes--popup {
 
 
 /* ADD button style */
+.press--btn-mobile,
 .IO__press--btn {
 	color: var(--color4);
-	padding: .5rem 2.5rem;
+	padding: .5rem 2rem;
 	background: transparent;
 	border: 0;
 	border-radius: .8rem;
@@ -468,6 +472,7 @@ label:hover + .IO__sizes--popup {
 }
 
 
+.press--btn-mobile,
 .IO__press--btn {
 	font-family: Saira Semi Condensed, sans-serif;
 	font-weight: 700;
@@ -690,7 +695,7 @@ label:hover + .IO__sizes--popup {
 	padding: 0.3rem 1rem;
 	position: absolute;
 	/* FIX: use revese position like the Keven's video. */
-	margin: -2.7rem 0 0 4rem;
+	margin: -2.7rem 0 0 7rem;
 	overflow: hidden;
 	max-width: 80ch;
 	transition: .9s ease-in-out;
@@ -737,8 +742,6 @@ label:hover + .IO__sizes--popup {
 
 
 .trigger-menu {
-	position: inherit;
-	background: transparent;
 	border-radius: 50%;
 	padding: .1rem;
 	border: none;
