@@ -58,7 +58,7 @@ globalThis.document.getElementById("coin1-input")
 	const value2 =	document.getElementById("coin2-input");
 
 	setValues(opt2, value2);
-	value2.value =	conversionCurrency(opt1, opt2, value1, value2);
+	value2.value =	`$ ${conversionCurrency(opt1, opt2, value1, value2)}`;
 });
 
 
@@ -70,5 +70,5 @@ globalThis.document.getElementById("coin2-input")
 	const value2 =	document.getElementById("coin2-input");
 
 	setValues(opt1, value1);
-	value1.value =	conversionCurrency(opt1, opt2, value1, value2);
+	value1.value =	`$ ${conversionCurrency(opt1, opt2, value1, value2)}`;
 })
