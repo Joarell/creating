@@ -21,23 +21,14 @@ globalThis.onload = () => {
 	const getter =	localStorage.getItem("refNumb");
 	const press =	sessionStorage.getItem("pane1");
 
-	return ( press === "populate" ?
-		setTimeout(() => {
-			showCrates1(getter);
-		}, 100):
-		false
-	)
+	press === "populate" ? setTimeout(() => {showCrates1(getter)}, 50): false;
 };
 
 
 globalThis.addEventListener("load", () => {
-	const pane = document.getElementById("crates-only").hasChildNodes;
+	const pane = document.getElementById("crates-only");
 
-	return (
-		pane ? true: setTimeout(() => {
-			showCrates1(getter);
-		}, 200)
-	)
+	pane.hasChildNodes() ? true: setTimeout(() => {showCrates1(getter)}, 50);
 });
 
 
@@ -93,7 +84,8 @@ export function showCrates1(estimate){
 					element.innerHTML += crate.map((info, index) => {
 						return (
 						index === 0 ? `<tr><td>${info}</td>`:
-						index === 5 ? `<td>${info}</td><td>${metric}</td></tr>`:
+						(index === 5) || (index === 4) ? 
+							`<td>${info}</td><td>${metric}</td></tr>`:
 							`<td>${info}</td>`
 						);
 					}, 0).join("");
@@ -108,5 +100,11 @@ export function showCrates1(estimate){
 
 
 function findKeyWords (target) {
-	return (["Crate", "PAX", "CARGO"].includes(target[0]) ? true: false);
+	return ([
+		"Crate",
+		"PAX",
+		"CARGO",
+		"cm",
+		"in"
+		].includes(target[0]) ? true: false);
 };

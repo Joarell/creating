@@ -11,10 +11,9 @@ globalThis.onstorage = () => {
 }
 
 globalThis.addEventListener("load", () => {
-	const stPanel =	document.getElementById("status").hasChildNodes;
-	// const body =	document.body.firstChild.ownerDocument.body.innerHTML;
+	const stPanel =	document.getElementById("status");
 
-	stPanel ? true : statusTable();
+	stPanel.hasChildNodes() ? true : setTimeout(() => {statusTable()}, 200);
 });
 
 globalThis.onload = () => {

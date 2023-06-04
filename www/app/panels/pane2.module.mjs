@@ -11,7 +11,8 @@ globalThis.onstorage = () => {
 		sessionStorage.setItem("pane2", "populate");
 		return(globalThis.location.reload() && showCrates1(getter));
 	};
-	return(press === "populate" ? 
+	return(
+		press === "populate" ?
 		globalThis.location.reload() && showCrates2(getter): false
 	);
 };
@@ -21,23 +22,14 @@ globalThis.onload = () => {
 	const getter =	localStorage.getItem("refNumb");
 	const press =	sessionStorage.getItem("pane2");
 
-	return ( press === "populate" ?
-		setTimeout(() => {
-			showCrates2(getter);
-		}, 200):
-		false
-	)
+	press === "populate" ? setTimeout(() => {showCrates2(getter)}, 50): false;
 };
 
 
 globalThis.addEventListener("load", () => {
-	const pane = document.getElementById("opened-crates").hasChildNodes;
+	const pane = document.getElementById("opened-crates");
 
-	return (
-		pane ? true: setTimeout(() => {
-			showCrates2(getter);
-		}, 200)
-	)
+	pane.hasChildNodes() ? true: setTimeout(() => {showCrates2(getter)}, 50);
 });
 
 
