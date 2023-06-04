@@ -22,20 +22,30 @@
 	<script type="module" src="./panels/clip.board.caller.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
 	<link rel="manifest" href="../manifest.json">
+
 <body>
 	<header>
-		<div>
+		<div class="header-content">
 			<h1 class="header--title">Otto</h1>
+			<div class="button-logout">
+				<a class="logout-btn" data-popup="Logout" id="logout">
+					<svg aria-hidden="true" class="menu-icon logout-icon">
+						<use href="#logout-material"></use>
+					</svg>
+				</a>
+			</div>
 		</div>
 	</header>
 	<main>
 		<!-- <div> -->
 		<!-- 	<div id="event-popup" popover> -->
 		<!-- 		<p>Test!</p> -->
-				<!-- Popover content goes in here -->
+		<!-- Popover content goes in here -->
 		<!-- 	</div> -->
 		<!-- 	<button type="menu" popovertarget="event-popup"></button> -->
 		<!-- </div> -->
+		<div>
+		</div>
 		<div class="container">
 			<div class="container__insert">
 				<h2 class="title" className"">+ Add</h3>
@@ -43,15 +53,15 @@
 						<div class="IO__top info" id="estimate">
 							<form class="IO__add--form">
 								<label for="input_estimate">Doc:</label>
-								<input type="text" autofocus class="IO__top__estimate" id="input_estimate" name="estimate" required="true">
+								<input type="text" autofocus class="IO__top__estimate" id="input_estimate"
+									name="estimate" required="true">
 							</form>
 						</div>
 						<div class="IO__sizes info">
 							<div class="IO__sizes__code">
 								<form class="IO__add--form">
 									<label for="input_code">Art:</label>
-									<input type="text" class="IO__sizes--code" id="input_code" name="art-code"
-										required>
+									<input type="text" class="IO__sizes--code" id="input_code" name="art-code" required>
 								</form>
 							</div>
 						</div>
@@ -59,10 +69,12 @@
 							<form class="IO__add--form">
 								<label for="input_length">L:</label>
 								<span aria-hidden="true" data-popup="Length" class="IO__sizes--popup"></span>
-								<input type="text" inputmode="numeric" class="IO__sizes__len" id="input_length" name="length" maxlength="3" required>
+								<input type="text" inputmode="numeric" class="IO__sizes__len" id="input_length"
+									name="length" maxlength="3" required>
 								<label for="input_depth">D:</label>
 								<span aria-hidden="true" data-popup="Depth" class="IO__sizes--popup"></span>
-								<input type="text" inputmode="numeric" class="IO__sizes__dep" id="input_depth" name="depth" maxlength="3" required>
+								<input type="text" inputmode="numeric" class="IO__sizes__dep" id="input_depth"
+									name="depth" maxlength="3" required>
 								<label for="input_height">H:</label>
 								<span aria-hidden="true" data-popup="Height" class="IO__sizes--popup"></span>
 								<input type="text" inputmode="numeric" class="IO__sizes__hei" id="input_height"
@@ -80,7 +92,8 @@
 						</div>
 						<div class="IO__press IO--span2 info">
 							<button class="IO__press--btn add--btn" onclick="globalThis.fns.catchWork()">ADD</button>
-							<button class="IO__press--btn del--btn" id="remove" onclick="globalThis.fns.catchRemove()">DEL</button>
+							<button class="IO__press--btn del--btn" id="remove"
+								onclick="globalThis.fns.catchRemove()">DEL</button>
 							<button class="IO__press--btn clear--btn" onclick="globalThis.fns.clearAll()">Clear</button>
 						</div>
 					</div>
@@ -89,7 +102,8 @@
 			<div class="container__status">
 				<h2 class="title">N - List</h2>
 				<div class="container__status__pane">
-					<iframe class="container__status__pane__frame" title="Work's list" id="status-frame" src="./panels/status_panel.html" sandbox="allow-same-origin allow-scripts"></iframe>
+					<iframe class="container__status__pane__frame" title="Work's list" id="status-frame"
+						src="./panels/status_panel.html" sandbox="allow-same-origin allow-scripts"></iframe>
 					<div class="container__status__counter">
 						<p id="count">Count works: 0 </p>
 						<p id="cub-meter">Cub: 0</p>
@@ -97,13 +111,9 @@
 					</div>
 					<!-- TODO: refactor the class name to container__status -->
 					<div class="IO__press__crate">
-						<button name="create" class="IO__crate" onclick="globalThis.fns.crate()" popovertarget="">
-							<p class="IO__crate__txt">Crate!</p>
+						<button name="create" class="IO__crate" onclick="globalThis.fns.create()" popovertarget="">
+							<p class="IO__crate__txt">Create!</p>
 						</button>
-						<span aria-hidden="true" data-popup="'Ctrl/Cmd + Enter' to CRATE." class="crate-popup"></span>
-						<div id="shortcut" popover>
-							<p>Press or "Ctrl/Cmd + Enter"</p>
-						</div>
 						<span name="waves" class="IO__crate--shadow1 wave"></span>
 						<span name="waves" class="IO__crate--shadow2 wave"></span>
 					</div>
@@ -114,13 +124,16 @@
 					<h2>= Results</h2>
 					<div class="container__results result--panels">
 						<div class="copy-pane1">
-							<iframe class="container__results--open" title="Works set" src="./panels/pane1_crates.html" sandbox="allow-same-origin allow-scripts"></iframe>
+							<iframe class="container__results--open" title="Works set" src="./panels/pane1_crates.html"
+								sandbox="allow-same-origin allow-scripts"></iframe>
 							<button class="IO__press--btn copy" id="copy-pane1">COPY
 								<p class="copy-message" id="copy-message">Copied!</p>
 							</button>
 						</div>
 						<div class="copy-pane2">
-							<iframe class="container__results--crates" title="List done" src="./panels/pane2_crates_open.html" sandbox="allow-same-origin allow-scripts"></iframe>
+							<iframe class="container__results--crates" title="List done"
+								src="./panels/pane2_crates_open.html"
+								sandbox="allow-same-origin allow-scripts"></iframe>
 							<button class="IO__press--btn copy" id="copy-pane2">COPY
 								<p class="copy-message">Copied!</p>
 							</button>
@@ -131,7 +144,8 @@
 					<div class="accordion">
 						<div class="menu accordion-panel" aria-labelledby="search-header">
 							<h3 class="" id="search-header">
-								<button class="trigger-menu menu search" aria-controls="search--content" aria-expanded="false">
+								<button class="trigger-menu menu search" aria-controls="search--content"
+									aria-expanded="false">
 									<span class="menu__option--text">Search</span>
 									<svg aria-hidden="true" class="menu-icon">
 										<use href="#lupa-material"></use>
@@ -140,15 +154,19 @@
 								<span lang="en" class="menu__option--text">Search Estimate</span>
 								<div class="menu__input menu__fetch" aria-hidden="true" role="region">
 									<form class="menu__fetch">
-										<input type="text" class="get__estimate" id="estimate_getter" autocomplete="on" required>
-										<button type="button" class="IO__press--btn menu__search-btn" id="fetch-btn">Search</button>
+										<input type="text" class="get__estimate" id="estimate_getter" autocomplete="on"
+											required>
+										<button type="button" class="IO__press--btn menu__search-btn"
+											id="fetch-btn">Search</button>
 									</form>
 								</div>
 							</h3>
 						</div>
-						<div class="exchange--content menu accordion-panel" id="exchange" aria-hidden="true" aria-labelledby="exchange--content" role="region">
+						<div class="exchange--content menu accordion-panel" id="exchange" aria-hidden="true"
+							aria-labelledby="exchange--content" role="region">
 							<h3 class="" id="exchange-header">
-								<button class="trigger-menu menu exchange" id="coin-button" aria-controls="exchange--content" aria-expanded="false">
+								<button class="trigger-menu menu exchange" id="coin-button"
+									aria-controls="exchange--content" aria-expanded="false">
 									<svg aria-hidden="true" class="menu-icon">
 										<use href="#exchange-material"></use>
 									</svg>
@@ -157,18 +175,22 @@
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__currency">
 										<select id="coin1" class="currency-menu">
-											<input type="text" name="currency" class="get__currency menu__input--form" id="coin1-input" required>
+											<input type="text" name="currency" class="get__currency menu__input--form"
+												id="coin1-input" required>
 										</select>
 										<select id="coin2" class="currency-menu">
-											<input type="text" name="currency" class="get__currency menu__input--form" id="coin2-input" required>
+											<input type="text" name="currency" class="get__currency menu__input--form"
+												id="coin2-input" required>
 										</select>
 									</form>
 								</div>
 							</h3>
 						</div>
-						<div class="menu accordion-panel units-convertion" aria-hidden="true" aria-labelledby="units-header" role="region">
+						<div class="menu accordion-panel units-convertion" aria-hidden="true"
+							aria-labelledby="units-header" role="region">
 							<h3 class="" id="units-header">
-								<button class="trigger-menu menu units" aria-controls="units--content" aria-expanded="false">
+								<button class="trigger-menu menu units" aria-controls="units--content"
+									aria-expanded="false">
 									<span class="menu__option--text">Units</span>
 									<svg aria-hidden="true" class="menu-icon">
 										<use href="#regua-material"></use>
@@ -182,19 +204,28 @@
 											<option>meters</option>
 											<option>centimeters</option>
 										</select>
-										<input type="text" name="measure" class="get__measure menu__input--form" id="input-unit1" required value=0>
+										<input type="text" name="measure" class="get__measure menu__input--form"
+											id="input-unit1" required value=0>
 										<select id="units2">
 											<option>centimeters</option>
 											<option>inches</option>
 											<option>meters</option>
 										</select>
-										<input type="text" name="measures" class="get__measure menu__input--form" id="input-unit2" required value=0>
+										<input type="text" name="measures" class="get__measure menu__input--form"
+											id="input-unit2" required value=0>
 									</form>
 								</div>
 							</h3>
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+		<div class="IO__press-mobile">
+			<div class="fixed-menu">
+				<button class="press--btn-mobile add--btn" onclick="globalThis.fns.catchWork()">ADD</button>
+				<button class="press--btn-mobile del--btn" id="remove" onclick="globalThis.fns.catchRemove()">DEL</button>
+				<button class="press--btn-mobile clear--btn" onclick="globalThis.fns.clearAll()">Clear</button>
 			</div>
 		</div>
 		<svg width="0" height="0" class="hidden board-icon">
@@ -211,6 +242,11 @@
 			<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 96 960 960" id="regua-material">
 				<path
 					d="M140 816q-24 0-42-18t-18-42V396q0-23 18-41.5t42-18.5h680q24 0 42 18.5t18 41.5v360q0 24-18 42t-42 18H140Zm0-60h680V396H690v180h-60V396H510v180h-60V396H330v180h-60V396H140v360Zm130-180h60-60Zm180 0h60-60Zm180 0h60-60Zm-150 0Z">
+				</path>
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" id="logout-material">
+				<path
+					d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h291v60H180v600h291v60H180Zm486-185-43-43 102-102H375v-60h348L621-612l43-43 176 176-174 174Z">
 				</path>
 			</symbol>
 		</svg>
