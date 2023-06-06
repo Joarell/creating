@@ -1,5 +1,4 @@
 /* TODO: link the screen sizes passing through actual min -> next max sizes. */
-
 @media only screen
 	and (min-width: 1080px)
 	and (max-width: 3840px) {
@@ -71,6 +70,7 @@
 		margin: 2rem 1rem;
 	}
 
+
 	/* main container. */
 	.container {
 		margin-top: 2rem;
@@ -101,22 +101,90 @@
 
 
 	.fixed-menu {
+		isolation: isolate;
 		display: flex;
 		justify-content: space-between;
 		flex-basis: 100%;
 		flex-grow: 1;
+		transition: 500ms ease-in-out;
 	}
 
 
 	.fixed-menu {
-		height: 7svh;
-		margin: 205% .1svw 0 .1svw;
-		background: var(--dark);
-		border-radius: 4dvw;
+		height: 9svh;
+		margin: 203% 6svw 0 6svw;
+		padding: .1rem;
+		border-radius: 10dvw;
 		z-index: 20;
 		opacity: .8;
+		z-index: 10;
+		& .add--btn:active {
+			background: var(--color6);
+			& > svg {
+				fill: var(--add-col);
+			}
+		}
+		& .del--btn:active {
+			background: var(--color8);
+			& > svg {
+				fill: var(--color3);
+			}
+		}
+		& .clear--btn:active {
+			background: var(--color4);
+			& > svg {
+				fill: var(--light-blue1);
+			}
+		}
+		& .option--btn:active {
+			background: var(--color4);
+			& > svg {
+				fill: var(--result-col);
+			}
+		}
 	}
 
+
+	.mobile-menu {
+		fill: var(--color4);
+		width: 1.5rem;
+		height: 1.5rem;
+	}
+
+
+	.press--btn-mobile {
+		color: var(--color4);
+		height: 3rem;
+		width: 3rem;
+		background: #12111385;
+		opacity: .8;
+		border: none;
+		border-radius: 30%;
+		cursor: pointer;
+		transition: transform .3s ease-in-out;
+		& {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		& > span {
+			position: absolute;
+			margin-top: 2rem;
+			font-size: .5rem;
+			font-weight: 700;
+		}
+		&:hover {
+			transition: all .5s ease-in-out;
+			transform: translateY(.1rem);
+			border-bottom: .05rem solid var(--color4);
+			border-right: .05rem solid var(--color4);
+			box-shadow: var(--shadow1);
+		}
+		&:active {
+			box-shadow: var(--inner-shadow);
+			transition: all .5s ease-in-out;
+		}
+	}
 
 	.result--panels {
 		display: flex;
@@ -222,7 +290,84 @@
 		flex-basis: 100%;
 		flex-grow: 1;
 		height: 10svh;
-		margin: 41% .1svw 0 .1svw;
+		margin: 40% 1svw 0 1svw;
+		transition: 500ms ease-in-out;
+	}
+
+
+	.fixed-menu {
+		height: 9svh;
+		padding: .1rem;
+		border-radius: 10dvw;
+		z-index: 20;
+		opacity: .8;
+		z-index: 10;
+		& .add--btn:active {
+			background: var(--color6);
+			& > svg {
+				fill: var(--add-col);
+			}
+		}
+		& .del--btn:active {
+			background: var(--color8);
+			& > svg {
+				fill: var(--color3);
+			}
+		}
+		& .clear--btn:active {
+			background: var(--color4);
+			& > svg {
+				fill: var(--light-blue1);
+			}
+		}
+		& .option--btn:active {
+			background: var(--color4);
+			& > svg {
+				fill: var(--result-col);
+			}
+		}
+	}
+
+
+	.mobile-menu {
+		fill: var(--color4);
+		width: 1.5rem;
+		height: 1.5rem;
+	}
+
+
+	.press--btn-mobile {
+		color: var(--color4);
+		height: 3rem;
+		width: 3rem;
+		background: #12111385;
+		opacity: .8;
+		border: none;
+		border-radius: 30%;
+		cursor: pointer;
+		transition: transform .3s ease-in-out;
+		& {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		& > span {
+			position: absolute;
+			margin-top: 2rem;
+			font-size: .5rem;
+			font-weight: 700;
+		}
+		&:hover {
+			transition: all .5s ease-in-out;
+			transform: translateY(.1rem);
+			border-bottom: .05rem solid var(--color4);
+			border-right: .05rem solid var(--color4);
+			box-shadow: var(--shadow1);
+		}
+		&:active {
+			box-shadow: var(--inner-shadow);
+			transition: all .5s ease-in-out;
+		}
 	}
 
 
