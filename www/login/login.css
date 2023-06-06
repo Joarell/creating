@@ -14,14 +14,16 @@
 	--color2: #162789; 
 	--color3: #FC007A; 
 	--color4: #FFF; 
-	--color5: #554
+	--color5: #554;
+	--color6: #141E30;
+	--color7: #243B55;
 }
 
 body, html, main {
 	height: 100%;
 	margin: 0;
 	font-family: sans-serif;
-	background: linear-gradient(#141e30, #243b55);
+	background: linear-gradient(var(--color6), var(--color7));
 	/* background: #141e30; */
 }
 
