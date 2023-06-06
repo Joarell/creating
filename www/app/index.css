@@ -17,12 +17,15 @@
 	--font-title: 13rem;
 	--fonts: 4rem;
 	--color1: #03e9f4;
+	--color2: #162789; 
 	--color3: #FC007A;
 	--color4: #FFF;
 	--color5: #333;
 	--color6: #00ff00;
 	--color7: #6B3A00;
 	--color8: #B80056;
+	--color9: #141E30;
+	--color10: #243B55;
 	--light-blue1: #CCDBDC;
 	--light-blue2: #9AD1D4;
 	--light-blue3: #80CED7;
@@ -35,7 +38,6 @@
 	--rowg: 2rem;
 	--rowg-mobile: 1rem;
 	--bord: .5rem;
-	--background-transp: #ffffff33;
 	--gradient: linear-gradient(270deg, var(--dark-blue), var(--dark-blue2));
 	--gradient1: linear-gradient(90deg, var(--dark-blue1), var(--dark-blue));
 	--shadow1: .3rem .3rem .6rem var(--iframes-bg),
@@ -63,6 +65,11 @@
 	transform:scaleX(1);
 	background:var(--gradient);
 	box-shadow: var(--shadow1);
+}
+
+
+html {
+	color-scheme: dark light;
 }
 
 
@@ -338,7 +345,7 @@ span + input {
 	display: flex;
 	flex-basis: 100%;
 	flex-direction: row;
-	gap: 1.5rem;
+	gap: 1rem;
 	justify-content: center;
 }
 
@@ -448,7 +455,6 @@ label:hover + .IO__sizes--popup {
 
 
 /* ADD button style */
-.press--btn-mobile,
 .IO__press--btn {
 	color: var(--color4);
 	padding: .5rem 2rem;
@@ -478,26 +484,24 @@ label:hover + .IO__sizes--popup {
 	font-weight: 700;
 	font-size: 1rem;
 	transition: all 1s ease;
-}
-
-
-.add--btn, .del--btn, .clear--btn {
-	outline: 0;
+	&:is(.add--btn, .del--btn, .clear--btn) {
+		outline: 0;
+	}
 }
 
 
 .add--btn:focus-within {
-	outline: 3px solid var(--color6);
+	outline: 1px solid var(--color6);
 	outline-offset: 2px;
 }
 
 .del--btn:focus-within {
-	outline: 3px solid var(--color8);
+	outline: 1px solid var(--color8);
 	outline-offset: 2px;
 }
 
 .clear--btn:focus-within {
-	outline: 3px solid var(--color4);
+	outline: 1px solid var(--color4);
 	outline-offset: 2px;
 }
 
