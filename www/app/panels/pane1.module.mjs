@@ -17,12 +17,13 @@ globalThis.onstorage = () => {
 };
 
 
-globalThis.onload = () => {
+// globalThis.onload = () => {
+globalThis.addEventListener("DOMContentLoaded", () => {
 	const getter =	localStorage.getItem("refNumb");
 	const press =	sessionStorage.getItem("pane1");
 
 	press === "populate" ? setTimeout(() => {showCrates1(getter)}, 50): false;
-};
+});
 
 
 globalThis.addEventListener("load", () => {

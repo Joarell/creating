@@ -18,12 +18,13 @@ globalThis.onstorage = () => {
 };
 
 
-globalThis.onload = () => {
+// globalThis.onload = () => {
+globalThis.addEventListener("DOMContentLoaded", () => {
 	const getter =	localStorage.getItem("refNumb");
 	const press =	sessionStorage.getItem("pane2");
 
 	press === "populate" ? setTimeout(() => {showCrates2(getter)}, 50): false;
-};
+});
 
 
 globalThis.addEventListener("load", () => {
