@@ -17,6 +17,7 @@ globalThis.onstorage = () => {
 };
 
 
+// FIX: The panel still not showing the content sometimes.
 // globalThis.onload = () => {
 globalThis.addEventListener("DOMContentLoaded", () => {
 	const getter =	localStorage.getItem("refNumb");
