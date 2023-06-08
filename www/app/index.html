@@ -101,8 +101,7 @@
 			<div class="container__status">
 				<h2 class="title">N - List</h2>
 				<div class="container__status__pane">
-					<iframe class="container__status__pane__frame" title="Work's list" id="status-frame"
-						src="./panels/status_panel.html" sandbox="allow-same-origin allow-scripts"></iframe>
+					<iframe class="container__status__pane__frame" title="Work's list" id="status-frame" src="./panels/status_panel.html" sandbox="allow-same-origin allow-scripts"></iframe>
 					<div class="container__status__counter">
 						<p id="count">Count works: 0 </p>
 						<p id="cub-meter">Cub: 0</p>
@@ -118,8 +117,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="container-bottom resutl">
-				<div class="result container--span">
+			<div class="container-bottom">
+				<div class="result container--span" aria-hidden="true">
 					<h2>= Results</h2>
 					<div class="container__results result--panels">
 						<div class="copy-pane1">
@@ -141,10 +140,9 @@
 				</div>
 				<div class="container-interactive">
 					<div class="accordion">
-						<div class="menu accordion-panel" aria-labelledby="search-header">
+						<div class="menu accordion-panel get-estimate" aria-labelledby="search-header" aria-hidden="true" role="region" id="search">
 							<h3 class="" id="search-header">
-								<button class="trigger-menu menu search" aria-controls="search--content"
-									aria-expanded="false">
+								<button class="trigger-menu menu search" aria-controls="search--content" aria-expanded="false">
 									<span class="menu__option--text">Search</span>
 									<svg aria-hidden="true" class="menu-icon">
 										<use href="#lupa-material"></use>
@@ -153,19 +151,15 @@
 								<span lang="en" class="menu__option--text">Search Estimate</span>
 								<div class="menu__input menu__fetch" aria-hidden="true" role="region">
 									<form class="menu__fetch">
-										<input type="text" class="get__estimate" id="estimate_getter" autocomplete="on"
-											required>
-										<button type="button" class="IO__press--btn menu__search-btn"
-											id="fetch-btn">Search</button>
+										<input type="text" class="get__estimate" id="estimate_getter" autocomplete="on" required>
+										<button type="button" class="IO__press--btn menu__search-btn" id="fetch-btn">Search</button>
 									</form>
 								</div>
 							</h3>
 						</div>
-						<div class="exchange--content menu accordion-panel" id="exchange" aria-hidden="true"
-							aria-labelledby="exchange--content" role="region">
+						<div class="exchange--content menu accordion-panel" id="exchange" aria-hidden="true" aria-labelledby="exchange--content" role="region">
 							<h3 class="" id="exchange-header">
-								<button class="trigger-menu menu exchange" id="coin-button"
-									aria-controls="exchange--content" aria-expanded="false">
+								<button class="trigger-menu menu exchange" id="coin-button" aria-controls="exchange--content" aria-expanded="false">
 									<svg aria-hidden="true" class="menu-icon">
 										<use href="#exchange-material"></use>
 									</svg>
@@ -174,12 +168,10 @@
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__currency">
 										<select id="coin1" class="currency-menu">
-											<input type="text" name="currency" class="get__currency menu__input--form"
-												id="coin1-input" required>
+											<input type="text" name="currency" class="get__currency menu__input--form" id="coin1-input" required>
 										</select>
 										<select id="coin2" class="currency-menu">
-											<input type="text" name="currency" class="get__currency menu__input--form"
-												id="coin2-input" required>
+											<input type="text" name="currency" class="get__currency menu__input--form" id="coin2-input" required>
 										</select>
 									</form>
 								</div>
@@ -240,28 +232,28 @@
 					</svg>
 					<span>Clear</span>
 				</button>
-				<button class="press--btn-mobile option--btn" value="menu" onclick="">
+				<button class="press--btn-mobile option--btn" id="menu-options" value="menu">
 					<svg class="mobile-menu" preserveAspectRatio="none">
 						<use href="#options-material"></use>
 					</svg>
 				</button>
 			</div>
-			<div aria-hidden="true" class="fan-options">
-				<button aria-hidden="true">
-					<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none">
-						<use href="#lupa-material"></use>
+			<div aria-hidden="true" class="fan-options" aria-controls="menu-options">
+				<a aria-hidden="false" role="button" href="#search" id="fetch-mob">
+					<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none" id="fetch-mob">
+						<use href="#lupa-material" id="fetch-mob"></use>
 					</svg>
-				</button>
-				<button aria-hidden="true">
-					<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none">
-						<use href="#exchange-material"></use>
+				</a>
+				<a aria-hidden="false" role="button" href="" id="currency-mob">
+					<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none" id="currency-mob">
+						<use href="#exchange-material" id="currency-mob"></use>
 					</svg>
-				</button>
-				<button aria-hidden="true">
-					<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none">
-						<use href="#regua-material"></use>
+				</a>
+				<a aria-hidden="false" role="button" href="" id="units-mob">
+					<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none" id="units-mob">
+						<use href="#regua-material" id="units-mob"></use>
 					</svg>
-				</button>
+				</a>
 			</div>
 		</div>
 		<svg width="0" height="0" class="hidden board-icon" preserveAspectRatio="none">
