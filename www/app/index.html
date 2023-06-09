@@ -22,17 +22,12 @@
 	<script type="module" src="./panels/clip.board.caller.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
 	<link rel="manifest" href="../manifest.json">
+
 <body>
 	<header>
 		<div class="header-content">
 			<h1 class="header--title">Otto</h1>
-			<div class="button-logout">
-				<a class="logout-btn" data-popup="Logout" id="logout">
-					<svg aria-hidden="true" class="logout-icon" preserveAspectRatio="none">
-						<use href="#logout-material"></use>
-					</svg>
-				</a>
-			</div>
+		</div>
 		</div>
 	</header>
 	<main>
@@ -43,8 +38,44 @@
 		<!-- 	</div> -->
 		<!-- 	<button type="menu" popovertarget="event-popup"></button> -->
 		<!-- </div> -->
-		<div>
 		</div>
+		<section>
+			<div class="section__menu">
+				<div class="right-header">
+					<div class="mode">
+						<form class="mode" id="unit-seg">
+							<input type="radio" name="mode" value="light" class="light" id="light-mode" checked>
+							<label class="mode--light" for="light-mode">
+								<svg class="logout-icon" preserveAspectRatio="none">
+									<use href="#light-material"></use>
+								</svg>
+							</label>
+							<input type="radio" name="mode" value="dark" class="dark" id="dark-mode">
+							<label class="mode--dark" for="dark-mode">
+								<svg class="logout-icon" preserveAspectRatio="none">
+									<use href="#dark-material"></use>
+								</svg>
+							</label>
+							<span class="mode--color"></span>
+						</form>
+					</div>
+					<div class="section__menu--btn">
+						<a role="button" class="layers-btn" data-popup="Logout" id="layers">
+							<svg aria-hidden="true" class="logout-icon" preserveAspectRatio="none">
+								<use href="#layer-material"></use>
+							</svg>
+						</a>
+					</div>
+					<div class="section__menu--btn">
+						<a role="button" class="logout-btn" data-popup="Logout" id="logout">
+							<svg aria-hidden="true" class="logout-icon" preserveAspectRatio="none">
+								<use href="#logout-material"></use>
+							</svg>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
 		<div class="container">
 			<div class="container__insert">
 				<h2 class="title" className"">+ Add</h3>
@@ -101,7 +132,8 @@
 			<div class="container__status">
 				<h2 class="title">N - List</h2>
 				<div class="container__status__pane">
-					<iframe class="container__status__pane__frame" title="Work's list" id="status-frame" src="./panels/status_panel.html" sandbox="allow-same-origin allow-scripts"></iframe>
+					<iframe class="container__status__pane__frame" title="Work's list" id="status-frame"
+						src="./panels/status_panel.html" sandbox="allow-same-origin allow-scripts"></iframe>
 					<div class="container__status__counter">
 						<p id="count">Count works: 0 </p>
 						<p id="cub-meter">Cub: 0</p>
@@ -140,9 +172,11 @@
 				</div>
 				<div class="container-interactive">
 					<div class="accordion">
-						<div class="menu accordion-panel get-estimate" aria-labelledby="search-header" aria-hidden="true" role="region" id="search">
+						<div class="menu accordion-panel get-estimate" aria-labelledby="search-header"
+							aria-hidden="true" role="region" id="search">
 							<h3 class="" id="search-header">
-								<button class="trigger-menu menu search" aria-controls="search--content" aria-expanded="false">
+								<button class="trigger-menu menu search" aria-controls="search--content"
+									aria-expanded="false">
 									<span class="menu__option--text">Search</span>
 									<svg aria-hidden="true" class="menu-icon">
 										<use href="#lupa-material"></use>
@@ -151,15 +185,19 @@
 								<span lang="en" class="menu__option--text">Search Estimate</span>
 								<div class="menu__input menu__fetch" aria-hidden="true" role="region">
 									<form class="menu__fetch">
-										<input type="text" class="get__estimate" id="estimate_getter" autocomplete="on" required>
-										<button type="button" class="IO__press--btn menu__search-btn" id="fetch-btn">Search</button>
+										<input type="text" class="get__estimate" id="estimate_getter" autocomplete="on"
+											required>
+										<button type="button" class="IO__press--btn menu__search-btn"
+											id="fetch-btn">Search</button>
 									</form>
 								</div>
 							</h3>
 						</div>
-						<div class="exchange--content menu accordion-panel" id="exchange" aria-hidden="true" aria-labelledby="exchange--content" role="region">
+						<div class="exchange--content menu accordion-panel" id="exchange" aria-hidden="true"
+							aria-labelledby="exchange--content" role="region">
 							<h3 class="" id="exchange-header">
-								<button class="trigger-menu menu exchange" id="coin-button" aria-controls="exchange--content" aria-expanded="false">
+								<button class="trigger-menu menu exchange" id="coin-button"
+									aria-controls="exchange--content" aria-expanded="false">
 									<svg aria-hidden="true" class="menu-icon">
 										<use href="#exchange-material"></use>
 									</svg>
@@ -168,10 +206,12 @@
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__currency">
 										<select id="coin1" class="currency-menu">
-											<input type="text" name="currency" class="get__currency menu__input--form" id="coin1-input" required>
+											<input type="text" name="currency" class="get__currency menu__input--form"
+												id="coin1-input" required>
 										</select>
 										<select id="coin2" class="currency-menu">
-											<input type="text" name="currency" class="get__currency menu__input--form" id="coin2-input" required>
+											<input type="text" name="currency" class="get__currency menu__input--form"
+												id="coin2-input" required>
 										</select>
 									</form>
 								</div>
@@ -220,7 +260,8 @@
 					</svg>
 					<span>Add</span>
 				</button>
-				<button class="press--btn-mobile del--btn" id="remove" value="del" onclick="globalThis.fns.catchRemove()">
+				<button class="press--btn-mobile del--btn" id="remove" value="del"
+					onclick="globalThis.fns.catchRemove()">
 					<svg class="mobile-menu" preserveAspectRatio="none">
 						<use href="#remove-material"></use>
 					</svg>
@@ -295,6 +336,21 @@
 			<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" id="remove-material">
 				<path
 					d="M331.913-288 480-436.087 628.087-288 672-331.913 523.913-480 672-628.087 628.087-672 480-523.913 331.913-672 288-628.087 436.087-480 288-331.913 331.913-288Zm148.12 213.978q-83.468 0-157.541-31.878-74.073-31.879-129.393-87.199-55.32-55.32-87.199-129.36-31.878-74.04-31.878-157.508 0-84.468 31.878-158.541 31.879-74.073 87.161-128.906 55.283-54.832 129.341-86.818 74.057-31.986 157.545-31.986 84.488 0 158.589 31.968 74.102 31.967 128.916 86.768 54.815 54.801 86.79 128.883Q886.218-564.516 886.218-480q0 83.501-31.986 157.57-31.986 74.069-86.818 129.36-54.833 55.291-128.873 87.17-74.04 31.878-158.508 31.878Zm-.033-68.13q141.043 0 239.446-98.752Q817.848-339.656 817.848-480q0-141.043-98.402-239.446-98.403-98.402-239.566-98.402-140.163 0-238.945 98.402-98.783 98.403-98.783 239.566 0 140.163 98.752 238.945Q339.656-142.152 480-142.152ZM480-480Z">
+				</path>
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" id="dark-material">
+				<path
+					d="M483-80q-84 0-157.5-32t-128-86.5Q143-253 111-326.5T79-484q0-146 93-257.5T409-880q-18 98 11 192.635 29 94.635 100 165.736 71 71.101 165.5 100.143Q780-392.445 879-410.471q-26 144.206-138 237.338Q629-80 483-80Zm0-60q100 0 182-57t132-145q-90-8-173-41.5T477.5-480Q414-543 381-625.5T340-797q-88 48-144.5 130.5T139-484q0 143.333 100.333 243.667Q339.667-140 483-140Zm-6-340Zm267-128-42-94-94-42 94-42 42-94 42 94 94 42-94 42-42 94Z">
+				</path>
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" id="light-material">
+				<path
+					d="M480-80q-27 0-47.5-13T406-129h-14q-24 0-42-18t-18-42v-143q-66-43-104-110t-38-148q0-121 84.5-205.5T480-880q121 0 205.5 84.5T770-590q0 81-38 148T628-332v143q0 24-18 42t-42 18h-14q-6 23-26.5 36T480-80Zm-88-109h176v-44H392v44Zm0-84h176v-40H392v40Zm-9-100h74v-137l-92-92 31-31 84 84 84-84 31 31-92 92v137h74q60-28 96.5-87T710-590q0-97-66.5-163.5T480-820q-97 0-163.5 66.5T250-590q0 71 36.5 130t96.5 87Zm97-176Zm0-48Z">
+				</path>
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" id="layer-material">
+				<path
+					d="M510-570v-270h330v270H510ZM120-450v-390h330v390H120Zm390 330v-390h330v390H510Zm-390 0v-270h330v270H120Zm60-390h210v-270H180v270Zm390 330h210v-270H570v270Zm0-450h210v-150H570v150ZM180-180h210v-150H180v150Zm210-330Zm180-120Zm0 180ZM390-330Z">
 				</path>
 			</symbol>
 		</svg>
