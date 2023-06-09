@@ -965,7 +965,6 @@ label + input {
 	width: 2rem;
 	height: 1rem;
 	font-size: 1rem;
-	align-items:center;
 	cursor: pointer;
 	color: var(--iframes-bg);
 	transition: all 5s ease;
@@ -984,7 +983,7 @@ label + input {
 	width: 2.2rem;
 	height: 1.9rem;
 	margin-right: 2.7rem;
-	border-radius: .3rem;
+	border-radius: 30%;
 	box-shadow: var(--inner-shadow);
 	pointer-events: none;
 	background: var(--menu-col);
