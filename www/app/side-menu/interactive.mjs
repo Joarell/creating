@@ -58,5 +58,4 @@ globalThis.document.querySelector(".IO__press-mobile")
 		menuOpts.setAttribute("aria-expanded", false);
 		menuOpts.setAttribute("aria-hidden", true);
 	}
-	console.log(element.target.id);
 }, true);
