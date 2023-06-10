@@ -29,9 +29,12 @@ globalThis.document.getElementById("input_estimate")
 });
 
 globalThis.onload = () => {
-	setCheckRadio();
+	const color = localStorage.getItem("mode");
+
 	browserStoragePrepare();
 	localStorage.setItem("metrica", document.getElementById("cm").value);
+	color === null ? localStorage.setItem("mode", "light"): false;
+	setCheckRadio();
 };
 
 // ╭────────────────────────────────────────────────────────╮
@@ -73,7 +76,9 @@ export const crate = () => {
 }
 
 export const clearAll = () => {
-	const del = confirm("Do you really want to delete the whole list?");
+	const del =		confirm("Do you really want to delete the whole list?");
+	const mode =	localStorage.getItem("mode");
+	const unit =	localStorage.getItem("metrica");
 
 	if (del === true) {
 		mod.countWorks();
@@ -83,6 +88,8 @@ export const clearAll = () => {
 		sessionStorage.clear();
 		globalThis.location.reload();
 	}
+	localStorage.setItem("mode", mode);
+	localStorage.setItem("metrica", unit);
 	mod.cleanInputs();
 }
 
@@ -99,7 +106,9 @@ function browserStoragePrepare() {
 
 
 function setCheckRadio() {
-	const measure = localStorage.getItem("metrica");
+	const measure =	localStorage.getItem("metrica");
+	const color =	localStorage.getItem("mode");
+	const body =	document.body.classList;
 
 	switch (measure) {
 		case 'cm - centimeters':
@@ -107,6 +116,18 @@ function setCheckRadio() {
 			break;
 		case 'in - inches':
 			document.getElementById('in').checked = true;
+			break;
+	}
+	switch (color) {
+		case ('light' || null):
+			document.getElementById('light-mode').checked = true;
+			body.remove("dark-mode");
+			body.toggle("light-mode");
+			break;
+		case 'dark':
+			document.getElementById('dark-mode').checked = true;
+			body.remove("light-mode");
+			body.toggle("dark-mode");
 			break;
 	}
 }

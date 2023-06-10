@@ -106,6 +106,7 @@ function parseArtWork(){
 	const test = (store) => {
 		return(
 			[
+				"mode",
 				"storage",
 				"currency",
 				"currency",
