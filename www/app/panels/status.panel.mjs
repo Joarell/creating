@@ -4,9 +4,13 @@
 globalThis.onstorage = () => {
 	const check =	localStorage.getItem("storage");
 	const newList =	sessionStorage.getItem("FETCHED");
+	const clear =	sessionStorage.getItem("clean");
 
-	check !== null ? globalThis.location.reload() : false;
-	check !== null ? localStorage.removeItem("storage") : false;
+	if (check) {
+		globalThis.location.reload();
+		localStorage.removeItem("storage");
+	};
+	clear !== null ? globalThis.location.reload(): false;
 	newList !== null ? statusTablePopulate(newList) : false;
 }
 

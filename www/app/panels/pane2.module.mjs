@@ -5,7 +5,12 @@ globalThis.onstorage = () => {
 	const press =	sessionStorage.getItem("pane2");
 	const getter =	localStorage.getItem("refNumb");
 	const copy =	sessionStorage.getItem("copy2");
+	const clear =	sessionStorage.getItem("clean");
 
+	if (clear) {
+		globalThis.location.reload();
+		sessionStorage.removeItem("clean");
+	};
 	if (copy) {
 		sessionStorage.removeItem("copy2");
 		sessionStorage.setItem("pane2", "populate");

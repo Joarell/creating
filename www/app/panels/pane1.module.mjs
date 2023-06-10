@@ -5,7 +5,9 @@ globalThis.onstorage = () => {
 	const press =	sessionStorage.getItem("pane1");
 	const getter =	localStorage.getItem("refNumb");
 	const copy =	sessionStorage.getItem("copy1");
+	const clear =	sessionStorage.getItem("clean");
 
+	clear !== null ? globalThis.location.reload(): false;
 	if (copy) {
 		sessionStorage.removeItem("copy1");
 		sessionStorage.setItem("pane1", "populate");
@@ -63,7 +65,6 @@ export function createHeader(table) {
 // │ Returns all crates from the indexedDB or gets from cloud. │
 // ╰───────────────────────────────────────────────────────────╯
 export function showCrates1(estimate){
-	console.log("Bolo", estimate);
 	const request = globalThis.indexedDB.open("Results");
 
 	request.onerror = (event) => {
