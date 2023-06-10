@@ -19,6 +19,7 @@
 	<script type="module" src="./side-menu/search.menu.mjs"></script>
 	<script type="module" src="./side-menu/menu.currency.conversion.mjs"></script>
 	<script type="module" src="./side-menu/menu.units.mjs"></script>
+	<script type="module" src="./front-modules/mode.color.mjs"></script>
 	<script type="module" src="./panels/clip.board.caller.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
 	<link rel="manifest" href="../manifest.json">
@@ -39,20 +40,20 @@
 		<!-- 	<button type="menu" popovertarget="event-popup"></button> -->
 		<!-- </div> -->
 		</div>
-		<section>
+		<section class="side-menu">
 			<div class="section__menu">
 				<div class="right-header">
 					<div class="mode">
-						<form class="mode" id="unit-seg">
-							<input type="radio" name="mode" value="light" class="light" id="light-mode" checked>
+						<form class="mode" id="mode-seg">
+							<input type="radio" name="mode" value="light" class="light" id="light-mode">
 							<label class="mode--light" for="light-mode">
-								<svg class="logout-icon" preserveAspectRatio="none">
+								<svg class="mode-icon" preserveAspectRatio="none">
 									<use href="#light-material"></use>
 								</svg>
 							</label>
 							<input type="radio" name="mode" value="dark" class="dark" id="dark-mode">
 							<label class="mode--dark" for="dark-mode">
-								<svg class="logout-icon" preserveAspectRatio="none">
+								<svg class="mode-icon" preserveAspectRatio="none">
 									<use href="#dark-material"></use>
 								</svg>
 							</label>

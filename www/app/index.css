@@ -48,7 +48,7 @@
 		-.2rem -.2rem .5rem var(--dark-blue2);
 
 	/* main setup */
-	--bg-clr: #BEBBBB;
+	--bg-col: #BEBBBB;
 	--iframes-bg: #96979C;
 	--add-col: #0B8325;
 	--mesure: #2DD751;
@@ -68,26 +68,24 @@
 }
 
 
-html {
-	color-scheme: dark light;
-}
-
-
-body {
+.body {
 	box-sizing: border-box;
-	background-color: var(--bg-clr);
 	font-family: Saira Semi Condensed, Mitr, sans-serif;
 	font-size: 0.8rem;
 	background-position: center;
 	scroll-behavior: slow;
-	color-scheme: light;
-	--txt-clr: var(--iframes-bg);
+	--txt-clr: var(--color4);
 }
 
 
-body.dark {
-	--bg-clr: var(--back-gray);
-	--txt-clr: var(--color4);
+.light-mode {
+	background-color: var(--bg-col);
+}
+
+
+.dark-mode {
+	background-color: var(--back-gray);
+	opacity: .8;
 }
 
 
@@ -161,7 +159,7 @@ input {
 	font-family: Mitr, sans-serif;
 	font-size: .9rem;
 	font-weight: 400;
-	color: #fff;
+	color: var(--txt-clr);
 }
 
 
@@ -190,22 +188,22 @@ tbody:nth-child(even) {
 
 
 ::-webkit-scrollbar {
-	width: 1rem;
+	width: .4rem;
 }
 
 
 ::-webkit-scrollbar-track {
 	background: white;
-	border-radius: 100vw;
-	margin-block: 0.2rem;
+	border-radius: 10vw;
+	/* margin-block: .2rem; */
 }
 
 
 ::-webkit-scrollbar-thumb {
 	background: var(--color1);
-	border-radius: 100vw;
-	border: .3rem solid white;
-	margin-block: 0.2rem;
+	border-radius: 10vw;
+	border: .1rem solid white;
+	margin-block: .1rem;
 }
 
 
@@ -994,13 +992,13 @@ label + input {
 
 .cm:checked ~ .IO__sizes--color {
 	transform: translateX(0);
-	transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)
+	transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 
 .in:checked ~ .IO__sizes--color {
 	transform: translateX(2.6rem);
-	transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)
+	transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 
