@@ -29,7 +29,6 @@
 		& > * {
 			display:grid;
 			place-items: center;
-			position: absolute;
 		}
 
 		& > div {
@@ -93,8 +92,6 @@
 	.loading {
 		z-index: 40;
 		margin-top: 20%;
-		margin-left: 45%;
-		position: absolute;
 		& {
 			display: flex;
 			align-items: center;
@@ -341,6 +338,14 @@
 	}
 
 
+	.footer-content {
+		display: none;
+		&:is([aria-hidden="false"]) {
+			display: block;
+		}
+	}
+
+
 	.layers-btn,
 	.logout-btn {
 		border: .1rem solid var(--gradient1);
@@ -359,7 +364,7 @@
 	}
 
 
-	.right-header {
+	.section-left-up {
 		display: flex;
 		flex-wrap: wrap;
 		align-content: center;
@@ -734,7 +739,7 @@
 	}
 
 
-	.right-header {
+	.section-left-up {
 		display: flex;
 		flex-wrap: wrap;
 		align-content: center;
@@ -955,7 +960,7 @@
 		100% {
 			opacity: 1;
 			transform: translate(
-				calc(cos(330deg) * 1rem),
+				calc(cos(330deg) * 1.5rem),
 				calc(sin(270deg) * 3rem)
 			);
 		}
@@ -971,8 +976,8 @@
 		100% {
 			opacity: 1;
 			transform: translate(
-				calc(cos(250deg) * 4.5rem),
-				calc(sin(250deg) * 3.2rem)
+				calc(cos(250deg) * 3.8rem),
+				calc(sin(250deg) * 3.5rem)
 			);
 		}
 	}
@@ -987,8 +992,8 @@
 		100% {
 			opacity: 1;
 			transform: translate(
-				calc(cos(190deg) * 3rem),
-				calc(sin(190deg) * 7rem)
+				calc(cos(190deg) * 2.6rem),
+				calc(sin(190deg) * 6rem)
 			);
 		}
 	}
@@ -1405,7 +1410,7 @@
 	}
 
 
-	.right-header {
+	.section-left-up {
 		display: flex;
 		flex-wrap: wrap;
 		align-content: center;
@@ -1415,7 +1420,7 @@
 		& {
 			width: 30%;
 			height: 15%;
-			position: absolute;
+			position: absolute
 		}
 		& > * {
 			box-shadow: var(--shadow1);
@@ -1546,16 +1551,15 @@
 		height: 10svh;
 		margin: 40% 3svw 0 3svw;
 		transition: 500ms ease-in-out;
-	}
-
-
-	.fixed-menu {
-		height: 9svh;
-		padding: .1rem;
-		border-radius: 10dvw;
-		z-index: 20;
-		opacity: .8;
-		z-index: 10;
+		& {
+			height: 9svh;
+			padding: .1rem;
+			border-radius: 10dvw;
+			z-index: 20;
+			opacity: .8;
+			z-index: 10;
+			position: fixed;
+		}
 		& .add--btn:active {
 			background: var(--color6);
 			& > svg {
@@ -1596,7 +1600,7 @@
 			z-index: 20;
 		}
 		& a:target {
-			display: true;
+			display: unset;
 		}
 		& > * {
 			flex-direction: column-reverse;
@@ -1604,7 +1608,7 @@
 			position: absolute;
 			border-radius: 30%;
 			border: transparent;
-			background: var(--bg-clr);
+			background: var(--bg-col);
 		}
 		& a:nth-child(1) {
 			line-height: 0;

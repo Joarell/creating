@@ -206,7 +206,6 @@ tbody:nth-child(even) {
 }
 
 
-.app,
 .loading-panels {
 	display: none;
 	&:is([aria-hidden="false"]) {
@@ -217,6 +216,13 @@ tbody:nth-child(even) {
 	}
 }
 
+
+.app {
+	display: none;
+	&:is([aria-hidden="false"]) {
+		display: unset;
+	}
+}
 
 /* ╭──────────────╮
    │ Cube loading │
