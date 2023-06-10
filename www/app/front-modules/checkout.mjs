@@ -21,7 +21,7 @@ globalThis.onstorage = () => {
 		mod.displayAirCub() &&
 		mod.countWorks()
 	);
-}
+};
 
 globalThis.document.getElementById("input_estimate")
 	.addEventListener("change", () => {
@@ -75,7 +75,7 @@ document.getElementById("unit-seg").addEventListener("change", () => {
 export const crate = () => {
 	browserStoragePrepare();
 	mod.crate();
-}
+};
 
 export const clearAll = () => {
 	const del =		confirm("Do you really want to delete the whole list?");
@@ -88,22 +88,25 @@ export const clearAll = () => {
 		mod.displayCub();
 		localStorage.clear();
 		sessionStorage.clear();
-		globalThis.location.reload();
+		sessionStorage.setItem("clean", "burn");
+		localStorage.setItem("mode", mode);
+		localStorage.setItem("metrica", unit);
+		document.getElementById("input_estimate").value = "";
 	}
-	localStorage.setItem("mode", mode);
-	localStorage.setItem("metrica", unit);
 	mod.cleanInputs();
-}
+};
 
 
 function loadingPage() {
 	const animation =	document.querySelector(".loading");
 	const pageApp =		document.querySelector(".app");
+	const footer =		document.querySelector(".footer-content");
 
 	animation.style.display = "none";
-	animation.setAttribute("aria-hidden", true)
-	pageApp.setAttribute("aria-hidden", false)
-}
+	animation.setAttribute("aria-hidden", true);
+	pageApp.setAttribute("aria-hidden", false);
+	footer.setAttribute("aria-hidden", false);
+};
 
 
 function browserStoragePrepare() {
@@ -114,7 +117,7 @@ function browserStoragePrepare() {
 		createDB();
 	}
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
-}
+};
 
 
 function setCheckRadio() {
@@ -142,4 +145,4 @@ function setCheckRadio() {
 			body.classList.toggle("dark-mode");
 			break;
 	}
-}
+};
