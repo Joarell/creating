@@ -94,13 +94,28 @@
 		& .section__menu--btn {
 			border-radius: 40%;
 		}
+		& > .section__menu--btn:active {
+			box-shadow: var(--inner-shadow);
+		}
 	}
 
 
+	.mode {
+		& label > svg {
+			fill: var(--color4);
+			width: 1rem;
+			height: 1rem;
+			transition: all 500ms ease-in-out;
+			&:hover {
+				fill: var(--dark);
+			}
+		}
+	}
+
 	.logout-icon {
 		fill: var(--color4);
-		width: 1rem;
-		height: 1rem;
+		width: 1.4rem;
+		height: 1.4rem;
 		transition: all 500ms ease-in-out;
 		&:hover {
 			fill: var(--dark);
@@ -174,6 +189,22 @@
 		& .section__menu--btn {
 			border-radius: 40%;
 		}
+		& > .section__menu--btn:active {
+			box-shadow: var(--inner-shadow);
+		}
+	}
+
+
+	.mode {
+		& label > svg {
+			fill: var(--color4);
+			width: 1rem;
+			height: 1rem;
+			transition: all 500ms ease-in-out;
+			&:hover {
+				fill: var(--dark);
+			}
+		}
 	}
 
 
@@ -227,8 +258,8 @@
 
 	.press--btn-mobile {
 		color: var(--color4);
-		height: 3rem;
-		width: 3rem;
+		height: 2.5rem;
+		width: 2.5rem;
 		background: #12111385;
 		opacity: .8;
 		border: none;
@@ -273,7 +304,6 @@
 	.fixed-menu {
 		height: 9svh;
 		margin: 203% 6svw 0 6svw;
-		padding: .1rem;
 		border-radius: 10dvw;
 		opacity: .8;
 		z-index: 10;
@@ -326,7 +356,7 @@
 			position: absolute;
 			border-radius: 30%;
 			border: transparent;
-			background: var(--bg-clr);
+			background: var(--bg-col);
 		}
 		& a:nth-child(1) {
 			line-height: 0;
@@ -546,6 +576,22 @@
 		}
 		& .section__menu--btn {
 			border-radius: 40%;
+		}
+		& > .section__menu--btn:active {
+			box-shadow: var(--inner-shadow);
+		}
+	}
+
+
+	.mode {
+		& label > svg {
+			fill: var(--color4);
+			width: 1rem;
+			height: 1rem;
+			transition: all 500ms ease-in-out;
+			&:hover {
+				fill: var(--dark);
+			}
 		}
 	}
 
