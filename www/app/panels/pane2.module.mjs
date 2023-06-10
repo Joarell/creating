@@ -18,21 +18,27 @@ globalThis.onstorage = () => {
 };
 
 
-// FIX: The panel still not showing the content sometimes.
-// globalThis.onload = () => {
-globalThis.addEventListener("DOMContentLoaded", () => {
+document.onreadystatechange = () => {
+	const pane =	document.getElementById("opened-crates");
+	const len =		pane.childNodes.length;
 	const getter =	localStorage.getItem("refNumb");
-	const press =	sessionStorage.getItem("pane2");
 
-	press === "populate" ? setTimeout(() => {showCrates2(getter)}, 50): false;
-});
+	if (len && getter)
+		len > 1 ? true: setTimeout(() => {showCrates2(getter)}, 50);
+	setTimeout(loadingPage, 2500);
+};
 
 
-globalThis.addEventListener("load", () => {
-	const pane = document.getElementById("opened-crates");
 
-	pane.hasChildNodes() ? true: setTimeout(() => {showCrates2(getter)}, 50);
-});
+
+function loadingPage() {
+	const animation =	document.querySelector(".loading-panels");
+	const pageApp =		document.querySelector(".panel-content");
+
+	animation.style.display = "none";
+	animation.setAttribute("aria-hidden", true)
+	pageApp.setAttribute("aria-hidden", false)
+}
 
 
 // ╭───────────────────────────────────────────────────────────────────────╮

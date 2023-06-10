@@ -16,22 +16,25 @@ globalThis.onstorage = () => {
 	);
 };
 
-
-// FIX: The panel still not showing the content sometimes.
-// globalThis.onload = () => {
-globalThis.addEventListener("DOMContentLoaded", () => {
+document.onreadystatechange = () => {
+	const pane =	document.getElementById("crates-only");
+	const len =		pane.childNodes.length;
 	const getter =	localStorage.getItem("refNumb");
-	const press =	sessionStorage.getItem("pane1");
 
-	press === "populate" ? setTimeout(() => {showCrates1(getter)}, 50): false;
-});
+	if (len && getter)
+		len > 1 ? true: setTimeout(() => {showCrates1(getter)}, 50);
+	setTimeout(loadingPage, 2500);
+};
 
 
-globalThis.addEventListener("load", () => {
-	const pane = document.getElementById("crates-only");
+function loadingPage() {
+	const animation =	document.querySelector(".loading-panels");
+	const pageApp =		document.querySelector(".panel-content");
 
-	pane.hasChildNodes() ? true: setTimeout(() => {showCrates1(getter)}, 50);
-});
+	animation.style.display = "none";
+	animation.setAttribute("aria-hidden", true)
+	pageApp.setAttribute("aria-hidden", false)
+}
 
 
 // ╭───────────────────────────────────────────────────────────────────────╮
@@ -60,6 +63,7 @@ export function createHeader(table) {
 // │ Returns all crates from the indexedDB or gets from cloud. │
 // ╰───────────────────────────────────────────────────────────╯
 export function showCrates1(estimate){
+	console.log("Bolo", estimate);
 	const request = globalThis.indexedDB.open("Results");
 
 	request.onerror = (event) => {
