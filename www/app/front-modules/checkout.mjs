@@ -29,13 +29,15 @@ globalThis.document.getElementById("input_estimate")
 });
 
 globalThis.onload = () => {
-	const color = localStorage.getItem("mode");
+	const color =		localStorage.getItem("mode");
 
 	browserStoragePrepare();
 	localStorage.setItem("metrica", document.getElementById("cm").value);
 	color === null ? localStorage.setItem("mode", "light"): false;
 	setCheckRadio();
+	setTimeout(loadingPage, 2500);
 };
+
 
 // ╭────────────────────────────────────────────────────────╮
 // │ Defines the measure of the works selected by the user. │
@@ -94,6 +96,16 @@ export const clearAll = () => {
 }
 
 
+function loadingPage() {
+	const animation =	document.querySelector(".loading");
+	const pageApp =		document.querySelector(".app");
+
+	animation.style.display = "none";
+	animation.setAttribute("aria-hidden", true)
+	pageApp.setAttribute("aria-hidden", false)
+}
+
+
 function browserStoragePrepare() {
 	const ref = localStorage.getItem("refNumb");
 
@@ -108,7 +120,7 @@ function browserStoragePrepare() {
 function setCheckRadio() {
 	const measure =	localStorage.getItem("metrica");
 	const color =	localStorage.getItem("mode");
-	const body =	document.body.classList;
+	const body =	document.body;
 
 	switch (measure) {
 		case 'cm - centimeters':
@@ -121,13 +133,13 @@ function setCheckRadio() {
 	switch (color) {
 		case ('light' || null):
 			document.getElementById('light-mode').checked = true;
-			body.remove("dark-mode");
-			body.toggle("light-mode");
+			body.classList.remove("dark-mode");
+			body.classList.toggle("light-mode");
 			break;
 		case 'dark':
 			document.getElementById('dark-mode').checked = true;
-			body.remove("light-mode");
-			body.toggle("dark-mode");
+			body.classList.remove("light-mode");
+			body.classList.toggle("dark-mode");
 			break;
 	}
 }
