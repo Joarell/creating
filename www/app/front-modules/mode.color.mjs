@@ -1,6 +1,6 @@
 
 
-globalThis.document.querySelector(".side-menu")
+globalThis.document.querySelector(".section-left-up")
 	.addEventListener("change", (color) => {
 	const mode = color.target.value;
 
