@@ -88,10 +88,10 @@ export const clearAll = () => {
 		mod.displayCub();
 		localStorage.clear();
 		sessionStorage.clear();
-		sessionStorage.setItem("clean", "burn");
+		sessionStorage.setItem("clean", "eraser");
 		localStorage.setItem("mode", mode);
 		localStorage.setItem("metrica", unit);
-		document.getElementById("input_estimate").value = "";
+		globalThis.document.getElementById("input_estimate").value = "";
 	}
 	mod.cleanInputs();
 };
