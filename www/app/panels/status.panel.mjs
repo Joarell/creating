@@ -6,11 +6,15 @@ globalThis.onstorage = () => {
 	const newList =	sessionStorage.getItem("FETCHED");
 	const clear =	sessionStorage.getItem("clean");
 
+	if (clear) {
+		globalThis.location.reload();
+		sessionStorage.removeItem("clean");
+		sessionStorage.setItem("pane-1", "clear");
+	};
 	if (check) {
 		globalThis.location.reload();
 		localStorage.removeItem("storage");
 	};
-	clear !== null ? globalThis.location.reload(): false;
 	newList !== null ? statusTablePopulate(newList) : false;
 }
 

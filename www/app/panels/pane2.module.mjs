@@ -5,15 +5,14 @@ globalThis.onstorage = () => {
 	const press =	sessionStorage.getItem("pane2");
 	const getter =	localStorage.getItem("refNumb");
 	const copy =	sessionStorage.getItem("copy2");
-	const clear =	sessionStorage.getItem("clean");
+	const clear =	sessionStorage.getItem("pane-2");
 
 	if (clear) {
 		globalThis.location.reload();
-		sessionStorage.removeItem("clean");
+		sessionStorage.removeItem("pane-2");
 	};
 	if (copy) {
 		sessionStorage.removeItem("copy2");
-		sessionStorage.setItem("pane2", "populate");
 		return(globalThis.location.reload() && showCrates1(getter));
 	};
 	return(
