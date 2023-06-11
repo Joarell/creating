@@ -286,6 +286,76 @@
 		}
 	}
 
+	/* ╭───────────────────────────╮
+	   │ 	Cube footer settings.  │
+	   ╰───────────────────────────╯
+	*/
+	.svg-frame {
+		position: relative;
+		width: 300px;
+		height: 300px;
+		transform-style: preserve-3d;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.svg-frame svg {
+		position: absolute;
+		transition: .5s;
+		z-index: calc(1 - (0.2 * var(--j)));
+		transform-origin: center;
+		width: 344px;
+		height: 344px;
+		fill: none;
+	}
+
+	.svg-frame:hover svg {
+		transform: 
+		rotate(-80deg)
+		skew(30deg)
+		translateX(calc(45px * var(--i)))
+		translateY(calc(-35px * var(--i)));
+	}
+
+	.svg-frame svg #center {
+		transition: .5s;
+		transform-origin: center;
+	}
+
+	.svg-frame:hover svg #center {
+		transform: rotate(-30deg) translateX(45px) translateY(-3px);
+	}
+
+	#out2 {
+		animation: rotate16 7s ease-in-out infinite alternate;
+		transform-origin: center;
+	}
+
+	#out3 {
+		animation: rotate16 3s ease-in-out infinite alternate;
+		transform-origin: center;
+		stroke: var(--color8);
+	}
+
+	#inner3,
+	#inner1 {
+		animation: rotate16 4s ease-in-out infinite alternate;
+		transform-origin: center;
+	}
+
+	#center1 {
+		fill: var(--color3);
+		animation: rotate16 2s ease-in-out infinite alternate;
+		transform-origin: center;
+	}
+
+	@keyframes rotate16 {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
 	/* ╭─────────────────────────────╮
 	   │ 	Right status container.  │
 	   ╰─────────────────────────────╯
@@ -341,10 +411,13 @@
 	.footer-content {
 		display: none;
 		&:is([aria-hidden="false"]) {
-			display: block;
+			display: flex;
+			justify-content: space-between;
+		}
+		& div:nth-of-type(2):has(h3) {
+			margin-top: 8rem;
 		}
 	}
-
 
 	.layers-btn,
 	.logout-btn {
@@ -460,7 +533,6 @@
 		& > * {
 			display:grid;
 			place-items: center;
-			position: absolute;
 		}
 
 		& > div {
@@ -515,13 +587,11 @@
 		}
 	}
 
-
 	/* ╭────────────────────╮
 	   │ 	Boxes loading.  │
 	   ╰────────────────────╯
 	*/
 	/* Made by Nawsome- from : https://uiverse.io/Nawsome/cold-liger-90 */
-
 	.loading {
 		z-index: 40;
 		margin-top: 80%;
