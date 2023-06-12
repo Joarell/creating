@@ -89,9 +89,6 @@ router.post("/token",
 );
 
 
-router.get("/currency", extAPI.externalAPICurrency
-);
-
 
 router.get("/estimates/:token", take.getDataEstimates
 );
