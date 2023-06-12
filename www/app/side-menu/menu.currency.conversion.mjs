@@ -27,6 +27,7 @@ globalThis.document.getElementById("exchange-header")
 	coin1 !== null ? opt1.value = coin1: false;
 	coin2 !== null ? opt2.value = coin2: false;
 	storageCurrency === null ? await getCurrencyValue(): false;
+	setTimeout(document.getElementById("exchange-header").click(), 3000);
 });
 
 
