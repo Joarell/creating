@@ -84,11 +84,13 @@ body {
 
 .light-mode {
 	background-color: var(--bg-col);
+	transition: all 1s linear;
 }
 
 
 .dark-mode {
 	background-color: var(--dark-blue2);
+	transition: all 1s linear;
 }
 
 
@@ -110,7 +112,7 @@ iframe {
 	transition: 500ms ease-in-out;
 	animation-name: fill-pane 2s ease;
 	animation-fill-mode: both;
-	animation-delay: 3s;
+	animation-delay: 1s;
 	&:hover {
 		border: none;
 		box-shadow: var(--shadow1);
@@ -922,7 +924,6 @@ label:hover + .IO__sizes--popup {
 	--input-menu-units-width: 6rem;
 	--input-menu-units-height: 2rem;
 	--display-flex: flex;
-	transition: all .3s ease-in-out;
 }
 
 
@@ -945,7 +946,7 @@ label:hover + .IO__sizes--popup {
 
 .accordion-panel:has([aria-expanded="false"]) {
 	width: var(--accordion-width, 25.5%);
-	transition: width 3s ease-in-out;
+	transition: width 2s ease-in-out;
 }
 
 
@@ -956,7 +957,7 @@ label:hover + .IO__sizes--popup {
 		background: var(--menu-col);
 		fill: var(--__icon-color);
 	}
-	transition: width 3s ease-in-out;
+	transition: width 2s ease-in-out;
 }
 
 
@@ -1092,8 +1093,6 @@ label:hover + .IO__sizes--popup {
 	justify-content: space-evenly;
 	gap: var(--input-menu-margin);
 	animation: open-pane 3s ease;
-	transition: width 2s ease-in-out;
-	transition: padding 5s ease-in-out;
 }
 
 

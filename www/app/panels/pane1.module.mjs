@@ -28,8 +28,8 @@ document.onreadystatechange = () => {
 	const getter =	localStorage.getItem("refNumb");
 
 	if (len && getter)
-		len > 1 ? true: setTimeout(() => {showCrates1(getter)}, 50);
-	setTimeout(loadingPage, 2500);
+		len > 1 ? true: setTimeout(showCrates1(getter), 50);
+	setTimeout(loadingPage, 2300);
 };
 
 
