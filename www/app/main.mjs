@@ -48,7 +48,7 @@ export function checkWork(work) {
 
 
 // ╭──────────────────────────────────────────────────────╮
-// │ This function converts all string inputs in intager. │
+// │ This function converts all string inputs in integer. │
 // ╰──────────────────────────────────────────────────────╯
 export function intParser(dimensions) {
 	const result = dimensions.map(size => {
@@ -191,7 +191,14 @@ function orderRemove (code) {
 };
 
 
-globalThis.onkeydown = (keyDown) => {
-	if (keyDown.key === "Enter" && keyDown.ctrlKey === true)
-		crate();
+globalThis.onkeydown = (push) => {
+	const task1 = ((push.key === "Enter") && (push.ctrlKey === true)) ?? false;
+
+	task1 ? crate(): false;
 };
+
+globalThis.document.getElementById("logout")
+.addEventListener("click", () => {
+	document.cookie = "user=; value=; Max-Age=0; path=/; domain=";
+	globalThis.location.replace('/');
+});
