@@ -120,7 +120,7 @@ const userTokenMatch = async( req, res, next) => {
 const userTokenExpTime = async (req, res, next) => {
 	const token	= req.headers.cookie && req.headers.cookie.split('=')[1];
 
-	console.log(token);
+	console.log('Token', token);
 	if (!token)
 		return (res.status(401).json({msg: "Unauthorized"}));
 

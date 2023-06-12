@@ -69,7 +69,7 @@ const newLogin = async (req, res) => {
 	if (result === 500)
 		return(res.status(500).json({msg: 'Server error'}));
 	res.set({
-		'Set-Cookie': `${user.name} = ${result[0]}`,
+		'Set-Cookie': `user = ${result[0]}`,
 		// 'Set-Cookie': 'user = Secure; HttpOnly;',
 		// 'Set-Cookie': 'SameSite=Strict',
 	});
