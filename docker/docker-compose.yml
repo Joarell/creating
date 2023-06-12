@@ -55,7 +55,7 @@ services:
       - db
     deploy:
       mode: replicated
-      replicas: 4
+      replicas: 2
 
     env_file: .env
     environment:
