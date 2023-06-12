@@ -1,9 +1,8 @@
 
 
-
 export async function checkBrowserDB(doc) {
 	const workerDB =	new Worker('./panels/worker.IDB.crates.mjs');
-	const checkIDB =	new Promise((resolve) => {
+	const checkIDB =	new Promise((resolve, reject) => {
 		workerDB.postMessage(doc)
 		workerDB.onmessage = (result => {
 			result !== undefined ? resolve(result.data): undefined;
@@ -11,12 +10,15 @@ export async function checkBrowserDB(doc) {
 	});
 	const data =		await checkIDB;
 
+	console.log(data);
 	if (data) {
 		document.getElementById("input_estimate").value = doc;
 		sessionStorage.setItem("FETCHED", JSON.stringify(data));
 	}
 	else if (!data)
 		alert(`Document not found! Please, try again.`);
+	else
+		setTimeout(alert(`Document not found! Please, try again.`), 200);
 	return(fetchDB(doc));
 };
 
@@ -40,7 +42,7 @@ function regexChecker(data){
 
 globalThis.document.getElementById("fetch-btn")
 	.addEventListener("click", () => {
-	const docEstimate =		document.getElementById("estimate_getter").value;
+	const docEstimate =	document.getElementById("estimate_getter").value;
 
 	return(!regexChecker(docEstimate) ? checkBrowserDB(docEstimate): false);
 });
