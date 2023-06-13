@@ -10,7 +10,6 @@ export async function checkBrowserDB(doc) {
 	});
 	const data =		await checkIDB;
 
-	console.log(data);
 	if (data) {
 		document.getElementById("input_estimate").value = doc;
 		sessionStorage.setItem("FETCHED", JSON.stringify(data));
