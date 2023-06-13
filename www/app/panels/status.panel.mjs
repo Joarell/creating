@@ -25,9 +25,7 @@ globalThis.addEventListener("load", () => {
 });
 
 globalThis.onload = () => {
-	setTimeout(() => {
-		statusTable();
-	}, 200);
+	setTimeout(statusTable, 200);
 }
 
 
