@@ -12,11 +12,11 @@
 // ╰─────────────────────────────────────────────────────────╯
 
 
-const checker		= require('../auth/user.check.out');
-const db			= require('../DB_models/db.transactions');
-const jwt			= require('jsonwebtoken');
-const tokenMan		= require('../DB_models/db.auth.procedures');
-const dataTokens	= require('../DB_models/db.tokens.stored');
+const checker =		require('../auth/user.check.out');
+const db =			require('../DB_models/db.transactions');
+const jwt =			require('jsonwebtoken');
+const tokenMan =	require('../DB_models/db.auth.procedures');
+const dataTokens =	require('../DB_models/db.tokens.stored');
 
 
 const inserNewUser = async (req, res) => {
@@ -41,6 +41,7 @@ const inserNewUser = async (req, res) => {
 const userLoginValidation = async (req, res, next) => {
 	const auth = await checker.checkUserAuthDB(req.body);
 
+	console.log("login", auth);
 	switch (auth) {
 		case 404:
 			return(res.status(404).json({msg: "User not found"}));
@@ -78,8 +79,8 @@ async function tokensCheckOut(tokenPairs, users, id){
 	const user				= users.find(user => user.id === id);
 	if (!user)
 		return(404);
-	const a_token			= tokenPairs[0].includes(user.auth_token);
-	const r_token			= tokenPairs[1].includes(user.refresh_token);
+	const a_token			= tokenPairs[1].includes(user.auth_token);
+	const r_token			= tokenPairs[0].includes(user.refresh_token);
 	const checkedTokens		= await dbTokensCheckOut(tokenPairs);
 	const suspiciousTokens	= await dbSuspiciousTokens(tokenPairs);
 
@@ -95,19 +96,23 @@ const userTokenMatch = async( req, res, next) => {
 	if (!req.headers.authorization)
 		return (res.status(401).json({msg: "Unauthorized"}));
 
-	const authToken	= req.headers['authorization'].split(' ')[1]
-	const { token }	= req.body;
-	const dbUsers	= await db.retriveDataUsers();
-	const userId	= req.body.id;
-	const result	= await tokensCheckOut([authToken, token], dbUsers, userId);
+	console.log(req.headers.cookie);
+	const authToken =	req.headers['authorization'].split(' ')[1]
+	const refToken =	req.headers['cookie'].split(' ')[1].split('=')[1];
+	const dbUsers =		await db.retriveDataUsers();
+	let userId = 		req.headers.cookie.split('=')[1];
+	userId =			Number.parseInt(userId);
+	const result = 		await tokensCheckOut(
+		[authToken, refToken], dbUsers, userId
+	);
 
-	console.log(result);
+	console.log("Match-access", result);
 	switch(result) {
 		case true:
 			next();
 			break;
 		case false :
-			dataTokens.storeSuspiciousTokens([authToken, token], req.body.id);
+			dataTokens.storeSuspiciousTokens([authToken, refToken], userId);
 			return(res.status(401).json({msg: "User blocked"}));
 		case 404:
 			return (res.status(404).json({msg: "User Not found"}));
@@ -118,14 +123,13 @@ const userTokenMatch = async( req, res, next) => {
 
 
 const userTokenExpTime = async (req, res, next) => {
-	const token	= req.headers.cookie && req.headers.cookie.split('=')[1];
+	const token	= req.headers.cookie.split(' ')[1].split('=')[1];
 
-	console.log('Token', token);
 	if (!token)
 		return (res.status(401).json({msg: "Unauthorized"}));
 
-	const dbUsers	= await db.retriveDataUsers();
-	const user		= dbUsers.find(user => {
+	const dbUsers =	await db.retriveDataUsers();
+	const user =	dbUsers.find(user => {
 		return (user.auth_token === token);
 	});
 

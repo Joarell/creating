@@ -12,9 +12,9 @@
 // ╰──────────────────────────────────────────────────────────────╯
 
 
-const checker		= require('../auth/user.check.out');
-const db			= require('../DB_models/db.transactions');
-const keepTokens	= require('../DB_models/db.auth.procedures');
+// const checker =		require('../auth/user.check.out');
+const db =			require('../DB_models/db.transactions');
+const keepTokens =	require('../DB_models/db.auth.procedures');
 
 
 const getDataUsers = async (req, res) => {
@@ -49,8 +49,8 @@ const updateEstimate = async (req, res) => {
 
 
 const shiftTokens = async (req, res) => {
-	const authToken	= req.headers['authorization'].split(' ')[1];
-	const result	= await keepTokens.tokenProcedures(authToken, req.body);
+	const authToken =	req.headers['authorization'].split(' ')[1];
+	const result =		await keepTokens.tokenProcedures(authToken, req.body);
 	
 	result === 403 ?
 		res.status(403).json({msg: "Not authorized!"}) :
@@ -60,20 +60,15 @@ const shiftTokens = async (req, res) => {
 
 // TODO: HTTPS cookie tests.
 const newLogin = async (req, res) => {
-	const dbUsers	= await db.retriveDataUsers();
-	const user		= dbUsers.find(user => user.name === req.body.name);
-	const body		= {id: user.id, token: user.refresh_token};
-	const result	= await keepTokens.tokenProcedures(user.auth_token, body);
+	const dbUsers =	await db.retriveDataUsers();
+	const user =	dbUsers.find(user => user.name === req.body.name);
+	const body =	{id: user.id, token: user.refresh_token};
+	const result =	await keepTokens.tokenProcedures(user.auth_token, body);
 
-	console.log(result);
 	if (result === 500)
 		return(res.status(500).json({msg: 'Server error'}));
-	res.set({
-		'Set-Cookie': `user = ${result[0]}`,
-		// 'Set-Cookie': 'user = Secure; HttpOnly;',
-		// 'Set-Cookie': 'SameSite=Strict',
-	});
-	res.status(201).json({msg: 'loged', tokens: result})
+	res.set({ 'Set-Cookie': `user=${result[0]}; Secure`});
+	res.status(201).json({msg: 'loged', tokens: result, id: user.id})
 };
 
 module.exports = {
