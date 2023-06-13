@@ -26,10 +26,12 @@ document.onreadystatechange = () => {
 	const pane =	document.getElementById("opened-crates");
 	const len =		pane.childNodes.length;
 	const getter =	localStorage.getItem("refNumb");
+	const mode =	localStorage.getItem("mode");
 
 	if (len && getter)
 		len > 1 ? true: setTimeout(showCrates2(getter), 50);
 	setTimeout(loadingPage, 2300);
+	changeMode(mode);
 };
 
 
@@ -41,6 +43,20 @@ function loadingPage() {
 	animation.setAttribute("aria-hidden", true)
 	pageApp.setAttribute("aria-hidden", false)
 }
+
+
+function changeMode (color) {
+	const body = document.body.classList;
+
+	console.log(color);
+	body.remove("light-mode");
+	body.remove("dark-mode");
+	return (
+		color === "dark" ?
+			body.add("dark-mode"):
+			body.add("light-mode")
+	);
+};
 
 
 // ╭───────────────────────────────────────────────────────────────────────╮

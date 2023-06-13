@@ -25,8 +25,25 @@ globalThis.addEventListener("load", () => {
 });
 
 globalThis.onload = () => {
+	const mode =	localStorage.getItem("mode");
+
+	changeMode(mode);
 	setTimeout(statusTable, 200);
 }
+
+
+function changeMode (color) {
+	const body = document.body.classList;
+
+	console.log(color);
+	body.remove("light-mode");
+	body.remove("dark-mode");
+	return (
+		color === "dark" ?
+			body.add("dark-mode"):
+			body.add("light-mode")
+	);
+};
 
 
 export function statusTablePopulate(data) {
