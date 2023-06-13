@@ -36,27 +36,37 @@ export function loginInto () {
 
 async function backEndLoginAuth (userInfo) {
 	const url = '/start';
-	const res = await fetch ( url, {
-		method: "POST",
-		body: JSON.stringify(userInfo),
-		headers: {
-			'Content-Type': 'application/json; charset=UTF-8'
-		},
-	}).then(body => body.json())
-	.catch(err => console.error(`Alert ${err}`));
-
-	res.msg === 'loged' ?
-		await appAccessCheckin(res.tokens) :
-		alert('Wrong credentials. Please try again!');
+	try {
+		const res = await fetch ( url, {
+			method: "POST",
+			body: JSON.stringify(userInfo),
+			headers: {
+				'Content-Type': 'application/json; charset=UTF-8'
+			},
+		}).then(body => body.json())
+		.catch(err => console.error(`Alert ${err}`));
+		res.msg === 'loged' ?
+			await appAccessCheckin(res) :
+			alert('Wrong credentials. Please try again!');
+	}
+	catch(err) {
+		alert(`Attention: ${err}`);
+	}
+	finally {
+		return;
+	}
 };
 
 
 async function appAccessCheckin (userAuth) {
-	const header	= {
+	document.cookie = `id=${userAuth.id}; path=/; Secure`;
+	const { tokens } =	userAuth;
+	const header =	{
+		'Authorization': `Bearer ${tokens[1]}`,
 		'Content-Type': 'application/javascript',
 		'Accept': 'text/html; text/css; application/javascript',
 	};
-	const request	= new Request('/app', {
+	const request =		new Request(`/app`, {
 		method: "GET",
 		mode: 'cors',
 		headers: header,
@@ -65,13 +75,21 @@ async function appAccessCheckin (userAuth) {
 		connection: 'keep-alive',
 		redirect: 'follow',
 	});
-	const checkOut	= await fetch(request)
-		.catch(err => alert(`Warning! ${err}`));
+	try {
+		const checkOut = await fetch(request)
+			.catch(err => alert(`Warning! ${err}`));
 
-	if (checkOut.status <= 400)
-		globalThis.location.assign(checkOut.url);
-	else {
-		alert("Not authorized! Please, try again");
-		globalThis.location.reload();
+		if (checkOut.status <= 400)
+			globalThis.location.assign(checkOut.url);
+		else {
+			alert("Not authorized! Please, try again");
+			globalThis.location.reload();
+		}
+	}
+	catch(err) {
+		alert(`Attention: ${err}`);
+	}
+	finally {
+		return;
 	}
 };
