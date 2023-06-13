@@ -67,7 +67,7 @@ async function appAccessCheckin (userAuth) {
 		'Accept': 'text/html; text/css; application/javascript',
 	};
 	const request =		new Request(`/app`, {
-		method: "GET",
+		method: "POST",
 		mode: 'cors',
 		headers: header,
 		cache: 'default',
@@ -82,8 +82,10 @@ async function appAccessCheckin (userAuth) {
 		if (checkOut.status <= 400)
 			globalThis.location.assign(checkOut.url);
 		else {
-			alert("Not authorized! Please, try again");
+			console.log(checkOut.status);
+			alert("Not authorized. Please, try again!");
 			globalThis.location.reload();
+			throw new Error(checkOut.status);
 		}
 	}
 	catch(err) {
