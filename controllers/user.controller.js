@@ -123,16 +123,17 @@ const userTokenMatch = async( req, res, next) => {
 
 
 const userTokenExpTime = async (req, res, next) => {
-	const token	= req.headers.cookie.split(' ')[1].split('=')[1];
-
-	if (!token)
+	console.log (req.headers.cookie);
+	if (!req.headers.cookie)
 		return (res.status(401).json({msg: "Unauthorized"}));
 
+	const token	= req.headers.cookie.split(' ')[1].split('=')[1];
 	const dbUsers =	await db.retriveDataUsers();
 	const user =	dbUsers.find(user => {
 		return (user.auth_token === token);
 	});
 
+	console.log("ExpToken", token);
 	if (!user)
 		return(res.status(401).json({msg: "Not authorized"}));
 	jwt.verify(token, process.env.SECRET_TOKEN, async (err, user) => {
