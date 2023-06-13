@@ -20,7 +20,7 @@ const express	= require('express');
 const cors		= require('cors');
 const take		= require('./controllers/estimate.controller.js');
 const valid		= require('./middlewares/add.middleware.js');
-const extAPI	= require('./controllers/external.API.request.js');
+// const extAPI	= require('./controllers/external.API.request.js');
 const userSet	= require('./controllers/user.controller.js');
 const router	= express.Router();
 const path		= require('path');
@@ -38,16 +38,14 @@ router.post('/__cspreport__', (req, res) => {
 });
 
 
-router.post('/private/auth',
-	userSet.userTokenExpTime,
-	(req, res) => {
-		res.set({
-			'Cache-Control': 'max-age=10; must-revalidate',
-		});
-		res.status(200).send("ok!");
-	}
+router.post('/private/auth', userSet.userTokenExpTime,
+	(req, res) => { res.status(200).send("CLEAR!") }
+	// (req, res) => {
+	// 	console.log("Check request", req);
+	// 	res.set({
+	// 		'Cache-Control': 'max-age=10; must-revalidate',
+	// 	});
 );
-
 
 router.post("/start",
 	userSet.userLoginValidation,
@@ -82,19 +80,25 @@ router.post("/new/users",
 );
 
 
-router.post("/token",
+router.get("/check/token",
+	userSet.userTokenMatch,
+	userSet.userTokenExpTime,
+	(req, res) => { res.status(200).send("CLEAR!") }
+);
+
+
+router.get("/shift/token",
 	userSet.userTokenMatch,
 	userSet.userTokenExpTime,
 	take.shiftTokens,
 );
 
 
-
-router.get("/estimates/:token", take.getDataEstimates
+router.get("/estimates/:ref_token", take.getDataEstimates
 );
 
 
-router.put("/estimate/:token",
+router.put("/estimate/:ref_token",
 	userSet.userTokenExpTime,
 	take.updateEstimate
 );
