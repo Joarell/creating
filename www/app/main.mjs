@@ -200,5 +200,6 @@ globalThis.onkeydown = (push) => {
 globalThis.document.getElementById("logout")
 .addEventListener("click", () => {
 	document.cookie = "user=; value=; Max-Age=0; path=/; domain=";
+	document.cookie = "id=; value=; Max-Age=0; path=/; domain=";
 	globalThis.location.replace('/');
 });
