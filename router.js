@@ -20,7 +20,7 @@ const express	= require('express');
 const cors		= require('cors');
 const take		= require('./controllers/estimate.controller.js');
 const valid		= require('./middlewares/add.middleware.js');
-// const extAPI	= require('./controllers/external.API.request.js');
+const extAPI	= require('./controllers/external.API.request.js');
 const userSet	= require('./controllers/user.controller.js');
 const router	= express.Router();
 const path		= require('path');
@@ -108,5 +108,8 @@ router.delete("/delete/estimate/:reference_id",
 	userSet.userTokenExpTime,
 	take.removeEstimates
 );
+
+
+router.get("/currency", extAPI.externalAPICurrency);
 
 module.exports = router;
