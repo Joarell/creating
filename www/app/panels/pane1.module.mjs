@@ -6,7 +6,9 @@ globalThis.onstorage = () => {
 	const getter =	localStorage.getItem("refNumb");
 	const copy =	sessionStorage.getItem("copy1");
 	const clear =	sessionStorage.getItem("pane-1");
+	const mode =	localStorage.getItem("mode");
 
+	changeMode(mode);
 	if (clear) {
 		globalThis.location.reload();
 		sessionStorage.removeItem("pane-1");

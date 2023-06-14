@@ -5,7 +5,9 @@ globalThis.onstorage = () => {
 	const check =	localStorage.getItem("storage");
 	const newList =	sessionStorage.getItem("FETCHED");
 	const clear =	sessionStorage.getItem("clean");
+	const mode =	localStorage.getItem("mode");
 
+	changeMode(mode);
 	if (clear) {
 		globalThis.location.reload();
 		sessionStorage.removeItem("clean");
