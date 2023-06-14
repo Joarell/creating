@@ -43,17 +43,21 @@
 	--gradient1: linear-gradient(90deg, var(--dark-blue1), var(--dark-blue));
 	--shadow1: .3rem .3rem .6rem var(--iframes-bg),
 		-.2rem -.2rem .5rem var(--color4);
-	--inner-shadow: inset .2rem .2rem .5rem var(--pressed),
+	--inner-shadow1: inset .2rem .2rem .5rem var(--pressed),
 		-.2rem -.2rem .5rem var(--iframes-bg);
-	--inner-panel: inset .2rem .2rem .5rem var(--iframes-bg),
-		-.2rem -.2rem .5rem var(--dark-blue2);
+	--inner-shadow-light: inset .1rem .1rem .5rem var(--color5),
+		inset -.1rem -.1rem .5rem var(--iframes-bg);
+	--inner-shadow-dark: inset .2rem .2rem .5rem var(--pressed),
+		-.2rem -.2rem .5rem var(--iframes-bg);
 
 /* ╭────────────────╮
    │ 	main setup  │
    ╰────────────────╯
 */
+	--gold: goldenrod;
 	--bg-col: #BEBBBB;
 	--iframes-bg: #96979C;
+	--table-line: #96979C30;
 	--add-col: #0B8325;
 	--mesure: #2DD751;
 	--result-col: #BF5E30;
@@ -85,12 +89,27 @@ body {
 .light-mode {
 	background-color: var(--bg-col);
 	transition: all 1s linear;
+	--table-font: var(--pressed);
+	--table-bg: var(--light-blue1);
+	--inner-shadow: var(--inner-shadow-dark);
+	--input-bg: var(--bg-col);
+	--input-font-col: var(--color4);
+	--slection-bg: transparent;
+	--crate-btn-col: var(--color3);
 }
 
 
 .dark-mode {
-	background-color: var(--dark-blue2);
+	background-color: var(--color5);
 	transition: all 1s linear;
+	--table-bg: var(--table-line);
+	--table-font: var(--light-blue1);
+	--p__color--mode: var(--color4);
+	--inner-shadow: var(--inner-shadow-light);
+	--input-bg: var(--iframes-bg);
+	--input-font-col: var(--back-gray);
+	--selection-bg: var(--color5);
+	--crate-btn-col: var(--iframes-bg);
 }
 
 
@@ -130,7 +149,7 @@ p {
 	font-size: .7rem;
 	font-family: 'Mitr', sans-serif;
 	font-weight: 500;
-	color: var(--back-gray);
+	color: var(--p__color--mode);
 	opacity: .5;
 }
 
@@ -143,11 +162,17 @@ ul, li, a {
 }
 
 
+label {
+	position: relative;
+	color: var(--iframes-bg);
+	font-size: .8rem;
+}
+
+
 input{
 	box-shadow: var(--inner-shadow);
-	background: transparent;
+	background: var(--input-bg);
 	border-radius: .3rem;
-	outline: none;
 	border: transparent;
 	outline: none;
 	border-bottom: .05rem solid var(--color4);
@@ -157,7 +182,13 @@ input{
 		font-family: Mitr, sans-serif;
 		font-size: .9rem;
 		font-weight: 400;
+		color: var(--input-font-col);
+	}
+	&:focus {
+		left: 0;
 		color: var(--color4);
+		font-size: 1rem;
+		transition: .5s ease-in-out;
 	}
 }
 
@@ -166,8 +197,7 @@ tr, td, th {
 	text-align: center;
 	padding: .1rem .3rem;
 	border-radius: 0.3rem;
-	color: var(--pressed);
-	counter-increment: works-count;
+	color: var(--table-font);
 	font-family: Saira Semi Condensed, sans-serif;
 	font-weight: 500;
 	font-size: .7rem;
@@ -175,15 +205,9 @@ tr, td, th {
 
 
 tbody:nth-child(even) {
-	background: var(--light-blue1);
+	background: var(--table-bg);
 	text-align: center;
 	border-radius: var(--bord);
-	border: 5rem solid var(--color4);
-	counter-reset: works-count;
-	& {
-		counter-increment: counter(works-count);
-		--r_height: works-count;
-	}
 }
 
 
@@ -487,29 +511,26 @@ span + input {
    ╰──────────────────────────────────────────────────────────╯
 */
 
-
 .container__status__counter {
 	border-radius: 1rem;
 	padding: 0 .6rem;
 	border: .1rem solid var(--iframes-bg);
 	box-sizing: border-box;
 	transition: .7s ease-in-out;
+	& > p {
+		color: var(--p__color--mode);
+		border-radius: 1rem;
+		padding: .1rem .3rem;
+		border: .1rem solid var(--iframes-bg);
+		box-sizing: border-box;
+	}
+	&:hover > p {
+		border-radius: 1rem;
+		box-shadow: var(--shadow1);
+		transition: .5s ease-in-out;
+	}
 }
 
-
-.container__status__counter > p {
-	border-radius: 1rem;
-	padding: .1rem .3rem;
-	border: .1rem solid var(--iframes-bg);
-	box-sizing: border-box;
-}
-
-
-.container__status__counter:hover > p {
-	border-radius: 1rem;
-	box-shadow: var(--shadow1);
-	transition: .5s ease-in-out;
-}
 
 /* ╭──────────────────────────────────────────────────────────╮
    │                     Container bottom                     │
@@ -797,12 +818,12 @@ label:hover + .IO__sizes--popup {
 	height: 6rem;
 	text-decoration: underline;
 	text-underline-offset: .09rem;
-	color: var(--color3);
+	color: var(--crate-btn-col);
 }
 
 
 .IO__crate > p {
-	color: var(--color3);
+	color: var(--crate-btn-col);
 	font-size: 1rem;
 	font-family: Mitr, sans-serif;
 	font-weight: 500;
@@ -947,6 +968,7 @@ label:hover + .IO__sizes--popup {
 .accordion-panel:has([aria-expanded="false"]) {
 	width: var(--accordion-width, 25.5%);
 	transition: width 2s ease-in-out;
+	fill: var(--p__color--mode);
 }
 
 
@@ -1040,8 +1062,7 @@ label:hover + .IO__sizes--popup {
 	border-radius: var(--input-menu-radius, 0);
 	margin: var(--input-menu-margin, 0);
 	border: var(--input-menu-border, 0);
-	transition: padding 2s ease-in-out,
-		transform 1s ease;
+	transition: padding 2s ease-in-out, transform 1s ease;
 }
 
 
@@ -1093,6 +1114,18 @@ label:hover + .IO__sizes--popup {
 	justify-content: space-evenly;
 	gap: var(--input-menu-margin);
 	animation: open-pane 3s ease;
+	& > select option {
+		background-color: var(--dark-blue1);
+		line-height: 0;
+		border: .1rem solid var(--light-blue1);
+		box-shadow: none;
+	}
+	& > select, input, label {
+		font-family: 'Mitr', sans-serif;
+		font-size: .85rem;
+		font-weight: 500;
+		background-color: var(--input-bg);
+	}
 }
 
 
@@ -1251,22 +1284,9 @@ label + input {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-}
-
-
-input {
-	width: 3rem;
-	transition: .5s ease-in-out;
-	&:focus {
-		left: 0;
-		color: var(--color4);
-		font-size: 1rem;
+	& input {
+		width: 3rem;
 	}
 }
 
 
-label {
-	position: relative;
-	color: var(--iframes-bg);
-	font-size: .8rem;
-}
