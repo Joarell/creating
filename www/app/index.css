@@ -96,6 +96,7 @@ body {
 	--input-font-col: var(--color4);
 	--slection-bg: transparent;
 	--crate-btn-col: var(--color3);
+	--p__color--mode: var(--back-gray);
 }
 
 
@@ -169,7 +170,7 @@ label {
 }
 
 
-input{
+input {
 	box-shadow: var(--inner-shadow);
 	background: var(--input-bg);
 	border-radius: .3rem;
@@ -190,6 +191,12 @@ input{
 		font-size: 1rem;
 		transition: .5s ease-in-out;
 	}
+}
+
+
+
+label + input {
+	margin-left: .5rem;
 }
 
 
@@ -1098,7 +1105,6 @@ label:hover + .IO__sizes--popup {
 
 .get__currency, .get__measure {
 	flex-grow: 2;
-	color: var(--back-gray);
 }
 
 
@@ -1113,18 +1119,18 @@ label:hover + .IO__sizes--popup {
 	flex-direction: flex-start;
 	justify-content: space-evenly;
 	gap: var(--input-menu-margin);
-	animation: open-pane 3s ease;
+	animation: open-pane 2.5s ease;
 	& > select option {
 		background-color: var(--dark-blue1);
 		line-height: 0;
 		border: .1rem solid var(--light-blue1);
 		box-shadow: none;
 	}
-	& > select, input, label {
+	& >	select {
 		font-family: 'Mitr', sans-serif;
 		font-size: .85rem;
 		font-weight: 500;
-		background-color: var(--input-bg);
+		background: var(--input-bg);
 	}
 }
 
@@ -1158,7 +1164,7 @@ label:hover + .IO__sizes--popup {
 	text-align: center;
 	background: transparent;
 	height: var(--input-menu-units-height, 0);
-	box-shadow: var(--shadow1);
+	box-shadow: var(--inner-shadow);
 	font-weight: 700;
 	transition: all 2s ease-in-out, transform 2s ease;
 }
@@ -1177,17 +1183,9 @@ label:hover + .IO__sizes--popup {
 	margin: 2.5rem 0 0 0;
 }
 
-
-label + input {
-	margin-left: .5rem;
-}
-
-
 .IO label {
 	cursor: pointer;
 }
-
-
 
 
 /* ╭────────────────────────────────────────────────────────╮
