@@ -37,7 +37,6 @@ globalThis.onload = () => {
 function changeMode (color) {
 	const body = document.body.classList;
 
-	console.log(color);
 	body.remove("light-mode");
 	body.remove("dark-mode");
 	return (
