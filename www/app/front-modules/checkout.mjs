@@ -75,6 +75,9 @@ document.getElementById("unit-seg").addEventListener("change", () => {
 export const crate = () => {
 	browserStoragePrepare();
 	mod.crate();
+	document.querySelector(".result").setAttribute("aria-hidden", false);
+	document.querySelector(".result").setAttribute("aria-expanded", true);
+	setTimeout(() => globalThis.scroll({top: 10000, behavior: "smooth"}), 1000);
 };
 
 export const clearAll = () => {
@@ -92,6 +95,8 @@ export const clearAll = () => {
 		localStorage.setItem("mode", mode);
 		localStorage.setItem("metrica", unit);
 		globalThis.document.getElementById("input_estimate").value = "";
+		document.querySelector(".result").setAttribute("aria-hidden", true);
+		document.querySelector(".result").setAttribute("aria-expanded", false);
 	}
 	mod.cleanInputs();
 };

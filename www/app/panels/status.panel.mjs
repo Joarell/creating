@@ -52,7 +52,8 @@ export function statusTablePopulate(data) {
 	let codes;
 	const doc =					JSON.parse(data);
 	const { reference, list } =	doc;
-
+	const mode =						localStorage.getItem("mode");
+		
 	localStorage.getItem("metrica") === "in - inches" ?
 		metric = "in - inches":
 		metric = "cm - centimeters";
@@ -65,6 +66,7 @@ export function statusTablePopulate(data) {
 	sessionStorage.setItem("codes", JSON.stringify(codes));
 	localStorage.setItem("refNumb", reference);
 	localStorage.setItem("metrica", metric);
+	localStorage.setItem("mode", mode);
 	sessionStorage.removeItem("FETCHED");
 	globalThis.location.reload();
 };
