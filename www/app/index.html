@@ -15,7 +15,7 @@
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)"> -->
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
 	<script type="module" src="./main.mjs"></script>
-	<script type="module" src="./side-menu/interactive.mjs"></script>
+	<script type="module" src="./side-menu/interactive.menu.mjs"></script>
 	<script type="module" src="./side-menu/search.menu.mjs"></script>
 	<script type="module" src="./side-menu/menu.currency.conversion.mjs"></script>
 	<script type="module" src="./side-menu/menu.units.mjs"></script>
@@ -178,9 +178,8 @@
 						<p id="cub-meter">Cub: 0</p>
 						<p id="cub-air">Air-Cub: 0</p>
 					</div>
-					<!-- TODO: refactor the class name to container__status -->
 					<div class="IO__press__crate">
-						<button name="crate" class="IO__crate" onclick="globalThis.fns.crate()">
+						<button name="waves" class="IO__crate" onclick="globalThis.fns.crate()">
 							<p class="IO__crate__txt">Crate!</p>
 						</button>
 						<span name="waves" class="IO__crate--shadow1 wave"></span>
@@ -189,7 +188,7 @@
 				</div>
 			</div>
 			<div class="container-bottom">
-				<div class="result container--span" aria-hidden="true">
+				<div class="result container--span" aria-hidden="true" aria-expanded="false" aria-controls="IO__crate" role="region" aria-labelledby="results">
 					<h2>= Results</h2>
 					<div class="container__results result--panels">
 						<div class="copy-pane1">
@@ -257,9 +256,9 @@
 							</h3>
 						</div>
 						<div class="menu accordion-panel units-conversion" aria-hidden="true"
-							aria-labelledby="units-header" role="region">
+							aria-labelledby="units-conversion" role="region" id="measures">
 							<h3 class="" id="units-header">
-								<button class="trigger-menu menu units" aria-controls="units--content"
+								<button class="trigger-menu menu units" aria-controls="units-conversion"
 									aria-expanded="false">
 									<span class="menu__option--text">Units</span>
 									<svg aria-hidden="true" class="menu-icon">
@@ -319,17 +318,17 @@
 				</button>
 			</div>
 			<div aria-hidden="true" class="fan-options" aria-controls="menu-options">
-				<a aria-hidden="false" role="button" href="#search" id="fetch-mob">
+				<a aria-hidden="true" role="button" href="#search" id="fetch-mob">
 					<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none" id="fetch-mob">
 						<use href="#lupa-material" id="fetch-mob"></use>
 					</svg>
 				</a>
-				<a aria-hidden="false" role="button" href="" id="currency-mob">
+				<a aria-hidden="true" role="button" href="#exchange" id="currency-mob">
 					<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none" id="currency-mob">
 						<use href="#exchange-material" id="currency-mob"></use>
 					</svg>
 				</a>
-				<a aria-hidden="false" role="button" href="" id="units-mob">
+				<a aria-hidden="true" role="button" href="#measures" id="units-mob">
 					<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none" id="units-mob">
 						<use href="#regua-material" id="units-mob"></use>
 					</svg>
@@ -483,4 +482,4 @@
 	</footer>
 </body>
 
-</html>
+</html

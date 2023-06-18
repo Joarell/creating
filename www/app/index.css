@@ -54,6 +54,7 @@
    │ 	main setup  │
    ╰────────────────╯
 */
+	--state: running;
 	--gold: goldenrod;
 	--bg-col: #BEBBBB;
 	--iframes-bg: #96979C;
@@ -571,15 +572,11 @@ span + input {
 
 .container__results {
 	display: flex;
-	flex-basis: 100%;
+	flex-wrap: wrap;
 	flex-direction: row;
 	gap: 1rem;
-	justify-content: center;
-}
-
-
-.container__results div > button {
-	margin: .5rem 0 0 6rem;
+	justify-content: space-evenly;
+	align-content: center;
 }
 
 
@@ -599,9 +596,22 @@ span + input {
 }
 
 
+.copy-pane1, .copy-pane2{
+	display: inherit;
+	align-items: center;
+	flex-direction: column;
+}
+
+
+.copy {
+	margin-top: 1rem;
+	position: relative;
+}
+
 .copy-message {
 	position: absolute;
-	margin: -5rem 0rem 0rem -.5rem;
+	padding: 0;
+	margin: -5rem 0rem 0rem .5rem;
 }
 
 
@@ -684,7 +694,8 @@ label:hover + .IO__sizes--popup {
 /* ADD button style */
 .IO__press--btn {
 	color: var(--color4);
-	padding: .5rem 2rem;
+	height: 2.5rem;
+	width: 5rem;
 	background: transparent;
 	border: 0;
 	border-radius: .8rem;
@@ -756,6 +767,9 @@ label:hover + .IO__sizes--popup {
 		transition: .3s ease-in-out;
 		background: red;
 	}
+	&:active ~ span {
+		animation-play-state: paused;
+	}
 }
 
 
@@ -826,6 +840,7 @@ label:hover + .IO__sizes--popup {
 	text-decoration: underline;
 	text-underline-offset: .09rem;
 	color: var(--crate-btn-col);
+	isolation: isolate;
 }
 
 
@@ -862,8 +877,8 @@ label:hover + .IO__sizes--popup {
 	);
 	transition: all .2s linear;
 	animation: waves 2000ms linear infinite;
+	animation-play-state: running;
 	cursor: pointer;
-	/* animation-play-state: var(--state, paused); */
 }
 
 
@@ -877,8 +892,8 @@ label:hover + .IO__sizes--popup {
 	);
 	transition: all .2s linear;
 	animation: waves 2000ms linear 1000ms infinite;
+	animation-play-state: running;
 	cursor: pointer;
-	/* animation-play-state: var(--state, paused); */
 }
 
 
@@ -1080,8 +1095,9 @@ label:hover + .IO__sizes--popup {
 .menu__fetch {
 	display: flex;
 	justify-content: center;
+	flex-wrap: wrap;
 	align-self: center;
-	flex-direction: column;
+	flex-direction: row;
 	transition: all 2s ease-in-out, transform 2s ease;
 }
 

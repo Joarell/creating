@@ -479,7 +479,7 @@
 		height: 1.4rem;
 		transition: all 500ms ease-in-out;
 		&:hover {
-			fill: var(--dark);
+			fill: var(--color1);
 		}
 	}
 }
@@ -835,7 +835,7 @@
 
 	.mode {
 		& label > svg {
-			fill: var(--color4);
+			fill: var(--p__color--mode);
 			width: 1rem;
 			height: 1rem;
 			transition: all 500ms ease-in-out;
@@ -847,12 +847,12 @@
 
 
 	.logout-icon {
-		fill: var(--color4);
+		fill: var(--p__color--mode);
 		width: 1rem;
 		height: 1rem;
 		transition: all 500ms ease-in-out;
 		&:hover {
-			fill: var(--dark);
+			fill: var(--color1);
 		}
 	}
 
@@ -917,6 +917,9 @@
 			margin-top: 2rem;
 			font-size: .5rem;
 			font-weight: 700;
+		}
+		& > svg {
+			fill: var(--p__color--mode);
 		}
 		&:hover {
 			transition: all .5s ease-in-out;
@@ -991,13 +994,17 @@
 		& a:target {
 			display: true;
 		}
+		& a > svg {
+			fill: var(--input-font-col);
+		}
 		& > * {
 			flex-direction: column-reverse;
 			flex-basis: 100%;
 			position: absolute;
-			border-radius: 30%;
+			border-radius: 1rem;
 			border: transparent;
 			background: var(--bg-col);
+			box-shadow: var(--inner-shadow);
 		}
 		& a:nth-child(1) {
 			line-height: 0;
@@ -1112,8 +1119,8 @@
 	}
 
 
-	.result,
-	.accordion > div {
+	.result:is([aria-hidden="true"]),
+	.accordion div:is([aria-hidden="true"]) {
 		display: none;
 	}
 
@@ -1129,7 +1136,9 @@
 	
 	.result:is([aria-hidden="false"]) {
 		display: block;
-		& > .result--panels {
+		animation: emerge 2.5s linear;
+		animation-fill-mode: forwards;
+		.result--panels {
 			display: flex;
 			flex-wrap: wrap;
 			flex-direction: column;
@@ -1489,7 +1498,8 @@
 		gap: .3rem;
 		& {
 			width: 30%;
-			height: 15%;
+			max-height: 10%;
+			margin-top: 1rem;
 			position: absolute
 		}
 		& > * {
@@ -1599,6 +1609,9 @@
 			font-size: .5rem;
 			font-weight: 700;
 		}
+		& > svg {
+			fill: var(--p__color--mode);
+		}
 		&:hover {
 			transition: all .5s ease-in-out;
 			transform: translateY(.1rem);
@@ -1657,7 +1670,7 @@
 	}
 
 
-	.fan-options {
+	.fan-options:is([aria-hidden="true"]) {
 		display: none;
 	}
 	
@@ -1672,6 +1685,9 @@
 		& a:target {
 			display: unset;
 		}
+		& a > svg {
+			fill: var(--input-font-col);
+		}
 		& > * {
 			flex-direction: column-reverse;
 			flex-basis: 100%;
@@ -1679,6 +1695,7 @@
 			border-radius: 30%;
 			border: transparent;
 			background: var(--bg-col);
+			box-shadow: var(--inner-shadow);
 		}
 		& a:nth-child(1) {
 			line-height: 0;
@@ -1693,8 +1710,8 @@
 		}
 		& a:nth-child(3) {
 			line-height: 0;
-			animation: units 300ms ease;
-			animation-delay: .6s;
+			animation: units 200ms ease;
+			animation-delay: .3s;
 			animation-fill-mode: forwards;
 		}
 	}
@@ -1792,8 +1809,8 @@
 	}
 
 
-	.result,
-	.accordion > div {
+	.result:is([aria-hidden="true"]),
+	.accordion div:is([aria-hidden="true"]) {
 		display: none;
 	}
 
@@ -1809,11 +1826,13 @@
 	
 	.result:is([aria-hidden="false"]) {
 		display: block;
+		animation: emerge 2.5s linear;
+		animation-fill-mode: forwards;
 		& > .result--panels {
 			display: flex;
 			flex-wrap: wrap;
-			flex-direction: column;
-			justify-content: center;
+			flex-direction: row;
+			justify-content: space-evenly;
 			gap: 1rem;
 		}
 	}
