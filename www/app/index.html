@@ -21,6 +21,7 @@
 	<script type="module" src="./side-menu/menu.units.mjs"></script>
 	<script type="module" src="./front-modules/mode.color.mjs"></script>
 	<script type="module" src="./panels/clip.board.caller.mjs"></script>
+	<script type="module" src="./plotter/layers.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
 	<link rel="manifest" href="../manifest.json">
 
@@ -99,7 +100,7 @@
 						</form>
 					</div>
 					<div class="section__menu--btn">
-						<a role="button" class="layers-btn" data-popup="Logout" id="layers">
+						<a role="button" class="layers-btn" data-popup="" id="crate-layers">
 							<svg aria-hidden="true" class="logout-icon" preserveAspectRatio="none">
 								<use href="#layer-material"></use>
 							</svg>
@@ -243,14 +244,10 @@
 								<span class="menu__option--text">Currency</span>
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__currency">
-										<select size="2" id="coin1" class="currency-menu">
-											<input type="text" name="currency" class="get__currency menu__input--form"
-												id="coin1-input" required>
-										</select>
-										<select size="2" id="coin2" class="currency-menu">
-											<input type="text" name="currency" class="get__currency menu__input--form"
-												id="coin2-input" required>
-										</select>
+										<select id="coin1" class="currency-menu"> </select>
+										<input type="text" name="currency" class="get__currency menu__input--form" id="coin1-input" required>
+										<select id="coin2" class="currency-menu"> </select>
+										<input type="text" name="currency" class="get__currency menu__input--form" id="coin2-input" required>
 									</form>
 								</div>
 							</h3>
@@ -268,20 +265,18 @@
 								<span lang="en" class="menu__option--text">Units</span>
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__units" id="units">
-										<select size="2" id="units1">
+										<select id="units1">
 											<option selected>inches</option>
 											<option>meters</option>
 											<option>centimeters</option>
 										</select>
-										<input type="text" name="measure" class="get__measure menu__input--form"
-											id="input-unit1" required value=0>
-										<select size="2" id="units2">
+										<input type="text" name="measure" class="get__measure menu__input--form" id="input-unit1" required value=0>
+										<select id="units2">
 											<option selected>centimeters</option>
 											<option>inches</option>
 											<option>meters</option>
 										</select>
-										<input type="text" name="measures" class="get__measure menu__input--form"
-											id="input-unit2" required value=0>
+										<input type="text" name="measures" class="get__measure menu__input--form" id="input-unit2" required value=0>
 									</form>
 								</div>
 							</h3>
@@ -333,6 +328,11 @@
 						<use href="#regua-material" id="units-mob"></use>
 					</svg>
 				</a>
+			</div>
+		</div>
+		<div class="plotter" id="layers">
+			<div class="layer">
+				<svg class="crate-layer"></svg>
 			</div>
 		</div>
 		<svg width="0" height="0" class="hidden board-icon" preserveAspectRatio="none">

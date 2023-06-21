@@ -110,7 +110,7 @@ body {
 	--inner-shadow: var(--inner-shadow-light);
 	--input-bg: var(--iframes-bg);
 	--input-font-col: var(--back-gray);
-	--selection-bg: var(--color5);
+	--selection-bg: var(--add-col);
 	--crate-btn-col: var(--iframes-bg);
 }
 
@@ -481,6 +481,7 @@ tbody:nth-child(even) {
 */
 
 /* Box shape */
+.plotter,
 .container__insert,
 .container__status,
 .result-left,
@@ -514,6 +515,7 @@ span + input {
 	margin-left: .5rem;
 }
 
+
 /* ╭──────────────────────────────────────────────────────────╮
    │                     Status container                     │
    ╰──────────────────────────────────────────────────────────╯
@@ -524,7 +526,7 @@ span + input {
 	padding: 0 .6rem;
 	border: .1rem solid var(--iframes-bg);
 	box-sizing: border-box;
-	transition: .7s ease-in-out;
+	transition: 1s ease-in-out;
 	& > p {
 		color: var(--p__color--mode);
 		border-radius: 1rem;
@@ -1137,16 +1139,18 @@ label:hover + .IO__sizes--popup {
 	gap: var(--input-menu-margin);
 	animation: open-pane 2.5s ease;
 	& > select option {
-		background-color: var(--dark-blue1);
+		background: var(--color4);
 		line-height: 0;
-		border: .1rem solid var(--light-blue1);
-		box-shadow: none;
+		border: .1rem solid var(--add-col);
+		box-shadow: var(--inner-shadow);
 	}
-	& >	select {
+	& > select {
 		font-family: 'Mitr', sans-serif;
 		font-size: .85rem;
 		font-weight: 500;
-		background: var(--input-bg);
+		background: var(--light-blue3);
+		color: var(--color5);
+		box-shadow: var(--inner-shadow);
 	}
 }
 
@@ -1178,10 +1182,7 @@ label:hover + .IO__sizes--popup {
 	width: var(--input-menu-units-width, 0);
 	border-radius: var(--input-menu-units-radius, 0);
 	text-align: center;
-	background: transparent;
 	height: var(--input-menu-units-height, 0);
-	box-shadow: var(--inner-shadow);
-	font-weight: 700;
 	transition: all 2s ease-in-out, transform 2s ease;
 }
 
