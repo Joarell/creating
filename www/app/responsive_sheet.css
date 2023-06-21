@@ -503,7 +503,7 @@
 			font-size: .7rem;
 			transition: fill 1s ease-in-out;
 		}
-		.crate-layer > rect:hover {
+		.crate-layer rect:hover {
 			fill: var(--color3);
 		}
 		.crate-layer {
