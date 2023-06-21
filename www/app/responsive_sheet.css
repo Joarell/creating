@@ -482,6 +482,36 @@
 			fill: var(--color1);
 		}
 	}
+
+
+	/* ╭──────────────────────────────────────────────────────────╮
+	   │                   Layer plotter setup.                   │
+	   ╰──────────────────────────────────────────────────────────╯
+	*/
+
+	.plotter {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		flex-basis: 100%;
+		& {
+			margin: 5% 20%;
+		}
+		.crate-layer > * {
+			font-family: 'Mitr', sans-serif;
+			font-weight: 400;
+			font-size: .7rem;
+			transition: fill 1s ease-in-out;
+		}
+		.crate-layer > rect:hover {
+			fill: var(--color3);
+		}
+		.crate-layer {
+			border-radius: 1rem;
+			border: .1rem solid var(--iframes-bg);
+			box-shadow: var(--inner-shadow);
+		}
+	}
 }
 
 
@@ -891,6 +921,7 @@
 	.IO__press-mobile > * {
 		position: fixed;
 		inset: 0;
+		width: 90%;
 		& > button > * {
 			pointer-events: none;
 		}
