@@ -79,7 +79,7 @@ export function labor(crate_dim, works, layer, crate) {
 	crate_dim = Array.from(fitingCrate(crate_dim, piece));
 	crate.push(works.splice(len, 1));
 	if (spin[0] != 0)
-		crate[crate.length - 1][0].push("S");
+		crate[crate.length - 1][0].push("");
 	return labor(crate_dim, works, layer, crate);
 }
 
