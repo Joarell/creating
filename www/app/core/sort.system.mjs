@@ -71,10 +71,10 @@ export function quickSort(works, index) {
 	if (works.length <= 1)
 		return works;
 
-	let left = [];
-	let right = [];
+	const left = [];
+	const right = [];
+	const pivot = [works[0]];
 	let i = 0;
-	let pivot = [works[0]];
 
 	while (i++ < works.length - 1)
 		works[i][index] <= pivot[0][index] ?
