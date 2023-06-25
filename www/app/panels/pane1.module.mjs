@@ -76,6 +76,7 @@ export function createHeader(table) {
 			<th>DEPTH</th>
 			<th>HEIGHT</th>
 			<th>CUBm³</th>
+			<th>UNIT</th>
 		</tr>
 	`
 	return(table.append(head));

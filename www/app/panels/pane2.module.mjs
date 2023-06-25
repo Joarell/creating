@@ -76,6 +76,7 @@ export function createHeader(table){
 			<th>DEPTH</th>
 			<th>HEIGHT</th>
 			<th>CUBm³</th>
+			<th>STATE</th>
 		</tr>
 	`
 	return(table.appendChild(head));
@@ -112,7 +113,7 @@ export function showCrates2(estimate) {
 					element.innerHTML += crate.map((info, index) => {
 						return (
 						index === 0 ? `<tr><td>${info}</td>`:
-						index === 5 ? `<td>${info}</td><td>${metric}</td></tr>`:
+						index === 5 ? `<td>${info}</td></tr>`:
 							`<td>${info}</td>`
 						);
 					}, 0).join("");
