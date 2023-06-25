@@ -489,11 +489,13 @@
 	   ╰──────────────────────────────────────────────────────────╯
 	*/
 
-	.plotter {
+	.plotter:is([aria-hidden="false"]) {
 		display: flex;
 		justify-content: center;
 		flex-wrap: wrap;
 		flex-basis: 100%;
+		/* animation: emerge 1.5s linear; */
+		/* animation-fill-mode: forwards; */
 		& {
 			margin: 5% 20%;
 		}
@@ -511,6 +513,10 @@
 			border: .1rem solid var(--iframes-bg);
 			box-shadow: var(--inner-shadow);
 		}
+	}
+
+	.plotter:is([aria-hidden="true"]) {
+		display: none;
 	}
 }
 
@@ -1150,6 +1156,7 @@
 	}
 
 
+	.plotter:is([aria-hidden="true"]),
 	.result:is([aria-hidden="true"]),
 	.accordion div:is([aria-hidden="true"]) {
 		display: none;
