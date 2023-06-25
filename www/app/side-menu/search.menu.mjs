@@ -3,9 +3,9 @@
 export async function checkBrowserDB(doc) {
 	const workerDB =	new Worker('./panels/worker.IDB.crates.mjs');
 	const checkIDB =	new Promise((resolve, reject) => {
-		workerDB.postMessage(doc)
+		workerDB.postMessage(doc);
 		workerDB.onmessage = (result => {
-			result !== undefined ? resolve(result.data): undefined;
+			result !== undefined ? resolve(result.data): reject(undefined);
 		})
 	});
 	const data =		await checkIDB;
