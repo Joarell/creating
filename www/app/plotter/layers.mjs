@@ -16,13 +16,15 @@ globalThis.document.getElementById("crate-layers")
 		));
 	document.querySelector(".plotter").setAttribute("aria-hidden", false);
 	document.querySelector(".plotter").setAttribute("aria-expanded", true);
+	setTimeout(() => globalThis.scroll({top: 1000, behavior: "smooth"}), 1200);
 	processStart(estimate);
+	setTimeout(() => globalThis.scroll({top: 1000, behavior: "smooth"}), 2000);
 });
 
 
 async function processStart(doc) {
 	const { crates } =	await getCrates(doc);
-	const display =		document.getElementById('layers');
+	const display =		document.getElementById('plotter__layers');
 
 	display.appendChild(plotter(crates));
 };
@@ -75,7 +77,6 @@ function reduceSpace(art, layer) {
 	const checkY = art[3] === layer[1];
 	const turnX = art[1] < layer[0];
 
-	console.log('work', art);
 	if (checkX && checkY) {
 		layer[0] = 0;
 		layer[1] = 0;
@@ -97,21 +98,15 @@ function reduceSpace(art, layer) {
 function worksPosition({ sizeX, sizeY }, space, crate) {
 	const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
 	const { pixelX, pixelY } =	drawPoint(space, crate);
-	const PADX =				6;
-	const PADY =				5;
+	const PAD =				6;
 	const MAXSIZEX =			0.991;
 	const MAXSIZEY =			0.991;
 
-	console.log(pixelX, pixelY);
 	if (space[0] === crate[0])
-		rect.setAttribute("x", PADX);
+		rect.setAttribute("x", PAD);
 	else
-		rect.setAttribute("x", pixelX + PADX);
-	rect.setAttribute("y", pixelY + PADY);
-	rect.setAttribute("rx", 20);
-	rect.setAttribute("ry", 20);
-	rect.setAttribute("fill", "transparent");
-	rect.setAttribute("stroke", "#03e9f4");
+		rect.setAttribute("x", pixelX + PAD);
+	rect.setAttribute("y", pixelY + PAD);
 	rect.setAttribute("width", sizeX * MAXSIZEX);
 	rect.setAttribute("height", sizeY * MAXSIZEY);
 	return(rect);
@@ -126,21 +121,21 @@ function drawPoint (layer, crateSize) {
 	const POSX =		X === 1 ? DRAWPIXEL: X * viewSize;
 	const POSY =		Y === 1 ? DRAWPIXEL: Y * viewSize;
 
-	console.log(viewSize);
 	return ({ pixelX: POSX, pixelY: POSY });
 };
 
 
 function textOnCenter(x, y, work, layer, crate) {
 	const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+	const PADX =	14;
 	const MIDDLEX = x * 1.5;
 	const CENTERX = x * 0.5;
 
 	if (layer[0] !== crate[0]){
-		text.setAttribute("x", MIDDLEX);
+		text.setAttribute("x", MIDDLEX - PADX);
 	}
 	else
-		text.setAttribute("x", CENTERX);
+		text.setAttribute("x", CENTERX - PADX);
 	text.setAttribute("y", y / 2);
 	text.innerHTML = work[0];
 	return (text);

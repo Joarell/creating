@@ -1,8 +1,5 @@
 
 
-import { quickSort } from "../core/sort.system.mjs";
-
-
 export async function getCrates(doc) {
 	const dataIDB =	new Worker('./panels/worker.IDB.crates.mjs');
 	return(new Promise((resolve, reject) => {
@@ -89,7 +86,6 @@ export function mobileView(sizes) {
 	let layerLength;
 	let layerHeight;
 
-	console.log(MOBILEWIDTH, MOBILEHEIGHT);
 	if (sizes[0] > sizes[1]) {
 		layerLength = MOBILEWIDTH;
 		layerHeight = (sizes[1] / sizes[0]) * MOBILEHEIGHT;
