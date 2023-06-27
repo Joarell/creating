@@ -17,3 +17,84 @@ export async function getCrates(doc) {
 		})
 	);
 };
+
+
+export function spaceAvailable (art, space) {
+	const spaceX =	art[1] <= space[0];
+	const spaceY =	art[3] <= space[1];
+	const turnX =	art[1] <= space [1];
+	const turnY =	art[3] <= space [0];
+
+	if (spaceX && spaceY) {
+		return (true);
+	}
+	else if(turnX || turnY) {
+		return (true);
+	};
+	return (false);
+};
+
+
+export function proportion (val, pixArea, layer) {
+	const layerArea = (val / layer) * pixArea;
+
+	return (layerArea);
+};
+
+
+export function getScreenProportion(screenSize, layerSize) {
+	const DESKTOP =	1024;
+
+	return(
+		screenSize >= DESKTOP ? deskTopView(layerSize): mobileView(layerSize)
+	);
+};
+
+
+export function screenSize() {
+	const DESKTOP =	900;
+	const MOBILE =	198;
+	const screen =	1024;
+	const view =	globalThis.screen.availWidth >= screen ? DESKTOP: MOBILE;
+
+	return (view);
+};
+
+
+export function deskTopView(sizes) {
+	const MAXSIZE =	900;
+	const PADUP =	4;
+	const PADDOWN =	10;
+	let layerLength;
+	let layerHeight;
+
+	if (sizes[0] > sizes[1]) {
+		layerLength = MAXSIZE;
+		layerHeight = (sizes[1] / sizes[0]) * MAXSIZE;
+	}
+	else {
+		layerHeight = MAXSIZE;
+		layerLength = (sizes[0] / sizes[1]) * MAXSIZE;
+	}
+	return ({x: layerLength + PADUP, y: layerHeight + PADDOWN});
+};
+
+
+export function mobileView(sizes) {
+	const MOBILEWIDTH =		395;
+	const MOBILEHEIGHT =	198;
+	const PADUP =			4;
+	const PADDOWN =			10;
+	let layerLength;
+	let layerHeight;
+
+	if (x > y) {
+		layerLength = MOBILEWIDTH;
+		layerHeight = (sizes[1] / sizes[0]) * MOBILEHEIGHT;
+	}
+	else {
+		layerHeight = MOBILEHEIGHT;
+		layerLength = (sizes[0] / sizes[1]) * MOBILEWIDTH;
+	}
+	return ({x: layerLength + PADUP, y: layerHeight + PADDOWN});
+};
