@@ -77,7 +77,7 @@ export const crate = () => {
 	mod.crate();
 	document.querySelector(".result").setAttribute("aria-hidden", false);
 	document.querySelector(".result").setAttribute("aria-expanded", true);
-	setTimeout(() => globalThis.scroll({top: 10000, behavior: "smooth"}), 1000);
+	setTimeout(() => globalThis.scroll({top: 1000, behavior: "smooth"}), 1000);
 };
 
 export const clearAll = () => {
