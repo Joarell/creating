@@ -172,7 +172,7 @@
 			<div class="container__status">
 				<h2 class="title">N - List</h2>
 				<div class="container__status__pane">
-					<iframe class="container__status__pane__frame" title="Work's list" id="status-frame"
+					<iframe loading="lazy" class="container__status__pane__frame" title="Work's list" id="status-frame"
 						src="./panels/status_panel.html" sandbox="allow-same-origin allow-scripts"></iframe>
 					<div class="container__status__counter">
 						<p id="count">Count works: 0 </p>
@@ -193,14 +193,14 @@
 					<h2>= Results</h2>
 					<div class="container__results result--panels">
 						<div class="copy-pane1">
-							<iframe class="container__results--open" title="Works set" src="./panels/pane1_crates.html"
+							<iframe loading="lazy" class="container__results--open" title="Works set" src="./panels/pane1_crates.html"
 								sandbox="allow-same-origin allow-scripts"></iframe>
 							<button class="IO__press--btn copy" id="copy-pane1">COPY
 								<p class="copy-message" id="copy-message">Copied!</p>
 							</button>
 						</div>
 						<div class="copy-pane2">
-							<iframe class="container__results--crates" title="List done"
+							<iframe loading="lazy" class="container__results--crates" title="List done"
 								src="./panels/pane2_crates_open.html"
 								sandbox="allow-same-origin allow-scripts"></iframe>
 							<button class="IO__press--btn copy" id="copy-pane2">COPY
@@ -331,6 +331,7 @@
 			</div>
 		</div>
 		<div class="plotter" id="layers" aria-hidden="true" aria-controls="crate-layers" aria-expanded="false">
+			<h2>//// Layers</h2>
 			<div class="layer">
 				<svg class="crate-layer"></svg>
 			</div>
