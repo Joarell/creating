@@ -11,7 +11,7 @@
 		grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
 		column-gap: var(--colg);
 		row-gap: var(--rowg);
-		padding: 5% 20%;
+		padding: 3% 20%;
 	}
 
 	/* ╭───────────────────╮
@@ -446,7 +446,7 @@
 		& {
 			width: 11%;
 			height: 7%;
-			margin: 4% 1% 0 5%;
+			margin: 2% 1% 0 5%;
 			position: fixed;
 		}
 		& > * {
@@ -502,7 +502,7 @@
 		animation-fill-mode: forwards;
 		transition: all 2s linear;
 		& {
-			margin: 3% 20%;
+			margin: 0% 20%;
 		}
 		& > h2 {
 			min-width: 100%;
@@ -517,11 +517,17 @@
 			font-size: .7rem;
 		}
 		.crate-layer text {
-			fill: var(--p__color--mode);
+			fill: var(--table-font);
 			transition: fill 1.5s ease;
 		}
+		.crate-layer rect {
+			rx: 2rem;
+			ry: 2rem;
+			fill: transparent;
+			stroke: var(--color8);
+		}
 		.crate-layer rect:hover {
-			fill: var(--dark-blue);
+			fill: var(--table-bg);
 			transition: fill 1s ease-in-out;
 		}
 		.crate-layer {
@@ -536,6 +542,7 @@
 
 @keyframes fade-open {
 	from {
+		inset: 0;
 		opacity: 0;
 		width: 0;
 		height: 0;
@@ -1261,6 +1268,12 @@
 		.crate-layer text {
 			fill: var(--p__color--mode);
 			transition: fill 1.5s ease;
+		}
+		.crate-layer rect {
+			rx: 2rem;
+			ry: 2rem;
+			fill: transparent;
+			stroke: var(--color8);
 		}
 		.crate-layer rect:hover {
 			fill: var(--dark-blue);
@@ -1997,6 +2010,12 @@
 		.crate-layer text {
 			fill: var(--p__color--mode);
 			transition: fill 1.5s ease;
+		}
+		.crate-layer rect {
+			rx: 2rem;
+			ry: 2rem;
+			fill: transparent;
+			stroke: var(--color8);
 		}
 		.crate-layer rect:hover {
 			fill: var(--dark-blue);
