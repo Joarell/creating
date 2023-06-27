@@ -52,10 +52,12 @@ export function getScreenProportion(screenSize, layerSize) {
 
 
 export function screenSize() {
-	const DESKTOP =	900;
-	const MOBILE =	198;
-	const screen =	1024;
-	const view =	globalThis.screen.availWidth >= screen ? DESKTOP: MOBILE;
+	const DESKTOP =			900;
+	const displaySetup =	0.880;
+	const screen =			1024;
+	const DISPLAY =			globalThis.screen.availWidth;
+	const MOBILEWIDTH =		DISPLAY * displaySetup
+	const view =			DISPLAY >= screen ? DESKTOP: MOBILEWIDTH;
 
 	return (view);
 };
@@ -81,14 +83,14 @@ export function deskTopView(sizes) {
 
 
 export function mobileView(sizes) {
-	const MOBILEWIDTH =		395;
-	const MOBILEHEIGHT =	198;
-	const PADUP =			4;
-	const PADDOWN =			10;
+	const displaySetup =		0.880;
+	const MOBILEWIDTH =		globalThis.screen.availWidth * displaySetup
+	const MOBILEHEIGHT =	globalThis.screen.availHeight * displaySetup;
 	let layerLength;
 	let layerHeight;
 
-	if (x > y) {
+	console.log(MOBILEWIDTH, MOBILEHEIGHT);
+	if (sizes[0] > sizes[1]) {
 		layerLength = MOBILEWIDTH;
 		layerHeight = (sizes[1] / sizes[0]) * MOBILEHEIGHT;
 	}
@@ -96,5 +98,5 @@ export function mobileView(sizes) {
 		layerHeight = MOBILEHEIGHT;
 		layerLength = (sizes[0] / sizes[1]) * MOBILEWIDTH;
 	}
-	return ({x: layerLength + PADUP, y: layerHeight + PADDOWN});
+	return ({x: layerLength, y: layerHeight});
 };

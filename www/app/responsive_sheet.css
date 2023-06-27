@@ -1224,6 +1224,56 @@
 			opacity: 1;
 		}
 	}
+
+
+	/* ╭──────────────────────────────────────────────────────────╮
+	   │                   Layer plotter setup.                   │
+	   ╰──────────────────────────────────────────────────────────╯
+	*/
+
+	.plotter:is([aria-hidden="true"]) {
+		display: none;
+	}
+
+	.plotter:is([aria-hidden="false"]) {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		flex-basis: 100%;
+		animation: emerge 2.5s ease;
+		animation-fill-mode: forwards;
+		transition: all 2s linear;
+		& {
+			margin: 3% 20%;
+		}
+		& > h2 {
+			min-width: 100%;
+		}
+		.crate-layer {
+			animation: fade-open 3s ease;
+			animation-fill-mode: forwards;
+		}
+		.crate-layer > * {
+			font-family: 'Mitr', sans-serif;
+			font-weight: 400;
+			font-size: .7rem;
+		}
+		.crate-layer text {
+			fill: var(--p__color--mode);
+			transition: fill 1.5s ease;
+		}
+		.crate-layer rect:hover {
+			fill: var(--dark-blue);
+			transition: fill 1s ease-in-out;
+		}
+		.crate-layer {
+			padding: .5rem;
+			justify-content: center;
+			border-radius: 2rem;
+			border: .1rem solid var(--iframes-bg);
+			box-shadow: var(--inner-shadow);
+		}
+	}
 }
 
 /* ╭──────────────────────────────────────────────────────────╮
@@ -1912,6 +1962,52 @@
 		}
 		100% {
 			opacity: 1;
+		}
+	}
+
+	/* ╭──────────────────────────────────────────────────────────╮
+	   │                   Layer plotter setup.                   │
+	   ╰──────────────────────────────────────────────────────────╯
+	*/
+
+	.plotter:is([aria-hidden="true"]) {
+		display: none;
+	}
+
+	.plotter:is([aria-hidden="false"]) {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		flex-basis: 100%;
+		animation: emerge 2.5s ease;
+		animation-fill-mode: forwards;
+		transition: all 2s linear;
+		& > h2 {
+			min-width: 100%;
+		}
+		.crate-layer {
+			animation: fade-open 3s ease;
+			animation-fill-mode: forwards;
+		}
+		.crate-layer > * {
+			font-family: 'Mitr', sans-serif;
+			font-weight: 400;
+			font-size: .7rem;
+		}
+		.crate-layer text {
+			fill: var(--p__color--mode);
+			transition: fill 1.5s ease;
+		}
+		.crate-layer rect:hover {
+			fill: var(--dark-blue);
+			transition: fill 1s ease-in-out;
+		}
+		.crate-layer {
+			padding: .5rem;
+			justify-content: center;
+			border-radius: 2rem;
+			border: .1rem solid var(--iframes-bg);
+			box-shadow: var(--inner-shadow);
 		}
 	}
 }

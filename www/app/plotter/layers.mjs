@@ -1,11 +1,7 @@
 
 
 import {
-	spaceAvailable,
-	proportion,
-	getCrates,
-	screenSize,
-	getScreenProportion 
+	spaceAvailable, proportion, getCrates, screenSize, getScreenProportion 
 } from './layer.coordinate.mjs';
 
 
@@ -26,9 +22,9 @@ globalThis.document.getElementById("crate-layers")
 
 async function processStart(doc) {
 	const { crates } =	await getCrates(doc);
-	const view =		document.getElementById('layers');
+	const display =		document.getElementById('layers');
 
-	view.appendChild(plotter(crates));
+	display.appendChild(plotter(crates));
 };
 
 
@@ -38,15 +34,15 @@ function plotter(crates) {
 	const layerSize =	crates.filter(size => size.length === 2);
 	const PAD = 25;
 	let works;
-	let layerView;
+	let displayView;
 	let crate;
 
 	for (crate in layerSize) {
 		works = crates.filter(arts => arts.length === 5 && arts[0] !== 'Crate');
-		layerView = getScreenProportion(screen, layerSize[crate]);
-		draw.setAttribute("width", layerView.x + PAD);
-		draw.setAttribute("height", layerView.y + PAD);
-		draw.appendChild(arranger(works, layerView, layerSize[crate]));
+		displayView = getScreenProportion(screen, layerSize[crate]);
+		draw.setAttribute("width", displayView.x + PAD);
+		draw.setAttribute("height", displayView.y + PAD);
+		draw.appendChild(arranger(works, displayView, layerSize[crate]));
 	}
 	return (draw);
 }
@@ -106,6 +102,7 @@ function worksPosition({ sizeX, sizeY }, space, crate) {
 	const MAXSIZEX =			0.991;
 	const MAXSIZEY =			0.991;
 
+	console.log(pixelX, pixelY);
 	if (space[0] === crate[0])
 		rect.setAttribute("x", PADX);
 	else
@@ -129,6 +126,7 @@ function drawPoint (layer, crateSize) {
 	const POSX =		X === 1 ? DRAWPIXEL: X * viewSize;
 	const POSY =		Y === 1 ? DRAWPIXEL: Y * viewSize;
 
+	console.log(viewSize);
 	return ({ pixelX: POSX, pixelY: POSY });
 };
 
