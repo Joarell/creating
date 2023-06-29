@@ -5,26 +5,9 @@ import {
 } from './layer.coordinate.mjs';
 
 
-globalThis.document.getElementById("crate-layers")
-	.addEventListener("click", () => {
-	const estimate = document.getElementById("input_estimate").value;
-	
-	if(!estimate)
-		return (
-			alert(
-			"Please, start an 'Doc', add works and press the 'Crate' button."
-		));
-	document.querySelector(".plotter").setAttribute("aria-hidden", false);
-	document.querySelector(".plotter").setAttribute("aria-expanded", true);
-	setTimeout(() => globalThis.scroll({top: 1000, behavior: "smooth"}), 1200);
-	processStart(estimate);
-	setTimeout(() => globalThis.scroll({top: 1000, behavior: "smooth"}), 2000);
-});
-
-
-async function processStart(doc) {
+export async function processStart(doc) {
 	const { crates } =	await getCrates(doc);
-	const display =		document.getElementById('plotter__layers');
+	const display =		document.getElementById('layers');
 
 	display.appendChild(plotter(crates));
 };
@@ -82,7 +65,7 @@ function reduceSpace(art, layer) {
 		layer[1] = 0;
 		return (layer);
 	}
-	else if(turnX) {
+	else if (turnX) {
 		layer[0] = layer[0] - art[1];
 		layer[1] !== art[3] ? layer[1] = layer[1] - art[3]: true;
 	}
