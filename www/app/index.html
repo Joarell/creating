@@ -21,7 +21,7 @@
 	<script type="module" src="./side-menu/menu.units.mjs"></script>
 	<script type="module" src="./front-modules/mode.color.mjs"></script>
 	<script type="module" src="./panels/clip.board.caller.mjs"></script>
-	<script type="module" src="./plotter/layers.mjs"></script>
+	<script type="module" src="./plotter/layer.controller.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
 	<link rel="manifest" href="../manifest.json">
 
@@ -115,6 +115,22 @@
 					</div>
 				</div>
 			</div>
+			<div class="plotter__menu" aria-hidden="true" aria-controls="crate-layers" aria-expanded="false">
+				<div class="plotter__menu__crates" id="display-crates">
+					<h3> All Crates ∊</h2>
+						<div class="plotter__crate__list" id="crate-list">
+							<div>
+								<select>
+									<option>Crate: 210 x 46 x 128 - cm</option>
+									<option>Crate: 210 x 46 x 128 - cm</option>
+									<option>Crate: 210 x 46 x 128 - cm</option>
+									<option>Crate: 210 x 46 x 128 - cm</option>
+									<option>Crate: 210 x 46 x 128 - cm</option>
+								</select>
+							</div>
+						</div>
+				</div>
+			</div>
 		</section>
 		<div class="container">
 			<div class="container__insert">
@@ -189,12 +205,13 @@
 				</div>
 			</div>
 			<div class="container-bottom">
-				<div class="result container--span" aria-hidden="true" aria-expanded="false" aria-controls="IO__crate" role="region" aria-labelledby="results">
+				<div class="result container--span" aria-hidden="true" aria-expanded="false" aria-controls="IO__crate"
+					role="region" aria-labelledby="results">
 					<h2>= Results</h2>
 					<div class="container__results result--panels">
 						<div class="copy-pane1">
-							<iframe loading="lazy" class="container__results--open" title="Works set" src="./panels/pane1_crates.html"
-								sandbox="allow-same-origin allow-scripts"></iframe>
+							<iframe loading="lazy" class="container__results--open" title="Works set"
+								src="./panels/pane1_crates.html" sandbox="allow-same-origin allow-scripts"></iframe>
 							<button class="IO__press--btn copy" id="copy-pane1">COPY
 								<p class="copy-message" id="copy-message">Copied!</p>
 							</button>
@@ -245,9 +262,11 @@
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__currency">
 										<select id="coin1" class="currency-menu"> </select>
-										<input type="text" name="currency" class="get__currency menu__input--form" id="coin1-input" required>
+										<input type="text" name="currency" class="get__currency menu__input--form"
+											id="coin1-input" required>
 										<select id="coin2" class="currency-menu"> </select>
-										<input type="text" name="currency" class="get__currency menu__input--form" id="coin2-input" required>
+										<input type="text" name="currency" class="get__currency menu__input--form"
+											id="coin2-input" required>
 									</form>
 								</div>
 							</h3>
@@ -270,13 +289,15 @@
 											<option>meters</option>
 											<option>centimeters</option>
 										</select>
-										<input type="text" name="measure" class="get__measure menu__input--form" id="input-unit1" required value=0>
+										<input type="text" name="measure" class="get__measure menu__input--form"
+											id="input-unit1" required value=0>
 										<select id="units2">
 											<option selected>centimeters</option>
 											<option>inches</option>
 											<option>meters</option>
 										</select>
-										<input type="text" name="measures" class="get__measure menu__input--form" id="input-unit2" required value=0>
+										<input type="text" name="measures" class="get__measure menu__input--form"
+											id="input-unit2" required value=0>
 									</form>
 								</div>
 							</h3>
@@ -331,13 +352,33 @@
 			</div>
 		</div>
 		<div class="plotter" id="layers" aria-hidden="true" aria-controls="crate-layers" aria-expanded="false">
-			<h2> Layers</h2>
-			<div class="plotter__layer">
+			<div class="plotter__header">
+				<h2>⊂ Layers</h2>
+				<p id="layer-count">Current layer: 2 / 4 </p>
+			</div>
+			<div class="plotter__display">
 				<svg class="crate-layer"></svg>
 			</div>
-			<div class="plotter__crates__menu" aria-hidden="true" aria-controls="crate-laers" aria-expanded="false"></div>
+			<div class="layer-button">
+				<button name="Previous" class="IO__press--btn " id="layer-prev">
+					<svg preserveAspectRatio="none">
+						<use xlink:href="#arrow-left-material"></use>
+					</svg>
+				</button>
+				<button name="Next" class="IO__press--btn " id="layer-next">
+					<svg preserveAspectRatio="none">
+						<use xlink:href="#arrow-right-material"></use>
+					</svg>
+				</button>
+			</div>
 		</div>
 		<svg width="0" height="0" class="hidden board-icon" preserveAspectRatio="none">
+			<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" id="arrow-left-material">
+				<path d="M560-280 360-480l200-200v400Z"></path>
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" id="arrow-right-material">
+				<path d="M400-280v-400l200 200-200 200Z"></path>
+			</symbol>
 			<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 96 960 960" id="exchange-material">
 				<path
 					d="M480 1016q-112 0-216-66T100 799v137H40V696h240v60H143q51 77 145.5 138.5T480 956q78 0 147.5-30t121-81.5Q800 793 830 723.5T860 576h60q0 91-34.5 171T791 887q-60 60-140 94.5T480 1016Zm-29-153v-54q-45-12-75.5-38.5T324 698l51-17q12 38 42.5 60t69.5 22q40 0 66.5-19.5T580 692q0-33-25-55.5T463 586q-60-25-90-54t-30-78q0-44 30-75t80-38v-51h55v51q38 4 66 24t45 55l-48 23q-15-28-37-42t-52-14q-39 0-61.5 18T398 454q0 32 26 51t84 43q69 29 98 61t29 83q0 25-9 46t-25.5 36Q584 789 560 798.5T506 811v52h-55ZM40 576q0-91 34.5-171T169 265q60-60 140-94.5T480 136q112 0 216 66t164 151V216h60v240H680v-60h137q-51-77-145-138.5T480 196q-78 0-147.5 30t-121 81.5Q160 359 130 428.5T100 576H40Z">

@@ -6,7 +6,7 @@
 @import "responsive_sheet.css";
 @import "index-01.css";
 @import "https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@100;200;300;400;500;600;700;800;900&family=Mitr:wght@200;300;400;500;600;700&family=Saira+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap";
-
+@import "https://www.nerdfonts.com/assets/css/webfont.css";
 
 *, *::before, *::after {
 	box-sizing: inherit;
@@ -56,6 +56,8 @@
 */
 	--state: running;
 	--gold: goldenrod;
+	--yellow-select: #EFECBBBE;
+	--hover-bg: #A39D29;
 	--bg-col: #BEBBBB;
 	--iframes-bg: #96979C;
 	--table-line: #96979C30;
@@ -98,6 +100,8 @@ body {
 	--slection-bg: transparent;
 	--crate-btn-col: var(--color3);
 	--p__color--mode: var(--back-gray);
+	--pack-works: var(--light-blue2);
+	--work-hover: var(--yellow-select);
 }
 
 
@@ -112,6 +116,8 @@ body {
 	--input-font-col: var(--back-gray);
 	--selection-bg: var(--add-col);
 	--crate-btn-col: var(--iframes-bg);
+	--pack-works: var(--iframes-bg);
+	--work-hover: var(--pressed);
 }
 
 
@@ -482,6 +488,7 @@ tbody:nth-child(even) {
 
 /* Box shape */
 .plotter,
+.plotter__menu,
 .container__insert,
 .container__status,
 .result-left,
@@ -1131,7 +1138,8 @@ label:hover + .IO__sizes--popup {
    ╰──────────────────────────────────────────────────────────╯
 */
 
-.menu__units, .menu__currency {
+.menu__units,
+.menu__currency {
 	display: var(--display-flex, none);
 	flex-wrap: wrap;
 	flex-direction: flex-start;
@@ -1149,7 +1157,7 @@ label:hover + .IO__sizes--popup {
 		font-size: .85rem;
 		font-weight: 500;
 		background: var(--light-blue3);
-		color: var(--color5);
+		color: var(--p__color--mode);
 		box-shadow: var(--inner-shadow);
 	}
 }
