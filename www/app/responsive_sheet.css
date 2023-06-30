@@ -447,7 +447,7 @@
 		& {
 			width: 11%;
 			height: 7%;
-			margin: 2% 1% 0 81%;
+			margin: 2% 1% 0 80%;
 			position: fixed;
 		}
 		& > * {
@@ -492,7 +492,9 @@
 
 	.plotter__menu:is([aria-hidden="true"]),
 	.plotter:is([aria-hidden="true"]) {
-		display: none;
+		animation: fade-close 500ms ease-out;
+		animation-fill-mode: forwards;
+		transition: all 1000ms ease-in-out;
 	}
 
 	.plotter:is([aria-hidden="false"]) {
@@ -505,9 +507,9 @@
 		& {
 			isolation: isolate;
 			margin: 0% 20%;
-			animation: emerge 2.5s ease;
+			animation: emerge 3s ease-in;
 			animation-fill-mode: forwards;
-			transition: all 2s linear;
+			transition: all 1s ease-in-out;
 		}
 		.plotter__header {
 			display: inherit;
@@ -526,23 +528,23 @@
 		}
 		.layer-button {
 			order: 3;
-			animation: fade-open 4s ease;
+			animation: emerge 5s ease;
 			animation-fill-mode: forwards;
-			transition: all 4s linear;
+			transition: animation 3s linear;
 			& button {
 				margin: 0 1rem;
 			}
 			& button > svg {
-				rx: 10rem;
-				ry: 10rem;
 				width: 100%;
 				height: 100%;
 				fill: var(--color4);
 			}
 		}
 		.crate-layer {
-			animation: fade-open 3s ease;
+			width: 100%;
+			animation: fede-open 3s ease-in;
 			animation-fill-mode: forwards;
+			transition: all 1s ease-in;
 		}
 		.crate-layer > * {
 			font-family: 'Mitr', sans-serif;
@@ -550,14 +552,14 @@
 			font-size: .7rem;
 		}
 		.crate-layer text {
-			font-size: 1rem;
+			font-size: .8rem;
 			fill: var(--table-font);
 			transition: fill 1.5s ease;
-			z-index: - 10;
+			z-index: -10;
 		}
 		.crate-layer rect {
-			rx: 2rem;
-			ry: 2rem;
+			rx: 1rem;
+			ry: 1rem;
 			fill: transparent;
 			stroke: var(--color8);
 		}
@@ -578,9 +580,9 @@
 	.plotter__menu:is([aria-hidden="false"]) {
 		display: flex;
 		justify-content: center;
-		transition: all 3s ease-in;
+		transition: all 1s ease-in;
 		& {
-			animation: fade-open 5s ease;
+			animation: emerge 3s ease-in;
 			animation-fill-mode: forwards;
 		}
 		& {
@@ -600,9 +602,9 @@
 			& {
 				min-width: 100%;
 				animation-delay: 15s;
-				animation: fade-open 5s ease;
+				animation: fade-open 3s ease-in;
 				animation-fill-mode: forwards;
-				transition: all 5s;
+				transition: all 2s ease-in;
 			}
 			.plotter__crate__list {
 				display: inherit;
@@ -610,23 +612,15 @@
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
-				isolation: isolate;
 				& {
+					isolation: isolate;
 					border-radius: 1rem;
 					border: .1rem solid var(--iframes-bg);
 					box-sizing: border-box;
 					padding: .1rem 1rem;
 					margin-top: 1rem;
 				}
-				& div > select option {
-					background: var(--color4);
-					line-height: 0;
-					border: .1rem solid var(--add-col);
-					box-shadow: var(--inner-shadow);
-					color: var(--iframes-bg);
-					border-radius: 1rem;
-				}
-				& div > select {
+				.crates-done {
 					font-family: 'Mitr', sans-serif;
 					font-size: .85rem;
 					font-weight: 500;
@@ -635,12 +629,38 @@
 					box-shadow: var(--inner-shadow);
 					border-radius: 1rem;
 					padding: .5rem .3rem;
+					counter-reset: crates-counter;
+					& option::before {
+						counter-increment: crates-counter;
+						content: counter(crates-counter) " - Create:";
+						color: var(color8);
+					}
+					& option {
+						background: var(--color4);
+						line-height: 0;
+						border: .1rem solid var(--add-col);
+						box-shadow: var(--inner-shadow);
+						color: var(--iframes-bg);
+						border-radius: 1rem;
+					}
 				}
 			}
 		}
 	}
 }
 
+
+@keyframes emerge {
+	0%, 50% {
+		opacity: 0;
+		box-shadow: none;
+		border: .1rem solid var(--iframes-bg);
+		filter: blur(1rem);
+	}
+	100% {
+		opacity: 1;
+	}
+}
 
 @keyframes fade-open {
 	from {
@@ -649,11 +669,25 @@
 		opacity: 0;
 		width: 0;
 		height: 0;
-		transform: translateX(-25%);
+		transform: translateY(-50%);
 	}
 	to {
 		opacity: 1;
-		transform: translateX(0);
+		transform: translateY(0);
+	}
+}
+
+@keyframes fade-close {
+	0%, 50% {
+		inset: 10%;
+		opacity: .8;
+		filter: blur(2rem);
+	}
+	100% {
+		filter: blur(4rem);
+		opacity: 0;
+		display: none;
+		transform: translateX(10%);
 	}
 }
 
@@ -1162,7 +1196,7 @@
 		display: flex;
 		flex-direction: row-reverse;
 		& {
-			margin: 206% 9svw 0 6svw;
+			margin: 206% 10% 0 3%;
 			z-index: 20;
 		}
 		& a:target {
@@ -1319,19 +1353,6 @@
 			flex-direction: column;
 			justify-content: center;
 			gap: 1rem;
-		}
-	}
-
-
-	@keyframes emerge {
-		0%, 50% {
-			opacity: 0;
-			box-shadow: none;
-			border: .1rem solid var(--iframes-bg);
-			filter: blur(1rem);
-		}
-		100% {
-			opacity: 1;
 		}
 	}
 
