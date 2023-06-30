@@ -33,9 +33,10 @@ function plotter(crates) {
 }
 
 
-function arranger(arts , pixLayer, crateSize) {
-	const element =	document.createDocumentFragment();
-	let layer =		[...crateSize];
+function arranger(arts , pixLayer, crate) {
+	const element =		document.createDocumentFragment();
+	const collector =	new WeakSet();
+	let layer =		[...crate];
 	let sizeX;
 	let sizeY;
 	let dimension;
@@ -43,14 +44,17 @@ function arranger(arts , pixLayer, crateSize) {
 
 	for (i in arts) {
 		if (!spaceAvailable(arts[i], layer))
-			layer = [...crateSize];
-		sizeX =	proportion(arts[i][1], pixLayer.x, crateSize[0]);
-		sizeY =	proportion(arts[i][3], pixLayer.y, crateSize[1]);
+			layer = [...crate];
+		sizeX =	proportion(arts[i][1], pixLayer.x, crate[0]);
+		sizeY =	proportion(arts[i][3], pixLayer.y, crate[1]);
 		dimension = {sizeX, sizeY};
-		element.appendChild(worksPosition(dimension, layer,crateSize));
-		element.appendChild(textOnCenter(sizeX, sizeY, arts[i], layer, crateSize));
+		collector.add(dimension);
+		element.appendChild(worksPosition.call(dimension, layer, crate));
+		element.appendChild(textOnCenter.call(dimension, arts[i], layer, crate));
 		reduceSpace(arts[i], layer);
 	}
+	dimension = null;
+	layer = null;
 	return(element);
 }
 
@@ -78,20 +82,20 @@ function reduceSpace(art, layer) {
 };
 
 
-function worksPosition({ sizeX, sizeY }, space, crate) {
+function worksPosition(space, crate) {
 	const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
 	const { pixelX, pixelY } =	drawPoint(space, crate);
-	const PAD =				6;
-	const MAXSIZEX =			0.991;
-	const MAXSIZEY =			0.991;
+	const PAD =					5;
+	const MAXSIZEX =			1;
+	const MAXSIZEY =			1;
 
 	if (space[0] === crate[0])
 		rect.setAttribute("x", PAD);
 	else
 		rect.setAttribute("x", pixelX + PAD);
 	rect.setAttribute("y", pixelY + PAD);
-	rect.setAttribute("width", sizeX * MAXSIZEX);
-	rect.setAttribute("height", sizeY * MAXSIZEY);
+	rect.setAttribute("width", this.sizeX * MAXSIZEX);
+	rect.setAttribute("height", this.sizeY * MAXSIZEY);
 	return(rect);
 }
 
@@ -108,18 +112,18 @@ function drawPoint (layer, crateSize) {
 };
 
 
-function textOnCenter(x, y, work, layer, crate) {
+function textOnCenter(work, layer, crate) {
 	const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
 	const PADX =	14;
-	const MIDDLEX = x * 1.5;
-	const CENTERX = x * 0.5;
+	const MIDDLEX = this.sizeX * 1.5;
+	const CENTERX = this.sizeX * 0.5;
 
 	if (layer[0] !== crate[0]){
 		text.setAttribute("x", MIDDLEX - PADX);
 	}
 	else
 		text.setAttribute("x", CENTERX - PADX);
-	text.setAttribute("y", y / 2);
+	text.setAttribute("y", this.sizeY / 2);
 	text.innerHTML = work[0];
 	return (text);
 }

@@ -14,9 +14,8 @@ globalThis.document.getElementById("crate-layers")
 			"Please, start an 'Doc', add works and press the 'Crate' button."
 		)
 	);
-	console.log(display.ariaHidden);
+	console.log('Aria Hidden:', display.ariaHidden, 'Menu', menu.ariaHidden);
 	openCloseDisplay([display, menu]);
-	// openCloseDisplay([display]);
 	if (display.ariaHidden) {
 		processStart(estimate);
 		setTimeout(() => globalThis.scroll({
@@ -29,9 +28,9 @@ globalThis.document.getElementById("crate-layers")
 });
 
 
-function openCloseDisplay (element) {
+export function openCloseDisplay (element) {
 	element.map(plotter => {
-		if (plotter.ariaHidden) {
+		if (plotter.ariaHidden === 'true') {
 			plotter.setAttribute("aria-hidden", false);
 			plotter.setAttribute("aria-expanded", true);
 		}

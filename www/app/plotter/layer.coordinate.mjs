@@ -49,7 +49,7 @@ export function getScreenProportion(screenSize, layerSize) {
 
 
 export function screenSize() {
-	const DESKTOP =			900;
+	const DESKTOP =			1010;
 	const displaySetup =	0.880;
 	const screen =			1024;
 	const DISPLAY =			globalThis.screen.availWidth;
@@ -61,9 +61,9 @@ export function screenSize() {
 
 
 export function deskTopView(sizes) {
-	const MAXSIZE =	900;
-	const PADUP =	4;
-	const PADDOWN =	10;
+	const MAXSIZE =	1010;
+	const PADUP =	0;
+	const PADDOWN =	0;
 	let layerLength;
 	let layerHeight;
 
