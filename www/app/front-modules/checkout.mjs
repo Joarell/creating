@@ -10,6 +10,7 @@
 
 import * as mod from './functions.front.end.mjs'
 import { createDB } from './link.storage.mjs';
+import { openCloseDisplay } from '../plotter/layer.controller.mjs'
 
 
 // ╭───────────────────────────────────────────────────────────────────╮
@@ -75,28 +76,30 @@ document.getElementById("unit-seg").addEventListener("change", () => {
 export const crate = () => {
 	browserStoragePrepare();
 	mod.crate();
-	document.querySelector(".result").setAttribute("aria-hidden", false);
-	document.querySelector(".result").setAttribute("aria-expanded", true);
-	setTimeout(() => globalThis.scroll({top: 1000, behavior: "smooth"}), 1000);
+	const element = document.querySelector(".result");
+	
+	element.ariaHidden === 'true' ? openCloseDisplay([element]) : false;
+	setTimeout(() => globalThis.scroll({top: 300, behavior: "smooth"}), 1000);
 };
 
+
 export const clearAll = () => {
-	const del =		confirm("Do you really want to delete the whole list?");
+	const clear =		confirm("Do you really want to delete the whole list?");
 	const mode =	localStorage.getItem("mode");
 	const unit =	localStorage.getItem("metrica");
+	const element = document.querySelector(".result");
+	const plotter =	document.getElementById('layers');
+	const menu =	document.querySelector(".plotter__menu");
 
-	if (del === true) {
-		mod.countWorks();
-		mod.displayAirCub();
-		mod.displayCub();
+	if (clear === true) {
+		mod.countWorks() && mod.displayAirCub() && mod.displayCub();
 		localStorage.clear();
 		sessionStorage.clear();
 		sessionStorage.setItem("clean", "eraser");
 		localStorage.setItem("mode", mode);
 		localStorage.setItem("metrica", unit);
 		globalThis.document.getElementById("input_estimate").value = "";
-		document.querySelector(".result").setAttribute("aria-hidden", true);
-		document.querySelector(".result").setAttribute("aria-expanded", false);
+		openCloseDisplay([element, plotter, menu]);
 	}
 	mod.cleanInputs();
 };
