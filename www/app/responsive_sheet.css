@@ -541,7 +541,6 @@
 			}
 		}
 		.crate-layer {
-			width: 100%;
 			animation: fede-open 3s ease-in;
 			animation-fill-mode: forwards;
 			transition: all 1s ease-in;
@@ -561,7 +560,7 @@
 			rx: 1rem;
 			ry: 1rem;
 			fill: transparent;
-			stroke: var(--color8);
+			stroke: var(--result-col);
 		}
 		.crate-layer rect:hover {
 			fill: var(--work-hover);
