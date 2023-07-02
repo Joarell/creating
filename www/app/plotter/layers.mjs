@@ -1,34 +1,21 @@
 
 
-import {
-	spaceAvailable, proportion, getCrates, screenSize, getScreenProportion 
-} from './layer.coordinate.mjs';
+import { spaceAvailable, proportion, screenSize, getScreenProportion } from './layer.coordinate.mjs';
 
-
-export async function processStart(doc) {
-	const { crates } =	await getCrates(doc);
-	const display =		document.getElementById('layers');
-
-	display.appendChild(plotter(crates));
-};
-
-
-function plotter(crates) {
+export function plotter(crates) {
 	const draw =		document.querySelector(".crate-layer");
 	const screen =		globalThis.screen.availWidth;
 	const layerSize =	crates.filter(size => size.length === 2);
-	const PAD = 25;
-	let works;
-	let displayView;
+	const displayView =	getScreenProportion(screen, layerSize[crate]);
+	const PAD =			25;
+	const works = crates.filter(arts => arts.length === 5 && arts[0] !== 'Crate');
 	let crate;
 
-	for (crate in layerSize) {
-		works = crates.filter(arts => arts.length === 5 && arts[0] !== 'Crate');
-		displayView = getScreenProportion(screen, layerSize[crate]);
-		draw.setAttribute("width", displayView.x + PAD);
-		draw.setAttribute("height", displayView.y + PAD);
-		draw.appendChild(arranger(works, displayView, layerSize[crate]));
-	}
+	draw.setAttribute("width", displayView.x + PAD);
+	draw.setAttribute("height", displayView.y + PAD);
+	draw.appendChild(arranger(works, displayView, layerSize[crate])); //Add map loop to each work
+	// for (crate in layerSize) {
+	// }
 	return (draw);
 }
 
@@ -53,8 +40,8 @@ function arranger(arts , pixLayer, crate) {
 		element.appendChild(textOnCenter.call(dimension, arts[i], layer, crate));
 		reduceSpace(arts[i], layer);
 	}
-	dimension = null;
-	layer = null;
+	dimension =	null;
+	layer =		null;
 	return(element);
 }
 

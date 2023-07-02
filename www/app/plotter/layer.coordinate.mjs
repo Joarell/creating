@@ -1,21 +1,5 @@
 
 
-export async function getCrates(doc) {
-	const dataIDB =	new Worker('./panels/worker.IDB.crates.mjs');
-	return(new Promise((resolve, reject) => {
-			dataIDB.postMessage(doc);
-			dataIDB.onmessage = (solvedList => {
-				solvedList.data !== undefined ?
-					resolve(solvedList.data):
-					reject(alert(`
-"${doc}" NOT found. Please, try again or press 'Crate' button!`
-				));
-			});
-		})
-	);
-};
-
-
 export function spaceAvailable (art, space) {
 	const spaceX =	art[1] <= space[0];
 	const spaceY =	art[3] <= space[1];
