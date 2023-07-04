@@ -3,7 +3,6 @@
 import { spaceAvailable, proportion, screenSize, getScreenProportion } from './layer.coordinate.mjs';
 
 export function plotter(crate) {
-	console.log(crate);
 	const draw =		document.querySelector(".crate-layer");
 	const screen =		globalThis.screen.availWidth;
 	// const layerSize =	crate.filter(size => size.length === 2);
