@@ -64,7 +64,7 @@ export function deskTopView(sizes) {
 
 
 export function mobileView(sizes) {
-	const displaySetup =		0.880;
+	const displaySetup =	0.880;
 	const MOBILEWIDTH =		globalThis.screen.availWidth * displaySetup
 	const MOBILEHEIGHT =	globalThis.screen.availHeight * displaySetup;
 	let layerLength;

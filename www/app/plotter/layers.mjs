@@ -2,20 +2,21 @@
 
 import { spaceAvailable, proportion, screenSize, getScreenProportion } from './layer.coordinate.mjs';
 
-export function plotter(crates) {
+export function plotter(crate) {
+	console.log(crate);
 	const draw =		document.querySelector(".crate-layer");
 	const screen =		globalThis.screen.availWidth;
-	const layerSize =	crates.filter(size => size.length === 2);
-	const displayView =	getScreenProportion(screen, layerSize[crate]);
+	// const layerSize =	crate.filter(size => size.length === 2);
+	const displayView =	getScreenProportion(screen, crate);
 	const PAD =			25;
-	const works = crates.filter(arts => arts.length === 5 && arts[0] !== 'Crate');
-	let crate;
+	const works =		crate.filter(arts => {
+		arts.length === 5 && arts[0] !== 'Crate'
+	});
 
 	draw.setAttribute("width", displayView.x + PAD);
 	draw.setAttribute("height", displayView.y + PAD);
-	draw.appendChild(arranger(works, displayView, layerSize[crate])); //Add map loop to each work
-	// for (crate in layerSize) {
-	// }
+	draw.appendChild(arranger(works, displayView, crate)); //Add map loop to each work
+	// for (crate in layerSize) { }
 	return (draw);
 }
 
@@ -23,7 +24,7 @@ export function plotter(crates) {
 function arranger(arts , pixLayer, crate) {
 	const element =		document.createDocumentFragment();
 	const collector =	new WeakSet();
-	let layer =		[...crate];
+	let layer =			[...crate];
 	let sizeX;
 	let sizeY;
 	let dimension;
@@ -47,9 +48,9 @@ function arranger(arts , pixLayer, crate) {
 
 
 function reduceSpace(art, layer) {
-	const checkX = art[1] === layer[0];
-	const checkY = art[3] === layer[1];
-	const turnX = art[1] < layer[0];
+	const checkX =	art[1] === layer[0];
+	const checkY =	art[3] === layer[1];
+	const turnX =	art[1] < layer[0];
 
 	if (checkX && checkY) {
 		layer[0] = 0;
@@ -91,7 +92,7 @@ function drawPoint (layer, crateSize) {
 	const X =			layer[0] / crateSize[0];
 	const Y =			layer[1] / crateSize[1];
 	const viewSize =	screenSize();
-	const DRAWPIXEL =	0
+	const DRAWPIXEL =	0;
 	const POSX =		X === 1 ? DRAWPIXEL: X * viewSize;
 	const POSY =		Y === 1 ? DRAWPIXEL: Y * viewSize;
 

@@ -24,9 +24,9 @@ export async function getCrates(doc) {
 
 
 export function processStart(doc) {
-	const display =		document.getElementById('layers');
+	const display = document.getElementById('layers');
 
-	display.appendChild(plotter(crates));
+	display.appendChild(plotter(doc));
 };
 
 
@@ -34,7 +34,7 @@ async function renderDisplay() {
 	const estimate =	document.getElementById("input_estimate").value;
 	const display =		document.querySelector(".plotter");
 	const menu =		document.querySelector(".plotter__menu");
-	const { crates } =	await getCrates(doc);
+	const { crates } =	await getCrates(estimate);
 	
 	if(!estimate)
 		return (
@@ -44,15 +44,14 @@ async function renderDisplay() {
 	);
 	openCloseDisplay([display, menu]);
 	if (display.ariaHidden) {
-		processStart(estimate);
+		processStart(crates);
 		setTimeout(() => globalThis.scroll({
 				top: 1000, behavior: "smooth"
 			}), 1200);
 		setTimeout(() => globalThis.scroll({
 				top: 1000, behavior: "smooth"
 			}), 2000);
-		globalThis.document
-			.getElementById("selected-crate", populateOptions(crates));
+			populateOptions(crates);
 	}
 };
 
