@@ -1,12 +1,12 @@
 
 
-import { spaceAvailable, proportion, screenSize, getScreenProportion } from './layer.coordinate.mjs';
+import * as coord from './layer.coordinate.mjs';
 
 export function plotter(crate) {
 	const draw =		document.querySelector(".crate-layer");
 	const screen =		globalThis.screen.availWidth;
 	// const layerSize =	crate.filter(size => size.length === 2);
-	const displayView =	getScreenProportion(screen, crate);
+	const displayView =	coord.getScreenProportion(screen, crate);
 	const PAD =			25;
 	const works =		crate.filter(arts => {
 		arts.length === 5 && arts[0] !== 'Crate'
@@ -30,10 +30,10 @@ function arranger(arts , pixLayer, crate) {
 	let i;
 
 	for (i in arts) {
-		if (!spaceAvailable(arts[i], layer))
+		if (!coord.spaceAvailable(arts[i], layer))
 			layer = [...crate];
-		sizeX =	proportion(arts[i][1], pixLayer.x, crate[0]);
-		sizeY =	proportion(arts[i][3], pixLayer.y, crate[1]);
+		sizeX =	coord.proportion(arts[i][1], pixLayer.x, crate[0]);
+		sizeY =	coord.proportion(arts[i][3], pixLayer.y, crate[1]);
 		dimension = {sizeX, sizeY};
 		collector.add(dimension);
 		element.appendChild(worksPosition.call(dimension, layer, crate));
@@ -90,7 +90,7 @@ function worksPosition(space, crate) {
 function drawPoint (layer, crateSize) {
 	const X =			layer[0] / crateSize[0];
 	const Y =			layer[1] / crateSize[1];
-	const viewSize =	screenSize();
+	const viewSize =	coord.screenSize();
 	const DRAWPIXEL =	0;
 	const POSX =		X === 1 ? DRAWPIXEL: X * viewSize;
 	const POSY =		Y === 1 ? DRAWPIXEL: Y * viewSize;

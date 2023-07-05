@@ -17,24 +17,17 @@ import { openCloseDisplay } from '../plotter/layer.controller.mjs'
 // │ Calls to each change on the localStorage to update the list pane. │
 // ╰───────────────────────────────────────────────────────────────────╯
 globalThis.onstorage = () => {
-	return (
-		mod.displayCub() &&
-		mod.displayAirCub() &&
-		mod.countWorks()
-	);
+	mod.displayCub();
+	mod.displayAirCub();
+	mod.countWorks();
 };
 
-globalThis.document.getElementById("input_estimate")
-	.addEventListener("change", () => {
-		createDB();
-});
-
 globalThis.onload = () => {
-	const color =		localStorage.getItem("mode");
+	const color = localStorage.getItem("mode");
 
 	browserStoragePrepare();
-	localStorage.setItem("metrica", document.getElementById("cm").value);
-	color === null ? localStorage.setItem("mode", "light"): false;
+	// localStorage.setItem("metrica", document.getElementById("cm").value);
+	color === null ? localStorage.setItem("mode", "light") : false;
 	setCheckRadio();
 	setTimeout(loadingPage, 2500);
 };
@@ -47,8 +40,13 @@ if (!localStorage.getItem("metrica")) {
 	const metrica = document.getElementById("cm").value;
 	localStorage.setItem("metrica", metrica);
 }
-document.getElementById("unit-seg").addEventListener("change", () => {
+
+
+export function setUnit() {
 	const measure = localStorage.getItem("metrica");
+	const check =	confirm(
+		"Attention! You are going to change the measurement of the works."
+	);
 
 	if (!measure || measure === undefined) {
 		localStorage.setItem("metrica",
@@ -56,40 +54,38 @@ document.getElementById("unit-seg").addEventListener("change", () => {
 		);
 		document.getElementById('cm').checked = true;
 	}
-	else if ( confirm(
-			"Attention! You are going to change the measurement of the works."
-		)){;
+	else if (check) {
 		const storage = localStorage.getItem('metrica');
-		
-		storage === 'cm - centimeters' ? 
-		localStorage.setItem("metrica", "in - inches") :
-		localStorage.setItem("metrica", "cm - centimeters");
-		return ;
+
+		storage === 'cm - centimeters' ?
+			localStorage.setItem("metrica", "in - inches") :
+			localStorage.setItem("metrica", "cm - centimeters");
+		return;
 	}
 	setCheckRadio();
-}, false);
+};
 
 
- // ╭──────────────────────────────────────────────────────╮
- // │ This is the trigger to the "crate" and clear button. │
- // ╰──────────────────────────────────────────────────────╯
+// ╭──────────────────────────────────────────────────────╮
+// │ This is the trigger to the "crate" and clear button. │
+// ╰──────────────────────────────────────────────────────╯
 export const crate = () => {
 	browserStoragePrepare();
 	mod.crate();
 	const element = document.querySelector(".result");
-	
+
 	element.ariaHidden === 'true' ? openCloseDisplay([element]) : false;
-	setTimeout(() => globalThis.scroll({top: 300, behavior: "smooth"}), 1000);
+	setTimeout(() => globalThis.scroll({ top: 300, behavior: "smooth" }), 1000);
 };
 
 
 export const clearAll = () => {
-	const clear =		confirm("Do you really want to delete the whole list?");
-	const mode =	localStorage.getItem("mode");
-	const unit =	localStorage.getItem("metrica");
+	const clear = confirm("Do you really want to delete the whole list?");
+	const mode = localStorage.getItem("mode");
+	const unit = localStorage.getItem("metrica");
 	const element = document.querySelector(".result");
-	const plotter =	document.getElementById('layers');
-	const menu =	document.querySelector(".plotter__menu");
+	const plotter = document.getElementById('layers');
+	const menu = document.querySelector(".plotter__menu");
 
 	if (clear === true) {
 		mod.countWorks() && mod.displayAirCub() && mod.displayCub();
@@ -106,9 +102,9 @@ export const clearAll = () => {
 
 
 function loadingPage() {
-	const animation =	document.querySelector(".loading");
-	const pageApp =		document.querySelector(".app");
-	const footer =		document.querySelector(".footer-content");
+	const animation = document.querySelector(".loading");
+	const pageApp = document.querySelector(".app");
+	const footer = document.querySelector(".footer-content");
 
 	animation.style.display = "none";
 	animation.setAttribute("aria-hidden", true);
@@ -129,9 +125,9 @@ function browserStoragePrepare() {
 
 
 function setCheckRadio() {
-	const measure =	localStorage.getItem("metrica");
-	const color =	localStorage.getItem("mode");
-	const body =	document.body;
+	const measure = localStorage.getItem("metrica");
+	const color = localStorage.getItem("mode");
+	const body = document.body;
 
 	switch (measure) {
 		case 'cm - centimeters':

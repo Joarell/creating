@@ -1,13 +1,9 @@
 
 
-globalThis.document.querySelector(".section-left-up")
-	.addEventListener("change", (color) => {
-	const mode = color.target.value;
-
+export function switchMode(mode) {
 	localStorage.setItem("mode", mode);
 	changeMode(mode);
-});
-
+};
 
 
 function changeMode (color) {

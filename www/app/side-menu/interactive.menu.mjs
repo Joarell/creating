@@ -1,14 +1,15 @@
+
+
 // ╭──────────────────────────────────────────────────────────╮
 // │                     Accordion setup.                     │
 // ╰──────────────────────────────────────────────────────────╯
-globalThis.document.querySelector(".accordion")
-	.addEventListener("click", event => {
+export function accordionController (event){
 	const activePanel = event.target.closest(".accordion-panel");
 
 	if (!activePanel)
 		return;
 	toggleAccordion(activePanel);
-});
+};
 
 
 function toggleAccordion(clicked) {
@@ -39,7 +40,7 @@ function mobileMenu (selected, id) {
 		selected.setAttribute("aria-expanded", true);
 		selected.setAttribute("aria-hidden", false);
 	};
-	setTimeout(() => globalThis.scroll({top: 10000, behavior: "smooth"}), 200);
+	setTimeout(() => globalThis.scroll({top: 1000, behavior: "smooth"}), 200);
 	setTimeout(() => document.getElementById(id).click(), 100);
 };
 

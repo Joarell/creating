@@ -15,13 +15,6 @@
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)"> -->
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
 	<script type="module" src="./main.mjs"></script>
-	<script type="module" src="./side-menu/interactive.menu.mjs"></script>
-	<script type="module" src="./side-menu/search.menu.mjs"></script>
-	<script type="module" src="./side-menu/menu.currency.conversion.mjs"></script>
-	<script type="module" src="./side-menu/menu.units.mjs"></script>
-	<script type="module" src="./front-modules/mode.color.mjs"></script>
-	<script type="module" src="./panels/clip.board.caller.mjs"></script>
-	<script type="module" src="./plotter/layer.controller.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
 	<link rel="manifest" href="../manifest.json">
 
@@ -100,15 +93,15 @@
 						</form>
 					</div>
 					<div class="section__menu--btn">
-						<a role="button" class="layers-btn" data-popup="" id="crate-layers">
-							<svg aria-hidden="true" class="logout-icon" preserveAspectRatio="none">
+						<a role="button" class="layers-btn" data-popup="" id="crate-layers" disabled>
+							<svg aria-hidden="true" class="logout-icon" id="layer-crate" preserveAspectRatio="none">
 								<use href="#layer-material"></use>
 							</svg>
 						</a>
 					</div>
 					<div class="section__menu--btn">
-						<a role="button" class="logout-btn" data-popup="Logout" id="logout">
-							<svg aria-hidden="true" class="logout-icon" preserveAspectRatio="none">
+						<a role="button" class="logout-btn" data-popup="Logout" id="logout-btn">
+							<svg aria-hidden="true" class="logout-icon" id="logout" preserveAspectRatio="none">
 								<use href="#logout-material"></use>
 							</svg>
 						</a>
@@ -169,10 +162,9 @@
 							</div>
 						</div>
 						<div class="IO__press IO--span2 info">
-							<button class="IO__press--btn add--btn" onclick="globalThis.fns.catchWork()">ADD</button>
-							<button class="IO__press--btn del--btn" id="remove"
-								onclick="globalThis.fns.catchRemove()">DEL</button>
-							<button class="IO__press--btn clear--btn" onclick="globalThis.fns.clearAll()">Clear</button>
+							<button class="IO__press--btn add--btn" id="add-btn" >ADD</button>
+							<button class="IO__press--btn del--btn" id="remove-btn" >DEL</button>
+							<button class="IO__press--btn clear--btn" id="clear-btn" >Clear</button>
 						</div>
 					</div>
 			</div>
@@ -188,7 +180,7 @@
 						<p id="cub-air">Air-Cub: 0</p>
 					</div>
 					<div class="IO__press__crate">
-						<button name="waves" class="IO__crate" onclick="globalThis.fns.crate()">
+						<button name="waves" class="IO__crate" id="crate-btn">
 							<p class="IO__crate__txt">Crate!</p>
 						</button>
 						<span name="waves" class="IO__crate--shadow1 wave"></span>
@@ -220,13 +212,12 @@
 				</div>
 				<div class="container-interactive">
 					<div class="accordion">
-						<div class="menu accordion-panel get-estimate" aria-labelledby="search-header"
-							aria-hidden="true" role="region" id="search">
+						<div class="menu accordion-panel get-estimate" aria-labelledby="search-header" aria-hidden="true" role="region">
 							<h3 class="" id="search-header">
-								<button class="trigger-menu menu search" aria-controls="search--content"
+								<button class="trigger-menu menu search" id="search-btn" aria-controls="search--content"
 									aria-expanded="false">
 									<span class="menu__option--text">Search</span>
-									<svg aria-hidden="true" class="menu-icon">
+									<svg aria-hidden="true" class="menu-icon" id="search-btn">
 										<use href="#lupa-material"></use>
 									</svg>
 								</button>
@@ -241,12 +232,10 @@
 								</div>
 							</h3>
 						</div>
-						<div class="exchange--content menu accordion-panel" id="exchange" aria-hidden="true"
-							aria-labelledby="exchange--content" role="region">
+						<div class="exchange--content menu accordion-panel" aria-hidden="true" aria-labelledby="exchange--content" role="region">
 							<h3 class="" id="exchange-header">
-								<button class="trigger-menu menu exchange" id="coin-button"
-									aria-controls="exchange--content" aria-expanded="false">
-									<svg aria-hidden="true" class="menu-icon">
+								<button class="trigger-menu menu exchange" id="exchange-btn" aria-controls="exchange--content" aria-expanded="false">
+									<svg aria-hidden="true" class="menu-icon" id="exchange-btn">
 										<use href="#exchange-material"></use>
 									</svg>
 								</button>
@@ -263,13 +252,11 @@
 								</div>
 							</h3>
 						</div>
-						<div class="menu accordion-panel units-conversion" aria-hidden="true"
-							aria-labelledby="units-conversion" role="region" id="measures">
+						<div class="menu accordion-panel units-conversion" aria-hidden="true" aria-labelledby="units-conversion" role="region">
 							<h3 class="" id="units-header">
-								<button class="trigger-menu menu units" aria-controls="units-conversion"
-									aria-expanded="false">
+								<button class="trigger-menu menu units" aria-controls="units-conversion" id="units-btn" aria-expanded="false">
 									<span class="menu__option--text">Units</span>
-									<svg aria-hidden="true" class="menu-icon">
+									<svg aria-hidden="true" class="menu-icon" id="units-btn">
 										<use href="#regua-material"></use>
 									</svg>
 								</button>

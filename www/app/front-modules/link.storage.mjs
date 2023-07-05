@@ -12,8 +12,8 @@ import { saveTheCurrentEstimate } from "./bridge.link.web.db.mjs";
 
 
 export function createDB() {
-	const dataName	= "Results";
-	const request	= globalThis.indexedDB.open(dataName);
+	const dataName =	"Results";
+	const request =		globalThis.indexedDB.open(dataName);
 
 	request.onerror = (event) => {
 		alert(`ATTENTION! ${event.target.errorCode}`);
@@ -30,9 +30,9 @@ export function createDB() {
 
 
 export function addNewWorksToIndexedDB (works) {
-	const dataName	= "Results";
-	const list		= document.getElementById("input_estimate").value;
-	const request	= globalThis.indexedDB.open(dataName);
+	const dataName =	"Results";
+	const list =		document.getElementById("input_estimate").value;
+	const request =		globalThis.indexedDB.open(dataName);
 
 	request.onerror = (event) => {
 		alert(`ERROR: ${event.target.errorCode}`);

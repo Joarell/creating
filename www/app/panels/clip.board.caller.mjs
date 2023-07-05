@@ -7,8 +7,7 @@
 import { findCrates, findCratesAndWorks } from "./clip.board.formatter.mjs";
 
 
-globalThis.document.getElementById("copy-pane1")
-	.addEventListener("click", () => {
+export function copyButton1 () {
 	const crates =		new Worker('./panels/worker.IDB.crates.mjs');
 	const estimate =	document.getElementById("input_estimate").value;
 	const checker =		sessionStorage.getItem(estimate);
@@ -25,11 +24,10 @@ globalThis.document.getElementById("copy-pane1")
 			false
 		);
 	};
-});
+};
 
 
-globalThis.document.getElementById("copy-pane2")
-	.addEventListener("click", () => {
+export function copyButton2 () {
 	const crates =		new Worker('./panels/worker.IDB.crates.mjs');
 	const estimate =	document.getElementById("input_estimate").value;
 	const checker =		sessionStorage.getItem(estimate);
@@ -46,4 +44,4 @@ globalThis.document.getElementById("copy-pane2")
 			false
 		);
 	};
-});
+};

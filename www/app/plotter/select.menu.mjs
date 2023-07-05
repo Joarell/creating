@@ -1,11 +1,5 @@
 
 
-globalThis.document.querySelector('.layer-button')
-.addEventListener('click', (element => skip(element)));
-
-globalThis.document.querySelector('.crates-done')
-.addEventListener('change', layersNumber);
-
 export function populateOptions(crates) {
 	const list =	crates.filter(crates => crates[0] === 'Crate');
 	const select =	document.getElementById('selected-crate');
@@ -24,7 +18,7 @@ export function populateOptions(crates) {
 };
 
 
-function layersNumber(list) {
+export function layersNumber(list) {
 	if (Array.isArray(list)) {
 		const layers =	changeCrateLayers(1);
 		sessionStorage.setItem('layers', layers.length);
@@ -66,7 +60,7 @@ function setLayerDisplay (value) {
 };
 
 
-function skip(button) {
+export function skip(button) {
 	const storage =		sessionStorage;
 	const layersVal =	Number.parseInt(storage.getItem('layers'));
 	const currentVal =	Number.parseInt(storage.getItem('currentLayer'));

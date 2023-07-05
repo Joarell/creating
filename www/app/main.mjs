@@ -1,205 +1,160 @@
-//╭───────────────────────────────────────────────────────────────────────────╮
-//│ ╭───────────────────────────────────────────────────────────────────────╮ │
-//│ │ INFO:          These are the functions to the first layer:            │ │
-//│ │                           Function checWork();                        │ │
-//│ │                           Function regValid();                        │ │
-//│ │                          Function catchWork();                        │ │
-//│ │                         Function catchRemove();                       │ │
-//│ │                         Function checkReference();                    │ │
-//│ │                         Function intParser();                         │ │
-//│ ╰───────────────────────────────────────────────────────────────────────╯ │
-//╰───────────────────────────────────────────────────────────────────────────╯
-
-import ArtWork from './front-modules/Art.class.def.mjs';
-import * as mod from './front-modules/functions.front.end.mjs'
-import { crate, clearAll } from './front-modules/checkout.mjs';
-
-globalThis.fns = { catchWork, catchRemove, crate, clearAll };
 
 
-// ╭────────────────────────────────────────────────────────────────────────╮
-// │ This function validates all inputs of the fields provided by the user. │
-// ╰────────────────────────────────────────────────────────────────────────╯
-export function checkWork(work) {
-	const checked =		regValid(intParser([work[1], work[2], work[3]]));
-	const regex =		/[^-a-z-A-Z-0-9]/g;
-	const estimate =	document.getElementById("input_estimate").value;
-	let i;
-	
-	i = 0;
-	for (i in localStorage.key(i)){
-		if(work[0] === localStorage.key(i)){
-			alert(`${work[0]} already added to the list. Please, try again`);
-			return(false);
-		}
-	}
-	switch (regex.test(work[0]) || regex.test(estimate)) {
-		case true:
-			alert(`Found special character NOT allowed on "Work code",\
-			or "Estimate" input. Please, try again!`);
-			return (false);
-	}
-	checkReference();
-	return (
-		Array.isArray(checked) ? 
-		new ArtWork(work[0], checked[0], checked[1], checked[2]) : false
-	);
-}
-
-
-// ╭──────────────────────────────────────────────────────╮
-// │ This function converts all string inputs in integer. │
-// ╰──────────────────────────────────────────────────────╯
-export function intParser(dimensions) {
-	const result = dimensions.map(size => {
-		return parseInt(size);
-	});
-	return (result);
-}
-
-
-// ╭────────────────────────────────────────────────────────────────────╮
-// │ Regular expression function to validate if all inputs are numbers. │
-// ╰────────────────────────────────────────────────────────────────────╯
-export function regValid(sizes_parsed) {
-	let i;
-	const regex = /^[0-9]{1,3}/;
-
-	i = 3;
-	while (--i > -1) {
-		if (regex.test(sizes_parsed[i]) === false) {
-			switch (i) {
-				case 2:
-					alert(`The provide HEIGHT is not a valid number.\
-					Please, try again!`);
-					return (false);
-				case 1:
-					alert(`The provide DEPTH is not a valid number.\
-					Please, try again!`);
-					return (false);
-				case 0:
-					alert(`The provide LENGTH is not a valid number.\
-					Please, try again!`);
-					return (false);
-			}
-		}
-	}
-	return (sizes_parsed);
-}
-
-
-//╭───────────────────────────────────────────────────────────────────────────╮
-//│   This function start the verification of the inputs in the first step.   │
-//│Secondly, calls the other functions from the modules when all verifications│
-//│                           were done and right.                            │
-//╰───────────────────────────────────────────────────────────────────────────╯
-export function catchWork() {
-	const estimate =	document.getElementById("input_estimate").value;
-	const cod =			document.getElementById("input_code").value;
-	const length =		document.getElementById("input_length").value;
-	const depth =		document.getElementById("input_depth").value;
-	const height =		document.getElementById("input_height").value;
-	let tmp;
-
-	if (!estimate)
-		return(alert("Attention! Please, add the \"Doc:\" reference field!"));
-	switch (cod && length && depth && height) {
-		case "":
-			alert(`Oops! Do not forget to fill each field. Please, try again!`);
-			return (mod.cleanInputs());
-	}
-	tmp = checkWork([cod, length, depth, height]);
-	if (tmp !== false) {
-		orderWorks(tmp);
-		localStorage.setItem(tmp.code, JSON.stringify(tmp));
-		localStorage.setItem("storage", "art-work");
-		mod.countWorks();
-		mod.displayAirCub();
-		mod.displayCub();
-	}
-	return (mod.cleanInputs());
-}
-
-
-// ╭─────────────────────────────────────────────────────────────────╮
-// │ This is the function to find the work in the list to remove it. │
-// ╰─────────────────────────────────────────────────────────────────╯
-export function catchRemove() {
-	const work = prompt("Please enter the work code to be removed:", "code?");
-	
-	if(localStorage.getItem(work)){
-		orderRemove(work);
-		localStorage.removeItem(work);
-		mod.countWorks();
-		mod.displayAirCub();
-		mod.displayCub();
-	}
-	else if(work === null)
-		return(mod.cleanInputs());
-	else
-		alert(`"${work}" was not found in the list. Please, try again!`);
-	localStorage.setItem("storage", "art-work");
-	return(mod.cleanInputs());
-}
-
-
-// ╭─────────────────────────────────────────────────────────────────╮
-// │ This functions checks if the reference has changed by the user. │
-// ╰─────────────────────────────────────────────────────────────────╯
-export function checkReference() {
-	const ref =		localStorage.getItem("refNumb");
-	const actual =	document.getElementById("input_estimate").value;
-	
-	if (ref){
-		if (ref !== actual){
-			if (confirm("ATTENTION! The refNumb has changed")){
-				localStorage.removeItem("refNumb");
-				localStorage.setItem("refNumb", actual);
-				document.getElementById("input_estimate").value = actual;
-			}
-			else
-				document.getElementById("input_estimate").value = ref;
-		}
-	}
-	localStorage.setItem("refNumb", actual);
-}
-
-
-function orderWorks({ code }){
-	const storage =	sessionStorage;
-	const array =	JSON.parse(storage.getItem("codes"));
-	let num;
-
-	if (!array)
-		return(storage.setItem("codes", JSON.stringify([[0, code]])));
-	num = Number.parseInt(array[array.length - 1]);
-	num = num + 1;
-	array.push([num, code]);
-	return(storage.setItem("codes", JSON.stringify(array)));
-};
-
-
-function orderRemove (code) {
-	const session =	sessionStorage;
-	const codes =	JSON.parse(session.getItem("codes"));
-	let i =			0;
-
-	while (codes[i][1] !== code && i <= codes.length)
-		i++;
-	codes.splice(i, 1);
-	session.setItem("codes", JSON.stringify(codes));
-};
+import * as main from './front-modules/start.front.mjs';
+import * as accordion from './side-menu/menu.currency.conversion.mjs';
+import * as unit from './side-menu/menu.units.mjs';
+import { crate, clearAll, setUnit } from './front-modules/checkout.mjs';
+import { copyButton1, copyButton2 } from './panels/clip.board.caller.mjs';
+import { createDB } from './front-modules/link.storage.mjs';
+import { switchMode } from './front-modules/mode.color.mjs';
+import { accordionController } from './side-menu/interactive.menu.mjs';
+import { searchEstimate } from './side-menu/search.menu.mjs';
+import { renderDisplay } from './plotter/layer.controller.mjs';
+import { layersNumber, skip } from './plotter/select.menu.mjs';
 
 
 globalThis.onkeydown = (push) => {
 	const task1 = ((push.key === "Enter") && (push.ctrlKey === true)) ?? false;
-
 	task1 ? crate(): false;
 };
 
-globalThis.document.getElementById("logout")
-.addEventListener("click", () => {
-	document.cookie = "user=; value=; Max-Age=0; path=/; domain=";
-	document.cookie = "id=; value=; Max-Age=0; path=/; domain=";
-	globalThis.location.replace('/');
-});
+
+globalThis.document.getElementById('main-app')
+	.addEventListener("click", (element => {
+	
+	// console.log(element.target.id);
+	switch (element.target.id) {
+		case "add-btn":
+			main.catchWork();
+			break;
+		case "remove-btn":
+			main.catchRemove();
+			break;
+		case "clear-btn":
+			clearAll();
+			break;
+		case "crate-btn":
+			crate();
+			break;
+		case "copy-pane1":
+			copyButton1();
+			break;
+		case "copy-pane2":
+			copyButton2();
+			break;
+		case "logout":
+			document.cookie = "user=; value=; Max-Age=0; path=/; domain=";
+			document.cookie = "id=; value=; Max-Age=0; path=/; domain=";
+			globalThis.location.replace('/');
+			break;
+		case "logout-btn":
+			document.cookie = "user=; value=; Max-Age=0; path=/; domain=";
+			document.cookie = "id=; value=; Max-Age=0; path=/; domain=";
+			globalThis.location.replace('/');
+			break;
+		case "search-header":
+			accordionController(element);
+			break;
+		case "exchange-header":
+			accordion.coins();
+			accordion.exchangeHeader();
+			accordionController(element);
+			break;
+		case "units-header":
+			accordionController(element);
+			break;
+		case "search-btn":
+			accordionController(element);
+			break;
+		case "exchange-btn":
+			accordion.coins();
+			accordionController(element);
+			break;
+		case "units-btn":
+			accordionController(element);
+			break;
+		case "fetch-btn":
+			searchEstimate();
+			break;
+		case "crate-layers":
+			renderDisplay();
+			break;
+		case "layer-crate":
+			renderDisplay();
+			break;
+		case "previous":
+			skip(element);
+			break;
+		case "layer-prev":
+			skip(element);
+			break;
+		case "next":
+			skip(element);
+			break;
+		case "layer-next":
+			skip(element);
+			break;
+		default:
+	}
+}), true);
+
+
+globalThis.document.getElementById('main-app')
+	.addEventListener("change", (element => {
+
+	// console.log(element.target.id);
+	switch (element.target.id) {
+		case "input_estimate":
+			createDB();
+			break;
+		case "in":
+			setUnit();
+			break;
+		case "cm":
+			setUnit();
+			break;
+		case "dark-mode":
+			switchMode('dark');
+			break;
+		case "light-mode":
+			switchMode('light');
+			break;
+		case "coin1":
+			accordion.coinInputOne();
+			break;
+		case "coin2":
+			accordion.coinInputTwo();
+			break;
+		case "units1":
+			unit.setUnitOne();
+			break;
+		case "units2":
+			unit.setUnitTwo();
+			break;
+		case "selected-crate":
+			layersNumber(element);
+			break;
+		default:
+	};
+}), true);
+
+
+globalThis.document.getElementById('main-app')
+	.addEventListener("input", (element => {
+
+	switch (element.target.id) {
+		case "coin1-input":
+			accordion.getInputOne();
+			break;
+		case "coin2-input":
+			accordion.getInputTwo();
+			break;
+		case "input-unit1":
+			unit.getUnitOne();
+			break;
+		case "input-unit2":
+			unit.getUnitTwo();
+			break;
+		default:
+	};
+}), true);

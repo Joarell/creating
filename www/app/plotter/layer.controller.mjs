@@ -4,9 +4,6 @@ import { plotter } from "./layers.mjs";
 import { populateOptions } from "./select.menu.mjs";
 
 
-globalThis.document.getElementById("crate-layers")
-	.addEventListener("click", renderDisplay);
-
 export async function getCrates(doc) {
 	const dataIDB =	new Worker('./panels/worker.IDB.crates.mjs');
 	return(new Promise((resolve, reject) => {
@@ -30,11 +27,10 @@ export function processStart(doc) {
 };
 
 
-async function renderDisplay() {
+export async function renderDisplay() {
 	const estimate =	document.getElementById("input_estimate").value;
 	const display =		document.querySelector(".plotter");
 	const menu =		document.querySelector(".plotter__menu");
-	const { crates } =	await getCrates(estimate);
 	
 	if(!estimate)
 		return (
@@ -42,6 +38,7 @@ async function renderDisplay() {
 			"Please, start an 'Doc', add works and press the 'Crate' button."
 		)
 	);
+	const { crates } =	await getCrates(estimate);
 	openCloseDisplay([display, menu]);
 	if (display.ariaHidden) {
 		processStart(crates);
@@ -52,7 +49,7 @@ async function renderDisplay() {
 				top: 1000, behavior: "smooth"
 			}), 2000);
 			populateOptions(crates);
-	}
+	};
 };
 
 

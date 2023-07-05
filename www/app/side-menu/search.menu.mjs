@@ -39,12 +39,11 @@ function regexChecker(data){
 };
 
 
-globalThis.document.getElementById("fetch-btn")
-	.addEventListener("click", () => {
+export function searchEstimate() {
 	const docEstimate =	document.getElementById("estimate_getter").value;
 
 	return(!regexChecker(docEstimate) ? checkBrowserDB(docEstimate): false);
-});
+};
 
 
 // function testClosure (num) {
