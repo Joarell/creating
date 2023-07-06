@@ -45,9 +45,9 @@ export function screenSize() {
 
 
 export function deskTopView(sizes) {
-	const MAXSIZE =	1010;
 	const PADUP =	0;
 	const PADDOWN =	0;
+	const MAXSIZE =	800;
 	let layerLength;
 	let layerHeight;
 

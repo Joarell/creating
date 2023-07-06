@@ -1,11 +1,15 @@
 
 
 export function populateOptions(crates) {
+	const set =		new WeakSet();
 	const list =	crates.filter(crates => crates[0] === 'Crate');
 	const select =	document.getElementById('selected-crate');
 	const unit =	localStorage
 		.getItem("metrica") === 'cm - centimeters' ? 'cm' : 'in';
 
+	if(select.hasChildNodes())
+		while(select.firstChild)
+			select.removeChild(select.firstChild);
 	select.innerHTML += list.map((crate, i) => {
 		i++;
 		return (`
@@ -15,6 +19,7 @@ export function populateOptions(crates) {
 		`);
 	}, 0);
 	layersNumber(crates);
+	set.add(list);
 };
 
 
@@ -26,7 +31,6 @@ export function layersNumber(list) {
 	else {
 		const crate =	document.getElementById('selected-crate').value;
 		const layers =	changeCrateLayers(Number.parseInt(crate.split(' ')[1]));
-		console.log(layers);
 		sessionStorage.setItem('layers', layers.length);
 	}
 	sessionStorage.setItem('currentLayer', 1);
@@ -35,6 +39,7 @@ export function layersNumber(list) {
 
 
 function changeCrateLayers(num) {
+	const set =			new WeakSet();
 	const doc =			document.getElementById('input_estimate').value;
 	const list =		JSON.parse(sessionStorage.getItem(doc));
 	const { crates } =	list;
@@ -46,13 +51,14 @@ function changeCrateLayers(num) {
 			return (element);
 		}
 	});
+	set.add(crates);
 	return(layer);
 };
 
 
 function setLayerDisplay (value) {
-	const layersNum = sessionStorage.getItem('layers');
-	const display = document.getElementById('layer-count');
+	const layersNum =	sessionStorage.getItem('layers');
+	const display =		document.getElementById('layer-count');
 
 	value === undefined ?
 		display.innerText = `Current layer: 1 / ${layersNum}`:
@@ -60,13 +66,13 @@ function setLayerDisplay (value) {
 };
 
 
-export function skip(button) {
+export function skipLayer(button) {
 	const storage =		sessionStorage;
 	const layersVal =	Number.parseInt(storage.getItem('layers'));
 	const currentVal =	Number.parseInt(storage.getItem('currentLayer'));
 	let sum;
 	
-	if (button.target.id === "next") {
+	if (button.target.id === "next" || button.target.id === "layer-next") {
 		sum = currentVal + 1;
 		if (sum <= layersVal) {
 			setLayerDisplay(sum);

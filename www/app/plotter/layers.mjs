@@ -2,11 +2,11 @@
 
 import * as coord from './layer.coordinate.mjs';
 
-export function plotter(crate) {
+export function plotter({ crate, size }) {
+	console.log(crate, size);
 	const draw =		document.querySelector(".crate-layer");
 	const screen =		globalThis.screen.availWidth;
-	// const layerSize =	crate.filter(size => size.length === 2);
-	const displayView =	coord.getScreenProportion(screen, crate);
+	const displayView =	coord.getScreenProportion(screen, size);
 	const PAD =			25;
 	const works =		crate.filter(arts => {
 		arts.length === 5 && arts[0] !== 'Crate'
@@ -15,7 +15,6 @@ export function plotter(crate) {
 	draw.setAttribute("width", displayView.x + PAD);
 	draw.setAttribute("height", displayView.y + PAD);
 	draw.appendChild(arranger(works, displayView, crate)); //Add map loop to each work
-	// for (crate in layerSize) { }
 	return (draw);
 }
 

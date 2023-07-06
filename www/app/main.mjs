@@ -9,8 +9,8 @@ import { createDB } from './front-modules/link.storage.mjs';
 import { switchMode } from './front-modules/mode.color.mjs';
 import { accordionController } from './side-menu/interactive.menu.mjs';
 import { searchEstimate } from './side-menu/search.menu.mjs';
-import { renderDisplay } from './plotter/layer.controller.mjs';
-import { layersNumber, skip } from './plotter/select.menu.mjs';
+import { changeCrateDisplay, openDisplay } from './plotter/layer.controller.mjs';
+import { layersNumber, skipLayer } from './plotter/select.menu.mjs';
 
 
 globalThis.onkeydown = (push) => {
@@ -77,22 +77,22 @@ globalThis.document.getElementById('main-app')
 			searchEstimate();
 			break;
 		case "crate-layers":
-			renderDisplay();
+			openDisplay();
 			break;
 		case "layer-crate":
-			renderDisplay();
+			openDisplay();
 			break;
 		case "previous":
-			skip(element);
+			skipLayer(element);
 			break;
 		case "layer-prev":
-			skip(element);
+			skipLayer(element);
 			break;
 		case "next":
-			skip(element);
+			skipLayer(element);
 			break;
 		case "layer-next":
-			skip(element);
+			skipLayer(element);
 			break;
 		default:
 	}
@@ -133,6 +133,7 @@ globalThis.document.getElementById('main-app')
 			break;
 		case "selected-crate":
 			layersNumber(element);
+			changeCrateDisplay();
 			break;
 		default:
 	};
