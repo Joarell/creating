@@ -98,7 +98,6 @@ export function catchWork() {
 	const height =		document.getElementById("input_height").value;
 	let tmp;
 
-	console.log(estimate);
 	if (!estimate)
 		return(alert("Attention! Please, add the \"Doc:\" reference field!"));
 	switch (cod && length && depth && height) {
