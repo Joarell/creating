@@ -95,14 +95,14 @@
 					<div class="section__menu--btn">
 						<a role="button" class="layers-btn" data-popup="" id="crate-layers" disabled>
 							<svg aria-hidden="true" class="logout-icon" id="layer-crate" preserveAspectRatio="none">
-								<use href="#layer-material"></use>
+								<use href="#layer-material" id="layer-crate"></use>
 							</svg>
 						</a>
 					</div>
 					<div class="section__menu--btn">
 						<a role="button" class="logout-btn" data-popup="Logout" id="logout-btn">
 							<svg aria-hidden="true" class="logout-icon" id="logout" preserveAspectRatio="none">
-								<use href="#logout-material"></use>
+								<use href="#logout-material" id="logout"></use>
 							</svg>
 						</a>
 					</div>
@@ -332,8 +332,8 @@
 		</div>
 		<div class="plotter" id="layers" aria-hidden="true" aria-controls="crate-layers" aria-expanded="false">
 			<div class="plotter__header">
-				<h2>⊂ Layers</h2>
-				<p id="layer-count">Current layer: 2 / 4 </p>
+				<h2>⊂ Internal Layers</h2>
+				<p id="layer-count">Current layer: 0 / 0 </p>
 			</div>
 			<div class="plotter__display">
 				<svg class="crate-layer"></svg>
@@ -341,12 +341,12 @@
 			<div class="layer-button">
 				<button name="Previous" class="IO__press--btn " id="layer-prev">
 					<svg id="previous" preserveAspectRatio="none">
-						<use xlink:href="#arrow-left-material"></use>
+						<use xlink:href="#arrow-left-material" id="previous"></use>
 					</svg>
 				</button>
 				<button name="Next" class="IO__press--btn " id="layer-next">
 					<svg id="next" preserveAspectRatio="none">
-						<use xlink:href="#arrow-right-material"></use>
+						<use xlink:href="#arrow-right-material" id="next"></use>
 					</svg>
 				</button>
 			</div>

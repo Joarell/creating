@@ -513,7 +513,7 @@
 			margin: 0% 20%;
 			animation: emerge 3s ease-in;
 			animation-fill-mode: forwards;
-			transition: all 1s ease-in-out;
+			transition: all 3s ease;
 		}
 		.plotter__header {
 			display: inherit;
@@ -534,7 +534,7 @@
 			order: 3;
 			animation: emerge 5s ease;
 			animation-fill-mode: forwards;
-			transition: animation 3s linear;
+			transition: all 3s linear;
 			& button {
 				margin: 0 1rem;
 			}
@@ -547,7 +547,7 @@
 		.crate-layer {
 			animation: fede-open 3s ease-in;
 			animation-fill-mode: forwards;
-			transition: all 1s ease-in;
+			transition: all 4s ease-in;
 		}
 		.crate-layer > * {
 			font-family: 'Mitr', sans-serif;
@@ -571,6 +571,8 @@
 			transition: fill 1s ease-in-out;
 		}
 		.crate-layer {
+			flex-basis: 100%;
+			flex-grow: 100%;
 			padding: .5rem;
 			justify-content: center;
 			border-radius: 2rem;
