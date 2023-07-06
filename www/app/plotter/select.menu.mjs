@@ -1,3 +1,4 @@
+import { renderLayer } from "./layer.controller.mjs";
 
 
 export function populateOptions(crates) {
@@ -33,7 +34,7 @@ export function layersNumber(list) {
 		const layers =	changeCrateLayers(Number.parseInt(crate.split(' ')[1]));
 		sessionStorage.setItem('layers', layers.length);
 	}
-	sessionStorage.setItem('currentLayer', 1);
+	sessionStorage.setItem('numLayer', 1);
 	setLayerDisplay();
 };
 
@@ -69,25 +70,41 @@ function setLayerDisplay (value) {
 export function skipLayer(button) {
 	const storage =		sessionStorage;
 	const layersVal =	Number.parseInt(storage.getItem('layers'));
-	const currentVal =	Number.parseInt(storage.getItem('currentLayer'));
+	const currentVal =	Number.parseInt(storage.getItem('numLayer'));
 	let sum;
 	
 	if (button.target.id === "next" || button.target.id === "layer-next") {
 		sum = currentVal + 1;
 		if (sum <= layersVal) {
 			setLayerDisplay(sum);
-			storage.setItem('currentLayer', sum);
+			storage.setItem('numLayer', sum);
+			sum--;
 		}
-		else
-			storage.setItem('currentLayer', layersVal);
+		else {
+			sum = layersVal - 1;
+			storage.setItem('numLayer', layersVal);
+		}
 	}
 	else {
 		sum = currentVal - 1;
 		if (sum >= 1 ) { 
 			setLayerDisplay(sum);
-			storage.setItem('currentLayer', sum);
+			storage.setItem('numLayer', sum);
 		}
-		else
-			storage.setItem('currentLayer', 1);
+		else {
+			sum = 1;
+			storage.setItem('numLayer', sum);
+		}
 	}
+	displayClean();
+	renderLayer(sum);
 };
+
+
+export function displayClean() {
+	const display = document.querySelector(".crate-layer");
+	if (display.hasChildNodes())
+		while(display.firstChild)
+			display.removeChild(display.firstChild)
+	return ;
+}

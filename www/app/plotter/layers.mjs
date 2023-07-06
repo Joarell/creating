@@ -2,27 +2,34 @@
 
 import * as coord from './layer.coordinate.mjs';
 
-export function plotter({ crate, size }) {
-	console.log(crate, size);
+export function plotter({ crate, size }, layer) {
 	const draw =		document.querySelector(".crate-layer");
 	const screen =		globalThis.screen.availWidth;
 	const displayView =	coord.getScreenProportion(screen, size);
 	const PAD =			25;
-	const works =		crate.filter(arts => {
-		arts.length === 5 && arts[0] !== 'Crate'
-	});
+	const works =		worksOnLayer(crate, layer);
 
 	draw.setAttribute("width", displayView.x + PAD);
 	draw.setAttribute("height", displayView.y + PAD);
-	draw.appendChild(arranger(works, displayView, crate)); //Add map loop to each work
+	draw.appendChild(arranger(works, displayView, size)); //Add map loop to each work
 	return (draw);
 }
 
 
-function arranger(arts , pixLayer, crate) {
+function worksOnLayer (list, layerNum) {
+	let counter =		0;
+	const works =		list.filter(arts => {
+		arts.length === 1 ? counter++: false;
+		if (arts.length === 5 && counter === layerNum)
+			return(arts);
+	});
+	return(works);
+};
+
+
+function arranger(arts , pixLayer, base) {
 	const element =		document.createDocumentFragment();
-	const collector =	new WeakSet();
-	let layer =			[...crate];
+	let layer =			[...base];
 	let sizeX;
 	let sizeY;
 	let dimension;
@@ -30,17 +37,14 @@ function arranger(arts , pixLayer, crate) {
 
 	for (i in arts) {
 		if (!coord.spaceAvailable(arts[i], layer))
-			layer = [...crate];
-		sizeX =	coord.proportion(arts[i][1], pixLayer.x, crate[0]);
-		sizeY =	coord.proportion(arts[i][3], pixLayer.y, crate[1]);
+			layer = [...base];
+		sizeX =	coord.proportion(arts[i][1], pixLayer.x, base[0]);
+		sizeY =	coord.proportion(arts[i][3], pixLayer.y, base[1]);
 		dimension = {sizeX, sizeY};
-		collector.add(dimension);
-		element.appendChild(worksPosition.call(dimension, layer, crate));
-		element.appendChild(textOnCenter.call(dimension, arts[i], layer, crate));
+		element.appendChild(worksPositionLayer.call(dimension, layer, base));
+		element.appendChild(textOnCenter.call(dimension, arts[i], layer, base));
 		reduceSpace(arts[i], layer);
 	}
-	dimension =	null;
-	layer =		null;
 	return(element);
 }
 
@@ -68,20 +72,18 @@ function reduceSpace(art, layer) {
 };
 
 
-function worksPosition(space, crate) {
+function worksPositionLayer(layer, crate) {
 	const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-	const { pixelX, pixelY } =	drawPoint(space, crate);
+	const { pixelX, pixelY } =	drawPoint(layer, crate);
 	const PAD =					5;
-	const MAXSIZEX =			1;
-	const MAXSIZEY =			1;
 
-	if (space[0] === crate[0])
+	if (layer[0] === crate[0])
 		rect.setAttribute("x", PAD);
 	else
 		rect.setAttribute("x", pixelX + PAD);
 	rect.setAttribute("y", pixelY + PAD);
-	rect.setAttribute("width", this.sizeX * MAXSIZEX);
-	rect.setAttribute("height", this.sizeY * MAXSIZEY);
+	rect.setAttribute("width", this.sizeX);
+	rect.setAttribute("height", this.sizeY);
 	return(rect);
 }
 

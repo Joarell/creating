@@ -33,7 +33,7 @@ export function getScreenProportion(screenSize, layerSize) {
 
 
 export function screenSize() {
-	const DESKTOP =			1010;
+	const DESKTOP =			800;
 	const displaySetup =	0.880;
 	const screen =			1024;
 	const DISPLAY =			globalThis.screen.availWidth;

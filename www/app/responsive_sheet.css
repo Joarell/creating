@@ -571,8 +571,6 @@
 			transition: fill 1s ease-in-out;
 		}
 		.crate-layer {
-			flex-basis: 100%;
-			flex-grow: 100%;
 			padding: .5rem;
 			justify-content: center;
 			border-radius: 2rem;
