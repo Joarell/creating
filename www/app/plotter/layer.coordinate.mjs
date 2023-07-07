@@ -34,7 +34,7 @@ export function getScreenProportion(screenSize, layerSize) {
 
 export function screenSize() {
 	const DESKTOP =			800;
-	const displaySetup =	0.880;
+	const displaySetup =	0.870;
 	const screen =			1024;
 	const DISPLAY =			globalThis.screen.availWidth;
 	const MOBILEWIDTH =		DISPLAY * displaySetup
@@ -64,7 +64,7 @@ export function deskTopView(sizes) {
 
 
 export function mobileView(sizes) {
-	const displaySetup =	0.880;
+	const displaySetup =	0.870;
 	const MOBILEWIDTH =		globalThis.screen.availWidth * displaySetup
 	const MOBILEHEIGHT =	globalThis.screen.availHeight * displaySetup;
 	let layerLength;
