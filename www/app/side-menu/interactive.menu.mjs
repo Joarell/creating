@@ -41,7 +41,7 @@ function mobileMenu (selected, id) {
 		selected.setAttribute("aria-hidden", false);
 	};
 	setTimeout(() => globalThis.scroll({top: 1000, behavior: "smooth"}), 200);
-	setTimeout(() => document.getElementById(id).click(), 100);
+	setTimeout(document.getElementById(id).click(), 100);
 };
 
 
@@ -57,12 +57,12 @@ function optionToggle(id, option) {
 	switch (id) {
 		case "fetch-mob":
 			menu =	document.querySelector(".get-estimate");
-			mobileMenu(menu, 'search');
+			mobileMenu(menu, 'search-btn');
 			closeFan(option);
 			break;
 		case "currency-mob":
 			menu =	document.querySelector(".exchange--content");
-			mobileMenu(menu, 'exchange');
+			mobileMenu(menu, 'exchange-btn');
 			closeFan(option);
 			setTimeout(() => {
 				document.getElementById('exchange-header').click()
@@ -70,7 +70,7 @@ function optionToggle(id, option) {
 			break;
 		case "units-mob":
 			menu =	document.querySelector(".units-conversion");
-			mobileMenu(menu, 'measures');
+			mobileMenu(menu, 'units-btn');
 			closeFan(option);
 			break;
 		default:
