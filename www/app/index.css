@@ -102,6 +102,7 @@ body {
 	--p__color--mode: var(--back-gray);
 	--pack-works: var(--light-blue2);
 	--work-hover: var(--yellow-select);
+	--stroke: var(--box);
 }
 
 
@@ -118,6 +119,7 @@ body {
 	--crate-btn-col: var(--iframes-bg);
 	--pack-works: var(--iframes-bg);
 	--work-hover: var(--pressed);
+	--stroke: var(--color1);
 }
 
 
@@ -488,7 +490,7 @@ tbody:nth-child(even) {
 
 /* Box shape */
 .plotter,
-.plotter__menu,
+/* .plotter__menu, */
 .container__insert,
 .container__status,
 .result-left,
@@ -1311,5 +1313,3 @@ label:hover + .IO__sizes--popup {
 		width: 3rem;
 	}
 }
-
-

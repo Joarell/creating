@@ -11,7 +11,7 @@
 		grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
 		column-gap: var(--colg);
 		row-gap: var(--rowg);
-		padding: 3% 20%;
+		padding: 2% 20%;
 		transition: all 2s linear;
 	}
 
@@ -447,7 +447,7 @@
 		& {
 			width: 11%;
 			height: 7%;
-			margin: 2% 1% 0 80%;
+			margin: 9% 1% 0 80%;
 			position: fixed;
 		}
 		& > * {
@@ -511,9 +511,10 @@
 		& {
 			isolation: isolate;
 			margin: 0% 20%;
-			animation: emerge 3s ease-in;
+			animation: emerge 2s ease-in;
 			animation-fill-mode: forwards;
-			transition: all 3s ease;
+			transition: all 2s ease;
+			border: .1rem solid var(--iframes-bg);
 		}
 		.plotter__header {
 			display: inherit;
@@ -522,17 +523,19 @@
 			justify-content: space-between;
 			flex-basis: 50%;
 			& > p {
-				font-size: .7rem;
-				background: var(--work-hover);
+				font-size: .6rem;
+				background: transparent;
 				border: .1rem solid var(--iframes-bg);
 				box-shadow: var(--inner-shadow);
 				border-radius: 1rem;
-				padding: .5rem;
+				padding: .4rem;
+				color: var(--p__color--mode);
+				opacity: .6;
 			}
 		}
 		.layer-button {
 			order: 3;
-			animation: emerge 5s ease;
+			animation: emerge 4s ease;
 			animation-fill-mode: forwards;
 			transition: all 3s linear;
 			& button {
@@ -545,9 +548,10 @@
 			}
 		}
 		.crate-layer {
-			animation: fede-open 3s ease-in;
+			animation: fede-open 3s ease;
 			animation-fill-mode: forwards;
-			transition: all 4s ease-in;
+			transition: all 2s linear;
+			border: .1rem solid var(--iframes-bg);
 		}
 		.crate-layer > * {
 			font-family: 'Mitr', sans-serif;
@@ -559,16 +563,26 @@
 			fill: var(--table-font);
 			transition: fill 1.5s ease;
 			z-index: -10;
+			animation: stroke-draw 3s ease-in-out, emerge 2s ease-in;
+			animation-fill-mode: forwards;
+			transition: ani1s ease-in-out;
 		}
 		.crate-layer rect {
 			rx: 1rem;
 			ry: 1rem;
 			fill: transparent;
-			stroke: var(--result-col);
+			stroke-dasharray: 100%;
+			stroke-dashoffset: 100%;
+			stroke: var(--stroke);
+			animation: stroke-draw 2.5s ease-in-out, emerge 1s ease-in;
+			animation-fill-mode: forwards;
+			/* animation-timing-function: cubic-bezier(.5, -100, .5, 100); */
+			transition: animation 2.5s ease-in-out;
 		}
 		.crate-layer rect:hover {
 			fill: var(--work-hover);
-			transition: fill 1s ease-in-out;
+			animation: emerge 2s ease-in-out;
+			transition: animation 1s ease;
 		}
 		.crate-layer {
 			padding: .5rem;
@@ -590,8 +604,8 @@
 		}
 		& {
 			width: 17%;
-			margin: 3% 3% 0 1%;
-			position: fixed;
+			/* margin: 10% 3% 0 1%; */
+			/* position: fixed; */
 		}
 		.plotter__menu__crates {
 			display: inherit;
@@ -618,25 +632,21 @@
 				& {
 					isolation: isolate;
 					border-radius: 1rem;
-					border: .1rem solid var(--iframes-bg);
 					box-sizing: border-box;
-					padding: .5rem 1rem;
 					margin-top: 1rem;
 				}
 				.crates-done {
 					font-family: 'Mitr', sans-serif;
-					font-size: .85rem;
+					font-size: .75rem;
 					font-weight: 500;
-					background: var(--work-hover);
-					color: var(--table-font);
-					box-shadow: var(--inner-shadow);
-					border-radius: 1rem;
-					padding: .5rem .3rem;
-					counter-reset: crates-counter;
-					& option::before {
-						counter-increment: crates-counter;
-						content: counter(crates-counter) " - Create:";
-						color: var(color8);
+					color: var(--p__color--mode);
+					opacity: .8;
+					& {
+						background: transparent;
+						box-shadow: var(--inner-shadow);
+						border-radius: 1rem;
+						padding: .2rem .3rem;
+						counter-reset: crates-counter;
 					}
 					& option {
 						background: var(--color4);
@@ -649,6 +659,23 @@
 				}
 			}
 		}
+	}
+}
+
+
+@keyframes stroke-draw {
+	0% {
+		stroke-dashoffset: 0;
+		stroke-dasharray: 0;
+		fill: var(--work-hover);
+	}
+	50% {
+		stroke-dashoffset: 1000;
+		stroke-dasharray: 1000;
+	}
+	100% {
+		stroke-dashoffset: 0;
+		stroke-dasharray: 0;
 	}
 }
 
@@ -1034,6 +1061,9 @@
 		& > * {
 			box-shadow: var(--shadow1);
 		}
+		.layers-btn {
+			display: none;
+		}
 		& .section__menu--btn {
 			border-radius: 40%;
 		}
@@ -1147,21 +1177,19 @@
 
 
 	.fixed-menu {
-		isolation: isolate;
-		display: flex;
-		justify-content: space-between;
-		flex-basis: 100%;
-		flex-grow: 1;
-		transition: 500ms ease-in-out;
-	}
-
-
-	.fixed-menu {
 		height: 9svh;
 		margin: 203% 6svw 0 6svw;
 		border-radius: 10dvw;
 		opacity: .8;
 		z-index: 10;
+		& {
+			isolation: isolate;
+			display: flex;
+			justify-content: space-between;
+			flex-basis: 100%;
+			flex-grow: 1;
+			transition: 500ms ease-in-out;
+		}
 		& .add--btn:active {
 			background: var(--color6);
 			& > svg {
@@ -1215,7 +1243,7 @@
 			border-radius: 1rem;
 			border: transparent;
 			background: var(--bg-col);
-			box-shadow: var(--inner-shadow);
+			opacity: .5;
 		}
 		& a:nth-child(1) {
 			line-height: 0;
@@ -1359,60 +1387,11 @@
 		}
 	}
 
-
-	/* ╭──────────────────────────────────────────────────────────╮
-	   │                   Layer plotter setup.                   │
-	   ╰──────────────────────────────────────────────────────────╯
-	*/
-
+	.plotter__menu:is([aria-hidden="true"]),
 	.plotter:is([aria-hidden="true"]) {
-		display: none;
-	}
-
-	.plotter:is([aria-hidden="false"]) {
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-		flex-basis: 100%;
-		animation: emerge 2.5s ease;
+		animation: fade-close 500ms ease-out;
 		animation-fill-mode: forwards;
-		transition: all 2s linear;
-		& {
-			margin: 3% 20%;
-		}
-		& > h2 {
-			min-width: 100%;
-		}
-		.crate-layer {
-			animation: fade-open 3s ease;
-			animation-fill-mode: forwards;
-		}
-		.crate-layer > * {
-			font-family: 'Mitr', sans-serif;
-			font-weight: 400;
-			font-size: .7rem;
-		}
-		.crate-layer text {
-			fill: var(--p__color--mode);
-			transition: fill 1.5s ease;
-		}
-		.crate-layer rect {
-			rx: 2rem;
-			ry: 2rem;
-			fill: transparent;
-			stroke: var(--color8);
-		}
-		.crate-layer rect:hover {
-			fill: var(--dark-blue);
-			transition: fill 1s ease-in-out;
-		}
-		.crate-layer {
-			padding: .5rem;
-			justify-content: center;
-			border-radius: 2rem;
-			border: .1rem solid var(--iframes-bg);
-			box-shadow: var(--inner-shadow);
-		}
+		transition: all 1000ms ease-in-out;
 	}
 }
 
@@ -1755,7 +1734,7 @@
 			width: 30%;
 			max-height: 10%;
 			margin-top: 1rem;
-			position: absolute
+			position: absolute;
 		}
 		& > * {
 			box-shadow: var(--shadow1);
@@ -1950,7 +1929,6 @@
 			border-radius: 30%;
 			border: transparent;
 			background: var(--bg-col);
-			box-shadow: var(--inner-shadow);
 		}
 		& a:nth-child(1) {
 			line-height: 0;
@@ -2110,6 +2088,13 @@
 	   ╰──────────────────────────────────────────────────────────╯
 	*/
 
+	.plotter__menu:is([aria-hidden="true"]),
+	.plotter:is([aria-hidden="true"]) {
+		animation: fade-close 500ms ease-out;
+		animation-fill-mode: forwards;
+		transition: all 1000ms ease-in-out;
+	}
+
 	.plotter:is([aria-hidden="true"]) {
 		display: none;
 	}
@@ -2119,15 +2104,49 @@
 		justify-content: center;
 		flex-wrap: wrap;
 		flex-basis: 100%;
-		animation: emerge 2.5s ease;
-		animation-fill-mode: forwards;
-		transition: all 2s linear;
+		& {
+			animation: emerge 2.5s ease;
+			animation-fill-mode: forwards;
+			transition: all 2s linear;
+			border: .1rem solid var(--iframes-bg);
+		}
+		.plotter__header {
+			display: inherit;
+			min-width: 100%;
+			align-items: baseline;
+			justify-content: space-between;
+			flex-basis: 50%;
+			& > p {
+				font-size: .7rem;
+				background: var(--work-hover);
+				border: .1rem solid var(--iframes-bg);
+				box-shadow: var(--inner-shadow);
+				border-radius: 1rem;
+				padding: .5rem;
+			}
+		}
+		.layer-button {
+			order: 3;
+			animation: emerge 4s ease;
+			animation-fill-mode: forwards;
+			transition: all 3s linear;
+			& button {
+				margin-top: 1rem;
+			}
+			& button > svg {
+				width: 100%;
+				height: 100%;
+				fill: var(--color4);
+			}
+		}
 		& > h2 {
 			min-width: 100%;
 		}
 		.crate-layer {
-			animation: fade-open 3s ease;
+			animation: fede-open 3s ease;
 			animation-fill-mode: forwards;
+			transition: all 2s linear;
+			border: .1rem solid var(--iframes-bg);
 		}
 		.crate-layer > * {
 			font-family: 'Mitr', sans-serif;
@@ -2137,16 +2156,28 @@
 		.crate-layer text {
 			fill: var(--p__color--mode);
 			transition: fill 1.5s ease;
+			z-index: -10;
+			animation: stroke-draw 3s ease-in-out, emerge 2s ease-in;
+			animation-fill-mode: forwards;
+			transition: ani1s ease-in-out;
 		}
 		.crate-layer rect {
-			rx: 2rem;
-			ry: 2rem;
+			rx: 1rem;
+			ry: 1rem;
 			fill: transparent;
 			stroke: var(--color8);
+			stroke-dasharray: 100%;
+			stroke-dashoffset: 100%;
+			stroke: var(--stroke);
+			animation: stroke-draw 2.5s ease-in-out, emerge 1s ease-in;
+			animation-fill-mode: forwards;
+			/* animation-timing-function: cubic-bezier(.5, -100, .5, 100); */
+			transition: animation 2.5s ease-in-out;
 		}
 		.crate-layer rect:hover {
-			fill: var(--dark-blue);
-			transition: fill 1s ease-in-out;
+			fill: var(--work-hover);
+			animation: emerge 2s ease-in-out;
+			transition: animation 1s ease;
 		}
 		.crate-layer {
 			padding: .5rem;
@@ -2154,6 +2185,75 @@
 			border-radius: 2rem;
 			border: .1rem solid var(--iframes-bg);
 			box-shadow: var(--inner-shadow);
+		}
+	}
+
+
+	.plotter__menu {
+		display: flex;
+		justify-content: center;
+		transition: all 1s ease-in;
+		& {
+			animation: emerge 3s ease-in;
+			animation-fill-mode: forwards;
+		}
+		& {
+			width: 17%;
+		}
+		.plotter__menu__crates {
+			display: inherit;
+			justify-content: flex-start;
+			flex-direction: column;
+			& > h3 {
+				text-align: center;
+				min-width: 100%;
+				max-height: 10%;
+			}
+			& {
+				min-width: 100%;
+				animation-delay: 15s;
+				animation: fade-open 3s ease-in;
+				animation-fill-mode: forwards;
+				transition: all 2s ease-in;
+			}
+			.plotter__crate__list {
+				display: inherit;
+				flex-basis: 100%;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				& {
+					isolation: isolate;
+					border-radius: 1rem;
+					box-sizing: border-box;
+					padding: .5rem 1rem;
+					margin-top: 1rem;
+				}
+				.crates-done {
+					font-family: 'Mitr', sans-serif;
+					font-size: .75rem;
+					font-weight: 500;
+					background: var(--work-hover);
+					color: var(--table-font);
+					box-shadow: var(--inner-shadow);
+					border-radius: 1rem;
+					padding: .3rem .2rem;
+					counter-reset: crates-counter;
+					& option::before {
+						counter-increment: crates-counter;
+						content: counter(crates-counter) " - Create:";
+						color: var(color8);
+					}
+					& option {
+						background: var(--color4);
+						line-height: 0;
+						border: .1rem solid var(--add-col);
+						box-shadow: var(--inner-shadow);
+						color: var(--iframes-bg);
+						border-radius: 1rem;
+					}
+				}
+			}
 		}
 	}
 }
