@@ -105,6 +105,7 @@ export function skipLayer(button) {
 
 export function displayClean() {
 	const display = document.querySelector(".crate-layer");
+
 	if (display.hasChildNodes())
 		while(display.firstChild)
 			display.removeChild(display.firstChild)
