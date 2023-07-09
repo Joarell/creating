@@ -15,6 +15,12 @@ import ArtWork from "../front-modules/Art.class.def.mjs";
 // │             a**2 = b**2 + c**2              │
 // ╰─────────────────────────────────────────────╯
 export function pitagoras(a, b, c) {
+	const stringCheck = [a, b, c].filter(num => {
+		return(Number.isSafeInteger(num));
+	});
+
+	if(stringCheck.length < 3)
+		return(false);
 	if (a && b && !c) {
 		a = a ** 2;
 		b = b ** 2;
@@ -40,10 +46,8 @@ export function pitagoras(a, b, c) {
 // │ This function returns the cubed value to the work. │
 // ╰────────────────────────────────────────────────────╯
 export function cubing(dimensions) {
-	let cm_to_m;
-
-	cm_to_m = 1_000_000;
-	const cubed = dimensions[1] * dimensions[2] * dimensions[3] / cm_to_m;
+	const CMTOM = 1_000_000;
+	const cubed = dimensions[1] * dimensions[2] * dimensions[3] / CMTOM;
 	return (~~(cubed * 1000) / 1000);
 }
 
@@ -63,26 +67,4 @@ export function big_work(work_list) {
 		}
 	}
 	return (great);
-}
-
-
-// ╭─────────────────────────────────────────────────────────────────╮
-// │ Converts the sizes to inches if metric is equal to "in", and to │
-// │             centimeters if metric is equal to "cm".             │
-// ╰─────────────────────────────────────────────────────────────────╯
-export function conversion(sizes, metric){
-	const inch = 0.39;
-	const dim = [sizes.code];
-
-	if (metric === "cm"){
-		dim.push(~~((sizes.x / inch) * 100) / 100);
-		dim.push(~~((sizes.z / inch) * 100) / 100);
-		dim.push(~~((sizes.y / inch) * 100) / 100);
-	}
-	else {
-		dim.push(~~((sizes.x * inch) * 100) / 100);
-		dim.push(~~((sizes.z * inch) * 100) / 100);
-		dim.push(~~((sizes.y * inch) * 100) / 100);
-	}
-	return (dim = new ArtWork(dim[0], dim[1], dim [2], dim [3]));
 }
