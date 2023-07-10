@@ -7,19 +7,14 @@
 // │ ╰───────────────────────────────────────────────────────────────╯ │
 // ╰───────────────────────────────────────────────────────────────────╯
 
-import ArtWork from "../front-modules/Art.class.def.mjs";
-
 
 // ╭─────────────────────────────────────────────╮
 // │ This is a replic of the pitagoras`s teorem. │
-// │             a**2 = b**2 + c**2              │
 // ╰─────────────────────────────────────────────╯
 export function pitagoras(a, b, c) {
-	const stringCheck = [a, b, c].filter(num => {
-		return(Number.isSafeInteger(num));
-	});
+	const stringCheck = [a, b, c].filter(num => !Number.isSafeInteger(num));
 
-	if(stringCheck.length < 3)
+	if(stringCheck.length > 0)
 		return(false);
 	if (a && b && !c) {
 		a = a ** 2;
@@ -46,25 +41,33 @@ export function pitagoras(a, b, c) {
 // │ This function returns the cubed value to the work. │
 // ╰────────────────────────────────────────────────────╯
 export function cubing(dimensions) {
+	const stringCheck = dimensions.filter(num => !Number.isSafeInteger(num));
+	const round =		1000;
+
+	if(stringCheck.length > 1)
+		return(false);
 	const CMTOM = 1_000_000;
 	const cubed = dimensions[1] * dimensions[2] * dimensions[3] / CMTOM;
-	return (~~(cubed * 1000) / 1000);
+	return ((cubed * round) / round);
 }
 
 
 // ╭───────────────────────────────────────────────╮
 // │ This function returns the biggest cubed work. │
 // ╰───────────────────────────────────────────────╯
-export function big_work(work_list) {
-	let i = 0;
-	let cubed = 0;
-	great = 0;
+export function big_work(workList) {
+	let i =			0;
+	let cubed =		0;
+	let greater =	0;
 
-	for (i in work_list) {
-		cubed = cubing(work_list[i]);
-		if (cubed > great) {
-			great = cubed;
-		}
+	console.log(Array.isArray(workList));
+	if (workList.length < 1 || !Array.isArray(workList))
+		return (false);
+	for (i in workList) {
+		if(workList[i].length < 4)
+			return (false);
+		cubed = cubing(workList[i]);
+		cubed > greater ? greater = cubed : false;
 	}
-	return (great);
+	return (greater);
 }
