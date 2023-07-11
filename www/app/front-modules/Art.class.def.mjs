@@ -6,73 +6,60 @@
 // TODO: create the regex function applying the DRY principle.
 export default class ArtWork {
 	constructor (code, x, z, y) {
-		this.code =		code;
-		this.x =		x;
-		this.z =		z;
-		this.y =		y;
+		this.code =	code;
+		this.x =	+x;
+		this.z =	+z;
+		this.y =	+y;
 	};
-	get cubeAir () {
-		return (this.cAir());
-	};
-	cAir () {
-		const CUBICAIR =	6000;
-		const x =			parseInt(this.x);
-		const z =			parseInt(this.z);
-		const y =			parseInt(this.y);
-		const regx =		/[0-9]{1,3}/.test(x);
-		const regz =		/[0-9]{1,3}/.test(z);
-		const regy =		/[0-9]{1,3}/.test(y);
 
-		if (regx && regz && regy)
-			return ((x * z * y) / CUBICAIR);
+	cAir () {
+		const CUBAIR =	6000;
+		const regx =	/[0-9]{1,3}/.test(this.x);
+		const regz =	/[0-9]{1,3}/.test(this.z);
+		const regy =	/[0-9]{1,3}/.test(this.y);
+		let result;
+
+		if (regx && regz && regy) {
+			result =	((this.x * this.z * this.y) / CUBAIR).toFixed(3);
+			return(+result);
+		}
 		return (false);
 	};
-	get cub () {
-		if (this.cubed() === false)
-			return (false);
-		return (Math.floor(this.cubed() * 1000) / 1000);
-	};
+
 	cubed () {
 		const CMTOM =	1_000_000;
-		const x =		parseInt(this.x);
-		const z =		parseInt(this.z);
-		const y =		parseInt(this.y);
-		const regx =	/[0-9]{1,3}/.test(x);
-		const regz =	/[0-9]{1,3}/.test(z);
-		const regy =	/[0-9]{1,3}/.test(y);
+		const regx =	/[0-9]{1,3}/.test(this.x);
+		const regz =	/[0-9]{1,3}/.test(this.z);
+		const regy =	/[0-9]{1,3}/.test(this.y);
+		let result;
 		
-		if (regx && regz && regy)
-			return ((x * z * y) / CMTOM);
+		if (regx && regz && regy) {
+			result =	 ((this.x * this.z * this.y) / CMTOM).toFixed(3);
+			return(+result);
+		}
 		return (false);
 	};
-	get vector () {
-		const x = parseFloat(this.x);
-		const z = parseFloat(this.z);
-		const y = parseFloat(this.y);
 
-		return ([this.code, x, z, y]);
+	arr () {
+		return ([this.code, this.x, this.z, this.y]);
 	};
-	// TODO: not tested yet.
+
 	conversion (metric) {
-		const INCH =		0.39;
+		const INCH =		2.54;
 		const dimensions =	[];
-		const x =			parseFloat(this.x);
-		const z =			parseFloat(this.z);
-		const y =			parseFloat(this.y);
 
 		if (metric === "cm"){
-			dimensions.push(Math.floor((x / INCH) * 100) / 100);
-			dimensions.push(Math.floor((z / INCH) * 100) / 100);
-			dimensions.push(Math.floor((y / INCH) * 100) / 100);
+			dimensions.push(+(this.x / INCH).toFixed(3));
+			dimensions.push(+(this.z / INCH).toFixed(3));
+			dimensions.push(+(this.y / INCH).toFixed(3));
 			return (dimensions);
 		}
 		else if (metric === "in"){
-			dimensions.push(Math.floor((x * INCH) * 100) / 100);
-			dimensions.push(Math.floor((z * INCH) * 100) / 100);
-			dimensions.push(Math.floor((y * INCH) * 100) / 100);
+			dimensions.push(+(this.x * INCH).toFixed(3));
+			dimensions.push(+(this.z * INCH).toFixed(3));
+			dimensions.push(+(this.y * INCH).toFixed(3));
 			return (dimensions);
 		}
-		else
-			return("incorrect value");
+		return(false);
 	};
 };
