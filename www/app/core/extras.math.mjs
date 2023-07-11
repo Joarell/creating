@@ -60,7 +60,6 @@ export function big_work(workList) {
 	let cubed =		0;
 	let greater =	0;
 
-	console.log(Array.isArray(workList));
 	if (workList.length < 1 || !Array.isArray(workList))
 		return (false);
 	for (i in workList) {
