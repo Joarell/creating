@@ -14,33 +14,13 @@
 import * as extra_math from "./extras.math.mjs";
 
 
-//╭──────────────────────────────────────────────────────────────────╮
-//│ This function is responsible to get only the sizes of the Object │
-//│                         split with ",".                          │
-//╰──────────────────────────────────────────────────────────────────╯
-// function splitInt(dimensions, codes) {
-// 	let work_dimensions;
-// 	let i;
-//
-// 	i = 0;
-// 	work_dimensions = [];
-// 	dimensions = dimensions.split(",");
-// 	while (i !== 3) {
-// 		work_dimensions.push(parseInt(dimensions[i]));
-// 		i++;
-// 	}
-// 	work_dimensions.unshift(codes);
-// 	return work_dimensions;
-// }
-
-
 //╭─────────────────────────────────────────────────────────────╮
 //│ This function get the codes and sizes of the works from the │
 //│                       list proveided.                       │
 //╰─────────────────────────────────────────────────────────────╯
 export function getDimensions(w_list) {
 	const dimensions = w_list.map((work) => {
-		return(work.vector);
+		return(work.arr());
 	});
 	return (dimensions);
 }
@@ -50,7 +30,7 @@ export function getDimensions(w_list) {
 //│ This function provides the airfreight cube to each sizes of the works │
 //│                          in the Object list.                          │
 //╰───────────────────────────────────────────────────────────────────────╯
-function cubeAll(w_list) {
+export function cubeAll(w_list) {
 	let result = [];
 	let i = 0;
 	let dimensions = getDimensions(w_list);
@@ -88,7 +68,7 @@ export function quickSort(works, index) {
 //│This function returns the code and cubed values in new arrays to each code │
 //│                         baased on the its sizes.                          │
 //╰───────────────────────────────────────────────────────────────────────────╯
-function zipper(codes, cubes, index) {
+export function zipper(codes, cubes, index) {
 	let new_arranje = [];
 
 	new_arranje.push(codes[index]);
@@ -104,7 +84,6 @@ function zipper(codes, cubes, index) {
 export function newArraySorted(works) {
 	let new_a = [];
 	let i = 0;
-
 
 	while (i < Object.values(works).length) {
 		new_a.push(zipper(Object.keys(works), cubeAll(works), i));
