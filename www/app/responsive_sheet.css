@@ -535,9 +535,11 @@
 		}
 		.layer-button {
 			order: 3;
+			flex-direction: column-reverse;
 			animation: emerge 4s ease;
 			animation-fill-mode: forwards;
 			transition: all 3s linear;
+			margin: 0 39%;
 			& button {
 				margin: 0 1rem;
 			}
