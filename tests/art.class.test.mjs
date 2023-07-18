@@ -6,8 +6,8 @@ import assert from 'node:assert';
 describe("Art work class tests to verify all methods implemented", () => {
 	it("Test-1: returns a artwork object class.", () => {
 		const art =			new ArtWork("098", "50", "5", "50");
-		const current =		typeof(art);
-		const expected =	'object';
+		const current =		art instanceof ArtWork;
+		const expected =	true;
 
 		assert.deepEqual(current, expected);
 	});

@@ -1,6 +1,4 @@
-"use strict"
-
-// impmort { describe, it, before, beforeEach, after, afterEach } from 'node:test';
+// import { describe, it, before, beforeEach, after, afterEach } from 'node:test';
 import ArtWork from '../www/app/front-modules/Art.class.def.mjs';
 import { describe, it } from 'node:test';
 import assert from 'node:assert'
