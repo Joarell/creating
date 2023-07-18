@@ -17,7 +17,7 @@
 // │ Verify which is the better value to "x", toward to reduce the height │
 // │                          measure or depth.                           │
 // ╰──────────────────────────────────────────────────────────────────────╯
-function swapSizes (sizes) {
+export function swapSizes (sizes) {
 	let x;
 	let z;
 	let y;
@@ -44,7 +44,7 @@ function swapSizes (sizes) {
 // ╭─────────────────────────────────────────────────────────────────╮
 // │ Returns the new crate with more works in side if it's possible. │
 // ╰─────────────────────────────────────────────────────────────────╯
-function largeCrate(list, sizes, dimensions) {
+export function largeCrate(list, sizes, dimensions) {
 	let new_crate;
 	let len;
 	let x;
@@ -79,7 +79,7 @@ function largeCrate(list, sizes, dimensions) {
 // │ Call the largerCrate funtion to define a new crate to arrange more works │
 // │                                 in side.                                 │
 // ╰──────────────────────────────────────────────────────────────────────────╯
-function doubleCheck(list, sizes, dimensions) {
+export function doubleCheck(list, sizes, dimensions) {
 	let x;
 	let z;
 	let y;
@@ -113,7 +113,7 @@ function doubleCheck(list, sizes, dimensions) {
 // │ Returns the sizes of the crate dealing with all works with the sizes if │
 // │                 the dimensions length if equal to four.                 │
 // ╰─────────────────────────────────────────────────────────────────────────╯
-function splitSectionCrateFour(list, dimensions) {
+export function splitSectionCrateFour(list, dimensions) {
 	let x;
 	let y;
 	let z;
@@ -149,7 +149,7 @@ function splitSectionCrateFour(list, dimensions) {
 // │ Returns the sizes of the crate dealing with all works with the sizes if │
 // │                 the dimensions length if equal to two.                  │
 // ╰─────────────────────────────────────────────────────────────────────────╯
-function splitSectionTwo(list, dimensions) {
+export function splitSectionTwo(list, dimensions) {
 	let x;
 	let y;
 	let z;
@@ -178,7 +178,7 @@ function splitSectionTwo(list, dimensions) {
 // │ Returns the sizes of the crate dealing with all works with the sizes if │
 // │                 the dimensions length if equal to one.                  │
 // ╰─────────────────────────────────────────────────────────────────────────╯
-function splitSectionCrateOne(list, dimensions) {
+export function splitSectionCrateOne(list, dimensions) {
 	let x;
 	let y;
 	let z;

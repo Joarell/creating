@@ -52,7 +52,7 @@ export function setUnit() {
 		localStorage.setItem("metrica",
 			document.getElementById("cm").value
 		);
-		document.getElementById('cm').checked = true;
+// │ This is the trigger to the "create" and clear button. │
 	}
 	else if (check) {
 		const storage = localStorage.getItem('metrica');
