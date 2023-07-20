@@ -1,6 +1,10 @@
 
 
-export default class Pipedo {
+export default class Hexaedro {
+	#x;
+	#z;
+	#y;
+
 	constructor (x, z, y) {
 		try {
 			const error = "Please, provide a correct x, z or y value.";
@@ -10,10 +14,8 @@ export default class Pipedo {
 		catch (err) {
 			return (err);
 		}
-		finally {
-			this.x = +x;
-			this.z = +z;
-			this.y = +y;
-		};
+		this.#x = +x;
+		this.#z = +z;
+		this.#y = +y;
 	};
 };
