@@ -2,79 +2,49 @@
 
 import RegexChecker from "./Regex.Class.mjs";
 
+
 export default class CubCalc {
 	#x;
 	#z;
 	#y;
 
 	constructor (x, z, y) {
-		const regex = new RegexChecker(x, z, y).regex;
-
-		try {
-			if (!regex) {
-				const error = "Not a valid entry to RegexChecker!";
-				throw new TypeError(error);
-			}
-		}
-		catch (err) {
-			return (err);
-		}
 		this.#x = +x;
 		this.#z = +z;
 		this.#y = +y;
 	};
 
 	get cubCalcAir () {
-		return (new CubCalcAir(this.#x, this.#z, this.#y).cubAir);
+		return (CubCalcAir(this.#x, this.#z, this.#y));
 	};
 
 	get cubArea () {
-		return (new CubArea(this.#x, this.#z, this.#y).cubArea);
+		return (CubArea(this.#x, this.#z, this.#y));
 	};
 }
 
 
-class CubCalcAir extends CubCalc {
-	#x;
-	#z;
-	#y;
+function CubCalcAir(x, z, y) {
+	const regex = new RegexChecker(x, z, y).regexSizes;
 
-	constructor (x, z ,y ) {
-		super(x, z, y);
-		this.#x = +x;
-		this.#z = +z;
-		this.#y = +y;
-	};
+	if (typeof(regex) === 'object')
+		return (regex);
 
-	get cubAir () {
-		const regex = new RegexChecker(this.#x, this.#z, this.#y).regex;
+	const CUBAIR = 6000;
+	const result = ((x * z * y) / CUBAIR).toFixed(3);
 
-		if (!regex) 
-			return(regex);
-		const CUBAIR = 6000;
-		const result = ((this.#x * this.#z * this.#y) / CUBAIR).toFixed(3);
-
-		return(+result);
-	};
+	return(+result);
 };
 
 
-class CubArea extends CubCalc {
-	#x;
-	#z;
-	#y;
+function CubArea(x, z, y) {
+	const regex = new RegexChecker(x, z, y).regexSizes;
 
-	constructor (x, z ,y ) {
-		super(x, z, y);
-		this.#x = +x;
-		this.#z = +z;
-		this.#y = +y;
-	};
+	if (typeof(regex) === 'object')
+		return (regex);
 
-	get cubArea () {
-		const CMTOM =	1_000_000;
-		const result =	((this.#x * this.#z * this.#y) / CMTOM).toFixed(3);
-		
-		return(+result);
-	};
+	const CMTOM =	1_000_000;
+	const result =	((x * z * y) / CMTOM).toFixed(3);
+	
+	return(+result);
 };
