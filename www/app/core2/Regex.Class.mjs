@@ -1,20 +1,31 @@
 
+
 export default class RegexChecker {
-	#x;
-	#z;
-	#y;
+	#values;
 
-	constructor (x, z, y) {
-		this.#x = +x;
-		this.#z = +z;
-		this.#y = +y;
+	constructor (...args) {
+		this.#values = [...args];
 	};
 
-	get regex() {
-		const regx = /[0-9]{1,3}/.test(this.#x);
-		const regz = /[0-9]{1,3}/.test(this.#z);
-		const regy = /[0-9]{1,3}/.test(this.#y);
-	
-		return ((regx && regz && regy) ? true : false);
+	get regexSizes() {
+		return (regexWorks.call(this.#values));
 	};
+};
+
+
+function regexWorks () {
+	try {
+		const regx =	this.map(val => {
+			const reg = /[0-9]{1,3}/.test(val)
+			return(Number.isNaN(reg) ? true : reg);
+		});
+		const error =	"Not a valid entry to RegexChecker!";
+
+		if (regx.includes(false)) {
+			throw new TypeError(error);
+		};
+	}
+	catch (err) {
+		return (err);
+	}
 };
