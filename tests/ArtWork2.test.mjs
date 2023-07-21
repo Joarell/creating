@@ -8,10 +8,10 @@ describe("Testing the Artwork class:", () => {
 		const art =			new ArtWork('001', 180, 5, 120);
 		const current =		art instanceof ArtWork;
 		const expected =	true;
-
+	
 		assert.strictEqual(current, expected);
 	});
-
+	
 	it("Test-2: returns false when code value is passed through.", () => {
 		const current =		new ArtWork(' ', "180", "5", "120");
 		const error =		`Please, provide a valid code. Current:  `;
@@ -47,7 +47,8 @@ describe("Testing the Artwork class:", () => {
 	it("Test-6: returns undefined to cubed air company calculation.", () => {
 		const art =			new ArtWork('001', "a", "5", "120");
 		const current =		art.cAir;
-		const expected =	undefined;
+		const error =		"Not a valid entry to RegexChecker!";
+		const expected =	new TypeError(error);
 	
 		assert.deepStrictEqual(current, expected);
 	});
@@ -55,17 +56,19 @@ describe("Testing the Artwork class:", () => {
 	it("Test-7: returns false to cubed air company calculation.", () => {
 		const art =			new ArtWork('001', 180, "a", 120);
 		const current =		art.cAir;
-		const expected =	undefined;
+		const error =		"Not a valid entry to RegexChecker!";
+		const expected =	new TypeError(error);
 	
-		assert.strictEqual(current, expected);
+		assert.deepStrictEqual(current, expected);
 	});
 	
 	it("Test-8: returns false to cubed air company calculation.", () => {
 		const art =			new ArtWork('001', "180", "5", "-");
 		const current =		art.cAir;
-		const expected =	undefined;
+		const error =		"Not a valid entry to RegexChecker!";
+		const expected =	new TypeError(error);
 	
-		assert.strictEqual(current, expected);
+		assert.deepStrictEqual(current, expected);
 	});
 	
 	it("Test-9: returns the cubic calculation.", () => {
@@ -79,24 +82,27 @@ describe("Testing the Artwork class:", () => {
 	it("Test-10: returns false to cubic calculation.", () => {
 		const art =			new ArtWork('001', "a", "5", "120");
 		const current =		art.cubed;
-		const expected =	undefined;
+		const error =		"Not a valid entry to RegexChecker!";
+		const expected =	new TypeError(error);
 	
-		assert.strictEqual(current, expected);
+		assert.deepStrictEqual(current, expected);
 	});
 	
 	it("Test-11: returns false to cubic calculation.", () => {
 		const art =			new ArtWork('001', "180", "a", "120");
 		const current =		art.cubed;
-		const expected =	undefined;
+		const error =		"Not a valid entry to RegexChecker!";
+		const expected =	new TypeError(error);
 	
-		assert.strictEqual(current, expected);
+		assert.deepStrictEqual(current, expected);
 	});
 	
 	it("Test-12: returns false to cubic calculation.", () => {
 		const art =			new ArtWork('001', 180, 5, "a");
 		const current =		art.cubed;
-		const expected =	undefined;
+		const error =		"Not a valid entry to RegexChecker!";
+		const expected =	new TypeError(error);
 	
-		assert.strictEqual(current, expected);
+		assert.deepStrictEqual(current, expected);
 	});
 });
