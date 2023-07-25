@@ -42,12 +42,63 @@ const list = [
 
 
 export function artWorksList() {
-	const artWorks = test.map(work => {
-		const newWork = new ArtWork(work[0], work[1], work[2], work[3]);
-		return (newWork);
+	const works =	list.map(work => {
+		return(new ArtWork(work[0], work[1], work[2], work[3]));
 	});
 
-	return(artWorks);
+	return(works);
+};
+
+
+export function lessSameSize() {
+	const works =		artWorksList();
+	const cubedList =	works.map(work => {
+		const cub = work.arr();
+		cub.push(work.cubed())
+		return(cub);
+	})
+	
+	return ({ cubedList });
+};
+
+
+export function quickSortResult() {
+	const gc =				new WeakSet();
+	const CUBEDVALUE =		4;
+	const cubedList =		artWorksCubed();
+	const result =			quickSort(cubedList, CUBEDVALUE)
+
+	gc.add(cubedList);
+	return ({sorted: result});
+};
+
+
+function quickSort(list, pos) {
+	if (list.length <= 1)
+		return (list);
+
+	const left =	[];
+	const pivot =	list.splice(0, 1)
+	const right =	[];
+	let i =			0;
+
+	for (i in list)
+		list[i][pos] <= pivot[0][pos] ? left.push(list[i]): right.push(list[i]);
+	return(quickSort(left, pos).concat(pivot, quickSort(right, pos)));
+};
+
+
+export function artWorksCubed() {
+	const gc =			new WeakSet();
+	const works =		artWorksList();
+	const cubedList =	works.map(work => {
+		const cub = work.arr();
+		cub.push(work.cubed())
+		return(cub);
+	})
+	
+	gc.add(works);
+	return (cubedList);
 };
 
 
