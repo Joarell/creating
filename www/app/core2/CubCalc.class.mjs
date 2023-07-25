@@ -1,6 +1,6 @@
 
 
-import RegexChecker from "./Regex.Class.mjs";
+import RegexChecker from "./Regex.class.mjs";
 
 
 export default class CubCalc {
