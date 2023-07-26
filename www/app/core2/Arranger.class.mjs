@@ -1,89 +1,69 @@
 
+import ArrangerLargestCanvas from "./Arranger.largest.works.mjs";
+import ArrangerNoCanvas from "./Arranger.no.canvas.mjs";
+import ArrangerSameSize from "./Arranger.same.size.class.mjs";
+import ArrangerStarter from "./Arranger.starter.class.mjs";
+
 
 export default class Arranger {
 	#list;
 
 	constructor (list) {
 		this.#list = list;
+		const dataChecker =	this.#checkData();
+
+		if(dataChecker && dataChecker.constructor.name === 'TypeError')
+			return (dataChecker);
+		return(this.#solver());
+	};
+	
+	// This is the 'chain of responsibility/Factory' pattern method.
+	async #solver () {
+		await this.#start();
+		await this.#sameSizeTrail();
+		await this.#noCanvasTrail();
+		await this.#largestCanvasTrail();
+
+		return(this.#list);
 	};
 
-	// This is the visible method to the client.
-	get solveTheList() {
-		const checker = (
-			!Array.isArray(this.#list) || 
-			this.#list.length === 0 ||
-			!this.#list
-		);
+	#checkData () {
+		try {
+			const check =	(val) => val.length === 0 || !val;
+			const checker =	(!Array.isArray(this.#list) || check(this.#list));
 
-		if(checker)
-			return(`Please, provide a type of 'ArtWork' object.`);
-		const start = this.#starter();
+			if(checker) {
+				const error = `Please, provide a type of 'ArtWork' object.`
+				throw new TypeError(error);
+			}
 
-		return(start);
-	};
-
-	// This is the 'chain of responsibility' method.
-	async #starter () {
-		const solver = new Promise((resolve, reject) => {
 			const artWork =	this.#list.map(work => {
 				return (work.constructor.name === "ArtWork");
 			});
 
 			if (artWork.includes(false)) {
-				reject(`Some work is not of the type 'ArtWork' object.`);
+				const error = `Some work is not of the type 'ArtWork' object.`;
+				throw new TypeError(error);
 			}
-			resolve(this.#list);
-		});
-		const CUBEDPOS = 4
-		
-		return(
-			solver
-			.then(addCubValueToEachWork)
-			.then(list => { return({sorted: quickSort(list, CUBEDPOS) })})
-			.catch(err => err)
-		);
+		}
+		catch (err) {
+			return(err);
+		};
 	};
-};
 
-function addCubValueToEachWork(list) {
-	const cubedList = list.map(work => {
-		const arrWork = work.arr();
-		arrWork.push(work.cubed());
+	async #start () {
+		this.#list = await new ArrangerStarter(this.#list);
+	};
 
-		return(arrWork);
-	});
+	async #sameSizeTrail () {
+		this.#list = await new ArrangerSameSize(this.#list);
+	};
 
-	return(cubedList);
-};
+	async #noCanvasTrail () {
+		this.#list = await new ArrangerNoCanvas(this.#list);
+	};
 
-
-function quickSort(list, pos) {
-	if (list.length <= 1)
-		return(list);
-
-	const left =	[];
-	const pivot =	list.splice(0, 1);
-	const right =	[];
-	let i =			0;
-
-	for (i in list)
-		list[i][pos] <= pivot[0][pos] ? left.push(list[i]): right.push(list[i]);
-	return (quickSort(left, pos).concat(pivot, quickSort(right, pos)));
-};
-
-
-function sameSizeSolver (list) {
-	list.test = 'test';
-};
-
-function noCanvasChecker (list) {
-};
-
-function largeCanvasChecker (list) {
-};
-
-function conventionalCrate(list) {
-};
-
-function lastCheckArranger(list) {
+	async #largestCanvasTrail () {
+		this.#list = await new ArrangerLargestCanvas(this.#list);
+	};
 };
