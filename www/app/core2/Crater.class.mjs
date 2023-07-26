@@ -16,3 +16,10 @@ export default class Crate {
 	get whichAirPort () {
 	};
 };
+
+
+function conventionalCrate(list) {
+};
+
+function lastCheckArranger(list) {
+};
