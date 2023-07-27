@@ -10,98 +10,98 @@ import ArrangerLargestCanvas from '../www/app/core2/Arranger.largest.works.mjs';
 
 
 describe("These are tests to Arranger class module.", () => {
-	it("TEST-1: returns error to empty data.", async () => {
-		const current =		await new Arranger();
+	it("TEST-1: returns error to empty data.",  () => {
+		const current =		 new Arranger();
 		const error =		`Please, provide a type of 'ArtWork' object.`;
 		const expected =	new TypeError(error);
 	
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it("TEST-2: returns error to not 'ArtWork' type.", async () => {
+	it("TEST-2: returns error to not 'ArtWork' type.", () => {
 		const arr =			['11000', 100, 5, 100];
-		const current =		await new Arranger(arr);
+		const current =		 new Arranger(arr);
 		const error =		`Some work is not of the type 'ArtWork' object.`;
 		const expected =	new TypeError(error);
 	
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it("TEST-3: returns error to string passed to the Arranger.", async () => {
-		const current =		await new Arranger('test');
+	it("TEST-3: returns error to string passed to the Arranger.", () => {
+		const current =		 new Arranger('test');
 		const error =		`Please, provide a type of 'ArtWork' object.`;
 		const expected =	new TypeError(error);
 	
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it("TEST-4: returns error to empty array.", async () => {
-		const current =		await new Arranger([]);
+	it("TEST-4: returns error to empty array.", () => {
+		const current =		 new Arranger([]);
 		const error =		`Please, provide a type of 'ArtWork' object.`;
 		const expected =	new TypeError(error);
 	
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it("TEST-5: returns error to string array.", async () => {
-		const current =		await new Arranger(['Test']);
+	it("TEST-5: returns error to string array.", () => {
+		const current =		 new Arranger(['Test']);
 		const error =		`Some work is not of the type 'ArtWork' object.`;
 		const expected =	new TypeError(error);
 	
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it("TEST-6: returns error to empty array.", async () => {
-		const current =		await new Arranger(['              ']);
+	it("TEST-6: returns error to empty array.", () => {
+		const current =		 new Arranger(['              ']);
 		const error =		`Some work is not of the type 'ArtWork' object.`;
 		const expected =	new TypeError(error);
 	
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it("TEST-7: returns error to not 'ArtWork' type.", async () => {
-		const current =		await new Arranger(' ')
+	it("TEST-7: returns error to not 'ArtWork' type.", () => {
+		const current =		 new Arranger(' ')
 		const error =		`Please, provide a type of 'ArtWork' object.`;
 		const expected =	new TypeError(error);
 	
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it("TEST-8: adds a list with cubed and sorted values", async () => {
+	it("TEST-8: adds a list with cubed and sorted values", () => {
 		const mocked =		mock.artWorksList();
-		const current =		await new ArrangerStarter(mocked);
+		const current =		 new ArrangerStarter(mocked);
 		const expected =	mock.quickSortResult();
 	
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it("TEST-9: adds an object list with same size works.", async () => {
+	it("TEST-9: adds an object list with same size works.", () => {
 		const mocked =		mock.quickSortResult();
-		const current =		await new ArrangerSameSize(mocked);
+		const current =		 new ArrangerSameSize(mocked);
 		const expected =	mock.lessSameSize();
 	
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it("TEST-10: adds an object list with no canvas elements.", async () => {
+	it("TEST-10: adds an object list with no canvas elements.", () => {
 		const mocked =		mock.lessSameSize();
-		const current =		await new ArrangerNoCanvas(mocked);
+		const current =		 new ArrangerNoCanvas(mocked);
 		const expected =	mock.noCanvasOut();
 	
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it("TEST-11: adds an object with respective cub values", async () => {
+	it("TEST-11: adds an object with respective cub values", () => {
 		const mocked =		mock.noCanvasOut();
-		const current =		await new ArrangerLargestCanvas(mocked);
+		const current =		 new ArrangerLargestCanvas(mocked);
 		const expected =	mock.largestWorks();
 	
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-12: adds an object with respective cub values", async () => {
+	it("TEST-12: adds an object with respective cub values", () => {
 		const mocked =		mock.artWorksList();
-		const current =		await new Arranger(mocked);
+		const current =		 new Arranger(mocked);
 		const expected =	mock.largestWorks();
 	
 		// console.log(current);

@@ -9,7 +9,7 @@ export default class ArrangerSameSize {
 		return(this.#sameSizeTrail());
 	};
 
-	async #trailOne() {
+	#trailOne() {
 		const getter =	[];
 		const checker = (a, b) => a[4] === b[4] && a[0] !== b[0];
 		this.map(work => {
@@ -31,7 +31,7 @@ export default class ArrangerSameSize {
 		return (art[1] === x && art[3] === y && art[4] === cub);
 	};
 
-	async #trailTwo(list) {
+	#trailTwo(list) {
 		const sameSize = [];
 		list.map(work => {
 			let getter =	[];
@@ -51,9 +51,9 @@ export default class ArrangerSameSize {
 		return(sameSize);
 	};
 
-	async #sameSizeTrail () {
-		const pathOne = await this.#trailOne.call(this.#list);
-		const pathTwo = await this.#trailTwo(pathOne);
+	#sameSizeTrail () {
+		const pathOne = this.#trailOne.call(this.#list);
+		const pathTwo = this.#trailTwo(pathOne);
 
 		pathTwo.map(art => {
 			this.#list.splice(this.#list.indexOf(art), 1);

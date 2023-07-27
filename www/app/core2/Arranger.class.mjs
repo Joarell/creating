@@ -18,11 +18,11 @@ export default class Arranger {
 	};
 	
 	// This is the 'chain of responsibility/Factory' pattern method.
-	async #solver () {
-		await this.#start();
-		await this.#sameSizeTrail();
-		await this.#noCanvasTrail();
-		await this.#largestCanvasTrail();
+	#solver () {
+		this.#start();
+		this.#sameSizeTrail();
+		this.#noCanvasTrail();
+		this.#largestCanvasTrail();
 
 		return(this.#list);
 	};
@@ -51,19 +51,19 @@ export default class Arranger {
 		};
 	};
 
-	async #start () {
-		this.#list = await new ArrangerStarter(this.#list);
+	#start () {
+		this.#list = new ArrangerStarter(this.#list);
 	};
 
-	async #sameSizeTrail () {
-		this.#list = await new ArrangerSameSize(this.#list);
+	#sameSizeTrail () {
+		this.#list = new ArrangerSameSize(this.#list);
 	};
 
-	async #noCanvasTrail () {
-		this.#list = await new ArrangerNoCanvas(this.#list);
+	#noCanvasTrail () {
+		this.#list = new ArrangerNoCanvas(this.#list);
 	};
 
-	async #largestCanvasTrail () {
-		this.#list = await new ArrangerLargestCanvas(this.#list);
+	#largestCanvasTrail () {
+		this.#list = new ArrangerLargestCanvas(this.#list);
 	};
 };

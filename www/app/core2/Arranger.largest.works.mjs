@@ -19,8 +19,8 @@ export default class ArrangerLargestCanvas {
 		return(largestCanvas);
 	}
 
-	async #largest() {
-		const { sorted } = this.#list;
+	#largest() {
+		const { sorted } =	this.#list;
 		const finder =		this.#finder.call(sorted);
 
 		finder.map(canvas => {

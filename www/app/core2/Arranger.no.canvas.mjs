@@ -14,7 +14,7 @@ export default class ArrangerNoCanvas {
 		});
 	};
 
-	async #noCanvasOut () {
+	#noCanvasOut () {
 		let { 
 			sorted, 
 			sameSize 
@@ -37,8 +37,8 @@ export default class ArrangerNoCanvas {
 		return(this.#peces);
 	};
 
-	async #noCanvas () {
-		const filtered = await this.#noCanvasOut();
+	#noCanvas () {
+		const filtered = this.#noCanvasOut();
 		return (filtered);
 	};
 };

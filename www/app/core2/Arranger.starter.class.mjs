@@ -39,7 +39,7 @@ export default class ArrangerStarter {
 		);
 	};
 
-	async #starter() {
+	#starter() {
 		const arrCubedList =	this.#addCubValueToEachWork();
 		const CUBEDPOS =		4
 		const sorted =			this.#quickSort(arrCubedList, CUBEDPOS);
