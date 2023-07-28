@@ -7,6 +7,7 @@ import ArrangerStarter from '../www/app/core2/Arranger.starter.class.mjs';
 import ArrangerSameSize from '../www/app/core2/Arranger.same.size.class.mjs';
 import ArrangerNoCanvas from '../www/app/core2/Arranger.no.canvas.mjs';
 import ArrangerLargestCanvas from '../www/app/core2/Arranger.largest.works.mjs';
+import ArrangerTube from '../www/app/core2/Arranger.tube.class.mjs';
 
 
 describe("These are tests to Arranger class module.", () => {
@@ -69,7 +70,7 @@ describe("These are tests to Arranger class module.", () => {
 	
 	it("TEST-8: adds a list with cubed and sorted values", () => {
 		const mocked =		mock.artWorksList();
-		const current =		 new ArrangerStarter(mocked);
+		const current =		new ArrangerStarter(mocked);
 		const expected =	mock.quickSortResult();
 	
 		assert.deepStrictEqual(current, expected);
@@ -77,7 +78,7 @@ describe("These are tests to Arranger class module.", () => {
 	
 	it("TEST-9: adds an object list with same size works.", () => {
 		const mocked =		mock.quickSortResult();
-		const current =		 new ArrangerSameSize(mocked);
+		const current =		new ArrangerSameSize(mocked);
 		const expected =	mock.lessSameSize();
 	
 		assert.deepStrictEqual(current, expected);
@@ -85,26 +86,33 @@ describe("These are tests to Arranger class module.", () => {
 	
 	it("TEST-10: adds an object list with no canvas elements.", () => {
 		const mocked =		mock.lessSameSize();
-		const current =		 new ArrangerNoCanvas(mocked);
+		const current =		new ArrangerNoCanvas(mocked);
 		const expected =	mock.noCanvasOut();
 	
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it("TEST-11: adds an object with respective cub values", () => {
+	it("TEST-11: adds an object with largest measures.", () => {
 		const mocked =		mock.noCanvasOut();
-		const current =		 new ArrangerLargestCanvas(mocked);
+		const current =		new ArrangerLargestCanvas(mocked);
 		const expected =	mock.largestWorks();
 	
 		assert.deepStrictEqual(current, expected);
 	});
 
 	it("TEST-12: adds an object with respective cub values", () => {
-		const mocked =		mock.artWorksList();
-		const current =		 new Arranger(mocked);
-		const expected =	mock.largestWorks();
+		const mocked =		mock.largestWorks();
+		const current =		new ArrangerTube(mocked);
+		const expected =	mock.findTubesClassTest();
 	
-		// console.log(current);
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-13: returns the solved list with all procedures.", () => {
+		const mocked =		mock.artWorksList();
+		const current =		new Arranger(mocked);
+		const expected =	mock.findTubes();
+	
 		assert.deepStrictEqual(current, expected);
 	});
 });
