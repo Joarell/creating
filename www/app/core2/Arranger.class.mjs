@@ -3,13 +3,14 @@ import ArrangerLargestCanvas from "./Arranger.largest.works.mjs";
 import ArrangerNoCanvas from "./Arranger.no.canvas.mjs";
 import ArrangerSameSize from "./Arranger.same.size.class.mjs";
 import ArrangerStarter from "./Arranger.starter.class.mjs";
+import ArrangerTube from "./Arranger.tube.class.mjs";
 
 
 export default class Arranger {
-	#list;
+	#works;
 
 	constructor (list) {
-		this.#list = list;
+		this.#works = list;
 		const dataChecker =	this.#checkData();
 
 		if(dataChecker && dataChecker.constructor.name === 'TypeError')
@@ -23,21 +24,23 @@ export default class Arranger {
 		this.#sameSizeTrail();
 		this.#noCanvasTrail();
 		this.#largestCanvasTrail();
+		this.#findTubes();
+		const finished = { list: this.#works };
 
-		return(this.#list);
+		return(finished);
 	};
 
 	#checkData () {
 		try {
 			const check =	(val) => val.length === 0 || !val;
-			const checker =	(!Array.isArray(this.#list) || check(this.#list));
+			const checker =	(!Array.isArray(this.#works) || check(this.#works));
 
 			if(checker) {
 				const error = `Please, provide a type of 'ArtWork' object.`
 				throw new TypeError(error);
 			}
 
-			const artWork =	this.#list.map(work => {
+			const artWork =	this.#works.map(work => {
 				return (work.constructor.name === "ArtWork");
 			});
 
@@ -52,18 +55,22 @@ export default class Arranger {
 	};
 
 	#start () {
-		this.#list = new ArrangerStarter(this.#list);
+		this.#works = new ArrangerStarter(this.#works);
 	};
 
 	#sameSizeTrail () {
-		this.#list = new ArrangerSameSize(this.#list);
+		this.#works = new ArrangerSameSize(this.#works);
 	};
 
 	#noCanvasTrail () {
-		this.#list = new ArrangerNoCanvas(this.#list);
+		this.#works = new ArrangerNoCanvas(this.#works);
 	};
 
 	#largestCanvasTrail () {
-		this.#list = new ArrangerLargestCanvas(this.#list);
+		this.#works = new ArrangerLargestCanvas(this.#works);
+	};
+
+	#findTubes () {
+		this.#works = new ArrangerTube(this.#works);
 	};
 };
