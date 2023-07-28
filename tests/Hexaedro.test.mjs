@@ -17,6 +17,7 @@ describe("These are test to the Hexaedro class.", () => {
 		const current =		Number.isSafeInteger(hexa.x);
 		const expected =	true;
 
+		console.log(hexa);
 		assert.strictEqual(current, expected);
 	});
 
@@ -24,47 +25,47 @@ describe("These are test to the Hexaedro class.", () => {
 		const hexa =		new Hexaedro("100", "5", "100");
 		const current =		Number.isSafeInteger(hexa.z);
 		const expected =	true;
-
+	
 		assert.strictEqual(current, expected);
 	});
-
+	
 	it("Test-4: returns an int to the 'y' measure.", () => {
 		const hexa =		new Hexaedro("100", "5", "100");
 		const current =		Number.isSafeInteger(hexa.y);
 		const expected =	true;
-
+	
 		assert.strictEqual(current, expected);
 	});
-
+	
 	it("Test-5: returns false when pass empty data to the class.", () => {
 		const current =		new Hexaedro(" ");
 		const error =		"Please, provide a correct x, z or y value.";
 		const expected =	new TypeError(error);
-
+	
 		assert.deepStrictEqual(current, expected);
 	});
-
+	
 	it("Test-6: returns false when pass only x to Hexaedro class.", () => {
 		const current =		new Hexaedro("100");
 		const error =		"Please, provide a correct x, z or y value.";
 		const expected =	new TypeError(error);
-
+	
 		assert.deepStrictEqual(current, expected);
 	});
-
+	
 	it("Test-7: returns false when pass only one value.", () => {
 		const current =		new Hexaedro("100", "5");
 		const error =		"Please, provide a correct x, z or y value.";
 		const expected =	new TypeError(error);
-
+	
 		assert.deepStrictEqual(current, expected);
 	});
-
+	
 	it("Test-8: returns false when pass only 2 values.", () => {
 		const current =		new Hexaedro("100", "5");
 		const error =		"Please, provide a correct x, z or y value.";
 		const expected =	new TypeError(error);
-
+	
 		assert.deepStrictEqual(current, expected);
 	});
 })
