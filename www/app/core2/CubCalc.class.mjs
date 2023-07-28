@@ -21,7 +21,7 @@ export default class CubCalc {
 	get cubArea () {
 		return (CubArea(this.#x, this.#z, this.#y));
 	};
-}
+};
 
 
 function CubCalcAir(x, z, y) {
