@@ -1,25 +1,46 @@
 
 
-export default class Crate {
-	#list;
+export default class Crater {
+	#peces;
 
 	constructor (list) {
-		this.#list = list;
+		this.#peces = list;
+		return(this.#startCratelist());
 	};
 
-	get cubAir() {
+	#startCratelist () {
+		const finished = { crates: this.#peces };
+		this.#tubeCrate();
+
+		retun(finished);
+	};
+	
+	#tubeCrate() {
+		const tubeCrate = new CraterTube(this.#peces.list?.tubes);
+		this.#peces.cratess = { tubeCrates: tubeCrate };
 	};
 
-	get totalcub() {
+	#LargestCanvas() {
+	};
+	
+	#sameSizeCrate() {
 	};
 
-	get whichAirPort () {
+	#noCanvasCrate() {
 	};
-};
 
+	#conventionalCrate() {
+	};
 
-function conventionalCrate(list) {
-};
+	#lastCheckArranger() {
+	};
 
-function lastCheckArranger(list) {
+	#cubAir() {
+	};
+
+	#totalcub() {
+	};
+
+	#whichAirPort () {
+	};
 };
