@@ -2,11 +2,11 @@
 export default class CraterTube {
 	#tubes;
 
-	constructor(peces) {
-		if(!peces) 
+	constructor(list) {
+		if(!list) 
 			return({ tube: false });
 
-		this.#tubes = peces;
+		this.#tubes = list;
 		return(this.#crateMaker());
 	};
 
@@ -103,7 +103,7 @@ export default class CraterTube {
 		if (biggest.length > 0 || biggest.length > MAXCONTENT)
 			crates.push(this.#hugeTubes(biggest));
 
-		while(this.#tubes.length >= MAXCONTENT) {
+		while(this.#tubes.length) {
 			reduce = this.#tubes.splice(0, MAXCONTENT);
 			crates.push(this.#interfaceCrates(reduce.length, reduce));
 			crates.push({ works: reduce });
