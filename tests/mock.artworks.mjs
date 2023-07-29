@@ -46,6 +46,77 @@ const list = [
 	['LJ-298', 300, 10, 300],
 ]
 
+
+// ╭───────────────────────────╮
+// │ Lergest canvas variables. │
+// ╰───────────────────────────╯
+export const canvas1 = [
+	['22222', 260, 10, 260],
+];
+
+const largest1 = [
+	['22222', 260, 10, 260],
+];
+
+export const canvas2 = [
+	['22222', 260, 10, 260],
+	['22207', 260, 10, 260],
+];
+
+const largest2 = [
+	['22222', 260, 10, 260],
+	['22207', 260, 10, 260],
+];
+
+export const canvas3 = [
+	['22222', 260, 10, 260],
+	['22207', 260, 10, 260],
+	['22172', 260, 10, 260],
+];
+
+const largest3 = [
+	['22222', 260, 10, 260],
+	['22207', 260, 10, 260],
+	['22172', 260, 10, 260],
+];
+
+export const canvas4 = [
+	['22222', 260, 10, 300],
+	['22207', 260, 10, 300],
+	['22172', 260, 10, 300],
+	['22172', 260, 10, 260],
+];
+
+const largest4 = [
+	['22222', 260, 10, 300],
+	['22207', 260, 10, 300],
+	['22172', 260, 10, 300],
+	['22172', 260, 10, 260],
+];
+
+export const canvas5 = [
+	['22222', 360, 10, 300],
+	['22207', 360, 10, 300],
+	['22172', 360, 10, 300],
+	['22222', 360, 10, 300],
+	['22207', 260, 10, 300],
+	['22172', 260, 10, 300],
+	['22172', 260, 10, 260],
+];
+
+const largest5 = [
+	['22222', 360, 10, 300],
+	['22207', 360, 10, 300],
+	['22172', 360, 10, 300],
+	['22222', 360, 10, 300],
+	['22207', 260, 10, 300],
+	['22172', 260, 10, 300],
+	['22172', 260, 10, 260],
+];
+
+// ╭─────────────────╮
+// │ Tube variables. │
+// ╰─────────────────╯
 export const caseTube1 = [
 	['22222', 260, 20, 20],
 ];
@@ -142,6 +213,113 @@ const tube6 = [
 // │ Bellow you will find the mock functions to 'Crater' class. │
 // ╰────────────────────────────────────────────────────────────╯
 
+
+// ╭─────────────────╮
+// │ Largest canvas. │
+// ╰─────────────────╯
+
+function setPadding(innerCrate, layers) {
+	const PAD =			23;
+	const HIGHPAD =		28;
+	const LAYER =		10;
+	const X =			innerCrate[1] + PAD;
+	const Z =			(innerCrate[2] + PAD) + (LAYER * layers);
+	const Y =			innerCrate[3] + HIGHPAD;
+
+	return ([X, Z, Y]);
+};
+
+
+function pitagorasTheorem(crate) {
+	const MAXHEIGHT =	240;
+	const a =			crate[2] ** 2;
+	const b =			MAXHEIGHT ** 2;
+	const c =			a - b;
+	const z =			~~(Math.sqrt(c) * 100) / 100;
+
+	return ([crate[0], z, MAXHEIGHT]);
+};
+
+
+function defineCrate(canvas) {
+	let biggestWork = canvas[0];
+	let crate;
+
+	canvas.map(work => {
+		if (work[1] > biggestWork[1] && work[3] > biggestWork[3])
+			biggestWork = work;
+	});
+	crate = setPadding(biggestWork, canvas.length);
+
+	return(crate);
+};
+
+
+function crateInterface (opt, works) {
+	let crate;
+	let pitagorasCrate;
+
+	switch (opt){
+		case 1:
+			crate =				defineCrate(works);
+			pitagorasCrate =	pitagorasTheorem(crate);
+			return(pitagorasCrate);
+		case 2:
+			crate =				defineCrate(works);
+			pitagorasCrate =	pitagorasTheorem(crate);
+			return(pitagorasCrate);
+		case 3:
+			crate =				defineCrate(works);
+			pitagorasCrate =	pitagorasTheorem(crate);
+			return(pitagorasCrate);
+	};
+};
+
+
+function largestCrateTrail(list) {
+	const MAXCANVAS =	3;
+	let crates =		[];
+	let canvas;
+
+	while (list.length) {
+		canvas = list.splice(0, MAXCANVAS);
+		crates.push(crateInterface(canvas.length, canvas));
+		crates.push({ works: canvas });
+	};
+	return(crates);
+};
+
+
+export function provideLargestCanvas(opt) {
+	let largest;
+	let crate = [];
+
+	switch(opt) {
+		case 1:
+			largest = largest1;
+			break ;
+		case 2:
+			largest = largest2;
+			break ;
+		case 3:
+			largest = largest3;
+			break ;
+		case 4:
+			largest = largest4;
+			break ;
+		case 5:
+			largest = largest5;
+			break ;
+	};
+
+	crate = { crates: largestCrateTrail(largest) };
+	return (crate);
+};
+
+
+// ╭──────────────╮
+// │ Tube crater. │
+// ╰──────────────╯
 function sizeComposer() {
 	let X = this[0][1];
 	let Z = this[0][2];
@@ -281,12 +459,6 @@ export function provideTubeCrate(opt) {
 		crate = crateTubesOpt(tubes); 
 	return (crate);
 };
-
-
-
-
-
-
 
 
 // ╭──────────────────────────────────────────────────────────────╮
