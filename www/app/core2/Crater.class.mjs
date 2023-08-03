@@ -1,4 +1,6 @@
+
 import CraterPythagoras from "./Crater.largest.canvas.mjs";
+import CraterSameSize from "./Crater.same.size.mjs";
 import CraterTube from "./Crater.tube.crate.mjs";
 
 
@@ -7,15 +9,15 @@ export default class Crater {
 
 	constructor (list) {
 		this.#lists = list;
-		return(this.#startCratelist());
+		return(this.#startCrateList());
 	};
 
-	#startCratelist () {
-		const finished = { crates: this.#lists };
+	#startCrateList () {
 		this.#tubeCrate();
 		this.#LargestCanvas();
+		this.#sameSizeCrate();
 
-		retun(finished);
+		return({ crates: this.#lists });
 	};
 	
 	// TODO: apply cubAir() to each crate.
@@ -32,6 +34,9 @@ export default class Crater {
 	};
 	
 	#sameSizeCrate() {
+		const sameMeasure = new CraterSameSize(this.#lists.list?.sameSize);
+		if(sameMeasure.largest)
+			this.#lists.crates = { sameSizeCrate: sameMeasure };
 	};
 
 	#noCanvasCrate() {
