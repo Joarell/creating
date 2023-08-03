@@ -62,23 +62,23 @@ export default class CraterSameSize {
 		const PACKAGECM =	5;
 		const LEN =			art.length === 1 ? art[0].length : art.length;
 		let DEPTH;
-		let X;
-		let Z;
-		let Y;
+		let x;
+		let z;
+		let y;
 
 		if (STACK) {
 			DEPTH =	(LEN % 2) + (LEN / 2);
-			X =		base[0][0];
-			Z =		DEPTH * PACKAGECM;
-			Y =		base[0][2];
+			x =		base[0][0];
+			z =		DEPTH * PACKAGECM;
+			y =		base[0][2];
 		}
 		else {
 			DEPTH =	(LEN % 2) + LEN;
-			X =		base[0][0];
-			Z =		DEPTH * PACKAGECM;
-			Y =		base[0][2];
+			x =		base[0][0];
+			z =		DEPTH * PACKAGECM;
+			y =		base[0][2];
 		};
-		return (this.#setPad([X, Z, Y]));
+		return (this.#setPad([x, z, y]));
 	};
 
 	#sizeStacking(base, newBase) {
@@ -90,18 +90,18 @@ export default class CraterSameSize {
 			]:
 			newBase;
 		const LIMIT =	132;
-		let X =			base[0][0];
-		let Z =			base[0][1];
-		let Y =			base[0][2] + extraSizes[2];
+		let x =			base[0][0];
+		let z =			base[0][1];
+		let y =			base[0][2] + extraSizes[2];
 		let stack =		false;
 
-		if (Y > LIMIT && X < LIMIT) {
-			[Y, X] =	[X, Y];
+		if (y > LIMIT && x < LIMIT) {
+			[y, x] =	[x, y];
 			stack =		true;
 		}
-		else if (Y > base[0][2])
+		else if (y > base[0][2])
 			stack =		true;
-		return ([stack, [X, Z, Y]]);
+		return ([stack, [x, z, y]]);
 	};
 
 	#compCrate(list) {
@@ -133,19 +133,19 @@ export default class CraterSameSize {
 	};
 
 	#countWorks () {
-		let X =		this.#peces[0][1];
-		let Z =		this.#peces[0][2];
-		let Y =		this.#peces[0][3];
-		let sizes =	[[X, Z, Y]];
+		let x =		this.#peces[0][1];
+		let z =		this.#peces[0][2];
+		let y =		this.#peces[0][3];
+		let sizes =	[[x, z, y]];
 		let works =	[];
 
 		this.#peces.map(work => {
-			if(work[1] !== X && work[3] !== Y) {
+			if(work[1] !== x && work[3] !== y) {
 				sizes.push([works]);
-				X =	work[1];
-				Z =	work[2];
-				Y =	work[3];
-				sizes.push([X, Z, Y]);
+				x =	work[1];
+				z =	work[2];
+				y =	work[3];
+				sizes.push([x, z, y]);
 				works =	[];
 			};
 			works.push(work);
