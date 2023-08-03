@@ -47,6 +47,144 @@ const list = [
 ]
 
 
+// ╭──────────────────────╮
+// │ Same size variables. │
+// ╰──────────────────────╯
+
+export const sameMeasure1 = [
+	['22222', 80, 5, 50],
+	['22207', 80, 5, 50],
+	['22126', 80, 5, 50],
+	['22172', 80, 5, 50],
+];
+
+const sameSize1 = [
+	['22222', 80, 5, 50],
+	['22207', 80, 5, 50],
+	['22126', 80, 5, 50],
+	['22172', 80, 5, 50],
+];
+
+export const sameMeasure2 = [
+	['22222', 60, 5, 50],
+	['22207', 60, 5, 50],
+	['22172', 60, 5, 50],
+	['22222', 60, 5, 50],
+	['22207', 60, 5, 50],
+	['22161', 60, 5, 50],
+	['22172', 60, 5, 50],
+	['22125', 60, 5, 50],
+];
+
+const sameSize2 = [
+	['22222', 60, 5, 50],
+	['22207', 60, 5, 50],
+	['22172', 60, 5, 50],
+	['22222', 60, 5, 50],
+	['22207', 60, 5, 50],
+	['22161', 60, 5, 50],
+	['22172', 60, 5, 50],
+	['22125', 60, 5, 50],
+];
+
+export const sameMeasure3 = [
+	['22207', 90, 5, 80],
+	['22155', 90, 5, 80],
+	['22170', 90, 5, 80],
+	['22163', 90, 5, 80],
+	['22222', 90, 5, 70],
+	['22207', 90, 5, 70],
+	['22172', 90, 5, 70],
+	['22222', 90, 5, 70],
+];
+
+const sameSize3 = [
+	['22207', 90, 5, 80],
+	['22155', 90, 5, 80],
+	['22170', 90, 5, 80],
+	['22163', 90, 5, 80],
+	['22222', 90, 5, 70],
+	['22207', 90, 5, 70],
+	['22172', 90, 5, 70],
+	['22222', 90, 5, 70],
+];
+
+export const sameMeasure4 = [
+	['22207', 40, 5, 50],
+	['22155', 40, 5, 50],
+	['22170', 40, 5, 50],
+	['22163', 40, 5, 50],
+	['22198', 40, 5, 50],
+	['22110', 40, 5, 50],
+	['22129', 40, 5, 50],
+	['22162', 40, 5, 50],
+	['22222', 20, 5, 70],
+	['22207', 20, 5, 70],
+	['22172', 20, 5, 70],
+	['22222', 20, 5, 70],
+	['22218', 20, 5, 70],
+	['22202', 20, 5, 70],
+	['22167', 20, 5, 70],
+	['22153', 20, 5, 70],
+];
+
+const sameSize4 = [
+	['22207', 40, 5, 50],
+	['22155', 40, 5, 50],
+	['22170', 40, 5, 50],
+	['22163', 40, 5, 50],
+	['22198', 40, 5, 50],
+	['22110', 40, 5, 50],
+	['22129', 40, 5, 50],
+	['22162', 40, 5, 50],
+	['22222', 20, 5, 70],
+	['22207', 20, 5, 70],
+	['22172', 20, 5, 70],
+	['22222', 20, 5, 70],
+	['22218', 20, 5, 70],
+	['22202', 20, 5, 70],
+	['22167', 20, 5, 70],
+	['22153', 20, 5, 70],
+];
+
+export const sameMeasure5 = [
+	['22222', 50, 5, 50],
+	['22169', 50, 5, 50],
+	['22164', 50, 5, 50],
+	['22138', 50, 5, 50],
+	['22105', 50, 5, 50],
+	['22131', 50, 5, 50],
+	['22127', 50, 5, 50],
+	['22001', 50, 5, 50],
+	['22212', 50, 5, 50],
+	['22163', 50, 5, 50],
+	['22096', 50, 5, 50],
+	['22138', 50, 5, 50],
+	['22019', 50, 5, 50],
+	['22083', 50, 5, 50],
+	['22047', 50, 5, 50],
+	['21992', 50, 5, 50],
+];
+
+const sameSize5 = [
+	['22222', 50, 5, 50],
+	['22169', 50, 5, 50],
+	['22164', 50, 5, 50],
+	['22138', 50, 5, 50],
+	['22105', 50, 5, 50],
+	['22131', 50, 5, 50],
+	['22127', 50, 5, 50],
+	['22001', 50, 5, 50],
+	['22212', 50, 5, 50],
+	['22163', 50, 5, 50],
+	['22096', 50, 5, 50],
+	['22138', 50, 5, 50],
+	['22019', 50, 5, 50],
+	['22083', 50, 5, 50],
+	['22047', 50, 5, 50],
+	['21992', 50, 5, 50],
+];
+
 // ╭───────────────────────────╮
 // │ Lergest canvas variables. │
 // ╰───────────────────────────╯
@@ -214,17 +352,208 @@ const tube6 = [
 // ╰────────────────────────────────────────────────────────────╯
 
 
+// ╭───────────────────╮
+// │ Same size canvas. │
+// ╰───────────────────╯
+
+function setPad(innerCrate) {
+	const PAD =		23;
+	const HIGHPAD =	28;
+	const X =		innerCrate[0] + PAD;
+	const Z =		innerCrate[1] + PAD;
+	const Y =		innerCrate[2] + HIGHPAD;
+
+	return([X, Z, Y]);
+};
+
+
+function checkComp(getter, test, baseLayer) {
+	const checker =	getter.map(value => {
+		const checkX = (value[0] + test[0]) <= baseLayer[0];
+		const checkZ = (value[1] + test[1]) <= baseLayer[1];
+		const checkY = (value[2] + test[2]) <= baseLayer[2];
+		
+		if (checkX && checkZ && checkY)
+			return(value);
+		return
+	});
+
+	if(checker[0] !== undefined)
+		checker.map(size => getter.splice(getter.indexOf(size), 1));
+	return(checker[0] !== undefined);
+};
+
+
+function tryComposeLayer(baseSize, list) {
+	const PACKAGECM =	10;
+	let getter =		[];
+	const compLayer =	list.map(size => {
+		const X =		size[0] === baseSize[0][0];
+		const Y =		size[2] === baseSize[0][2];
+		const secondX = size[0] === (baseSize[0][0] - PACKAGECM);
+		const secondY = size[2] === (baseSize[0][2] - PACKAGECM);
+
+		if (X && Y || secondX && secondY)
+			return(size);
+		if (getter.length > 0) {
+			if(checkComp(getter, size, baseSize))
+				return(size);
+		}
+		else
+			getter.push(size);
+	});
+	return(compLayer[0] !== undefined);
+};
+
+
+function orderSizes(base, art) {
+	const STACK =		base.shift();
+	const PACKAGECM =	5;
+	const LEN =			art.length === 1 ? art[0].length : art.length;
+	let DEPTH;
+	let X;
+	let Z;
+	let Y;
+
+	if (STACK) {
+		DEPTH =	(LEN % 2) + (LEN / 2);
+		X =		base[0][0];
+		Z =		DEPTH * PACKAGECM;
+		Y =		base[0][2];
+	}
+	else {
+		DEPTH =	(LEN % 2) + LEN;
+		X =		base[0][0];
+		Z =		DEPTH * PACKAGECM;
+		Y =		base[0][2];
+	};
+	return (setPad([X, Z, Y]));
+};
+
+
+function increaseSizesStacking(base, newBase) {
+	const extraSizes =	newBase.length > 3 ?
+		[
+			newBase[0][1],
+			newBase[0][2],
+			newBase[1][3],
+		]:
+		newBase;
+	const LIMIT =		132;
+	let X =				base[0][0];
+	let Z =				base[0][1];
+	let Y =				base[0][2] + extraSizes[2];
+	let stack =			false;
+
+	if (Y > LIMIT && X < LIMIT) {
+		[Y, X] =	[X, Y];
+		stack =		true;
+	}
+	else if (Y > base[0][2])
+		stack =		true;
+	return([stack, [X, Z, Y]]);
+};
+
+
+function compCrate(tracks) {
+	const LIMITWORKS =	10;
+	const crate =		[];
+	let baseCrate;
+	let comp;
+	let works;
+
+	while (tracks.length) {
+		baseCrate =	tracks.splice(0, 1);
+		works =		tracks.splice(0, tracks[0].length);
+		tracks.length > 0 ? comp = tryComposeLayer(baseCrate, tracks) : false;
+		if(comp) {
+			baseCrate =	increaseSizesStacking(baseCrate, tracks.splice(0, 1));
+			tracks[0].map(val => works[0][0].push(val));
+			tracks.splice(0, tracks[0].length);
+		}
+		else {
+			if(works[0].length > LIMITWORKS && (works[0].length % 2) === 0)
+				baseCrate =	increaseSizesStacking(baseCrate, works[0]);
+			else
+				baseCrate.unshift(false);
+		};
+		crate.push(orderSizes(baseCrate, works));
+		crate.push({ works: works });
+	};
+	return(crate);
+};
+
+
+function countWorks(peces) {
+	let X =		peces[0][1];
+	let Z =		peces[0][2];
+	let Y =		peces[0][3];
+	let sizes =	[[X, Z, Y]];
+	let works =	[];
+
+	peces.map(work => {
+		if(work[1] !== X && work[3] !== Y) {
+			sizes.push([works]);
+			X =	work[1];
+			Z =	work[2];
+			Y =	work[3];
+			sizes.push([X, Z, Y]);
+			works =	[];
+		};
+		works.push(work);
+	});
+	sizes.push(works);
+	return(sizes);
+};
+
+
+function sameSizeTrail(list) {
+	const countDiffSizes =	countWorks(list);
+	const crateDone =		compCrate(countDiffSizes);
+
+	return (crateDone);
+};
+
+
+export function provideSameSizeCanvas(opt) {
+	let crate;
+	let sameSize;
+
+	switch(opt) {
+		case 1:
+			sameSize = sameSize1;
+			break ;
+		case 2:
+			sameSize = sameSize2;
+			break ;
+		case 3:
+			sameSize = sameSize3;
+			break ;
+		case 4:
+			sameSize = sameSize4;
+			break ;
+		case 5:
+			sameSize = sameSize5;
+			break ;
+	};
+	crate =		{ crates: sameSizeTrail(sameSize) };
+	sameSize =	null;
+	return (crate);
+};
+
+provideSameSizeCanvas(5);
+
 // ╭─────────────────╮
 // │ Largest canvas. │
 // ╰─────────────────╯
 
 function setPadding(innerCrate, layers) {
-	const PAD =			23;
-	const HIGHPAD =		28;
-	const LAYER =		10;
-	const X =			innerCrate[1] + PAD;
-	const Z =			(innerCrate[2] + PAD) + (LAYER * layers);
-	const Y =			innerCrate[3] + HIGHPAD;
+	const PAD =		23;
+	const HIGHPAD =	28;
+	const LAYER =	10;
+	const X =		innerCrate[1] + PAD;
+	const Z =		(innerCrate[2] + PAD) + (LAYER * layers);
+	const Y =		innerCrate[3] + HIGHPAD;
 
 	return ([X, Z, Y]);
 };
@@ -313,6 +642,7 @@ export function provideLargestCanvas(opt) {
 	};
 
 	crate = { crates: largestCrateTrail(largest) };
+	largest = null;
 	return (crate);
 };
 
@@ -457,6 +787,7 @@ export function provideTubeCrate(opt) {
 	}
 	else
 		crate = crateTubesOpt(tubes); 
+	tubes = null;
 	return (crate);
 };
 
