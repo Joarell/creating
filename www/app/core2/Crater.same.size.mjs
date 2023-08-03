@@ -1,0 +1,163 @@
+
+
+export default class CraterSameSize {
+	#peces;
+
+	constructor(list) {
+		if(!list)
+			return({ sameSize: false});
+		this.#peces = list;
+		return (this.#startCrateTrail());
+	};
+
+	#setPad(innerCrate) {
+		const PAD =		23;
+		const HIGHPAD =	28;
+		const X =		innerCrate[0] + PAD;
+		const Z =		innerCrate[1] + PAD;
+		const Y =		innerCrate[2] + HIGHPAD;
+
+		return([X, Z, Y]);
+	};
+
+	#checkComp(getter, test, baseLayer) {
+		const checker =	getter.map(value => {
+			const checkX = (value[0] + test[0]) <= baseLayer[0];
+			const checkZ = (value[1] + test[1]) <= baseLayer[1];
+			const checkY = (value[2] + test[2]) <= baseLayer[2];
+			
+			if (checkX && checkZ && checkY)
+				return (value);
+			return
+		});
+
+		if(checker[0] !== undefined)
+			checker.map(size => getter.splice(getter.indexOf(size), 1));
+		return(checker[0] !== undefined);
+	};
+
+	#composeLayer(baseSize, list) {
+		const PACKAGECM =	10;
+		let getter =		[];
+		const compLayer =	list.map(size => {
+			const X =		size[0] === baseSize[0][0];
+			const Y =		size[2] === baseSize[0][2];
+			const secondX = size[0] === (baseSize[0][0] - PACKAGECM);
+			const secondY = size[2] === (baseSize[0][2] - PACKAGECM);
+
+			if (X && Y || secondX && secondY)
+				return(size);
+			if (getter.length > 0) {
+				if (this.#checkComp(getter, size, baseSize))
+					return(size);
+			}
+			else
+				getter.push(size);
+		});
+		return (compLayer[0] !== undefined);
+	};
+
+	#orderSizes(base, art) {
+		const STACK =		base.shift();
+		const PACKAGECM =	5;
+		const LEN =			art.length === 1 ? art[0].length : art.length;
+		let DEPTH;
+		let X;
+		let Z;
+		let Y;
+
+		if (STACK) {
+			DEPTH =	(LEN % 2) + (LEN / 2);
+			X =		base[0][0];
+			Z =		DEPTH * PACKAGECM;
+			Y =		base[0][2];
+		}
+		else {
+			DEPTH =	(LEN % 2) + LEN;
+			X =		base[0][0];
+			Z =		DEPTH * PACKAGECM;
+			Y =		base[0][2];
+		};
+		return (this.#setPad([X, Z, Y]));
+	};
+
+	#sizeStacking(base, newBase) {
+		const extraSizes =	newBase.length > 3 ?
+			[
+				newBase[0][1],
+				newBase[0][2],
+				newBase[1][3],
+			]:
+			newBase;
+		const LIMIT =	132;
+		let X =			base[0][0];
+		let Z =			base[0][1];
+		let Y =			base[0][2] + extraSizes[2];
+		let stack =		false;
+
+		if (Y > LIMIT && X < LIMIT) {
+			[Y, X] =	[X, Y];
+			stack =		true;
+		}
+		else if (Y > base[0][2])
+			stack =		true;
+		return ([stack, [X, Z, Y]]);
+	};
+
+	#compCrate(list) {
+		const LIMITWORKS =	10;
+		const crate =		[];
+		let baseCrate;
+		let comp;
+		let works;
+
+		while (list.length) {
+			baseCrate =	list.splice(0, 1);
+			works =		list.splice(0, list[0].length);
+			list.length > 0 ? comp = this.#composeLayer(baseCrate, list): false;
+			if(comp) {
+				baseCrate =	this.#sizeStacking(baseCrate, list.splice(0, 1));
+				list[0].map(val => works[0][0].push(val));
+				list.splice(0, list[0].length);
+			}
+			else {
+				if(works[0].length > LIMITWORKS && (works[0].length % 2) === 0)
+					baseCrate =	this.#sizeStacking(baseCrate, works[0]);
+				else
+					baseCrate.unshift(false);
+			};
+			crate.push(this.#orderSizes(baseCrate, works));
+			crate.push({ works: works });
+		};
+		return (crate);
+	};
+
+	#countWorks () {
+		let X =		this.#peces[0][1];
+		let Z =		this.#peces[0][2];
+		let Y =		this.#peces[0][3];
+		let sizes =	[[X, Z, Y]];
+		let works =	[];
+
+		this.#peces.map(work => {
+			if(work[1] !== X && work[3] !== Y) {
+				sizes.push([works]);
+				X =	work[1];
+				Z =	work[2];
+				Y =	work[3];
+				sizes.push([X, Z, Y]);
+				works =	[];
+			};
+			works.push(work);
+		});
+		sizes.push(works);
+		return (sizes);
+	};
+
+	#startCrateTrail () {
+		const countDiffSizes =	this.#countWorks();
+		const crateDone =		this.#compCrate(countDiffSizes);
+
+		return ({ crates: crateDone });
+	};
+};
