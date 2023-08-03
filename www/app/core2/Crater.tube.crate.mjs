@@ -21,9 +21,9 @@ export default class CraterTube {
 		let Y = this[0][3];
 		
 		this.map(tube => {
-			X = tube[1] ?? X;
-			Z = tube[2] ?? Z;
-			Y = tube[3] ?? Y;
+			X = tube[1] > X ? tube[1]: X;
+			Z = tube[2] > Z ? tube[2]: Z;
+			Y = tube[3] > Y ? tube[3]: Y;
 		});
 
 		return([X, Z, Y]);
