@@ -86,7 +86,7 @@ export default class CraterSameSize {
 			[
 				newBase[0][1],
 				newBase[0][2],
-				newBase[1][3],
+				newBase[0][3],
 			]:
 			newBase;
 		const LIMIT =	132;
