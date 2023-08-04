@@ -29,7 +29,7 @@ export default class CraterTube {
 		return([X, Z, Y]);
 	}
 
-	#setSizes(pad, highPad) {
+	#setPaddings(pad, highPad) {
 		const X = this[0] + pad;
 		const Z = this[1] + pad;
 		const Y = this[2] + highPad;
@@ -52,7 +52,7 @@ export default class CraterTube {
 		const HEIGHTPAD =	25 * content;
 		const baseSize =	this.#sizeComposer.call(works);
 
-		return (this.#setSizes.call(baseSize, DEFAULTPAD, HEIGHTPAD));
+		return (this.#setPaddings.call(baseSize, DEFAULTPAD, HEIGHTPAD));
 	};
 
 	#interfaceCrates(opt, list) {
