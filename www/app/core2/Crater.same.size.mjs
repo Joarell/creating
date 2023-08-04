@@ -104,30 +104,37 @@ export default class CraterSameSize {
 		return ([stack, [x, z, y]]);
 	};
 
-	#compCrate(list) {
+	#solveList(list) {
 		const LIMITWORKS =	10;
-		const crate =		[];
 		let baseCrate;
 		let comp;
 		let works;
 
+		baseCrate =	list.splice(0, 1);
+		works =		list.splice(0, list[0].length);
+		list.length > 0 ? comp = this.#composeLayer(baseCrate, list): false;
+		if(comp) {
+			baseCrate =	this.#sizeStacking(baseCrate, list.splice(0, 1));
+			list[0].map(val => works[0][0].push(val));
+			list.splice(0, list[0].length);
+		}
+		else {
+			if(works[0].length > LIMITWORKS && (works[0].length % 2) === 0)
+				baseCrate =	this.#sizeStacking(baseCrate, works[0]);
+			else
+				baseCrate.unshift(false);
+		};
+		return ({ crate: this.#orderSizes(baseCrate, works), works: works });
+	};
+
+	#compCrate(list) {
+		const crate =	[];
+		let solver;
+
 		while (list.length) {
-			baseCrate =	list.splice(0, 1);
-			works =		list.splice(0, list[0].length);
-			list.length > 0 ? comp = this.#composeLayer(baseCrate, list): false;
-			if(comp) {
-				baseCrate =	this.#sizeStacking(baseCrate, list.splice(0, 1));
-				list[0].map(val => works[0][0].push(val));
-				list.splice(0, list[0].length);
-			}
-			else {
-				if(works[0].length > LIMITWORKS && (works[0].length % 2) === 0)
-					baseCrate =	this.#sizeStacking(baseCrate, works[0]);
-				else
-					baseCrate.unshift(false);
-			};
-			crate.push(this.#orderSizes(baseCrate, works));
-			crate.push({ works: works });
+			solver =	this.#solveList(list);
+			crate.push(solver.crate);
+			crate.push({ works: solver.works });
 		};
 		return (crate);
 	};
