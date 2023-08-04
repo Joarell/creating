@@ -48,6 +48,97 @@ const list = [
 
 
 // ╭──────────────────────╮
+// │ No canvas variables. │
+// ╰──────────────────────╯
+export const furniture1 = [
+	['22222', 80, 80, 100],
+	['22207', 80, 80, 100],
+	['22126', 80, 80, 100],
+];
+
+const sculptore1 = [
+	['22222', 80, 80, 100],
+	['22207', 80, 80, 100],
+	['22126', 80, 80, 100],
+];
+
+export const furniture2 = [
+	['22222', 80, 80, 100],
+	['22207', 80, 80, 100],
+	['22126', 80, 80, 100],
+	['22145', 80, 80, 70],
+	['22314', 80, 80, 70],
+	['22296', 80, 80, 70],
+];
+
+const sculptore2 = [
+	['22222', 80, 80, 100],
+	['22207', 80, 80, 100],
+	['22126', 80, 80, 100],
+	['22145', 80, 80, 70],
+	['22314', 80, 80, 70],
+	['22296', 80, 80, 70],
+];
+
+export const furniture3 = [
+	['22222', 80, 80, 100],
+	['22207', 80, 80, 100],
+	['22126', 80, 80, 100],
+	['22120', 80, 80, 100],
+	['22206', 80, 80, 100],
+	['22124', 80, 80, 100],
+	['22145', 80, 80, 70],
+	['22314', 80, 80, 70],
+	['22296', 80, 80, 70],
+	['22141', 80, 80, 70],
+	['22309', 80, 80, 70],
+	['22290', 80, 80, 70],
+];
+
+const sculptore3 = [
+	['22222', 80, 80, 100],
+	['22207', 80, 80, 100],
+	['22126', 80, 80, 100],
+	['22120', 80, 80, 100],
+	['22206', 80, 80, 100],
+	['22124', 80, 80, 100],
+	['22145', 80, 80, 70],
+	['22314', 80, 80, 70],
+	['22296', 80, 80, 70],
+	['22141', 80, 80, 70],
+	['22309', 80, 80, 70],
+	['22290', 80, 80, 70],
+];
+
+export const furniture4 = [
+	['22222', 280, 180, 100],
+	['22207', 280, 180, 100],
+	['22126', 280, 180, 100],
+];
+
+const sculptore4 = [
+	['22222', 280, 180, 100],
+	['22207', 280, 180, 100],
+	['22126', 280, 180, 100],
+];
+
+export const furniture5 = [
+	['22222', 280, 180, 100],
+	['22124', 80, 80, 100],
+	['22145', 80, 80, 70],
+	['22124', 80, 70, 90],
+	['22145', 55, 80, 85],
+];
+
+const sculptore5 = [
+	['22222', 280, 180, 100],
+	['22124', 80, 80, 100],
+	['22145', 80, 80, 70],
+	['22124', 80, 70, 90],
+	['22145', 55, 80, 85],
+];
+
+// ╭──────────────────────╮
 // │ Same size variables. │
 // ╰──────────────────────╯
 
@@ -351,11 +442,121 @@ const tube6 = [
 // │ Bellow you will find the mock functions to 'Crater' class. │
 // ╰────────────────────────────────────────────────────────────╯
 
+// ╭────────────╮
+// │ No canvas. │
+// ╰────────────╯
+
+function defCrate(peces) {
+	const LENLIMIT =	277;
+	const PAD =			peces.length * 10;
+	let x =				PAD;
+	let z =				0;
+	let y =				0;
+
+	peces.map(item => {
+		x +=	item[1];
+		z =		item[2] > z ? item[2] : z;
+		y =		item[3] > y ? item[3] : y;
+	});
+	if (x > LENLIMIT && peces.length % 2 === 0) {
+		x /= 2;
+		z *= 2;
+	};
+	return (setPad([x, z, y]));
+};
+
+
+function validationComp(val1, val2) {
+	const MAXLEN =		277;
+	const MAXDEPTH =	177;
+	const MAXHEIGHT =	132;
+	const compareX =	val1[1] === val2[1] && val1[1] < MAXLEN;
+	const compareZ =	val1[2] === val2[2] && val1[2] < MAXDEPTH;
+	const compareY =	val1[3] <= MAXHEIGHT;
+
+	return (compareX && compareZ && compareY ? true : false);
+};
+
+
+function defineMaxWorks(items) {
+	const PAD =			10;
+	const MAXLEN =		277;
+	const MAXDEPTH =	177;
+	let x =				PAD * items.length;
+	let z =				0;
+	let equals =		0;
+
+	items.map(art => {
+		const compare =	validationComp(art, items[0]);
+		const check1 =	art[2] - items[0][2];
+		const check2 =	items[0][2] - art[2];
+		
+		if (compare === true)
+			equals++;
+		else if((check1 > 0 && check1 <= PAD) || (check2 > 0 && check2 <= PAD))
+			equals++;
+		x += art[1];
+		z += art[3];
+	});
+	if (x < MAXLEN && z < MAXDEPTH)
+		return(items.length);
+	else if(items.length % 2 === 0)
+		if(x > MAXLEN && (z * 2) + PAD < MAXDEPTH)
+			return(items.length);
+	return(equals === 0 || items[0][1] > MAXLEN ? 1 : equals);
+};
+
+
+function noCanvasTrail(list) {
+	const crate =	[];
+	let peces;
+
+	while(list.length) {
+		peces =		defineMaxWorks(list);
+		peces =		list.splice(0, peces);
+		if (peces.length > 0) {
+			crate.push(defCrate(peces));
+			crate.push({ works: peces });
+		}
+		else {
+			crate.push(defCrate(list.splice(0, 1)));
+			crate.push({ works: peces });
+		};
+	};
+	return (crate);
+};
+
+
+export function provideNoCanvas(opt) {
+	let crate;
+	let noCanvas;
+
+	switch(opt) {
+		case 1:
+			noCanvas = sculptore1;
+			break ;
+		case 2:
+			noCanvas = sculptore2;
+			break ;
+		case 3:
+			noCanvas = sculptore3;
+			break ;
+		case 4:
+			noCanvas = sculptore4;
+			break ;
+		case 5:
+			noCanvas = sculptore5;
+			break ;
+	};
+	crate =		{ crates: noCanvasTrail(noCanvas) };
+	noCanvas =	null;
+	return (crate);
+};
+
 
 // ╭───────────────────╮
 // │ Same size canvas. │
 // ╰───────────────────╯
-
 function setPad(innerCrate) {
 	const PAD =		23;
 	const HIGHPAD =	28;
@@ -411,23 +612,23 @@ function orderSizes(base, art) {
 	const PACKAGECM =	5;
 	const LEN =			art.length === 1 ? art[0].length : art.length;
 	let DEPTH;
-	let X;
-	let Z;
-	let Y;
+	let x;
+	let z;
+	let y;
 
 	if (STACK) {
 		DEPTH =	(LEN % 2) + (LEN / 2);
-		X =		base[0][0];
-		Z =		DEPTH * PACKAGECM;
-		Y =		base[0][2];
+		x =		base[0][0];
+		z =		DEPTH * PACKAGECM;
+		y =		base[0][2];
 	}
 	else {
 		DEPTH =	(LEN % 2) + LEN;
-		X =		base[0][0];
-		Z =		DEPTH * PACKAGECM;
-		Y =		base[0][2];
+		x =		base[0][0];
+		z =		DEPTH * PACKAGECM;
+		y =		base[0][2];
 	};
-	return (setPad([X, Z, Y]));
+	return (setPad([x, z, y]));
 };
 
 
@@ -440,18 +641,18 @@ function increaseSizesStacking(base, newBase) {
 		]:
 		newBase;
 	const LIMIT =		132;
-	let X =				base[0][0];
-	let Z =				base[0][1];
-	let Y =				base[0][2] + extraSizes[2];
+	let x =				base[0][0];
+	let z =				base[0][1];
+	let y =				base[0][2] + extraSizes[2];
 	let stack =			false;
 
-	if (Y > LIMIT && X < LIMIT) {
-		[Y, X] =	[X, Y];
+	if (y > LIMIT && x < LIMIT) {
+		[y, x] =	[x, y];
 		stack =		true;
 	}
-	else if (Y > base[0][2])
+	else if (y > base[0][2])
 		stack =		true;
-	return([stack, [X, Z, Y]]);
+	return([stack, [x, z, y]]);
 };
 
 
@@ -485,19 +686,19 @@ function compCrate(tracks) {
 
 
 function countWorks(peces) {
-	let X =		peces[0][1];
-	let Z =		peces[0][2];
-	let Y =		peces[0][3];
-	let sizes =	[[X, Z, Y]];
+	let x =		peces[0][1];
+	let z =		peces[0][2];
+	let y =		peces[0][3];
+	let sizes =	[[x, z, y]];
 	let works =	[];
 
 	peces.map(work => {
-		if(work[1] !== X && work[3] !== Y) {
+		if(work[1] !== x && work[3] !== y) {
 			sizes.push([works]);
-			X =	work[1];
-			Z =	work[2];
-			Y =	work[3];
-			sizes.push([X, Z, Y]);
+			x =	work[1];
+			z =	work[2];
+			y =	work[3];
+			sizes.push([x, z, y]);
 			works =	[];
 		};
 		works.push(work);
@@ -541,7 +742,6 @@ export function provideSameSizeCanvas(opt) {
 	return (crate);
 };
 
-provideSameSizeCanvas(5);
 
 // ╭─────────────────╮
 // │ Largest canvas. │
@@ -651,17 +851,16 @@ export function provideLargestCanvas(opt) {
 // │ Tube crater. │
 // ╰──────────────╯
 function sizeComposer() {
-	let X = this[0][1];
-	let Z = this[0][2];
-	let Y = this[0][3];
+	let x = this[0][1];
+	let z = this[0][2];
+	let y = this[0][3];
 	
 	this.map(tube => {
-		X = tube[1] ?? X;
-		Z = tube[2] ?? Z;
-		Y = tube[3] ?? Y;
+		x = tube[1] > x ? tube[1] : x;
+		z = tube[2] > z ? tube[2] : z;
+		y = tube[3] > y ? tube[3] : y;
 	});
-
-	return([X, Z, Y]);
+	return([x, z, y]);
 };
 
 
@@ -685,7 +884,7 @@ function oneTubeCrate() {
 };
 
 function TubeCrate(content) {
-	const DEFAULTPAD =	15;
+	const DEFAULTPAD =	18;
 	const HEIGHTPAD =	25 * content;
 	const baseSize =	sizeComposer.call(this);
 
@@ -790,6 +989,8 @@ export function provideTubeCrate(opt) {
 	tubes = null;
 	return (crate);
 };
+
+provideTubeCrate(2);
 
 
 // ╭──────────────────────────────────────────────────────────────╮
