@@ -48,7 +48,7 @@ export default class CraterTube {
 	};
 
 	#tubeCrate(works, content) {
-		const DEFAULTPAD =	15;
+		const DEFAULTPAD =	18;
 		const HEIGHTPAD =	25 * content;
 		const baseSize =	this.#sizeComposer.call(works);
 
