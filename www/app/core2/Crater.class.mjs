@@ -16,6 +16,7 @@ export default class Crater {
 		this.#tubeCrate();
 		this.#LargestCanvas();
 		this.#sameSizeCrate();
+		this.#noCanvasCrate();
 
 		return({ crates: this.#lists });
 	};
@@ -40,6 +41,9 @@ export default class Crater {
 	};
 
 	#noCanvasCrate() {
+		const noCanvas = new CraterSameSize(this.#lists.list?.sameSize);
+		if(noCanvas.largest)
+			this.#lists.crates = { noCanvasCrate: noCanvas };
 	};
 
 	#conventionalCrate() {
