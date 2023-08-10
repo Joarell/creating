@@ -276,6 +276,188 @@ const sameSize5 = [
 	['21992', 50, 5, 50],
 ];
 
+// ╭───────────────────────────────────╮
+// │ Sorted list - Conventional crate. │
+// ╰───────────────────────────────────╯
+
+//						 crate[0]
+//			   ╭──────────────────────────╮
+//			   │                          │
+//			   │                          │
+//			   │                          │
+//	  crate[3] │                          │ crate[1]
+//			   │                          │
+//			   │                          │
+//			   │                          │
+//			   ╰──────────────────────────╯
+//						crate[2]
+
+
+function defineExternalSize(innerSize, works) {
+	const DEFAULTPAD =	23;
+	const HIGHPAD =		28;
+	const LAYERPAD =	5;
+	const X =			innerSize[0] + DEFAULTPAD;
+	const Y =			innerSize[2] + HIGHPAD;
+	let z =				works.length * LAYERPAD + DEFAULTPAD;
+	let i =				0;
+	let tmp =			0;
+
+	while (i++ < 4) {
+		Object.entries(works[i]).map(canvas => {
+			canvas[1].map(art => {
+				art[2] > tmp ? tmp = art[2] : false;
+			});
+			z += tmp;
+		});
+	};
+	return([X, z, Y]);
+};
+
+
+function crateReduceSize(crate, work) {
+	const x1 = crate[0];
+	const y1 = crate[2];
+	const x2 = crate[3];
+	const y2 = crate[5];
+
+	if (work[0] <= x2)
+		x1 === x2 ? crate[3] = x2 - work[0] : false;
+	else
+		x1 >= work[0] ? crate[0] = x1 - work[0] : crate[3] = x2 - work[0];
+	if (work[1] <= y2)
+		x1 === x2 ? crate[5] = y2 - work[1] : false;
+	else
+		y1 >= work[1] ? crate[2] = y1 - work[1] : crate[5] = y2 - work[1];
+
+	x1 !== crate[0] && x1 === work[0] ? crate[2] = y2 - work[1] : false;
+	y1 !== crate[2] && x2 >= work[1] ? crate[3] = x2 - work[0] : false;
+	x2 === work[0] ? crate[2] = y1 - work[1] : false;
+	y2 === work[1] ? crate[0] = x1 - work[0] : false;
+};
+
+
+// TODO: check the small works remained on the list.
+function matchCanvasInLayer(matched, layer, arts, len) {
+	if(layer[0] === 0 && layer[2] === 0 || len < 0)
+		return ;
+
+	let x =			arts[len][1];
+	let y =			arts[len][3];
+	let check1 =	x <= layer[0] && y <= layer[5];
+	let check2 =	x <= layer[3] && y <= layer[2];
+
+	if (check1 || check2) {
+		crateReduceSize(layer, [x, y]);
+		matched.push(arts[len]);
+		return (matchCanvasInLayer(matched, layer, arts, len - 1));
+	};
+	[x, y] = [y, x];
+	check1 = x <= layer[0] && y <= layer[5];
+	check2 = x <= layer[3] && y <= layer[2];
+	if (check1 || check2) {
+		crateReduceSize(layer, [x, y]);
+		arts[len].push("");
+		matched.push(arts[len]);
+		return (matchCanvasInLayer(matched, layer, arts, len - 1));
+	};
+	return (matchCanvasInLayer(matched, layer, arts, len - 1));
+};
+
+
+function setLayer(crate, works) {
+	switch(this) {
+		case 1:
+			crate.unshift({ layer1 : works });
+			break ;
+		case 2:
+			crate.push({ layer2 : works });
+			break ;
+		case 3:
+			crate.push({ layer3 : works });
+			break ;
+		case 4:
+			crate.push({ layer4 : works });
+			break ;
+		default:
+			return ;
+	}
+};
+
+
+function fillCrate(size, list) {
+	const MAXLAYER =	4
+	let crate =			[];
+	let i =				0;
+	let greb =			[];
+
+	while (i++ < MAXLAYER && list.length) {
+		matchCanvasInLayer(greb, [...size,...size], list, list.length - 1);
+		greb.map(art => list.splice(list.indexOf(art), 1));
+		setLayer.call(i, crate, greb);
+		greb =	null;
+		greb =	[];
+	};
+	return(crate);
+};
+
+
+function defineSizeCrate(list) {
+	const LEN =			list.length - 1;
+	const biggestWork =	[...list[LEN]];
+	const X =			biggestWork[1];
+	const Z =			biggestWork[2];
+	const Y =			biggestWork[3];
+	
+	return([X, Z, Y]);
+};
+
+
+function solveList(artList, crate) {
+	if (!artList.length)
+		return ;
+	const size =		defineSizeCrate(artList);
+	const crateFilled =	fillCrate(size, artList);
+	const crateDone =	defineExternalSize(size, crateFilled);
+
+	crate.push(crateDone);
+	crate.push({ works: crateFilled});
+	return (solveList(artList, crate));
+};
+
+
+export function conventionalWorks () {
+	const list =		largestWorks();
+	const { sorted } =	list;
+	const innerCrate =	[];
+	let crate;
+	// switch(opt) {
+	// 	case 1:
+	// 		tubes = tube1;
+	// 		break ;
+	// 	case 2:
+	// 		tubes = tube2;
+	// 		break ;
+	// 	case 3:
+	// 		tubes = tube3;
+	// 		break ;
+	// 	case 4:
+	// 		tubes = tube4;
+	// 		break ;
+	// 	case 5:
+	// 		tubes = tube5;
+	// 		break ;
+	// 	case 6:
+	// 		tubes = tube6;
+	// 		break ;
+	// };
+	solveList(sorted, innerCrate);
+	crate =				{ crates: innerCrate };
+	return (crate);
+};
+
+conventionalWorks();
+
 // ╭───────────────────────────╮
 // │ Lergest canvas variables. │
 // ╰───────────────────────────╯
@@ -637,7 +819,7 @@ function increaseSizesStacking(base, newBase) {
 		[
 			newBase[0][1],
 			newBase[0][2],
-			newBase[1][3],
+			newBase[0][3],
 		]:
 		newBase;
 	const LIMIT =		132;
@@ -840,7 +1022,6 @@ export function provideLargestCanvas(opt) {
 			largest = largest5;
 			break ;
 	};
-
 	crate = { crates: largestCrateTrail(largest) };
 	largest = null;
 	return (crate);
@@ -990,8 +1171,6 @@ export function provideTubeCrate(opt) {
 	return (crate);
 };
 
-provideTubeCrate(2);
-
 
 // ╭──────────────────────────────────────────────────────────────╮
 // │ Bellow you will find all mock functions to 'Arranger' class. │
@@ -1046,8 +1225,8 @@ export function findTubes () {
 export function largestWorks () {
 	const list =			noCanvasOut();
 	const { sorted } =		list;
+	const MAXHEIGHT = 220;
 	const largestCanvas =	sorted.filter(work => {
-		const MAXHEIGHT = 220;
 		if (work[1] > MAXHEIGHT || work[3] > MAXHEIGHT)
 			return (work);
 		return ;
