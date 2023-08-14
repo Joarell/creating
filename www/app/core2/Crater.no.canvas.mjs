@@ -50,9 +50,10 @@ export default class CraterNotCanvas {
 		return (compareX && compareZ && compareY ? true : false);
 	};
 
+	//returns how many works to put in side the crate.
 	#defineMaxPeces(items) {
 		const PAD =			10;
-		const MAXLEN =		277;
+		const MAXLEN =		554;
 		const MAXDEPTH =	177;
 		let x =				PAD * items.length;
 		let z =				0;
@@ -72,9 +73,11 @@ export default class CraterNotCanvas {
 		});
 		if (x < MAXLEN && z < MAXDEPTH)
 			return(items.length);
-		else if(items.length % 2 === 0)
+		else if(items.length % 2 === 0) {
 			if(x > MAXLEN && (z * 2) + PAD < MAXDEPTH)
 				return (items.length);
+			return(~~(MAXLEN / x * items.length));
+		};
 		return (equals === 0 || items[0][1] > MAXLEN ? 1 : equals);
 	};
 
