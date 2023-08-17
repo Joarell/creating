@@ -1,6 +1,8 @@
 
 import CraterPythagoras from "./Crater.largest.canvas.mjs";
+import CraterNotCanvas from "./Crater.no.canvas.mjs";
 import CraterSameSize from "./Crater.same.size.mjs";
+import CraterStandard from "./Crater.standard.crate.mjs";
 import CraterTube from "./Crater.tube.crate.mjs";
 
 
@@ -17,6 +19,7 @@ export default class Crater {
 		this.#LargestCanvas();
 		this.#sameSizeCrate();
 		this.#noCanvasCrate();
+		this.#conventionalCrate();
 
 		return({ crates: this.#lists });
 	};
@@ -41,12 +44,15 @@ export default class Crater {
 	};
 
 	#noCanvasCrate() {
-		const noCanvas = new CraterSameSize(this.#lists.list?.sameSize);
+		const noCanvas = new CraterNotCanvas(this.#lists.list?.noCanvas);
 		if(noCanvas.largest)
 			this.#lists.crates = { noCanvasCrate: noCanvas };
 	};
 
 	#conventionalCrate() {
+		const conventinal = new CraterStandard(this.#lists.list?.sorted);
+		if(conventinal.largest)
+			this.#lists.crates = { noCanvasCrate: conventinal };
 	};
 
 	#lastCheckArranger() {
