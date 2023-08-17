@@ -46,7 +46,89 @@ const list = [
 	['LJ-298', 300, 10, 300],
 ]
 
+export const standard1 = [
+	[ '2313', 30, 3, 30, 0.003 ],
+	[ '1111', 30, 3, 30, 0.003 ],
+	[ '777', 50, 3, 50, 0.007 ],
+	[ '909', 100, 5, 20, 0.01 ],
+	[ '1112', 60, 5, 90, 0.027 ],
+	[ '8899', 120, 3, 100, 0.036 ],
+	[ '123', 100, 5, 100, 0.05 ],
+	[ '8980', 130, 3, 130, 0.051 ],
+	[ '3231', 180, 3, 110, 0.059 ],
+	[ '1298', 120, 5, 100, 0.06 ],
+	[ '71234', 180, 3, 120, 0.065 ],
+	[ '5908', 150, 5, 90, 0.068 ],
+	[ '8383', 180, 3, 130, 0.07 ],
+	[ '230202', 170, 7, 70, 0.083 ],
+	[ '88800', 170, 7, 70, 0.083 ]
+];
 
+export const standard2 = [
+	[ '71234', 180, 3, 120, 0.065 ],
+	[ '5908', 150, 5, 90, 0.068 ],
+	[ '8383', 180, 3, 130, 0.07 ],
+	[ '230202', 170, 7, 70, 0.083 ],
+	[ '88800', 170, 7, 70, 0.083 ]
+];
+
+export const standard3 = [
+	[ '8899', 120, 3, 100, 0.036 ],
+	[ '123', 100, 5, 100, 0.05 ],
+	[ '136', 140, 5, 100, 0.07 ],
+	[ '8980', 130, 3, 130, 0.051 ],
+	[ '3231', 180, 3, 110, 0.059 ],
+	[ '1298', 120, 5, 100, 0.06 ],
+];
+
+export const standard4 = [
+	[ '8899', 120, 3, 100, 0.036 ],
+	[ '123', 100, 5, 100, 0.05 ],
+	[ '136', 140, 5, 100, 0.07 ],
+	[ '8980', 130, 3, 130, 0.051 ],
+];
+
+const common1 = [
+	[ '2313', 30, 3, 30, 0.003 ],
+	[ '1111', 30, 3, 30, 0.003 ],
+	[ '777', 50, 3, 50, 0.007 ],
+	[ '909', 100, 5, 20, 0.01 ],
+	[ '1112', 60, 5, 90, 0.027 ],
+	[ '8899', 120, 3, 100, 0.036 ],
+	[ '123', 100, 5, 100, 0.05 ],
+	[ '8980', 130, 3, 130, 0.051 ],
+	[ '3231', 180, 3, 110, 0.059 ],
+	[ '1298', 120, 5, 100, 0.06 ],
+	[ '71234', 180, 3, 120, 0.065 ],
+	[ '5908', 150, 5, 90, 0.068 ],
+	[ '8383', 180, 3, 130, 0.07 ],
+	[ '230202', 170, 7, 70, 0.083 ],
+	[ '88800', 170, 7, 70, 0.083 ]
+];
+
+const common2 = [
+	[ '71234', 180, 3, 120, 0.065 ],
+	[ '5908', 150, 5, 90, 0.068 ],
+	[ '8383', 180, 3, 130, 0.07 ],
+	[ '230202', 170, 7, 70, 0.083 ],
+	[ '88800', 170, 7, 70, 0.083 ]
+];
+
+const common3 = [
+	[ '8899', 120, 3, 100, 0.036 ],
+	[ '123', 100, 5, 100, 0.05 ],
+	[ '136', 140, 5, 100, 0.07 ],
+	[ '8980', 130, 3, 130, 0.051 ],
+	[ '3231', 180, 3, 110, 0.059 ],
+	[ '1298', 120, 5, 100, 0.06 ],
+];
+
+const common4 = [
+	[ '8899', 120, 3, 100, 0.036 ],
+	[ '123', 100, 5, 100, 0.05 ],
+	[ '136', 140, 5, 100, 0.07 ],
+	[ '8980', 130, 3, 130, 0.051 ],
+];
 // ╭──────────────────────╮
 // │ No canvas variables. │
 // ╰──────────────────────╯
@@ -285,81 +367,81 @@ const sameSize5 = [
 //			   │                          │
 //			   │                          │
 //			   │                          │
-//	  crate[3] │                          │ crate[1]
+//	  crate[5] │                          │ crate[2]
 //			   │                          │
 //			   │                          │
 //			   │                          │
 //			   ╰──────────────────────────╯
-//						crate[2]
-
+//						crate[3]
 
 function defineExternalSize(innerSize, works) {
 	const DEFAULTPAD =	23;
 	const HIGHPAD =		28;
-	const LAYERPAD =	5;
+	const LAYERPAD =	10;
 	const X =			innerSize[0] + DEFAULTPAD;
 	const Y =			innerSize[2] + HIGHPAD;
 	let z =				works.length * LAYERPAD + DEFAULTPAD;
 	let i =				0;
 	let tmp =			0;
 
-	while (i++ < 4) {
+	for (i in works) {
 		Object.entries(works[i]).map(canvas => {
 			canvas[1].map(art => {
 				art[2] > tmp ? tmp = art[2] : false;
 			});
-			z += tmp;
+			z +=	tmp;
+			tmp =	0;
 		});
 	};
 	return([X, z, Y]);
 };
 
 
-function crateReduceSize(crate, work) {
-	const x1 = crate[0];
-	const y1 = crate[2];
-	const x2 = crate[3];
-	const y2 = crate[5];
+function crateReduceSize(layer, art) {
+	const x1 = layer[0];
+	const y1 = layer[2];
+	const x2 = layer[3];
+	const y2 = layer[5];
 
-	if (work[0] <= x2)
-		x1 === x2 ? crate[3] = x2 - work[0] : false;
-	else
-		x1 >= work[0] ? crate[0] = x1 - work[0] : crate[3] = x2 - work[0];
-	if (work[1] <= y2)
-		x1 === x2 ? crate[5] = y2 - work[1] : false;
-	else
-		y1 >= work[1] ? crate[2] = y1 - work[1] : crate[5] = y2 - work[1];
+	art[0] <= x2 ? layer[3] = x2 - art[0] : false;
+	art[1] <= y2 && layer[3] !== x2 ? layer[5] = y2 - art[1]: false;
 
-	x1 !== crate[0] && x1 === work[0] ? crate[2] = y2 - work[1] : false;
-	y1 !== crate[2] && x2 >= work[1] ? crate[3] = x2 - work[0] : false;
-	x2 === work[0] ? crate[2] = y1 - work[1] : false;
-	y2 === work[1] ? crate[0] = x1 - work[0] : false;
+	x1 !== layer[0] && x1 === art[0] ? layer[2] = y2 - art[1] : false;
+	y1 > y2 && layer[3] === 0 ? layer[2] = y1 - art[1] : false;
+	y2 === 0 && y1 > 0 ? layer[0] = x1 - art[0] : false;
+
+	y2 <= x1 && layer[3] === x2 ?
+		layer[0] = x1 - art[0]:
+		layer[5] = y2 - art[1];
+	x1 !== layer[0] && layer[0] <= layer[3] ? layer[5] = y2 - art[1] : false;
+
+	x2 === art[0] ? layer[2] = y1 - art[1] : false;
+	y2 === art[1] ? layer[0] = x1 - art[0] : false;
 };
 
 
-// TODO: check the small works remained on the list.
 function matchCanvasInLayer(matched, layer, arts, len) {
 	if(layer[0] === 0 && layer[2] === 0 || len < 0)
 		return ;
+	let i =		0;
+	let x =		arts[len][1];
+	let y =		arts[len][3];
+	let check1;
+	let check2;
+	let check3;
 
-	let x =			arts[len][1];
-	let y =			arts[len][3];
-	let check1 =	x <= layer[0] && y <= layer[5];
-	let check2 =	x <= layer[3] && y <= layer[2];
+	while (i++ < 2) {
+		check1 = x <= layer[0] && y <= layer[5];
+		check2 = x <= layer[3] && y <= layer[2];
+		check3 = x <= layer[0] && y <= layer[2] && layer[3] === 0;
 
-	if (check1 || check2) {
-		crateReduceSize(layer, [x, y]);
-		matched.push(arts[len]);
-		return (matchCanvasInLayer(matched, layer, arts, len - 1));
-	};
-	[x, y] = [y, x];
-	check1 = x <= layer[0] && y <= layer[5];
-	check2 = x <= layer[3] && y <= layer[2];
-	if (check1 || check2) {
-		crateReduceSize(layer, [x, y]);
-		arts[len].push("");
-		matched.push(arts[len]);
-		return (matchCanvasInLayer(matched, layer, arts, len - 1));
+		if (check1 || check2 || check3) {
+			crateReduceSize(layer, [x, y]);
+			i === 2 ? arts[len].push("") : false;
+			matched.push(arts[len]);
+			return (matchCanvasInLayer(matched, layer, arts, len - 1));
+		};
+		[x, y] = [y, x];
 	};
 	return (matchCanvasInLayer(matched, layer, arts, len - 1));
 };
@@ -379,37 +461,82 @@ function setLayer(crate, works) {
 		case 4:
 			crate.push({ layer4 : works });
 			break ;
+		case 5:
+			crate.push({ layer5 : works });
+			break ;
 		default:
 			return ;
 	}
 };
 
 
-function fillCrate(size, list) {
-	const MAXLAYER =	4
-	let crate =			[];
-	let i =				0;
-	let greb =			[];
+function hugeCanvasFirst(crate, list, layer) {
+	let countLayer =	0;
+	const GETCANVAS =	[];
 
-	while (i++ < MAXLAYER && list.length) {
+	list.map(art => {
+		let x = art[1];
+		let y = art[3];
+		let j = 0;
+
+		while (j++ < 2) {
+			if (x === layer[0] && y === layer[2]) {
+				j === 2 ? art.push("") : false;
+				GETCANVAS.push(art);
+			};
+			[x, y] = [y, x];
+		};
+	});
+	GETCANVAS.map(canvas => {
+		countLayer++;
+		setLayer.call(countLayer, crate, [canvas]);
+		list.splice(list.indexOf(canvas), 1);
+	});
+	return(countLayer);
+};
+
+
+function fillCrate(size, list) {
+	const MAXLAYER =	4;
+	let crate =			[];
+	let greb =			[];
+	let checkLen =		false;
+	let i =				hugeCanvasFirst(crate, list, size);
+
+
+	while (i++ < MAXLAYER || checkLen && list.length) {
 		matchCanvasInLayer(greb, [...size,...size], list, list.length - 1);
 		greb.map(art => list.splice(list.indexOf(art), 1));
 		setLayer.call(i, crate, greb);
-		greb =	null;
-		greb =	[];
+		greb =		null;
+		greb =		[];
+		checkLen =	list.length === 1 && i === MAXLAYER;
 	};
 	return(crate);
 };
 
 
 function defineSizeCrate(list) {
-	const LEN =			list.length - 1;
-	const biggestWork =	[...list[LEN]];
-	const X =			biggestWork[1];
-	const Z =			biggestWork[2];
-	const Y =			biggestWork[3];
+	const MAXX =	250;
+	const MAXY =	132;
+	let len =		list.length;
+	let x =			0;
+	let z =			0;
+	let y =			0;
+
+	while(len--) {
+		(x + x + list[len][1]) <= MAXX ? x += list[len][1]: 
+			x < list[len][1] && list[len][1] <= MAXX ?
+				x = list[len][1]:
+			list[len][1] > MAXX ? x = list[len][3] : false;
 	
-	return([X, Z, Y]);
+		z = list[len][2] ?? z;
+
+		(y + y + list[len][3]) <= MAXY ? y += list[len][3]: 
+			y < list[len][3] && list[len][3] <= MAXY ? y = list[len][3]:
+			list[len][3] > MAXY ? y = list[len][3] : false;
+	};
+	return([x, z, y]);
 };
 
 
@@ -421,42 +548,54 @@ function solveList(artList, crate) {
 	const crateDone =	defineExternalSize(size, crateFilled);
 
 	crate.push(crateDone);
-	crate.push({ works: crateFilled});
+	crate.push({ works: crateFilled });
 	return (solveList(artList, crate));
 };
 
 
-export function conventionalWorks () {
+export function addCub(list) {
+	list.map(work => {
+		const X =		work[1];
+		const Z =		work[2];
+		const Y =		work[3];
+		const CMTOM =	1_000_000;
+
+		work.push(+(X * Z * Y / CMTOM).toFixed(3));
+	})
+	console.log(list);
+};
+
+
+export function conventionalWorks (opt) {
 	const list =		largestWorks();
 	const { sorted } =	list;
 	const innerCrate =	[];
+	let works;
 	let crate;
-	// switch(opt) {
-	// 	case 1:
-	// 		tubes = tube1;
-	// 		break ;
-	// 	case 2:
-	// 		tubes = tube2;
-	// 		break ;
-	// 	case 3:
-	// 		tubes = tube3;
-	// 		break ;
-	// 	case 4:
-	// 		tubes = tube4;
-	// 		break ;
-	// 	case 5:
-	// 		tubes = tube5;
-	// 		break ;
-	// 	case 6:
-	// 		tubes = tube6;
-	// 		break ;
-	// };
-	solveList(sorted, innerCrate);
+	switch(opt) {
+		case 1:
+			works = common1;
+			break ;
+		case 2:
+			works = common2;
+			break ;
+		case 3:
+			works = common3;
+			break ;
+		case 4:
+			works = common4;
+			break ;
+		case 5:
+			works = sorted;
+			break ;
+	};
+	solveList(works, innerCrate);
 	crate =				{ crates: innerCrate };
 	return (crate);
 };
 
-conventionalWorks();
+// addCub(standard4);
+// conventionalWorks(2);
 
 // ╭───────────────────────────╮
 // │ Lergest canvas variables. │
@@ -662,7 +801,7 @@ function validationComp(val1, val2) {
 
 function defineMaxWorks(items) {
 	const PAD =			10;
-	const MAXLEN =		277;
+	const MAXLEN =		554;
 	const MAXDEPTH =	177;
 	let x =				PAD * items.length;
 	let z =				0;
@@ -682,9 +821,11 @@ function defineMaxWorks(items) {
 	});
 	if (x < MAXLEN && z < MAXDEPTH)
 		return(items.length);
-	else if(items.length % 2 === 0)
+	else if(items.length % 2 === 0) {
 		if(x > MAXLEN && (z * 2) + PAD < MAXDEPTH)
 			return(items.length);
+		return(~~(MAXLEN / x * items.length));
+	};
 	return(equals === 0 || items[0][1] > MAXLEN ? 1 : equals);
 };
 
@@ -731,10 +872,10 @@ export function provideNoCanvas(opt) {
 			break ;
 	};
 	crate =		{ crates: noCanvasTrail(noCanvas) };
-	noCanvas =	null;
 	return (crate);
 };
 
+// provideNoCanvas(3);
 
 // ╭───────────────────╮
 // │ Same size canvas. │
