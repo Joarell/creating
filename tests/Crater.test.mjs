@@ -8,6 +8,7 @@ import CraterTube from '../www/app/core2/Crater.tube.crate.mjs';
 import CraterPythagoras from '../www/app/core2/Crater.largest.canvas.mjs';
 import CraterSameSize from '../www/app/core2/Crater.same.size.mjs';
 import CraterNotCanvas from '../www/app/core2/Crater.no.canvas.mjs';
+import CraterStandard from '../www/app/core2/Crater.standard.crate.mjs';
 
 
 describe("These are test to Crater class.", () => {
@@ -144,7 +145,7 @@ describe("These are test to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-19: returns the Pythagoras crate to the list passed.", () => {
+	it("TEST-18: returns the Pythagoras crate to the list passed.", () => {
 		const same =		mock.sameMeasure5;
 		const current =		new CraterSameSize(same);
 		const expected =	mock.provideSameSizeCanvas(5);
@@ -152,14 +153,14 @@ describe("These are test to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-20: returns false object to no list passe to the class.", () => {
+	it("TEST-19: returns false object to no list passe to the class.", () => {
 		const current =		new CraterNotCanvas();
 		const expected =	{ noCanvas: false };
 		
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-21: returns false object to no list passe to the class.", () => {
+	it("TEST-20: returns one crate assuming 4 sculptures provided.", () => {
 		const same =		mock.furniture1;
 		const current =		new CraterNotCanvas(same);
 		const expected =	mock.provideNoCanvas(1);
@@ -167,7 +168,7 @@ describe("These are test to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-22: returns false object to no list passe to the class.", () => {
+	it("TEST-21: returns one crate assuming 6 sculptures provided.", () => {
 		const same =		mock.furniture2;
 		const current =		new CraterNotCanvas(same);
 		const expected =	mock.provideNoCanvas(2);
@@ -175,7 +176,7 @@ describe("These are test to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-23: returns false object to no list passe to the class.", () => {
+	it("TEST-22: returns the crate assumin 12 sculptures provided.", () => {
 		const same =		mock.furniture3;
 		const current =		new CraterNotCanvas(same);
 		const expected =	mock.provideNoCanvas(3);
@@ -183,7 +184,7 @@ describe("These are test to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-24: returns false object to no list passe to the class.", () => {
+	it("TEST-23: returns false object to no list passe to the class.", () => {
 		const same =		mock.furniture4;
 		const current =		new CraterNotCanvas(same);
 		const expected =	mock.provideNoCanvas(4);
@@ -191,11 +192,66 @@ describe("These are test to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-25: returns false object to no list passe to the class.", () => {
+	it("TEST-24: returns false object to no list passe to the class.", () => {
 		const same =		mock.furniture5;
 		const current =		new CraterNotCanvas(same);
 		const expected =	mock.provideNoCanvas(5);
 		
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-25: returns false object to no list passe to the class.", () => {
+		const current =		new CraterStandard();
+		const expected =	{ standard: false };
+	
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-26: returns 3 crates as a result of the list passed.", () => {
+		const sorted  =		mock.standard1;
+		const current =		new CraterStandard(sorted);
+		const expected =	mock.conventionalWorks(1);
+	
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-27: returns 1 crate with 5 layers.", () => {
+		const sorted  =		mock.standard2;
+		const current =		new CraterStandard(sorted);
+		const expected =	mock.conventionalWorks(2);
+	
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-28: returns 2 crates as result to the list passed.", () => {
+		const sorted  =		mock.standard3;
+		const current =		new CraterStandard(sorted);
+		const expected =	mock.conventionalWorks(3);
+	
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-29: returns 1 crates as result to the list passed.", () => {
+		const sorted  =		mock.standard4;
+		const current =		new CraterStandard(sorted);
+		const expected =	mock.conventionalWorks(4);
+	
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-30: returns 3 crates as a result of the sorted list.", () => {
+		const { sorted } =	mock.largestWorks();
+		const current =		new CraterStandard(sorted);
+		const expected =	mock.conventionalWorks(5);
+	
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-31: returns 1 crates as result to the list passed.", () => {
+		const sorted  =		mock.standard4;
+		const current =		new CraterStandard(sorted);
+		const expected =	mock.conventionalWorks(4);
+	
 		console.log(current, 'and', expected);
 		assert.deepStrictEqual(current, expected);
 	});
