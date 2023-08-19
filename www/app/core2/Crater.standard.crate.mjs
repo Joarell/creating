@@ -2,18 +2,16 @@
 
 export default class CraterStandard {
 	#list;
-	#layers;
+	#maxLayers;
 
-	constructor(canvas) {
+	constructor(canvas, maxLayer) {
 		if(!canvas)
 			return({ standard: false});
-		this.#list = canvas;
+
+		this.#list =		canvas;
+		this.#maxLayers =	maxLayer;
 		return(this.#startCrate());
 	}
-
-	set maxLayers(num) {
-		this.#layers = num;
-	};
 
 	#startCrate() {
 		const INNERCRATE =	[];
@@ -65,21 +63,21 @@ export default class CraterStandard {
 		const Y2 = axis[5];
 
 		art[0] <= X2 ? axis[3] = X2 - art[0] : false;
-		(art[1] <= Y2) && (axis[3] !== X2) ? axis[5] = Y2 - art[1]: false;
+		(art[2] <= Y2) && (axis[3] !== X2) ? axis[5] = Y2 - art[1] : false;
 
-		(axis[0] !== X1) && (X1 === art[0]) ? axis[2] = Y2 - art[1]: false;
-		(axis[3] === 0) && (Y1 > Y2)  ? axis[2] = Y1 - art[1]: false;
+		(axis[0] !== X1) && (X1 === art[0]) ? axis[2] = Y2 - art[1] : false;
+		(axis[3] === 0) && (Y1 > Y2) ? axis[2] = Y1 - art[1] : false;
 
-		(Y2 === 0) && (Y1 > 0) ? axis[0] = X1 - art[0]: false;
+		(Y2 === 0) && (Y1 > 0) ? axis[0] = X1 - art[0] : false;
 
 		(axis[3] === X2) && (Y2 <= X1) ?
-			axis[0] = X1 - art[0]:
+			axis[0] = X1 - art[0] :
 			axis[5] = Y2 - art[1];
 
-		(axis[0] !== X1) && (axis[0] <= axis[3]) ? axis[5] = Y2 - art[1]: false;
+		(axis[0] !== X1) && (axis[0] <= axis[3]) ? axis[5] = Y2 - art[1] : false;
 
-		art[0] === X2 ? axis[2] = Y1 - art[1]: false;
-		art[1] === Y2 ? axis[0] = X1 - art[0]: false;
+		art[0] === X2 ? axis[2] = Y1 - art[1] : false;
+		art[1] === Y2 ? axis[0] = X1 - art[0] : false;
 	};
 
 	#matchCanvasInLayer(matched, layer, len) {
@@ -156,7 +154,7 @@ export default class CraterStandard {
 	};
 
 	#fillCrate(measure) {
-		const MAXLAYER =	this.#layers ?? 4;
+		const MAXLAYER =	this.#maxLayers ?? 4;
 		let crate =			[];
 		let greb =			[];
 		let checkLen =		true;
