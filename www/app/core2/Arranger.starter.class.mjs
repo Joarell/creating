@@ -29,14 +29,8 @@ export default class ArrangerStarter {
 		let i =			0;
 
 		for (i in list)
-			list[i][pos] <= pivot[0][pos] ? 
-				left.push(list[i]):
-				right.push(list[i]);
-		
-		return (
-			this.#quickSort(left, pos)
-			.concat(pivot, this.#quickSort(right, pos))
-		);
+			list[i][pos] <= pivot[0][pos] ? left.push(list[i]): right.push(list[i]);
+		return(this.#quickSort(left, pos) .concat(pivot, this.#quickSort(right, pos)));
 	};
 
 	#starter() {
