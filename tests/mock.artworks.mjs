@@ -474,19 +474,7 @@ function hugeCanvasFirst(crate, list, layer) {
 	let countLayer =	0;
 	const GETCANVAS =	[];
 
-	list.map(art => {
-		let x = art[1];
-		let y = art[3];
-		let j = 0;
-
-		while (j++ < 2) {
-			if (x === layer[0] && y === layer[2]) {
-				j === 2 ? art.push("") : false;
-				GETCANVAS.push(art);
-			};
-			[x, y] = [y, x];
-		};
-	});
+	list.map(art => art[1] === layer[0] ? GETCANVAS.push(art) : false);
 	GETCANVAS.map(canvas => {
 		countLayer++;
 		setLayer.call(countLayer, crate, [canvas]);
@@ -595,7 +583,7 @@ export function conventionalWorks (opt) {
 };
 
 // addCub(standard4);
-// conventionalWorks(2);
+// conventionalWorks(5);
 
 // ╭───────────────────────────╮
 // │ Lergest canvas variables. │
@@ -1331,21 +1319,19 @@ export function artWorksList() {
 };
 
 
-export function findTubesClassTest () {
+export function findTubesTest () {
 	const list =			largestWorks();
 	const { noCanvas } =	list;
 	const tubes =			noCanvas.filter(pece => {
 		if(pece[1] !== pece[2] && pece[2] === pece[3])
 			return(pece);
-		return
+		return;
 	})
 
 	tubes.map(art => list.noCanvas.splice(list.noCanvas.indexOf(art), 1));
-	list.tubes = tubes
-
-	return ( list );
+	list.tubes = tubes;
+	return (list);
 };
-
 
 export function findTubes () {
 	const list =			largestWorks();
@@ -1353,12 +1339,11 @@ export function findTubes () {
 	const tubes =			noCanvas.filter(pece => {
 		if(pece[1] !== pece[2] && pece[2] === pece[3])
 			return(pece);
-		return
+		return;
 	})
 
 	tubes.map(art => list.noCanvas.splice(list.noCanvas.indexOf(art), 1));
-	list.tubes = tubes
-
+	list.tubes = tubes;
 	return ({ list });
 };
 
@@ -1378,7 +1363,7 @@ export function largestWorks () {
 	});
 	list.largest = largestCanvas;
 	return(list);
-}
+};
 
 
 export function noCanvasOut () {
@@ -1425,13 +1410,13 @@ function firstTrialWorks() {
 			if (!getter.includes(this[i]) && checker(this[i], work))
 				getter.push(this[i])
 	});
-	
 	return(getter);
 };
 
 
 function secondTrialWorks() {
 	const sameSizeList = [];
+
 	this.map(work => {
 		let getter =	[];
 		const x =		work[1];
@@ -1450,28 +1435,28 @@ function secondTrialWorks() {
 			});
 		getter = null;
 	});
-
 	return(sameSizeList);
 };
 
 
 export function quickSortResult() {
-	const gc =				new WeakSet();
-	const CUBEDVALUE =		4;
-	const cubedList =		artWorksCubed();
-	const result =			quickSort(cubedList, CUBEDVALUE)
+	const gc =			new WeakSet();
+	const CUBEDVALUE =	4;
+	const cubedList =	artWorksCubed();
+	const result =		quickSort(cubedList, CUBEDVALUE);
 
 	gc.add(cubedList);
 	return ({sorted: result});
 };
 
+quickSortResult()
 
 function quickSort(list, pos) {
 	if (list.length <= 1)
 		return (list);
 
 	const left =	[];
-	const pivot =	list.splice(0, 1)
+	const pivot =	list.splice(0, 1);
 	const right =	[];
 	let i =			0;
 
