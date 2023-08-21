@@ -17,7 +17,6 @@ describe("These are test to the Hexaedro class.", () => {
 		const current =		Number.isSafeInteger(hexa.x);
 		const expected =	true;
 
-		console.log(hexa);
 		assert.strictEqual(current, expected);
 	});
 
