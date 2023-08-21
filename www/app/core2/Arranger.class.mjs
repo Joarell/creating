@@ -18,7 +18,6 @@ export default class Arranger {
 		return(this.#solver());
 	};
 	
-	// This is the 'chain of responsibility/Factory' pattern method.
 	#solver () {
 		this.#start();
 		this.#sameSizeTrail();
@@ -39,11 +38,9 @@ export default class Arranger {
 				const error = `Please, provide a type of 'ArtWork' object.`
 				throw new TypeError(error);
 			}
-
 			const artWork =	this.#works.map(work => {
 				return (work.constructor.name === "ArtWork");
 			});
-
 			if (artWork.includes(false)) {
 				const error = `Some work is not of the type 'ArtWork' object.`;
 				throw new TypeError(error);
