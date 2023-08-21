@@ -54,7 +54,7 @@ export default class CraterStandard {
 	//		   │                          │
 	//		   │                          │
 	//		   ╰──────────────────────────╯
-	//					axis[3]
+	//					 axis[3]
 
 	#analysisReduceSpace(axis, art) {
 		const X1 = axis[0];
@@ -132,19 +132,7 @@ export default class CraterStandard {
 		let countLayer =	0;
 		const GETCANVAS =	[];
 
-		this.#list.map(art => {
-			let x = art[1];
-			let y = art[3];
-			let j = 0;
-
-			while (j++ < 2) {
-				if (x === layer[0] && y === layer[2]) {
-					j === 2 ? art.push("") : false;
-					GETCANVAS.push(art);
-				};
-				[x, y] = [y, x];
-			};
-		});
+		this.#list.map(art => art[1] === layer[0] ? GETCANVAS.push(art) : false);
 		GETCANVAS.map(canvas => {
 			countLayer++;
 			this.#setLayer.call(countLayer, crate, [canvas]);
