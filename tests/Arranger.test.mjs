@@ -103,12 +103,12 @@ describe("These are tests to Arranger class module.", () => {
 	it("TEST-12: adds an object with respective cub values", () => {
 		const mocked =		mock.largestWorks();
 		const current =		new ArrangerTube(mocked);
-		const expected =	mock.findTubesClassTest();
+		const expected =	mock.findTubesTest();
 	
 		assert.deepStrictEqual(current, expected);
 	});
-
-	it("TEST-13: returns the solved list with all procedures.", () => {
+	
+	it("TEST-13: returns the divided list with all procedures.", () => {
 		const mocked =		mock.artWorksList();
 		const current =		new Arranger(mocked);
 		const expected =	mock.findTubes();
