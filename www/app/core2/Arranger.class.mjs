@@ -15,7 +15,7 @@ export default class Arranger {
 
 		if(dataChecker && dataChecker.constructor.name === 'TypeError')
 			return (dataChecker);
-		return(this.#solver());
+		return(Object.assign(Arranger, this.#solver()));
 	};
 	
 	#solver () {
@@ -24,9 +24,8 @@ export default class Arranger {
 		this.#noCanvasTrail();
 		this.#largestCanvasTrail();
 		this.#findTubes();
-		const finished = { list: this.#works };
 
-		return(finished);
+		return({ list: this.#works });
 	};
 
 	#checkData () {
