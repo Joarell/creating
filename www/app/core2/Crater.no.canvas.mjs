@@ -4,7 +4,7 @@ export default class CraterNotCanvas {
 	#peces;
 
 	constructor (list) {
-		if(!list)
+		if(!list || list.length === 0)
 			return({ noCanvas: false});
 		this.#peces = list;
 		return (this.#noCanvasTrail());

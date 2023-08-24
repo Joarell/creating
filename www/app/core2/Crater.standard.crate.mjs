@@ -5,21 +5,19 @@ export default class CraterStandard {
 	#maxLayers;
 
 	constructor(canvas, maxLayer) {
-		if(!canvas)
+		if(!canvas || canvas.length === 0)
 			return({ standard: false});
 
 		this.#list =		canvas;
-		this.#maxLayers =	maxLayer;
+		this.#maxLayers =	4 ?? maxLayer;
 		return(this.#startCrate());
 	}
 
 	#startCrate() {
-		const INNERCRATE =	[];
-		let crate;
+		const ARTS =	[];
 
-		this.#provideCrate(INNERCRATE);
-		crate =			{ crates : INNERCRATE };
-		return(crate);
+		this.#provideCrate(ARTS);
+		return({ crates : ARTS, backUp : JSON.parse(JSON.stringify(ARTS)) });
 	};
 
 	#defineFinalSize(innerSize, works) {
@@ -83,9 +81,10 @@ export default class CraterStandard {
 	#matchCanvasInLayer(matched, layer, len) {
 		if(layer[0] === 0 && layer[2] === 0 || len < 0)
 			return ;
-		let i =		0;
-		let x =		this.#list[len][1];
-		let y =		this.#list[len][3];
+		const SPIN =	6
+		let i =			0;
+		let x =			this.#list[len][1];
+		let y =			this.#list[len][3];
 		let check1;
 		let check2;
 		let check3;
@@ -97,7 +96,10 @@ export default class CraterStandard {
 
 			if (check1 || check2 || check3) {
 				this.#analysisReduceSpace(layer, [x, y]);
-				i === 2 ? this.#list[len].push("") : false;
+				if (i === 2 && this.#list[len].length < SPIN)
+					this.#list[len].push(" ");
+				else if (this.#list[len].lenght === SPIN)
+					this.#list[len].pop();
 				matched.push(this.#list[len]);
 				return (this.#matchCanvasInLayer(matched, layer, len - 1));
 			};
@@ -142,21 +144,20 @@ export default class CraterStandard {
 	};
 
 	#fillCrate(measure) {
-		const MAXLAYER =	this.#maxLayers ?? 4;
 		let crate =			[];
 		let greb =			[];
 		let checkLen =		true;
 		let i =				this.#hugeCanvasFirst(crate, measure);
 		let len;
 
-		while (i++ < MAXLAYER || checkLen && this.#list.length){
+		while (i++ < this.#maxLayers || checkLen && this.#list.length){
 			len = this.#list.length - 1;
 			this.#matchCanvasInLayer(greb, [...measure, ...measure], len);
 			greb.map(art => this.#list.splice(this.#list.indexOf(art), 1));
 			this.#setLayer.call(i, crate, greb);
 			greb =		null;
 			greb =		[];
-			checkLen =	this.#list.length === 1 && i === MAXLAYER;
+			checkLen =	this.#list.length === 1 && i === this.#maxLayers;
 		};
 		return(crate);
 	};

@@ -4,8 +4,9 @@ export default class CraterSameSize {
 	#peces;
 
 	constructor(list) {
-		if(!list)
+		if(!list || list.length === 0)
 			return({ sameSize: false});
+
 		this.#peces = list;
 		return (this.#startCrateTrail());
 	};
@@ -162,9 +163,11 @@ export default class CraterSameSize {
 	};
 
 	#startCrateTrail () {
-		const countDiffSizes =	this.#countWorks();
+		let countDiffSizes =	this.#countWorks();
 		const crateDone =		this.#compCrate(countDiffSizes);
+		const BACKUP =			JSON.parse(JSON.stringify(crateDone));
 
-		return ({ crates: crateDone });
+		countDiffSizes =		null;
+		return ({ crates : crateDone, backUp : BACKUP });
 	};
 };
