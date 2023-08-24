@@ -1,5 +1,8 @@
 
 import ArtWork from '../www/app/front-modules/Art.class.def.mjs';
+import Arranger from '../www/app/core2/Arranger.class.mjs';
+import CraterSameSize from '../www/app/core2/Crater.same.size.mjs';
+import CraterStandard from '../www/app/core2/Crater.standard.crate.mjs';
 
 
 const list = [
@@ -46,6 +49,149 @@ const list = [
 	['LJ-298', 300, 10, 300],
 ]
 
+
+// ╭─────────────╮
+// │ Crater Mock │
+// ╰─────────────╯
+export const mockTest40 =	{
+		crates: [ [ 153, 43, 78, 85.527 ], { works: [ [
+				[ '38388', 130, 5, 50, 0.033 ],
+				[ '18988', 130, 5, 50, 0.033 ],
+				[ '34733', 130, 5, 50, 0.033, ' ' ],
+				[ '75784', 130, 5, 50, 0.033 ]
+			] ]
+		} ],
+		backUp: [
+		[ 53, 33, 58, 16.907 ],
+		{ works: [[[
+				[ '1111', 30, 3, 30, 0.003 ],
+				[ '71234', 30, 3, 30, 0.003 ],
+				[ '8980', 30, 3, 30, 0.003 ],
+				[ '2313', 30, 3, 30, 0.003 ]
+			]]]
+		},
+		[ 153, 43, 78, 85.527 ],
+		{ works: [
+			[
+				[ '38388', 130, 5, 50, 0.033 ],
+				[ '18988', 130, 5, 50, 0.033 ],
+				[ '34733', 130, 5, 50, 0.033 ],
+				[ '75784', 130, 5, 50, 0.033 ]
+			]
+		]}
+	]
+};
+	
+
+export const mockTest41 =	{
+	crates : [
+		[ 203, 83, 188, 527.935 ],
+		{
+			works: [
+				{ layer1: [ [ '1897', 180, 5, 100, 0.09 ] ] },
+				{ layer2: [ [ '8877', 160, 5, 160, 0.128 ] ] },
+				{
+					layer3: [
+						[ '5908', 150, 5, 90, 0.068 ],
+						[ '1112', 60, 5, 90, 0.027, ' ' ],
+						[ '777', 50, 3, 50, 0.007 ],
+						[ '1111', 30, 3, 30, 0.003 ],
+						[ '71234', 30, 3, 30, 0.003 ]
+					]
+				},
+				{
+					layer4: [
+						[ '8745', 130, 5, 100, 0.065 ],
+						[ '8980', 30, 3, 30, 0.003 ],
+						[ '2313', 30, 3, 30, 0.003 ]
+					]
+				}
+			]
+		},
+		[ 143, 96, 148, 338.624 ],
+		{
+			works: [
+				{ layer1: [ [ '8899', 120, 3, 100, 0.036 ] ] },
+				{ layer2: [ [ '9884', 100, 5, 120, 0.06 ] ] },
+				{ layer3: [ [ '90909', 100, 5, 90, 0.045 ] ] },
+				{ layer4: [ [ '12345', 89, 5, 88, 0.039 ] ] },
+				{ layer5: [ [ '9897', 75, 5, 80, 0.03 ] ] }
+			]
+		}
+	],
+	backUp: [
+		[ 203, 83, 188, 527.935 ],
+		{
+			works: [
+				{ layer1: [ [ '1897', 180, 5, 100, 0.09 ] ] },
+				{ layer2: [ [ '8877', 160, 5, 160, 0.128 ] ] },
+				{
+					layer3: [
+						[ '5908', 150, 5, 90, 0.068 ],
+						[ '1112', 60, 5, 90, 0.027, ' ' ],
+						[ '777', 50, 3, 50, 0.007 ]
+					]
+				},
+				{ layer4: [ [ '8745', 130, 5, 100, 0.065 ] ] }
+			]
+		},
+		[ 143, 96, 148, 338.624 ],
+		{
+			works: [
+				{ layer1: [ [ '8899', 120, 3, 100, 0.036 ] ] },
+				{ layer2: [ [ '9884', 100, 5, 120, 0.06 ] ] },
+				{ layer3: [ [ '90909', 100, 5, 90, 0.045 ] ] },
+				{ layer4: [ [ '12345', 89, 5, 88, 0.039 ] ] },
+				{ layer5: [ [ '9897', 75, 5, 80, 0.03 ] ] }
+			]
+		},
+	]
+};
+	
+
+export function mockOptios() {
+	const crates = {};
+	const setCub = (sizes) => {
+		const COORDINATES = 3;
+		if (sizes === false)
+			return ;
+		if (Array.isArray(sizes) && sizes.length === COORDINATES) {
+			const X =			sizes[0];
+			const Z =			sizes[1];
+			const Y =			sizes[2];
+			const AIRCONST =	6000;
+			const cubCrate =	+(X * Z *Y / AIRCONST).toFixed(3);
+
+			sizes.push(cubCrate);
+		};
+	};
+	
+	crates.sameSizeCrate = new CraterSameSize(findTubesTest().sameSize);
+	crates.standardCrate = new CraterStandard(findTubesTest().sorted);
+	crates.sameSizeCrate.crates.map(setCub);
+	crates.standardCrate.crates.map(setCub);
+	crates.sameSizeCrate.backUp.map(setCub);
+	crates.standardCrate.backUp.map(setCub);
+	return({ crates });
+};
+
+export function fakeCrater(works) {
+	const crates =		['crates ahead'];
+	const TOTALCUB =	3864.145;
+	const PAX =			6;
+	const CARGO =		2;
+	
+	crates.sameSizeCrate = new CraterSameSize(findTubesTest(works).sameSize);
+	crates.standardCrate = new CraterStandard(findTubesTest(works).sorted);
+	crates.airCubTotal = TOTALCUB;
+	crates.wichAirPort = [{ PAX }, { CARGO }];
+
+	return({ crates });
+};
+
+// ╭────────────────╮
+// │ Standard Works │
+// ╰────────────────╯
 export const standard1 = [
 	[ '2313', 30, 3, 30, 0.003 ],
 	[ '1111', 30, 3, 30, 0.003 ],
@@ -129,234 +275,6 @@ const common4 = [
 	[ '136', 140, 5, 100, 0.07 ],
 	[ '8980', 130, 3, 130, 0.051 ],
 ];
-// ╭──────────────────────╮
-// │ No canvas variables. │
-// ╰──────────────────────╯
-export const furniture1 = [
-	['22222', 80, 80, 100],
-	['22207', 80, 80, 100],
-	['22126', 80, 80, 100],
-];
-
-const sculptore1 = [
-	['22222', 80, 80, 100],
-	['22207', 80, 80, 100],
-	['22126', 80, 80, 100],
-];
-
-export const furniture2 = [
-	['22222', 80, 80, 100],
-	['22207', 80, 80, 100],
-	['22126', 80, 80, 100],
-	['22145', 80, 80, 70],
-	['22314', 80, 80, 70],
-	['22296', 80, 80, 70],
-];
-
-const sculptore2 = [
-	['22222', 80, 80, 100],
-	['22207', 80, 80, 100],
-	['22126', 80, 80, 100],
-	['22145', 80, 80, 70],
-	['22314', 80, 80, 70],
-	['22296', 80, 80, 70],
-];
-
-export const furniture3 = [
-	['22222', 80, 80, 100],
-	['22207', 80, 80, 100],
-	['22126', 80, 80, 100],
-	['22120', 80, 80, 100],
-	['22206', 80, 80, 100],
-	['22124', 80, 80, 100],
-	['22145', 80, 80, 70],
-	['22314', 80, 80, 70],
-	['22296', 80, 80, 70],
-	['22141', 80, 80, 70],
-	['22309', 80, 80, 70],
-	['22290', 80, 80, 70],
-];
-
-const sculptore3 = [
-	['22222', 80, 80, 100],
-	['22207', 80, 80, 100],
-	['22126', 80, 80, 100],
-	['22120', 80, 80, 100],
-	['22206', 80, 80, 100],
-	['22124', 80, 80, 100],
-	['22145', 80, 80, 70],
-	['22314', 80, 80, 70],
-	['22296', 80, 80, 70],
-	['22141', 80, 80, 70],
-	['22309', 80, 80, 70],
-	['22290', 80, 80, 70],
-];
-
-export const furniture4 = [
-	['22222', 280, 180, 100],
-	['22207', 280, 180, 100],
-	['22126', 280, 180, 100],
-];
-
-const sculptore4 = [
-	['22222', 280, 180, 100],
-	['22207', 280, 180, 100],
-	['22126', 280, 180, 100],
-];
-
-export const furniture5 = [
-	['22222', 280, 180, 100],
-	['22124', 80, 80, 100],
-	['22145', 80, 80, 70],
-	['22124', 80, 70, 90],
-	['22145', 55, 80, 85],
-];
-
-const sculptore5 = [
-	['22222', 280, 180, 100],
-	['22124', 80, 80, 100],
-	['22145', 80, 80, 70],
-	['22124', 80, 70, 90],
-	['22145', 55, 80, 85],
-];
-
-// ╭──────────────────────╮
-// │ Same size variables. │
-// ╰──────────────────────╯
-
-export const sameMeasure1 = [
-	['22222', 80, 5, 50],
-	['22207', 80, 5, 50],
-	['22126', 80, 5, 50],
-	['22172', 80, 5, 50],
-];
-
-const sameSize1 = [
-	['22222', 80, 5, 50],
-	['22207', 80, 5, 50],
-	['22126', 80, 5, 50],
-	['22172', 80, 5, 50],
-];
-
-export const sameMeasure2 = [
-	['22222', 60, 5, 50],
-	['22207', 60, 5, 50],
-	['22172', 60, 5, 50],
-	['22222', 60, 5, 50],
-	['22207', 60, 5, 50],
-	['22161', 60, 5, 50],
-	['22172', 60, 5, 50],
-	['22125', 60, 5, 50],
-];
-
-const sameSize2 = [
-	['22222', 60, 5, 50],
-	['22207', 60, 5, 50],
-	['22172', 60, 5, 50],
-	['22222', 60, 5, 50],
-	['22207', 60, 5, 50],
-	['22161', 60, 5, 50],
-	['22172', 60, 5, 50],
-	['22125', 60, 5, 50],
-];
-
-export const sameMeasure3 = [
-	['22207', 90, 5, 80],
-	['22155', 90, 5, 80],
-	['22170', 90, 5, 80],
-	['22163', 90, 5, 80],
-	['22222', 90, 5, 70],
-	['22207', 90, 5, 70],
-	['22172', 90, 5, 70],
-	['22222', 90, 5, 70],
-];
-
-const sameSize3 = [
-	['22207', 90, 5, 80],
-	['22155', 90, 5, 80],
-	['22170', 90, 5, 80],
-	['22163', 90, 5, 80],
-	['22222', 90, 5, 70],
-	['22207', 90, 5, 70],
-	['22172', 90, 5, 70],
-	['22222', 90, 5, 70],
-];
-
-export const sameMeasure4 = [
-	['22207', 40, 5, 50],
-	['22155', 40, 5, 50],
-	['22170', 40, 5, 50],
-	['22163', 40, 5, 50],
-	['22198', 40, 5, 50],
-	['22110', 40, 5, 50],
-	['22129', 40, 5, 50],
-	['22162', 40, 5, 50],
-	['22222', 20, 5, 70],
-	['22207', 20, 5, 70],
-	['22172', 20, 5, 70],
-	['22222', 20, 5, 70],
-	['22218', 20, 5, 70],
-	['22202', 20, 5, 70],
-	['22167', 20, 5, 70],
-	['22153', 20, 5, 70],
-];
-
-const sameSize4 = [
-	['22207', 40, 5, 50],
-	['22155', 40, 5, 50],
-	['22170', 40, 5, 50],
-	['22163', 40, 5, 50],
-	['22198', 40, 5, 50],
-	['22110', 40, 5, 50],
-	['22129', 40, 5, 50],
-	['22162', 40, 5, 50],
-	['22222', 20, 5, 70],
-	['22207', 20, 5, 70],
-	['22172', 20, 5, 70],
-	['22222', 20, 5, 70],
-	['22218', 20, 5, 70],
-	['22202', 20, 5, 70],
-	['22167', 20, 5, 70],
-	['22153', 20, 5, 70],
-];
-
-export const sameMeasure5 = [
-	['22222', 50, 5, 50],
-	['22169', 50, 5, 50],
-	['22164', 50, 5, 50],
-	['22138', 50, 5, 50],
-	['22105', 50, 5, 50],
-	['22131', 50, 5, 50],
-	['22127', 50, 5, 50],
-	['22001', 50, 5, 50],
-	['22212', 50, 5, 50],
-	['22163', 50, 5, 50],
-	['22096', 50, 5, 50],
-	['22138', 50, 5, 50],
-	['22019', 50, 5, 50],
-	['22083', 50, 5, 50],
-	['22047', 50, 5, 50],
-	['21992', 50, 5, 50],
-];
-
-const sameSize5 = [
-	['22222', 50, 5, 50],
-	['22169', 50, 5, 50],
-	['22164', 50, 5, 50],
-	['22138', 50, 5, 50],
-	['22105', 50, 5, 50],
-	['22131', 50, 5, 50],
-	['22127', 50, 5, 50],
-	['22001', 50, 5, 50],
-	['22212', 50, 5, 50],
-	['22163', 50, 5, 50],
-	['22096', 50, 5, 50],
-	['22138', 50, 5, 50],
-	['22019', 50, 5, 50],
-	['22083', 50, 5, 50],
-	['22047', 50, 5, 50],
-	['21992', 50, 5, 50],
-];
 
 // ╭───────────────────────────────────╮
 // │ Sorted list - Conventional crate. │
@@ -423,9 +341,10 @@ function crateReduceSize(layer, art) {
 function matchCanvasInLayer(matched, layer, arts, len) {
 	if(layer[0] === 0 && layer[2] === 0 || len < 0)
 		return ;
-	let i =		0;
-	let x =		arts[len][1];
-	let y =		arts[len][3];
+	const SPIN =	6
+	let i =			0;
+	let x =			arts[len][1];
+	let y =			arts[len][3];
 	let check1;
 	let check2;
 	let check3;
@@ -437,7 +356,10 @@ function matchCanvasInLayer(matched, layer, arts, len) {
 
 		if (check1 || check2 || check3) {
 			crateReduceSize(layer, [x, y]);
-			i === 2 ? arts[len].push("") : false;
+			if (i === 2 && arts[len].length < SPIN)
+				arts[len].push(" ");
+			else if (arts[len].lenght === SPIN)
+				arts[len].pop();
 			matched.push(arts[len]);
 			return (matchCanvasInLayer(matched, layer, arts, len - 1));
 		};
@@ -550,7 +472,6 @@ export function addCub(list) {
 
 		work.push(+(X * Z * Y / CMTOM).toFixed(3));
 	})
-	console.log(list);
 };
 
 
@@ -558,8 +479,10 @@ export function conventionalWorks (opt) {
 	const list =		largestWorks();
 	const { sorted } =	list;
 	const innerCrate =	[];
+	const backUp =	[];
 	let works;
-	let crate;
+	let innerCopy;
+
 	switch(opt) {
 		case 1:
 			works = common1;
@@ -577,9 +500,11 @@ export function conventionalWorks (opt) {
 			works = sorted;
 			break ;
 	};
+
+	innerCopy = [...works];
 	solveList(works, innerCrate);
-	crate =				{ crates: innerCrate };
-	return (crate);
+	solveList(innerCopy, backUp);
+	return({ crates: innerCrate, backUp : backUp });
 };
 
 // addCub(standard4);
@@ -754,6 +679,97 @@ const tube6 = [
 // ╭────────────╮
 // │ No canvas. │
 // ╰────────────╯
+// ╭──────────────────────╮
+// │ No canvas variables. │
+// ╰──────────────────────╯
+export const furniture1 = [
+	['22222', 80, 80, 100],
+	['22207', 80, 80, 100],
+	['22126', 80, 80, 100],
+];
+
+const sculptore1 = [
+	['22222', 80, 80, 100],
+	['22207', 80, 80, 100],
+	['22126', 80, 80, 100],
+];
+
+export const furniture2 = [
+	['22222', 80, 80, 100],
+	['22207', 80, 80, 100],
+	['22126', 80, 80, 100],
+	['22145', 80, 80, 70],
+	['22314', 80, 80, 70],
+	['22296', 80, 80, 70],
+];
+
+const sculptore2 = [
+	['22222', 80, 80, 100],
+	['22207', 80, 80, 100],
+	['22126', 80, 80, 100],
+	['22145', 80, 80, 70],
+	['22314', 80, 80, 70],
+	['22296', 80, 80, 70],
+];
+
+export const furniture3 = [
+	['22222', 80, 80, 100],
+	['22207', 80, 80, 100],
+	['22126', 80, 80, 100],
+	['22120', 80, 80, 100],
+	['22206', 80, 80, 100],
+	['22124', 80, 80, 100],
+	['22145', 80, 80, 70],
+	['22314', 80, 80, 70],
+	['22296', 80, 80, 70],
+	['22141', 80, 80, 70],
+	['22309', 80, 80, 70],
+	['22290', 80, 80, 70],
+];
+
+const sculptore3 = [
+	['22222', 80, 80, 100],
+	['22207', 80, 80, 100],
+	['22126', 80, 80, 100],
+	['22120', 80, 80, 100],
+	['22206', 80, 80, 100],
+	['22124', 80, 80, 100],
+	['22145', 80, 80, 70],
+	['22314', 80, 80, 70],
+	['22296', 80, 80, 70],
+	['22141', 80, 80, 70],
+	['22309', 80, 80, 70],
+	['22290', 80, 80, 70],
+];
+
+export const furniture4 = [
+	['22222', 280, 180, 100],
+	['22207', 280, 180, 100],
+	['22126', 280, 180, 100],
+];
+
+const sculptore4 = [
+	['22222', 280, 180, 100],
+	['22207', 280, 180, 100],
+	['22126', 280, 180, 100],
+];
+
+export const furniture5 = [
+	['22222', 280, 180, 100],
+	['22124', 80, 80, 100],
+	['22145', 80, 80, 70],
+	['22124', 80, 70, 90],
+	['22145', 55, 80, 85],
+];
+
+const sculptore5 = [
+	['22222', 280, 180, 100],
+	['22124', 80, 80, 100],
+	['22145', 80, 80, 70],
+	['22124', 80, 70, 90],
+	['22145', 55, 80, 85],
+];
+
 
 function defCrate(peces) {
 	const LENLIMIT =	277;
@@ -868,6 +884,144 @@ export function provideNoCanvas(opt) {
 // ╭───────────────────╮
 // │ Same size canvas. │
 // ╰───────────────────╯
+// ╭──────────────────────╮
+// │ Same size variables. │
+// ╰──────────────────────╯
+
+export const sameMeasure1 = [
+	['22222', 80, 5, 50],
+	['22207', 80, 5, 50],
+	['22126', 80, 5, 50],
+	['22172', 80, 5, 50],
+];
+
+const sameSize1 = [
+	['22222', 80, 5, 50],
+	['22207', 80, 5, 50],
+	['22126', 80, 5, 50],
+	['22172', 80, 5, 50],
+];
+
+export const sameMeasure2 = [
+	['22222', 60, 5, 50],
+	['22207', 60, 5, 50],
+	['22172', 60, 5, 50],
+	['22222', 60, 5, 50],
+	['22207', 60, 5, 50],
+	['22161', 60, 5, 50],
+	['22172', 60, 5, 50],
+	['22125', 60, 5, 50],
+];
+
+const sameSize2 = [
+	['22222', 60, 5, 50],
+	['22207', 60, 5, 50],
+	['22172', 60, 5, 50],
+	['22222', 60, 5, 50],
+	['22207', 60, 5, 50],
+	['22161', 60, 5, 50],
+	['22172', 60, 5, 50],
+	['22125', 60, 5, 50],
+];
+
+export const sameMeasure3 = [
+	['22207', 90, 5, 80],
+	['22155', 90, 5, 80],
+	['22170', 90, 5, 80],
+	['22163', 90, 5, 80],
+	['22222', 90, 5, 70],
+	['22207', 90, 5, 70],
+	['22172', 90, 5, 70],
+	['22222', 90, 5, 70],
+];
+
+const sameSize3 = [
+	['22207', 90, 5, 80],
+	['22155', 90, 5, 80],
+	['22170', 90, 5, 80],
+	['22163', 90, 5, 80],
+	['22222', 90, 5, 70],
+	['22207', 90, 5, 70],
+	['22172', 90, 5, 70],
+	['22222', 90, 5, 70],
+];
+
+export const sameMeasure4 = [
+	['22207', 40, 5, 50],
+	['22155', 40, 5, 50],
+	['22170', 40, 5, 50],
+	['22163', 40, 5, 50],
+	['22198', 40, 5, 50],
+	['22110', 40, 5, 50],
+	['22129', 40, 5, 50],
+	['22162', 40, 5, 50],
+	['22222', 20, 5, 70],
+	['22207', 20, 5, 70],
+	['22172', 20, 5, 70],
+	['22222', 20, 5, 70],
+	['22218', 20, 5, 70],
+	['22202', 20, 5, 70],
+	['22167', 20, 5, 70],
+	['22153', 20, 5, 70],
+];
+
+const sameSize4 = [
+	['22207', 40, 5, 50],
+	['22155', 40, 5, 50],
+	['22170', 40, 5, 50],
+	['22163', 40, 5, 50],
+	['22198', 40, 5, 50],
+	['22110', 40, 5, 50],
+	['22129', 40, 5, 50],
+	['22162', 40, 5, 50],
+	['22222', 20, 5, 70],
+	['22207', 20, 5, 70],
+	['22172', 20, 5, 70],
+	['22222', 20, 5, 70],
+	['22218', 20, 5, 70],
+	['22202', 20, 5, 70],
+	['22167', 20, 5, 70],
+	['22153', 20, 5, 70],
+];
+
+export const sameMeasure5 = [
+	['22222', 50, 5, 50],
+	['22169', 50, 5, 50],
+	['22164', 50, 5, 50],
+	['22138', 50, 5, 50],
+	['22105', 50, 5, 50],
+	['22131', 50, 5, 50],
+	['22127', 50, 5, 50],
+	['22001', 50, 5, 50],
+	['22212', 50, 5, 50],
+	['22163', 50, 5, 50],
+	['22096', 50, 5, 50],
+	['22138', 50, 5, 50],
+	['22019', 50, 5, 50],
+	['22083', 50, 5, 50],
+	['22047', 50, 5, 50],
+	['21992', 50, 5, 50],
+];
+
+const sameSize5 = [
+	['22222', 50, 5, 50],
+	['22169', 50, 5, 50],
+	['22164', 50, 5, 50],
+	['22138', 50, 5, 50],
+	['22105', 50, 5, 50],
+	['22131', 50, 5, 50],
+	['22127', 50, 5, 50],
+	['22001', 50, 5, 50],
+	['22212', 50, 5, 50],
+	['22163', 50, 5, 50],
+	['22096', 50, 5, 50],
+	['22138', 50, 5, 50],
+	['22019', 50, 5, 50],
+	['22083', 50, 5, 50],
+	['22047', 50, 5, 50],
+	['21992', 50, 5, 50],
+];
+
 function setPad(innerCrate) {
 	const PAD =		23;
 	const HIGHPAD =	28;
@@ -1026,10 +1180,12 @@ function sameSizeTrail(list) {
 	return (crateDone);
 };
 
-
 export function provideSameSizeCanvas(opt) {
 	let crate;
 	let sameSize;
+	let result;
+	let backUp;
+	let copy;
 
 	switch(opt) {
 		case 1:
@@ -1048,8 +1204,12 @@ export function provideSameSizeCanvas(opt) {
 			sameSize = sameSize5;
 			break ;
 	};
-	crate =		{ crates: sameSizeTrail(sameSize) };
+	copy =		[...sameSize];
+	result =	sameSizeTrail(sameSize);
+	backUp =	sameSizeTrail(copy);
+	crate =		{ crates : result, backUp : backUp };
 	sameSize =	null;
+	copy =		null;
 	return (crate);
 };
 
@@ -1310,17 +1470,18 @@ export function artList() {
 };
 
 
-export function artWorksList() {
-	const works =	list.map(work => {
+export function artWorksList(works) {
+	const arts =	works ?? list;
+	const artList =	arts.map(work => {
 		return(new ArtWork(work[0], work[1], work[2], work[3]));
 	});
 
-	return(works);
+	return(artList);
 };
 
 
-export function findTubesTest () {
-	const list =			largestWorks();
+export function findTubesTest (works) {
+	const list =			largestWorks(works);
 	const { noCanvas } =	list;
 	const tubes =			noCanvas.filter(pece => {
 		if(pece[1] !== pece[2] && pece[2] === pece[3])
@@ -1333,8 +1494,9 @@ export function findTubesTest () {
 	return (list);
 };
 
-export function findTubes () {
-	const list =			largestWorks();
+
+export function findTubes (works) {
+	const list =			largestWorks(works);
 	const { noCanvas } =	list;
 	const tubes =			noCanvas.filter(pece => {
 		if(pece[1] !== pece[2] && pece[2] === pece[3])
@@ -1344,12 +1506,12 @@ export function findTubes () {
 
 	tubes.map(art => list.noCanvas.splice(list.noCanvas.indexOf(art), 1));
 	list.tubes = tubes;
-	return ({ list });
+	return (Object.assign(Arranger, { list }));
 };
 
 
-export function largestWorks () {
-	const list =			noCanvasOut();
+export function largestWorks (works) {
+	const list =			noCanvasOut(works);
 	const { sorted } =		list;
 	const MAXHEIGHT = 220;
 	const largestCanvas =	sorted.filter(work => {
@@ -1366,8 +1528,8 @@ export function largestWorks () {
 };
 
 
-export function noCanvasOut () {
-	const list =					lessSameSize();
+export function noCanvasOut (works) {
+	const list =					lessSameSize(works);
 	const { sorted, sameSize } =	list;
 	const MAXDEPTH =				10;
 	const noCanvas =				sorted.filter(work => work[2] > MAXDEPTH);
@@ -1386,8 +1548,8 @@ export function noCanvasOut () {
 };
 
 
-export function lessSameSize() {
-	const sortedWorks =	quickSortResult();
+export function lessSameSize(works) {
+	const sortedWorks =	quickSortResult(works);
 	const { sorted } =	sortedWorks;
 	const trialOne =	firstTrialWorks.call(sorted);
 	const trialTwo =	secondTrialWorks.call(trialOne);
@@ -1439,17 +1601,16 @@ function secondTrialWorks() {
 };
 
 
-export function quickSortResult() {
+export function quickSortResult(works) {
 	const gc =			new WeakSet();
 	const CUBEDVALUE =	4;
-	const cubedList =	artWorksCubed();
+	const cubedList =	artWorksCubed(works);
 	const result =		quickSort(cubedList, CUBEDVALUE);
 
 	gc.add(cubedList);
 	return ({sorted: result});
 };
 
-quickSortResult()
 
 function quickSort(list, pos) {
 	if (list.length <= 1)
@@ -1466,15 +1627,13 @@ function quickSort(list, pos) {
 };
 
 
-export function artWorksCubed() {
-	const gc =			new WeakSet();
-	const works =		artWorksList();
-	const cubedList =	works.map(work => {
+export function artWorksCubed(works) {
+	const arts =		works ?? artWorksList();
+	const cubedList =	arts.map(work => {
 		const cub = work.arr();
 		cub.push(work.cubed())
 		return(cub);
 	})
 	
-	gc.add(works);
 	return (cubedList);
 };
