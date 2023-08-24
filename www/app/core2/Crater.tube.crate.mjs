@@ -3,8 +3,8 @@ export default class CraterTube {
 	#tubes;
 
 	constructor(list) {
-		if(!list) 
-			return({ tube: false });
+		if(!list || list.length === 0) 
+			return({ tube : false });
 
 		this.#tubes = list;
 		return(this.#crateMaker());
