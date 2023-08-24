@@ -5,7 +5,7 @@ export default class CraterLastCheckReArranger {
 	#cratesDone;
 
 	constructor (crates) {
-		if (!Array.isArray(crates))
+		if (crates[0] !== 'crates ahead')
 			return (false);
 
 		this.#cratesDone = crates;
@@ -70,17 +70,30 @@ export default class CraterLastCheckReArranger {
 		return(!bool);
 	};
 
-	#consolidationStarted() {
-		const sameSizes =	this.#cratesDone[2].sameSizeCrate.crates;
-		const standard =	this.#cratesDone[4].standardCrate.crates;
-		let sameLen =		sameSizes.length;
+	#consolidationTrail(standard, sameSizes, pos){
+		if (pos < 0)
+			return ;
+		if (pos % 2 === 1)
+			if(this.#processingCratesList(standard, sameSizes[pos])){
+				sameSizes.splice(pos - 1, 2);
+				pos = sameSizes.length;
+			};
+		return(this.#consolidationTrail(standard, sameSizes, pos - 1));
+	};
 
-		while(sameLen-- > 0) {
-			if (sameLen % 2 === 1)
-				if(this.#processingCratesList(standard, sameSizes[sameLen])) {
-					sameSizes.splice(sameLen - 1, 2);
-					sameLen = sameSizes.length;
-				};
+	#consolidationStarted() {
+		const sameSize =	this.#cratesDone.sameSizeCrate.crates;
+		const checkBackUp =	this.#cratesDone.sameSizeCrate.backUp;
+		const standard =	this.#cratesDone.standardCrate.crates;
+		let sameLen;
+
+		if(!sameSize)
+			return ;
+		sameLen = sameSize.length;
+		this.#consolidationTrail(standard, sameSize, sameLen);
+		if (sameSize.length === checkBackUp.length) {
+			this.#cratesDone.sameSizeCrate.backUp = false;
+			this.#cratesDone.standardCrate.backUp = false;
 		};
 	};
 };
