@@ -73,6 +73,7 @@ describe("These are tests to Arranger class module.", () => {
 		const current =		new ArrangerStarter(mocked);
 		const expected =	mock.quickSortResult();
 	
+		// console.log(mocked);
 		assert.deepStrictEqual(current, expected);
 	});
 	

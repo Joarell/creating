@@ -1,5 +1,5 @@
 
-import ArtWork from '../www/app/front-modules/Art.class.def.mjs';
+import ArtWork from '../www/app/core2/ArtWork.class.mjs';
 import Arranger from '../www/app/core2/Arranger.class.mjs';
 import CraterSameSize from '../www/app/core2/Crater.same.size.mjs';
 import CraterStandard from '../www/app/core2/Crater.standard.crate.mjs';
@@ -150,6 +150,7 @@ export const mockTest41 =	{
 	
 
 export function mockOptios() {
+	const BACKUP = true;
 	const crates = {};
 	const setCub = (sizes) => {
 		const COORDINATES = 3;
@@ -166,8 +167,8 @@ export function mockOptios() {
 		};
 	};
 	
-	crates.sameSizeCrate = new CraterSameSize(findTubesTest().sameSize);
-	crates.standardCrate = new CraterStandard(findTubesTest().sorted);
+	crates.sameSizeCrate = new CraterSameSize(findTubesTest().sameSize, BACKUP);
+	crates.standardCrate = new CraterStandard(findTubesTest().sorted, BACKUP);
 	crates.sameSizeCrate.crates.map(setCub);
 	crates.standardCrate.crates.map(setCub);
 	crates.sameSizeCrate.backUp.map(setCub);
@@ -1630,8 +1631,8 @@ function quickSort(list, pos) {
 export function artWorksCubed(works) {
 	const arts =		works ?? artWorksList();
 	const cubedList =	arts.map(work => {
-		const cub = work.arr();
-		cub.push(work.cubed())
+		const cub = work.arr;
+		cub.push(work.cubed)
 		return(cub);
 	})
 	
