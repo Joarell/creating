@@ -8,9 +8,10 @@
 // │ ╰──────────────────────────────────────────────────────────────────────╯ │
 // ╰──────────────────────────────────────────────────────────────────────────╯
 
-import ArtWork from "./Art.class.def.mjs";
+import Arranger from "../core2/Arranger.class.mjs";
+import ArtWork from "../core2/ArtWork.class.mjs";
+import Crater from "../core2/Crater.class.mjs";
 import { addNewWorksToIndexedDB } from "./link.storage.mjs";
-import { boss } from "../core/start.adm.mjs";
 
 
 // ╭─────────────────────────────────────────────────────────────────────╮
@@ -22,7 +23,7 @@ export function displayCub() {
 	const element=	document.getElementById("cub-meter");
 	result =		parseArtWork();
 	result = result.reduce((sum, val) => {
-		return (sum + val.cub);
+		return (sum + val.cubed);
 	}, 0)
 	element.innerText = "Cub: " + (Math.floor(result * COMA) / COMA) + "m³";
 	return (element);
@@ -42,7 +43,7 @@ export function displayAirCub() {
 	element =		document.getElementById("cub-air");
 	result =		parseArtWork();
 	result = result.reduce((sum, val) => {
-		return (sum + val.cubeAir);
+		return (sum + val.cAir);
 	}, 0)
 	element.innerText = std_msg + (Math.floor(result * COMA) / COMA);
 	return (element);
@@ -53,19 +54,20 @@ export function displayAirCub() {
 // │ This function is the main function of the webapp. It solves the art work │
 // │                         list to possible crates.                         │
 // ╰──────────────────────────────────────────────────────────────────────────╯
-export function crate() {
+export async function crate() {
 	let crates;
 	const estimate =	{};
 	const e_code =		document.getElementById("input_estimate").value;
 
 	if (confirm("Ready to crate all works?")) {
-		crates =				checkMetric();
+		crates =				await checkMetric();
 		estimate["reference"] =	e_code;
 		estimate["list"] =		parseArtWork();
 		estimate["crates"] =	crates;
 		addNewWorksToIndexedDB (estimate);
 
-		// INFO: efemeral triggers to each panel render the result
+		console.log(crates);
+		// INFO: Efemeral triggers to each panel render the result
 		sessionStorage.setItem("pane1", "populate");
 		sessionStorage.setItem("pane2", "populate");
 	}
@@ -131,19 +133,28 @@ function parseArtWork(){
 }
 
 
+async function solveList(list) {
+	const RESULT =	await Promise.resolve(new Arranger(list))
+		.then(list => new Crater(list))
+		.then(solved => solved.crates)
+	.catch(err => err);
+
+	return(RESULT);
+};
+
+
 // ╭───────────────────────────────────────────────────────────╮
 // │ Checks the works is in inches and converts to centimeters │
 // ╰───────────────────────────────────────────────────────────╯
-function checkMetric() {
+async function checkMetric() {
 	const works =	localStorage;
-	let list =		parseArtWork();
+	const list =	parseArtWork();
+	let crates;
 
 	if (works.length === 1)
 		return(alert("Oops! Sounds like you not added any work yet.\
 		Please, try again!"));
-	else if(works.getItem("metrica") === "cm - centimeters")
-		return (boss(list));
-	else {
+	if (works.getItem("metrica") !== "cm - centimeters") {
 		list = list.map((sizes) => {
 			let j;
 			const tmp = [sizes.code];
@@ -155,5 +166,6 @@ function checkMetric() {
 			return (tmp);
 		});
 	}
-	return(boss(list));
+	crates =	await solveList(list);
+	return (crates);
 }

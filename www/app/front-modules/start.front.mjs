@@ -10,7 +10,7 @@
 //│ ╰───────────────────────────────────────────────────────────────────────╯ │
 //╰───────────────────────────────────────────────────────────────────────────╯
 
-import ArtWork from './Art.class.def.mjs';
+import ArtWork from '../core2/ArtWork.class.mjs';
 import * as mod from './functions.front.end.mjs'
 
 
@@ -107,8 +107,8 @@ export function catchWork() {
 	}
 	tmp = checkWork([cod, length, depth, height]);
 	if (tmp !== false) {
-		orderWorks(tmp);
-		localStorage.setItem(tmp.code, JSON.stringify(tmp));
+		orderWorks(tmp.data);
+		localStorage.setItem(tmp.data.code, JSON.stringify(tmp.data));
 		localStorage.setItem("storage", "art-work");
 		mod.countWorks();
 		mod.displayAirCub();
