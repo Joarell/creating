@@ -10,8 +10,8 @@ export default class ArrangerStarter {
 
 	#addCubValueToEachWork() {
 		const cubedList = this.#list.map(work => {
-			const arrWork = work.arr();
-			arrWork.push(work.cubed());
+			const arrWork = work.arr;
+			arrWork.push(work.cubed);
 
 			return(arrWork);
 		});
