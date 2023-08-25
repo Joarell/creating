@@ -29,6 +29,10 @@ export default class ArtWork extends Hexaedro {
 		return ([this.#code, this.#x, this.#z, this.#y]);
 	};
 
+	get data () {
+		return ({ code : this.#code, x : this.#x, z : this.#z, y : this.#y});
+	};
+
 	get cAir () {
 		return (new CubCalc(this.#x, this.#z, this.#y).cubCalcAir);
 	};
