@@ -200,36 +200,41 @@ describe("These are tests to Crater class.", () => {
 	});
 
 	it("TEST-25: returns 3 crates as a result of the list passed.", () => {
-		const current =		new CraterStandard(mock.standard1);
+		const BACKUP =		true;
+		const current =		new CraterStandard(mock.standard1, BACKUP);
 		const expected =	mock.conventionalWorks(1);
 	
 		assert.deepStrictEqual(current, expected);
 	});
 
 	it("TEST-26: returns 1 crate with 5 layers.", () => {
-		const current =		new CraterStandard(mock.standard2);
+		const BACKUP =		true;
+		const current =		new CraterStandard(mock.standard2, BACKUP);
 		const expected =	mock.conventionalWorks(2);
 	
 		assert.deepStrictEqual(current, expected);
 	});
 
 	it("TEST-27: returns 2 crates as result to the list passed.", () => {
-		const current =		new CraterStandard(mock.standard3);
+		const BACKUP =		true;
+		const current =		new CraterStandard(mock.standard3, BACKUP);
 		const expected =	mock.conventionalWorks(3);
 	
 		assert.deepStrictEqual(current, expected);
 	});
 
 	it("TEST-28: returns 1 crates as result to the list passed.", () => {
-		const current =		new CraterStandard(mock.standard4);
+		const BACKUP =		true;
+		const current =		new CraterStandard(mock.standard4, BACKUP);
 		const expected =	mock.conventionalWorks(4);
 	
 		assert.deepStrictEqual(current, expected);
 	});
 
 	it("TEST-29: returns 3 crates as a result of the sorted list.", () => {
+		const BACKUP =		true;
 		const { sorted } =	mock.findTubesTest();
-		const current =		new CraterStandard(sorted);
+		const current =		new CraterStandard(sorted, BACKUP);
 		const expected =	mock.conventionalWorks(5);
 	
 		assert.deepStrictEqual(current, expected);
@@ -242,7 +247,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-31: returns false to empty list.", () => {
+	it("TEST-31: returns the Crater assign object.", () => {
 		const works  =		new Arranger(mock.artWorksList());
 		const test =		new Crater(works);
 		const current =		test === Crater;
@@ -280,7 +285,7 @@ describe("These are tests to Crater class.", () => {
 		const current =		new Crater(works).crates.standardCrate.backUp;
 		const expected =	mock.mockOptios().crates.standardCrate.backUp;
 	
-		assert.deepEqual(current, expected);
+		assert.deepStrictEqual(current, expected);
 	});
 
 	it("TEST-36: returns less 6 sameSizeCrates and adds to the standards", () => {
@@ -577,7 +582,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-48: returns false case 'crates' object stays the same.", () => {
+	it("TEST-48: returns false case 'crates' object stays the same.", async () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -601,7 +606,7 @@ describe("These are tests to Crater class.", () => {
 		const works =		new Arranger(mock.artWorksList(list));
 		const current =		new Crater(works).crates.sameSizeCrate.backUp;
 		const expected =	false;
-	
+
 		assert.deepStrictEqual(current, expected);
 	});
 
@@ -633,7 +638,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-49: excludes the 'totalCubBackUp' and 'wichAirPortBackUp' from the result.", () => {
+	it("TEST-50: excludes the 'totalCubBackUp' and 'wichAirPortBackUp' from the result.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -659,5 +664,39 @@ describe("These are tests to Crater class.", () => {
 		const expected =	12;
 	
 		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-51: returns less 2 sameSizeCrates and adds to the standards.", () => {
+		const list =	[
+			['5908', 150, 5, 90],
+			['8899', 120, 3, 100],
+			['777', 50, 3, 50],
+			['8980', 30, 3, 30],
+			['71234', 30, 3, 30],
+			['1111', 30, 3, 30],
+			['2313', 30, 3, 30],
+			['1112', 60, 5, 90],
+			['1897', 180, 5, 100],
+			['9897', 75, 5, 80],
+			['9884', 100, 5, 120],
+			['8745', 130, 5, 100],
+			['8877', 160, 5, 160],
+			['34733', 130, 5, 50],
+			['18988', 130, 5, 50],
+			['38388', 130, 5, 50],
+			['75784', 130, 5, 50],
+			['90909', 100, 5, 90],
+			['12345', 89, 5, 88],
+		];
+
+		const works =		new Arranger(mock.artWorksList(list));
+		const current =		new Crater(works).crates.allCrates;
+		const expected =	[
+			[ 153, 43, 78, 85.527 ],
+			[ 203, 83, 188, 527.935 ],
+			[ 143, 96, 148, 338.624 ]
+		];
+	
+		assert.notEqual(current, expected);
 	});
 });
