@@ -3,20 +3,24 @@
 export default class CraterStandard {
 	#list;
 	#maxLayers;
+	#backUp;
 
-	constructor(canvas, maxLayer) {
+	constructor(canvas, backUp, maxLayer) {
 		if(!canvas || canvas.length === 0)
 			return({ standard: false});
 
 		this.#list =		canvas;
 		this.#maxLayers =	4 ?? maxLayer;
+		this.#backUp =		backUp;
 		return(this.#startCrate());
 	}
 
 	#startCrate() {
-		const ARTS =	[];
+		const ARTS = [];
 
 		this.#provideCrate(ARTS);
+		if (!this.#backUp)
+			return ({ crates :  ARTS });
 		return({ crates : ARTS, backUp : JSON.parse(JSON.stringify(ARTS)) });
 	};
 
