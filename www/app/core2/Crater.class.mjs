@@ -23,6 +23,7 @@ export default class Crater {
 		return(Object.assign(Crater, this.#startCrateList()));
 	};
 
+
 	#startCrateList () {
 		this.#tubeCrate();
 		this.#LargestCanvas();
@@ -38,6 +39,7 @@ export default class Crater {
 			this.#totalCubBackUp();
 			this.#whichAirPortBackUp();
 		};
+		this.#allCrates();
 		return({ crates: this.#crates });
 	};
 	
@@ -62,12 +64,27 @@ export default class Crater {
 	};
 
 	#standardCrates() {
-		const standard = new CraterStandard(this.#works?.sorted);
-		this.#crates.standardCrate = standard;
+		const BACKUP =	this.#crates.sameSizeCrate.hasOwnProperty('crates');
+		const std =		new CraterStandard(this.#works?.sorted, BACKUP);
+		this.#crates.standardCrate = std;
 	};
 
 	#lastCheckArrangerSameSizeToStandard() {
 		new CraterLastCheckReArranger(this.#crates);
+	};
+
+	#allCrates () {
+		const CRATES = [];
+		const filter = (data) => {
+			Array.isArray(data) ? CRATES.push(data) : false;
+		};
+
+		this.#crates?.tubeCrate?.crates?.map(filter);
+		this.#crates?.largestCrate?.crates?.map(filter);
+		this.#crates?.sameSizeCrate?.crates?.map(filter);
+		this.#crates?.noCanvasCrate?.crates?.map(filter);
+		this.#crates?.standardCrate?.crates?.map(filter);
+		this.#crates.allCrates = CRATES;
 	};
 
 	#cubAir() {
