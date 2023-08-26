@@ -4,21 +4,21 @@ import assert from 'node:assert';
 
 
 describe("These are teste to the converte measures class:", () => {
-	it ("TEST-1: Returns the centimeter conversion.", () => {
-		const current =		new Converter(100, 5, 120).cmConvert;
+	it ("TEST-1: Returns the centimeter conversion to inches.", () => {
+		const current =		new Converter(100, 5, 120).inConvert;
 		const expected =	[39.37, 1.969, 47.244];
 	
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it ("TEST-2: Returns the centimeter conversion to string values.", () => {
-		const current =		new Converter("100", "5", "120").cmConvert;
+	it ("TEST-2: centimeter conversion to  inches assuming string values.", () => {
+		const current =		new Converter("100", "5", "120").inConvert;
 		const expected =	[39.37, 1.969, 47.244];
 	
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it ("TEST-3: Returns undefined for none value passed.", () => {
+	it ("TEST-3: returns undefined for none value passed.", () => {
 		const current =		new Converter().cmConvert;
 		const error =		"Please, provide a value to be converted.";
 		const expected =	new TypeError(error);
@@ -50,8 +50,8 @@ describe("These are teste to the converte measures class:", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it ("TEST-7: Returns the  inch conversion value", () => {
-		const current =		new Converter(39.37, 1.969, 47.244).inConvert;
+	it ("TEST-7: Returns the inch conversion value", () => {
+		const current =		new Converter(39.37, 1.969, 47.244).cmConvert;
 		const expected =	[100, 5, 120];
 	
 		assert.deepStrictEqual(current, expected);
