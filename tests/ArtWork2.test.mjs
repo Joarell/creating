@@ -79,7 +79,7 @@ describe("Testing the Artwork class:", () => {
 		assert.strictEqual(current, expected);
 	});
 	
-	it("Test-10: returns false to cubic calculation.", () => {
+	it("Test-10: returns an Error to cubic calculation.", () => {
 		const art =			new ArtWork('001', "a", "5", "120");
 		const current =		art.cubed;
 		const error =		"Not a valid entry to RegexChecker!";
@@ -88,7 +88,7 @@ describe("Testing the Artwork class:", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it("Test-11: returns false to cubic calculation.", () => {
+	it("Test-11: returns an Error to cubic calculation.", () => {
 		const art =			new ArtWork('001', "180", "a", "120");
 		const current =		art.cubed;
 		const error =		"Not a valid entry to RegexChecker!";
@@ -97,11 +97,26 @@ describe("Testing the Artwork class:", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 	
-	it("Test-12: returns false to cubic calculation.", () => {
+	it("Test-12: returns an Error to cubic calculation.", () => {
 		const art =			new ArtWork('001', 180, 5, "a");
 		const current =		art.cubed;
 		const error =		"Not a valid entry to RegexChecker!";
 		const expected =	new TypeError(error);
+	
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("Test-13: returns an object with art work data.", () => {
+		const art =			new ArtWork('001', 180, 5, 100);
+		const current =		art.data;
+		const expected =	{ code : '001', x : 180, z : 5, y : 100 };
+	
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("Test-14: returns the unit convertion from in to cm.", () => {
+		const current =		new ArtWork('001', 70.866, 1.968, 39.370).autoConvert;
+		const expected =	[ '001', 180., 5, 100 ];
 	
 		assert.deepStrictEqual(current, expected);
 	});
