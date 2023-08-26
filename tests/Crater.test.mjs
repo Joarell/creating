@@ -666,7 +666,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-51: returns less 2 sameSizeCrates and adds to the standards.", () => {
+	it("TEST-51: returns all crates done.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -690,12 +690,43 @@ describe("These are tests to Crater class.", () => {
 		];
 
 		const works =		new Arranger(mock.artWorksList(list));
-		const current =		new Crater(works).crates.allCrates;
+		const current =		new Crater(works).crates.allCrates
 		const expected =	[
 			[ 153, 43, 78, 85.527 ],
 			[ 203, 83, 188, 527.935 ],
 			[ 143, 96, 148, 338.624 ]
 		];
+	
+		assert.notEqual(current, expected);
+	});
+
+	it("TEST-52: returns all crates and backUp crates done.", () => {
+		const list =	[
+			['5908', 150, 5, 90],
+			['8899', 120, 3, 100],
+			['777', 50, 3, 50],
+			['8980', 30, 3, 30],
+			['71234', 30, 3, 30],
+			['1111', 30, 3, 30],
+			['2313', 30, 3, 30],
+			['1112', 60, 5, 90],
+			['1897', 180, 5, 100],
+			['9897', 75, 5, 80],
+			['9884', 100, 5, 120],
+			['8745', 130, 5, 100],
+			['8877', 160, 5, 160],
+			['34733', 130, 5, 50],
+			['18988', 130, 5, 50],
+			['38388', 130, 5, 50],
+			['75784', 130, 5, 50],
+			['90909', 100, 5, 90],
+			['12345', 89, 5, 88],
+		];
+
+		const works =		new Arranger(mock.artWorksList(list));
+		const result =		new Crater(works).crates
+		const current =		result.allCrates;
+		const expected =	result.allCratesBackUp;
 	
 		assert.notEqual(current, expected);
 	});

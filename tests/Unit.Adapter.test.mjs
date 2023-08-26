@@ -98,4 +98,35 @@ describe("Testing the Unit Adapter class:", () => {
 	
 		assert.notEqual(current, expected);
 	});
+
+	it("TEST-7: returns solved list with inches values including backUps.", async () => {
+		let list =	[
+			[ '5908', 59.055, 1.969, 35.433 ],
+			[ '8899', 47.244, 1.181, 39.37 ],
+			[ '777', 19.685, 1.181, 19.685 ],
+			[ '8980', 11.811, 1.181, 11.811 ],
+			[ '71234', 11.811, 1.181, 11.811 ],
+			[ '1111', 11.811, 1.181, 11.811 ],
+			[ '2313', 11.811, 1.181, 11.811 ],
+			[ '1112', 23.622, 1.969, 35.433 ],
+			[ '1897', 70.866, 1.969, 39.37 ],
+			[ '9897', 29.528, 1.969, 31.496 ],
+			[ '9884', 39.37, 1.969, 47.244 ],
+			[ '8745', 51.181, 1.969, 39.37 ],
+			[ '8877', 62.992, 1.969, 62.992 ],
+			[ '34733', 51.181, 1.969, 19.685 ],
+			[ '18988', 51.181, 1.969, 19.685 ],
+			[ '38388', 51.181, 1.969, 19.685 ],
+			[ '75784', 51.181, 1.969, 19.685 ],
+			[ '90909', 39.37, 1.969, 35.433 ],
+			[ '12345', 35.039, 1.969, 34.646 ]
+		];
+
+		const works =		mock.artWorksList(list);
+		const result =		await new UnitAdapter(works, 'in');
+		const current =		result.allCrates;
+		const expected =	result.allCratesBackUp;
+	
+		assert.notEqual(current, expected);
+	});
 });
