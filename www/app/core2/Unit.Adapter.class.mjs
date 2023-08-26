@@ -118,14 +118,23 @@ export default class UnitAdapter {
 		if(Array.isArray(data))
 			return(data = data.map(this.#swapUnitRevertion));
 
-		else if (data.hasOwnProperty('crates') === false)
+		else if (!data.hasOwnProperty('crates'))
 			return(data);
 
-		data.crates = data.crates.map(info => {
-			if (info.length === 4)
-				return(info = this.#swapUnitRevertion(info));
-			return (info.works = this.#revertionLayers(info));
-		});
+		else if (data.hasOwnProperty('crates')) {
+			data.crates = data.crates.map(info => {
+				if (info.length === 4)
+					return(info = this.#swapUnitRevertion(info));
+				return (info.works = this.#revertionLayers(info));
+			});
+		}
+		else if (data.hasOwnProperty('backUp')) {
+			data.crates = data.crates.map(info => {
+				if (info.length === 4)
+					return(info = this.#swapUnitRevertion(info));
+				return (info.works = this.#revertionLayers(info));
+			});
+		};
 		return(data);
 	};
 
@@ -152,6 +161,12 @@ export default class UnitAdapter {
 		crates.standardCrate = this.#revertionUnit(crates.standardCrate);
 		crates.airCubTotal = +(crates.airCubTotal * CUBCONST).toFixed(3);
 		crates.allCrates = this.#revertionUnit(crates.allCrates);
+
+		if (crates.sameSizeCrate.hasOwnProperty('backUp')) {
+			crates.airCubTotalBackUp = +(crates.airCubTotalBackUp * CUBCONST)
+				.toFixed(3);
+			crates.allCratesBackUp = this.#revertionUnit(crates.allCratesBackUp);
+		};
 		return(crates);
 	};
 

@@ -38,6 +38,7 @@ export default class Crater {
 		if (Array.isArray(this.#crates.sameSizeCrate.backUp)) {
 			this.#totalCubBackUp();
 			this.#whichAirPortBackUp();
+			this.#allCratesBackUp();
 		};
 		this.#allCrates();
 		return({ crates: this.#crates });
@@ -85,6 +86,20 @@ export default class Crater {
 		this.#crates?.noCanvasCrate?.crates?.map(filter);
 		this.#crates?.standardCrate?.crates?.map(filter);
 		this.#crates.allCrates = CRATES;
+	};
+
+	#allCratesBackUp () {
+		const CRATES = [];
+		const filter = (data) => {
+			Array.isArray(data) ? CRATES.push(data) : false;
+		};
+
+		this.#crates?.tubeCrate?.crates?.map(filter);
+		this.#crates?.largestCrate?.crates?.map(filter);
+		this.#crates?.sameSizeCrate?.backUp?.map(filter);
+		this.#crates?.noCanvasCrate?.crates?.map(filter);
+		this.#crates?.standardCrate?.backUp?.map(filter);
+		this.#crates.allCratesBackUp = CRATES;
 	};
 
 	#cubAir() {
