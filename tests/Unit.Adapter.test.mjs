@@ -1,0 +1,101 @@
+
+import { describe, it } from 'node:test';
+import assert from 'node:assert';
+import * as mock from './mock.artworks.mjs';
+import UnitAdapter from '../www/app/core2/Unit.Adapter.class.mjs';
+import Converter from '../www/app/core2/Converter.class.mjs';
+
+
+describe("Testing the Unit Adapter class:", () => {
+	it("TEST-1: returns an Error to nowArtWorks input list.", async () => {
+		const current =		await new UnitAdapter('', 'cm');
+		const error =		`Please, provide a valid list.`;
+		const expected =	new TypeError(error);
+	
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-2: returns a Promise.", () => {
+		const current =		new UnitAdapter().constructor.name;
+		const expected =	'Promise';
+	
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-3: returns a Promise TypeError to no valid list.", () => {
+		const current =		new UnitAdapter('', 'cm');
+		const error =		`Please, provide a type of 'ArtWork' object list.`;
+		const expected =	Promise.resolve(new TypeError(error));
+	
+		assert.deepEqual(current, expected);
+	});
+
+	it("TEST-4: returns a Promise TypeError to no valid unit.", async () => {
+		const list =	[
+			['5908', 150, 5, 90],
+			['8899', 120, 3, 100],
+			['777', 50, 3, 50],
+			['1112', 60, 5, 90],
+			['1897', 180, 5, 100],
+			['9897', 75, 5, 80],
+			['9884', 100, 5, 120],
+			['8745', 130, 5, 100],
+			['8877', 160, 5, 160],
+			['75784', 130, 5, 50],
+			['90909', 100, 5, 90],
+			['12345', 89, 5, 88],
+		];
+		const current =		await new UnitAdapter(list)
+		const error =		`Please, provide a type of 'ArtWork' object list.`
+		const expected =	new TypeError(error);
+	
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-5: returns the solved list passed then true.", async () => {
+		const list =	[
+			['5908', 150, 5, 90],
+			['8899', 120, 3, 100],
+			['777', 50, 3, 50],
+			['1112', 60, 5, 90],
+			['1897', 180, 5, 100],
+			['9897', 75, 5, 80],
+			['9884', 100, 5, 120],
+			['8745', 130, 5, 100],
+			['8877', 160, 5, 160],
+			['75784', 130, 5, 50],
+			['90909', 100, 5, 90],
+			['12345', 89, 5, 88],
+		];
+	
+		const works =		mock.artWorksList(list);
+		const result =		await new UnitAdapter(works, 'cm');
+		const current =		result.hasOwnProperty('allCrates');
+		const expected =	true;
+	
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-6: returns solved list with inches values.", async () => {
+		let list =	[
+			[ '5908', 59.055, 1.969, 35.433 ],
+			[ '8899', 47.244, 1.181, 39.37 ],
+			[ '777', 19.685, 1.181, 19.685 ],
+			[ '1112', 23.622, 1.969, 35.433 ],
+			[ '1897', 70.866, 1.969, 39.37 ],
+			[ '9897', 29.528, 1.969, 31.496 ],
+			[ '9884', 39.37, 1.969, 47.244 ],
+			[ '8745', 51.181, 1.969, 39.37 ],
+			[ '8877', 62.992, 1.969, 62.992 ],
+			[ '75784', 51.181, 1.969, 19.685 ],
+			[ '90909', 39.37, 1.969, 35.433 ],
+			[ '12345', 35.039, 1.969, 34.646 ]
+		];
+
+		const works =		mock.artWorksList(list);
+		const current =		await new UnitAdapter(works, 'in');
+		const expected =	await new UnitAdapter(works, 'cm');
+	
+		assert.notEqual(current, expected);
+	});
+});
