@@ -7,12 +7,14 @@ export default class Converter {
 		this.#values = [...args];
 	};
 
+	//INFO: Converts inches to centimeters.
 	get cmConvert () {
-		return (cmConvert.call(this.#values));
+		return (inConvert.call(this.#values));
 	}
 
+	//INFO: Converts centimeters to inches.
 	get inConvert () {
-		return (inConvert.call(this.#values));
+		return (cmConvert.call(this.#values));
 	}
 };
 
