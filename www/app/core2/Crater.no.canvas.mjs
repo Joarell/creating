@@ -4,6 +4,7 @@ export default class CraterNotCanvas {
 	#peces;
 
 	constructor (list) {
+		// console.log('NoCanvas:', list);
 		if(!list || list.length === 0)
 			return({ noCanvas: false});
 		this.#peces = list;
@@ -50,11 +51,24 @@ export default class CraterNotCanvas {
 		return (compareX && compareZ && compareY ? true : false);
 	};
 
-	//returns how many works to put in side the crate.
-	#defineMaxPeces(items) {
+	#validationSizes(x, z, equals, items) {
 		const PAD =			10;
 		const MAXLEN =		554;
 		const MAXDEPTH =	177;
+
+		if (x < MAXLEN && z < MAXDEPTH)
+			return(items.length);
+		else if(items.length % 2 === 0) {
+			if(x > MAXLEN && (z * 2) + PAD < MAXDEPTH)
+				return (items.length);
+			return(~~(MAXLEN / x * items.length));
+		};
+		return (equals === 0 || items[0][1] > MAXLEN ? 1 : equals);
+	};
+
+	//returns how many works to put in side the crate.
+	#defineMaxPeces(items) {
+		const PAD =			10;
 		let x =				PAD * items.length;
 		let z =				0;
 		let equals =		0;
@@ -71,14 +85,7 @@ export default class CraterNotCanvas {
 			x += art[1];
 			z += art[3];
 		});
-		if (x < MAXLEN && z < MAXDEPTH)
-			return(items.length);
-		else if(items.length % 2 === 0) {
-			if(x > MAXLEN && (z * 2) + PAD < MAXDEPTH)
-				return (items.length);
-			return(~~(MAXLEN / x * items.length));
-		};
-		return (equals === 0 || items[0][1] > MAXLEN ? 1 : equals);
+		return (this.#validationSizes(x, z, equals, items));
 	};
 
 	#noCanvasTrail(){

@@ -39,6 +39,40 @@ export default class CraterLastCheckReArranger {
 		});
 	};
 
+	#layersInterfaceChecker(layer) {
+		if (Array.isArray(layer[0]))
+			return(layer.map(art => art.length === 6 ? art.pop() : false));
+		switch (Object.keys(layer)[0]) {
+			case 'layer1' :
+				return(layer.layer1.map(art => art.length === 6? art.pop(): false));
+			case 'layer2' :
+				return(layer.layer2.map(art => art.length === 6? art.pop(): false));
+			case 'layer3' :
+				return(layer.layer3.map(art => art.length === 6? art.pop(): false));
+			case 'layer4' :
+				return(layer.layer4.map(art => art.length === 6? art.pop(): false));
+			case 'layer5' :
+				return(layer.layer5.map(art => art.length === 6? art.pop(): false));
+		};
+	};
+
+	#cleanWorksSpinning(data) {
+		let key = 0;
+		let val = 0;
+
+		for (key in data) {
+			if (data[key][val] === 'works') {
+				data[key][val].works.map(arts => {
+					if (Array.isArray(arts) && arts.length === 6)
+						arts.pop();
+					else if (!Array.isArray(arts)) {
+						this.#layersInterfaceChecker(arts);
+					};
+				});
+			};
+		};
+	};
+
 // ╭───────────────────────────────────────────────────────────────────────────╮
 // │ Simulates if the crate with 5 layer can consolidate all same size canvas. │
 // ╰───────────────────────────────────────────────────────────────────────────╯
@@ -57,13 +91,15 @@ export default class CraterLastCheckReArranger {
 			if (i % 2 === 1) {
 				result =	[...extracted];
 				this.#removeCrate(listCrates, i, result);
-				result = this.#quickSort(result, CUBPOS);
-				result = new CraterStandard(result, MAXLAYER);
+				result =	this.#quickSort(result, CUBPOS);
+				result =	new CraterStandard(result, MAXLAYER);
 				if (result.crates.length === 2) {
 					listCrates.splice(i, 1, result.crates[1]);
 					listCrates.splice(i - 1, 1, result.crates[0]);
-					bool = false;
-				};
+					bool =	false;
+				}
+				else
+					this.#cleanWorksSpinning(result);
 				result = null;
 			};
 		};
