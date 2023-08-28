@@ -683,9 +683,17 @@ const tube6 = [
 // ╭──────────────────────╮
 // │ No canvas variables. │
 // ╰──────────────────────╯
+export const furniture0 = [
+	['22126', 80, 80, 100],
+];
+
 export const furniture1 = [
 	['22222', 80, 80, 100],
 	['22207', 80, 80, 100],
+	['22126', 80, 80, 100],
+];
+
+const sculptore0 = [
 	['22126', 80, 80, 100],
 ];
 
@@ -860,6 +868,9 @@ export function provideNoCanvas(opt) {
 	let noCanvas;
 
 	switch(opt) {
+		case 0:
+			noCanvas = sculptore0;
+			break ;
 		case 1:
 			noCanvas = sculptore1;
 			break ;
