@@ -5,14 +5,15 @@ export default class Converter {
 
 	constructor (...args) {
 		this.#values = [...args];
+		// console.log(this.#values);
 	};
 
-	//INFO: Converts inches to centimeters.
+	// INFO: Converts inches to centimeters.
 	get cmConvert () {
 		return (inConvert.call(this.#values));
 	}
 
-	//INFO: Converts centimeters to inches.
+	// INFO: Converts centimeters to inches.
 	get inConvert () {
 		return (cmConvert.call(this.#values));
 	}
@@ -21,10 +22,10 @@ export default class Converter {
 
 function checkValues () {
 	const checker = this.filter(val => {
-		if (Boolean && Number(val)) 
+		if (Number(val)) 
 			return (val);
-		else if (Boolean && val.trim() > 0)
-			return (+val);
+		else if (typeof(val) === 'string' && val)
+			return (+val.trim());
 		else
 			return;
 	});
