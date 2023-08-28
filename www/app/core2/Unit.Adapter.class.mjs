@@ -70,7 +70,7 @@ export default class UnitAdapter {
 		if(Array.isArray(data)) {
 			return(data = data.map(swapUnitReversion));
 		}
-		else if (!data.hasOwnProperty('crates')) {
+		else if (!data?.hasOwnProperty('crates')) {
 			return(data);
 		}
 		else if (CHECK1 || CHECK2) {
@@ -108,7 +108,7 @@ export default class UnitAdapter {
 				crates[key] = this.#reversionUnit(crates[key])
 		}
 		
-		if (crates.sameSizeCrate.hasOwnProperty('backUp')) {
+		if (crates.sameSizeCrate?.hasOwnProperty('backUp')) {
 			crates.airCubTotalBackUp = +(crates.airCubTotalBackUp * CUBCONST)
 				.toFixed(3);
 			crates.allCratesBackUp = this.#reversionUnit(crates.allCratesBackUp)

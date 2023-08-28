@@ -24,22 +24,30 @@ export default class Crater {
 	};
 
 	#startCrateList () {
+		let key =		0;
+		const CRATES = [ 'tubeCrate', 'largestCrate', 'sameSizeCrate',
+			'noCanvasCrate', 'standardCrate'
+		];
+
 		this.#tubeCrate();
 		this.#LargestCanvas();
 		this.#sameSizeCrate();
 		this.#noCanvasCrate();
 		this.#standardCrates();
 		this.#lastCheckArrangerSameSizeToStandard();
+		for (key in this.#crates)
+			if (!(this.#crates[key]?.hasOwnProperty('crates') && CRATES.includes(key)))
+				delete this.#crates[key];
+
+		this.#allCrates();
 		this.#cubAir();
 		this.#totalCub();
 		this.#whichAirPort();
-
-		if (Array.isArray(this.#crates.sameSizeCrate.backUp)) {
+		if (Array.isArray(this.#crates?.sameSizeCrate?.backUp)) {
 			this.#totalCubBackUp();
 			this.#whichAirPortBackUp();
 			this.#allCratesBackUp();
 		};
-		this.#allCrates();
 		return({ crates: this.#crates });
 	};
 	
@@ -59,7 +67,6 @@ export default class Crater {
 	};
 
 	#noCanvasCrate() {
-		// console.log('Crater', this.#works);
 		const noCanvas = new CraterNotCanvas(this.#works?.noCanvas);
 		this.#crates.noCanvasCrate = noCanvas;
 	};
@@ -122,7 +129,7 @@ export default class Crater {
 
 		for (key in this.#crates)
 			this.#crates[key]?.crates?.map(setCub);
-		if(Array.isArray(this.#crates.sameSizeCrate.backUp)) {
+		if(Array.isArray(this.#crates?.sameSizeCrate?.backUp)) {
 			this.#crates?.sameSizeCrate?.backUp?.map(setCub);
 			this.#crates?.standardCrate?.backUp?.map(setCub);
 		};
