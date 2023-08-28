@@ -110,7 +110,26 @@ describe("Testing the Unit Adapter class:", () => {
 		assert.notEqual(current, expected);
 	});
 
-	it("TEST-8: returns solved list with inches values including backUps.", async () => {
+	it("TEST-8: returns solved list with one inches sized. ", async () => {
+		let list =	[
+			[ '5908', 59.055, 1.969, 35.433 ],
+		];
+
+		const works =		mock.artWorksList(list);
+		const result =		await new UnitAdapter(works, 'in');
+		const current =		result.standardCrate.crates;
+		const expected =	[ [ 68.11, 14.961, 46.457, 7.89 ],
+			{
+				works : [
+					{ layer1: [ '5908', 59.055, 1.969, 35.433, 5.492 ] }
+				]
+			}
+		];
+	
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-9: returns solved list with inches values including backUps.", async () => {
 		let list =	[
 			[ '5908', 59.055, 1.969, 35.433 ],
 			[ '8899', 47.244, 1.181, 39.37 ],
@@ -142,6 +161,6 @@ describe("Testing the Unit Adapter class:", () => {
 			[ 56.299, 37.795, 58.268, 20.664 ]
 		];
 	
-		assert.notEqual(current, expected);
+		assert.deepStrictEqual(current, expected);
 	});
 });
