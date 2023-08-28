@@ -23,7 +23,6 @@ export default class Crater {
 		return(Object.assign(Crater, this.#startCrateList()));
 	};
 
-
 	#startCrateList () {
 		this.#tubeCrate();
 		this.#LargestCanvas();
@@ -60,6 +59,7 @@ export default class Crater {
 	};
 
 	#noCanvasCrate() {
+		// console.log('Crater', this.#works);
 		const noCanvas = new CraterNotCanvas(this.#works?.noCanvas);
 		this.#crates.noCanvasCrate = noCanvas;
 	};
@@ -75,35 +75,40 @@ export default class Crater {
 	};
 
 	#allCrates () {
-		const CRATES = [];
-		const filter = (data) => {
+		let key =				0;
+		const CRATES =			[];
+		const filterCrates =	(data) => {
 			Array.isArray(data) ? CRATES.push(data) : false;
 		};
 
-		this.#crates?.tubeCrate?.crates?.map(filter);
-		this.#crates?.largestCrate?.crates?.map(filter);
-		this.#crates?.sameSizeCrate?.crates?.map(filter);
-		this.#crates?.noCanvasCrate?.crates?.map(filter);
-		this.#crates?.standardCrate?.crates?.map(filter);
+		for (key in this.#crates)
+			this.#crates[key]?.crates?.map(filterCrates);
 		this.#crates.allCrates = CRATES;
 	};
 
 	#allCratesBackUp () {
-		const CRATES = [];
-		const filter = (data) => {
+		let check1;
+		let check2;
+		let key =		0;
+		const CRATES =	[];
+		const filterCrates =	(data) => {
 			Array.isArray(data) ? CRATES.push(data) : false;
 		};
 
-		this.#crates?.tubeCrate?.crates?.map(filter);
-		this.#crates?.largestCrate?.crates?.map(filter);
-		this.#crates?.sameSizeCrate?.backUp?.map(filter);
-		this.#crates?.noCanvasCrate?.crates?.map(filter);
-		this.#crates?.standardCrate?.backUp?.map(filter);
+		for (key in this.#crates) {
+			check1 = this.#crates[key] === 'sameSizeCrate';
+			check2 = this.#crates[key] === 'standardCrate';
+
+			if (check1 || check2) 
+				this.#crates[key]?.backUp?.map(filterCrates);
+			this.#crates[key]?.crates?.map(filterCrates);
+		};
 		this.#crates.allCratesBackUp = CRATES;
 	};
 
 	#cubAir() {
-		const setCub = (sizes) => {
+		let key =		0;
+		const setCub =	(sizes) => {
 			const COORDINATES = 3;
 			if (Array.isArray(sizes) && sizes.length === COORDINATES) {
 				const X =			sizes[0];
@@ -115,12 +120,8 @@ export default class Crater {
 			};
 		};
 
-		this.#crates?.tubeCrate?.crates?.map(setCub);
-		this.#crates?.largestCrate?.crates?.map(setCub);
-		this.#crates?.sameSizeCrate?.crates?.map(setCub);
-		this.#crates?.noCanvasCrate?.crates?.map(setCub);
-		this.#crates?.standardCrate?.crates?.map(setCub);
-
+		for (key in this.#crates)
+			this.#crates[key]?.crates?.map(setCub);
 		if(Array.isArray(this.#crates.sameSizeCrate.backUp)) {
 			this.#crates?.sameSizeCrate?.backUp?.map(setCub);
 			this.#crates?.standardCrate?.backUp?.map(setCub);
@@ -128,6 +129,7 @@ export default class Crater {
 	};
 
 	#totalCub() {
+		let key =	0;
 		let total =	[];
 		const setTotalCub =	(crate) => {
 			if (Array.isArray(crate)) {
@@ -135,88 +137,87 @@ export default class Crater {
 			};
 		};
 
-		this.#crates?.tubeCrate?.crates?.map(setTotalCub);
-		this.#crates?.largestCrate?.crates?.map(setTotalCub);
-		this.#crates?.sameSizeCrate?.crates?.map(setTotalCub);
-		this.#crates?.noCanvasCrate?.crates?.map(setTotalCub);
-		this.#crates?.standardCrate?.crates?.map(setTotalCub);
-		
+		for (key in this.#crates)
+			this.#crates[key]?.crates?.map(setTotalCub);
 		total = total.reduce((sum, val) => +(sum + val).toFixed(3), 0);
 		this.#crates.airCubTotal = total;
 	};
 
 	#totalCubBackUp() {
-		let total =	[];
+		let check1;
+		let check2;
+		let total =			[];
+		let key =			0;
 		const setTotalCub =	(crate) => {
-			if (crate === false)
-				return ;
 			if (Array.isArray(crate)) {
 				total.push(crate[3]);
 			};
 		};
-		this.#crates?.tubeCrate?.crates?.map(setTotalCub);
-		this.#crates?.largestCrate?.crates?.map(setTotalCub);
-		this.#crates?.sameSizeCrate?.backUp?.map(setTotalCub);
-		this.#crates?.noCanvasCrate?.crates?.map(setTotalCub);
-		this.#crates?.standardCrate?.backUp?.map(setTotalCub);
-		
+
+		for (key in this.#crates) {
+			check1 = this.#crates[key] === 'sameSizeCrate';
+			check2 = this.#crates[key] === 'standardCrate';
+
+			if (check1 || check2) 
+				this.#crates[key]?.backUp?.map(setTotalCub);
+			else if (!(check1 || check2))
+				this.#crates[key]?.crates?.map(setTotalCub);
+		};
 		total = total.reduce((sum, val) => +(sum + val).toFixed(3), 0);
 		this.#crates.airCubTotalBackUp = total;
+	};
+
+	#airPortOptions (crate) {
+		const MAXX =	300;
+		const MAXZ =	200;
+		const MAXY =	160;
+
+		if (Array.isArray(crate)) {
+			const X = crate[0];
+			const Z = crate[1];
+			const Y = crate[2];
+
+			return (!(X > MAXX || Z > MAXZ || Y > MAXY) ? 'PAX' : 'CARGO');
+		};
 	};
 
 	#whichAirPort () {
 		let pax =		0;
 		let cargo =		0;
-		const wichAirPort = (crate) => {
-			const MAXX =	300;
-			const MAXZ =	200;
-			const MAXY =	160;
+		let key =		0;
+		let tmp;
 
-			if (crate === false)
-				return ;
-			if (Array.isArray(crate)) {
-				const X = crate[0];
-				const Z = crate[1];
-				const Y = crate[2];
-
-				!(X > MAXX && Z > MAXZ || Y > MAXY) ? pax++ : cargo++;
-			};
-		};
-
-		this.#crates?.tubeCrate?.crates?.map(wichAirPort);
-		this.#crates?.largestCrate?.crates?.map(wichAirPort);
-		this.#crates?.sameSizeCrate?.crates?.map(wichAirPort);
-		this.#crates?.noCanvasCrate?.crates?.map(wichAirPort);
-		this.#crates?.standardCrate?.crates?.map(wichAirPort);
-
+		for (key in this.#crates)
+			this.#crates[key]?.crates?.map(crate => {
+				tmp =	this.#airPortOptions(crate);
+				tmp === 'PAX' ? pax++ : tmp === 'CARGO' ? cargo++ : false;
+			});
 		this.#crates.wichAirPort = [{ PAX : pax }, { CARGO : cargo }];
 	};
 
 	#whichAirPortBackUp () {
+		let check1;
+		let check2;
+		let tmp;
+		let key =		0;
 		let pax =		0;
 		let cargo =		0;
-		const wichAirPort = (crate) => {
-			const MAXX =	300;
-			const MAXZ =	200;
-			const MAXY =	160;
 
-			if (crate === false)
-				return ;
-			if (Array.isArray(crate)) {
-				const X = crate[0];
-				const Z = crate[1];
-				const Y = crate[2];
+		for (key in this.#crates) {
+			check1 = this.#crates[key] === 'sameSizeCrate';
+			check2 = this.#crates[key] === 'standardCrate';
 
-				!(X > MAXX && Z > MAXZ || Y > MAXY) ? pax++ : cargo++;
-			};
+			if (check1 || check2) 
+				this.#crates[key]?.backUp?.map(crate => {
+				tmp =	this.#airPortOptions(crate);
+				tmp === 'PAX' ? pax++ : tmp === 'CARGO' ? cargo++ : false;
+				});
+			else if (!(check1 || check2))
+				this.#crates[key]?.crates?.map(crate => {
+					tmp =	this.#airPortOptions(crate);
+					tmp === 'PAX' ? pax++ : tmp === 'CARGO' ? cargo++ : false;
+				});
 		};
-
-		this.#crates?.tubeCrate?.crates?.map(wichAirPort);
-		this.#crates?.largestCrate?.crates?.map(wichAirPort);
-		this.#crates?.sameSizeCrate?.backUp?.map(wichAirPort);
-		this.#crates?.noCanvasCrate?.crates?.map(wichAirPort);
-		this.#crates?.standardCrate?.backUp?.map(wichAirPort);
-
 		this.#crates.wichAirPortBackUp = [{ PAX : pax }, { CARGO : cargo }];
 	};
 };

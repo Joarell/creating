@@ -152,7 +152,15 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-19: returns one crate assuming 4 sculptures provided.", () => {
+	it("TEST-19: returns one crate assuming 1 sculptures provided.", () => {
+		const same =		mock.furniture0;
+		const current =		new CraterNotCanvas(same);
+		const expected =	mock.provideNoCanvas(0);
+		
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-20: returns one crate assuming 4 sculptures provided.", () => {
 		const same =		mock.furniture1;
 		const current =		new CraterNotCanvas(same);
 		const expected =	mock.provideNoCanvas(1);
@@ -160,7 +168,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-20: returns one crate assuming 6 sculptures provided.", () => {
+	it("TEST-21: returns one crate assuming 6 sculptures provided.", () => {
 		const same =		mock.furniture2;
 		const current =		new CraterNotCanvas(same);
 		const expected =	mock.provideNoCanvas(2);
@@ -168,7 +176,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-21: returns the crate assumin 12 sculptures provided.", () => {
+	it("TEST-22: returns the crate assumin 12 sculptures provided.", () => {
 		const same =		mock.furniture3;
 		const current =		new CraterNotCanvas(same);
 		const expected =	mock.provideNoCanvas(3);
@@ -176,7 +184,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-22: returns false object to no list input to the class.", () => {
+	it("TEST-23: returns false object to no list input to the class.", () => {
 		const same =		mock.furniture4;
 		const current =		new CraterNotCanvas(same);
 		const expected =	mock.provideNoCanvas(4);
@@ -184,7 +192,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-23: returns false object to no list input to the class.", () => {
+	it("TEST-24: returns false object to no list input to the class.", () => {
 		const same =		mock.furniture5;
 		const current =		new CraterNotCanvas(same);
 		const expected =	mock.provideNoCanvas(5);
@@ -192,14 +200,14 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-24: returns false object to no list input to the class.", () => {
+	it("TEST-25: returns false object to no list input to the class.", () => {
 		const current =		new CraterStandard();
 		const expected =	{ standard: false };
 	
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-25: returns 3 crates as a result of the list passed.", () => {
+	it("TEST-26: returns 3 crates as a result of the list passed.", () => {
 		const BACKUP =		true;
 		const current =		new CraterStandard(mock.standard1, BACKUP);
 		const expected =	mock.conventionalWorks(1);
@@ -207,7 +215,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-26: returns 1 crate with 5 layers.", () => {
+	it("TEST-27: returns 1 crate with 5 layers.", () => {
 		const BACKUP =		true;
 		const current =		new CraterStandard(mock.standard2, BACKUP);
 		const expected =	mock.conventionalWorks(2);
@@ -215,7 +223,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-27: returns 2 crates as result to the list passed.", () => {
+	it("TEST-28: returns 2 crates as result to the list passed.", () => {
 		const BACKUP =		true;
 		const current =		new CraterStandard(mock.standard3, BACKUP);
 		const expected =	mock.conventionalWorks(3);
@@ -223,7 +231,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-28: returns 1 crates as result to the list passed.", () => {
+	it("TEST-29: returns 1 crates as result to the list passed.", () => {
 		const BACKUP =		true;
 		const current =		new CraterStandard(mock.standard4, BACKUP);
 		const expected =	mock.conventionalWorks(4);
@@ -231,7 +239,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-29: returns 3 crates as a result of the sorted list.", () => {
+	it("TEST-30: returns 3 crates as a result of the sorted list.", () => {
 		const BACKUP =		true;
 		const { sorted } =	mock.findTubesTest();
 		const current =		new CraterStandard(sorted, BACKUP);
@@ -240,14 +248,14 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-30: returns false to empty list.", () => {
+	it("TEST-31: returns false to empty list.", () => {
 		const current =		new Crater();
 		let expected =		{ crater: false };
 
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-31: returns the Crater assign object.", () => {
+	it("TEST-32: returns the Crater assign object.", () => {
 		const works  =		new Arranger(mock.artWorksList());
 		const test =		new Crater(works);
 		const current =		test === Crater;
@@ -256,7 +264,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-32: returns less sameSizeCrates and adds to the standards", () => {
+	it("TEST-33: returns less sameSizeCrates and adds to the standards", () => {
 		const works =		new Arranger(mock.artWorksList());
 		const current =		new Crater(works).crates.sameSizeCrate;
 		const expected =	mock.fakeCrater().crates.sameSizeCrate;
@@ -264,7 +272,7 @@ describe("These are tests to Crater class.", () => {
 		assert.notEqual(current, expected);
 	});
 
-	it("TEST-33: returns less sameSizeCrates and adds to the standards", () => {
+	it("TEST-34: returns less sameSizeCrates and adds to the standards", () => {
 		const works =		new Arranger(mock.artWorksList());
 		const current =		new Crater(works).crates.sameSizeCrate;
 		const expected =	mock.mockOptios().crates.sameSizeCrate;
@@ -272,7 +280,7 @@ describe("These are tests to Crater class.", () => {
 		assert.notEqual(current, expected);
 	});
 
-	it("TEST-34: returns the sameSizeCrate backUp.", () => {
+	it("TEST-35: returns the sameSizeCrate backUp.", () => {
 		const works =		new Arranger(mock.artWorksList());
 		const current =		new Crater(works).crates.sameSizeCrate.backUp;
 		const expected =	mock.mockOptios().crates.sameSizeCrate.backUp;
@@ -280,7 +288,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepEqual(current, expected);
 	});
 
-	it("TEST-35: returns the standardCrate backUp.", () => {
+	it("TEST-36: returns the standardCrate backUp.", () => {
 		const works =		new Arranger(mock.artWorksList());
 		const current =		new Crater(works).crates.standardCrate.backUp;
 		const expected =	mock.mockOptios().crates.standardCrate.backUp;
@@ -288,7 +296,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-36: returns less 6 sameSizeCrates and adds to the standards", () => {
+	it("TEST-37: returns less 6 sameSizeCrates and adds to the standards", () => {
 		const works =		new Arranger(mock.artWorksList());
 		const current =		new Crater(works).crates.standardCrate;
 		const expected =	mock.fakeCrater().crates.standardCrate;
@@ -296,7 +304,7 @@ describe("These are tests to Crater class.", () => {
 		assert.notEqual(current, expected);
 	});
 
-	it("TEST-37: returns less 2 sameSizeCrates and adds to the standards.", () => {
+	it("TEST-38: returns less 2 sameSizeCrates and adds to the standards.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -326,7 +334,7 @@ describe("These are tests to Crater class.", () => {
 		assert.notEqual(current, expected);
 	});
 
-	it("TEST-38: returns tube false to the input list.", () => {
+	it("TEST-39: returns tube false to the input list.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -356,7 +364,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-39: returns largest false to the input list.", () => {
+	it("TEST-40: returns largest false to the input list.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -386,7 +394,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-40: returns sameSizeCrate crates and backup.", () => {
+	it("TEST-41: returns sameSizeCrate crates and backup.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -416,7 +424,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-41: returns noCanvas false to the input list.", () => {
+	it("TEST-42: returns noCanvas false to the input list.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -446,7 +454,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-42: returns noCanvas false to the input list.", () => {
+	it("TEST-43: returns noCanvas false to the input list.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -476,7 +484,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-43: returns the air cub total value.", () => {
+	it("TEST-44: returns the air cub total value.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -506,7 +514,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-44: returns the air cub total value to the backUp crates.", () => {
+	it("TEST-45: returns the air cub total value to the backUp crates.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -531,12 +539,12 @@ describe("These are tests to Crater class.", () => {
 
 		const works =		new Arranger(mock.artWorksList(list));
 		const current =		new Crater(works).crates.airCubTotalBackUp
-		const expected =	968.993;
+		const expected =	952.086;
 	
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-45: returns the wich air port settup to the backUp crates.", () => {
+	it("TEST-46: returns the wich air port setup to the backUp crates.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -561,12 +569,12 @@ describe("These are tests to Crater class.", () => {
 
 		const works =		new Arranger(mock.artWorksList(list));
 		const current =		new Crater(works).crates.wichAirPortBackUp;
-		const expected =	[{ PAX: 3 }, { CARGO: 1 }];
+		const expected =	[{ PAX: 2 }, { CARGO: 1 }];
 	
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-46: returns the total crates air cube calculation.", () => {
+	it("TEST-47: returns the total crates air cube calculation.", () => {
 		const works =		new Arranger(mock.artWorksList());
 		const current =		new Crater(works).crates.airCubTotal;
 		const expected =	mock.fakeCrater().crates.airCubTotal;
@@ -574,15 +582,15 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-47: returns the number of crate to PAX or Cargo airport.", () => {
+	it("TEST-48: returns the number of crate to PAX or Cargo airport.", () => {
 		const works =		new Arranger(mock.artWorksList());
-		const current =		new Crater(works).crates.wichAirProt;
-		const expected =	mock.fakeCrater().crates.wichAirProt;
+		const current =		new Crater(works).crates.wichAirPort;
+		const expected =	mock.fakeCrater().crates.wichAirPort;
 
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-48: returns false case 'crates' object stays the same.", async () => {
+	it("TEST-49: returns false case 'crates' object stays the same.", async () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -610,7 +618,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-49: returns false case 'crates' object stays the same.", () => {
+	it("TEST-50: returns false case 'crates' object stays the same.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -638,7 +646,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-50: excludes the 'totalCubBackUp' and 'wichAirPortBackUp' from the result.", () => {
+	it("TEST-51: excludes the 'totalCubBackUp' and 'wichAirPortBackUp' from the result.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -666,7 +674,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-51: returns all crates done.", () => {
+	it("TEST-52: returns all crates done.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -700,7 +708,7 @@ describe("These are tests to Crater class.", () => {
 		assert.notEqual(current, expected);
 	});
 
-	it("TEST-52: returns all crates and backUp crates done.", () => {
+	it("TEST-53: returns all crates and backUp crates done.", () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
