@@ -54,17 +54,15 @@ export function intParser(dimensions) {
 	return (result);
 }
 
-
 // ╭────────────────────────────────────────────────────────────────────╮
 // │ Regular expression function to validate if all inputs are numbers. │
 // ╰────────────────────────────────────────────────────────────────────╯
 export function regValid(sizes_parsed) {
-	let i;
-	const regex = /^[0-9]{1,3}/;
+	let i =			2;
+	const regex =	/^[0-9\.0-9]{1,7}$/;
 
-	i = 3;
-	while (--i > -1) {
-		if (regex.test(sizes_parsed[i]) === false) {
+	while (--i >= 0) {
+		if (!regex.test(sizes_parsed[i])) {
 			switch (i) {
 				case 2:
 					alert(`The provide HEIGHT is not a valid number.\
@@ -148,7 +146,7 @@ export function checkReference() {
 	const actual =	document.getElementById("input_estimate").value;
 	
 	if (ref){
-		if (ref !== actual){
+		if (ref !== actual) {
 			if (confirm("ATTENTION! The refNumb has changed")){
 				localStorage.removeItem("refNumb");
 				localStorage.setItem("refNumb", actual);

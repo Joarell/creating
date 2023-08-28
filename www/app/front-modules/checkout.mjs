@@ -26,7 +26,6 @@ globalThis.onload = () => {
 	const color = localStorage.getItem("mode");
 
 	browserStoragePrepare();
-	// localStorage.setItem("metrica", document.getElementById("cm").value);
 	color === null ? localStorage.setItem("mode", "light") : false;
 	setCheckRadio();
 	setTimeout(loadingPage, 2500);

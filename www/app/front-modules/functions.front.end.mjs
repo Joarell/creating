@@ -8,9 +8,8 @@
 // │ ╰──────────────────────────────────────────────────────────────────────╯ │
 // ╰──────────────────────────────────────────────────────────────────────────╯
 
-import Arranger from "../core2/Arranger.class.mjs";
 import ArtWork from "../core2/ArtWork.class.mjs";
-import Crater from "../core2/Crater.class.mjs";
+import UnitAdapter from "../core2/Unit.Adapter.class.mjs";
 import { addNewWorksToIndexedDB } from "./link.storage.mjs";
 
 
@@ -20,11 +19,13 @@ import { addNewWorksToIndexedDB } from "./link.storage.mjs";
 export function displayCub() {
 	let result;
 	const COMA =	1000;
-	const element=	document.getElementById("cub-meter");
+	const element =	document.getElementById("cub-meter");
+
 	result =		parseArtWork();
-	result = result.reduce((sum, val) => {
+	console.log(result);
+	result =		result?.reduce((sum, val) => {
 		return (sum + val.cubed);
-	}, 0)
+	}, 0) ?? 0;
 	element.innerText = "Cub: " + (Math.floor(result * COMA) / COMA) + "m³";
 	return (element);
 }
@@ -42,9 +43,9 @@ export function displayAirCub() {
 	std_msg =		"Air-Cub: ";
 	element =		document.getElementById("cub-air");
 	result =		parseArtWork();
-	result = result.reduce((sum, val) => {
+	result =		result?.reduce((sum, val) => {
 		return (sum + val.cAir);
-	}, 0)
+	}, 0) ?? 0;
 	element.innerText = std_msg + (Math.floor(result * COMA) / COMA);
 	return (element);
 }
@@ -66,7 +67,6 @@ export async function crate() {
 		estimate["crates"] =	crates;
 		addNewWorksToIndexedDB (estimate);
 
-		console.log(crates);
 		// INFO: Efemeral triggers to each panel render the result
 		sessionStorage.setItem("pane1", "populate");
 		sessionStorage.setItem("pane2", "populate");
@@ -81,7 +81,7 @@ export function countWorks() {
 	const result =		parseArtWork();
 	let counter =		document.getElementById("count");
 
-	counter.innerText =	"Counting: " + result.length;
+	counter.innerText =	"Counting: " + result?.length;
 	return (counter);
 }
 
@@ -102,70 +102,45 @@ export function cleanInputs() {
 // │ Converts the localStorage data in to ArtWork object. │
 // ╰──────────────────────────────────────────────────────╯
 function parseArtWork(){
-	const db =		localStorage;
-	let temp =		[];
-	let i =			0;
-	const test = (store) => {
-		return(
-			[
-				"mode",
-				"storage",
-				"currency",
-				"currency",
-				"metrica",
-				"refNumb"
-			].includes(store) ?
-			false: true
-		);
-	}
+	const DB =		localStorage;
+	const avoid =	["mode", "storage", "currency", "currency", "metrica", "refNumb" ]
+	const temp =	[];
+	let works;
 	
-	while(db.key(i)){
-		if(test(db.key(i)))
-			temp.push(JSON.parse(db.getItem(db.key(i))));
-		i++;
-	}
-	return(temp[0] !== null ?
-		temp = temp.map((work) => {
-			return(new ArtWork(work.code, work.x, work.z, work.y));
-		}):
-		false
-	);
+	Object.entries(DB).map(data => {
+		avoid.includes(data[0]) ? false : temp.push(JSON.parse(data[1]));
+	});
+	works = temp.map(work => {
+		return(new ArtWork(work.code, work.x, work.z, work.y));
+	})
+	return(works.length > 0 ? works : false);
 }
-
-
-async function solveList(list) {
-	const RESULT =	await Promise.resolve(new Arranger(list))
-		.then(list => new Crater(list))
-		.then(solved => solved.crates)
-	.catch(err => err);
-
-	return(RESULT);
-};
 
 
 // ╭───────────────────────────────────────────────────────────╮
 // │ Checks the works is in inches and converts to centimeters │
 // ╰───────────────────────────────────────────────────────────╯
 async function checkMetric() {
-	const works =	localStorage;
-	const list =	parseArtWork();
+	const storageUnit =	localStorage.getItem('metrica');
+	const UNIT =		storageUnit === 'cm - centimeters' ? 'cm' : 'in';
+	const list =		parseArtWork();
 	let crates;
 
-	if (works.length === 1)
+	if (storageUnit.length === 1)
 		return(alert("Oops! Sounds like you not added any work yet.\
 		Please, try again!"));
-	if (works.getItem("metrica") !== "cm - centimeters") {
-		list = list.map((sizes) => {
-			let j;
-			const tmp = [sizes.code];
-			const converted = sizes.conversion("cm");
-
-			j = 0;
-			for (j in converted)
-				tmp.push(converted[j]);
-			return (tmp);
-		});
-	}
-	crates =	await solveList(list);
+	// if (works.getItem("metrica") !== "cm - centimeters") {
+	// 	list = list.map((sizes) => {
+	// 		let j;
+	// 		const tmp = [sizes.code];
+	// 		const converted = sizes.conversion("cm");
+	//
+	// 		j = 0;
+	// 		for (j in converted)
+	// 			tmp.push(converted[j]);
+	// 		return (tmp);
+	// 	});
+	// }
+	crates = await Promise.resolve(new UnitAdapter(list, UNIT));
 	return (crates);
 }

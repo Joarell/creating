@@ -109,7 +109,8 @@ function whichAirport(proc_list) {
 // │ This function is responsible to handle all the steps in order to solve │
 // │                           the art work list.                           │
 // ╰────────────────────────────────────────────────────────────────────────╯
-// FIX: The function noCanvasOut is no working properly
+
+
 export function boss(the_list) {
 	let crates;
 	let std_layer;
