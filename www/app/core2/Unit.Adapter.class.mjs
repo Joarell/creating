@@ -63,78 +63,26 @@ export default class UnitAdapter {
 		};
 	};
 
-	#swapUnitRevertion(sizes) {
-		const CUBCONST = 0.061_023;
-		let tmp;
-		let x;
-		let z;
-		let y;
-
-		switch(sizes.length) {
-			case 4 :
-				x =		sizes[0];
-				z =		sizes[1];
-				y =		sizes[2];
-				tmp =	Array.from(new Converter(x, z, y).inConvert);
-				tmp.push(+(sizes[3] * CUBCONST).toFixed(3));
-				return(tmp);
-			case 5 :
-				x =		sizes[1];
-				z =		sizes[2];
-				y =		sizes[3];
-				tmp =	Array.from(new Converter(x, z, y).inConvert);
-				tmp.unshift(sizes[0]);
-				tmp.push(+(sizes[3] * CUBCONST).toFixed(3));
-				return(tmp);
-		};
-	};
-
-	#revertionLayers(crate) {
-		return (crate.works = crate.works.map(layer => {
-			if(Object.keys(layer)[0] === 'layer1')
-				return(layer = layer.layer1.map(work => {
-					return(this.#swapUnitRevertion(work))
-				}))
-			if(Object.keys(layer)[0] === 'layer2')
-				return(layer = layer.layer2.map(work => {
-					return(this.#swapUnitRevertion(work))
-				}))
-			if(Object.keys(layer)[0] === 'layer3')
-				return(layer = layer.layer3.map(work => {
-					return(this.#swapUnitRevertion(work))
-				}))
-			if(Object.keys(layer)[0] === 'layer4')
-				return(layer = layer.layer4.map(work => {
-					return(this.#swapUnitRevertion(work))
-				}))
-			if(Object.keys(layer)[0] === 'layer5')
-				return(layer = layer.layer5.map(work => {
-					return(this.#swapUnitRevertion(work))
-				}))
-		}));
-	};
-
 	#revertionUnit(data) {
-		if(Array.isArray(data))
-			return(data = data.map(this.#swapUnitRevertion));
+		const CHECK1 = data?.hasOwnProperty('crates');
+		const CHECK2 = data?.hasOwnProperty('backUp');
 
-		else if (!data.hasOwnProperty('crates'))
+		if(Array.isArray(data)) {
+			return(data = data.map(swapUnitRevertion));
+		}
+		else if (!data.hasOwnProperty('crates')) {
 			return(data);
-
-		else if (data.hasOwnProperty('crates')) {
+		}
+		else if (CHECK1 || CHECK2) {
 			data.crates = data.crates.map(info => {
 				if (info.length === 4)
-					return(info = this.#swapUnitRevertion(info));
-				return (info.works = this.#revertionLayers(info));
+					return(info = swapUnitRevertion(info));
+				return (info.works = Array.isArray(info.works[0]) ?
+					info.works.map(swapUnitRevertion) :
+					info.works.map(layerInterface)
+				);
 			});
 		}
-		else if (data.hasOwnProperty('backUp')) {
-			data.crates = data.crates.map(info => {
-				if (info.length === 4)
-					return(info = this.#swapUnitRevertion(info));
-				return (info.works = this.#revertionLayers(info));
-			});
-		};
 		return(data);
 	};
 
@@ -146,27 +94,26 @@ export default class UnitAdapter {
 			const z = converted[2];
 			const y = converted[3];
 
-			return( new ArtWork(code, x, z, y));
+			return(new ArtWork(code, x, z, y));
 		});
 		return (convertedList);
 	};
 
 	#convertToIN(crates) {
-		const CUBCONST = 0.061_023;
+		const CUBCONST =	0.061_023;
+		let key =			0;
 
-		crates.tubeCrate = this.#revertionUnit(crates.tubeCrate);
-		crates.largestCrate = this.#revertionUnit(crates.largestCrate);
-		crates.sameSizeCrate = this.#revertionUnit(crates.sameSizeCrate);
-		crates.noCanvasCrate = this.#revertionUnit(crates.noCanvasCrate);
-		crates.standardCrate = this.#revertionUnit(crates.standardCrate);
-		crates.airCubTotal = +(crates.airCubTotal * CUBCONST).toFixed(3);
-		crates.allCrates = this.#revertionUnit(crates.allCrates);
-
+		for (key in crates) {
+			if (crates[key].hasOwnProperty('crates'))
+				crates[key] = this.#revertionUnit(crates[key])
+		}
+		
 		if (crates.sameSizeCrate.hasOwnProperty('backUp')) {
 			crates.airCubTotalBackUp = +(crates.airCubTotalBackUp * CUBCONST)
 				.toFixed(3);
-			crates.allCratesBackUp = this.#revertionUnit(crates.allCratesBackUp);
+			crates.allCratesBackUp = this.#revertionUnit(crates.allCratesBackUp)
 		};
+		crates.allCrates = this.#revertionUnit(crates.allCrates);
 		return(crates);
 	};
 
@@ -186,6 +133,47 @@ export default class UnitAdapter {
 			.then(cratesDone => this.#convertToIN(cratesDone.crates))
 		.catch(err => err);
 
+		// console.log(RESULT);
 		return (RESULT);
+	};
+};
+
+
+function swapUnitRevertion(sizes) {
+	const CUBCONST = 0.061_023;
+	let tmp;
+	let x;
+	let z;
+	let y;
+
+	switch(sizes.length) {
+		case 4 :
+			x =		sizes[0];
+			z =		sizes[1];
+			y =		sizes[2];
+			tmp =	Array.from(new Converter(x, z, y).inConvert);
+			tmp.push(+(sizes[3] * CUBCONST).toFixed(3));
+			return(sizes = tmp);
+		case 5 || 6 :
+			x =		sizes[1];
+			z =		sizes[2];
+			y =		sizes[3];
+			tmp =	Array.from(new Converter(x, z, y).inConvert);
+			tmp.unshift(sizes[0]);
+			tmp.push(+(sizes[3] * CUBCONST).toFixed(3));
+			return(sizes = tmp);
+	};
+};
+
+
+function layerInterface(layer) {
+	let key = 0;
+
+	for (key in layer) {
+		if (layer[key].length === 1) {
+			layer[key] = swapUnitRevertion(layer[key][0]);
+		}
+		else
+			layer[key].map(swapUnitRevertion);
 	};
 };

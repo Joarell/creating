@@ -3,7 +3,6 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import * as mock from './mock.artworks.mjs';
 import UnitAdapter from '../www/app/core2/Unit.Adapter.class.mjs';
-import Converter from '../www/app/core2/Converter.class.mjs';
 
 
 describe("Testing the Unit Adapter class:", () => {
@@ -52,7 +51,19 @@ describe("Testing the Unit Adapter class:", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-5: returns the solved list passed then true.", async () => {
+	it("TEST-5: returns one crate to sculpture passed.", async () => {
+		const list =	[
+			['5908', 50.3, 50.3, 33.9],
+		];
+		const work =		mock.artWorksList(list);
+		const result =		await new UnitAdapter(work, 'in')
+		const current =		result.noCanvasCrate.hasOwnProperty('crates');
+		const expected =	true;
+
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-6: returns the solved list passed then true.", async () => {
 		const list =	[
 			['5908', 150, 5, 90],
 			['8899', 120, 3, 100],
@@ -76,7 +87,7 @@ describe("Testing the Unit Adapter class:", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-6: returns solved list with inches values.", async () => {
+	it("TEST-7: returns solved list with inches values.", async () => {
 		let list =	[
 			[ '5908', 59.055, 1.969, 35.433 ],
 			[ '8899', 47.244, 1.181, 39.37 ],
@@ -99,7 +110,7 @@ describe("Testing the Unit Adapter class:", () => {
 		assert.notEqual(current, expected);
 	});
 
-	it("TEST-7: returns solved list with inches values including backUps.", async () => {
+	it("TEST-8: returns solved list with inches values including backUps.", async () => {
 		let list =	[
 			[ '5908', 59.055, 1.969, 35.433 ],
 			[ '8899', 47.244, 1.181, 39.37 ],
@@ -125,7 +136,11 @@ describe("Testing the Unit Adapter class:", () => {
 		const works =		mock.artWorksList(list);
 		const result =		await new UnitAdapter(works, 'in');
 		const current =		result.allCrates;
-		const expected =	result.allCratesBackUp;
+		const expected =	[
+			[ 60.236, 16.929, 30.709, 5.219 ],
+			[ 79.921, 32.677, 74.016, 32.216 ],
+			[ 56.299, 37.795, 58.268, 20.664 ]
+		];
 	
 		assert.notEqual(current, expected);
 	});
