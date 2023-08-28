@@ -417,10 +417,12 @@ function fillCrate(size, list) {
 
 	while (i++ < MAXLAYER || checkLen && list.length) {
 		matchCanvasInLayer(greb, [...size,...size], list, list.length - 1);
-		greb.map(art => list.splice(list.indexOf(art), 1));
-		setLayer.call(i, crate, greb);
-		greb =		null;
-		greb =		[];
+		if (greb.length > 0) {
+			greb.map(art => list.splice(list.indexOf(art), 1));
+			setLayer.call(i, crate, greb);
+			greb =		null;
+			greb =		[];
+		};
 		checkLen =	list.length === 1 && i === MAXLAYER;
 	};
 	return(crate);

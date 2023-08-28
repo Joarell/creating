@@ -212,6 +212,8 @@ describe("These are tests to Crater class.", () => {
 		const current =		new CraterStandard(mock.standard1, BACKUP);
 		const expected =	mock.conventionalWorks(1);
 	
+		console.log('---------------------------------------------');
+		// console.log(current,'--------', expected);
 		assert.deepStrictEqual(current, expected);
 	});
 
