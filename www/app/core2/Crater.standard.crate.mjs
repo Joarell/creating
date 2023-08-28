@@ -157,10 +157,12 @@ export default class CraterStandard {
 		while (i++ < this.#maxLayers || checkLen && this.#list.length){
 			len = this.#list.length - 1;
 			this.#matchCanvasInLayer(greb, [...measure, ...measure], len);
-			greb.map(art => this.#list.splice(this.#list.indexOf(art), 1));
-			this.#setLayer.call(i, crate, greb);
-			greb =		null;
-			greb =		[];
+			if (greb.length > 0) {
+				greb.map(art => this.#list.splice(this.#list.indexOf(art), 1));
+				this.#setLayer.call(i, crate, greb);
+				greb =		null;
+				greb =		[];
+			};
 			checkLen =	this.#list.length === 1 && i === this.#maxLayers;
 		};
 		return(crate);

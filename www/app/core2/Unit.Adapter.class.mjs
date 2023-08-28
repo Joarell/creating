@@ -63,12 +63,12 @@ export default class UnitAdapter {
 		};
 	};
 
-	#revertionUnit(data) {
+	#reversionUnit(data) {
 		const CHECK1 = data?.hasOwnProperty('crates');
 		const CHECK2 = data?.hasOwnProperty('backUp');
 
 		if(Array.isArray(data)) {
-			return(data = data.map(swapUnitRevertion));
+			return(data = data.map(swapUnitReversion));
 		}
 		else if (!data.hasOwnProperty('crates')) {
 			return(data);
@@ -76,11 +76,11 @@ export default class UnitAdapter {
 		else if (CHECK1 || CHECK2) {
 			data.crates = data.crates.map(info => {
 				if (info.length === 4)
-					return(info = swapUnitRevertion(info));
-				return (info.works = Array.isArray(info.works[0]) ?
-					info.works.map(swapUnitRevertion) :
-					info.works.map(layerInterface)
-				);
+					return (info = swapUnitReversion(info));
+				Array.isArray(info.works[0]) ?
+					info.works = info.works.map(swapUnitReversion) :
+					info.works = info.works.map(layerInterface)
+				return (info);
 			});
 		}
 		return(data);
@@ -105,15 +105,15 @@ export default class UnitAdapter {
 
 		for (key in crates) {
 			if (crates[key].hasOwnProperty('crates'))
-				crates[key] = this.#revertionUnit(crates[key])
+				crates[key] = this.#reversionUnit(crates[key])
 		}
 		
 		if (crates.sameSizeCrate.hasOwnProperty('backUp')) {
 			crates.airCubTotalBackUp = +(crates.airCubTotalBackUp * CUBCONST)
 				.toFixed(3);
-			crates.allCratesBackUp = this.#revertionUnit(crates.allCratesBackUp)
+			crates.allCratesBackUp = this.#reversionUnit(crates.allCratesBackUp)
 		};
-		crates.allCrates = this.#revertionUnit(crates.allCrates);
+		crates.allCrates = this.#reversionUnit(crates.allCrates);
 		return(crates);
 	};
 
@@ -133,13 +133,12 @@ export default class UnitAdapter {
 			.then(cratesDone => this.#convertToIN(cratesDone.crates))
 		.catch(err => err);
 
-		// console.log(RESULT);
 		return (RESULT);
 	};
 };
 
 
-function swapUnitRevertion(sizes) {
+function swapUnitReversion(sizes) {
 	const CUBCONST = 0.061_023;
 	let tmp;
 	let x;
@@ -171,9 +170,10 @@ function layerInterface(layer) {
 
 	for (key in layer) {
 		if (layer[key].length === 1) {
-			layer[key] = swapUnitRevertion(layer[key][0]);
+			layer[key] = swapUnitReversion(layer[key][0]);
 		}
 		else
-			layer[key].map(swapUnitRevertion);
+			layer[key] = layer[key].map(swapUnitReversion);
 	};
+	return(layer);
 };
