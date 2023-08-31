@@ -29,7 +29,7 @@ export function copyButton2 () {
 	if (!checker)
 		return(alert(`Please, press the \"Crate\" button if already added works.`));
 	crates.postMessage(estimate);
-	crates.onmessage = (test) => {
-		return(Array.isArray(test.data.crates) ? findCratesAndWorks(test.data): false);
+	crates.onmessage = (res) => {
+		return(findCratesAndWorks(res.data));
 	};
 };
