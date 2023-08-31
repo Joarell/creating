@@ -494,6 +494,11 @@
 	   ╰──────────────────────────────────────────────────────────╯
 	*/
 
+	.container-interactive {
+		width: 81%;
+		margin-left: 4rem;
+	}
+
 	.plotter__menu:is([aria-hidden="true"]),
 	.plotter:is([aria-hidden="true"]) {
 		animation: fade-close 500ms ease-out;
@@ -1144,7 +1149,7 @@
 		color: var(--color4);
 		height: 2.5rem;
 		width: 2.5rem;
-		background: #12111385;
+		background: var(--mob-col);
 		opacity: .8;
 		border: none;
 		border-radius: .7rem;
@@ -1236,16 +1241,16 @@
 			display: true;
 		}
 		& a > svg {
-			fill: var(--input-font-col);
+			fill: var(--light-blue1);
+			opacity: .7;
 		}
 		& > * {
 			flex-direction: column-reverse;
 			flex-basis: 100%;
 			position: absolute;
-			border-radius: 1rem;
+			border-radius: 40%;
 			border: transparent;
-			background: var(--bg-col);
-			opacity: .5;
+			background: var(--mob-col);
 		}
 		& a:nth-child(1) {
 			line-height: 0;
@@ -1394,6 +1399,11 @@
 		animation: fade-close 500ms ease-out;
 		animation-fill-mode: forwards;
 		transition: all 1000ms ease-in-out;
+	}
+
+	.container--interactive {
+		width: 100%;
+		margin: 0;
 	}
 }
 
@@ -1922,15 +1932,16 @@
 			display: unset;
 		}
 		& a > svg {
-			fill: var(--input-font-col);
+			fill: var(--light-blue1);
+			opacity: .7;
 		}
 		& > * {
 			flex-direction: column-reverse;
 			flex-basis: 100%;
 			position: absolute;
-			border-radius: 30%;
+			border-radius: 40%;
 			border: transparent;
-			background: var(--bg-col);
+			background: var(--mob-col);
 		}
 		& a:nth-child(1) {
 			line-height: 0;
@@ -2003,7 +2014,7 @@
 
 
 	.mobile-icon {
-		fill: var(--iframes-bg);
+		fill: var(--dark);
 		fill-opacity: .9;
 		width: 1.7rem;
 		height: 1.7rem;

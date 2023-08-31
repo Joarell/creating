@@ -39,6 +39,7 @@
 	--rowg: 2rem;
 	--rowg-mobile: 1rem;
 	--bord: .5rem;
+	--mob-col: #12111385;
 	--gradient: linear-gradient(270deg, var(--dark-blue), var(--dark-blue2));
 	--gradient1: linear-gradient(90deg, var(--dark-blue1), var(--dark-blue));
 	--shadow1: .3rem .3rem .6rem var(--iframes-bg),
@@ -555,12 +556,6 @@ span + input {
    │                     Container bottom                     │
    ╰──────────────────────────────────────────────────────────╯
 */
-.container-interactive {
-	width: 75%;
-	margin-left: 5rem;
-}
-
-
 .container-bottom {
 	grid-column: span 2;
 }
