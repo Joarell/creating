@@ -20,15 +20,12 @@ globalThis.onstorage = () => {
 	newList !== null ? statusTablePopulate(newList) : false;
 }
 
-globalThis.addEventListener("load", () => {
-	const stPanel =	document.getElementById("status");
-
-	stPanel.hasChildNodes() ? true : setTimeout(() => {statusTable()}, 200);
-});
 
 globalThis.onload = () => {
 	const mode =	localStorage.getItem("mode");
+	const stPanel =	document.getElementById("status");
 
+	stPanel.hasChildNodes() ? true : setTimeout(() => {statusTable()}, 200);
 	changeMode(mode);
 	setTimeout(statusTable, 200);
 }
@@ -39,11 +36,7 @@ function changeMode (color) {
 
 	body.remove("light-mode");
 	body.remove("dark-mode");
-	return (
-		color === "dark" ?
-			body.add("dark-mode"):
-			body.add("light-mode")
-	);
+	return (color === "dark" ? body.add("dark-mode"): body.add("light-mode"));
 };
 
 
@@ -52,7 +45,7 @@ export function statusTablePopulate(data) {
 	let codes;
 	const doc =					JSON.parse(data);
 	const { reference, list } =	doc;
-	const mode =						localStorage.getItem("mode");
+	const mode =				localStorage.getItem("mode");
 		
 	localStorage.getItem("metrica") === "in - inches" ?
 		metric = "in - inches":

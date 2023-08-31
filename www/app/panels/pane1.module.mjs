@@ -20,9 +20,10 @@ globalThis.onstorage = () => {
 		return(globalThis.location.reload() && showCrates1(getter));
 	};
 	return(press === "populate" ?
-		globalThis.location.reload() && showCrates1(getter): false
+		globalThis.location.reload() && showCrates1(getter) : false
 	);
 };
+
 
 document.onreadystatechange = () => {
 	const pane =	document.getElementById("crates-only");
@@ -52,11 +53,7 @@ function changeMode (color) {
 
 	body.remove("light-mode");
 	body.remove("dark-mode");
-	return (
-		color === "dark" ?
-			body.add("dark-mode"):
-			body.add("light-mode")
-	);
+	return (color === "dark" ? body.add("dark-mode"): body.add("light-mode"));
 };
 
 
@@ -72,10 +69,11 @@ export function createHeader(table) {
 	head.innerHTML =`
 		<tr>
 			<th>STATUS</th>
+			<th>TYPE</th>
 			<th>LENGTH</th>
 			<th>DEPTH</th>
 			<th>HEIGHT</th>
-			<th>CUBm³</th>
+			<th>CUB</th>
 			<th>UNIT</th>
 		</tr>
 	`
@@ -83,57 +81,108 @@ export function createHeader(table) {
 };
 
 
-// ╭───────────────────────────────────────────────────────────╮
-// │ Returns all crates from the indexedDB or gets from cloud. │
-// ╰───────────────────────────────────────────────────────────╯
-export function showCrates1(estimate){
-	const request = globalThis.indexedDB.open("Results");
+async function getIDBData (ref) {
+	const WORKER = new Worker('./worker.IDB.crates.mjs');
+	let request;
 
-	request.onerror = (event) => {
-		alert(`WARNING: ${event.target.errorCode}`);
-	};
-	request.onsuccess = () => {
-		const db = request.result.transaction("Results")
-			.objectStore("Results").get(estimate);
+	WORKER.postMessage(ref);
+	request = await new Promise((resolve, reject) => {
+		WORKER.onmessage = (res) => {
+			const { data } = res;
+			data.reference === ref ? resolve(data) : reject(res);
+		};
+	});
 
-		db.onsuccess = () => {
-			let metric;
-			let crate;
-			let i =			0;
-			const crates =	db.result.crates;
-			const element =	document.createElement("table");
-			const pane =	document.getElementById("crates-only");
-			
-			localStorage.getItem("metrica") === "in - inches" ?
-				metric = "in": metric = "cm";
-			createHeader(element);
-			while(i <= crates.length - 1){
-				if(findKeyWords(crates[i])) {
-					crate = db.result.crates[i];
-					element.innerHTML += crate.map((info, index) => {
-						return (
-						index === 0 ? `<tr><td>${info}</td>`:
-						(index === 5) || (index === 4) ? 
-							`<td>${info}</td><td>${metric}</td></tr>`:
-							`<td>${info}</td>`
-						);
-					}, 0).join("");
-				}
-				i++;
-			};
-			sessionStorage.removeItem("pane1");
-			pane.appendChild(element);
-		}
-	}
+	return(request);
 };
 
 
-function findKeyWords (target) {
-	return ([
-		"Crate",
-		"PAX",
-		"CARGO",
-		"cm",
-		"in"
-		].includes(target[0]) ? true: false);
+function airPortStatus(crate) {
+	const MAXX =	300;
+	const MAXZ =	200;
+	const MAXY =	165;
+	const X =		crate[0][0];
+	const Z =		crate[0][1];
+	const Y =		crate[0][2];
+
+	return(X <= MAXX && Z <= MAXZ && Y <= MAXY ? 'PAX' : 'CARGO');
+};
+
+
+function addHTMLTableLine (data, unit) {
+	const { crates } =	data;
+	const port =		airPortStatus(crates);
+	const content =		crates.map(crate => {
+		let line;
+
+		if (crate.length === 4)
+			line = crate.map((info, i) => {
+				switch(i) {
+					case 0 :
+						return(`<tr><td>${port}</td><td>CRATE</td><td>${info}</td>`);
+					case 1 :
+						return(`<td>${info}</td>`)
+					case 2 :
+						return(`<td>${info}</td>`)
+					case 3 :
+						return(`<td>${info}</td><td>${unit}</td></tr>`);
+				};
+			}, 0).join("");
+		return(line);
+	}, 0).join("");
+
+	return (content);
+};
+
+
+// ╭───────────────────────────────────────────────────────────╮
+// │ Returns all crates from the indexedDB or gets from cloud. │
+// ╰───────────────────────────────────────────────────────────╯
+export async function showCrates1(estimate) {
+	const { crates } =	await getIDBData(estimate);
+	const element =			document.createElement("table");
+	const pane =		document.getElementById("crates-only");
+	let key =			0;
+	let i =				0;
+	let metric;
+
+	localStorage.getItem("metrica") === "in - inches" ?
+		metric = "in": metric = "cm";
+	createHeader(element);
+	for (key in crates) {
+		if (crates[key].hasOwnProperty('crates')) {
+			element.innerHTML += addHTMLTableLine(crates[key], metric);
+		};
+		i++;
+	};
+	sessionStorage.removeItem("pane1");
+	pane.appendChild(finishedRender(element, crates));
+};
+
+
+function finishedRender(table, info) {
+	table.innerHTML += `<tr>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+		</tr>`;
+	table.innerHTML += `<tr>
+		<td>AIRPORT</td>
+		<td>PAX</td>
+		<td>${info.wichAirPort[0].PAX}</td>
+		</tr>`;
+	table.innerHTML += `<tr>
+		<td>AIRPORT</td>
+		<td>CARGO</td>
+		<td>${info.wichAirPort[1].CARGO}</td>
+		</tr>`;
+	table.innerHTML += `<tr>
+		<td>Total Cub:</td>
+		<td>${info.airCubTotal}</td>
+		</tr>`;
+	return(table);
 };

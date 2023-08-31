@@ -15,11 +15,11 @@ globalThis.onstorage = () => {
 	};
 	if (copy) {
 		sessionStorage.removeItem("copy2");
-		return(globalThis.location.reload() && showCrates1(getter));
+		return(globalThis.location.reload() && showCrates2(getter));
 	};
 	return(
 		press === "populate" ?
-		globalThis.location.reload() && showCrates2(getter): false
+		globalThis.location.reload() && showCrates2(getter) : false
 	);
 };
 
@@ -52,11 +52,7 @@ function changeMode (color) {
 
 	body.remove("light-mode");
 	body.remove("dark-mode");
-	return (
-		color === "dark" ?
-			body.add("dark-mode"):
-			body.add("light-mode")
-	);
+	return ( color === "dark" ? body.add("dark-mode"): body.add("light-mode"));
 };
 
 
@@ -71,11 +67,12 @@ export function createHeader(table){
 			table.removeChild(table.firstChild)
 	head.innerHTML =`
 		<tr>
-			<th>STATUS</th>
+			<th>INFO</th>
+			<th>TYPE</th>
 			<th>LENGTH</th>
 			<th>DEPTH</th>
 			<th>HEIGHT</th>
-			<th>CUBm³</th>
+			<th>UNIT</th>
 			<th>STATE</th>
 		</tr>
 	`
@@ -83,50 +80,131 @@ export function createHeader(table){
 };
 
 
-// ╭───────────────────────────────────────────────────────────╮
-// │ Returns all crates from the indexedDB or gets from cloud. │
-// ╰───────────────────────────────────────────────────────────╯
-export function showCrates2(estimate) {
-	const request = globalThis.indexedDB.open("Results");
+async function getIDBData (ref) {
+	const WORKER = new Worker('./worker.IDB.crates.mjs');
+	let request;
 
-	request.onerror = (event) => {
-		alert(`WARNING: ${event.target.errorCode}`);
-	};
-	request.onsuccess = () => {
-		const db = request.result.transaction("Results")
-			.objectStore("Results").get(estimate);
+	WORKER.postMessage(ref);
+	request = await new Promise((resolve, reject) => {
+		WORKER.onmessage = (res) => {
+			const { data } = res;
+			data.reference === ref ? resolve(data) : reject(res);
+		};
+	});
 
-		db.onsuccess = () => {
-			let metric;
-			let crate;
-			let i =			0;
-			const crates =	db.result.crates;
-			const element =	document.createElement("table");
-			const pane =	document.getElementById("opened-crates");
-			
-			localStorage.getItem("metrica") === "in - inches" ?
-				metric = "in": metric = "cm";
-			createHeader(element);
-			while(i <= db.result.crates.length - 1) {
-				if(avoidWords(crates[i]) && crates[i].length > 2) {
-					crate = db.result.crates[i];
-					element.innerHTML += crate.map((info, index) => {
-						return (
-						index === 0 ? `<tr><td>${info}</td>`:
-						index === 5 ? `<td>${info}</td></tr>`:
-							`<td>${info}</td>`
-						);
-					}, 0).join("");
-				}
-				i++;
-			};
-			sessionStorage.removeItem("pane2");
-			pane.appendChild(element);
-		}
-	}
+	return(request);
 };
 
 
-function avoidWords (target) {
-	return (["PAX", "CARGO"].includes(target[0]) ? false: true);
+function layerInterface(layer, num, unit) {
+	const content = layer.map((info, i) => {
+		switch(i) {
+			case 0 :
+				return(`<tr><td>LAYER-${num}</td><td>${info}</td>`);
+			case 1 :
+				return(`<td>${info}</td>`)
+			case 2 :
+				return(`<td>${info}</td>`)
+			case 3 :
+				return(`<td>${info}</td>`)
+			case 4 :
+				return(layer[i + 1] !== undefined ? `<td>${unit}</td>`:
+						`<td>${unit}</td><td>N/A</td></tr>`);
+			case 5 :
+				return(`<td>${info}</td><td></tr>`);
+		};
+	}, 0).join("");
+	return (content);
+};
+
+
+function addHTMLLayerWorksLine ({ works }, table, unit) {
+	let layer;
+	let i =		-1;
+
+	while (i++ < works.length) {
+		if (!Array.isArray(works[i])) {
+			for (layer in works[i]) {
+					table.innerHTML += works[i][layer].map(layer => {
+						return(layerInterface(layer, i + 1, unit));
+					}).join("");
+			};
+		}
+		else 
+			table.innerHTML += layerInterface(works[0], i + 1, unit);
+	};
+};
+
+
+function airPortStatus(crate) {
+	const MAXX =	300;
+	const MAXZ =	200;
+	const MAXY =	165;
+	const X =		crate[0][0];
+	const Z =		crate[0][1];
+	const Y =		crate[0][2];
+
+	return(X <= MAXX && Z <= MAXZ && Y <= MAXY ? 'PAX' : 'CARGO');
+};
+
+
+function setStatusCrateType(kind, unit) {
+	switch(kind) {
+		case 'tubeCrate' :
+			return(`<td>${unit}</td><td>󱥎</td></tr>`);
+		case 'largestCrate' :
+			return(`<td>${unit}</td><td></td></tr>`);
+		case 'sameSizeCrate' :
+			return(`<td>${unit}</td><td>󰇼</td></tr>`);
+		case 'noCanvasCrate' :
+			return(`<td>${unit}</td><td>󰓨</td></tr>`);
+		case 'standardCrate' :
+			return(`<td>${unit}</td><td>󰹉</td></tr>`);
+	};
+};
+
+
+function addHTMLTableLine({ crates }, table, kind) {
+	let works =		0;
+	let port =		airPortStatus(crates);
+	const UNIT =	localStorage.getItem('metrica') === 'cm - centimeters' ?
+		'cm' : 'in';
+
+	crates.map(done => {
+		if (done.length === 4)
+			table.innerHTML += done.map((info, i) => {
+				switch(i) {
+					case 0 :
+						return(`<tr><td>${port}</td><td>CRATE</td><td>${info}</td>`);
+					case 1 :
+						return(`<td>${info}</td>`)
+					case 2 :
+						return(`<td>${info}</td>`)
+					case 3 :
+						return(setStatusCrateType(kind, UNIT));
+				};
+			}, 0).join("");
+		works === 0 ? works = 1 : works += 2;
+		if (crates[works] !== undefined)
+			addHTMLLayerWorksLine(crates[works], table, UNIT, kind);
+	}, 0).join("");
+};
+
+
+// ╭───────────────────────────────────────────────────────────╮
+// │ Returns all crates from the indexedDB or gets from cloud. │
+// ╰───────────────────────────────────────────────────────────╯
+export async function showCrates2(estimate) {
+	const { crates } =	await getIDBData(estimate);
+	const element =		document.createElement("table");
+	const pane =		document.getElementById("opened-crates");
+	let key;
+
+	createHeader(element);
+	for (key in crates) {
+		if (crates[key].hasOwnProperty('crates'))
+			addHTMLTableLine(crates[key], element, key);
+	};
+	sessionStorage.removeItem("pane2");
+	pane.appendChild(element);
 };
