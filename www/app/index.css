@@ -280,7 +280,7 @@ tbody:nth-child(even) {
 
 .cube {
 	top: 3.9rem;
-	left: 6rem;
+	left: 8rem;
 	width: 6.25rem;
 	height: 6.25rem;
 	position: relative;
@@ -555,6 +555,10 @@ span + input {
    │                     Container bottom                     │
    ╰──────────────────────────────────────────────────────────╯
 */
+.container-interactive {
+	width: 75%;
+	margin-left: 5rem;
+}
 
 
 .container-bottom {
@@ -564,7 +568,7 @@ span + input {
 
 .container-bottom {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(20rem, 2fr));
 	column-gap: 2rem;
 	row-gap: var(--rowg);
 	width: 100%;
@@ -588,12 +592,13 @@ span + input {
 	gap: 1rem;
 	justify-content: space-evenly;
 	align-content: center;
+	flex-basis: 100%;
 }
 
 
 .result--panels div > iframe {
 	display: flex;
-	width: 20rem;
+	width: 22rem;
 	height: 15rem;
 	content: var(--r_height);
 	animation-name: fill-pane;
@@ -604,6 +609,9 @@ span + input {
 
 .container--span {
 	grid-column: span 2;
+	width:50rem;
+	/* animation: open-pane 2s ease-in-out; */
+	transition: height .5s ease-in-out;
 }
 
 
@@ -978,6 +986,7 @@ label:hover + .IO__sizes--popup {
 	--input-menu-units-width: 6rem;
 	--input-menu-units-height: 2rem;
 	--display-flex: flex;
+	--result-panels: 20rem;
 }
 
 
@@ -999,7 +1008,7 @@ label:hover + .IO__sizes--popup {
 
 
 .accordion-panel:has([aria-expanded="false"]) {
-	width: var(--accordion-width, 25.5%);
+	width: var(--accordion-width, 28.5%);
 	transition: width 2s ease-in-out;
 	fill: var(--p__color--mode);
 }

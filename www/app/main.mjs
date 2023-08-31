@@ -36,6 +36,9 @@ globalThis.document.getElementById('main-app')
 		case "crate-btn":
 			crate();
 			break;
+		case "crate_btn":
+			crate();
+			break;
 		case "copy-pane1":
 			copyButton1();
 			break;
@@ -52,6 +55,9 @@ globalThis.document.getElementById('main-app')
 			document.cookie = "id=; value=; Max-Age=0; path=/; domain=";
 			globalThis.location.replace('/');
 			break;
+		case "seek-btn":
+			accordionController(element);
+			break;
 		case "search-header":
 			accordionController(element);
 			break;
@@ -66,8 +72,15 @@ globalThis.document.getElementById('main-app')
 		case "search-btn":
 			accordionController(element);
 			break;
+		case "ex-btn":
+			accordion.coins();
+			accordionController(element);
+			break;
 		case "exchange-btn":
 			accordion.coins();
+			accordionController(element);
+			break;
+		case "unit-btn":
 			accordionController(element);
 			break;
 		case "units-btn":
