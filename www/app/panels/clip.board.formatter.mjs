@@ -60,7 +60,7 @@ function formatterClipBoard(data) {
 		let line;
 
 		if (info.length === 5) {
-			line = `'\t'CODE: ${info[0]} - ${info[1]} x ${info[2]} x ${info[3]} - ${unit}`;
+			line = `CODE: ${info[0]} - ${info[1]} x ${info[2]} x ${info[3]} - ${unit}`;
 			return(line);
 		}
 		else if (info.length === 4) {
@@ -76,9 +76,9 @@ function formatterClipBoard(data) {
 
 
 function charRemover(target, len) {
-	// console.log(target);
 
 	while(len--) {
+		target = target.replace('CODE: ','\t');
 		target = target.replace('"','');
 		target = target.replace('"','');
 		target = target.replace(',','\n');
