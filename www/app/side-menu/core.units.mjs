@@ -54,9 +54,7 @@ function centimetersShift (unit1, unit2, measure1, measure2) {
 	const cmpSetup =	measureSetupCheckout(unit1, unit2);
 
 	if (unit1 === unit2)
-		return (
-			measure1.value > measure2.value ? measure1.value: measure2.value
-		);
+		return(measure1.value > measure2.value ? measure1.value: measure2.value);
 	else if (cmpSetup.checked1)
 		return(resolveConversion(measure1, measure2, inches, "in"));
 	return(resolveConversion(measure1, measure2, meters, "m"));
@@ -64,14 +62,12 @@ function centimetersShift (unit1, unit2, measure1, measure2) {
 
 
 function inchesShift (unit1, unit2, measure1, measure2) {
-	const centimeters = 2.54;
+	const centimeters = 0.393;
 	const meters =		0.0254;
 	const cmpSetup =	measureSetupCheckout(unit1, unit2);
 
 	if (unit1 === unit2)
-		return (
-			measure1.value > measure2.value ? measure1.value: measure2.value
-		);
+		return(measure1.value > measure2.value ? measure1.value: measure2.value);
 	else if (cmpSetup.checked2)
 		return(resolveConversion(measure1, measure2, centimeters, "cm"));
 	return(resolveConversion(measure1, measure2, meters, "m"));
