@@ -68,7 +68,7 @@ export function createHeader(table){
 	head.innerHTML =`
 		<tr>
 			<th>INFO</th>
-			<th>TYPE</th>
+			<th>DATA</th>
 			<th>LENGTH</th>
 			<th>DEPTH</th>
 			<th>HEIGHT</th>
@@ -111,7 +111,7 @@ function layerInterface(layer, num, unit) {
 				return(layer[i + 1] !== undefined ? `<td>${unit}</td>`:
 						`<td>${unit}</td><td>N/A</td></tr>`);
 			case 5 :
-				return(`<td>${info}</td><td></tr>`);
+				return(`<td>${info}</td></tr>`);
 		};
 	}, 0).join("");
 	return (content);
@@ -165,13 +165,12 @@ function setStatusCrateType(kind, unit) {
 
 
 function addHTMLTableLine({ crates }, table, kind) {
-	let works =		0;
 	let port =		airPortStatus(crates);
 	const UNIT =	localStorage.getItem('metrica') === 'cm - centimeters' ?
 		'cm' : 'in';
 
-	crates.map(done => {
-		if (done.length === 4)
+	crates.map((done, i) => {
+		if (i % 2 === 0)
 			table.innerHTML += done.map((info, i) => {
 				switch(i) {
 					case 0 :
@@ -184,9 +183,8 @@ function addHTMLTableLine({ crates }, table, kind) {
 						return(setStatusCrateType(kind, UNIT));
 				};
 			}, 0).join("");
-		works === 0 ? works = 1 : works += 2;
-		if (crates[works] !== undefined)
-			addHTMLLayerWorksLine(crates[works], table, UNIT, kind);
+		else
+			addHTMLLayerWorksLine(crates[i], table, UNIT, kind);
 	}, 0).join("");
 };
 
