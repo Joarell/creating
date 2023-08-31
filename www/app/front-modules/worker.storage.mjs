@@ -4,7 +4,6 @@
 globalThis.onmessage = (estimate) => {
 	const request = globalThis.indexedDB.open("Results");
 
-	console.log(request);
 	request.onerror = (event) => {
 		console.log(`WARNING: ${event.target.errorCode}`);
 	};
@@ -16,7 +15,7 @@ globalThis.onmessage = (estimate) => {
 		.get(estimate.data);
 	
 		db.onerror = () => {
-			globalThis.postMessage(false);
+			globalThis.postMessage(undefined);
 		}
 		db.onsuccess = () => {
 			globalThis.postMessage(db.result);

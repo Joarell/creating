@@ -105,6 +105,7 @@ export function catchWork() {
 	}
 	tmp = checkWork([cod, length, depth, height]);
 	if (tmp !== false) {
+		// console.log(tmp);
 		orderWorks(tmp.data);
 		localStorage.setItem(tmp.data.code, JSON.stringify(tmp.data));
 		localStorage.setItem("storage", "art-work");

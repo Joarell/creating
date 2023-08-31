@@ -13,6 +13,18 @@ import UnitAdapter from "../core2/Unit.Adapter.class.mjs";
 import { addNewWorksToIndexedDB } from "./link.storage.mjs";
 
 
+// ╭─────────────────────────────────────────────╮
+// │ This function adds the new work and counts. │
+// ╰─────────────────────────────────────────────╯
+export function countWorks() {
+	const result =		parseArtWork();
+	let counter =		document.getElementById("count");
+
+	counter.innerText =	result ? "Counting: " + result?.length : "Counting 0";
+	return (counter);
+}
+
+
 // ╭─────────────────────────────────────────────────────────────────────╮
 // │ This function do the calculation of the cub of all works in meters. │
 // ╰─────────────────────────────────────────────────────────────────────╯
@@ -22,11 +34,10 @@ export function displayCub() {
 	const element =	document.getElementById("cub-meter");
 
 	result =		parseArtWork();
-	console.log(result);
 	result =		result?.reduce((sum, val) => {
 		return (sum + val.cubed);
 	}, 0) ?? 0;
-	element.innerText = "Cub: " + (Math.floor(result * COMA) / COMA) + "m³";
+	element.innerText = "Cub: " + ((result * COMA) / COMA).toFixed(3) + "m³";
 	return (element);
 }
 
@@ -46,7 +57,7 @@ export function displayAirCub() {
 	result =		result?.reduce((sum, val) => {
 		return (sum + val.cAir);
 	}, 0) ?? 0;
-	element.innerText = std_msg + (Math.floor(result * COMA) / COMA);
+	element.innerText = std_msg + ((result * COMA) / COMA).toFixed(3);
 	return (element);
 }
 
@@ -57,13 +68,15 @@ export function displayAirCub() {
 // ╰──────────────────────────────────────────────────────────────────────────╯
 export async function crate() {
 	let crates;
+	let list;
 	const estimate =	{};
 	const e_code =		document.getElementById("input_estimate").value;
 
 	if (confirm("Ready to crate all works?")) {
 		crates =				await checkMetric();
 		estimate["reference"] =	e_code;
-		estimate["list"] =		parseArtWork();
+		list =					parseArtWork();
+		estimate["list"] =		list.map(art => art.data);
 		estimate["crates"] =	crates;
 		addNewWorksToIndexedDB (estimate);
 
@@ -71,18 +84,6 @@ export async function crate() {
 		sessionStorage.setItem("pane1", "populate");
 		sessionStorage.setItem("pane2", "populate");
 	}
-}
-
-
-// ╭─────────────────────────────────────────────╮
-// │ This function adds the new work and counts. │
-// ╰─────────────────────────────────────────────╯
-export function countWorks() {
-	const result =		parseArtWork();
-	let counter =		document.getElementById("count");
-
-	counter.innerText =	"Counting: " + result?.length;
-	return (counter);
 }
 
 
@@ -101,19 +102,19 @@ export function cleanInputs() {
 // ╭──────────────────────────────────────────────────────╮
 // │ Converts the localStorage data in to ArtWork object. │
 // ╰──────────────────────────────────────────────────────╯
-function parseArtWork(){
+function parseArtWork() {
 	const DB =		localStorage;
 	const avoid =	["mode", "storage", "currency", "currency", "metrica", "refNumb" ]
 	const temp =	[];
 	let works;
 	
 	Object.entries(DB).map(data => {
-		avoid.includes(data[0]) ? false : temp.push(JSON.parse(data[1]));
+		!avoid.includes(data[0]) ? temp.push(JSON.parse(data[1])) : false;
 	});
 	works = temp.map(work => {
 		return(new ArtWork(work.code, work.x, work.z, work.y));
 	})
-	return(works.length > 0 ? works : false);
+	return(works.length > 0 ? works : undefined);
 }
 
 
@@ -129,18 +130,6 @@ async function checkMetric() {
 	if (storageUnit.length === 1)
 		return(alert("Oops! Sounds like you not added any work yet.\
 		Please, try again!"));
-	// if (works.getItem("metrica") !== "cm - centimeters") {
-	// 	list = list.map((sizes) => {
-	// 		let j;
-	// 		const tmp = [sizes.code];
-	// 		const converted = sizes.conversion("cm");
-	//
-	// 		j = 0;
-	// 		for (j in converted)
-	// 			tmp.push(converted[j]);
-	// 		return (tmp);
-	// 	});
-	// }
 	crates = await Promise.resolve(new UnitAdapter(list, UNIT));
 	return (crates);
 }
