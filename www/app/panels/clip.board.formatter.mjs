@@ -46,29 +46,27 @@ export function findCratesAndWorks ({ crates }) {
 
 
 export function findCrates ({ crates }) {
-	let allCrates;
-
-	crates ? allCrates = crates.filter(crate => {
-			return (["Crate"].includes(crate[0]) ? crate: false);
-		}):
-	false;
 	sessionStorage.setItem("copy1", "done!");
 	return(formatterClipBoard(crates.allCrates));
 };
 
 
-function formatterClipBoard(crates) {
-	if(!crates)
+function formatterClipBoard(data) {
+	if(!data)
 		return("There is no crates. Please, try again!");
 	const unit =		localStorage.getItem("metrica") === 'cm - centimeters'?
 		'cm' : 'in';
-	const formatted =	crates.map(info => {
+	const formatted =	data.map(info => {
 		let line;
 
-		if (Array.isArray(info)) {
-			line = `CODE: ${info[0]} - ${info[1]} x ${info[2]} x ${info[3]} - ${unit}`;
+		if (info.length === 5) {
+			line = `'\t'CODE: ${info[0]} - ${info[1]} x ${info[2]} x ${info[3]} - ${unit}`;
 			return(line);
-		};
+		}
+		else if (info.length === 4) {
+			line = `CRATE: ${info[0]} x ${info[1]} x ${info[2]} - ${unit}`;
+			return(line);
+		}
 		return(info);
 	});
 	const getString =		JSON.stringify(formatted);
