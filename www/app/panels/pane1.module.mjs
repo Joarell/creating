@@ -97,10 +97,10 @@ async function getIDBData (ref) {
 };
 
 
-function airPortStatus(crate) {
-	const MAXX =	300;
-	const MAXZ =	200;
-	const MAXY =	165;
+function airPortStatus(crate, sizeUnit) {
+	const MAXX =	sizeUnit === 'cm' ? 300 : 118.110;
+	const MAXZ =	sizeUnit === 'cm' ? 200 : 78.740;
+	const MAXY =	sizeUnit === 'cm' ? 165 : 64.960 ;
 	const X =		crate[0][0];
 	const Z =		crate[0][1];
 	const Y =		crate[0][2];
@@ -109,14 +109,12 @@ function airPortStatus(crate) {
 };
 
 
-function addHTMLTableLine (data, unit) {
+function addHTMLTableLine (data, unit, table) {
 	const { crates } =	data;
-	const port =		airPortStatus(crates);
-	const content =		crates.map(crate => {
-		let line;
-
+	const port =		airPortStatus(crates, unit);
+	crates.map(crate => {
 		if (crate.length === 4)
-			line = crate.map((info, i) => {
+			table.innerHTML += crate.map((info, i) => {
 				switch(i) {
 					case 0 :
 						return(`<tr><td>${port}</td><td>CRATE</td><td>${info}</td>`);
@@ -128,10 +126,7 @@ function addHTMLTableLine (data, unit) {
 						return(`<td>${info}</td><td>${unit}</td></tr>`);
 				};
 			}, 0).join("");
-		return(line);
-	}, 0).join("");
-
-	return (content);
+	}, 0);
 };
 
 
@@ -140,20 +135,17 @@ function addHTMLTableLine (data, unit) {
 // ╰───────────────────────────────────────────────────────────╯
 export async function showCrates1(estimate) {
 	const { crates } =	await getIDBData(estimate);
-	const element =			document.createElement("table");
+	const element =		document.createElement("table");
 	const pane =		document.getElementById("crates-only");
 	let key =			0;
-	let i =				0;
 	let metric;
 
 	localStorage.getItem("metrica") === "in - inches" ?
 		metric = "in": metric = "cm";
 	createHeader(element);
 	for (key in crates) {
-		if (crates[key].hasOwnProperty('crates')) {
-			element.innerHTML += addHTMLTableLine(crates[key], metric);
-		};
-		i++;
+		if (crates[key].hasOwnProperty('crates'))
+			addHTMLTableLine(crates[key], metric, element);
 	};
 	sessionStorage.removeItem("pane1");
 	pane.appendChild(finishedRender(element, crates));
