@@ -2,19 +2,18 @@
 
 export async function checkBrowserDB(doc) {
 	const workerDB =	new Worker('./panels/worker.IDB.crates.mjs');
-	const checkIDB =	new Promise((resolve, reject) => {
+	const checkIDB =	await new Promise((resolve, reject) => {
 		workerDB.postMessage(doc);
 		workerDB.onmessage = (result => {
 			result !== undefined ? resolve(result.data): reject(undefined);
 		})
 	});
-	const data =		await checkIDB;
 
-	if (data) {
+	if (checkIDB) {
 		document.getElementById("input_estimate").value = doc;
-		sessionStorage.setItem("FETCHED", JSON.stringify(data));
+		sessionStorage.setItem("FETCHED", JSON.stringify(checkIDB));
 	}
-	else if (!data)
+	else if (!checkIDB)
 		alert(`Document not found! Please, try again.`);
 	else
 		setTimeout(alert(`Document not found! Please, try again.`), 200);
@@ -46,6 +45,7 @@ export function searchEstimate() {
 };
 
 
+// INFO: cluster test.
 // function testClosure (num) {
 // 	let count = num;
 //
