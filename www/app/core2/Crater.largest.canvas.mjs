@@ -25,8 +25,8 @@ export default class CraterPythagoras {
 		const MAXHEIGHT =	240;
 		const a =			crate[2] ** 2;
 		const b =			MAXHEIGHT ** 2;
-		const c =			a - b;
-		const z =			~~(Math.sqrt(c) * 100) / 100;
+		const c =			a > b ? a - b : b - a;
+		const z =			(~~(Math.sqrt(c) * 100)) / 100;
 
 		return ([crate[0], z, MAXHEIGHT]);
 	};
