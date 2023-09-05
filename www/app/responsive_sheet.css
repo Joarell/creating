@@ -90,6 +90,7 @@
 	*/
 	/* Made by Nawsome- from : https://uiverse.io/Nawsome/cold-liger-90 */
 
+	/* Page load */
 	.loading {
 		z-index: 40;
 		margin-top: 20%;
@@ -287,14 +288,14 @@
 		}
 	}
 
-	/* ╭───────────────────────────╮
-	   │ 	Cube footer settings.  │
-	   ╰───────────────────────────╯
+	/* ╭────────────────────────────────╮
+	   │ 	Animation footer settings.  │
+	   ╰────────────────────────────────╯
 	*/
 	.svg-frame {
 		position: relative;
-		width: 300px;
-		height: 300px;
+		width: 18rem;
+		height: 18rem;
 		transform-style: preserve-3d;
 		display: flex;
 		justify-content: center;

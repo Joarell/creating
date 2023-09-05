@@ -230,6 +230,7 @@ tbody:nth-child(even) {
 
 ::-webkit-scrollbar {
 	width: .4rem;
+	height: .4rem;
 }
 
 
@@ -242,10 +243,8 @@ tbody:nth-child(even) {
 
 ::-webkit-scrollbar-thumb {
 	background: var(--color1);
-	border-radius: 10vw;
+	border-radius: 10vh;
 	border: .1rem solid white;
-	margin-block: .1rem;
-	height: .4rem;
 }
 
 
@@ -281,7 +280,7 @@ tbody:nth-child(even) {
 
 .cube {
 	top: 3.9rem;
-	left: 8rem;
+	left: 7.5rem;
 	width: 6.25rem;
 	height: 6.25rem;
 	position: relative;
