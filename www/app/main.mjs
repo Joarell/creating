@@ -14,8 +14,10 @@ import { layersNumber, skipLayer } from './plotter/select.menu.mjs';
 
 
 globalThis.onkeydown = (push) => {
-	const task1 = ((push.key === "Enter") && (push.ctrlKey === true)) ?? false;
-	task1 ? crate(): false;
+	const task1 = ((push.key === "Enter") && (push.ctrlKey === true));
+	task1 ? crate() : false;
+	const task2 = ((push.ctrlKey === true) && (push.key === "V"));
+	task2 ? openDisplay() : false;
 };
 
 
@@ -145,7 +147,7 @@ globalThis.document.getElementById('main-app')
 			unit.setUnitTwo();
 			break;
 		case "selected-crate":
-			layersNumber(element);
+			layersNumber();
 			changeCrateDisplay();
 			break;
 		default:
