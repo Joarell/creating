@@ -120,18 +120,23 @@ function layerInterface(layer, num, unit) {
 
 function addHTMLLayerWorksLine ({ works }, table, unit) {
 	let layer;
-	let i =		-1;
+	let i =	0;
 
-	while (i++ < works.length) {
+	while (i < works.length) {
 		if (!Array.isArray(works[i])) {
 			for (layer in works[i]) {
-					table.innerHTML += works[i][layer].map(layer => {
-						return(layerInterface(layer, i + 1, unit));
-					}).join("");
+				table.innerHTML += works[i][layer].map(layer => {
+					return(layerInterface(layer, i + 1, unit));
+				}).join("");
 			};
 		}
-		else 
-			table.innerHTML += layerInterface(works[0], i + 1, unit);
+		else if (Array.isArray(works[i])) {
+			works.map(art => {
+				table.innerHTML += layerInterface(art, i + 1, unit);
+			});
+			i++;
+		};
+		i++;
 	};
 };
 
