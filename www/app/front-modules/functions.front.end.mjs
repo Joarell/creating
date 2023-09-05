@@ -104,9 +104,11 @@ export function cleanInputs() {
 // ╰──────────────────────────────────────────────────────╯
 function parseArtWork() {
 	const DB =		localStorage;
-	const avoid =	["mode", "storage", "currency", "currency", "metrica", "refNumb" ]
 	const temp =	[];
 	let works;
+	const avoid =	[
+		"doneList" ,"mode", "storage", "currency", "currency", "metrica", "refNumb" 
+	]
 	
 	Object.entries(DB).map(data => {
 		!avoid.includes(data[0]) ? temp.push(JSON.parse(data[1])) : false;
