@@ -60,7 +60,7 @@ function changeMode (color) {
 // │ This is the header creator when the page or localStorage are updated. │
 // ╰───────────────────────────────────────────────────────────────────────╯
 export function createHeader(table){
-	const head =		document.createElement("tr");
+	const head = document.createElement("tr");
 	
 	if(table.parentNode)
 		while(table.firstChild)
@@ -121,6 +121,7 @@ function layerInterface(layer, num, unit) {
 function addHTMLLayerWorksLine ({ works }, table, unit) {
 	let layer;
 	let i =	0;
+	let tmp;
 
 	while (i < works.length) {
 		if (!Array.isArray(works[i])) {
@@ -131,10 +132,11 @@ function addHTMLLayerWorksLine ({ works }, table, unit) {
 			};
 		}
 		else if (Array.isArray(works[i])) {
-			works.map(art => {
+			works.map((art, count) => {
+				tmp = count;
 				table.innerHTML += layerInterface(art, i + 1, unit);
 			});
-			i++;
+			i = tmp;
 		};
 		i++;
 	};
@@ -142,9 +144,9 @@ function addHTMLLayerWorksLine ({ works }, table, unit) {
 
 
 function airPortStatus(crate, sizeUnit) {
-	const MAXX =	sizeUnit === 'cm' ? 300 : 118.110;
-	const MAXZ =	sizeUnit === 'cm' ? 200 : 78.740;
-	const MAXY =	sizeUnit === 'cm' ? 165 : 64.960 ;
+	const MAXX =	sizeUnit === 'cm' ? 300 : 118.110; // INFO: cm and in max size
+	const MAXZ =	sizeUnit === 'cm' ? 200 : 78.740; // INFO: cm and in max size
+	const MAXY =	sizeUnit === 'cm' ? 165 : 64.960 ; // INFO: cm and in max size
 	const X =		crate[0][0];
 	const Z =		crate[0][1];
 	const Y =		crate[0][2];
