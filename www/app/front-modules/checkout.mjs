@@ -51,7 +51,7 @@ export function setUnit() {
 		localStorage.setItem("metrica",
 			document.getElementById("cm").value
 		);
-// │ This is the trigger to the "create" and clear button. │
+	// This is the trigger to the "create" and clear button.
 	}
 	else if (check) {
 		const storage = localStorage.getItem('metrica');
@@ -97,6 +97,7 @@ export const clearAll = () => {
 		openCloseDisplay([element, plotter, menu]);
 	}
 	mod.cleanInputs();
+	document.getElementById("input_estimate").select();
 };
 
 
@@ -115,10 +116,9 @@ function loadingPage() {
 function browserStoragePrepare() {
 	const ref = localStorage.getItem("refNumb");
 
-	if (ref) {
+	if (ref)
 		document.getElementById("input_estimate").value = ref;
 		createDB();
-	}
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
 };
 
