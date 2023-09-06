@@ -26,6 +26,7 @@ export default class CraterTube {
 			Y = tube[3] > Y ? tube[3]: Y;
 		});
 
+		console.log(X, Z, Y);
 		return([X, Z, Y]);
 	}
 
@@ -38,7 +39,7 @@ export default class CraterTube {
 	};
 
 	#oneTubeCrate() {
-		const DEFAULTPAD =	23;
+		const DEFAULTPAD =	18;
 		const HEIGHTPAD =	25;
 		const X =			this[0][1] + DEFAULTPAD;
 		const Z =			this[0][2] + DEFAULTPAD;
