@@ -33,7 +33,6 @@ export default class TubeRender {
 		const POSX =		X === 1 ? DRAWPIXEL : +(X * axios.x).toFixed(3);
 		const POSY =		Y === 1 ? DRAWPIXEL : +(Y * axios.y).toFixed(3);
 
-		console.log(X, Y);
 		return ({ pixelX: POSX, pixelY: POSY });
 	};
 
