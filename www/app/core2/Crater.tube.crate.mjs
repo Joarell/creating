@@ -26,7 +26,6 @@ export default class CraterTube {
 			Y = tube[3] > Y ? tube[3]: Y;
 		});
 
-		console.log(X, Z, Y);
 		return([X, Z, Y]);
 	}
 
