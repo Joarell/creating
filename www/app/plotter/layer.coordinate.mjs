@@ -6,28 +6,26 @@ export function spaceAvailable (art, space) {
 	const turnX =	art[1] <= space [1];
 	const turnY =	art[3] <= space [0];
 
-	if (spaceX && spaceY) {
+	if (spaceX && spaceY)
 		return (true);
-	}
-	else if(turnX || turnY) {
+	else if(turnX || turnY)
 		return (true);
-	};
 	return (false);
 };
 
 
 export function proportion (val, pixArea, layer) {
-	const layerArea = (val / layer) * pixArea;
-
+	const layerArea = +((val / layer) * pixArea).toFixed(3);
 	return (layerArea);
 };
 
 
 export function getScreenProportion(screenSize, layerSize) {
 	const DESKTOP =	1024;
-
 	return(
-		screenSize >= DESKTOP ? deskTopView(layerSize): mobileView(layerSize)
+		screenSize >= DESKTOP ?
+			deskTopView(layerSize) :
+			mobileView(layerSize)
 	);
 };
 
