@@ -45,7 +45,7 @@ export function searchEstimate() {
 };
 
 
-// INFO: cluster test.
+// INFO: Closure test.
 // function testClosure (num) {
 // 	let count = num;
 //
