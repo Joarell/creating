@@ -2,40 +2,65 @@
 
 import { renderLayer } from "./layer.controller.mjs";
 
+export async function getIDBData (ref) {
+	const WORKER = new Worker('../app/panels/worker.IDB.crates.mjs');
+	let request;
 
-export function populateOptions(crates) {
-	const set =		new WeakSet();
-	const list =	crates.filter(crates => crates[0] === 'Crate');
-	const select =	document.getElementById('selected-crate');
-	const unit =	localStorage
+	WORKER.postMessage(ref);
+	request = await new Promise((resolve, reject) => {
+		WORKER.onmessage = (res) => {
+			const { data } = res;
+			data.reference === ref ? resolve(data.crates) : reject(res);
+		};
+	});
+	return(request);
+}
+
+
+export async function populateOptions() {
+	const estimate =	localStorage.getItem("refNumb");
+	const crates =		await getIDBData(estimate);
+	const select =		document.getElementById('selected-crate');
+	const unit =		localStorage
 		.getItem("metrica") === 'cm - centimeters' ? 'cm' : 'in';
 
 	if(select.hasChildNodes())
 		while(select.firstChild)
 			select.removeChild(select.firstChild);
-	select.innerHTML += list.map((crate, i) => {
+	select.innerHTML = crates.allCrates.map((crate, i) => {
 		i++;
 		return (`
 			<option>
-				Crate ${i} - ${crate[1]} x ${crate[2]} x ${crate[3]} - ${unit}
+				Crate ${i} - ${crate[0]} x ${crate[1]} x ${crate[2]} - ${unit}
 			</option>
 		`);
 	}, 0);
-	layersNumber(crates);
-	set.add(list);
+	localStorage.setItem('doneList', JSON.stringify({...crates}));
+	await layersNumber(crates);
 };
 
 
-export function layersNumber(list) {
-	if (Array.isArray(list)) {
-		const layers =	changeCrateLayers(1);
-		sessionStorage.setItem('layers', layers.length);
-	}
-	else {
-		const crate =	document.getElementById('selected-crate').value;
-		const layers =	changeCrateLayers(Number.parseInt(crate.split(' ')[1]));
-		sessionStorage.setItem('layers', layers.length);
-	}
+export async function layersNumber(list) {
+	const crate =	document.getElementById('selected-crate').value;
+	let selected =	+crate.split(' ')[1];
+	let data =		list ?? JSON.parse(localStorage.getItem('doneList'));
+	let layers;
+	let key;
+
+	for (key in data) {
+		if (data[key].hasOwnProperty('crates')) {
+			selected--;
+			data[key].crates.map((box, i) => {
+				if (selected === 0 && i % 2 === 1)
+					key === 'tubeCrate' || key === 'noCanvasCrate' ?
+						layers = 1 : layers = box.works.length;
+				else if (i % 2 === 0 && selected !== 0)
+					selected--;
+			}, 0);
+		};
+	};
+	sessionStorage.setItem('layers', layers);
+	// changeCrateLayers(Number.parseInt(crate.split(' ')[1]));
 	sessionStorage.setItem('numLayer', 1);
 	setLayerDisplay();
 };
@@ -54,6 +79,7 @@ function changeCrateLayers(num) {
 			return (element);
 		}
 	});
+
 	set.add(crates);
 	return(layer);
 };
