@@ -178,7 +178,7 @@ export function mockOptios() {
 
 export function fakeCrater(works) {
 	const crates =		['crates ahead'];
-	const TOTALCUB =	3864.145;
+	const TOTALCUB =	4579.569;
 	const PAX =			6;
 	const CARGO =		2;
 	
@@ -1236,9 +1236,9 @@ function setPadding(innerCrate, layers) {
 	const PAD =		23;
 	const HIGHPAD =	28;
 	const LAYER =	10;
-	const X =		innerCrate[1] + PAD;
-	const Z =		(innerCrate[2] + PAD) + (LAYER * layers);
-	const Y =		innerCrate[3] + HIGHPAD;
+	const X =		innerCrate[0] + PAD;
+	const Z =		(innerCrate[1] + PAD) + (LAYER * layers);
+	const Y =		innerCrate[2] + HIGHPAD;
 
 	return ([X, Z, Y]);
 };
@@ -1256,37 +1256,28 @@ function pitagorasTheorem(crate) {
 
 
 function defineCrate(canvas) {
-	let biggestWork = canvas[0];
 	let crate;
+	let x = 0;
+	let z = 0;
+	let y = 0;
 
 	canvas.map(work => {
-		if (work[1] > biggestWork[1] && work[3] > biggestWork[3])
-			biggestWork = work;
+		x < work[1] ? x = work[1] : false;
+		z < work[2] ? z = work[2] : false;
+		y < work[3] ? y = work[3] : false;
 	});
-	crate = setPadding(biggestWork, canvas.length);
-
+	crate = setPadding([x, z, y], canvas.length);
 	return(crate);
 };
 
 
-function crateInterface (opt, works) {
+function crateInterface (works) {
 	let crate;
 	let pitagorasCrate;
 
-	switch (opt){
-		case 1:
-			crate =				defineCrate(works);
-			pitagorasCrate =	pitagorasTheorem(crate);
-			return(pitagorasCrate);
-		case 2:
-			crate =				defineCrate(works);
-			pitagorasCrate =	pitagorasTheorem(crate);
-			return(pitagorasCrate);
-		case 3:
-			crate =				defineCrate(works);
-			pitagorasCrate =	pitagorasTheorem(crate);
-			return(pitagorasCrate);
-	};
+	crate =				defineCrate(works);
+	pitagorasCrate =	pitagorasTheorem(crate);
+	return(pitagorasCrate);
 };
 
 
@@ -1297,7 +1288,7 @@ function largestCrateTrail(list) {
 
 	while (list.length) {
 		canvas = list.splice(0, MAXCANVAS);
-		crates.push(crateInterface(canvas.length, canvas));
+		crates.push(crateInterface(canvas));
 		crates.push({ works: canvas });
 	};
 	return(crates);

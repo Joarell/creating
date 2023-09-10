@@ -14,9 +14,9 @@ export default class CraterPythagoras {
 		const PAD =		23;
 		const HIGHPAD =	28;
 		const LAYER =	10;
-		const X =		innerCrate[1] + PAD;
-		const Z =		(innerCrate[2] + PAD) + (LAYER * layers);
-		const Y =		innerCrate[3] + HIGHPAD;
+		const X =		innerCrate[0] + PAD;
+		const Z =		(innerCrate[1] + PAD) + (LAYER * layers);
+		const Y =		innerCrate[2] + HIGHPAD;
 
 		return ([X, Z, Y]);
 	};
@@ -32,35 +32,27 @@ export default class CraterPythagoras {
 	};
 
 	#defineCrate(canvas) {
-		let biggestWork = canvas[0];
 		let crate;
+		let x = 0;
+		let z = 0;
+		let y = 0;
 
 		canvas.map(work => {
-			if (work[1] > biggestWork[1] && work[3] > biggestWork[3])
-				biggestWork = work;
+			x < work[1] ? x = work[1] : false;
+			z < work[2] ? z = work[2] : false;
+			y < work[3] ? y = work[3] : false;
 		});
-		crate = this.#setPadding(biggestWork, canvas.length);
+		crate = this.#setPadding([x, z, y], canvas.length);
 		return(crate);
 	};
 
-	#crateInterface(opt, works) {
+	#crateInterface(works) {
 		let crate;
 		let pitagorasCrates;
 
-		switch (opt){
-			case 1:
-				crate =				this.#defineCrate(works);
-				pitagorasCrates =	this.#pitagorasTheorem(crate);
-				return(pitagorasCrates);
-			case 2:
-				crate =				this.#defineCrate(works);
-				pitagorasCrates =	this.#pitagorasTheorem(crate);
-				return(pitagorasCrates);
-			case 3:
-				crate =				this.#defineCrate(works);
-				pitagorasCrates =	this.#pitagorasTheorem(crate);
-				return(pitagorasCrates);
-		};
+		crate =				this.#defineCrate(works);
+		pitagorasCrates =	this.#pitagorasTheorem(crate);
+		return(pitagorasCrates);
 	};
 
 	#largestCrateTrail () {
@@ -70,7 +62,7 @@ export default class CraterPythagoras {
 
 		while(this.#largest.length) {
 			canvas = this.#largest.splice(0, MAXCANVAS);
-			crates.push(this.#crateInterface(canvas.length, canvas))
+			crates.push(this.#crateInterface(canvas))
 			crates.push({ works: canvas });
 		};
 		return(crates);
