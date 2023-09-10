@@ -576,8 +576,8 @@
 			transition: ani1s ease-in-out;
 		}
 		.crate-layer rect {
-			rx: 1rem;
-			ry: 1rem;
+			rx: .5rem;
+			ry: .5rem;
 			fill: transparent;
 			stroke-dasharray: 100%;
 			stroke-dashoffset: 100%;
@@ -595,7 +595,7 @@
 		.crate-layer {
 			padding: .5rem;
 			justify-content: center;
-			border-radius: 2rem;
+			border-radius: 1rem;
 			border: .1rem solid var(--iframes-bg);
 			box-shadow: var(--inner-shadow);
 		}
