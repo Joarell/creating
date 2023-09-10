@@ -118,10 +118,9 @@ function layerInterface(layer, num, unit) {
 };
 
 
-function addHTMLLayerWorksLine ({ works }, table, unit) {
+function addHTMLLayerWorksLine ({ works }, table, unit, kind) {
 	let layer;
 	let i =	0;
-	let tmp;
 
 	while (i < works.length) {
 		if (!Array.isArray(works[i])) {
@@ -131,12 +130,17 @@ function addHTMLLayerWorksLine ({ works }, table, unit) {
 				}).join("");
 			};
 		}
-		else if (Array.isArray(works[i])) {
-			works.map((art, count) => {
-				tmp = count;
+		else if (kind === 'sameSizeCrate') {
+			works[0].map((art, count) => {
+				i = count;
 				table.innerHTML += layerInterface(art, i + 1, unit);
 			});
-			i = tmp;
+		}
+		else if (Array.isArray(works[i])) {
+			works.map((art, count) => {
+				i = count;
+				table.innerHTML += layerInterface(art, i + 1, unit);
+			});
 		};
 		i++;
 	};
