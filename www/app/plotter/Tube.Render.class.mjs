@@ -61,9 +61,8 @@ export default class TubeRender {
 function nextPointY(info) {
 	let result;
 
-	if ( info.length === 2)
+	if (info.length === 2)
 		return (info.at(-2));
 	result = info.reduce((sum, val) => (sum + val), 0);
 	return (result - info.at(-1));
 };
-
