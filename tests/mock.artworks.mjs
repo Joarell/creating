@@ -784,7 +784,7 @@ const sculptore5 = [
 
 function defCrate(peces) {
 	const LENLIMIT =	277;
-	const PAD =			peces.length * 10;
+	const PAD =			peces.length > 1 ? peces.length * 10 : 0;
 	let x =				PAD;
 	let z =				0;
 	let y =				0;
