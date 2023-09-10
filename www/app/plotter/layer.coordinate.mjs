@@ -3,8 +3,8 @@
 export function spaceAvailable (art, space) {
 	const spaceX =	art[1] <= space[0];
 	const spaceY =	art[3] <= space[1];
-	const turnX =	art[1] <= space [1];
-	const turnY =	art[3] <= space [0];
+	const turnX =	art[1] <= space[1];
+	const turnY =	art[3] <= space[0];
 
 	if (spaceX && spaceY)
 		return (true);
@@ -43,21 +43,19 @@ export function screenSize() {
 
 
 export function deskTopView(sizes) {
-	const PADUP =	0;
-	const PADDOWN =	0;
 	const MAXSIZE =	800;
 	let layerLength;
 	let layerHeight;
 
 	if (sizes[0] > sizes[1]) {
 		layerLength = MAXSIZE;
-		layerHeight = (sizes[1] / sizes[0]) * MAXSIZE;
+		layerHeight = +((sizes[1] / sizes[0]) * MAXSIZE).toFixed(3);
 	}
 	else {
 		layerHeight = MAXSIZE;
-		layerLength = (sizes[0] / sizes[1]) * MAXSIZE;
-	}
-	return ({x: layerLength + PADUP, y: layerHeight + PADDOWN});
+		layerLength = +((sizes[0] / sizes[1]) * MAXSIZE).toFixed(3);
+	};
+	return ({ x: layerLength, y: layerHeight });
 };
 
 
@@ -70,11 +68,11 @@ export function mobileView(sizes) {
 
 	if (sizes[0] > sizes[1]) {
 		layerLength = MOBILEWIDTH;
-		layerHeight = (sizes[1] / sizes[0]) * MOBILEHEIGHT;
+		layerHeight = +((sizes[1] / sizes[0]) * MOBILEHEIGHT).toFixed(3);
 	}
 	else {
 		layerHeight = MOBILEHEIGHT;
-		layerLength = (sizes[0] / sizes[1]) * MOBILEWIDTH;
+		layerLength = +((sizes[0] / sizes[1]) * MOBILEWIDTH).toFixed
 	}
 	return ({x: layerLength, y: layerHeight});
 };

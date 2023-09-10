@@ -16,17 +16,16 @@ export default class CraterTube {
 	};
 
 	#sizeComposer(){
-		let X = this[0][1];
-		let Z = this[0][2];
-		let Y = this[0][3];
+		let x = this[0][1];
+		let z = this[0][2];
+		let y = 0;
 		
 		this.map(tube => {
-			X = tube[1] > X ? tube[1]: X;
-			Z = tube[2] > Z ? tube[2]: Z;
-			Y = tube[3] > Y ? tube[3]: Y;
+			x = tube[1] > x ? tube[1]: x;
+			z = tube[2] > z ? tube[2]: z;
+			y += tube[3];
 		});
-
-		return([X, Z, Y]);
+		return([x, z, y]);
 	}
 
 	#setPaddings(pad, highPad) {
@@ -47,9 +46,9 @@ export default class CraterTube {
 		return ([X, Z, Y]);
 	};
 
-	#tubeCrate(works, content) {
+	#tubeCrate(works) {
 		const DEFAULTPAD =	18;
-		const HEIGHTPAD =	25 * content;
+		const HEIGHTPAD =	25;
 		const baseSize =	this.#sizeComposer.call(works);
 
 		return (this.#setPaddings.call(baseSize, DEFAULTPAD, HEIGHTPAD));
@@ -60,11 +59,11 @@ export default class CraterTube {
 			case 1:
 				return(this.#oneTubeCrate.call(list));
 			case 2:
-				return(this.#tubeCrate(list, 2));
+				return(this.#tubeCrate(list));
 			case 3:
-				return(this.#tubeCrate(list, 3));
+				return(this.#tubeCrate(list));
 			case 4:
-				return(this.#tubeCrate(list, 4));
+				return(this.#tubeCrate(list));
 		};
 	};
 

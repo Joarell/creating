@@ -41,7 +41,7 @@ export function renderLayer() {
 	const crate =	getCurrentCrate();
 	const layer =	+sessionStorage.getItem('numLayer');
 
-	display.appendChild(plotter(crate, layer));
+	display.appendChild(plotter(crate, layer - 1));
 };
 
 

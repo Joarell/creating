@@ -123,7 +123,7 @@ export default class CraterLastCheckReArranger {
 		const standard =	this.#cratesDone.standardCrate.crates;
 		let sameLen;
 
-		if(!sameSize)
+		if(!sameSize || !standard)
 			return ;
 		sameLen = sameSize.length;
 		this.#consolidationTrail(standard, sameSize, sameLen);

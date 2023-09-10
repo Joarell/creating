@@ -1337,12 +1337,12 @@ export function provideLargestCanvas(opt) {
 function sizeComposer() {
 	let x = this[0][1];
 	let z = this[0][2];
-	let y = this[0][3];
+	let y = 0;
 	
 	this.map(tube => {
 		x = tube[1] > x ? tube[1] : x;
 		z = tube[2] > z ? tube[2] : z;
-		y = tube[3] > y ? tube[3] : y;
+		y += tube[3];
 	});
 	return([x, z, y]);
 };
@@ -1358,7 +1358,7 @@ function setSizes(pad, highPad){
 
 
 function oneTubeCrate() {
-	const DEFAULTPAD =	23;
+	const DEFAULTPAD =	18;
 	const HEIGHTPAD =	25;
 	const X =			this[0][1] + DEFAULTPAD;
 	const Z =			this[0][2] + DEFAULTPAD;
@@ -1367,9 +1367,9 @@ function oneTubeCrate() {
 	return ([X, Z, Y]);
 };
 
-function TubeCrate(content) {
+function TubeCrate() {
 	const DEFAULTPAD =	18;
-	const HEIGHTPAD =	25 * content;
+	const HEIGHTPAD =	25;
 	const baseSize =	sizeComposer.call(this);
 
 	return (setSizes.call(baseSize, DEFAULTPAD, HEIGHTPAD));
@@ -1381,11 +1381,11 @@ function interfaceTubeCrates(opt, tubes) {
 		case 1:
 			return(oneTubeCrate.call(tubes));
 		case 2:
-			return(TubeCrate.call(tubes, 2));
+			return(TubeCrate.call(tubes));
 		case 3:
-			return(TubeCrate.call(tubes, 3));
+			return(TubeCrate.call(tubes));
 		case 4:
-			return(TubeCrate.call(tubes, 4));
+			return(TubeCrate.call(tubes));
 	};
 };
 
@@ -1465,9 +1465,8 @@ export function provideTubeCrate(opt) {
 			break ;
 	};
 
-	if(tubes.length > 4) {
+	if(tubes.length > 4)
 		return(crateTubesOpt(tubes));
-	}
 	else
 		crate = crateTubesOpt(tubes); 
 	tubes = null;

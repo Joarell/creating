@@ -50,38 +50,21 @@ export async function layersNumber(list) {
 	for (key in data) {
 		if (data[key].hasOwnProperty('crates')) {
 			selected--;
-			data[key].crates.map((box, i) => {
-				if (selected === 0 && i % 2 === 1)
-					key === 'tubeCrate' || key === 'noCanvasCrate' ?
-						layers = 1 : layers = box.works.length;
-				else if (i % 2 === 0 && selected !== 0)
-					selected--;
-			}, 0);
+			if (key === 'sameSizeCrate')
+				layers = data[key].crates[1].works[0].length;
+			else
+				data[key].crates.map((box, i) => {
+					if (selected === 0 && i % 2 === 1)
+						key === 'tubeCrate' || key === 'noCanvasCrate' ?
+							layers = 1 : layers = box.works.length;
+					else if (i % 2 === 0 && selected !== 0)
+						selected--;
+				}, 0);
 		};
 	};
 	sessionStorage.setItem('layers', layers);
-	// changeCrateLayers(Number.parseInt(crate.split(' ')[1]));
 	sessionStorage.setItem('numLayer', 1);
 	setLayerDisplay();
-};
-
-
-function changeCrateLayers(num) {
-	const set =			new WeakSet();
-	const doc =			document.getElementById('input_estimate').value;
-	const list =		JSON.parse(sessionStorage.getItem(doc));
-	const { crates } =	list;
-	let i =				0;
-	const layer =		crates.filter(element => {
-		if (element[0] === 'Crate')
-			i++;
-		if ((i === num) && (element.length === 1)) {
-			return (element);
-		}
-	});
-
-	set.add(crates);
-	return(layer);
 };
 
 
