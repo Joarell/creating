@@ -99,13 +99,26 @@ export default class CraterStandard {
 		axis[0] > 0 && axis[2] <= 0 ? axis[2] = Y1 : 0;
 	};
 
-	#shiftAxios(sizes, layer) {
-		const CHECK1 = layer[0] / 2 <= sizes[0];
-		const CHECK2 = layer[2] <= sizes[1];
-		const CHECK3 = layer[3] / 2 <= sizes[0];
-		const CHECK4 = layer[5] <= sizes[1];
+	#shiftAxios(work, layer) {
+		const CHECK1 = layer[0] >= work[1];
+		const CHECK2 = layer[2] >= work[0];
+		const CHECK3 = layer[3] >= work[1];
+		const CHECK4 = layer[5] >= work[0];
 
+		if (work[0] <= layer[0] / 2 && work[1] <= layer[2])
+			return (false);
+		else if (work[0] <= layer[3] / 2 && work[1] <= layer[5])
+			return (false);
 		return(CHECK1 && CHECK2 || CHECK3 && CHECK4 ? true : false);
+	};
+
+	#matchWorkOnLayer(x, y, layer) {
+		const check1 = x <= layer[0] && y <= layer[5];
+		const check2 = x <= layer[3] && y <= layer[2];
+		const check3 = x <= layer[0] && y <= layer[2] && layer[3] === 0;
+		const check4 = x <= layer[0] && y <= layer[2] && layer[5] === 0;
+
+		return(check1 || check2 || check3 || check4 ? true : false);
 	};
 
 	#matchCanvasInLayer(matched, layer, len) {
@@ -115,19 +128,13 @@ export default class CraterStandard {
 		let i =			0;
 		let x =			this.#list[len][1];
 		let y =			this.#list[len][3];
-		let check1;
-		let check2;
-		let check3;
-		let check4;
 
 		while (i++ < 2) {
-			check1 = x <= layer[0] && y <= layer[5];
-			check2 = x <= layer[3] && y <= layer[2];
-			check3 = x <= layer[0] && y <= layer[2] && layer[3] === 0;
-			check4 = x <= layer[0] && y <= layer[2] && layer[5] === 0;
-
-			if (check1 || check2 || check3 || check4) {
-				this.#shiftAxios([x, y], layer) ? [x, y] = [y, x] : false;
+			if (this.#matchWorkOnLayer(x, y, layer)) {
+				if (this.#shiftAxios([x, y], layer, i)) {
+					[x, y] = [y, x]
+					x !== y ? i++ : false;
+				};
 				this.#analysisReduceSpace(layer, [x, y]);
 				if (i === 2 && this.#list[len].length < SPIN)
 					this.#list[len].push(" ");
@@ -200,7 +207,7 @@ export default class CraterStandard {
 	#checkOneCrate(list) {
 		const BIGGEST =	list.at(-1);
 		const CHECKER =	list.filter(art => {
-			if(BIGGEST[5] >= art[5])
+			if(BIGGEST[4] >= art[4])
 				return (art);
 		});
 		return (this.#list.length === CHECKER.length ? true : false);
@@ -243,6 +250,7 @@ export default class CraterStandard {
 		});
 
 		procList = this.#quickSort(procList, 5);
+		procList = procList.map(art => { art.pop(); return(art) });
 		return(this.#list = procList);
 	};
 
