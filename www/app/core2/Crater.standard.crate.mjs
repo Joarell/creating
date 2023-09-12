@@ -15,6 +15,20 @@ export default class CraterStandard {
 		return(this.#startCrate());
 	}
 
+	#quickSort(arts, pos) {
+		if (arts.length <= 1)
+			return(arts);
+
+		const left =	[];
+		const pivot =	arts.splice(0, 1);
+		const right =	[];
+		let j =			0;
+
+		for (j in arts)
+			arts[j][pos] <= pivot[0][pos] ? left.push(arts[j]) : right.push(arts[j]);
+		return(this.#quickSort(left, pos).concat(pivot, this.#quickSort(right, pos)));
+	};
+
 	#startCrate() {
 		const ARTS = [];
 
@@ -64,22 +78,34 @@ export default class CraterStandard {
 		const X2 = axis[3];
 		const Y2 = axis[5];
 
-		art[0] <= X2 ? axis[3] = X2 - art[0] : false;
-		(art[2] <= Y2) && (axis[3] !== X2) ? axis[5] = Y2 - art[1] : false;
+		art[0] <= X2 ? axis[3] = X2 - art[0] : axis[0] = X1 - art[0];
+		(art[2] <= Y2) && (axis[3] !== X2) ? axis[5] = Y2 - art[1] : 0;
 
-		(axis[0] !== X1) && (X1 === art[0]) ? axis[2] = Y2 - art[1] : false;
-		(axis[3] === 0) && (Y1 > Y2) ? axis[2] = Y1 - art[1] : false;
+		(axis[0] !== X1) && (X1 === art[0]) ? axis[2] = Y2 - art[1] : 0;
+		(axis[3] === 0) && (Y1 > Y2) ? axis[2] = Y1 - art[1] : 0;
 
-		(Y2 === 0) && (Y1 > 0) ? axis[0] = X1 - art[0] : false;
+		(Y2 === 0) && (Y1 > 0) ? axis[0] = X1 - art[0] : 0;
 
-		(axis[3] === X2) && (Y2 <= X1) ?
-			axis[0] = X1 - art[0] :
-			axis[5] = Y2 - art[1];
+		(axis[3] === X2) && (Y2 <= X1) ? axis[0] = X1 - art[0] : 0;
+		(axis[3] === 0) && (axis[5] === Y2) ? axis[5] = Y2 - art[1] : 0;
 
-		(axis[0] !== X1) && (axis[0] <= axis[3]) ? axis[5] = Y2 - art[1] : false;
+		(axis[0] === 0) && (axis[0] <= axis[3]) ? axis[5] = Y2 - art[1] : 0;
+		(axis[2] === Y1) && (axis[5] === Y1) ? axis[5] = Y2 - art[1] : 0;
 
-		art[0] === X2 ? axis[2] = Y1 - art[1] : false;
-		art[1] === Y2 ? axis[0] = X1 - art[0] : false;
+		art[0] === X2 ? axis[2] = Y1 - art[1] : 0;
+		art[1] === Y2 && axis[3] === X2 ? axis[0] = X1 - art[0] : 0;
+
+		axis[0] > 0 && axis[5] <= 0 ? axis[5] = Y2 : 0;
+		axis[0] > 0 && axis[2] <= 0 ? axis[2] = Y1 : 0;
+	};
+
+	#shiftAxios(sizes, layer) {
+		const CHECK1 = layer[0] / 2 <= sizes[0];
+		const CHECK2 = layer[2] <= sizes[1];
+		const CHECK3 = layer[3] / 2 <= sizes[0];
+		const CHECK4 = layer[5] <= sizes[1];
+
+		return(CHECK1 && CHECK2 || CHECK3 && CHECK4 ? true : false);
 	};
 
 	#matchCanvasInLayer(matched, layer, len) {
@@ -92,13 +118,16 @@ export default class CraterStandard {
 		let check1;
 		let check2;
 		let check3;
+		let check4;
 
 		while (i++ < 2) {
 			check1 = x <= layer[0] && y <= layer[5];
 			check2 = x <= layer[3] && y <= layer[2];
 			check3 = x <= layer[0] && y <= layer[2] && layer[3] === 0;
+			check4 = x <= layer[0] && y <= layer[2] && layer[5] === 0;
 
-			if (check1 || check2 || check3) {
+			if (check1 || check2 || check3 || check4) {
+				this.#shiftAxios([x, y], layer) ? [x, y] = [y, x] : false;
 				this.#analysisReduceSpace(layer, [x, y]);
 				if (i === 2 && this.#list[len].length < SPIN)
 					this.#list[len].push(" ");
@@ -148,10 +177,10 @@ export default class CraterStandard {
 	};
 
 	#fillCrate(measure) {
-		let crate =			[];
-		let greb =			[];
-		let checkLen =		true;
-		let i =				this.#hugeCanvasFirst(crate, measure);
+		let crate =		[];
+		let greb =		[];
+		let checkLen =	true;
+		let i =			this.#hugeCanvasFirst(crate, measure);
 		let len;
 
 		while (i++ < this.#maxLayers || checkLen && this.#list.length){
@@ -168,32 +197,60 @@ export default class CraterStandard {
 		return(crate);
 	};
 
-	#defineSizeBaseCrate() {
+	#checkOneCrate(list) {
+		const BIGGEST =	list.at(-1);
+		const CHECKER =	list.filter(art => {
+			if(BIGGEST[5] >= art[5])
+				return (art);
+		});
+		return (this.#list.length === CHECKER.length ? true : false);
+	};
+
+	// HACK: improves needed to define the best crate size 'backtrack'.
+	#defineSizeBaseCrate(list) {
+		const CRATE1 =	this.#checkOneCrate(list);
 		const MAXX =	250;
 		const MAXY =	132;
-		let len =		this.length;
+		let len =		list.length;
 		let x =			0;
 		let z =			0;
 		let y =			0;
 
-		while(len--) {
-			(x + x + this[len][1]) <= MAXX ? x += this[len][1]: 
-				x < this[len][1] && this[len][1] <= MAXX ? x = this[len][1]:
-					this[len][1] > MAXX ? x = this[len][1] : false;
-			
-			z = this[len][2] ?? z;
+		if (CRATE1) {
+			x = list.at(-1)[1];
+			z = list.at(-1)[2];
+			y = list.at(-1)[3];
+		}
+		else
+			while(len--) {
+				(x + x + list[len][1]) <= MAXX ? x += list[len][1] :
+					x < list[len][1] && list[len][1] <= MAXX ? x = list[len][1]:
+						list[len][1] > MAXX ? x = list[len][1] : false;
 
-			(y + y + this[len][3]) <= MAXY ? y += this[len][3]: 
-				y < this[len][3] && this[len][3] <= MAXY ? y = this[len][3]:
-					this[len][3] > MAXY ? y = this[len][3] : false;
-		};
+				z = list[len][2] ?? z;
+
+				(y + y + list[len][3]) <= MAXY ? y += list[len][3]:
+					y < list[len][3] && list[len][3] <= MAXY ? y = list[len][3]:
+						list[len][3] > MAXY ? y = list[len][3] : false;
+			};
 		return([x, z, y]);
+	};
+
+	#addXandYtimes(canvas) {
+		let procList = canvas.map(art => {
+			art.push(art[1] * art[3])
+			return(art);
+		});
+
+		procList = this.#quickSort(procList, 5);
+		return(this.#list = procList);
 	};
 
 	#provideCrate(crate) {
 		if (!this.#list.length)
 			return ;
-		const size =		this.#defineSizeBaseCrate.call(this.#list);
+		const listXYTimes =	this.#addXandYtimes(this.#list);
+		const size =		this.#defineSizeBaseCrate(listXYTimes);
 		const crateFilled =	this.#fillCrate(size);
 		const crateDone =	this.#defineFinalSize(size, crateFilled);
 
