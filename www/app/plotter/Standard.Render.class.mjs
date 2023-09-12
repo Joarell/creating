@@ -4,95 +4,87 @@ import * as coord from './layer.coordinate.mjs';
 export default class StandarRender {
 	#canvas;
 	#layer;
-	#innerCrate;
+	#inCrate;
 
-	constructor ({ works }, layerSize, dim ) {
-		this.#canvas =		works;
-		this.#layer =		layerSize;
-		this.#innerCrate =	dim;
+	constructor ({ works }, layerSize, dim, layer) {
+		this.#layer =	layerSize;
+		this.#inCrate =	dim;
+		this.#canvas =	Object.values(works[layer])[0];
 
 		return (this.#standardRender());
 	};
 
-	// BUG: Not working yet.
+	#worksPositionLayer({ x, y }) {
+		const RECT =	document.createElementNS("http://www.w3.org/2000/svg", "rect");
+		const INSET =	1;
+		const PAD =		20;
+		let length =	nextPoint(x);
+		let heigth;
+
+		if (this.#layer.x > length )
+			heigth = 0;
+		else {
+			length = 0;
+			heigth = (this.#layer.y - y.at(1));
+		}
+		RECT.setAttribute("x", length + INSET);
+		RECT.setAttribute("y", heigth + INSET);
+		x.at(-1) === this.#layer.x || nextPoint(x) + x.at(-1) === this.#layer.x ? 
+			RECT.setAttribute("width", x.at(-1) - PAD):
+			RECT.setAttribute("width", x.at(-1));
+		y.at(-1) >= this.#layer.y || length === 0 && heigth > 0 ?
+			RECT.setAttribute("height", y.at(-1) - PAD):
+			RECT.setAttribute("height", y.at(-1));
+		return(RECT);
+	};
+
+	#textOnCenter({ x, y }, work, layer) {
+		const TEXT =	document.createElementNS("http://www.w3.org/2000/svg", "text");
+		const MID =		0.5;
+		const POSTX =	nextPoint(x);
+		const POSTY =	nextPoint(y);
+		let posx;
+		let posy;
+
+		if (layer.x >= POSTX + x.at(-1)) {
+			posx = POSTX + MID * x.at(-1);
+			posy = y.at(-1) * MID;
+		}
+		else {
+			posx = (layer.x - POSTX) + x.at(-1) * MID;
+			posy = y.at(1) + y.at(-1) * MID;
+			// posy = (layer.y - POSTY) + y.at(-1) * MID;
+		}
+		TEXT.setAttribute("x", posx);
+		TEXT.setAttribute("y", posy);
+		TEXT.innerHTML = work[0];
+		return (TEXT);
+	};
+
 	#standardRender () {
 		const element =	document.createDocumentFragment();
-		let size =		[...this.#innerCrate];
-		let sizeY;
-		let sizeX;
-		let dimension;
+		let x =		[];
+		let y =		[];
+		let txt;
 
-		this.#canvas.map(tube => {
-			sizeX =	coord.proportion(tube[1], this.#layer.x, this.#innerCrate[0]);
-			sizeY =	coord.proportion(tube[3], this.#layer.y, this.#innerCrate[2]);
-			dimension = { sizeX, sizeY };
-			element.appendChild(this.#worksPositionLayer.call(dimension, size, this.#innerCrate));
-			element.appendChild(this.#textOnCenter.call(dimension, tube, size, this.#innerCrate));
-			this.#reduceSpace(tube, this.#innerCrate);
+		this.#canvas.map(art => {
+			x.push(coord.proportion(art[1], this.#layer.x, this.#inCrate[0]));
+			y.push(coord.proportion(art[3], this.#layer.y, this.#inCrate[2]));
+			element.appendChild(this.#worksPositionLayer({ x : x, y : y }));
+			txt = [ { x: x , y: y }, art, this.#layer ];
+			element.appendChild(this.#textOnCenter.apply(null, txt));
+			// nextPoint(x) + x.at(-1) === this.#layer.x ? x = [] : false;
+			// nextPoint(y) + y.at(-1) === this.#layer.y ? y = [] : false;
 		});
 		return (element);
 	};
+};
 
-	#worksPositionLayer(layer, crate) {
-		const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-		const { pixelX, pixelY } =	this.#drawPoint(layer, crate);
-		const PAD =					10;
+function nextPoint(info) {
+	let result;
 
-		if (layer[0] === crate[0])
-			rect.setAttribute("x", PAD);
-		else
-			rect.setAttribute("x", pixelX + PAD);
-		rect.setAttribute("y", pixelY + PAD);
-		rect.setAttribute("width", this.sizeX);
-		rect.setAttribute("height", this.sizeY);
-		return(rect);
-	}
-
-	#reduceSpace(art, layer) {
-		const checkX =	art[1] === layer[0];
-		const checkY =	art[3] === layer[1];
-		const turnX =	art[1] < layer[0];
-
-		if (checkX && checkY) {
-			layer[0] = 0;
-			layer[1] = 0;
-			return (layer);
-		}
-		else if (turnX) {
-			layer[0] = layer[0] - art[1];
-			layer[1] !== art[3] ? layer[1] = layer[1] - art[3]: true;
-		}
-		else {
-			layer[1] = layer[1] - art[3];
-			layer[0] !== art[1] ? layer[0] = layer[0] - art[1]: true;
-		[art[1], art[3]] = [art[3], art[1]];
-		}
-		return (layer);
-	};
-
-	#drawPoint (layer, crateSize) {
-		const X =			layer[0] / crateSize[0];
-		const Y =			layer[1] / crateSize[1];
-		const viewSize =	coord.screenSize();
-		const DRAWPIXEL =	0;
-		const POSX =		X === 1 ? DRAWPIXEL: X * viewSize;
-		const POSY =		Y === 1 ? DRAWPIXEL: Y * viewSize;
-
-		return ({ pixelX: POSX, pixelY: POSY });
-	};
-
-	#textOnCenter(work, layer, crate) {
-			const text =	document.createelementns("http://www.w3.org/2000/svg", "text");
-			const padx =	14;
-			const middlex = this.sizex * 1.5;
-			const centerx = this.sizex * 0.5;
-
-			if (layer[0] !== crate[0])
-				text.setattribute("x", middlex - padx);
-			else
-				text.setattribute("x", centerx - padx);
-			text.setattribute("y", this.sizey / 2);
-			text.innerhtml = work[0];
-			return (text);
-	};
+	if (info.length === 2)
+		return (info.at(-2));
+	result = info.reduce((sum, val) => (sum + val), 0);
+	return (+(result - info.at(-1)));
 };
