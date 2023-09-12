@@ -12,8 +12,6 @@ export default class noCanvasRender {
 		this.#inCrate =	dim;
 		this.#items =	works;
 
-		console.log(layerSize, 'and', dim);
-		console.log(this.#inCrate);
 		return (this.#canvasRender());
 	};
 
