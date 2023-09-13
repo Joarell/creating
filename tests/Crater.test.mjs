@@ -509,7 +509,7 @@ describe("These are tests to Crater class.", () => {
 
 		const works =		new Arranger(mock.artWorksList(list));
 		const current =		new Crater(works).crates.airCubTotal;
-		const expected =	952.086;
+		const expected =	844.949;
 	
 		assert.deepStrictEqual(current, expected);
 	});
@@ -539,7 +539,7 @@ describe("These are tests to Crater class.", () => {
 
 		const works =		new Arranger(mock.artWorksList(list));
 		const current =		new Crater(works).crates.airCubTotalBackUp
-		const expected =	952.086;
+		const expected =	844.949;
 	
 		assert.deepStrictEqual(current, expected);
 	});
@@ -569,7 +569,7 @@ describe("These are tests to Crater class.", () => {
 
 		const works =		new Arranger(mock.artWorksList(list));
 		const current =		new Crater(works).crates.wichAirPortBackUp;
-		const expected =	[{ PAX: 2 }, { CARGO: 1 }];
+		const expected =	[{ PAX: 1 }, { CARGO: 1 }];
 	
 		assert.deepStrictEqual(current, expected);
 	});
@@ -765,5 +765,22 @@ describe("These are tests to Crater class.", () => {
 		const expected =	result.allCratesBackUp;
 	
 		assert.notEqual(current, expected);
+	});
+
+	it("TEST-55: returns all crates and backUp crates done.", () => {
+		const list =	[
+			['5908', 100, 5, 100],
+			['8899', 50, 5, 50],
+			['777', 50, 5, 50],
+			['8980', 40, 5, 40],
+			['71234', 30, 5, 50],
+			['71214', 50, 5, 30],
+		];
+
+		const works =		new Arranger(mock.artWorksList(list));
+		const current =		new Crater(works).crates.airCubTotal;
+		const expected =	139.072;
+	
+		assert.deepStrictEqual(current, expected);
 	});
 });

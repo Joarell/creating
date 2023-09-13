@@ -54,13 +54,7 @@ const list = [
 // │ Crater Mock │
 // ╰─────────────╯
 export const mockTest40 =	{
-		crates: [ [ 153, 43, 78, 85.527 ], { works: [ [
-				[ '38388', 130, 5, 50, 0.033 ],
-				[ '18988', 130, 5, 50, 0.033 ],
-				[ '34733', 130, 5, 50, 0.033, ' ' ],
-				[ '75784', 130, 5, 50, 0.033 ]
-			] ]
-		} ],
+		crates: [],
 		backUp: [
 		[ 53, 33, 58, 16.907 ],
 		{ works: [[[
@@ -85,64 +79,82 @@ export const mockTest40 =	{
 
 export const mockTest41 =	{
 	crates : [
-		[ 203, 83, 188, 527.935 ],
+		[183, 96, 188, 550.464],
 		{
 			works: [
-				{ layer1: [ [ '1897', 180, 5, 100, 0.09 ] ] },
-				{ layer2: [ [ '8877', 160, 5, 160, 0.128 ] ] },
+				{ layer1: [ [ '8877', 160, 5, 160, 0.128 ] ] },
+				{ layer2: [
+					[ '38388', 130, 5, 50, 0.033, ' ' ],
+					[ '75784', 130, 5, 50, 0.033, ' ' ],
+					[ '34733', 130, 5, 50, 0.033, ' ' ],
+					[ '1111', 30, 3, 30, 0.003 ],
+					[ '71234', 30, 3, 30, 0.003 ],
+					[ '8980', 30, 3, 30, 0.003 ],
+					[ '2313', 30, 3, 30, 0.003 ]
+				] },
 				{
 					layer3: [
-						[ '5908', 150, 5, 90, 0.068 ],
-						[ '1112', 60, 5, 90, 0.027, ' ' ],
-						[ '777', 50, 3, 50, 0.007 ],
-						[ '1111', 30, 3, 30, 0.003 ],
-						[ '71234', 30, 3, 30, 0.003 ]
+						[ '18988', 130, 5, 50, 0.033, ' ' ],
+						[ '8899', 120, 3, 100, 0.036, ' ' ],
+						[ '8745', 130, 5, 100, 0.065, ' ' ]
 					]
 				},
 				{
-					layer4: [
-						[ '8745', 130, 5, 100, 0.065 ],
-						[ '8980', 30, 3, 30, 0.003 ],
-						[ '2313', 30, 3, 30, 0.003 ]
+					layer4: [ 
+						[ '5908', 150, 5, 90, 0.068, ' ' ],
+						[ '1112', 60, 5, 90, 0.027 ]
 					]
-				}
+				},
+				{ layer5: [ [ '777', 50, 3, 50, 0.007 ] ] }
 			]
 		},
-		[ 143, 96, 148, 338.624 ],
+		[203, 68, 128, 294.485 ],
 		{
 			works: [
-				{ layer1: [ [ '8899', 120, 3, 100, 0.036 ] ] },
-				{ layer2: [ [ '9884', 100, 5, 120, 0.06 ] ] },
-				{ layer3: [ [ '90909', 100, 5, 90, 0.045 ] ] },
-				{ layer4: [ [ '12345', 89, 5, 88, 0.039 ] ] },
-				{ layer5: [ [ '9897', 75, 5, 80, 0.03 ] ] }
+				{ layer1: [ [ '1897', 180, 5, 100, 0.09 ] ] },
+				{
+					layer2: [
+						[ '9884', 100, 5, 120, 0.06, ' ' ],
+						[ '90909', 100, 5, 90, 0.045, ' ' ],
+						[ '12345', 89, 5, 88, 0.039, ' ' ]
+					]
+				},
+				{ layer3: [ [ '9897', 75, 5, 80, 0.03, ' ' ] ] },
 			]
 		}
 	],
 	backUp: [
-		[ 203, 83, 188, 527.935 ],
+		[183, 81, 188, 464.454],
 		{
 			works: [
-				{ layer1: [ [ '1897', 180, 5, 100, 0.09 ] ] },
-				{ layer2: [ [ '8877', 160, 5, 160, 0.128 ] ] },
+				{ layer1: [ [ '8877', 160, 5, 160, 0.128 ] ] },
+				{
+					layer2: [
+						[ '5908', 150, 5, 90, 0.068, ' ' ],
+						[ '1112', 60, 5, 90, 0.027 ]
+					]
+				},
 				{
 					layer3: [
-						[ '5908', 150, 5, 90, 0.068 ],
-						[ '1112', 60, 5, 90, 0.027, ' ' ],
+						[ '8745', 130, 5, 100, 0.065, ' ' ],
 						[ '777', 50, 3, 50, 0.007 ]
 					]
 				},
-				{ layer4: [ [ '8745', 130, 5, 100, 0.065 ] ] }
+				{ layer4: [ [ '8899', 120, 3, 100, 0.036, ' ' ] ] },
 			]
 		},
-		[ 143, 96, 148, 338.624 ],
+		[203, 68, 128, 294.485 ],
 		{
 			works: [
-				{ layer1: [ [ '8899', 120, 3, 100, 0.036 ] ] },
-				{ layer2: [ [ '9884', 100, 5, 120, 0.06 ] ] },
-				{ layer3: [ [ '90909', 100, 5, 90, 0.045 ] ] },
-				{ layer4: [ [ '12345', 89, 5, 88, 0.039 ] ] },
-				{ layer5: [ [ '9897', 75, 5, 80, 0.03 ] ] }
+				{ layer1: [ [ '1897', 180, 5, 100, 0.09 ] ] },
+				{
+					layer2: [
+						[ '9884', 100, 5, 120, 0.06, ' ' ],
+						[ '90909', 100, 5, 90, 0.045, ' ' ],
+						[ '12345', 89, 5, 88, 0.039, ' ' ]
+					]
+				},
+				{ layer3: [ [ '9897', 75, 5, 80, 0.03 ] ] },
 			]
 		},
 	]
@@ -176,10 +188,11 @@ export function mockOptios() {
 	return({ crates });
 };
 
+
 export function fakeCrater(works) {
 	const crates =		['crates ahead'];
-	const TOTALCUB =	4579.569;
-	const PAX =			6;
+	const TOTALCUB =	4390.698;
+	const PAX =			5;
 	const CARGO =		2;
 	
 	crates.sameSizeCrate = new CraterSameSize(findTubesTest(works).sameSize);
@@ -317,25 +330,53 @@ function defineExternalSize(innerSize, works) {
 
 
 function crateReduceSize(layer, art) {
-	const x1 = layer[0];
-	const y1 = layer[2];
-	const x2 = layer[3];
-	const y2 = layer[5];
+	const X1 = layer[0];
+	const Y1 = layer[2];
+	const X2 = layer[3];
+	const Y2 = layer[5];
 
-	art[0] <= x2 ? layer[3] = x2 - art[0] : false;
-	art[1] <= y2 && layer[3] !== x2 ? layer[5] = y2 - art[1]: false;
+	art[0] <= X2 ? layer[3] = X2 - art[0] : layer[0] = X1 - art[0];
+	(art[2] <= Y2) && (layer[3] !== X2) ? layer[5] = Y2 - art[1] : 0;
 
-	x1 !== layer[0] && x1 === art[0] ? layer[2] = y2 - art[1] : false;
-	y1 > y2 && layer[3] === 0 ? layer[2] = y1 - art[1] : false;
-	y2 === 0 && y1 > 0 ? layer[0] = x1 - art[0] : false;
+	(layer[0] !== X1) && (X1 === art[0]) ? layer[2] = Y2 - art[1] : 0;
+	(layer[3] === 0) && (Y1 > Y2) ? layer[2] = Y1 - art[1] : 0;
 
-	y2 <= x1 && layer[3] === x2 ?
-		layer[0] = x1 - art[0]:
-		layer[5] = y2 - art[1];
-	x1 !== layer[0] && layer[0] <= layer[3] ? layer[5] = y2 - art[1] : false;
+	(Y2 === 0) && (Y1 > 0) ? layer[0] = X1 - art[0] : 0;
 
-	x2 === art[0] ? layer[2] = y1 - art[1] : false;
-	y2 === art[1] ? layer[0] = x1 - art[0] : false;
+	(layer[3] === X2) && (Y2 <= X1) ? layer[0] = X1 - art[0] : 0;
+	(layer[3] === 0) && (layer[5] === Y2) ? layer[5] = Y2 - art[1] : 0;
+
+	(layer[0] === 0) && (layer[0] <= layer[3]) ? layer[5] = Y2 - art[1] : 0;
+	(layer[2] === Y1) && (layer[5] === Y1) ? layer[5] = Y2 - art[1] : 0;
+
+	art[0] === X2 ? layer[2] = Y1 - art[1] : 0;
+	art[1] === Y2 && layer[3] === X2 ? layer[0] = X1 - art[0] : 0;
+
+	layer[0] > 0 && layer[5] <= 0 ? layer[5] = Y2 : 0;
+	layer[0] > 0 && layer[2] <= 0 ? layer[2] = Y1 : 0;
+};
+
+function shiftAxios(work, layer) {
+	const CHECK1 = layer[0] >= work[1];
+	const CHECK2 = layer[2] >= work[0];
+	const CHECK3 = layer[3] >= work[1];
+	const CHECK4 = layer[5] >= work[0];
+
+	if (work[0] <= layer[0] / 2 && work[1] <= layer[2])
+		return (false);
+	else if (work[0] <= layer[3] / 2 && work[1] <= layer[5])
+		return (false);
+	return(CHECK1 && CHECK2 || CHECK3 && CHECK4 ? true : false);
+};
+
+
+function matchWorkOnLayer(x, y, layer) {
+	const check1 = x <= layer[0] && y <= layer[5];
+	const check2 = x <= layer[3] && y <= layer[2];
+	const check3 = x <= layer[0] && y <= layer[2] && layer[3] === 0;
+	const check4 = x <= layer[0] && y <= layer[2] && layer[5] === 0;
+
+	return(check1 || check2 || check3 || check4 ? true : false);
 };
 
 
@@ -346,16 +387,13 @@ function matchCanvasInLayer(matched, layer, arts, len) {
 	let i =			0;
 	let x =			arts[len][1];
 	let y =			arts[len][3];
-	let check1;
-	let check2;
-	let check3;
 
 	while (i++ < 2) {
-		check1 = x <= layer[0] && y <= layer[5];
-		check2 = x <= layer[3] && y <= layer[2];
-		check3 = x <= layer[0] && y <= layer[2] && layer[3] === 0;
-
-		if (check1 || check2 || check3) {
+		if (matchWorkOnLayer(x, y, layer)) {
+			if (shiftAxios([x, y], layer)) {
+				[x, y] = [y, x ];
+				x !== y ? i++ : false;
+			};
 			crateReduceSize(layer, [x, y]);
 			if (i === 2 && arts[len].length < SPIN)
 				arts[len].push(" ");
@@ -429,7 +467,18 @@ function fillCrate(size, list) {
 };
 
 
+function checkOneCrate(list) {
+	const BIGGEST = list.at(-1);
+	const CHECKER = list.filter(art => {
+		if (BIGGEST[4] >= art[4])
+			return(art);
+	});
+	return(list.length === CHECKER.length ? true : false);
+};
+
+
 function defineSizeCrate(list) {
+	const CRATE =	checkOneCrate(list);
 	const MAXX =	250;
 	const MAXY =	132;
 	let len =		list.length;
@@ -437,32 +486,51 @@ function defineSizeCrate(list) {
 	let z =			0;
 	let y =			0;
 
-	while(len--) {
-		(x + x + list[len][1]) <= MAXX ? x += list[len][1]: 
-			x < list[len][1] && list[len][1] <= MAXX ?
-				x = list[len][1]:
-			list[len][1] > MAXX ? x = list[len][3] : false;
-	
-		z = list[len][2] ?? z;
+	if(CRATE) {
+		x = list.at(-1)[1];
+		z = list.at(-1)[2];
+		y = list.at(-1)[3];
+	}
+	else
+		while(len--) {
+			(x + x + list[len][1]) <= MAXX ? x += list[len][1]: 
+				x < list[len][1] && list[len][1] <= MAXX ?
+					x = list[len][1]:
+				list[len][1] > MAXX ? x = list[len][3] : false;
+		
+			z = list[len][2] ?? z;
 
-		(y + y + list[len][3]) <= MAXY ? y += list[len][3]: 
-			y < list[len][3] && list[len][3] <= MAXY ? y = list[len][3]:
-			list[len][3] > MAXY ? y = list[len][3] : false;
-	};
+			(y + y + list[len][3]) <= MAXY ? y += list[len][3]: 
+				y < list[len][3] && list[len][3] <= MAXY ? y = list[len][3]:
+				list[len][3] > MAXY ? y = list[len][3] : false;
+		};
 	return([x, z, y]);
+};
+
+
+function addXandYtimes(canvas) {
+	let procList = canvas.map(art => {
+		art.push(art[1] * art[3])
+		return(art);
+	});
+
+	procList = quickSort(procList, 5);
+	procList = procList.map(art => { art.pop(); return(art) });
+	return(procList);
 };
 
 
 function solveList(artList, crate) {
 	if (!artList.length)
 		return ;
-	const size =		defineSizeCrate(artList);
-	const crateFilled =	fillCrate(size, artList);
+	const listXYtimes = addXandYtimes(artList);
+	const size =		defineSizeCrate(listXYtimes);
+	const crateFilled =	fillCrate(size, listXYtimes);
 	const crateDone =	defineExternalSize(size, crateFilled);
 
 	crate.push(crateDone);
 	crate.push({ works: crateFilled });
-	return (solveList(artList, crate));
+	return (solveList(listXYtimes, crate));
 };
 
 
@@ -481,10 +549,8 @@ export function addCub(list) {
 export function conventionalWorks (opt) {
 	const list =		largestWorks();
 	const { sorted } =	list;
-	const innerCrate =	[];
-	const backUp =	[];
+	const inCrate =	[];
 	let works;
-	let innerCopy;
 
 	switch(opt) {
 		case 1:
@@ -504,10 +570,8 @@ export function conventionalWorks (opt) {
 			break ;
 	};
 
-	innerCopy = [...works];
-	solveList(works, innerCrate);
-	solveList(innerCopy, backUp);
-	return({ crates: innerCrate, backUp : backUp });
+	solveList(works, inCrate);
+	return({ crates: inCrate, backUp : JSON.parse(JSON.stringify(inCrate)) });
 };
 
 // addCub(standard4);
@@ -1623,10 +1687,10 @@ function quickSort(list, pos) {
 	const left =	[];
 	const pivot =	list.splice(0, 1);
 	const right =	[];
-	let i =			0;
 
-	for (i in list)
-		list[i][pos] <= pivot[0][pos] ? left.push(list[i]): right.push(list[i]);
+	list.map(art => {
+		art[pos] <= pivot[0][pos] ? left.push(art): right.push(art);
+	});
 	return(quickSort(left, pos).concat(pivot, quickSort(right, pos)));
 };
 
