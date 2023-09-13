@@ -15,20 +15,6 @@ export default class CraterStandard {
 		return(this.#startCrate());
 	}
 
-	#quickSort(arts, pos) {
-		if (arts.length <= 1)
-			return(arts);
-
-		const left =	[];
-		const pivot =	arts.splice(0, 1);
-		const right =	[];
-		let j =			0;
-
-		for (j in arts)
-			arts[j][pos] <= pivot[0][pos] ? left.push(arts[j]) : right.push(arts[j]);
-		return(this.#quickSort(left, pos).concat(pivot, this.#quickSort(right, pos)));
-	};
-
 	#startCrate() {
 		const ARTS = [];
 
@@ -36,6 +22,20 @@ export default class CraterStandard {
 		if (!this.#backUp)
 			return ({ crates :  ARTS });
 		return({ crates : ARTS, backUp : JSON.parse(JSON.stringify(ARTS)) });
+	};
+
+	#quickSort(arts, pos) {
+		if (arts.length <= 1)
+			return(arts);
+
+		const left =	[];
+		const pivot =	arts.splice(0, 1);
+		const right =	[];
+
+		arts.map(work => {
+			work[pos] <= pivot[0][pos] ? left.push(work) : right.push(work);
+		});
+		return(this.#quickSort(left, pos).concat(pivot, this.#quickSort(right, pos)));
 	};
 
 	#defineFinalSize(innerSize, works) {
@@ -131,7 +131,7 @@ export default class CraterStandard {
 
 		while (i++ < 2) {
 			if (this.#matchWorkOnLayer(x, y, layer)) {
-				if (this.#shiftAxios([x, y], layer, i)) {
+				if (this.#shiftAxios([x, y], layer)) {
 					[x, y] = [y, x]
 					x !== y ? i++ : false;
 				};
