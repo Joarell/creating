@@ -3,42 +3,94 @@
 import * as coord from './layer.coordinate.mjs';
 
 export default class noCanvasRender {
-	#pixSize;
+	#pixelSize;
 	#items;
 	#inCrate;
 
 	constructor ({ works }, layerSize, dim) {
-		this.#pixSize =	layerSize;
+		this.#pixelSize =	layerSize;
 		this.#inCrate =	dim;
 		this.#items =	works;
 
 		return (this.#canvasRender());
 	};
 
-	#worksPositionLayer({ x, y }) {
-		const RECT =	document.createElementNS("http://www.w3.org/2000/svg", "rect");
-		const INSET =	1;
-		const PAD =		20;
-		const X =		x.length > 1 ? nextPointX(x) : 0;
+	#layerPositioningWork(x, y) {
+		let posX;
+		let posY;
+		const RESET = findSpot(x, y, this.#pixelSize);
 
-		RECT.setAttribute("x", X + INSET);
-		RECT.setAttribute("y", 0 + INSET);
-		RECT.setAttribute("width", x.at(-1) - PAD);
-		RECT.setAttribute("height", y.at(-1) - PAD);
+		if (x.includes(0) || y.includes(0)) {
+			posX = RESET.x;
+			posY = RESET.y;
+		}
+		else {
+			!x.includes(0) && x.length === 1 ? posX = 0 : posX = RESET.x;
+			!y.includes(0) && !x.includes(0) ? posY = 0 : posY = RESET.y;
+		}
+		return({ posX, posY });
+	};
+
+	#worksPositionLayer({ X, Y }) {
+		const RECT =		document.createElementNS("http://www.w3.org/2000/svg", "rect");
+		const INSET =		1;
+		const PAD =			20;
+		const POS =			this.#layerPositioningWork(X, Y);
+		const { x, y } =	this.#pixelSize;
+
+		RECT.setAttribute("x", POS.posX + INSET);
+		RECT.setAttribute("y", POS.posY + INSET);
+		X.at(-1) >= x || POS.posX + X.at(-1) + INSET >= x ? 
+			RECT.setAttribute("width", X.at(-1) - PAD):
+			RECT.setAttribute("width", X.at(-1));
+		Y.at(-1) >= y || POS.posY + Y.at(-1) >= y ?
+			RECT.setAttribute("height", Y.at(-1) - PAD):
+			RECT.setAttribute("height", Y.at(-1));
 		return(RECT);
 	};
 
-	#textOnCenter({ x, y }, work) {
-		const text =	document.createElementNS("http://www.w3.org/2000/svg", "text");
+	#textOnCenter({ X, Y }, work, layer) {
+		const TEXT =	document.createElementNS("http://www.w3.org/2000/svg", "text");
 		const MID =		0.5;
-		const X =		x.at(-1) * MID;
-		const Y =		y.at(-1) * MID;
-		const CENTERX =	x.length === 1 ? X : nextPointX(x) + X;
+		const SUMMX =	+nextPoint(X).toFixed(0);
+		let posX;
+		let posY;
+		const RESET =	findSpot(X, Y, layer);
 
-		text.setAttribute("x", CENTERX);
-		text.setAttribute("y", Y);
-		text.innerHTML = work[0];
-		return (text);
+		if (X.includes(0) || Y.includes(0)) {
+			posX = RESET.x + (X.at(-1) * MID);
+			posY = RESET.y + (Y.at(-1) * MID);
+		}
+		else {
+			!X.includes(0) ? posX = SUMMX + (X.at(-1) * MID) :
+				posX = RESET.x (X.at(-1) * MID);
+			!Y.includes(0) && !X.includes(0) ? posY = Y.at(-1) * MID :
+				posY = RESET.y + (Y.at(-1) * MID);
+		}
+		TEXT.setAttribute("x", posX);
+		TEXT.setAttribute("y", posY);
+		TEXT.innerHTML = work[0];
+		return (TEXT);
+	};
+
+	#addZero(x, y, count, layer) {
+		let i =			count;
+		let resultX =	[];
+		let resultY =	[];
+
+		while(i >= 0 && x[i] !== 0) {
+			resultX.push(x[i]);
+			i--;
+		};
+		i = count;
+		while(i >= 0 && y[i] !== 0) {
+			resultY.push(y[i]);
+			i--;
+		};
+		resultX = resultX.reduce((sum, val) => (sum + val), 0);
+		resultY = resultY.reduce((sum, val) => (sum + val), 0);
+		resultX >= layer.x ? x.push(0) : false;
+		resultY >= layer.y ? y.push(0) : false;
 	};
 
 	#canvasRender () {
@@ -47,23 +99,49 @@ export default class noCanvasRender {
 		const Y =		[];
 		let txt;
 
-		this.#items.map(item => {
-			X.push(coord.proportion(item[1], this.#pixSize.x, this.#inCrate[0]));
-			Y.push(coord.proportion(item[2], this.#pixSize.y, this.#inCrate[1]));
-			element.appendChild(this.#worksPositionLayer({ x : X, y : Y }));
-			txt = [ { x: X, y: Y }, item, this.#inCrate ];
+		this.#items.map((item, i) => {
+			X.push(coord.proportion(item[1], this.#pixelSize.x, this.#inCrate[0]));
+			Y.push(coord.proportion(item[2], this.#pixelSize.y, this.#inCrate[1]));
+			element.appendChild(this.#worksPositionLayer({ X, Y }));
+			txt = [ { X, Y }, item, this.#pixelSize ];
 			element.appendChild(this.#textOnCenter.apply(null, txt));
+			this.#addZero( X, Y , i, this.#pixelSize);
 		});
-		console.log(X, Y);
 		return (element);
 	};
 };
 
-function nextPointX(info) {
+
+function nextPoint(info) {
 	let result;
 
 	if (info.length === 2)
 		return (info.at(-2));
 	result = info.reduce((sum, val) => (sum + val), 0);
 	return (result - info.at(-1));
+};
+
+
+// ╭──────────────────────────────────────────────────────────────╮
+// │ INFO: finds the last work location to define the next point. │
+// ╰──────────────────────────────────────────────────────────────╯
+function findSpot(axioX, axioY, layer) {
+	let x;
+	let y;
+	let tmp;
+	let zeroX =		0;
+	let zeroY =		0;
+	const SUMMX =	nextPoint(axioX);
+	const SUMMY =	nextPoint(axioY);
+
+	axioX.map(val => val === 0 ? zeroX++ : false);
+	axioY.map(val => val === 0 ? zeroY++ : false);
+	x = SUMMX - (zeroX * layer.x);
+	y = SUMMX < layer.x || SUMMY < layer.y ? 0 : SUMMY - (zeroY * layer.y);
+	if (x === 0 && axioY.includes(0)) {
+		tmp = axioY.indexOf(layer.y);
+		tmp >= 0 ? x = axioX[tmp] : x = axioX[axioY.indexOf(0) - 1];
+	};
+	y >= layer.y ? y = SUMMY - (zeroY * layer.y) - axioY.at(-1) : false;
+	return ({ x, y });
 };
