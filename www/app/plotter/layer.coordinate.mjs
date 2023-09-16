@@ -22,10 +22,8 @@ export function proportion (val, pixArea, layer) {
 
 export function getScreenProportion(screenSize, layerSize) {
 	const DESKTOP =	1024;
-	return(
-		screenSize >= DESKTOP ?
-			deskTopView(layerSize) :
-			mobileView(layerSize)
+	return( screenSize >= DESKTOP ?
+			deskTopView(layerSize) : mobileView(layerSize)
 	);
 };
 
@@ -49,11 +47,11 @@ export function deskTopView(sizes) {
 
 	if (sizes[0] > sizes[1]) {
 		layerLength = MAXSIZE;
-		layerHeight = +((sizes[1] / sizes[0]) * MAXSIZE).toFixed(3);
+		layerHeight = +((sizes[1] / sizes[0]) * MAXSIZE).toFixed(0);
 	}
 	else {
 		layerHeight = MAXSIZE;
-		layerLength = +((sizes[0] / sizes[1]) * MAXSIZE).toFixed(3);
+		layerLength = +((sizes[0] / sizes[1]) * MAXSIZE).toFixed(0);
 	};
 	return ({ x: layerLength, y: layerHeight });
 };
@@ -68,11 +66,11 @@ export function mobileView(sizes) {
 
 	if (sizes[0] > sizes[1]) {
 		layerLength = MOBILEWIDTH;
-		layerHeight = +((sizes[1] / sizes[0]) * MOBILEHEIGHT).toFixed(3);
+		layerHeight = +((sizes[1] / sizes[0]) * MOBILEHEIGHT).toFixed(0);
 	}
 	else {
 		layerHeight = MOBILEHEIGHT;
-		layerLength = +((sizes[0] / sizes[1]) * MOBILEWIDTH).toFixed
+		layerLength = +((sizes[0] / sizes[1]) * MOBILEWIDTH).toFixed(0);
 	}
 	return ({x: layerLength, y: layerHeight});
 };

@@ -11,7 +11,6 @@ export function plotter({ type, crate, works }, layerNum) {
 	const draw =	cleanRender();
 	const screen =	globalThis.screen.availWidth;
 	const inCrate = [crate[0] - 23, crate[1] - 23, crate[2] - 28]
-	const PAD =		works.works.length * 10;
 	let layerV;
 
 	layerV = coord.getScreenProportion(screen, [inCrate[0], inCrate[2]]);
@@ -29,7 +28,6 @@ export function plotter({ type, crate, works }, layerNum) {
 			draw.appendChild(new sameSizeRender(works, layerV, inCrate, layerNum));
 			break ;
 		case 'noCanvasCrate' : //Renders only the X and Y, of each object.
-			inCrate[0] -= PAD;
 			layerV = coord.getScreenProportion(screen, [inCrate[0], inCrate[1]]);
 			draw.setAttribute("width", layerV.x);
 			draw.setAttribute("height", layerV.y);
