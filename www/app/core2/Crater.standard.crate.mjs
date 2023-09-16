@@ -132,8 +132,8 @@ export default class CraterStandard {
 		while (i++ < 2) {
 			if (this.#matchWorkOnLayer(x, y, layer)) {
 				if (this.#shiftAxios([x, y], layer)) {
-					[x, y] = [y, x]
 					x !== y ? i++ : false;
+					[x, y] = [y, x];
 				};
 				this.#analysisReduceSpace(layer, [x, y]);
 				if (i === 2 && this.#list[len].length < SPIN)
@@ -173,13 +173,23 @@ export default class CraterStandard {
 	#hugeCanvasFirst(crate, layer) {
 		let countLayer =	0;
 		const GETCANVAS =	[];
+		const HUGE =		this.#list.at(-1);
 
-		this.#list.map(art => art[1] === layer[0] ? GETCANVAS.push(art) : false);
-		GETCANVAS.map(canvas => {
+		if (HUGE[1] === layer[0] && HUGE[3] === layer[2]) {
 			countLayer++;
-			this.#setLayer.call(countLayer, crate, [canvas]);
-			this.#list.splice(this.#list.indexOf(canvas), 1);
-		});
+			this.#setLayer.call(countLayer, crate, [HUGE]);
+			this.#list.pop();
+		}
+		else {
+			this.#list.reverse().map(art => {
+				art[1] === layer[0] ? GETCANVAS.push(art) : false
+			});
+			GETCANVAS.map(canvas => {
+				countLayer++;
+				this.#setLayer.call(countLayer, crate, [canvas]);
+				this.#list.splice(this.#list.indexOf(canvas), 1);
+			});
+		};
 		return(countLayer);
 	};
 
@@ -190,7 +200,7 @@ export default class CraterStandard {
 		let i =			this.#hugeCanvasFirst(crate, measure);
 		let len;
 
-		while (i++ < this.#maxLayers || checkLen && this.#list.length){
+		while (i++ < this.#maxLayers || checkLen && this.#list.length) {
 			len = this.#list.length - 1;
 			this.#matchCanvasInLayer(greb, [...measure, ...measure], len);
 			if (greb.length > 0) {

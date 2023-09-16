@@ -141,29 +141,33 @@ export default class CraterSameSize {
 	};
 
 	#countWorks () {
-		let x =		this.#peces[0][1];
-		let z =		this.#peces[0][2];
-		let y =		this.#peces[0][3];
-		let sizes =	[[x, z, y]];
-		let works =	[];
+		const MAXDEPTH =	10;
+		let x =				this.#peces[0][1];
+		let z =				this.#peces[0][2];
+		let y =				this.#peces[0][3];
+		let sizes =			[[x, z, y]];
+		let works =			[];
 
 		this.#peces.map(work => {
-			if(work[1] !== x && work[3] !== y) {
-				sizes.push([works]);
-				x =	work[1];
-				z =	work[2];
-				y =	work[3];
-				sizes.push([x, z, y]);
-				works =	[];
+			if (work[2] <= MAXDEPTH) {
+				if(work[1] !== x && work[3] !== y) {
+					sizes.push([works]);
+					x =	work[1];
+					z =	work[2];
+					y =	work[3];
+					sizes.push([x, z, y]);
+					works =	[];
+				};
+				works.push(work);
 			};
-			works.push(work);
 		});
-		sizes.push(works);
-		return (sizes);
+		return (works.length >= 4 ? sizes.push(works) : null);
 	};
 
 	#startCrateTrail () {
 		let countDiffSizes =	this.#countWorks();
+		if (countDiffSizes === null)
+			return(null);
 		const crateDone =		this.#compCrate(countDiffSizes);
 		const BACKUP =			JSON.parse(JSON.stringify(crateDone));
 

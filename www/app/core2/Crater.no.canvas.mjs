@@ -20,21 +20,45 @@ export default class CraterNotCanvas {
 		return ([X, Z, Y]);
 	};
 
+	#splitCrate(works) {
+		let x =		0;
+		let z =		0;
+		let newX =	0;
+		let newZ =	0;
+		let aux;
+
+		aux = works.length / 2;
+		works.map(item => {
+			if (aux-- > 0) {
+				x += item[1];
+				z < item[2] ? z = item[2] : false;
+			}
+			newX = item[1];
+			newZ < item[2] ? newZ = item[2] : false;
+		});
+		newX > x ? true : newX = x;
+		newZ += z;
+		return ({ newX, newZ });
+	}
+
 	#defCrate(peces) {
 		const PAD =			peces.length > 1 ? peces.length * 10 : 0;
 		const LENLIMIT =	277;
+		const SPLIT =		peces.length > 4 && peces.length % 2 === 0;
 		let x =				PAD;
 		let z =				0;
 		let y =				0;
+		let splited;
 
 		peces.map(item => {
 			x +=	item[1];
 			z =		item[2] > z ? item[2] : z;
 			y =		item[3] > y ? item[3] : y;
 		});
-		if (x > LENLIMIT && peces.length % 2 === 0) {
-			x /= 2;
-			z *= 2;
+		if (x > LENLIMIT || SPLIT) {
+			splited = this.#splitCrate(peces);
+			x = splited.newX;
+			z = splited.newZ;
 		};
 		return (this.#setPadding([x, z, y]));
 	};
@@ -103,6 +127,6 @@ export default class CraterNotCanvas {
 				crate.push({ works: peces });
 			};
 		};
-		return ({ crates: crate});
+		return ({ crates: crate });
 	};
 };
