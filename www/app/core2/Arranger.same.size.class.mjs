@@ -10,16 +10,17 @@ export default class ArrangerSameSize {
 	};
 
 	#trailOne() {
-		const getter =	[];
-		const checker = (a, b) => a[4] === b[4] && a[0] !== b[0];
+		const MAXDEPTH =	10;
+		const getter =		[];
+		const checker =		(a, b) => a[4] === b[4] && a[0] !== b[0];
 		this.map(work => {
 			let i =	0;
 
-			for(i in this)
-				if (!getter.includes(this[i]) && checker(this[i], work))
-					getter.push(this[i])
+			if (work[2] <= MAXDEPTH)
+				for(i in this)
+					if (!getter.includes(this[i]) && checker(this[i], work))
+						getter.push(this[i])
 		});
-	
 		return(getter);
 	};
 

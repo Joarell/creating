@@ -15,28 +15,27 @@ export default class ArrangerStarter {
 
 			return(arrWork);
 		});
-
 		return(cubedList);
 	};
 
-	#quickSort(list, pos) {
+	#quickS(list, pos) {
 		if (list.length <= 1)
 			return(list);
 
 		const left =	[];
 		const pivot =	list.splice(0, 1);
 		const right =	[];
-		let i =			0;
 
-		for (i in list)
-			list[i][pos] <= pivot[0][pos] ? left.push(list[i]): right.push(list[i]);
-		return(this.#quickSort(left, pos) .concat(pivot, this.#quickSort(right, pos)));
+		list.map(work => {
+			work[pos] <= pivot[0][pos] ? left.push(work): right.push(work);
+		});
+		return(this.#quickS(left, pos) .concat(pivot, this.#quickS(right, pos)));
 	};
 
 	#starter() {
 		const arrCubedList =	this.#addCubValueToEachWork();
 		const CUBEDPOS =		4
-		const sorted =			this.#quickSort(arrCubedList, CUBEDPOS);
+		const sorted =			this.#quickS(arrCubedList, CUBEDPOS);
 
 		return({ sorted });
 	};
