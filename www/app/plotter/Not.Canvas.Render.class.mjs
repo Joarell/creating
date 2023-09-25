@@ -9,8 +9,8 @@ export default class noCanvasRender {
 
 	constructor ({ works }, layerSize, dim) {
 		this.#pixelSize =	layerSize;
-		this.#inCrate =	dim;
-		this.#items =	works;
+		this.#inCrate =		dim;
+		this.#items =		works;
 
 		return (this.#canvasRender());
 	};
