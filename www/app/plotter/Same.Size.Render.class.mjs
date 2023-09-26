@@ -10,7 +10,7 @@ export default class sameSizeRender {
 	constructor ({ works }, layerSize, dim, layer) {
 		this.#pixSize =	layerSize;
 		this.#inCrate =	dim;
-		this.#canvas =	Array.isArray(works[0]) ? [works[0][layer]] : works[0];
+		this.#canvas =	Array.isArray(works[0]) ? [works[layer]] : works[0];
 
 		return (this.#canvasRender());
 	};
@@ -29,13 +29,15 @@ export default class sameSizeRender {
 	};
 
 	#textOnCenter({ x, y }, work) {
-		const text =	document.createElementNS("http://www.w3.org/2000/svg", "text");
-		const X =		x.at(-1);
-		const Y =		y.at(-1) * 0.5;
-		const CENTERX =	X * 0.5;
-		const POS =		y.length === 1 ? Y : nextPointY(y) + Y;
+		const text =		document.createElementNS("http://www.w3.org/2000/svg", "text");
+		const MID =			0.5;
+		const LETTERPIX =	10;
+		const X =			x.at(-1);
+		const Y =			y.at(-1) * MID;
+		const CENTERX =		X * MID;
+		const POS =			y.length === 1 ? Y : nextPointY(y) + Y;
 
-		text.setAttribute("x", CENTERX);
+		text.setAttribute("x", CENTERX - ((work.length * LETTERPIX) * MID));
 		text.setAttribute("y", POS);
 		text.innerHTML = work[0];
 		return (text);
@@ -49,7 +51,7 @@ export default class sameSizeRender {
 
 
 		this.#canvas.map(art => {
-			X.push(coord.proportion(art[1], this.#pixSize.x, this.#inCrate[1]));
+			X.push(coord.proportion(art[1], this.#pixSize.x, this.#inCrate[0]));
 			Y.push(coord.proportion(art[3], this.#pixSize.y, this.#inCrate[2]));
 			element.appendChild(this.#worksPositionLayer({ x: X, y: Y }));
 			txt = [ { x: X , y: Y }, art, this.#inCrate, ];

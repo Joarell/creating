@@ -50,20 +50,21 @@ export default class noCanvasRender {
 	};
 
 	#textOnCenter({ X, Y }, work, layer) {
-		const TEXT =	document.createElementNS("http://www.w3.org/2000/svg", "text");
-		const MID =		0.5;
-		const SUMMX =	+nextPoint(X).toFixed(0);
+		const TEXT =		document.createElementNS("http://www.w3.org/2000/svg", "text");
+		const MID =			0.5;
+		const SUMMX =		+nextPoint(X).toFixed(0);
+		const LETTERPIX =	10;
 		let posX;
 		let posY;
 		const RESET =	findSpot(X, Y, layer);
 
 		if (X.includes(0) || Y.includes(0)) {
-			posX = RESET.x + (X.at(-1) * MID);
+			posX = RESET.x + (X.at(-1) * MID - ((work.length * LETTERPIX) * MID));
 			posY = RESET.y + (Y.at(-1) * MID);
 		}
 		else {
 			!X.includes(0) ? posX = SUMMX + (X.at(-1) * MID) :
-				posX = RESET.x (X.at(-1) * MID);
+				posX = RESET.x (X.at(-1) * MID - ((work.length * LETTERPIX) * MID));
 			!Y.includes(0) && !X.includes(0) ? posY = Y.at(-1) * MID :
 				posY = RESET.y + (Y.at(-1) * MID);
 		}

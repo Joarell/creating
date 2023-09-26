@@ -29,11 +29,13 @@ export default class LargestRender {
 	};
 
 	#textOnCenter({ x, y }, work) {
-		const text =	document.createElementNS("http://www.w3.org/2000/svg", "text");
-		const X =		x.at(-1);
-		const Y =		y.at(-1) * 0.5;
-		const CENTERX =	X * 0.5;
-		const POS =		y.length === 1 ? Y : nextPointY(y) + Y;
+		const text =		document.createElementNS("http://www.w3.org/2000/svg", "text");
+		const X =			x.at(-1);
+		const Y =			y.at(-1) * 0.5;
+		const MID =			0.5;
+		const LETTERPIX =	10;
+		const CENTERX =		X * MID - ((work.length * LETTERPIX) * MID);
+		const POS =			y.length === 1 ? Y : nextPointY(y) + Y;
 
 		text.setAttribute("x", CENTERX);
 		text.setAttribute("y", POS);

@@ -14,43 +14,49 @@ export default class StandarRender {
 		return (this.#standardRender());
 	};
 
-	#worksPositionLayer({ pos, values }) {
+	#worksPositionLayer({next, pos, values }) {
 		const RECT =		document.createElementNS("http://www.w3.org/2000/svg", "rect");
 		const INSET =		1;
 		const PAD =			20;
 		const X =			this.#pixelSize.x;
 		const Y =			this.#pixelSize.y;
+		const EXTPADY =		0;
+		// const EXTPADY =		next[1] ? Y - next[1] : 0; // BUG: rendering wrong in some cases.
 	
 		RECT.setAttribute("x", pos[0] + INSET);
-		RECT.setAttribute("y", pos[1] + INSET);
+		RECT.setAttribute("y", pos[1] + EXTPADY + INSET);
 
 		values[0] >= X || pos[0] + values[0] + INSET >= X ?
 		RECT.setAttribute("width", values[0] - PAD) :
 			RECT.setAttribute("width", values[0]);
-		values[1] >= Y || pos[1] + values[1] >= Y ?
+		values[1] + EXTPADY >= Y || pos[1] + values[1] >= Y ?
 		RECT.setAttribute("height", values[1] - PAD) :
 			RECT.setAttribute("height", values[1]);
 		return (RECT);
 	};
 	
-	#textOnCenter({ pos, values }, code) {
-		const TEXT =	document.createElementNS("http://www.w3.org/2000/svg", "text");
-		const MID =		0.5;
+	#textOnCenter({ next, pos, values }, code) {
+		const TEXT =		document.createElementNS("http://www.w3.org/2000/svg", "text");
+		const MID =			0.5;
+		// const Y =			this.#pixelSize.y;
+		const EXTPADY =		0;
+		// const EXTPADY =	next[1] ? Y - next[1] : 0; // BUG: rendering wrong in some cases.
+		const LETTERPIX =	10;
 		let posX;
 		let posY;
 
 		posX = pos[0] + (values[0] * MID);
-		posY = pos[1] + (values[1] * MID);
-		TEXT.setAttribute("x", posX);
+		posY = pos[1] + EXTPADY + (values[1] * MID);
+		TEXT.setAttribute("x", posX - ((code.length * LETTERPIX) * MID));
 		TEXT.setAttribute("y", posY);
 		TEXT.innerHTML = code;
 		return (TEXT);
 	};
 
-
 	#verifyPlaceWork(data, valX, valY) {
 		let x;
 		let y;
+		const SIZEX =		this.#pixelSize.x;
 		const SIZEY =		this.#pixelSize.y;
 		const { next, values, pos } = data;
 		const postPos1 =	next[0] === null ? values[0] + valX : next[0] + valX;
@@ -67,13 +73,24 @@ export default class StandarRender {
 				x = next[1] + valY <= SIZEY && pos[0] === 0 ? 0 : values[0];
 				y = next[1] + valY <= SIZEY ? next[1] : undefined;
 			};
-			return (x === undefined || y === undefined ? false : { x, y });
 		}
 		else {
-			postPos1 && pos[0] === 0 ? x = next[0] : x = values[0];
+			postPos1 <= SIZEX ? x = next[0] : x = values[0];
 			pos[1] === 0 && next[0] ? y = 0 : y = values[1];
 		};
 		return (x !== undefined && y !== undefined ? { x, y } : false);
+	};
+
+	#lastWorkUpdateNextValues(coord, data, x, y) {
+		const PIXELX =	this.#pixelSize.x;
+		const PIXELY =	this.#pixelSize.y;
+		const checkX1 =	coord.x === PIXELX || data.next[0] === null;
+		const checkX2 = data.values[0] + x === PIXELX;
+		const checkY1 = coord.y === PIXELY || data.values[1] + y === PIXELY;
+		const checkY2 = data.pos[0] === x && data.pos[1] + y < PIXELY;
+
+		checkX1 || checkX2 ? data.next[0] = null : data.next[0] = x + data.next[0];
+		checkY1 ? data.next[1] = null : checkY2 ? data.next[1] = null : false;
 	};
 
 	#setNewWork(code, data, previous, coord, x, y) {
@@ -82,23 +99,18 @@ export default class StandarRender {
 		const PIXELX = this.#pixelSize.x;
 		const PIXELY = this.#pixelSize.y;
 
-		nextX = previous.next[0] + x === PIXELX ? null :
-			previous.next[0] === null && x === previous.pos[0] ?
-				null : PIXELX - (PIXELX - (previous.next[0] + x));
-		nextY = previous.next[1] + y === PIXELY ? null :
+		nextX = coord.x + x === PIXELX ? null :
+			coord.x === null && x === previous.pos[0] ?
+				null : PIXELX - (PIXELX - (coord.x + x));
+		nextY = coord.y + y === PIXELY && coord.y !== 0 ? null :
 			coord.y === 0 ? PIXELY - (PIXELY - y) :
-				PIXELY - (PIXELY - (previous.next[1] + y));
-
+				PIXELY - (PIXELY - (coord.y + y));
 		data[code] = {
 			values: [x, y],
 			pos: [coord.x, coord.y],
 			next: [nextX, nextY],
 		};
-		x !== 0 && previous.values[0] + x === PIXELX ? previous.next[0] = null :
-			previous.next[0] = PIXELX - previous.next[0];
-		y !== 0 && previous.values[1] + y === PIXELY ? previous.next[1] = null :
-			previous.pos[0] === x && previous.pos[1] + y < PIXELY ?
-			previous.next[1] = null : false;
+		this.#lastWorkUpdateNextValues(coord, previous, x , y);
 		return (data);
 	}
 
