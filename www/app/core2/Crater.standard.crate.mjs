@@ -72,6 +72,11 @@ export default class CraterStandard {
 	//		   ╰──────────────────────────╯
 	//					 axis[3]
 
+	#redefineLayerSize(axis, art, procLayer) {
+		(axis[3] === 0) && (axis[2] > 0) ? axis[3] = procLayer.X1 - art[0] : 0;
+		axis[5] < 0 ? axis[5] = procLayer.Y2 : 0;
+	};
+
 	#analysisReduceSpace(axis, art) {
 		const X1 = axis[0];
 		const Y1 = axis[2];
@@ -87,16 +92,17 @@ export default class CraterStandard {
 		(Y2 === 0) && (Y1 > 0) ? axis[0] = X1 - art[0] : 0;
 
 		(axis[3] === X2) && (Y2 <= X1) ? axis[0] = X1 - art[0] : 0;
-		(axis[3] === 0) && (axis[5] === Y2) ? axis[5] = Y2 - art[1] : 0;
+		(axis[3] === 0) && (axis[2] === Y1) ? axis[5] = Y2 - art[1] : 0;
 
-		(axis[0] === 0) && (axis[0] <= axis[3]) ? axis[5] = Y2 - art[1] : 0;
-		(axis[2] === Y1) && (axis[5] === Y1) ? axis[5] = Y2 - art[1] : 0;
+		(axis[0] === 0) && (axis[5] > 0) ? axis[5] = Y2 - art[1] : 0;
+		(axis[2] === Y1) && (axis[5] === Y2) ? axis[5] = Y2 - art[1] : 0;
+		(axis[5] <= 0) && (axis[3] !== X2) ? axis[0] = X1 - art[0] : 0;
 
-		art[0] === X2 ? axis[2] = Y1 - art[1] : 0;
-		art[1] === Y2 && axis[3] === X2 ? axis[0] = X1 - art[0] : 0;
+		(art[0] === X2) && (axis[2] > art[1]) ? axis[2] = Y1 - art[1] : 0;
+		(art[1] === Y2) && (axis[3] === X2) ? axis[0] = X1 - art[0] : 0;
+		(axis[0] === X1) && (axis[5] === 0) ? axis[0] = X1 - art[0] : 0;
 
-		axis[0] > 0 && axis[5] <= 0 ? axis[5] = Y2 : 0;
-		axis[0] > 0 && axis[2] <= 0 ? axis[2] = Y1 : 0;
+		this.#redefineLayerSize(axis, art, { X1, Y1, X2, Y2 });
 	};
 
 	#shiftAxios(work, layer) {
@@ -104,9 +110,10 @@ export default class CraterStandard {
 		const CHECK2 = layer[2] >= work[0];
 		const CHECK3 = layer[3] >= work[1];
 		const CHECK4 = layer[5] >= work[0];
+		const CHECK5 = work[1] === layer[0] || work[0] === layer[1];
 
-		if (work[0] <= layer[0] / 2 && work[1] <= layer[2])
-			return (false);
+		if (CHECK5)
+			return (true);
 		else if (work[0] <= layer[3] / 2 && work[1] <= layer[5])
 			return (false);
 		return(CHECK1 && CHECK2 || CHECK3 && CHECK4 ? true : false);
@@ -125,11 +132,12 @@ export default class CraterStandard {
 		if(layer[0] === 0 && layer[2] === 0 || len < 0)
 			return ;
 		const SPIN =	6
+		const FLIP =	2;
 		let i =			0;
 		let x =			this.#list[len][1];
 		let y =			this.#list[len][3];
 
-		while (i++ < 2) {
+		while (i++ < FLIP) {
 			if (this.#matchWorkOnLayer(x, y, layer)) {
 				if (this.#shiftAxios([x, y], layer)) {
 					x !== y ? i++ : false;
@@ -267,8 +275,8 @@ export default class CraterStandard {
 	#provideCrate(crate) {
 		if (!this.#list.length)
 			return ;
-		const listXYTimes =	this.#addXandYtimes(this.#list);
-		const size =		this.#defineSizeBaseCrate(listXYTimes);
+		this.#addXandYtimes(this.#list);
+		const size =		this.#defineSizeBaseCrate(this.#list);
 		const crateFilled =	this.#fillCrate(size);
 		const crateDone =	this.#defineFinalSize(size, crateFilled);
 

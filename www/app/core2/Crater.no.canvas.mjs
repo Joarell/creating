@@ -10,6 +10,20 @@ export default class CraterNotCanvas {
 		return (this.#noCanvasTrail());
 	};
 
+	#quickSort(arts, pos) {
+		if (arts.length <= 1)
+			return(arts);
+
+		const left =	[];
+		const pivot =	arts.splice(0, 1);
+		const right =	[];
+
+		arts.map(work => {
+			work[pos] <= pivot[0][pos] ? left.push(work) : right.push(work);
+		});
+		return(this.#quickSort(left, pos).concat(pivot, this.#quickSort(right, pos)));
+	};
+
 	#setPadding(innerCrate) {
 		const PAD =		23;
 		const HIGHPAD =	28;
@@ -42,10 +56,9 @@ export default class CraterNotCanvas {
 	}
 
 	#defCrate(peces) {
-		const PAD =			peces.length > 1 ? peces.length * 10 : 0;
 		const LENLIMIT =	277;
 		const SPLIT =		peces.length > 4 && peces.length % 2 === 0;
-		let x =				PAD;
+		let x =				0;
 		let z =				0;
 		let y =				0;
 		let splited;
@@ -79,43 +92,52 @@ export default class CraterNotCanvas {
 		const MAXLEN =		554;
 		const MAXDEPTH =	177;
 
-		if (x < MAXLEN && z < MAXDEPTH)
-			return(items.length);
-		else if(items.length % 2 === 0) {
+		if(items.length % 2 === 0)
 			if(x > MAXLEN && (z * 2) + PAD < MAXDEPTH)
 				return (items.length);
-			return(~~(MAXLEN / x * items.length));
-		};
 		return (equals === 0 || items[0][1] > MAXLEN ? 1 : equals);
 	};
 
 	//returns how many works to put in side the crate.
 	#defineMaxPeces(items) {
-		const PAD =			10;
-		let x =				PAD * items.length;
-		let z =				0;
-		let equals =		0;
+		const PAD =		10;
+		let x =			PAD * items.length;
+		let z =			0;
+		let equals =	0;
+		const workRef =	items[0];
 
 		items.map(art => {
-			const compare =	this.#validationComp(art, items[0]);
-			const bool1 =	art[2] - items[0][2];
-			const bool2 =	items[0][2] - art[2];
+			const compare =	this.#validationComp(art, workRef);
+			const bool1 =	art[2] - workRef[2];
+			const bool2 =	workRef[2] - art[2];
+			const check =	bool1 > 0 && bool1 <= PAD || bool2 > 0 && bool2 <= PAD;
 			
-			if (compare === true)
+			if (compare === true || check) {
 				equals++;
-			else if((bool1 > 0 && bool1 <= PAD) || (bool2 > 0 && bool2 <= PAD))
-				equals++;
-			x += art[1];
-			z += art[3];
+				x += art[1];
+				z += art[3];
+			};
 		});
 		return (this.#validationSizes(x, z, equals, items));
+	};
+
+	#addXandZtimes(canvas) {
+		let procList = canvas.map(art => {
+			art.push(art[1] * art[2])
+			return(art);
+		});
+
+		procList = this.#quickSort(procList, 5);
+		procList = procList.map(art => { art.pop(); return(art) });
+		return(this.#peces = procList);
 	};
 
 	#noCanvasTrail(){
 		const crate =	[];
 		let peces;
 
-		while(this.#peces.length) {
+		this.#addXandZtimes(this.#peces);
+		while(this.#peces.length  > 1) {
 			peces =		this.#defineMaxPeces(this.#peces);
 			peces =		this.#peces.splice(0, peces);
 			if (peces.length > 0) {

@@ -37,7 +37,7 @@ export default class Crater {
 		this.#lastCheckArrangerSameSizeToStandard();
 		for (key in this.#crates)
 			if (!(this.#crates[key]?.hasOwnProperty('crates') && CRATES.includes(key)))
-				delete this.#crates[key];
+				key !== 'sameSizeCrate' ? delete this.#crates[key] : false;
 
 		this.#allCrates();
 		this.#cubAir();

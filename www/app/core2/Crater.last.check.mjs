@@ -65,9 +65,8 @@ export default class CraterLastCheckReArranger {
 				data[key][val].works.map(arts => {
 					if (Array.isArray(arts) && arts.length === 6)
 						arts.pop();
-					else if (!Array.isArray(arts)) {
+					else if (!Array.isArray(arts))
 						this.#layersInterfaceChecker(arts);
-					};
 				});
 			};
 		};
@@ -77,22 +76,22 @@ export default class CraterLastCheckReArranger {
 // │ Simulates if the crate with 5 layer can consolidate all same size canvas. │
 // ╰───────────────────────────────────────────────────────────────────────────╯
 	#processingCratesList (listCrates, attCrate) {
+		const LEN =			attCrate.works.length;
+		const CUBPOS =		4;
+		const MAXLAYER =	5;
 		let result;
 		let i =				0;
 		let bool =			true;
-		const LEN =			attCrate.works[0].length;
-		const CUBPOS =		4;
-		const MAXLAYER =	5;
 		let extracted =		LEN === 1 ?
-			[...attCrate.works[0].flat()]:
-			[...attCrate.works[0]];
+			[...attCrate.works[0]]:
+			[...attCrate.works];
 
 		while(i++ < listCrates.length && bool) {
 			if (i % 2 === 1) {
 				result =	[...extracted];
 				this.#removeCrate(listCrates, i, result);
 				result =	this.#quickSort(result, CUBPOS);
-				result =	new CraterStandard(result, MAXLAYER);
+				result =	new CraterStandard(result, false, MAXLAYER);
 				if (result.crates.length === 2) {
 					listCrates.splice(i, 1, result.crates[1]);
 					listCrates.splice(i - 1, 1, result.crates[0]);
@@ -108,7 +107,7 @@ export default class CraterLastCheckReArranger {
 
 	#consolidationTrail(standard, sameSizes, pos){
 		if (pos < 0)
-			return ;
+			return(sameSizes);
 		if (pos % 2 === 1)
 			if(this.#processingCratesList(standard, sameSizes[pos])){
 				sameSizes.splice(pos - 1, 2);
