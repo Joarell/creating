@@ -56,105 +56,105 @@ const list = [
 export const mockTest40 =	{
 		crates: [],
 		backUp: [
-		[ 53, 33, 58, 16.907 ],
-		{ works: [[[
+		[ 53, 43, 58, 22.03 ],
+		{ works: [[
 				[ '1111', 30, 3, 30, 0.003 ],
 				[ '71234', 30, 3, 30, 0.003 ],
 				[ '8980', 30, 3, 30, 0.003 ],
 				[ '2313', 30, 3, 30, 0.003 ]
-			]]]
+			]]
 		},
 		[ 153, 43, 78, 85.527 ],
-		{ works: [
+		{ works:
 			[
 				[ '38388', 130, 5, 50, 0.033 ],
 				[ '18988', 130, 5, 50, 0.033 ],
 				[ '34733', 130, 5, 50, 0.033 ],
 				[ '75784', 130, 5, 50, 0.033 ]
 			]
-		]}
+		}
 	]
 };
 	
 
 export const mockTest41 =	{
-	crates : [
-		[183, 96, 188, 550.464],
+	crates: [
+		[ 183, 83, 188, 475.922 ],
 		{
 			works: [
 				{ layer1: [ [ '8877', 160, 5, 160, 0.128 ] ] },
-				{ layer2: [
-					[ '38388', 130, 5, 50, 0.033, ' ' ],
-					[ '75784', 130, 5, 50, 0.033, ' ' ],
-					[ '34733', 130, 5, 50, 0.033, ' ' ],
-					[ '1111', 30, 3, 30, 0.003 ],
-					[ '71234', 30, 3, 30, 0.003 ],
-					[ '8980', 30, 3, 30, 0.003 ],
-					[ '2313', 30, 3, 30, 0.003 ]
-				] },
+				{
+					layer2: [
+						[ '75784', 130, 5, 50, 0.033, ' ' ],
+						[ '34733', 130, 5, 50, 0.033, ' ' ],
+						[ '18988', 130, 5, 50, 0.033, ' ' ],
+						[ '38388', 130, 5, 50, 0.033, ' ' ]
+					]
+				},
 				{
 					layer3: [
-						[ '18988', 130, 5, 50, 0.033, ' ' ],
+						[ '1112', 60, 5, 90, 0.027, ' ' ],
 						[ '8899', 120, 3, 100, 0.036, ' ' ],
 						[ '8745', 130, 5, 100, 0.065, ' ' ]
 					]
 				},
 				{
-					layer4: [ 
-						[ '5908', 150, 5, 90, 0.068, ' ' ],
-						[ '1112', 60, 5, 90, 0.027 ]
-					]
-				},
-				{ layer5: [ [ '777', 50, 3, 50, 0.007 ] ] }
+				layer4: [ [ '5908', 150, 5, 90, 0.068, ' ' ], [ '777', 50, 3, 50, 0.007 ] ]
+				}
 			]
 		},
-		[203, 68, 128, 294.485 ],
+		[ 203, 81, 128, 350.784 ],
 		{
 			works: [
 				{ layer1: [ [ '1897', 180, 5, 100, 0.09 ] ] },
 				{
 					layer2: [
-						[ '9884', 100, 5, 120, 0.06, ' ' ],
+						[ '12345', 89, 5, 88, 0.039, ' ' ],
 						[ '90909', 100, 5, 90, 0.045, ' ' ],
-						[ '12345', 89, 5, 88, 0.039, ' ' ]
+						[ '9897', 75, 5, 80, 0.03, ' ' ]
 					]
 				},
-				{ layer3: [ [ '9897', 75, 5, 80, 0.03, ' ' ] ] },
+				{
+					layer3: [
+						[ '9884', 100, 5, 120, 0.06, ' ' ],
+						[ '2313', 30, 3, 30, 0.003 ],
+						[ '8980', 30, 3, 30, 0.003 ]
+					]
+				},
+				{
+					layer4: [ [ '71234', 30, 3, 30, 0.003 ], [ '1111', 30, 3, 30, 0.003 ] ]
+				}
 			]
 		}
 	],
 	backUp: [
-		[183, 81, 188, 464.454],
+		[ 183, 81, 188, 464.454 ],
 		{
 			works: [
 				{ layer1: [ [ '8877', 160, 5, 160, 0.128 ] ] },
 				{
 					layer2: [
 						[ '5908', 150, 5, 90, 0.068, ' ' ],
-						[ '1112', 60, 5, 90, 0.027 ]
-					]
-				},
-				{
-					layer3: [
-						[ '8745', 130, 5, 100, 0.065, ' ' ],
+						[ '1112', 60, 5, 90, 0.027, ' ' ],
 						[ '777', 50, 3, 50, 0.007 ]
 					]
 				},
-				{ layer4: [ [ '8899', 120, 3, 100, 0.036, ' ' ] ] },
+				{ layer3: [ [ '8745', 130, 5, 100, 0.065, ' ' ] ] },
+				{ layer4: [ [ '8899', 120, 3, 100, 0.036, ' ' ] ] }
 			]
 		},
-		[203, 68, 128, 294.485 ],
-		{
+		[ 203, 83, 128, 359.445 ],
+		{ 
 			works: [
 				{ layer1: [ [ '1897', 180, 5, 100, 0.09 ] ] },
+				{ layer2: [ [ '9884', 100, 5, 120, 0.06, ' ' ] ] },
 				{
-					layer2: [
-						[ '9884', 100, 5, 120, 0.06, ' ' ],
+					layer3: [
 						[ '90909', 100, 5, 90, 0.045, ' ' ],
 						[ '12345', 89, 5, 88, 0.039, ' ' ]
 					]
 				},
-				{ layer3: [ [ '9897', 75, 5, 80, 0.03 ] ] },
+				{ layer4: [ [ '9897', 75, 5, 80, 0.03 ] ] }
 			]
 		},
 	]
@@ -173,7 +173,7 @@ export function mockOptios() {
 			const Z =			sizes[1];
 			const Y =			sizes[2];
 			const AIRCONST =	6000;
-			const cubCrate =	+(X * Z *Y / AIRCONST).toFixed(3);
+			const cubCrate =	+(X * Z * Y / AIRCONST).toFixed(3);
 
 			sizes.push(cubCrate);
 		};
@@ -181,18 +181,18 @@ export function mockOptios() {
 	
 	crates.sameSizeCrate = new CraterSameSize(findTubesTest().sameSize, BACKUP);
 	crates.standardCrate = new CraterStandard(findTubesTest().sorted, BACKUP);
-	crates.sameSizeCrate.crates.map(setCub);
-	crates.standardCrate.crates.map(setCub);
-	crates.sameSizeCrate.backUp.map(setCub);
-	crates.standardCrate.backUp.map(setCub);
+	crates.sameSizeCrate?.crates?.map(setCub);
+	crates.standardCrate?.crates?.map(setCub);
+	crates.sameSizeCrate?.backUp?.map(setCub);
+	crates.standardCrate?.backUp?.map(setCub);
 	return({ crates });
 };
 
 
 export function fakeCrater(works) {
 	const crates =		['crates ahead'];
-	const TOTALCUB =	4390.698;
-	const PAX =			5;
+	const TOTALCUB =	4532.091;
+	const PAX =			6;
 	const CARGO =		2;
 	
 	crates.sameSizeCrate = new CraterSameSize(findTubesTest(works).sameSize);
@@ -329,41 +329,50 @@ function defineExternalSize(innerSize, works) {
 };
 
 
-function crateReduceSize(layer, art) {
-	const X1 = layer[0];
-	const Y1 = layer[2];
-	const X2 = layer[3];
-	const Y2 = layer[5];
-
-	art[0] <= X2 ? layer[3] = X2 - art[0] : layer[0] = X1 - art[0];
-	(art[2] <= Y2) && (layer[3] !== X2) ? layer[5] = Y2 - art[1] : 0;
-
-	(layer[0] !== X1) && (X1 === art[0]) ? layer[2] = Y2 - art[1] : 0;
-	(layer[3] === 0) && (Y1 > Y2) ? layer[2] = Y1 - art[1] : 0;
-
-	(Y2 === 0) && (Y1 > 0) ? layer[0] = X1 - art[0] : 0;
-
-	(layer[3] === X2) && (Y2 <= X1) ? layer[0] = X1 - art[0] : 0;
-	(layer[3] === 0) && (layer[5] === Y2) ? layer[5] = Y2 - art[1] : 0;
-
-	(layer[0] === 0) && (layer[0] <= layer[3]) ? layer[5] = Y2 - art[1] : 0;
-	(layer[2] === Y1) && (layer[5] === Y1) ? layer[5] = Y2 - art[1] : 0;
-
-	art[0] === X2 ? layer[2] = Y1 - art[1] : 0;
-	art[1] === Y2 && layer[3] === X2 ? layer[0] = X1 - art[0] : 0;
-
-	layer[0] > 0 && layer[5] <= 0 ? layer[5] = Y2 : 0;
-	layer[0] > 0 && layer[2] <= 0 ? layer[2] = Y1 : 0;
+function redefineLayerSize(axis, art, procLayer) {
+	(axis[3] === 0) && (axis[2] > 0) ? axis[3] = procLayer.X1 - art[0] : 0;
+	axis[5] < 0 ? axis[5] = procLayer.Y2 : 0;
 };
+
+
+function crateReduceSize(axis, art) {
+	const X1 = axis[0];
+	const Y1 = axis[2];
+	const X2 = axis[3];
+	const Y2 = axis[5];
+
+	art[0] <= X2 ? axis[3] = X2 - art[0] : axis[0] = X1 - art[0];
+	(art[2] <= Y2) && (axis[3] !== X2) ? axis[5] = Y2 - art[1] : 0;
+
+	(axis[0] !== X1) && (X1 === art[0]) ? axis[2] = Y2 - art[1] : 0;
+	(axis[3] === 0) && (Y1 > Y2) ? axis[2] = Y1 - art[1] : 0;
+
+	(Y2 === 0) && (Y1 > 0) ? axis[0] = X1 - art[0] : 0;
+
+	(axis[3] === X2) && (Y2 <= X1) ? axis[0] = X1 - art[0] : 0;
+	(axis[3] === 0) && (axis[2] === Y1) ? axis[5] = Y2 - art[1] : 0;
+
+	(axis[0] === 0) && (axis[5] > 0) ? axis[5] = Y2 - art[1] : 0;
+	(axis[2] === Y1) && (axis[5] === Y2) ? axis[5] = Y2 - art[1] : 0;
+	(axis[5] <= 0) && (axis[3] !== X2) ? axis[0] = X1 - art[0] : 0;
+
+	(art[0] === X2) && (axis[2] > art[1]) ? axis[2] = Y1 - art[1] : 0;
+	(art[1] === Y2) && (axis[3] === X2) ? axis[0] = X1 - art[0] : 0;
+	(axis[0] === X1) && (axis[5] === 0) ? axis[0] = X1 - art[0] : 0;
+
+	redefineLayerSize(axis, art, { X1, Y1, X2, Y2 });
+};
+
 
 function shiftAxios(work, layer) {
 	const CHECK1 = layer[0] >= work[1];
 	const CHECK2 = layer[2] >= work[0];
 	const CHECK3 = layer[3] >= work[1];
 	const CHECK4 = layer[5] >= work[0];
+	const CHECK5 = work[1] === layer[0] || work[0] === layer[1];
 
-	if (work[0] <= layer[0] / 2 && work[1] <= layer[2])
-		return (false);
+	if (CHECK5)
+		return (true);
 	else if (work[0] <= layer[3] / 2 && work[1] <= layer[5])
 		return (false);
 	return(CHECK1 && CHECK2 || CHECK3 && CHECK4 ? true : false);
@@ -384,15 +393,16 @@ function matchCanvasInLayer(matched, layer, arts, len) {
 	if(layer[0] === 0 && layer[2] === 0 || len < 0)
 		return ;
 	const SPIN =	6
+	const FLIP =	2;
 	let i =			0;
 	let x =			arts[len][1];
 	let y =			arts[len][3];
 
-	while (i++ < 2) {
+	while (i++ < FLIP) {
 		if (matchWorkOnLayer(x, y, layer)) {
 			if (shiftAxios([x, y], layer)) {
-				[x, y] = [y, x ];
 				x !== y ? i++ : false;
+				[x, y] = [y, x ];
 			};
 			crateReduceSize(layer, [x, y]);
 			if (i === 2 && arts[len].length < SPIN)
@@ -434,13 +444,23 @@ function setLayer(crate, works) {
 function hugeCanvasFirst(crate, list, layer) {
 	let countLayer =	0;
 	const GETCANVAS =	[];
+	const HUGE =		list.at(-1);
 
-	list.map(art => art[1] === layer[0] ? GETCANVAS.push(art) : false);
-	GETCANVAS.map(canvas => {
+	if (HUGE[1] === layer[0] && HUGE[3] === layer[2]) {
 		countLayer++;
-		setLayer.call(countLayer, crate, [canvas]);
-		list.splice(list.indexOf(canvas), 1);
-	});
+		setLayer.call(countLayer, crate, [HUGE]);
+		list.pop();
+	}
+	else {
+		list.reverse().map(art => {
+			art[1] === layer[0] ? GETCANVAS.push(art) : false
+		});
+		GETCANVAS.map(canvas => {
+			countLayer++;
+			setLayer.call(countLayer, crate, [canvas]);
+			list.splice(list.indexOf(canvas), 1);
+		});
+	};
 	return(countLayer);
 };
 
@@ -763,7 +783,7 @@ const sculptore0 = [
 	['22126', 80, 80, 100],
 ];
 
-const sculptore1 = [
+let sculptore1 = [
 	['22222', 80, 80, 100],
 	['22207', 80, 80, 100],
 	['22126', 80, 80, 100],
@@ -778,7 +798,7 @@ export const furniture2 = [
 	['22296', 80, 80, 70],
 ];
 
-const sculptore2 = [
+let sculptore2 = [
 	['22222', 80, 80, 100],
 	['22207', 80, 80, 100],
 	['22126', 80, 80, 100],
@@ -802,7 +822,7 @@ export const furniture3 = [
 	['22290', 80, 80, 70],
 ];
 
-const sculptore3 = [
+let sculptore3 = [
 	['22222', 80, 80, 100],
 	['22207', 80, 80, 100],
 	['22126', 80, 80, 100],
@@ -823,7 +843,7 @@ export const furniture4 = [
 	['22126', 280, 180, 100],
 ];
 
-const sculptore4 = [
+let sculptore4 = [
 	['22222', 280, 180, 100],
 	['22207', 280, 180, 100],
 	['22126', 280, 180, 100],
@@ -846,21 +866,45 @@ const sculptore5 = [
 ];
 
 
+function splitCrate(works) {
+	let x =		0;
+	let z =		0;
+	let newX =	0;
+	let newZ =	0;
+	let aux;
+
+	aux = works.length / 2;
+	works.map(item => {
+		if (aux-- > 0) {
+			x += item[1];
+			z < item[2] ? z = item[2] : false;
+		}
+		newX = item[1];
+		newZ < item[2] ? newZ = item[2] : false;
+	});
+	newX > x ? true : newX = x;
+	newZ += z;
+	return ({ newX, newZ });
+}
+
+
 function defCrate(peces) {
 	const LENLIMIT =	277;
-	const PAD =			peces.length > 1 ? peces.length * 10 : 0;
-	let x =				PAD;
+	const SPLIT =		peces.length > 4 && peces.length % 2 === 0;
+	let x =				0;
 	let z =				0;
 	let y =				0;
+	let splited;
 
 	peces.map(item => {
 		x +=	item[1];
 		z =		item[2] > z ? item[2] : z;
 		y =		item[3] > y ? item[3] : y;
 	});
-	if (x > LENLIMIT && peces.length % 2 === 0) {
-		x /= 2;
-		z *= 2;
+	if (x > LENLIMIT || SPLIT) {
+		splited = splitCrate(peces);
+		x = splited.newX;
+		z = splited.newZ;
 	};
 	return (setPad([x, z, y]));
 };
@@ -878,10 +922,20 @@ function validationComp(val1, val2) {
 };
 
 
-function defineMaxWorks(items) {
+function validationSizes(x, z, equals, items) {
 	const PAD =			10;
 	const MAXLEN =		554;
 	const MAXDEPTH =	177;
+
+	if(items.length % 2 === 0)
+		if(x > MAXLEN && (z * 2) + PAD < MAXDEPTH)
+			return (items.length);
+	return (equals === 0 || items[0][1] > MAXLEN ? 1 : equals);
+};
+
+
+function defineMaxWorks(items) {
+	const PAD =			10;
 	let x =				PAD * items.length;
 	let z =				0;
 	let equals =		0;
@@ -890,38 +944,44 @@ function defineMaxWorks(items) {
 		const compare =	validationComp(art, items[0]);
 		const check1 =	art[2] - items[0][2];
 		const check2 =	items[0][2] - art[2];
+		const check =	check1 > 0 && check1 <= PAD || check2 > 0 && check2 <= PAD;
 		
-		if (compare === true)
+		if (compare === true || check) {
 			equals++;
-		else if((check1 > 0 && check1 <= PAD) || (check2 > 0 && check2 <= PAD))
-			equals++;
-		x += art[1];
-		z += art[3];
+			x += art[1];
+			z += art[3];
+		};
 	});
-	if (x < MAXLEN && z < MAXDEPTH)
-		return(items.length);
-	else if(items.length % 2 === 0) {
-		if(x > MAXLEN && (z * 2) + PAD < MAXDEPTH)
-			return(items.length);
-		return(~~(MAXLEN / x * items.length));
-	};
-	return(equals === 0 || items[0][1] > MAXLEN ? 1 : equals);
+	return(validationSizes(x, z, equals, items));
+};
+
+
+function addXandZtimes(list) {
+	let procList = list.map(art => {
+		art.push(art[1] * art[2])
+		return(art);
+	});
+
+	procList = quickSort(procList, 5);
+	procList = procList.map(art => { art.pop(); return(art) });
+	return(procList);
 };
 
 
 function noCanvasTrail(list) {
 	const crate =	[];
 	let peces;
+	const newList =	addXandZtimes(list);
 
-	while(list.length) {
-		peces =		defineMaxWorks(list);
-		peces =		list.splice(0, peces);
+	while(newList.length > 1) {
+		peces =		defineMaxWorks(newList);
+		peces =		newList.splice(0, peces);
 		if (peces.length > 0) {
 			crate.push(defCrate(peces));
 			crate.push({ works: peces });
 		}
 		else {
-			crate.push(defCrate(list.splice(0, 1)));
+			crate.push(defCrate(newList.splice(0, 1)));
 			crate.push({ works: peces });
 		};
 	};
@@ -953,7 +1013,7 @@ export function provideNoCanvas(opt) {
 			noCanvas = sculptore5;
 			break ;
 	};
-	crate =		{ crates: noCanvasTrail(noCanvas) };
+	crate =	{ crates: noCanvasTrail(noCanvas) };
 	return (crate);
 };
 
@@ -1161,15 +1221,15 @@ function orderSizes(base, art) {
 
 	if (STACK) {
 		DEPTH =	(LEN % 2) + (LEN / 2);
-		x =		base[0][0];
+		x =		base[0];
 		z =		DEPTH * PACKAGECM;
-		y =		base[0][2];
+		y =		base[2];
 	}
 	else {
 		DEPTH =	(LEN % 2) + LEN;
-		x =		base[0][0];
+		x =		base[0];
 		z =		DEPTH * PACKAGECM;
-		y =		base[0][2];
+		y =		base[2];
 	};
 	return (setPad([x, z, y]));
 };
@@ -1183,11 +1243,11 @@ function increaseSizesStacking(base, newBase) {
 			newBase[0][3],
 		]:
 		newBase;
-	const LIMIT =		132;
-	let x =				base[0][0];
-	let z =				base[0][1];
-	let y =				base[0][2] + extraSizes[2];
-	let stack =			false;
+	const LIMIT =	132;
+	let x =			base[0][0];
+	let z =			base[0][1];
+	let y =			base[0][2] + extraSizes[2];
+	let stack =		false;
 
 	if (y > LIMIT && x < LIMIT) {
 		[y, x] =	[x, y];
@@ -1202,13 +1262,13 @@ function increaseSizesStacking(base, newBase) {
 function compCrate(tracks) {
 	const LIMITWORKS =	10;
 	const crate =		[];
-	let baseCrate;
 	let comp;
+	let baseCrate;
 	let works;
 
 	while (tracks.length) {
-		baseCrate =	tracks.splice(0, 1);
-		works =		tracks.splice(0, tracks[0].length);
+		baseCrate =	tracks.splice(0, 1).flat();
+		works =		tracks.splice(0, 1).flat();
 		tracks.length > 0 ? comp = tryComposeLayer(baseCrate, tracks) : false;
 		if(comp) {
 			baseCrate =	increaseSizesStacking(baseCrate, tracks.splice(0, 1));
@@ -1229,25 +1289,28 @@ function compCrate(tracks) {
 
 
 function countWorks(peces) {
-	let x =		peces[0][1];
-	let z =		peces[0][2];
-	let y =		peces[0][3];
-	let sizes =	[[x, z, y]];
-	let works =	[];
+	const MAXDEPTH =	10;
+	let x =				peces[0][1];
+	let z =				peces[0][2];
+	let y =				peces[0][3];
+	let sizes =			[[x, z, y]];
+	let works =			[];
 
 	peces.map(work => {
-		if(work[1] !== x && work[3] !== y) {
-			sizes.push([works]);
-			x =	work[1];
-			z =	work[2];
-			y =	work[3];
-			sizes.push([x, z, y]);
-			works =	[];
+		if(work[2] <= MAXDEPTH) {
+			if(work[1] !== x && work[3] !== y) {
+				sizes.push([works]);
+				x =	work[1];
+				z =	work[2];
+				y =	work[3];
+				sizes.push([x, z, y]);
+				works =	[];
+			};
+			works.push(work);
 		};
-		works.push(work);
 	});
 	sizes.push(works);
-	return(sizes);
+	return (sizes[1].length >= 4 ? sizes : null);
 };
 
 
@@ -1262,8 +1325,6 @@ export function provideSameSizeCanvas(opt) {
 	let crate;
 	let sameSize;
 	let result;
-	let backUp;
-	let copy;
 
 	switch(opt) {
 		case 1:
@@ -1282,12 +1343,9 @@ export function provideSameSizeCanvas(opt) {
 			sameSize = sameSize5;
 			break ;
 	};
-	copy =		[...sameSize];
 	result =	sameSizeTrail(sameSize);
-	backUp =	sameSizeTrail(copy);
-	crate =		{ crates : result, backUp : backUp };
+	crate =		{ crates : result, backUp : result };
 	sameSize =	null;
-	copy =		null;
 	return (crate);
 };
 
