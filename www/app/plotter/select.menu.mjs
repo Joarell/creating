@@ -50,7 +50,7 @@ export async function layersNumber(list) {
 	for (key in data) {
 		if (data[key].hasOwnProperty('crates') && selected > 0) {
 			if (key === 'sameSizeCrate')
-				layers = data[key].crates[1].works[0].length;
+				layers = data[key].crates[1].works[0].length - 1;
 			else
 				data[key].crates.map((box, i) => {
 					if (selected === 0 && i % 2 === 1)

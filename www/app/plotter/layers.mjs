@@ -24,7 +24,6 @@ export function plotter({ type, crate, works }, layerNum) {
 			draw.appendChild(new LargestRender(works, layerV, inCrate, layerNum));
 			break ;
 		case 'sameSizeCrate' : //Renders only Z, and Y, on the layer.
-			layerV = coord.getScreenProportion(screen, [inCrate[1], inCrate[2]]);
 			draw.appendChild(new sameSizeRender(works, layerV, inCrate, layerNum));
 			break ;
 		case 'noCanvasCrate' : //Renders only the X and Y, of each object.
