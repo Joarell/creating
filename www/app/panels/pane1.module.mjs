@@ -144,8 +144,10 @@ export async function showCrates1(estimate) {
 		metric = "in": metric = "cm";
 	createHeader(element);
 	for (key in crates) {
-		if (crates[key].hasOwnProperty('crates'))
-			addHTMLTableLine(crates[key], metric, element);
+		if (crates[key].hasOwnProperty('crates')) {
+			crates[key].crates.length > 0 ?
+			addHTMLTableLine(crates[key], metric, element) : false;
+		};
 	};
 	sessionStorage.removeItem("pane1");
 	pane.appendChild(finishedRender(element, crates));

@@ -49,16 +49,18 @@ export async function layersNumber(list) {
 
 	for (key in data) {
 		if (data[key].hasOwnProperty('crates') && selected > 0) {
-			if (key === 'sameSizeCrate')
-				layers = data[key].crates[1].works[0].length - 1;
-			else
-				data[key].crates.map((box, i) => {
-					if (selected === 0 && i % 2 === 1)
-						key === 'tubeCrate' || key === 'noCanvasCrate' ?
-							layers = 1 : layers = box.works.length;
-					else if (i % 2 === 0)
-						selected--;
-				}, 0);
+			if (data[key].crates.length > 0 ) {
+				if (key === 'sameSizeCrate')
+					layers = data[key].crates[1].works[0].length - 1;
+				else
+					data[key].crates.map((box, i) => {
+						if (selected === 0 && i % 2 === 1)
+							key === 'tubeCrate' || key === 'noCanvasCrate' ?
+								layers = 1 : layers = box.works.length;
+						else if (i % 2 === 0)
+							selected--;
+					}, 0);
+			};
 		};
 	};
 	sessionStorage.setItem('layers', layers);

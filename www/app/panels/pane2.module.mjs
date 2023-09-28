@@ -131,7 +131,7 @@ function addHTMLLayerWorksLine ({ works }, table, unit, kind) {
 			};
 		}
 		else if (kind === 'sameSizeCrate') {
-			works[0].map((art, count) => {
+			works.map((art, count) => {
 				i = count;
 				table.innerHTML += layerInterface(art, i + 1, unit);
 			});
@@ -211,8 +211,10 @@ export async function showCrates2(estimate) {
 
 	createHeader(element);
 	for (key in crates) {
-		if (crates[key].hasOwnProperty('crates'))
-			addHTMLTableLine(crates[key], element, key);
+		if (crates[key].hasOwnProperty('crates')) {
+			crates[key].crates.length > 0 ?
+			addHTMLTableLine(crates[key], element, key) : false;
+		};
 	};
 	sessionStorage.removeItem("pane2");
 	pane.appendChild(element);
