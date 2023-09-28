@@ -120,9 +120,9 @@ function parseArtWork() {
 }
 
 
-// ╭───────────────────────────────────────────────────────────╮
-// │ Checks the works is in inches and converts to centimeters │
-// ╰───────────────────────────────────────────────────────────╯
+// ╭──────────────────────────────────────────────────────────────────────────────╮
+// │ Checks the works is in inches and converts to centimeters and solve the list.│
+// ╰──────────────────────────────────────────────────────────────────────────────╯
 async function checkMetric() {
 	const storageUnit =	localStorage.getItem('metrica');
 	const UNIT =		storageUnit === 'cm - centimeters' ? 'cm' : 'in';

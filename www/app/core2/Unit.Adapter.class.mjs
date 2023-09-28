@@ -106,8 +106,7 @@ export default class UnitAdapter {
 		for (key in crates) {
 			if (crates[key].hasOwnProperty('crates'))
 				crates[key] = this.#reversionUnit(crates[key])
-		}
-		
+		};
 		if (crates.sameSizeCrate?.hasOwnProperty('backUp')) {
 			crates.airCubTotalBackUp = +(crates.airCubTotalBackUp * CUBCONST)
 				.toFixed(3);
