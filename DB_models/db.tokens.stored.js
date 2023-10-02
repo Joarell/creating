@@ -16,9 +16,12 @@ async function storeSuspiciousTokens (tokens, id) {
 
 	try {
 		await client.query('BEGIN');
-		const content = `INSERT INTO craters.suspicious_tokens ( user_id,
-			auto_token, refresh_token ) 
-			VALUES (${id}, '${tokens[0]}', '${tokens[1]}')`;
+		const content = `
+			INSERT INTO
+				craters.suspicious_tokens (user_id, auto_token, refresh_token)
+			VALUES
+				(${id}, '${tokens.authToken}', '${tokens.refToken}')
+		`;
 		await client.query(content);
 		await client.query('COMMIT');
 		return (201);
@@ -39,7 +42,11 @@ async function retrieveSuspiciousTokens () {
 
 	try {
 		const { rows } = await client.query(
-			`SELECT * FROM craters.suspicious_tokens`
+			`SELECT
+				*
+			FROM
+				craters.suspicious_tokens
+			`
 		);
 		return (rows);
 	}
@@ -59,7 +66,11 @@ async function retrieveOldTokens () {
 
 	try {
 		const { rows } = await client.query(
-			`SELECT * FROM craters.expired_tokens`
+			`SELECT
+				*
+			FROM
+				craters.expired_tokens
+			`
 		);
 		return (rows);
 	}

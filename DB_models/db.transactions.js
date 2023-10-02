@@ -16,14 +16,22 @@ const pool			= require('./db.settings');
 const encryption	= require('../auth/encriptation.module.js');
 
 
-async function retriveDataUsers() {
+async function retriveDataUsers(user) {
+	console.log('GET users:', user);
 	const client	= await pool.connect();
 
 	try {
-		const { rows }	= await client.query('SELECT * FROM craters.users');
+		const { rows }	= await client.query(`
+			SELECT
+				*
+			FROM
+				craters.users
+			WHERE
+				name = '${user}'
+		`);
 		return (rows);
 	}
-	catch ( err ) {
+	catch (err) {
 		console.error(`ALERT, ${err}`);
 		await pool.query('ROLLBACK');
 	}
@@ -33,11 +41,18 @@ async function retriveDataUsers() {
 }
 
 
-async function retriveDataEstimates() {
+async function retriveDataEstimates(doc) {
 	const client	= await pool.connect();
 
 	try {
-		const { rows }	= await pool.query('SELECT * FROM data_solved');
+		const { rows }	= await pool.query(`
+			SELECT
+				*
+			FROM
+				data_solved
+			WHERE
+				reference_id = '${doc}'
+		`);
 		return (rows);
 	}
 	catch (err) {
@@ -93,7 +108,7 @@ async function addResultToDataBase(estimate) {
 
 	try {
 		await client.query('BEGIN');
-		const content = ` INSERT INTO data_solved 
+		const content = ` INSERT INTO data_solved
 			(reference_id, works, crates, user_name, user_id, update_state)
 			VALUES
 			('${reference}', '${list}', '${crates}', '${user_name}', ${user_id},
@@ -104,9 +119,9 @@ async function addResultToDataBase(estimate) {
 		return (201);
 	}
 	catch (err) {
-		console.error("ALERT", err);
+		console.error("ALERT DUPLICATE DATA:", err);
 		await pool.query('ROLLBACK');
-		throw err;
+		return (409);
 	}
 	finally {
 		client.release();
@@ -115,8 +130,9 @@ async function addResultToDataBase(estimate) {
 
 
 async function updateData (content) {
+	console.log('UPDATE', content);
 	const { reference, user_name } = content;
-	const list		= JSON.stringify({ "list": content.works }, null, "");
+	const list		= JSON.stringify({ "list": content.list }, null, "");
 	const crates	= JSON.stringify({ "crates": content.crates }, null, "");
 	const dataUTC	= new Date(Date.now()).toLocaleString();
 	const client	= await pool.connect();

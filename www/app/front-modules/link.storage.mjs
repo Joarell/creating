@@ -80,12 +80,12 @@ export async function movingDataToSesseionStorage(reference) {
 			.transaction("Results")
 			.objectStore("Results").get(reference);
 		
-		db.onsuccess = () => {
+		db.onsuccess = async () => {
 			const reference = document.getElementById("input_estimate").value;
 			const obj = db.result;
 
 			globalThis.sessionStorage.setItem(reference, JSON.stringify(obj));
-			saveTheCurrentEstimate(reference);
+			await saveTheCurrentEstimate(reference);
 		};
 	};
 }

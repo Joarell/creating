@@ -14,14 +14,53 @@ export async function checkBrowserDB(doc) {
 		sessionStorage.setItem("FETCHED", JSON.stringify(checkIDB));
 	}
 	else if (!checkIDB)
-		alert(`Document not found! Please, try again.`);
-	else
-		setTimeout(alert(`Document not found! Please, try again.`), 200);
-	return(fetchDB(doc));
+		return(fetchDB(doc));
 };
 
 
-function fetchDB(doc) {
+function setDBFetched (result) {
+	try {
+		if (result){
+			const { crates, works, reference_id } = result[0];
+			const fetched = {
+				crates,
+				list : works.list,
+				reference : reference_id
+			}
+			document.getElementById("input_estimate").value = reference_id;
+			sessionStorage.setItem("FETCHED", JSON.stringify(fetched));
+		}
+		else
+			throw new TypeError('Data not found!');
+	}
+	catch (err) {
+		alert(`ATTENTION: ${err}`);
+	}
+};
+
+
+async function fetchDB(doc) {
+	const url =		`/estimates/${doc}`;
+	let token =		globalThis.document.cookie.split(' ');
+	token = token.find(data => data.split('=')[0] === 'token').split('=')[1];
+	const HEADER =	{
+		'Authorization': `Bearer ${token}`,
+		'Content-Type': 'application/json; charset=UTF-8',
+	};
+	if (globalThis.navigator.onLine) {
+		try {
+			await fetch (url, {
+				method: "GET",
+				headers: HEADER,
+			}).then(estimate => estimate.json())
+			.then(setDBFetched)
+			.catch(err => console.error(`ALERT ${err}`));
+		}
+		catch(err) {
+			alert(`ATTENTION: ${err}`);
+			alert(`Document not found! Please, try again.`);
+		}
+	}
 }
 
 

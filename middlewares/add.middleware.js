@@ -25,11 +25,11 @@ function validationData (data) {
 const userDataValidation = async (req, res, next) => {
 	if (!req.body)
 		return( res.status(406).json({msg: "Missing data"}));
-	const { name, id } = req.body;
-	const dbUser = await db.retriveDataUsers();
-	const user = dbUser.find(user => user.id === id);
+	const { user_name } = req.body;
+	const dbUser = await db.retriveDataUsers(req.body.user_name);
+	const user = dbUser[0];
 
-	if (name !== user.name)
+	if (user_name !== user.name)
 		return (res.status(406).json({msg: "User error!"}));
 	next();
 };
@@ -38,14 +38,14 @@ const userDataValidation = async (req, res, next) => {
 const validationBodyEstimate = async (req, res, next) => {
 	if (!req.body)
 		return( res.status(406).json({msg: "Missing data"}));
-	const { reference, list, crates, name, id } = req.body;
+	const { reference, list, crates, user_name, user_id } = req.body;
 	const valid = validationData([
-		reference, list, crates, name, id
+		reference, list, crates, user_name, user_id
 	]);
 
 	if (valid)
 		return (res.status(206).json({
-			message: `Oops! Please, Check all the information` }));
+			message: `Oops! Please, Check all the information.` }));
 	next();
 }
 

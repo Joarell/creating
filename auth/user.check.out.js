@@ -6,11 +6,8 @@ require('dotenv').config();
 
 
 async function checkUserAuthDB (userLogin) {
-	const data		= await db.retriveDataUsers();
-	const dbUser	= data.find(user => {
-		if(userLogin.name === user.name)
-			return(user);
-	});
+	const data		= await db.retriveDataUsers(userLogin.name);
+	const dbUser	= data[0];
 
 	if(!dbUser)
 		return (404);

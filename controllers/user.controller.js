@@ -19,7 +19,7 @@ const tokenMan =	require('../DB_models/db.auth.procedures');
 const dataTokens =	require('../DB_models/db.tokens.stored');
 
 
-const inserNewUser = async (req, res) => {
+const insertNewUser = async (req, res) => {
 	const set		= new WeakSet();
 	const token		= tokenMan.authTokenGen( req.body.name );
 	const refToken	= tokenMan.refTokenGen( req.body.email);
@@ -53,6 +53,7 @@ const userLoginValidation = async (req, res, next) => {
 };
 
 
+// NOTE: maybe the database should do this search.
 async function dbSuspiciousTokens (tokens) {
 	const dbTokens			= await dataTokens.retrieveOldTokens();
 	const checkedAuthToken	= dbTokens.includes(tokens[0]);
@@ -75,12 +76,34 @@ async function dbTokensCheckOut (tokens) {
 };
 
 
+function extractTokens (request) {
+	let authToken =		request.headers['authorization']?.split(' ')[1];
+	const COOKIE =		request.headers['cookie']?.split(' ');
+
+	cookieToken = COOKIE.find(data => {
+		if(data.split('=')[0] === 'token')
+			return(data);
+	})?.split('=')[1];
+	refToken = COOKIE.find(data => {
+		if (data.split('=')[0] === 'user')
+			return(data);
+	})?.split('=')[1];
+
+	authToken && authToken.at(-1) === ';' ? authToken = authToken.slice(0, -1) : 0;
+	cookieToken.at(-1) === ';' ? cookieToken = cookieToken.slice(0, -1) : 0;
+	refToken.at(-1) === ';' ? refToken = refToken.slice(0, -1) : 0;
+	authToken === undefined ? authToken = cookieToken : false;
+
+	return ({ authToken, refToken });
+};
+
+
 async function tokensCheckOut(tokenPairs, users, id){
-	const user				= users.find(user => user.id === id);
-	if (!user)
+	console.log(tokenPairs, 'and', users);
+	if (!users && id !== users.id)
 		return(404);
-	const a_token			= tokenPairs[1].includes(user.auth_token);
-	const r_token			= tokenPairs[0].includes(user.refresh_token);
+	const a_token			= tokenPairs.authToken === users.auth_token;
+	const r_token			= tokenPairs.refToken === users.refresh_token;
 	const checkedTokens		= await dbTokensCheckOut(tokenPairs);
 	const suspiciousTokens	= await dbSuspiciousTokens(tokenPairs);
 
@@ -92,19 +115,23 @@ async function tokensCheckOut(tokenPairs, users, id){
 };
 
 
-const userTokenMatch = async( req, res, next) => {
-	if (!req.headers.authorization)
-		return (res.status(401).json({msg: "Unauthorized"}));
+function getId(request) {
+	let id =	request.body.user_id ?? request.headers['cookie'].split(' ');
 
-	console.log(req.headers.cookie);
-	const authToken =	req.headers['authorization'].split(' ')[1]
-	const refToken =	req.headers['cookie'].split(' ')[1].split('=')[1];
-	const dbUsers =		await db.retriveDataUsers();
-	let userId = 		req.headers.cookie.split('=')[1];
-	userId =			Number.parseInt(userId);
-	const result = 		await tokensCheckOut(
-		[authToken, refToken], dbUsers, userId
-	);
+	if (!Array.isArray(id) && id)
+		return ({id});
+	id = id.find(data => data.split('=')[0] === 'id')?.split('=')[1];
+	id.at(-1) === ';' ? id = id.slice(0, -1) : false;
+	return ({id});
+};
+
+
+const userTokenMatch = async(req, res, next) => {
+	const tokens =		extractTokens(req);
+	const cookieData =	getId(req);
+	console.log('COOKIE', cookieData);
+	const dbUsers =		await db.retriveDataUsers(cookieData.user);
+	const result = 		await tokensCheckOut(tokens, dbUsers[0], cookieData.id);
 
 	console.log("Match-access", result);
 	switch(result) {
@@ -112,7 +139,7 @@ const userTokenMatch = async( req, res, next) => {
 			next();
 			break;
 		case false :
-			dataTokens.storeSuspiciousTokens([authToken, refToken], userId);
+			dataTokens.storeSuspiciousTokens(tokens, userId);
 			return(res.status(401).json({msg: "User blocked"}));
 		case 404:
 			return (res.status(404).json({msg: "User Not found"}));
@@ -123,28 +150,22 @@ const userTokenMatch = async( req, res, next) => {
 
 
 const userTokenExpTime = async (req, res, next) => {
-	console.log (req.headers.cookie);
-	if (!req.headers.cookie)
-		return (res.status(401).json({msg: "Unauthorized"}));
+	const tokens =		extractTokens(req);
+	const dbUser =		await db.retriveDataUsers(req.body.user_id);
 
-	const token	= req.headers.cookie.split(' ')[1].split('=')[1];
-	const dbUsers =	await db.retriveDataUsers();
-	const user =	dbUsers.find(user => {
-		return (user.auth_token === token);
-	});
-
-	console.log("ExpToken", token);
-	if (!user)
+	console.log("ExpToken", tokens, 'and user:', dbUser[0]);
+	if (!dbUser[0])
 		return(res.status(401).json({msg: "Not authorized"}));
-	jwt.verify(token, process.env.SECRET_TOKEN, async (err, user) => {
-		err ? res.status(403).json({msg: "Token access denied!"}) :
-		next();
+	jwt.verify(tokens.authToken, process.env.SECRET_TOKEN, async (err) => {
+		console.log('JWT', err);
+		err ? res.status(403).json({msg: "Token access denied!"}) : next();
 	});
 };
 
 module.exports = {
-	inserNewUser,
+	extractTokens,
+	inserNewUser: insertNewUser,
 	userLoginValidation,
 	userTokenExpTime,
 	userTokenMatch,
-};
+}

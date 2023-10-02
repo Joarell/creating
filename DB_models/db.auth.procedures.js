@@ -15,21 +15,20 @@ const jwt	= require('jsonwebtoken');
 const db	= require('./db.transactions');
 
 
-async function getUserData (authToken, refToken, id) {
-	const dataUser	= await db.retriveDataUsers();
-	const user		= dataUser.find(user => user.id === id);
-	const checkAuth = user.auth_token === authToken;
-	const checkRef	= user.refresh_token === refToken;
-	const checkId	= user.id === id;
+async function getUserData (authToken, info) {
+	const dataUser	= await db.retriveDataUsers(info.name);
+	const checkAuth = dataUser[0].auth_token === authToken;
+	const checkRef	= dataUser[0].refresh_token === info.token;
+	const checkId	= dataUser[0].id === info.id;
 
-	if((checkAuth && checkRef && checkId) === true)
-		return (user);
+	if(checkAuth && checkRef && checkId)
+		return (dataUser[0]);
 	return (false);
 };
 
 
 async function tokenProcedures (accessToken, body) {
-	const userDB = await getUserData(accessToken, body.token, body.id);
+	const userDB = await getUserData(accessToken, body);
 	
 	if (userDB) {
 		const newAuthToken	= authTokenGen();
@@ -60,7 +59,7 @@ async function storeOldTokensGetNew (expTokens, newTokens, user) {
 		await client.query('COMMIT');
 		return(newTokens);
 	}
-	catch ( err ) {
+	catch (err) {
 		console.error(`WARNING: ${err}`);
 		await client.query ('ROLLBACK');
 		return ({500: `${err}`});
@@ -102,7 +101,7 @@ function authTokenGen(userName) {
 	const authtoken = jwt.sign(
 		{ data: userName },
 		process.env.SECRET_TOKEN,
-		{ expiresIn: '60s' }
+		{ expiresIn: '10m' }
 	);
 	return (authtoken);
 };
@@ -110,7 +109,7 @@ function authTokenGen(userName) {
 
 function refTokenGen (userEmail) {
 	const refToken = jwt.sign(userEmail, process.env.REF_SECRET_TOKEN);
-	return ( refToken );
+	return (refToken);
 };
 
 module.exports = {

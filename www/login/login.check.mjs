@@ -1,8 +1,5 @@
 
-
-
 globalThis.fns = { loginInto };
-
 
 globalThis.onkeydown = (keyPress) => {
 	if (keyPress.key === 'Enter')
@@ -34,46 +31,49 @@ export function loginInto () {
 };
 
 
-async function backEndLoginAuth (userInfo) {
-	const url = '/start';
-	try {
-		const res = await fetch ( url, {
-			method: "POST",
-			body: JSON.stringify(userInfo),
-			headers: {
-				'Content-Type': 'application/json; charset=UTF-8'
-			},
-		}).then(body => body.json())
-		.catch(err => console.error(`Alert ${err}`));
-		res.msg === 'loged' ?
-			await appAccessCheckin(res) :
-			alert('Wrong credentials. Please try again!');
-	}
-	catch(err) {
-		alert(`Attention: ${err}`);
-	}
-	finally {
-		return;
-	}
+async function setLogin(info) {
+	if (info.msg === 'active') 
+		await appAccessCheckIn(info)
+	else
+		alert('Wrong credentials. Please try again!');
+	return(info);
 };
 
 
-async function appAccessCheckin (userAuth) {
-	document.cookie = `id=${userAuth.id}; path=/; Secure`;
-	const { tokens } =	userAuth;
+async function backEndLoginAuth (userInfo) {
+	const USER =	JSON.stringify(userInfo);
+	const url =		'/start';
+	try {
+		await fetch (url, {
+			method: "POST",
+			body: USER,
+			headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+		}).then(body => body.json())
+		.then(setLogin)
+		.catch(err => console.error(`Alert ${err}`));
+	}
+	catch(err) {
+		alert(`Attention: ${err}`);
+	};
+};
+
+
+async function appAccessCheckIn (userAuth) {
+	console.log(userAuth);
+	const { result } =	userAuth;
 	const header =	{
-		'Authorization': `Bearer ${tokens[1]}`,
+		'Authorization': `Bearer ${result[0]}`,
 		'Content-Type': 'application/javascript',
 		'Accept': 'text/html; text/css; application/javascript',
 	};
 	const request =		new Request(`/app`, {
-		method: "POST",
-		mode: 'cors',
-		headers: header,
-		cache: 'default',
-		credentials: 'include',
-		connection: 'keep-alive',
-		redirect: 'follow',
+		Method: "POST",
+		Mode: 'cors',
+		Headers: header,
+		Cache: 'default',
+		Credentials: 'include',
+		Connection: 'keep-alive',
+		Redirect: 'follow',
 	});
 	try {
 		const checkOut = await fetch(request)
@@ -90,8 +90,5 @@ async function appAccessCheckin (userAuth) {
 	}
 	catch(err) {
 		alert(`Attention: ${err}`);
-	}
-	finally {
-		return;
-	}
+	};
 };

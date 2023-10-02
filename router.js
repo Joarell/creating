@@ -38,14 +38,12 @@ router.post('/__cspreport__', (req, res) => {
 });
 
 
-router.post('/private/auth', userSet.userTokenExpTime,
-	(req, res) => { res.status(200).send("CLEAR!") }
-	// (req, res) => {
-	// 	console.log("Check request", req);
-	// 	res.set({
-	// 		'Cache-Control': 'max-age=10; must-revalidate',
-	// 	});
-);
+router.post('/private/auth',
+	userSet.userTokenMatch,
+	userSet.userTokenExpTime,
+	(req, res) => {
+		res.status(200).json({ 'status' : 'active' });
+});
 
 router.post("/start",
 	userSet.userLoginValidation,
@@ -63,16 +61,6 @@ router.get("/", (req, res) => {
 router.get("/logout", userSet.userLoginValidation);
 
 
-router.post("/estimate/:token",
-	userSet.userTokenMatch,
-	valid.userDataValidation,
-	userSet.userTokenExpTime,
-	valid.validationBodyEstimate,
-	valid.dataEstimateChecker,
-	take.addResultToDataBase
-);
-
-
 router.post("/new/users",
 	valid.validationBodyUserAdd,
 	valid.dataUserChecker,
@@ -80,31 +68,32 @@ router.post("/new/users",
 );
 
 
-router.get("/check/token",
+router.get("/shift/tokens",
 	userSet.userTokenMatch,
-	userSet.userTokenExpTime,
-	(req, res) => { res.status(200).send("CLEAR!") }
-);
-
-
-router.get("/shift/token",
-	userSet.userTokenMatch,
-	userSet.userTokenExpTime,
 	take.shiftTokens,
 );
 
 
-router.get("/estimates/:ref_token", take.getDataEstimates
-);
-
-
-router.put("/estimate/:ref_token",
+router.post("/new/estimate",
+	userSet.userTokenMatch,
 	userSet.userTokenExpTime,
-	take.updateEstimate
+	valid.userDataValidation,
+	valid.validationBodyEstimate,
+	valid.dataEstimateChecker,
+	take.addResultToDataBase
 );
 
 
-router.delete("/delete/estimate/:reference_id",
+router.get("/estimates/:ref_id", take.getDataEstimates);
+
+
+router.put("/update/estimate",
+	userSet.userTokenExpTime,
+	take.updateEstimate,
+);
+
+
+router.delete("/delete/estimate/:ref_id",
 	userSet.userTokenExpTime,
 	take.removeEstimates
 );
