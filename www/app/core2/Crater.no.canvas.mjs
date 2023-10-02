@@ -122,6 +122,8 @@ export default class CraterNotCanvas {
 	};
 
 	#addXandZtimes(canvas) {
+		if (!Array.isArray(canvas))
+			return (canvas);
 		let procList = canvas.map(art => {
 			art.push(art[1] * art[2])
 			return(art);
@@ -137,7 +139,7 @@ export default class CraterNotCanvas {
 		let peces;
 
 		this.#addXandZtimes(this.#peces);
-		while(this.#peces.length  > 1) {
+		while(this.#peces.length > 0) {
 			peces =		this.#defineMaxPeces(this.#peces);
 			peces =		this.#peces.splice(0, peces);
 			if (peces.length > 0) {

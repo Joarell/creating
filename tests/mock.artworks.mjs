@@ -185,6 +185,7 @@ export function mockOptios() {
 	crates.standardCrate?.crates?.map(setCub);
 	crates.sameSizeCrate?.backUp?.map(setCub);
 	crates.standardCrate?.backUp?.map(setCub);
+
 	return({ crates });
 };
 
@@ -957,6 +958,8 @@ function defineMaxWorks(items) {
 
 
 function addXandZtimes(list) {
+	if (!Array.isArray(list))
+		return(list);
 	let procList = list.map(art => {
 		art.push(art[1] * art[2])
 		return(art);
@@ -973,7 +976,7 @@ function noCanvasTrail(list) {
 	let peces;
 	const newList =	addXandZtimes(list);
 
-	while(newList.length > 1) {
+	while(newList.length > 0) {
 		peces =		defineMaxWorks(newList);
 		peces =		newList.splice(0, peces);
 		if (peces.length > 0) {
