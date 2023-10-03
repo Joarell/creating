@@ -1,5 +1,4 @@
 'use strict';
-const bcrypt = require('bcrypt');
 
 
 /** @type {import('sequelize-cli').Migration} */
@@ -12,10 +11,10 @@ module.exports = {
 			});
 		await queryInterface.createTable('users', {
 			id: {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING(20),
 				allowNull: false,
 				primaryKey: true,
-				autoIncrement: true,
+				autoIncrement: false,
 				timestamps: true,
 			},
 			name: {
@@ -31,7 +30,7 @@ module.exports = {
 				allowNull: false,
 			},
 			email: {
-				type: Sequelize.STRING(200),
+				type: Sequelize.STRING(100),
 				allowNull: false,
 			},
 			pass_frase: {

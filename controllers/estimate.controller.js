@@ -12,13 +12,13 @@
 // ╰──────────────────────────────────────────────────────────────╯
 
 
-// const checker =		require('../auth/user.check.out');
-const db =			require('../DB_models/db.transactions');
-const keepTokens =	require('../DB_models/db.auth.procedures');
-const extract =		require('./user.controller');
-
+const db =						require('../DB_models/db.transactions');
+const keepTokens =				require('../DB_models/db.auth.procedures');
+const { randomBytes } =			require('crypto');
+const { extractCookieData } =	require('./user.controller');
 
 const getDataUsers = async (req, res) => {
+	console.log('TESTING');
 	const result = await db.retriveDataUsers();
 	return (res.status(200).send(result));
 }
@@ -31,7 +31,8 @@ const getDataEstimates = async (req, res) => {
 
 
 const addResultToDataBase = async (req, res) => {
-	const result = await db.addResultToDataBase(req.body);
+	const session =		extractCookieData(req).session;
+	const result =		await db.addResultToDataBase(req.body, session);
 	return (result === 201 ? 
 		res.status(201).send(req.body) : 
 		res.status(409).send('DATA ALREADY EXIST!')
@@ -40,53 +41,61 @@ const addResultToDataBase = async (req, res) => {
 
 
 const removeEstimates = async (req, res) => {
-	const { reference_id } = req.params;
-	await db.delEstimate(reference_id);
+	const { ref_id } = req.params;
+	await db.delEstimate(ref_id);
 	return (res.status(204).json({msg:"Done!"}));
 };
 
 
 const updateEstimate = async (req, res) => {
-	await db.updateData(req.body);
+	const session =	extractCookieData(req).session;
+	await db.updateData(req.body, session);
 	return(res.status(202).send(req.body));
 };
 
 
 const shiftTokens = async (req, res) => {
-	const tokens =	extract.extractTokens(req);
+	console.log("RENEW", req.headers.cookie);
+	const cookie =	extractCookieData(req);
+	console.log('RENEW', cookie, 'and', typeof cookie.id);
 	const body =	{
-		id : req.body.user_id,
-		token: tokens.refToken,
+		id : Number.parseInt(req.body.user_id),
+		token: cookie.refToken,
 		name : req.body.user_name
 	};
-	const result =	await keepTokens.tokenProcedures(tokens.authToken, body);
+	const result =	await keepTokens
+		.tokenProcedures(cookie.authToken, body, cookie.session);
 
-	if(result) {
+	if(result !== 500) {
 		res.set({'Set-Cookie': [
-			`user=${result.newAuthToken} ; Secure`,
-			`token=${result.newRefToken} ; Secure`,
+			`user=${result.newAuthToken}; 
+				Max-Age=300; HttpOnly; SameSite=Strict; Secure;`,
+			`token=${result.newRefToken}; 
+				Max-Age=300; HttpOnly; SameSite=Strict; Secure;`,
 		]});
 		res.status(201).json({ msg: 'active', result });
 	}
 	else
-		res.status(403).json({msg: "Not authorized!"});
+		res.status(401).json({msg: "Not authorized!"});
 };
 
 
 // TODO: HTTPS cookie tests.
 const newLogin = async (req, res) => {
-	console.log('LOGIN:', req.body.name);
-	const dbUsers =	await db.retriveDataUsers(req.body.name);
+	const session =	randomBytes(5).toString('hex');
+	const dbUsers =	await db.retriveDataUsers(req.body.name, 'login');
 	const user =	dbUsers[0];
 	const body =	{id : user.id, token: user.refresh_token, name : user.name};
-	const result =	await keepTokens.tokenProcedures(user.auth_token, body);
+	const result =	await keepTokens
+		.tokenProcedures(user.auth_token, body, session);
 
 	if (result === 500)
 		return(res.status(500).json({msg: 'Server error'}));
 	res.set({'Set-Cookie': [
-		`user=${result[1]}; SameSite; Secure`,
-		`token=${result[0]}; SameSite; Secure`,
-		`id=${user.id}; SameSite; Secure`,
+		`session=${session}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
+		`user=${result[1]}; Max-Age=300; HttpOnly; SameSite=Strict; Secure;`,
+		`token=${result[0]}; Max-Age=300; HttpOnly; SameSite=Strict; Secure;`,
+		`id=${user.id}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
 	]});
 	res.status(201).json({msg: 'active', result, id : user.id});
 };

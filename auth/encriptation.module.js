@@ -1,12 +1,28 @@
-const bcrypt = require('bcrypt');
+
+const { scryptSync, randomBytes } = require('crypto');
 
 
-async function passEncriptProcedure (passFrase) {
+function encryptPassWord(pass, salt) {
+	return (scryptSync(pass, salt, 32).toString('hex'));
+}
+
+
+function decryptChecker(pass, hash) {
+	const salt =				hash.slice(64);
+	const originalPassHash =	hash.slice(0, 64);
+	const currentPassHash =		encryptPassWord(pass, salt);
+
+	console.log('HASHES', originalPassHash, 'and', currentPassHash);
+	return(originalPassHash === currentPassHash);
+};
+
+
+function passEncriptProcedure (passFrase) {
 	try {
-		const salt			= await bcrypt.genSalt(11);
-		const hashedPass	= await bcrypt.hash(passFrase, salt);
-
-		return (hashedPass);
+		const salt =	randomBytes(16).toString('hex');
+		const hashed =	encryptPassWord(passFrase, salt) + salt;
+	
+		return (hashed);
 	}
 	catch (err) {
 		console.error(`Pass failed ${err}`); 
@@ -14,4 +30,8 @@ async function passEncriptProcedure (passFrase) {
 	};
 };
 
-module.exports = { passEncriptProcedure };
+module.exports = { 
+	decryptChecker,
+	encryptPassWord,
+	passEncriptProcedure 
+};

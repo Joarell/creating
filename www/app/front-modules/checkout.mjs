@@ -11,6 +11,7 @@
 import * as mod from './functions.front.end.mjs'
 import { createDB } from './link.storage.mjs';
 import { openCloseDisplay } from '../plotter/layer.controller.mjs'
+import { checkTokens } from './token.checkout.mjs';
 
 
 // ╭───────────────────────────────────────────────────────────────────╮
@@ -30,6 +31,8 @@ globalThis.onload = () => {
 	setCheckRadio();
 	setTimeout(loadingPage, 2500);
 };
+
+globalThis.onbeforeunload = checkTokens();
 
 
 // ╭────────────────────────────────────────────────────────╮

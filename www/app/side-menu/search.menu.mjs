@@ -41,10 +41,7 @@ function setDBFetched (result) {
 
 async function fetchDB(doc) {
 	const url =		`/estimates/${doc}`;
-	let token =		globalThis.document.cookie.split(' ');
-	token = token.find(data => data.split('=')[0] === 'token').split('=')[1];
 	const HEADER =	{
-		'Authorization': `Bearer ${token}`,
 		'Content-Type': 'application/json; charset=UTF-8',
 	};
 	if (globalThis.navigator.onLine) {

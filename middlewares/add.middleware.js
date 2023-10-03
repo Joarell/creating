@@ -12,13 +12,12 @@
 
 
 const db	= require('../DB_models/db.transactions');
-const jwt	= require('jsonwebtoken');
 
 
 // TODO: refactor code: "const isFalse = (data) => !data"
 function validationData (data) {
-	const result = data.map((info) => { return((info ?? '') !== ''); });
-	return (result.includes(false));
+	const result = data.find(info => info === '' || info === ' ')
+	return (result);
 };
 
 
@@ -68,8 +67,8 @@ const dataEstimateChecker = async (req, res, next) => {
 const validationBodyUserAdd = async (req, res, next) => {
 	if (!req.body)
 		return( res.status(406).json({msg: "Missing data"}));
-	const { name, email, lastName, passFrase, birthday } = req.body;
-	const data = validationData([name, lastName, email, passFrase, birthday]); 
+	const { user_name, email, lastName, passFrase, birthday } = req.body;
+	const data = validationData([user_name, lastName, email, passFrase, birthday]); 
 
 	if (data) {
 		return (res.status(206).json({
@@ -84,12 +83,11 @@ const dataUserChecker = async (req, res, next) => {
 	if (!req.body)
 		return(res.status(406).json({msg: "Missing data"}));
 	const { name }	= req.body;
-	const prevUsers = await db.retriveDataUsers();
+	const prevUsers = await db.retriveDataUsers(req.body.user_name);
 	const checkUser = prevUsers.find(usr => usr.name === name);
 
-	if (checkUser) {
+	if (checkUser)
 		return (res.status(409).json({msg: 'The user already exists on DB'}));
-	};
 	next();
 }
 

@@ -21,8 +21,8 @@ const dataTokens =	require('../DB_models/db.tokens.stored');
 
 const insertNewUser = async (req, res) => {
 	const set		= new WeakSet();
-	const token		= tokenMan.authTokenGen( req.body.name );
-	const refToken	= tokenMan.refTokenGen( req.body.email);
+	const token		= tokenMan.authTokenGen(req.body.user_name);
+	const refToken	= tokenMan.refTokenGen(req.body.email);
 	let userData	= {
 		...req.body,
 		accessToken: token,
@@ -30,6 +30,7 @@ const insertNewUser = async (req, res) => {
 	};
 	const confirmation = await db.addNewUser(userData);
 
+	console.log("NEW USER", confirmation);
 	set.add(userData);
 	if (confirmation === 500)
 		return (res.status(501).json({msg: "Pass frase procedure failure"}));
@@ -53,7 +54,7 @@ const userLoginValidation = async (req, res, next) => {
 };
 
 
-// NOTE: maybe the database should do this search.
+// NOTE: database should do this search.
 async function dbSuspiciousTokens (tokens) {
 	const dbTokens			= await dataTokens.retrieveOldTokens();
 	const checkedAuthToken	= dbTokens.includes(tokens[0]);
@@ -76,36 +77,43 @@ async function dbTokensCheckOut (tokens) {
 };
 
 
-function extractTokens (request) {
-	let authToken =		request.headers['authorization']?.split(' ')[1];
+function extractCookieData (request) {
 	const COOKIE =		request.headers['cookie']?.split(' ');
+	let authToken;
+	let refToken;
+	let session;
+	let id;
 
-	cookieToken = COOKIE.find(data => {
-		if(data.split('=')[0] === 'token')
-			return(data);
-	})?.split('=')[1];
-	refToken = COOKIE.find(data => {
-		if (data.split('=')[0] === 'user')
-			return(data);
-	})?.split('=')[1];
+	COOKIE.map(data => {
+		data.split('=')[0] === "token" ? authToken = data.split('=')[1] : 0;
+	});
+	COOKIE.map(data => {
+		data.split('=')[0] === "user" ? refToken = data.split('=')[1] : 0;
+	});
+	COOKIE.map(data => {
+		data.split('=')[0] === "session" ? session = data.split('=')[1] : 0;
+	});
+	COOKIE.map(data => {
+		data.split('=')[0] === "id" ? id = data.split('=')[1] : 0;
+	});
 
-	authToken && authToken.at(-1) === ';' ? authToken = authToken.slice(0, -1) : 0;
-	cookieToken.at(-1) === ';' ? cookieToken = cookieToken.slice(0, -1) : 0;
+	authToken.at(-1) === ';' ? authToken = authToken.slice(0, -1) : 0;
+	id.at(-1) === ';' ? id = id.slice(0, -1) : 0;
+	session.at(-1) === ';' ? session = session.slice(0, -1) : 0;
 	refToken.at(-1) === ';' ? refToken = refToken.slice(0, -1) : 0;
-	authToken === undefined ? authToken = cookieToken : false;
 
-	return ({ authToken, refToken });
+	return (authToken ? { authToken, refToken, session, id } : {id});
 };
 
 
-async function tokensCheckOut(tokenPairs, users, id){
-	console.log(tokenPairs, 'and', users);
-	if (!users && id !== users.id)
+async function tokensCheckOut(info, users) {
+	console.log(info, 'and', users);
+	if (!users && info.id !== users.id)
 		return(404);
-	const a_token			= tokenPairs.authToken === users.auth_token;
-	const r_token			= tokenPairs.refToken === users.refresh_token;
-	const checkedTokens		= await dbTokensCheckOut(tokenPairs);
-	const suspiciousTokens	= await dbSuspiciousTokens(tokenPairs);
+	const a_token			= info.authToken === users.auth_token;
+	const r_token			= info.refToken === users.refresh_token;
+	const checkedTokens		= await dbTokensCheckOut(info);
+	const suspiciousTokens	= await dbSuspiciousTokens(info);
 
 	if (checkedTokens || suspiciousTokens === true)
 		return(403);
@@ -115,46 +123,45 @@ async function tokensCheckOut(tokenPairs, users, id){
 };
 
 
-function getId(request) {
-	let id =	request.body.user_id ?? request.headers['cookie'].split(' ');
-
-	if (!Array.isArray(id) && id)
-		return ({id});
-	id = id.find(data => data.split('=')[0] === 'id')?.split('=')[1];
-	id.at(-1) === ';' ? id = id.slice(0, -1) : false;
-	return ({id});
-};
-
-
 const userTokenMatch = async(req, res, next) => {
-	const tokens =		extractTokens(req);
-	const cookieData =	getId(req);
-	console.log('COOKIE', cookieData);
-	const dbUsers =		await db.retriveDataUsers(cookieData.user);
-	const result = 		await tokensCheckOut(tokens, dbUsers[0], cookieData.id);
+	try {
+		const cookieData =	extractCookieData(req);
+		const dbUsers =		await db.retriveDataUsers(cookieData.id, 'auth');
+		let result;
 
-	console.log("Match-access", result);
-	switch(result) {
-		case true:
-			next();
-			break;
-		case false :
-			dataTokens.storeSuspiciousTokens(tokens, userId);
-			return(res.status(401).json({msg: "User blocked"}));
-		case 404:
-			return (res.status(404).json({msg: "User Not found"}));
-		case 403:
-			return (res.status(403).json({msg: "Suspicious try"}));
-	};
+		if (!cookieData.authToken) {
+			cookieData.authToken = dbUsers[0].auth_token;
+			cookieData.refToken = dbUsers[0].refresh_token;
+		};
+
+		result = 		await tokensCheckOut(cookieData, dbUsers[0]);
+		console.log("Match-access", result);
+		switch(result && cookieData.session === dbUsers[0].session) {
+			case true:
+				next();
+				break;
+			case false :
+				dataTokens.storeSuspiciousTokens(cookieData)
+				return(res.status(401).json({msg: "User blocked"}));
+			case 404:
+				return (res.status(404).json({msg: "User Not found"}));
+			case 403:
+				return (res.status(403).json({msg: "Suspicious try"}));
+		}
+	}
+	catch(err) {
+		console.error(err);
+		return(res.status(412).json({msg: "Invalid body data."}));
+	}
 };
 
 
 const userTokenExpTime = async (req, res, next) => {
-	const tokens =		extractTokens(req);
-	const dbUser =		await db.retriveDataUsers(req.body.user_id);
+	const cookieData =	extractCookieData(req);
+	const dbUser =		await db.retriveDataUsers(cookieData.id, 'auth');
 
-	console.log("ExpToken", tokens, 'and user:', dbUser[0]);
-	if (!dbUser[0])
+	console.log("ExpToken", cookieData, 'and user:', dbUser[0]);
+	if (!dbUser[0] && dbUser[0].session !== cookieData.session)
 		return(res.status(401).json({msg: "Not authorized"}));
 	jwt.verify(tokens.authToken, process.env.SECRET_TOKEN, async (err) => {
 		console.log('JWT', err);
@@ -163,8 +170,8 @@ const userTokenExpTime = async (req, res, next) => {
 };
 
 module.exports = {
-	extractTokens,
-	inserNewUser: insertNewUser,
+	extractCookieData,
+	insertNewUser,
 	userLoginValidation,
 	userTokenExpTime,
 	userTokenMatch,

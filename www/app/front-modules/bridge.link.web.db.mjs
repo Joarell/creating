@@ -1,6 +1,5 @@
 
 
-
 // TODO: develop a closure class to preserve the access and refresh token
 // on the client side towards future http requests using Map().
 
@@ -38,18 +37,15 @@ function setOfflineRef(doc) {
 // TODO: test.
 async function getNewTokens(content) {
 	const url =		'/shift/tokens';
-	let cookie =	globalThis.document.cookie.split(' ');
-	let user_id =	cookie.find(data => data.split('=')[0] === 'id').split('=')[1];
-	let user_name =	cookie.find(data => data.split('=')[0] === 'user').split('=')[1];
 	const HEADER =	{ 'Content-Type': 'application/json; charset=UTF-8' };
-	const DATA =	JSON.stringify({ user_id, user_name })
 
 	try {
-		await fetch (url, {
-			method: "PUT",
-			body: DATA,
+		const result = await fetch (url, {
+			method: "POST",
 			headers: HEADER,
-		}).catch(err => console.error(`ALERT ${err}`));
+		}).then(code => code.status)
+		.catch(err => console.error(`ALERT ${err}`));
+		console.log('UPDATE TOKEN:', result);
 		postDataFromClientSide(content);
 	}
 	catch(err) {
@@ -59,9 +55,10 @@ async function getNewTokens(content) {
 
 
 function checkStatusCode(code, info, data, header) {
+	console.log('CODE', code);
 	switch(code) {
 		case 409 :
-			upDateEstimateClient(data, header);
+			upDateEstimateClient(data, header, info);
 			break ;
 		case 403 :
 			getNewTokens(info);
@@ -70,16 +67,18 @@ function checkStatusCode(code, info, data, header) {
 };
 
 
-async function upDateEstimateClient(data, header) {
+async function upDateEstimateClient(data, header, content) {
 	if (confirm("This estimate already exist. Would you like to update it?")){
 		const url = '/update/estimate';
 
 		try {
-			await fetch (url, {
+			const result = await fetch (url, {
 				method: "PUT",
 				body: data,
 				headers: header,
-			}).catch(err => console.error(`ALERT ${err}`));
+			}).then(code => code.status)
+			.catch(err => console.error(`ALERT ${err}`));
+			result === 403 ? checkStatusCode(result, content) : false;
 		}
 		catch(err) {
 			alert(`ATTENTION: ${err}`);
@@ -93,10 +92,7 @@ async function upDateEstimateClient(data, header) {
 async function postDataFromClientSide(content) {
 	const DATA =	JSON.stringify(content);
 	const url =		`/new/estimate/`;
-	let token =		globalThis.document.cookie.split(' ');
-	token = token.find(data => data.split('=')[0] === 'token').split('=')[1];
 	const HEADER =	{
-		'Authorization': `Bearer ${token}`,
 		'Content-Type': 'application/json; charset=UTF-8',
 	};
 	if (globalThis.navigator.onLine) {

@@ -1,0 +1,43 @@
+# POST {{base_url}}/new/estimate
+POST http://localhost:80/new/estimate
+Authorization: Bearer {{jwt_token}}
+Continent-Type: application/json
+
+{
+	"reference":"PED-TEST-3",
+	"list":[
+		{
+			"code":"LA-12930",
+			"x":100,
+			"z":10, 
+			"y":100
+		},
+		{
+			"code":"LA-129",
+			"x":100,
+			"z":10,
+			"y":100
+		},
+		{
+			"code":"LA-10989",
+			"x":10,
+			"z":5,
+			"y":80
+		},
+		{
+			"code":"892s98df9",
+			"x":120,
+			"z":5,
+			"y":180
+		}
+	],
+	"crates":[
+		"Final",
+		123,
+		46,
+		128,
+		0.724
+	],
+	"user_name" : "Bianca",
+	"user_id" : "1"
+}

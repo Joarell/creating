@@ -11,17 +11,22 @@
 const pool	= require('./db.settings');
 
 
-async function storeSuspiciousTokens (tokens, id) {
+async function storeSuspiciousTokens (data) {
 	const client = await pool.connect();
 
 	try {
 		await client.query('BEGIN');
 		const content = `
 			INSERT INTO
-				craters.suspicious_tokens (user_id, auto_token, refresh_token)
-			VALUES
-				(${id}, '${tokens.authToken}', '${tokens.refToken}')
-		`;
+				craters.suspicious_tokens (
+				user_id, auto_token, refresh_token, session
+				)
+			VALUES (
+				'${data.id}',
+				'${data.authToken}',
+				'${data.refToken}',
+				'${data.session}'
+			)`;
 		await client.query(content);
 		await client.query('COMMIT');
 		return (201);

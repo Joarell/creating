@@ -8,10 +8,10 @@ module.exports = {
 			schema: 'craters'
 		}, [{
 			name: 'Jev',
-			last_name: 'Souza',
-			birth_date: '1990-08-12',
+			lastName: 'Souza',
+			birthday: '1990-08-12',
 			email: 'otto@test.com',
-			pass_frase: 'testing'
+			passFrase: 'testing'
 		}]);
 	},
 

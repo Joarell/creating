@@ -16,8 +16,12 @@ module.exports = {
 				allowNull: false,
 				autoIncrement: true,
 			},
+			session: {
+				type: Sequelize.STRING(10),
+				allowNull: false,
+			},
 			user_id: {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING(20),
 				references: {
 					model: {
 						tableName: 'users',

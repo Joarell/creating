@@ -45,10 +45,8 @@ router.post('/private/auth',
 		res.status(200).json({ 'status' : 'active' });
 });
 
-router.post("/start",
-	userSet.userLoginValidation,
-	take.newLogin
-);
+
+router.post("/start", userSet.userLoginValidation, take.newLogin);
 
 
 router.get("/", (req, res) => {
@@ -64,19 +62,16 @@ router.get("/logout", userSet.userLoginValidation);
 router.post("/new/users",
 	valid.validationBodyUserAdd,
 	valid.dataUserChecker,
-	userSet.inserNewUser
+	userSet.insertNewUser
 );
 
 
-router.get("/shift/tokens",
-	userSet.userTokenMatch,
-	take.shiftTokens,
-);
+router.post("/shift/tokens",
+	(req,res) => console.log('TESANDO', req.body.cookie),
+	take.shiftTokens);
 
 
 router.post("/new/estimate",
-	userSet.userTokenMatch,
-	userSet.userTokenExpTime,
 	valid.userDataValidation,
 	valid.validationBodyEstimate,
 	valid.dataEstimateChecker,
@@ -87,16 +82,10 @@ router.post("/new/estimate",
 router.get("/estimates/:ref_id", take.getDataEstimates);
 
 
-router.put("/update/estimate",
-	userSet.userTokenExpTime,
-	take.updateEstimate,
-);
+router.put("/update/estimate", take.updateEstimate);
 
 
-router.delete("/delete/estimate/:ref_id",
-	userSet.userTokenExpTime,
-	take.removeEstimates
-);
+router.delete("/delete/estimate/:ref_id", take.removeEstimates);
 
 
 router.get("/currency", extAPI.externalAPICurrency);

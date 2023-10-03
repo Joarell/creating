@@ -21,34 +21,40 @@ async function getUserData (authToken, info) {
 	const checkRef	= dataUser[0].refresh_token === info.token;
 	const checkId	= dataUser[0].id === info.id;
 
+	console.log("TOKEN DB", dataUser[0], 'and', authToken, 'and', info);
+	console.log(checkAuth)
+	console.log(checkRef)
+	console.log(checkId)
 	if(checkAuth && checkRef && checkId)
 		return (dataUser[0]);
 	return (false);
 };
 
 
-async function tokenProcedures (accessToken, body) {
+async function tokenProcedures (accessToken, body, session) {
 	const userDB = await getUserData(accessToken, body);
 	
-	if (userDB) {
+	if(userDB) {
 		const newAuthToken	= authTokenGen();
 		const newRefToken	= refTokenGen(userDB.email);
 		const expTokens		= [accessToken, body.token];
 		const newTokens		= [newAuthToken, newRefToken];
-		return (await storeOldTokensGetNew(expTokens, newTokens, userDB));
+		return(await storeOldTokensGetNew(expTokens, newTokens, userDB, session));
 	};
 	return (500);
 };
 
 
-async function storeOldTokensGetNew (expTokens, newTokens, user) {
+async function storeOldTokensGetNew (expTokens, newTokens, user, session) {
 	const client = await pool.connect();
 
 	try {
 		await client.query('BEGIN');
 		const oldTokens = `INSERT INTO craters.expired_tokens (
-			user_id, auth_token, refresh_token)
-			VALUES (${user.id}, '${expTokens[0]}', '${expTokens[1]}')`;
+			session, user_id, auth_token, refresh_token)
+			VALUES (
+				'${session}', '${user.id}', '${expTokens[0]}', '${expTokens[1]}'
+			)`;
 		const addNewTokens = `UPDATE craters.users SET
 			auth_token = '${newTokens[0]}',
 			refresh_token = '${newTokens[1]}'
@@ -101,7 +107,7 @@ function authTokenGen(userName) {
 	const authtoken = jwt.sign(
 		{ data: userName },
 		process.env.SECRET_TOKEN,
-		{ expiresIn: '10m' }
+		{ expiresIn: '5m' }
 	);
 	return (authtoken);
 };
