@@ -1,4 +1,4 @@
-import Converter from '../www/app/core2/Converter.class.mjs';
+import Converter from '../otto/app/core2/Converter.class.mjs';
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 

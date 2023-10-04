@@ -2,7 +2,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import * as mock from './mock.artworks.mjs';
-import UnitAdapter from '../www/app/core2/Unit.Adapter.class.mjs';
+import UnitAdapter from '../otto/app/core2/Unit.Adapter.class.mjs';
 
 
 describe("Testing the Unit Adapter class:", () => {

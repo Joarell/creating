@@ -1,14 +1,14 @@
 
-import Crater from '../www/app/core2/Crater.class.mjs';
+import Crater from '../otto/app/core2/Crater.class.mjs';
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import * as mock from './mock.artworks.mjs';
-import CraterTube from '../www/app/core2/Crater.tube.crate.mjs';
-import CraterPythagoras from '../www/app/core2/Crater.largest.canvas.mjs';
-import CraterSameSize from '../www/app/core2/Crater.same.size.mjs';
-import CraterNotCanvas from '../www/app/core2/Crater.no.canvas.mjs';
-import CraterStandard from '../www/app/core2/Crater.standard.crate.mjs';
-import Arranger from '../www/app/core2/Arranger.class.mjs';
+import CraterTube from '../otto/app/core2/Crater.tube.crate.mjs';
+import CraterPythagoras from '../otto/app/core2/Crater.largest.canvas.mjs';
+import CraterSameSize from '../otto/app/core2/Crater.same.size.mjs';
+import CraterNotCanvas from '../otto/app/core2/Crater.no.canvas.mjs';
+import CraterStandard from '../otto/app/core2/Crater.standard.crate.mjs';
+import Arranger from '../otto/app/core2/Arranger.class.mjs';
 
 
 describe("These are tests to Crater class.", () => {

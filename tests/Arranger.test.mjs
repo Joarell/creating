@@ -1,13 +1,13 @@
 
-import Arranger from '../www/app/core2/Arranger.class.mjs';
+import Arranger from '../otto/app/core2/Arranger.class.mjs';
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import * as mock from './mock.artworks.mjs';
-import ArrangerStarter from '../www/app/core2/Arranger.starter.class.mjs';
-import ArrangerSameSize from '../www/app/core2/Arranger.same.size.class.mjs';
-import ArrangerNoCanvas from '../www/app/core2/Arranger.no.canvas.mjs';
-import ArrangerLargestCanvas from '../www/app/core2/Arranger.largest.works.mjs';
-import ArrangerTube from '../www/app/core2/Arranger.tube.class.mjs';
+import ArrangerStarter from '../otto/app/core2/Arranger.starter.class.mjs';
+import ArrangerSameSize from '../otto/app/core2/Arranger.same.size.class.mjs';
+import ArrangerNoCanvas from '../otto/app/core2/Arranger.no.canvas.mjs';
+import ArrangerLargestCanvas from '../otto/app/core2/Arranger.largest.works.mjs';
+import ArrangerTube from '../otto/app/core2/Arranger.tube.class.mjs';
 
 
 describe("These are tests to Arranger class module.", () => {

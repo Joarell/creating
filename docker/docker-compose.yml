@@ -48,7 +48,7 @@ services:
 #  │    Authorization and authentication container server     │
 #  ╰──────────────────────────────────────────────────────────╯
   auth_server:
-    command: npm start
+    command: yarn start
     # container_name: auth_server
     depends_on:
       - web_app
@@ -127,14 +127,14 @@ services:
     restart: always
     volumes:
       - ../proxy/nginx:/var/log/nginx
-      - ../www/:/home/crater
+      - ../otto/:/home/crater
 
 
 # ╭──────────────────────────────────────────────────────────╮
 # │               Main app container settings                │
 # ╰──────────────────────────────────────────────────────────╯
   web_app:
-    command: npm start
+    command: yarn start
     container_name: web_app
     depends_on:
       - db
@@ -148,7 +148,7 @@ services:
   
     restart: on-failure
     volumes:
-      - ../www/:/crater/app
+      - ../otto/:/crater/app
     working_dir: /crater/app
     # TODO: try out another work directory to pass the '/', as a root path.
 

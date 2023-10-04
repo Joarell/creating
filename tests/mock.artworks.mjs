@@ -1,8 +1,8 @@
 
-import ArtWork from '../www/app/core2/ArtWork.class.mjs';
-import Arranger from '../www/app/core2/Arranger.class.mjs';
-import CraterSameSize from '../www/app/core2/Crater.same.size.mjs';
-import CraterStandard from '../www/app/core2/Crater.standard.crate.mjs';
+import ArtWork from '../otto/app/core2/ArtWork.class.mjs';
+import Arranger from '../otto/app/core2/Arranger.class.mjs';
+import CraterSameSize from '../otto/app/core2/Crater.same.size.mjs';
+import CraterStandard from '../otto/app/core2/Crater.standard.crate.mjs';
 
 
 const list = [

@@ -1,4 +1,4 @@
-import ArtWork from '../www/app/core2/ArtWork.class.mjs'
+import ArtWork from '../otto/app/core2/ArtWork.class.mjs'
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 
