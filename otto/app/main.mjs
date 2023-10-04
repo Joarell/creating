@@ -48,13 +48,9 @@ globalThis.document.getElementById('main-app')
 			copyButton2();
 			break;
 		case "logout":
-			document.cookie = "user=; value=; Max-Age=0; path=/; domain=";
-			document.cookie = "id=; value=; Max-Age=0; path=/; domain=";
 			globalThis.location.replace('/');
 			break;
 		case "logout-btn":
-			document.cookie = "user=; value=; Max-Age=0; path=/; domain=";
-			document.cookie = "id=; value=; Max-Age=0; path=/; domain=";
 			globalThis.location.replace('/');
 			break;
 		case "seek-btn":

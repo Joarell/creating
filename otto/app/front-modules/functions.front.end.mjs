@@ -71,8 +71,9 @@ export async function crate() {
 	let list;
 	const estimate =	{};
 	const e_code =		document.getElementById("input_estimate").value;
+	const works =		 sessionStorage.getItem('codes')
 
-	if (confirm("Ready to crate all works?")) {
+	if (confirm("Ready to crate all works?") && works) {
 		crates =				await checkMetric();
 		estimate["reference"] =	e_code;
 		list =					parseArtWork();
@@ -84,7 +85,9 @@ export async function crate() {
 		sessionStorage.setItem("pane1", "populate");
 		sessionStorage.setItem("pane2", "populate");
 	}
-}
+	else
+		alert('Pease, add a some works to be crated!');
+};
 
 
 //╭───────────────────────────────────────────────────────────────────────────╮

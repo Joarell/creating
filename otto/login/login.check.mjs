@@ -40,7 +40,7 @@ async function setLogin(info) {
 };
 
 
-async function backEndLoginAuth (userInfo) {
+async function backEndLoginAuth(userInfo) {
 	const USER =	JSON.stringify(userInfo);
 	const url =		'/start';
 	try {
@@ -58,7 +58,7 @@ async function backEndLoginAuth (userInfo) {
 };
 
 
-async function appAccessCheckIn (userAuth) {
+async function appAccessCheckIn(userAuth) {
 	console.log(userAuth);
 	const { result } =	userAuth;
 	const header =	{
@@ -86,7 +86,7 @@ async function appAccessCheckIn (userAuth) {
 			alert("Not authorized. Please, try again!");
 			globalThis.location.reload();
 			throw new Error(checkOut.status);
-		}
+		};
 	}
 	catch(err) {
 		alert(`Attention: ${err}`);

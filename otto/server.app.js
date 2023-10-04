@@ -20,10 +20,8 @@ app.use((req, res, next) => {
 });
 
 app.get('/app', (req, res) => {
-	// app.use(express.static(path.join(__dirname)));
 	app.use('/app', express.static(__dirname + '/app'));
 	res.status(200).sendFile(path.join(__dirname));
-	console.log(req.body);
 	console.log('passed');
 });
 

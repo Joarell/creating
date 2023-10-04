@@ -5,8 +5,9 @@ import { displayClean, populateOptions } from "./select.menu.mjs";
 
 
 export function openCloseDisplay (element) {
+	const works = sessionStorage.getItem('codes');
 	element.map(plotter => {
-		if (plotter.ariaHidden === 'true') {
+		if (plotter.ariaHidden === 'true' && works) {
 			plotter.setAttribute("aria-hidden", false);
 			plotter.setAttribute("aria-expanded", true);
 		}
@@ -29,7 +30,9 @@ export async function openDisplay() {
 	if (display.ariaHidden === 'false') {
 		await populateOptions();
 		renderLayer();
-		setTimeout(() => globalThis.scroll({ top: 1000, behavior: "smooth" }), 1000);
+		setTimeout(
+			() => globalThis.scroll({ top: 1000, behavior: "smooth" }), 1000
+		);
 	};
 };
 

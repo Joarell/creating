@@ -32,7 +32,7 @@ globalThis.onload = () => {
 	setTimeout(loadingPage, 2500);
 };
 
-globalThis.onbeforeunload = checkTokens();
+// globalThis.onbeforeunload = checkTokens();
 
 
 // ╭────────────────────────────────────────────────────────╮
@@ -76,8 +76,12 @@ export const crate = () => {
 	mod.crate();
 	const element = document.querySelector(".result");
 
-	element.ariaHidden === 'true' ? openCloseDisplay([element]) : false;
-	setTimeout(() => globalThis.scroll({ top: 300, behavior: "smooth" }), 1000);
+	if (sessionStorage.getItem('codes')) {
+		element.ariaHidden === 'true' ? openCloseDisplay([element]) : false;
+		setTimeout(
+			() => globalThis.scroll({ top: 300, behavior: "smooth" }), 1000
+		);
+	};
 };
 
 

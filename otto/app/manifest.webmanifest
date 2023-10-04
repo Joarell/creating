@@ -1,7 +1,7 @@
 {
 	"permissions": ["webRequest"],
-	"short_name": "Weather",
-	"name": "Weather: Do I need an umbrella?",
+	"short_name": "Otto",
+	"name": "Otto Web Crater.",
 	"icons": [
 		{
 			"src": "/images/icons-vector.svg",
@@ -20,13 +20,13 @@
 		}
 	],
 	"id": "",
-	"start_url": "/",
+	"start_url": "https://otto.com/login",
 	"background_color": "#162789",
 	"display": "standalone",
 	"scope": "/",
-	"theme_color": "#162789",
+	"theme_color": "#03d9f4",
 	"shortcuts": [],
-	"description": "AI web crater.",
+	"description": "Progressive Web App art work crate solver list.",
 	"screenshots": [
 		{
 			"src": "/images/screenshot1.png",

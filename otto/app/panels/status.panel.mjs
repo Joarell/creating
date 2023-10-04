@@ -6,6 +6,7 @@ globalThis.onstorage = () => {
 	const newList =	sessionStorage.getItem("FETCHED");
 	const clear =	sessionStorage.getItem("clean");
 	const mode =	localStorage.getItem("mode");
+	const works =	sessionStorage.getItem('codes')
 
 	changeMode(mode);
 	if (clear) {
@@ -13,7 +14,7 @@ globalThis.onstorage = () => {
 		sessionStorage.removeItem("clean");
 		sessionStorage.setItem("pane-1", "clear");
 	};
-	if (check) {
+	if (check && works) {
 		globalThis.location.reload();
 		localStorage.removeItem("storage");
 	};

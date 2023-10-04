@@ -123,8 +123,6 @@ export async function saveTheCurrentEstimate (estimate) {
 		reference,
 		list,
 		crates : result,
-		user_name: 'Bianca',
-		user_id : 1,
 	};
 	return (postDataFromClientSide(INFO));
 };
