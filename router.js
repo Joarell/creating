@@ -3,7 +3,7 @@
 // │ │ INFO: Here is the routes of the webcrater: │ │
 // │ │               /__cspreport__               │ │
 // │ │                 /new/login                 │ │
-// │ │                    /www                    │ │
+// │ │                    /otto                   │ │
 // │ │                   /login                   │ │
 // │ │                  /logout                   │ │
 // │ │              /insert/estimate              │ │
@@ -38,9 +38,7 @@ router.post('/__cspreport__', (req, res) => {
 });
 
 
-router.post('/private/auth',
-	userSet.userTokenMatch,
-	userSet.userTokenExpTime,
+router.post('/private/auth', userSet.userTokenMatch, userSet.userTokenExpTime,
 	(req, res) => {
 		res.status(200).json({ 'status' : 'active' });
 });
@@ -50,13 +48,9 @@ router.post("/start", userSet.userLoginValidation, take.newLogin);
 
 
 router.get("/", (req, res) => {
-	res.status(200).redirect('./www/login/');
+	res.status(200).redirect('./otto/login/');
 	console.log('Running');
 });
-
-
-// TODO: route not tested yet
-router.get("/logout", userSet.userLoginValidation);
 
 
 router.post("/new/users",
@@ -66,9 +60,7 @@ router.post("/new/users",
 );
 
 
-router.post("/shift/tokens",
-	(req,res) => console.log('TESANDO', req.body.cookie),
-	take.shiftTokens);
+router.post("/shift/tokens", take.shiftTokens);
 
 
 router.post("/new/estimate",
