@@ -17,7 +17,10 @@
 	<script async type="module" src="./main.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
 	<link rel="manifest" href="./manifest.webmanifest">
-
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 <body>
 	<header>
 		<div class="header-content">
@@ -64,13 +67,13 @@
 		</div>
 	</div>
 	<main class="app" aria-hidden="true" id="main-app">
-		<div>
-			<div id="event-popup" popover>
-				<p>Test!</p>
-				Popover content goes in here
-			</div>
-			<button type="menu" popovertarget="event-popup"></button>
-		</div>
+		<!-- <div> -->
+		<!-- 	<div class="popup" id="event-popup" popover> -->
+		<!-- 		<p>Test!</p> -->
+		<!-- 		Popover content goes in here -->
+		<!-- 	</div> -->
+		<!-- 	<button type="menu" popovertarget="event-popup"></button> -->
+		<!-- </div> -->
 		<section class="side-menu">
 			<div class="section__menu">
 				<div class="section-left-up">
@@ -92,7 +95,7 @@
 						</form>
 					</div>
 					<div class="section__menu--btn">
-						<a role="button" class="layers-btn" name="Open layers" data-popup="" id="crate-layers" disabled>
+						<a role="button" class="layers-btn" name="Checking layer" data-popup="" id="crate-layers" disabled>
 							<svg aria-hidden="true" class="logout-icon" id="layer-crate" preserveAspectRatio="none">
 								<use href="#layer-material" id="layer-crate"></use>
 							</svg>
@@ -110,7 +113,7 @@
 		</section>
 		<div class="container" id="body-app">
 			<div class="container__insert">
-				<h2 class="title" className"">+ Add</h3>
+				<h2 class="title"><i class="fa-solid fa-plus"></i> Add</h2>
 					<div class="IO">
 						<div class="IO__top info" id="estimate">
 							<form class="IO__add--form">
@@ -161,7 +164,7 @@
 			</div>
 			<!--This div provides the overview about the works added before the call of the AI-->
 			<div class="container__status">
-				<h2 class="title">N - List</h2>
+				<h2 class="title"><i class="fa-solid fa-list-ul"></i> List</h2>
 				<div class="container__status__pane">
 					<iframe loading="lazy" class="container__status__pane__frame" title="Work's list" id="status-frame"
 						src="./panels/status_panel.html" sandbox="allow-same-origin allow-scripts"></iframe>
@@ -180,9 +183,8 @@
 				</div>
 			</div>
 			<div class="container-bottom">
-				<div class="result container--span" aria-hidden="true" aria-expanded="false" aria-controls="IO__crate"
-					role="region" aria-labelledby="results">
-					<h2>= Results</h2>
+				<div class="result container--span" aria-hidden="true" aria-expanded="false" aria-controls="IO__crate" role="region" aria-labelledby="results">
+					<h2><i class="fa-solid fa-equals"></i> Results</h2>
 					<div class="container__results result--panels">
 						<div class="copy-pane1">
 							<iframe loading="lazy" class="container__results--open" title="Works set"
@@ -194,8 +196,7 @@
 						<div class="copy-pane2">
 							<iframe loading="lazy" class="container__results--crates" title="List done"
 								src="./panels/pane2_crates_open.html" sandbox="allow-same-origin allow-scripts"></iframe>
-							<button class="IO__press--btn copy" id="copy-pane2">COPY
-								<p class="copy-message">Copied!</p>
+							<button class="IO__press--btn copy" id="copy-pane2">COPY <p class="copy-message">Copied!</p>
 							</button>
 						</div>
 					</div>
@@ -204,20 +205,17 @@
 					<div class="accordion">
 						<div class="accordion-panel get-estimate" aria-labelledby="search-header" aria-hidden="true" role="region">
 							<h3 class="" id="search-header">
-								<button class="trigger-menu menu search" id="search-btn" aria-controls="search--content"
-									aria-expanded="false">
-									<span class="menu__option--text">Search</span>
+								<button class="trigger-menu menu search" data-role="popover" data-popover-text="Currency" id="search-btn" aria-controls="search--content" aria-expanded="false">
 									<svg aria-hidden="true" class="menu-icon" id="search-btn">
 										<use href="#lupa-material" id="seek-btn"></use>
 									</svg>
 								</button>
-								<span lang="en" class="menu__option--text">Search Estimate</span>
+								<span lang="en" class="menu__option--text" data-role="popover" data-popover-text="Currency">Search Estimate</span>
 								<div class="menu__input menu__fetch" aria-hidden="true" role="region">
 									<form class="menu__fetch">
 										<input type="text" class="get__estimate" id="estimate_getter" autocomplete="on"
 											required>
-										<button type="button" class="IO__press--btn menu__search-btn"
-											id="fetch-btn">Search</button>
+										<button type="button" class="IO__press--btn menu__search-btn" id="fetch-btn">Search</button>
 									</form>
 								</div>
 							</h3>
@@ -229,7 +227,7 @@
 										<use href="#exchange-material" id="ex-btn"></use>
 									</svg>
 								</button>
-								<span class="menu__option--text">Currency</span>
+								<span class="menu__option--text" data-role="popover" data-popover-text="Currency">Currency</span>
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__currency">
 										<div>
@@ -251,12 +249,11 @@
 						<div class="accordion-panel units-conversion" aria-hidden="true" aria-labelledby="units-conversion" role="region">
 							<h3 class="" id="units-header">
 								<button class="trigger-menu menu units" aria-controls="units-conversion" id="units-btn" aria-expanded="false">
-									<span class="menu__option--text">Units</span>
 									<svg aria-hidden="true" class="menu-icon" id="units-btn">
 										<use href="#regua-material" id="unit-btn"></use>
 									</svg>
 								</button>
-								<span lang="en" class="menu__option--text">Units</span>
+								<span lang="en" class="menu__option--text" data-role="popover" data-popover-text="Units">Units</span>
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__units" id="units">
 										<div>

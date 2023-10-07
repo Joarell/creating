@@ -5,8 +5,73 @@
 
 @import "responsive_sheet.css";
 @import "index-01.css";
-@import "https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@100;200;300;400;500;600;700;800;900&family=Mitr:wght@200;300;400;500;600;700&family=Saira+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap";
+@import "./font-awesome-4.7.0/less/font-awesome.less";
 @import "https://www.nerdfonts.com/assets/css/webfont.css";
+
+
+/* ╭──────────────────────────────────────────────────────────╮
+   │                     APP LATIN FONTS.                     │
+   ╰──────────────────────────────────────────────────────────╯
+*/
+@font-face {
+  font-family: 'Font Awesome';
+  src: url('./font-awesome-4.7.0/fonts/fontawesome-webfont.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Big Shoulders Stencil Display';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url(https://fonts.gstatic.com/s/bigshouldersstencildisplay/v28/6aeZ4LS6U6pR_bp5b_t2ugOhHWFcxSGP9ttD96KCb8xPytKb-oPRU-vkuLm_3E__L3bm.woff2) format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url(https://fonts.gstatic.com/s/mitr/v11/pxiLypw5ucZF-Tw4MQ.woff2) format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url(https://fonts.gstatic.com/s/mitr/v11/pxiEypw5ucZF8c8bJJfecg.woff2) format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: 'Saira Semi Condensed';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url(https://fonts.gstatic.com/s/sairasemicondensed/v13/U9MD6c-2-nnJkHxyCjRcnMHcWVWV1cWRRX8MaOY.woff2) format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: 'Saira Semi Condensed';
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url(https://fonts.gstatic.com/s/sairasemicondensed/v13/U9MM6c-2-nnJkHxyCjRcnMHcWVWV1cWRRXf_S_MRiXk.woff2) format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: 'Saira Semi Condensed';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url(https://fonts.gstatic.com/s/sairasemicondensed/v13/U9MM6c-2-nnJkHxyCjRcnMHcWVWV1cWRRXe3TfMRiXk.woff2) format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 
 *, *::before, *::after {
 	box-sizing: inherit;
@@ -79,7 +144,6 @@
 	box-shadow: var(--shadow1);
 }
 
-
 body {
 	box-sizing: border-box;
 	font-family: Saira Semi Condensed, Mitr, sans-serif;
@@ -88,6 +152,11 @@ body {
 	scroll-behavior: slow;
 	background-color: var(--bg-col);
 	transition: padding 1s ease-in-out;
+}
+
+
+[popover] {
+	font-size: 3rem;
 }
 
 
@@ -186,7 +255,7 @@ label {
 
 input {
 	box-shadow: var(--inner-shadow);
-	background: var(--input-bg);
+	background-color: var(--input-bg);
 	border-radius: .3rem;
 	border: transparent;
 	outline: none;
@@ -492,6 +561,7 @@ tbody:nth-child(even) {
    ╰──────────────────────────────────────────────────────────╯
 */
 
+.popup,
 .plotter,
 .container__insert,
 .container__status,
@@ -733,11 +803,21 @@ label:hover + .IO__sizes--popup {
 		outline-offset: 2px;
 	}
 	&:hover {
+		visibility: visible;
+		-webkit-animation: fadeIn .5s;
+		animation: fadeIn 1s;
 		transform: translateY(.1rem);
 		background: goldenrod;
 		box-shadow: var(--shadow1);
 		border: .5rem solid var(--color8);
 		transition: all .5s ease-in-out;
+		color: var(--color5);
+		& > p {
+			color: var(--color5);
+		}
+		.popup {
+			display: block;
+		}
 	}
 	&:active {
 		transition: .5s ease-in-out;
@@ -761,17 +841,6 @@ label:hover + .IO__sizes--popup {
 	display: grid;
 	place-items: center;
 	opacity: 100%;
-}
-
-
-.IO__crate:hover {
-	& > p {
-		color: var(--color5);
-	}
-	color: var(--color5);
-	visibility: visible;
-	-webkit-animation: fadeIn 1s;
-	animation: fadeIn 2s;
 }
 
 
@@ -909,6 +978,7 @@ label:hover + .IO__sizes--popup {
 	overflow: hidden;
 	transition: .5s ease-in-out;
 	& {
+		font-size: var(--fonts);
 		font-weight: 400;
 		max-width: 80ch;
 		box-shadow: var(--shadow1);
@@ -993,7 +1063,7 @@ label:hover + .IO__sizes--popup {
 .menu-icon {
 	box-shadow: var(--inner-shadow);
 	background: transparent;
-	width: 3rem;
+	width: 2.5rem;
 	padding: .5rem;
 	aspect-ratio: 1 / 1;
 	border-radius: 50%;
@@ -1024,6 +1094,7 @@ label:hover + .IO__sizes--popup {
 
 .accordion-panel:nth-child(2) {
 	--__icon-color: var(--color6);
+	opacity: .8;
 }
 
 
@@ -1119,6 +1190,10 @@ label:hover + .IO__sizes--popup {
 	& .get__currency, .get__measure {
 		width: 100%;
 		color: var(--p__color--mode);
+		z-index: 10;
+		&:focus {
+			width: 95%;
+		}
 	}
 }
 
@@ -1246,7 +1321,9 @@ label:hover + .IO__sizes--popup {
 		width: 3.5rem;
 		height: 1.5rem;
 	}
-	& input:active {
-		width: 2.5rem;
+	& input:focus {
+		width: 3rem;
+		font-size: 1.1rem;
+		transition: input 1s ease-in-out;
 	}
 }
