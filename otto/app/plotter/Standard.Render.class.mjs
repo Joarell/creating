@@ -17,7 +17,7 @@ export default class StandarRender {
 	#worksPositionLayer({next, pos, values }) {
 		const RECT =		document.createElementNS("http://www.w3.org/2000/svg", "rect");
 		const INSET =		1;
-		const PAD =			20;
+		const PAD =			2;
 		const X =			this.#pixelSize.x;
 		const Y =			this.#pixelSize.y;
 		const EXTPADY =		0;

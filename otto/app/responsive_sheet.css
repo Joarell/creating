@@ -415,6 +415,10 @@
 	.IO__sizes--code,
 	.IO__top__estimate {
 		width: auto;
+		&:focus {
+			font-size: 1.1rem;
+			transition: input 1s ease-in-out;
+		}
 	}
 
 	/* ╭──────────────────────╮
@@ -536,7 +540,6 @@
 			margin: 0% 20%;
 			animation: emerge 2s ease-in;
 			animation-fill-mode: forwards;
-			transition: all 2s ease;
 			border: .1rem solid var(--iframes-bg);
 		}
 		.plotter__header {
@@ -575,7 +578,7 @@
 		.crate-layer {
 			animation: fede-open 3s ease;
 			animation-fill-mode: forwards;
-			transition: all 2s linear;
+			transition: width height 2s ease;
 			border: .1rem solid var(--iframes-bg);
 		}
 		.crate-layer > * {
