@@ -133,6 +133,7 @@ export default class CraterStandard {
 			return ;
 		const SPIN =	6
 		const FLIP =	2;
+		const ICON =	`<i class="nf nf-oct-sync"></i>`;
 		let i =			0;
 		let x =			this.#list[len][1];
 		let y =			this.#list[len][3];
@@ -145,7 +146,8 @@ export default class CraterStandard {
 				};
 				this.#analysisReduceSpace(layer, [x, y]);
 				if (i === 2 && this.#list[len].length < SPIN)
-					this.#list[len].push(" ");
+					this.#list[len].push(ICON);
+					// this.#list[len].push(" ");
 				else if (this.#list[len].lenght === SPIN)
 					this.#list[len].pop();
 				matched.push(this.#list[len]);

@@ -163,15 +163,15 @@ function airPortStatus(crate, sizeUnit) {
 function setStatusCrateType(kind, unit) {
 	switch(kind) {
 		case 'tubeCrate' :
-			return(`<td>${unit}</td><td>󱥎</td></tr>`);
+			return(`<td>${unit}</td><td><i class="nf nf-md-cylinder"></i></td></tr>`);
 		case 'largestCrate' :
-			return(`<td>${unit}</td><td></td></tr>`);
+			return(`<td>${unit}</td><td><i class="nf nf-fae-triangle_ruler"></i></td></tr>`);
 		case 'sameSizeCrate' :
-			return(`<td>${unit}</td><td>󰇼</td></tr>`);
+			return(`<td>${unit}</td><td><i class="nf nf-fae-equal"></i></td></tr>`);
 		case 'noCanvasCrate' :
-			return(`<td>${unit}</td><td>󰓨</td></tr>`);
+			return(`<td>${unit}</td><td><i class="nf nf-md-sync_off"></i></td></tr>`);
 		case 'standardCrate' :
-			return(`<td>${unit}</td><td>󰹉</td></tr>`);
+			return(`<td>${unit}</td><td><i class="nf nf-fa-picture_o"></i></td></tr>`);
 	};
 };
 
