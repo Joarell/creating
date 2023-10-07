@@ -12,8 +12,31 @@
 		column-gap: var(--colg);
 		row-gap: var(--rowg);
 		padding: 2% 20%;
-		transition: all 2s linear;
 	}
+	/* ╭──────────────────────────────────────────────────────────╮
+	   │                     Container bottom                     │
+	   ╰──────────────────────────────────────────────────────────╯
+	*/
+
+	.container-bottom {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: space-evenly;
+		justify-content: flex-start;
+		gap: 1rem;
+		& > .container--span {
+			&:nth-of-type(1) {
+				height: 100%;
+				width: clamp(35vw, 75%, 40vw);
+				flex-grow: .4;
+			}
+		}
+		& {
+			grid-column: span 2;
+			transition: all 2s ease-in-out;
+		}
+	}
+
 
 	/* ╭───────────────────╮
 	   │ 	Spinner setup  │
@@ -381,7 +404,7 @@
 		border: .1rem solid var(--iframes-bg);
 		border-radius: 1rem;
 		padding: .8rem .5rem;
-		width: 60%;
+		width: 70%;
 		transition: .5s ease;
 	}
 
@@ -494,12 +517,6 @@
 	   │                   Layer plotter setup.                   │
 	   ╰──────────────────────────────────────────────────────────╯
 	*/
-
-	.container-interactive {
-		width: 81%;
-		margin-left: 4rem;
-	}
-
 	.plotter__menu:is([aria-hidden="true"]),
 	.plotter:is([aria-hidden="true"]) {
 		animation: fade-close 500ms ease-out;
@@ -1126,7 +1143,7 @@
 		flex-wrap: wrap;
 		flex-shrink: 1;
 		flex-basis: 100%;
-		gap: 2rem;
+		gap: 1rem;
 		justify-content: space-between;
 	}
 
@@ -1344,7 +1361,7 @@
 
 	.IO__sizes--code,
 	.IO__top__estimate {
-		width: 90%;
+		width: 100%;
 		margin-right: .2rem;
 	}
 
@@ -1372,6 +1389,9 @@
 		display: none;
 	}
 
+	.accordion div:is([aria-hidden="false"]) {
+		margin-top: 1rem;
+	}
 
 	.exchange--content:is([aria-hidden="false"]),
 	.units-convertion:is([aria-hidden="false"]),
@@ -1382,19 +1402,6 @@
 	}
 
 	
-	.result:is([aria-hidden="false"]) {
-		display: block;
-		animation: emerge 2.5s linear;
-		animation-fill-mode: forwards;
-		.result--panels {
-			display: flex;
-			flex-wrap: wrap;
-			flex-direction: column;
-			justify-content: center;
-			gap: .1rem;
-		}
-	}
-
 	.plotter__menu:is([aria-hidden="true"]),
 	.plotter:is([aria-hidden="true"]) {
 		animation: fade-close 500ms ease-out;
@@ -1810,7 +1817,7 @@
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: space-between;
-		gap: 2rem;
+		gap: 1rem;
 		flex-grow: 4;
 	}
 

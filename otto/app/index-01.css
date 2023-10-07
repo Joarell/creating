@@ -28,7 +28,7 @@ footer {
 
 .header--title, .container__footer {
 	margin: 0 0;
-	font-size: var(--font-title);
+	font-size: 13rem;
 	opacity: .05;
 }
 

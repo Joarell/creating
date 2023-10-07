@@ -14,8 +14,8 @@
 
 
 :root {
-	--font-title: 13rem;
-	--fonts: 4rem;
+	--font-title: 1.5rem;
+	--fonts: .8rem;
 	--color1: #03e9f4;
 	--color2: #162789; 
 	--color3: #FC007A;
@@ -51,10 +51,10 @@
 	--inner-shadow-dark: inset .2rem .2rem .5rem var(--pressed),
 		-.2rem -.2rem .5rem var(--iframes-bg);
 
-/* ╭────────────────╮
-   │ 	main setup  │
-   ╰────────────────╯
-*/
+	/* ╭────────────────╮
+	   │ 	main setup  │
+	   ╰────────────────╯
+	*/
 	--state: running;
 	--gold: goldenrod;
 	--yellow-select: #EFECBBBE;
@@ -83,10 +83,11 @@
 body {
 	box-sizing: border-box;
 	font-family: Saira Semi Condensed, Mitr, sans-serif;
-	font-size: 0.8rem;
+	font-size: var(--fonts);
 	background-position: center;
 	scroll-behavior: slow;
 	background-color: var(--bg-col);
+	transition: padding 1s ease-in-out;
 }
 
 
@@ -104,6 +105,8 @@ body {
 	--pack-works: var(--light-blue2);
 	--work-hover: var(--yellow-select);
 	--stroke: var(--box);
+	--background-select: var(--bg-col);
+	--background-option: var(--color4);
 }
 
 
@@ -115,17 +118,18 @@ body {
 	--p__color--mode: var(--color4);
 	--inner-shadow: var(--inner-shadow-light);
 	--input-bg: var(--iframes-bg);
-	--input-font-col: var(--back-gray);
+	--input-font-col: var(--color4);
 	--selection-bg: var(--add-col);
 	--crate-btn-col: var(--iframes-bg);
 	--pack-works: var(--iframes-bg);
 	--work-hover: var(--pressed);
 	--stroke: var(--color1);
+	--background-select: var(--color5);
 }
 
 
 h2 {
-	font-size: calc(var(fonts) - 2);
+	font-size: var(--font-title);
 }
 
 
@@ -138,7 +142,7 @@ h1, h2, h3 {
 iframe {
 	text-align: center;
 	border: .05rem solid var(--iframes-bg);
-	border-radius: 2rem;
+	border-radius: 1.2rem;
 	transition: 500ms ease-in-out;
 	animation-name: fill-pane 2s ease;
 	animation-fill-mode: both;
@@ -157,7 +161,7 @@ p {
 	background: transparent;
 	text-align-last: justify;
 	line-height: 1rem;
-	font-size: .7rem;
+	font-size: var(--fonts);
 	font-family: 'Mitr', sans-serif;
 	font-weight: 500;
 	color: var(--p__color--mode);
@@ -176,7 +180,7 @@ ul, li, a {
 label {
 	position: relative;
 	color: var(--iframes-bg);
-	font-size: .8rem;
+	font-size: var(--fonts);
 }
 
 
@@ -191,22 +195,22 @@ input {
 	& {
 		text-align: center;
 		font-family: Mitr, sans-serif;
-		font-size: .9rem;
+		font-size: calc(var(--fonts) + .1rem);
 		font-weight: 400;
 		color: var(--input-font-col);
 	}
 	&:focus {
 		left: 0;
 		color: var(--color4);
-		font-size: 1rem;
+		font-size: var(--fonts);
 		transition: .5s ease-in-out;
 	}
+	height: 1.5rem;
 }
 
 
-
-label + input {
-	margin-left: .5rem;
+select {
+	display: block;
 }
 
 
@@ -217,7 +221,7 @@ tr, td, th {
 	color: var(--table-font);
 	font-family: Saira Semi Condensed, sans-serif;
 	font-weight: 500;
-	font-size: .7rem;
+	font-size: calc(var(--fonts) - .08rem);
 }
 
 
@@ -266,6 +270,7 @@ tbody:nth-child(even) {
 	}
 }
 
+
 /* ╭──────────────╮
    │ Cube loading │
    ╰──────────────╯
@@ -273,14 +278,13 @@ tbody:nth-child(even) {
 /* Made by JkHuger - from: https://uiverse.io/JkHuger/odd-insect-77 */
 .loading-panels {
 	display: flex;
-	justify-content: center;
+	align-items: center;
+	justify-self: center;
 	position: absolute;
 }
 
-
 .cube {
-	top: 3.9rem;
-	left: 7.5rem;
+	inset: 4rem 0 0 9rem;
 	width: 6.25rem;
 	height: 6.25rem;
 	position: relative;
@@ -488,16 +492,14 @@ tbody:nth-child(even) {
    ╰──────────────────────────────────────────────────────────╯
 */
 
-/* Box shape */
 .plotter,
-/* .plotter__menu, */
 .container__insert,
 .container__status,
 .result-left,
 .result,
 .menu {
 	padding: 2rem 2rem;
-	font-size: 1rem;
+	font-size: var(--fonts);
 	font-weight: 600;
 	box-sizing: border-box;
 	box-shadow: var(--shadow1);
@@ -508,7 +510,7 @@ tbody:nth-child(even) {
 span[data-popup]::before {
 	content: attr(data-popup);
 	color: var(--color4);
-	font-size: .7rem;
+	font-size: var(--fonts);
 	cursor: pointer;
 	position: absolute;
 }
@@ -516,12 +518,6 @@ span[data-popup]::before {
 
 .IO__add--form:hover {
 	box-shadow: var(--shadow1);
-}
-
-
-.IO__add--form > input + label,
-span + input {
-	margin-left: .5rem;
 }
 
 
@@ -537,8 +533,9 @@ span + input {
 	box-sizing: border-box;
 	transition: 1s ease-in-out;
 	& > p {
-		color: var(--p__color--mode);
 		border-radius: 1rem;
+		font-size: .7rem;
+		color: var(--p__color--mode);
 		padding: .1rem .3rem;
 		border: .1rem solid var(--iframes-bg);
 		box-sizing: border-box;
@@ -552,32 +549,9 @@ span + input {
 
 
 /* ╭──────────────────────────────────────────────────────────╮
-   │                     Container bottom                     │
-   ╰──────────────────────────────────────────────────────────╯
-*/
-.container-bottom {
-	grid-column: span 2;
-}
-
-
-.container-bottom {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(20rem, 2fr));
-	column-gap: 2rem;
-	row-gap: var(--rowg);
-	width: 100%;
-	height: 100%;
-}
-
-/* ╭──────────────────────────────────────────────────────────╮
    │                       Result pane                        │
    ╰──────────────────────────────────────────────────────────╯
 */
-
-.menu__search {
-	margin-top: .5rem;
-}
-
 
 .container__results {
 	display: flex;
@@ -586,31 +560,24 @@ span + input {
 	gap: 1rem;
 	justify-content: space-evenly;
 	align-content: center;
-	flex-basis: 100%;
+	& > div {
+		flex-grow: 1;
+		content: var(--r_height);
+		animation-name: fill-pane;
+		animation-delay: 1s;
+		animation-fill-mode: forwards;
+	}
+	& div > iframe {
+		height: 15rem;
+		width: 100%;
+	}
 }
 
 
-.result--panels div > iframe {
+
+
+.copy-pane1, .copy-pane2 {
 	display: flex;
-	width: 22rem;
-	height: 15rem;
-	content: var(--r_height);
-	animation-name: fill-pane;
-	animation-delay: 1s;
-	animation-fill-mode: forwards;
-}
-
-
-.container--span {
-	grid-column: span 2;
-	width:50rem;
-	/* animation: open-pane 2s ease-in-out; */
-	transition: height .5s ease-in-out;
-}
-
-
-.copy-pane1, .copy-pane2{
-	display: inherit;
 	align-items: center;
 	flex-direction: column;
 }
@@ -631,7 +598,7 @@ span + input {
 .copy-message {
 	visibility: hidden;
 	color: var(--add-col);
-	font-size: 1rem;
+	font-size: var(--fonts);
 	transition: 3s ease-out;
 }
 
@@ -653,14 +620,14 @@ span + input {
 	color: var(--color4);
 	position: relative;
 	margin-top: 2%;
-	left: 7.5%;
+	left: 7.0%;
 }
 
 
 .IO__sizes--popup,
 .menu__option--text {
 	font-family: Mitr, sans-serif;
-	font-size: 1rem;
+	font-size: cals(var(--fonts) - .4rem);
 	font-weight: 400;
 }
 
@@ -733,7 +700,7 @@ label:hover + .IO__sizes--popup {
 .IO__press--btn {
 	font-family: Saira Semi Condensed, sans-serif;
 	font-weight: 700;
-	font-size: 1rem;
+	font-size: calc(var(--fonts) + .3rem);
 	transition: all 1s ease;
 	&:is(.add--btn, .del--btn, .clear--btn) {
 		outline: 0;
@@ -760,9 +727,7 @@ label:hover + .IO__sizes--popup {
    │                       Crate button                       │
    ╰──────────────────────────────────────────────────────────╯
 */
-
 .IO__crate {
-	/* outline: 0; */
 	&:focus-within {
 		outline: 3px solid goldenrod;
 		outline-offset: 2px;
@@ -932,14 +897,12 @@ label:hover + .IO__sizes--popup {
 	display: flex;
 	flex-direction: column;
 	isolation: isolate;
-}
-
-
-.menu {
-	background: transparent;
-	border-color: var(--menu-col);
-	padding: .7rem;
-	inset: 0;
+	& {
+		background: transparent;
+		border-color: var(--menu-col);
+		padding: .7rem;
+		inset: 0;
+	}
 }
 
 
@@ -947,40 +910,27 @@ label:hover + .IO__sizes--popup {
 	visibility: hidden;
 	color: var(--color4);
 	overflow: hidden;
-	transition: .9s ease-in-out;
+	transition: .5s ease-in-out;
 	& {
 		font-weight: 400;
 		max-width: 80ch;
 		box-shadow: var(--shadow1);
 		border-radius: var(--bord);
-		border-bottom: .05rem solid var(--color4);
-		border-right: .05rem solid var(--color4);
 		padding: 0.3rem 1rem;
 		position: absolute;
-		margin: -2.3% 0 0 5%;
+		margin: -2.9% 0 0 5%;
 	}
 }
 
 
-.menu + .menu {
-	margin-top: 1rem;
-}
-
-
 .accordion-panel:has([aria-expanded="true"]) {
-	flex-basis: clamp(9rem, 35vh, 18rem);
-	--accordion-W-H: 100%;
-	--accordion-width: 100%;
 	--input-menu-radius: 2rem;
 	--input-menu-margin: 1rem;
 	--input-menu-border: .1rem solid var(--iframes-bg);
 	--input-menu-display: block;
 	--input-menu-paddin-units: 1.5rem 1.5rem;
 	--input-menu-units-radius: .5rem;
-	--input-menu-units-width: 6rem;
-	--input-menu-units-height: 2rem;
 	--display-flex: flex;
-	--result-panels: 20rem;
 }
 
 
@@ -1002,7 +952,7 @@ label:hover + .IO__sizes--popup {
 
 
 .accordion-panel:has([aria-expanded="false"]) {
-	width: var(--accordion-width, 28.5%);
+	width: var(--accordion-width, 1rem);
 	transition: width 2s ease-in-out;
 	fill: var(--p__color--mode);
 }
@@ -1015,22 +965,21 @@ label:hover + .IO__sizes--popup {
 		background: var(--menu-col);
 		fill: var(--__icon-color);
 	}
+	width: 18vw;
 	transition: width 2s ease-in-out;
 }
 
 
-.exchange--content:hover {
-	border-radius: 2rem;
-	box-shadow: var(--shadow1);
-	transition: width 2s ease-in-out, transform 2s ease;
+.accordion-panel + .accordion-panel {
+	margin-top: 1rem;
 }
 
 
 .trigger-menu {
-	border-radius: 50%;
-	padding: .1rem;
+	border-radius: 100%;
+	inset: 0;
 	border: none;
-	box-shadow: var(--inner-shadow);
+	margin-left: 75%;
 	transition: all .5s ease-in-out;
 	z-index: 10;
 }
@@ -1038,7 +987,7 @@ label:hover + .IO__sizes--popup {
 
 .trigger-menu:active {
 	display: flex;
-	gap: 1rem;
+	gap: 2rem;
 	box-shadow: var(--inner-shadow);
 	transition: .5s ease-in-out;
 }
@@ -1098,6 +1047,7 @@ label:hover + .IO__sizes--popup {
 	border-radius: var(--input-menu-radius, 0);
 	margin: var(--input-menu-margin, 0);
 	border: var(--input-menu-border, 0);
+	padding: var(--input-menu-paddin-units, 0);
 	transition: padding 2s ease-in-out, transform 1s ease;
 }
 
@@ -1108,10 +1058,10 @@ label:hover + .IO__sizes--popup {
 */
 .menu__fetch {
 	display: flex;
+	align-items: center;
 	justify-content: center;
 	flex-wrap: wrap;
-	align-self: center;
-	flex-direction: row;
+	flex-direction: column;
 	transition: all 2s ease-in-out, transform 2s ease;
 }
 
@@ -1133,11 +1083,6 @@ label:hover + .IO__sizes--popup {
 }
 
 
-.get__currency, .get__measure {
-	flex-grow: 2;
-}
-
-
 /* ╭──────────────────────────────────────────────────────────╮
    │                  Menu Units & Currency.                  │
    ╰──────────────────────────────────────────────────────────╯
@@ -1146,57 +1091,45 @@ label:hover + .IO__sizes--popup {
 .menu__units,
 .menu__currency {
 	display: var(--display-flex, none);
-	flex-wrap: wrap;
-	flex-direction: flex-start;
-	justify-content: space-evenly;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
 	gap: var(--input-menu-margin);
 	animation: open-pane 2.5s ease;
-	& > select option {
-		background: var(--color4);
-		line-height: 0;
-		border: .1rem solid var(--add-col);
-		box-shadow: var(--inner-shadow);
+	& > div {
+		display: var(--display-flex, none);
+		flex-flow: row wrap;
+		flex-grow: .1;
+		justify-content: flex-start;
+		gap: var(--input-menu-margin);
+		animation: open-pane 2.5s ease;
+		& > select option {
+			text-align: center;
+			background: var(--background-option);
+			line-height: 0;
+			border: .1rem solid var(--add-col);
+		}
+		& > select {
+			padding: .1rem;
+			font-family: 'Mitr', sans-serif;
+			border-radius: var(--bord);
+			font-size: var(--fonts);
+			font-weight: 500;
+			background: var(--background-select);
+			color: var(--p__color--mode);
+			box-shadow: var(--inner-shadow);
+		}
 	}
-	& > select {
-		font-family: 'Mitr', sans-serif;
-		font-size: .85rem;
-		font-weight: 500;
-		background: var(--light-blue3);
+	& .get__currency, .get__measure {
+		width: 100%;
 		color: var(--p__color--mode);
-		box-shadow: var(--inner-shadow);
 	}
 }
 
 
 .exchange--content,
 .units-conversion {
-	width: var(--accordion-W-H, none);
-	height: var(--accordion-W-H, none);
 	transition: width 3s ease-in-out;
 	transition: padding 5s ease-in-out;
-}
-
-
-.menu__input--form {
-	display: var(--input-menu-display, none);
-	width: var(--input-menu-units-width, auto);
-}
-
-
-.menu__input {
-	padding: var(--input-menu-paddin-units, 0);
-	transition: all 2s ease-in-out, transform 2s ease;
-}
-
-
-.menu__units > select,
-.menu__currency > select {
-	display: var(--input-menu-display, none);
-	width: var(--input-menu-units-width, 0);
-	border-radius: var(--input-menu-units-radius, 0);
-	text-align: center;
-	height: var(--input-menu-units-height, 0);
-	transition: all 2s ease-in-out, transform 2s ease;
 }
 
 
@@ -1263,7 +1196,7 @@ label:hover + .IO__sizes--popup {
 	align-items: center;
 	width: 2rem;
 	height: 1rem;
-	font-size: 1rem;
+	font-size: var(--fonts);
 	cursor: pointer;
 	color: var(--iframes-bg);
 	transition: all 5s ease;
@@ -1313,6 +1246,10 @@ label:hover + .IO__sizes--popup {
 	align-items: center;
 	justify-content: space-between;
 	& input {
-		width: 3rem;
+		width: 3.5rem;
+		height: 1.5rem;
+	}
+	& input:active {
+		width: 2.5rem;
 	}
 }

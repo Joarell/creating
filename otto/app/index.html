@@ -9,7 +9,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="dashboard controls" content="Main Page">
 	<meta name="author" content="Joseph Joarell">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="theme-color" media="(prefers-color-scheme: light)" content="#BEBBBB">
 	<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#222725">
 	<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)"> -->
@@ -93,14 +93,14 @@
 						</form>
 					</div>
 					<div class="section__menu--btn">
-						<a role="button" class="layers-btn" data-popup="" id="crate-layers" disabled>
+						<a role="button" class="layers-btn" name="Open layers" data-popup="" id="crate-layers" disabled>
 							<svg aria-hidden="true" class="logout-icon" id="layer-crate" preserveAspectRatio="none">
 								<use href="#layer-material" id="layer-crate"></use>
 							</svg>
 						</a>
 					</div>
 					<div class="section__menu--btn">
-						<a role="button" class="logout-btn" data-popup="Logout" id="logout-btn">
+						<a role="button" class="logout-btn" name="logout" data-popup="Logout" id="logout-btn">
 							<svg aria-hidden="true" class="logout-icon" id="logout" preserveAspectRatio="none">
 								<use href="#logout-material" id="logout"></use>
 							</svg>
@@ -203,7 +203,7 @@
 				</div>
 				<div class="container-interactive">
 					<div class="accordion">
-						<div class="menu accordion-panel get-estimate" aria-labelledby="search-header" aria-hidden="true" role="region">
+						<div class="accordion-panel get-estimate" aria-labelledby="search-header" aria-hidden="true" role="region">
 							<h3 class="" id="search-header">
 								<button class="trigger-menu menu search" id="search-btn" aria-controls="search--content"
 									aria-expanded="false">
@@ -223,7 +223,7 @@
 								</div>
 							</h3>
 						</div>
-						<div class="exchange--content menu accordion-panel" aria-hidden="true" aria-labelledby="exchange--content" role="region">
+						<div class="exchange--content accordion-panel" aria-hidden="true" aria-labelledby="exchange--content" role="region">
 							<h3 class="" id="exchange-header">
 								<button class="trigger-menu menu exchange" id="exchange-btn" aria-controls="exchange--content" aria-expanded="false">
 									<svg aria-hidden="true" class="menu-icon" id="exchange-btn">
@@ -233,17 +233,23 @@
 								<span class="menu__option--text">Currency</span>
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__currency">
-										<select id="coin1" class="currency-menu"> </select>
-										<input type="text" name="currency" class="get__currency menu__input--form"
-											id="coin1-input" required>
-										<select id="coin2" class="currency-menu"> </select>
-										<input type="text" name="currency" class="get__currency menu__input--form"
-											id="coin2-input" required>
+										<div>
+											<select id="coin1" class="currency-menu">
+												<option selected>BRL</option>
+											</select>
+											<select id="coin2" class="currency-menu">
+												<option selected>USD</option>
+											</select>
+										</div>
+										<div>
+											<input type="text" name="currency" class="get__currency menu__input--form" id="coin1-input" required>
+											<input type="text" name="currency" class="get__currency menu__input--form" id="coin2-input" required>
+										</div>
 									</form>
 								</div>
 							</h3>
 						</div>
-						<div class="menu accordion-panel units-conversion" aria-hidden="true" aria-labelledby="units-conversion" role="region">
+						<div class="accordion-panel units-conversion" aria-hidden="true" aria-labelledby="units-conversion" role="region">
 							<h3 class="" id="units-header">
 								<button class="trigger-menu menu units" aria-controls="units-conversion" id="units-btn" aria-expanded="false">
 									<span class="menu__option--text">Units</span>
@@ -254,20 +260,24 @@
 								<span lang="en" class="menu__option--text">Units</span>
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__units" id="units">
-										<select id="units1">
-											<option selected>inches</option>
-											<option>meters</option>
-											<option>centimeters</option>
-										</select>
-										<input type="text" name="measure" class="get__measure menu__input--form"
-											id="input-unit1" required value=0>
-										<select id="units2">
-											<option selected>centimeters</option>
-											<option>inches</option>
-											<option>meters</option>
-										</select>
-										<input type="text" name="measures" class="get__measure menu__input--form"
-											id="input-unit2" required value=0>
+										<div>
+											<select id="units1">
+												<option selected>inches</option>
+												<option>meters</option>
+												<option>centimeters</option>
+											</select>
+											<select id="units2">
+												<option selected>centimeters</option>
+												<option>inches</option>
+												<option>meters</option>
+											</select>
+										</div>
+										<div>
+											<input type="text" name="measure" class="get__measure menu__input--form"
+												id="input-unit1" required value=0>
+											<input type="text" name="measures" class="get__measure menu__input--form"
+												id="input-unit2" required value=0>
+										</div>
 									</form>
 								</div>
 							</h3>
