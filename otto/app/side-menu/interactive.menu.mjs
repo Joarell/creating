@@ -5,11 +5,32 @@
 // ╰──────────────────────────────────────────────────────────╯
 export function accordionController (event){
 	const activePanel = event.target.closest(".accordion-panel");
+	const menu =		document.querySelector(".accordion-panel");
 
+	if (event.target.id === "body-app")
+		return(closeMenu(menu));
 	if (!activePanel)
 		return;
 	toggleAccordion(activePanel);
 };
+
+
+function closeMenu(element) {
+	let menu;
+	let buttons;
+	let panel;
+
+	for (menu in element) {
+		buttons =	element.parentElement.querySelectorAll("button");
+		panel =		element.parentElement.querySelectorAll(".menu__input");
+		buttons.forEach(button => {
+			button.setAttribute("aria-expanded", false);
+		});
+		panel.forEach(aria => {
+			aria.setAttribute("aria-hidden", true);
+		});
+	}
+}
 
 
 function toggleAccordion(clicked) {

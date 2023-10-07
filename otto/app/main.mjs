@@ -26,6 +26,9 @@ globalThis.document.getElementById('main-app')
 	
 	// console.log(element.target.id);
 	switch (element.target.id) {
+		case "body-app" :
+			accordionController(element);
+			break;
 		case "add-btn":
 			main.catchWork();
 			break;
@@ -105,7 +108,6 @@ globalThis.document.getElementById('main-app')
 		case "layer-next":
 			skipLayer(element);
 			break;
-		default:
 	}
 }), true);
 

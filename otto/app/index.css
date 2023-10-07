@@ -180,7 +180,7 @@ ul, li, a {
 label {
 	position: relative;
 	color: var(--iframes-bg);
-	font-size: var(--fonts);
+	font-size: calc(var(--fonts) + .2rem);
 }
 
 
@@ -700,7 +700,7 @@ label:hover + .IO__sizes--popup {
 .IO__press--btn {
 	font-family: Saira Semi Condensed, sans-serif;
 	font-weight: 700;
-	font-size: calc(var(--fonts) + .3rem);
+	font-size: calc(var(--fonts) + .5rem);
 	transition: all 1s ease;
 	&:is(.add--btn, .del--btn, .clear--btn) {
 		outline: 0;
@@ -764,14 +764,11 @@ label:hover + .IO__sizes--popup {
 }
 
 
-.crate-popup {
-	visibility: hidden;
-	position: initial;
-	z-index: 20;
-}
-
-
-.IO__crate:hover + .crate-popup {
+.IO__crate:hover {
+	& > p {
+		color: var(--color5);
+	}
+	color: var(--color5);
 	visibility: visible;
 	-webkit-animation: fadeIn 1s;
 	animation: fadeIn 2s;
