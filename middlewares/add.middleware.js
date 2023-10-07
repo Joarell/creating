@@ -11,7 +11,8 @@
 // ╰────────────────────────────────────────────────────╯
 
 
-const db	= require('../DB_models/db.transactions');
+const db =						require('../DB_models/db.transactions');
+const { extractCookieData } =	require('../controllers/user.controller');
 
 
 // TODO: refactor code: "const isFalse = (data) => !data"
@@ -22,13 +23,13 @@ function validationData (data) {
 
 
 const userDataValidation = async (req, res, next) => {
+	const cookie = extractCookieData(req);
 	if (!req.body)
 		return( res.status(406).json({msg: "Missing data"}));
-	const { user_name } = req.body;
-	const dbUser = await db.retriveDataUsers(req.body.user_name);
-	const user = dbUser[0];
+	const { name } = cookie;
+	const dbUser = await db.retriveDataUsers(name, 'auth');
 
-	if (user_name !== user.name)
+	if (!dbUser)
 		return (res.status(406).json({msg: "User error!"}));
 	next();
 };
@@ -37,10 +38,8 @@ const userDataValidation = async (req, res, next) => {
 const validationBodyEstimate = async (req, res, next) => {
 	if (!req.body)
 		return( res.status(406).json({msg: "Missing data"}));
-	const { reference, list, crates, user_name, user_id } = req.body;
-	const valid = validationData([
-		reference, list, crates, user_name, user_id
-	]);
+	const { reference, list, crates } = req.body;
+	const valid = validationData([reference, list, crates]);
 
 	if (valid)
 		return (res.status(206).json({
@@ -53,10 +52,9 @@ const dataEstimateChecker = async (req, res, next) => {
 	if (!req.body)
 		return( res.status(406).json({msg: "Missing data"}));
 	const { reference } = req.body;
-	const estimates		= await db.retriveDataEstimates();
-	const checkEstimate = estimates.find(ref => ref.reference_id === reference);
+	const estimate		= await db.retriveDataEstimates(reference);
 
-	if (checkEstimate) {
+	if (!estimate) {
 		return (res.status(409).json({
 			message: `Oops! The estimate already exists!`}));
 	};

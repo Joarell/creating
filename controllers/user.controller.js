@@ -123,36 +123,39 @@ async function tokensCheckOut(info, users) {
 
 
 const userTokenMatch = async(req, res, next) => {
-	const cookieData =	extractCookieData(req);
 	try {
+		const cookieData =	extractCookieData(req);
 		const dbUsers =		await db.retriveDataUsers(cookieData.id, 'auth');
 		let result;
 
-		if(!cookieData)
-			return(res.status(403).send('Acess Denied!'));
 		if (!cookieData.authToken) {
 			cookieData.authToken = dbUsers[0].auth_token;
 			cookieData.refToken = dbUsers[0].refresh_token;
 		};
-		result = await tokensCheckOut(cookieData, dbUsers[0]);
-		console.log("Match-access", result);
-		switch(result) {
-			case true:
-				next();
-				break;
-			case false :
-				dataTokens.storeSuspiciousTokens(cookieData)
-				return(res.status(401).json({msg: "User blocked"}));
-			case 404:
-				return (res.status(404).json({msg: "User Not found"}));
-			case 403:
-				return (res.status(403).json({msg: "Suspicious try"}));
-			default :
-				throw new TypeError('Session not match, suspicious action.');
-		};
+		if (cookieData.session) {
+			result = await tokensCheckOut(cookieData, dbUsers[0]);
+			console.log("Match-access", result);
+			switch(result) {
+				case true:
+					next();
+					break;
+				case false :
+					dataTokens.storeSuspiciousTokens(cookieData)
+					return(res.status(401).json({msg: "User blocked"}));
+				case 404:
+					return (res.status(404).json({msg: "User Not found"}));
+				case 403:
+					return (res.status(403).json({msg: "Suspicious try"}));
+				default :
+					throw new TypeError('Session not match, suspicious action.');
+			};
+		}
+		else
+			throw new TypeError();
 	}
 	catch(err) {
 		console.error('TOKEN MATCH:', err);
+		return(res.status(403).send('Acess Denied!'));
 	};
 };
 

@@ -18,7 +18,6 @@ const { randomBytes } =			require('crypto');
 const { extractCookieData } =	require('./user.controller');
 
 const getDataUsers = async (req, res) => {
-	console.log('TESTING');
 	const result = await db.retriveDataUsers();
 	return (res.status(200).send(result));
 }
@@ -31,11 +30,11 @@ const getDataEstimates = async (req, res) => {
 
 
 const addResultToDataBase = async (req, res) => {
-	const session =		extractCookieData(req).session;
-	const result =		await db.addResultToDataBase(req.body, session);
+	const cookie =		extractCookieData(req);
+	const result =		await db.addResultToDataBase(req.body, cookie);
 	return (result === 201 ? 
 		res.status(201).send(req.body) : 
-		res.status(409).send('DATA ALREADY EXIST!')
+		res.status(409).send('DATA ERROR!')
 	);
 };
 
@@ -55,13 +54,12 @@ const updateEstimate = async (req, res) => {
 
 
 const shiftTokens = async (req, res) => {
-	console.log("RENEW", req.headers.cookie);
 	const cookie =	extractCookieData(req);
 	console.log('RENEW', cookie, 'and', typeof cookie.id);
 	const body =	{
-		id : Number.parseInt(req.body.user_id),
+		id : cookie.id,
 		token: cookie.refToken,
-		name : req.body.user_name
+		name : cookie.name
 	};
 	const result =	await keepTokens
 		.tokenProcedures(cookie.authToken, body, cookie.session);
@@ -92,9 +90,10 @@ const newLogin = async (req, res) => {
 	if (result === 500)
 		return(res.status(500).json({msg: 'Server error'}));
 	res.set({'Set-Cookie': [
+		`name=${user.name}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
 		`session=${session}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
-		`user=${result[1]}; Max-Age=300; HttpOnly; SameSite=Strict; Secure;`,
-		`token=${result[0]}; Max-Age=300; HttpOnly; SameSite=Strict; Secure;`,
+		`user=${result[1]}; Max-Age=10; HttpOnly; SameSite=Strict; Secure;`,
+		`token=${result[0]}; Max-Age=10; HttpOnly; SameSite=Strict; Secure;`,
 		`id=${user.id}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
 	]});
 	res.status(201).json({msg: 'active', result, id : user.id});
