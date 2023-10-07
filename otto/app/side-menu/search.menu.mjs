@@ -1,5 +1,17 @@
 
 
+// NOTE: reset the code changed by the data base in order to render on status panel.
+function resetList(list) {
+	const reseted = [];
+
+	list.map(work => {
+		const { code, x , z, y } = work;
+		reseted.push({ code, x, z ,y });
+	});
+	return(reseted);
+};
+
+
 export async function checkBrowserDB(doc) {
 	const workerDB =	new Worker('./panels/worker.IDB.crates.mjs');
 	const checkIDB =	await new Promise((resolve, reject) => {
@@ -24,7 +36,7 @@ function setDBFetched (result) {
 			const { crates, works, reference_id } = result[0];
 			const fetched = {
 				crates,
-				list : works.list,
+				list : resetList(works.list),
 				reference : reference_id
 			}
 			document.getElementById("input_estimate").value = reference_id;
