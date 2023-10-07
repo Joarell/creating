@@ -17,7 +17,7 @@ export default class StandarRender {
 	#worksPositionLayer({next, pos, values }) {
 		const RECT =		document.createElementNS("http://www.w3.org/2000/svg", "rect");
 		const INSET =		1;
-		const PAD =			2;
+		const PAD =			20;
 		const X =			this.#pixelSize.x;
 		const Y =			this.#pixelSize.y;
 		const EXTPADY =		0;
@@ -163,9 +163,10 @@ export default class StandarRender {
 		const X = [];
 		const Y = [];
 		const MAPWORK = {};
+		const ICON =	`<i class="nf nf-oct-sync"></i>`;
 
 		this.#canvas.map(art => {
-			if (art.at(-1) === ' ') {
+			if (art.at(-1) === ICON) {
 				X.push(coord.proportion(art[3], this.#pixelSize.x, this.#inCrate[0]));
 				Y.push(coord.proportion(art[1], this.#pixelSize.y, this.#inCrate[2]));
 			}

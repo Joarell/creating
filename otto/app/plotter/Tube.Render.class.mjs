@@ -18,7 +18,7 @@ export default class TubeRender {
 	#worksPositionLayer({ x, y }) {
 		const RECT =	document.createElementNS("http://www.w3.org/2000/svg", "rect");
 		const INSET =	1;
-		const PAD =		2;
+		const PAD =		20;
 		const Y =		y.length > 1 ? nextPointY(y) : 0;
 
 		RECT.setAttribute("x", 0 + INSET);
