@@ -35,7 +35,7 @@ module.exports = {
 				allowNull: false
 			},
 			session: {
-				type: Sequelize.STRING.BINARY,
+				type: Sequelize.STRING(10),
 				allowNull: false,
 			},
 			update_state: {
