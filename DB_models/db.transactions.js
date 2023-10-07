@@ -32,7 +32,6 @@ async function retriveDataUsers(user, target) {
 				WHERE
 					id = '${user}'
 			`);
-			console.log(rows);
 			return (rows);
 		}
 		const { rows }	= await client.query(`
@@ -114,8 +113,9 @@ async function addNewUser (user) {
 }
 
 
-async function addResultToDataBase(estimate, session) {
-	const { reference, user_name, user_id } = estimate;
+async function addResultToDataBase(estimate, userData) {
+	console.log('RESULT DATA:', estimate);
+	const { reference } = estimate;
 	const list		= JSON.stringify({ "list": estimate.list }, null, "");
 	const crates	= JSON.stringify({ "crates": estimate.crates }, null, "");
 	const dataUTC	= new Date(Date.now()).toLocaleString();
@@ -124,16 +124,15 @@ async function addResultToDataBase(estimate, session) {
 	try {
 		await client.query('BEGIN');
 		const content = ` INSERT INTO data_solved
-			(reference_id, works, crates, user_name, session, user_id, update_state)
-			VALUES ('${reference}', '${list}', '${crates}', '${user_name}',
-			'${session}', '${user_id}', '${dataUTC}'
-			)`;
+			(reference_id, works, crates, user_name, user_id, session, update_state)
+			VALUES ('${reference}', '${list}', '${crates}', '${userData.name}',
+			'${userData.id}', '${userData.session}', '${dataUTC}')`;
 		await pool.query(content);
 		await pool.query('COMMIT');
 		return (201);
 	}
 	catch (err) {
-		console.error("ALERT DUPLICATE DATA:", err);
+		console.error("DATA ERROR:", err);
 		await pool.query('ROLLBACK');
 		return (409);
 	}

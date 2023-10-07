@@ -21,10 +21,10 @@ async function getUserData (authToken, info) {
 	const checkRef	= dataUser[0].refresh_token === info.token;
 	const checkId	= dataUser[0].id === info.id;
 
-	console.log("TOKEN DB", dataUser[0], 'and', authToken, 'and', info);
-	console.log(checkAuth)
-	console.log(checkRef)
-	console.log(checkId)
+	// console.log("TOKEN DB", dataUser[0], 'and', authToken, 'and', info);
+	// console.log(checkAuth)
+	// console.log(checkRef)
+	// console.log(checkId)
 	if(checkAuth && checkRef && checkId)
 		return (dataUser[0]);
 	return (false);
@@ -107,7 +107,7 @@ function authTokenGen(userName) {
 	const authtoken = jwt.sign(
 		{ data: userName },
 		process.env.SECRET_TOKEN,
-		{ expiresIn: '5m' }
+		{ expiresIn: '12h' }
 	);
 	return (authtoken);
 };
