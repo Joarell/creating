@@ -166,8 +166,7 @@
 			<div class="container__status">
 				<h2 class="title"><i class="fa-solid fa-list-ul"></i> List</h2>
 				<div class="container__status__pane">
-					<iframe loading="lazy" class="container__status__pane__frame" title="Work's list" id="status-frame"
-						src="./panels/status_panel.html" sandbox="allow-same-origin allow-scripts"></iframe>
+					<iframe loading="lazy" class="container__status__pane__frame" title="Work's list" id="status-frame" src="./panels/status_panel.html"></iframe>
 					<div class="container__status__counter">
 						<p id="count">Count works: 0 </p>
 						<p id="cub-meter">Cub: 0</p>
@@ -187,15 +186,13 @@
 					<h2><i class="fa-solid fa-equals"></i> Results</h2>
 					<div class="container__results result--panels">
 						<div class="copy-pane1">
-							<iframe loading="lazy" class="container__results--open" title="Works set"
-								src="./panels/pane1_crates.html" sandbox="allow-same-origin allow-scripts"></iframe>
+							<iframe loading="lazy" class="container__results--open" title="Works set" src="./panels/pane1_crates.html"></iframe>
 							<button class="IO__press--btn copy" id="copy-pane1">COPY
 								<p class="copy-message" id="copy-message">Copied!</p>
 							</button>
 						</div>
 						<div class="copy-pane2">
-							<iframe loading="lazy" class="container__results--crates" title="List done"
-								src="./panels/pane2_crates_open.html" sandbox="allow-same-origin allow-scripts"></iframe>
+							<iframe loading="lazy" class="container__results--crates" title="List done" src="./panels/pane2_crates_open.html"></iframe>
 							<button class="IO__press--btn copy" id="copy-pane2">COPY <p class="copy-message">Copied!</p>
 							</button>
 						</div>
@@ -212,9 +209,8 @@
 								</button>
 								<span lang="en" class="menu__option--text" data-role="popover" data-popover-text="Currency">Search Estimate</span>
 								<div class="menu__input menu__fetch" aria-hidden="true" role="region">
-									<form class="menu__fetch">
-										<input type="text" class="get__estimate" id="estimate_getter" autocomplete="on"
-											required>
+									<form class="menu__fetch" onsubmit="return false">
+										<input type="text" class="get__estimate" id="estimate_getter" placeholder="Enter Doc reference" autocomplete="on" required>
 										<button type="button" class="IO__press--btn menu__search-btn" id="fetch-btn">Search</button>
 									</form>
 								</div>
