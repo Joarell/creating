@@ -50,6 +50,7 @@ function toggleAccordion(clicked) {
 function openPanel(panel) {
 	panel.querySelector("button").setAttribute("aria-expanded", true);
 	panel.querySelector(".menu__input").setAttribute("aria-hidden", false);
+	globalThis.document.getElementById("estimate_getter").select();
 };
 
 
