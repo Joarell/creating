@@ -11,7 +11,7 @@
 import * as mod from './functions.front.end.mjs'
 import { createDB } from './link.storage.mjs';
 import { openCloseDisplay } from '../plotter/layer.controller.mjs'
-import { checkTokens } from './token.checkout.mjs';
+// import { checkTokens } from './token.checkout.mjs';
 
 
 // ╭───────────────────────────────────────────────────────────────────╮
@@ -29,7 +29,7 @@ globalThis.onload = () => {
 	browserStoragePrepare();
 	color === null ? localStorage.setItem("mode", "light") : false;
 	setCheckRadio();
-	setTimeout(loadingPage, 2500);
+	setTimeout(loadingPage, 1500);
 };
 
 // globalThis.onbeforeunload = checkTokens();
