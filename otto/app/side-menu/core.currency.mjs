@@ -33,6 +33,7 @@ export async function populateCoins() {
 		return("Error");
 	select1.appendChild(currencyName(coinNames));
 	select2.appendChild(currencyName(coinNames));
+	return ;
 };
 
 
