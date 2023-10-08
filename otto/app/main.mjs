@@ -11,6 +11,7 @@ import { accordionController } from './side-menu/interactive.menu.mjs';
 import { searchEstimate } from './side-menu/search.menu.mjs';
 import { changeCrateDisplay, openDisplay } from './plotter/layer.controller.mjs';
 import { layersNumber, skipLayer } from './plotter/select.menu.mjs';
+import { logout } from './front-modules/logout.mjs';
 
 
 globalThis.onkeydown = (push) => {
@@ -51,10 +52,10 @@ globalThis.document.getElementById('main-app')
 			copyButton2();
 			break;
 		case "logout":
-			globalThis.location.replace('/');
+			logout();
 			break;
 		case "logout-btn":
-			globalThis.location.replace('/');
+			logout();
 			break;
 		case "seek-btn":
 			accordionController(element);
