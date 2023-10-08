@@ -18,8 +18,7 @@ globalThis.onstorage = () => {
 		sessionStorage.removeItem("copy2");
 		return(globalThis.location.reload() && showCrates2(getter));
 	};
-	return(
-		press === "populate" ?
+	return(press && press === "populate" ?
 		globalThis.location.reload() && showCrates2(getter) : false
 	);
 };
@@ -32,7 +31,7 @@ document.onreadystatechange = () => {
 	const mode =	localStorage.getItem("mode");
 
 	if (len && getter)
-		len > 1 ? true: setTimeout(showCrates2(getter), 50);
+		len > 1 ? true: setTimeout(() => showCrates2(getter), 50);
 	setTimeout(loadingPage, 2300);
 	changeMode(mode);
 };
@@ -89,7 +88,7 @@ async function getIDBData (ref) {
 	request = await new Promise((resolve, reject) => {
 		WORKER.onmessage = (res) => {
 			const { data } = res;
-			data.reference === ref ? resolve(data) : reject(res);
+			data?.reference === ref ? resolve(data) : reject(res);
 		};
 	});
 
