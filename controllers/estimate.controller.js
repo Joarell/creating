@@ -89,13 +89,15 @@ const newLogin = async (req, res) => {
 
 	if (result === 500)
 		return(res.status(500).json({msg: 'Server error'}));
-	res.set({'Set-Cookie': [
+	res.set({
+		'Set-Cookie': [
 		`name=${user.name}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
 		`session=${session}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
 		`user=${result[1]}; Max-Age=10; HttpOnly; SameSite=Strict; Secure;`,
 		`token=${result[0]}; Max-Age=10; HttpOnly; SameSite=Strict; Secure;`,
 		`id=${user.id}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
-	]});
+		],
+	});
 	res.status(201).json({msg: 'active', result, id : user.id});
 };
 
