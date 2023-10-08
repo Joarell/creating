@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 		"default-src 'self'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self' https://fonts.google.com"
 	);
 	res.setHeader('Accept', 'text/html, text/css, application/javascript');
-	res.setHeader('Cache-Control', 'public, max-age=2592000');
+	// res.setHeader('Cache-Control', 'public, max-age=2592000');
 	next();
 });
 

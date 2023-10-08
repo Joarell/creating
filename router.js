@@ -71,6 +71,9 @@ router.post("/new/estimate",
 );
 
 
+router.get("/logout", (req, res) => res.status(200).redirect('./otto/login/'));
+
+
 router.get("/estimates/:ref_id", take.getDataEstimates);
 
 
