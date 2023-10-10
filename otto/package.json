@@ -1,10 +1,13 @@
 {
-	"name": "public",
+	"name": "otto-app-server",
 	"version": "1.0.0",
 	"description": "",
 	"main": "main.mjs",
 	"scripts": {
-		"start": "nodemon server.app.js"
+		"dev": "vite",
+		"start": "nodemon server.app.js",
+		"buld": "vite build",
+		"preview": "vite preview"
 	},
 	"keywords": [],
 	"author": "",
@@ -15,7 +18,8 @@
 		"express": "^4.18.2",
 		"jsonwebtoken": "^9.0.0",
 		"pg": "^8.8.0",
-		"sequelize": "^6.28.0"
+		"sequelize": "^6.28.0",
+		"vite": "^4.4.11"
 	},
 	"devDependencies": {
 		"nodemon": "^3.0.1"
