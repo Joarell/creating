@@ -49,7 +49,6 @@ services:
 #  ╰──────────────────────────────────────────────────────────╯
   auth_server:
     command: yarn start
-    # container_name: auth_server
     depends_on:
       - web_app
       - db
