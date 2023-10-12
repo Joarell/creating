@@ -11,14 +11,19 @@
 
 function extractWorksLayers({ works }) {
 	let arts = [];
+	const AUX = Array.isArray(works[0][0]) ? works[0] : works;
 	
-	works?.map(data => {
+	AUX?.map(data => {
 		let layer;
 
+		if (Array.isArray(data))
+			return(arts.push(data));
 		for (layer in data) {
 			arts.push(layer);
-			data[layer].length === 1 ? arts?.push(data[layer][0]) :
-				data[layer].map(work => arts.push(work));
+			data[layer].length === 1 ? arts.push(data[layer][0]) :
+				!Array.isArray(data[0]) ?
+					data[layer].map(work => arts.push(work)) :
+					data[layer][0].map(work => arts.push(work));
 		};
 	});
 	return(arts);
@@ -65,8 +70,8 @@ function formatterClipBoard(data) {
 	const formatted =	data.map(info => {
 		let line;
 
-		if (!Array.isArray(info))
-			return (`LAYER ${info}`);
+		if (typeof(info) === 'string')
+			return (`LAYER layer ${info?.at(-1)}:`);
 		if (info.length >= 5) {
 			line = `CODE: ${info[0]} - ${info[1]} x ${info[2]} x ${info[3]} - ${unit}`;
 			return(line);
@@ -74,7 +79,7 @@ function formatterClipBoard(data) {
 		else if (info.length === 4) {
 			line = `CRATE: ${info[0]} x ${info[1]} x ${info[2]} - ${unit}`;
 			return(line);
-		}
+		};
 	});
 	const getString =		JSON.stringify(formatted);
 	const copyFinished =	charRemover(getString, formatted.length);
@@ -83,10 +88,9 @@ function formatterClipBoard(data) {
 
 
 function charRemover(target, len) {
-
 	while(len--) {
-		target = target.replace('LAYER','   ');
-		target = target.replace('CODE: ','\t');
+		target = target.replace('LAYER','\t');
+		target = target.replace('CODE: ','\t\t');
 		target = target.replace('"','');
 		target = target.replace('"','');
 		target = target.replace(',','\n');

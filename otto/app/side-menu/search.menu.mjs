@@ -46,7 +46,8 @@ function setDBFetched (result) {
 			throw new TypeError('Data not found!');
 	}
 	catch (err) {
-		alert(`ATTENTION: ${err}`);
+		console.log(`ATTENTION: ${err}`);
+		alert(`Document not found! Please, try again.`);
 	}
 };
 
@@ -66,7 +67,7 @@ async function fetchDB(doc) {
 			.catch(err => console.error(`ALERT ${err}`));
 		}
 		catch(err) {
-			alert(`ATTENTION: ${err}`);
+			console.log(`ATTENTION: ${err}`);
 			alert(`Document not found! Please, try again.`);
 		}
 	}

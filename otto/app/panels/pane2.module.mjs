@@ -121,6 +121,7 @@ function layerInterface(layer, num, unit) {
 function addHTMLLayerWorksLine ({ works }, table, unit, kind) {
 	let layer;
 	let i =	0;
+	let aux;
 
 	while (i < works.length) {
 		if (!Array.isArray(works[i])) {
@@ -131,7 +132,8 @@ function addHTMLLayerWorksLine ({ works }, table, unit, kind) {
 			};
 		}
 		else if (kind === 'sameSizeCrate') {
-			works.map((art, count) => {
+			aux = Array.isArray(works[0][0]) ? works[0] : works;
+			aux.map((art, count) => {
 				i = count;
 				table.innerHTML += layerInterface(art, i + 1, unit);
 			});
