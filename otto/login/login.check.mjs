@@ -1,4 +1,5 @@
 
+
 globalThis.fns = { loginInto };
 
 globalThis.onkeydown = (keyPress) => {
@@ -50,23 +51,22 @@ async function backEndLoginAuth(userInfo) {
 			headers: { 'Content-Type': 'application/json; charset=UTF-8' },
 		}).then(body => body.json())
 		.then(setLogin)
-		.catch(err => console.error(`Alert ${err}`));
+		.catch(err => console.error(`Alert response ${err}`));
 	}
 	catch(err) {
-		alert(`Attention: ${err}`);
+		alert(`Attention attempt to login: ${err}`);
 	};
 };
 
 
 async function appAccessCheckIn(userAuth) {
-	console.log(userAuth);
 	const { result } =	userAuth;
 	const header =	{
 		'Authorization': `Bearer ${result[0]}`,
 		'Content-Type': 'application/javascript',
 		'Accept': 'text/html; text/css; application/javascript',
 	};
-	const request =		new Request(`/app`, {
+	const request =		new Request(`/app/`, {
 		Method: "POST",
 		Mode: 'cors',
 		Headers: header,
@@ -82,13 +82,12 @@ async function appAccessCheckIn(userAuth) {
 		if (checkOut.status <= 400)
 			globalThis.location.assign(checkOut.url);
 		else {
-			console.log(checkOut.status);
 			alert("Not authorized. Please, try again!");
 			globalThis.location.reload();
 			throw new Error(checkOut.status);
 		};
 	}
 	catch(err) {
-		alert(`Attention: ${err}`);
+		alert(`Attention redirection: ${err}`);
 	};
 };
