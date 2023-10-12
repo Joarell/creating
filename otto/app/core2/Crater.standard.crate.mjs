@@ -60,6 +60,7 @@ export default class CraterStandard {
 		return([X, z, Y]);
 	};
 
+	// TODO: one method to handle each X and Y pairs.
 	//					 axis[0]
 	//		   ╭──────────────────────────╮
 	//		   │                          │
@@ -72,8 +73,26 @@ export default class CraterStandard {
 	//		   ╰──────────────────────────╯
 	//					 axis[3]
 
+	#perfectMatch(work, sizes, axis) {
+		const METCHX1 = work[0] === sizes.X1;
+		const METCHY1 = work[1] === sizes.Y1;
+		const METCHX2 = work[0] === sizes.X2;
+		const METCHY2 = work[1] === sizes.Y2;
+
+		if(METCHX1 && METCHY1 && METCHX2 && METCHY2) {
+			axis[0] = 0;
+			axis[1] = 0;
+			axis[2] = 0;
+			axis[3] = 0;
+			axis[4] = 0;
+			axis[5] = 0;
+			return(true);
+		};
+		return(false);
+	}
+
 	#redefineLayerSize(axis, art, procLayer) {
-		(axis[3] === 0) && (axis[2] > 0) ? axis[3] = procLayer.X1 - art[0] : 0;
+		(axis[3] === 0) && (axis[2] > 0) ? axis[3] = procLayer.X1 : 0;
 		axis[5] < 0 ? axis[5] = procLayer.Y2 : 0;
 	};
 
@@ -83,13 +102,15 @@ export default class CraterStandard {
 		const X2 = axis[3];
 		const Y2 = axis[5];
 
+		if (this.#perfectMatch(art, { X1, X2, Y1, Y2 }, axis))
+			return (axis);
 		art[0] <= X2 ? axis[3] = X2 - art[0] : axis[0] = X1 - art[0];
 		(art[2] <= Y2) && (axis[3] !== X2) ? axis[5] = Y2 - art[1] : 0;
 
-		(axis[0] !== X1) && (X1 === art[0]) ? axis[2] = Y2 - art[1] : 0;
+		(axis[0] !== X1) && (X1 === art[0]) && Y2 > 0 ? axis[2] = Y2 - art[1] : 0;
 		(axis[3] === 0) && (Y1 > Y2) ? axis[2] = Y1 - art[1] : 0;
 
-		(Y2 === 0) && (Y1 > 0) ? axis[0] = X1 - art[0] : 0;
+		(Y2 === 0) && (Y1 > 0) && (axis[3] === X2) ? axis[0] = X1 - art[0] : 0;
 
 		(axis[3] === X2) && (Y2 <= X1) ? axis[0] = X1 - art[0] : 0;
 		(axis[3] === 0) && (axis[2] === Y1) ? axis[5] = Y2 - art[1] : 0;
@@ -102,7 +123,7 @@ export default class CraterStandard {
 		(art[1] === Y2) && (axis[3] === X2) ? axis[0] = X1 - art[0] : 0;
 		(axis[0] === X1) && (axis[5] === 0) ? axis[0] = X1 - art[0] : 0;
 
-		this.#redefineLayerSize(axis, art, { X1, Y1, X2, Y2 });
+		return(this.#redefineLayerSize(axis, art, { X1, Y1, X2, Y2 }));
 	};
 
 	#shiftAxios(work, layer) {
@@ -233,7 +254,7 @@ export default class CraterStandard {
 		return (this.#list.length === CHECKER.length ? true : false);
 	};
 
-	// HACK: improves needed to define the best crate size 'backtrack'.
+	// HACK: improvement necessary to define the best crate size 'backtrack'.
 	#defineSizeBaseCrate(list) {
 		const CRATE1 =	this.#checkOneCrate(list);
 		const MAXX =	250;

@@ -171,6 +171,7 @@ export default class CraterSameSize {
 		const BACKUP =			JSON.parse(JSON.stringify(crateDone));
 
 		countDiffSizes =		null;
+		Array.isArray(crateDone[0][0]) ? crateDone = crateDone[0] : 0;
 		return ({ crates : crateDone, backUp : BACKUP });
 	};
 };
