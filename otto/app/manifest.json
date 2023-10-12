@@ -4,26 +4,33 @@
 	"name": "Otto Web Crater.",
 	"icons": [
 		{
-			"src": "/images/icons-vector.svg",
+			"src": "/images/logo-vec.svg",
 			"type": "image/svg+xml",
 			"sizes": "512x512"
 		},
 		{
-			"src": "/images/icons-192.png",
+			"src": "./images/logo-512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		},
+		{
+			"src": "/images/icon-192.png",
 			"type": "image/png",
 			"sizes": "192x192"
 		},
 		{
-			"src": "/images/icons-512.png",
+			"src": "./images/maskable_icon_x192.png",
+			"sizes": "196x196",
 			"type": "image/png",
-			"sizes": "512x512"
+			"purpose": "any maskable"
 		}
 	],
-	"id": "",
-	"start_url": "https://otto.com/login",
+	"id": "/app/",
+	"start_url": "http://localhost/app/",
 	"background_color": "#162789",
+	"display_override": ["fullscreen", "minimal-ui"],
 	"display": "standalone",
-	"scope": "/",
+	"scope": "http://localhost/app/",
 	"theme_color": "#03d9f4",
 	"shortcuts": [],
 	"description": "Progressive Web App art work crate solver list.",
