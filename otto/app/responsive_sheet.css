@@ -1,7 +1,6 @@
 /* TODO: link the screen sizes passing through actual min -> next max sizes. */
-@media only screen
-	and (min-width: 1080px)
-	and (max-width: 4000px) {
+/* @media only screen and (min-width: 1080px) and (max-width: 4000px) { */
+@media not all and (max-width: 80rem) {
 	/* ╭─────────────────────╮
 	   │ 	main container.  │
 	   ╰─────────────────────╯
@@ -1145,7 +1144,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		flex-shrink: 1;
-		flex-basis: 100%;
+		flex-basis: clamp(80%, 70%, 100%);
 		gap: 1rem;
 		justify-content: space-between;
 	}
@@ -1422,10 +1421,8 @@
    │                    iPhone x landscape                    │
    ╰──────────────────────────────────────────────────────────╯
 */
-
-@media only screen
-	and ( min-width: 840px)
-	and ( max-width: 1700px) {
+/* @media only screen and ( min-width: 840px) and ( max-width: 1700px) { */
+@media not all and(min-width: 45rem) {
 
 	header {
 		height: 10%;
@@ -1815,20 +1812,21 @@
 	   │ 	Right status container.  │
 	   ╰─────────────────────────────╯
 	*/
-	.container__status__pane {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		gap: 1rem;
-		flex-grow: 4;
-	}
-
-
+	.container__status__pane,
 	.container__status__pane__frame {
+		display: flex;
+		flex-wrap: wrap;
 		flex-shrink: 1;
-		flex-grow: 3;
+		flex-basis: clamp(80%, 70%, 100%);
+		gap: 1rem;
+		justify-content: space-between;
 	}
+
+
+	/* .container__status__pane__frame { */
+	/* 	flex-shrink: 1; */
+	/* 	flex-grow: 3; */
+	/* } */
 
 
 	.IO__press * {

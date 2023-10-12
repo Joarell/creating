@@ -5,7 +5,6 @@
 
 @import "responsive_sheet.css";
 @import "index-01.css";
-@import "./font-awesome-4.7.0/less/font-awesome.less";
 @import "https://www.nerdfonts.com/assets/css/webfont.css";
 
 
@@ -13,10 +12,6 @@
    │                     APP LATIN FONTS.                     │
    ╰──────────────────────────────────────────────────────────╯
 */
-@font-face {
-  font-family: 'Font Awesome';
-  src: url('./font-awesome-4.7.0/fonts/fontawesome-webfont.woff2') format('woff2');
-}
 
 @font-face {
 	font-family: 'Big Shoulders Stencil Display';
@@ -105,8 +100,8 @@
 	--rowg-mobile: 1rem;
 	--bord: .5rem;
 	--mob-col: #12111385;
-	--gradient: linear-gradient(270deg, var(--dark-blue), var(--dark-blue2));
-	--gradient1: linear-gradient(90deg, var(--dark-blue1), var(--dark-blue));
+	--gradient: linear-gradient(270deg, var(--color8), var(--dark-blue2));
+	--gradient1: linear-gradient(90deg, var(--color8), var(--dark-blue));
 	--shadow1: .3rem .3rem .6rem var(--iframes-bg),
 		-.2rem -.2rem .5rem var(--color4);
 	--inner-shadow1: inset .2rem .2rem .5rem var(--pressed),

@@ -2,25 +2,27 @@
 <html lang="en">
 <!-- this tag is used to autorefresh the page. Rememeter to get rid of it.-->
 <!-- <meta http-equiv="refresh" content="3"> -->
-<title>OTC</title>
 
 <head>
+	<title>OTC</title>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="Otto web app to solve art work list. All measures and 90% all kinds.">
 	<meta name="dashboard controls" content="Main Page">
 	<meta name="author" content="Joseph Joarell">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="theme-color" media="(prefers-color-scheme: light)" content="#BEBBBB">
 	<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#222725">
-	<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-schem: dark)"> -->
-	<!-- <link rel="icon" type="image/svg+xml" href="/favicon-light-mode.svg" media="(prefers-color-schem: light)"> -->
+	<link rel="icon" type="image/x-icon" href="./images/favicon-dark.ico" media="(prefers-color-schem: dark)">
+	<link rel="shortcut icon" type="image/x-icon" href="./images/favicon-dark.ico" media="(prefers-color-schem: dark)">
+	<link rel="icon" type="image/x-icon" href="./images/favicon-light.ico" media="(prefers-color-schem: light)">
+	<link rel="short icon" type="image/x-icon" href="./images/favicon-light.ico" media="(prefers-color-schem: light)">
 	<script async type="module" src="./main.mjs"></script>
 	<link rel="stylesheet" href="./index.css" />
-	<link rel="manifest" href="./manifest.webmanifest">
+	<link rel="manifest" href="./manifest.json" crossorigin="use-credentials">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
 <body>
 	<header>
 		<div class="header-content">
@@ -95,14 +97,16 @@
 						</form>
 					</div>
 					<div class="section__menu--btn">
-						<a role="button" class="layers-btn" name="Checking layer" data-popup="" id="crate-layers" disabled>
+						<a aria-label="Checking layer" role="button" class="layers-btn" data-popup="" id="crate-layers"
+							disabled>
 							<svg aria-hidden="true" class="logout-icon" id="layer-crate" preserveAspectRatio="none">
 								<use href="#layer-material" id="layer-crate"></use>
 							</svg>
 						</a>
 					</div>
 					<div class="section__menu--btn">
-						<a role="button" class="logout-btn" name="logout" data-popup="Logout" id="logout-btn">
+						<a aria-label="logout button" role="button" class="logout-btn" data-popup="Logout"
+							id="logout-btn">
 							<svg aria-hidden="true" class="logout-icon" id="logout" preserveAspectRatio="none">
 								<use href="#logout-material" id="logout"></use>
 							</svg>
@@ -113,60 +117,61 @@
 		</section>
 		<div class="container" id="body-app">
 			<div class="container__insert">
-				<h2 class="title"><i class="fa-solid fa-plus"></i> Add</h2>
-					<div class="IO">
-						<div class="IO__top info" id="estimate">
+				<h2 class="title"><i class="nf nf-oct-plus"></i> Add</h2>
+				<div class="IO">
+					<div class="IO__top info" id="estimate">
+						<form class="IO__add--form">
+							<label for="input_estimate">Doc:</label>
+							<input type="text" autofocus class="IO__top__estimate" id="input_estimate" name="estimate"
+								required="true">
+						</form>
+					</div>
+					<div class="IO__sizes info">
+						<div class="IO__sizes__code">
 							<form class="IO__add--form">
-								<label for="input_estimate">Doc:</label>
-								<input type="text" autofocus class="IO__top__estimate" id="input_estimate"
-									name="estimate" required="true">
+								<label for="input_code">Art:</label>
+								<input type="text" class="IO__sizes--code" id="input_code" name="art-code" required>
 							</form>
-						</div>
-						<div class="IO__sizes info">
-							<div class="IO__sizes__code">
-								<form class="IO__add--form">
-									<label for="input_code">Art:</label>
-									<input type="text" class="IO__sizes--code" id="input_code" name="art-code" required>
-								</form>
-							</div>
-						</div>
-						<div class="IO__sizes__mesure IO--span2 info">
-							<form class="IO__add--form">
-								<label for="input_length">L:</label>
-								<span aria-hidden="true" data-popup="Length" class="IO__sizes--popup"></span>
-								<input type="text" inputmode="numeric" class="IO__sizes__len" id="input_length"
-									name="length" maxlength="7" required>
-								<label for="input_depth">D:</label>
-								<span aria-hidden="true" data-popup="Depth" class="IO__sizes--popup"></span>
-								<input type="text" inputmode="numeric" class="IO__sizes__dep" id="input_depth"
-									name="depth" maxlength="7" required>
-								<label for="input_height">H:</label>
-								<span aria-hidden="true" data-popup="Height" class="IO__sizes--popup"></span>
-								<input type="text" inputmode="numeric" class="IO__sizes__hei" id="input_height"
-									name="height" maxlength="7" required>
-							</form>
-							<div class="IO__sizes__units info">
-								<form class="IO__sizes__units" id="unit-seg">
-									<input type="radio" name="units" value="cm - centimeters" class="cm" id="cm">
-									<label class="IO__sizes__units--seg1" for="cm">cm</label>
-									<input type="radio" name="units" value="in - inches" class="in" id="in">
-									<label class="IO__sizes__units--seg2" for="in">in</label>
-									<span class="IO__sizes--color"></span>
-								</form>
-							</div>
-						</div>
-						<div class="IO__press IO--span2 info">
-							<button class="IO__press--btn add--btn" id="add-btn" >ADD</button>
-							<button class="IO__press--btn del--btn" id="remove-btn" >DEL</button>
-							<button class="IO__press--btn clear--btn" id="clear-btn" >Clear</button>
 						</div>
 					</div>
+					<div class="IO__sizes__mesure IO--span2 info">
+						<form class="IO__add--form">
+							<label for="input_length">L:</label>
+							<span aria-hidden="true" data-popup="Length" class="IO__sizes--popup"></span>
+							<input type="text" inputmode="numeric" class="IO__sizes__len" id="input_length"
+								name="length" maxlength="7" required>
+							<label for="input_depth">D:</label>
+							<span aria-hidden="true" data-popup="Depth" class="IO__sizes--popup"></span>
+							<input type="text" inputmode="numeric" class="IO__sizes__dep" id="input_depth" name="depth"
+								maxlength="7" required>
+							<label for="input_height">H:</label>
+							<span aria-hidden="true" data-popup="Height" class="IO__sizes--popup"></span>
+							<input type="text" inputmode="numeric" class="IO__sizes__hei" id="input_height"
+								name="height" maxlength="7" required>
+						</form>
+						<div class="IO__sizes__units info">
+							<form class="IO__sizes__units" id="unit-seg">
+								<input type="radio" name="units" value="cm - centimeters" class="cm" id="cm">
+								<label class="IO__sizes__units--seg1" for="cm">cm</label>
+								<input type="radio" name="units" value="in - inches" class="in" id="in">
+								<label class="IO__sizes__units--seg2" for="in">in</label>
+								<span class="IO__sizes--color"></span>
+							</form>
+						</div>
+					</div>
+					<div class="IO__press IO--span2 info">
+						<button class="IO__press--btn add--btn" id="add-btn">ADD</button>
+						<button class="IO__press--btn del--btn" id="remove-btn">DEL</button>
+						<button class="IO__press--btn clear--btn" id="clear-btn">Clear</button>
+					</div>
+				</div>
 			</div>
 			<!--This div provides the overview about the works added before the call of the AI-->
 			<div class="container__status">
-				<h2 class="title"><i class="fa-solid fa-list-ul"></i> List</h2>
+				<h2 class="title"><i class="nf nf-md-format_list_text"></i> List</h2>
 				<div class="container__status__pane">
-					<iframe loading="lazy" class="container__status__pane__frame" title="Work's list" id="status-frame" src="./panels/status_panel.html"></iframe>
+					<iframe loading="lazy" class="container__status__pane__frame" title="Work's list" id="status-frame"
+						src="./panels/status_panel.html"></iframe>
 					<div class="container__status__counter">
 						<p id="count">Count works: 0 </p>
 						<p id="cub-meter">Cub: 0</p>
@@ -181,18 +186,21 @@
 					</div>
 				</div>
 			</div>
-			<div class="container-bottom">
-				<div class="result container--span" aria-hidden="true" aria-expanded="false" aria-controls="IO__crate" role="region" aria-labelledby="results">
-					<h2><i class="fa-solid fa-equals"></i> Results</h2>
+			<div class="container-bottom" aria-labelledby="results panel">
+				<div class="result container--span" aria-hidden="false" aria-expanded="true" aria-controls="IO__crate"
+					role="region">
+					<h2><i class="nf nf-md-widgets_outline"></i> Results</h2>
 					<div class="container__results result--panels">
 						<div class="copy-pane1">
-							<iframe loading="lazy" class="container__results--open" title="Works set" src="./panels/pane1_crates.html"></iframe>
+							<iframe loading="lazy" class="container__results--open" title="Works set"
+								src="./panels/pane1_crates.html"></iframe>
 							<button class="IO__press--btn copy" id="copy-pane1">COPY
 								<p class="copy-message" id="copy-message">Copied!</p>
 							</button>
 						</div>
 						<div class="copy-pane2">
-							<iframe loading="lazy" class="container__results--crates" title="List done" src="./panels/pane2_crates_open.html"></iframe>
+							<iframe loading="lazy" class="container__results--crates" title="List done"
+								src="./panels/pane2_crates_open.html"></iframe>
 							<button class="IO__press--btn copy" id="copy-pane2">COPY <p class="copy-message">Copied!</p>
 							</button>
 						</div>
@@ -200,30 +208,39 @@
 				</div>
 				<div class="container-interactive">
 					<div class="accordion">
-						<div class="accordion-panel get-estimate" aria-labelledby="search-header" aria-hidden="true" role="region">
+						<div class="accordion-panel get-estimate" aria-labelledby="search-header" aria-hidden="true"
+							role="region">
 							<h3 class="" id="search-header">
-								<button class="trigger-menu menu search" data-role="popover" data-popover-text="Currency" id="search-btn" aria-controls="search--content" aria-expanded="false">
-									<svg aria-hidden="true" class="menu-icon" id="search-btn">
+								<button class="trigger-menu menu search" data-role="popover"
+									data-popover-text="Currency" id="search-btn" aria-controls="search--content"
+									aria-expanded="false">
+									<svg aria-label="search menu" class="menu-icon" id="search-btn">
 										<use href="#lupa-material" id="seek-btn"></use>
 									</svg>
 								</button>
-								<span lang="en" class="menu__option--text" data-role="popover" data-popover-text="Currency">Search Estimate</span>
+								<span lang="en" class="menu__option--text" data-role="popover"
+									data-popover-text="Currency">Search Estimate</span>
 								<div class="menu__input menu__fetch" aria-hidden="true" role="region">
 									<form class="menu__fetch" onsubmit="return false">
-										<input type="text" class="get__estimate" id="estimate_getter" placeholder="Enter Doc reference" autocomplete="on" required>
-										<button type="button" class="IO__press--btn menu__search-btn" id="fetch-btn">Search</button>
+										<input type="text" class="get__estimate" id="estimate_getter"
+											placeholder="Doc reference" autocomplete="on" required>
+										<button type="button" class="IO__press--btn menu__search-btn"
+											id="fetch-btn">Search</button>
 									</form>
 								</div>
 							</h3>
 						</div>
-						<div class="accordion-panel exchange--content" aria-hidden="true" aria-labelledby="exchange--content" role="region">
+						<div class="accordion-panel exchange--content" aria-hidden="true"
+							aria-labelledby="exchange--content" role="region">
 							<h3 class="" id="exchange-header">
-								<button class="trigger-menu menu exchange" id="exchange-btn" aria-controls="exchange--content" aria-expanded="false">
-									<svg aria-hidden="true" class="menu-icon" id="exchange-btn">
+								<button class="trigger-menu menu exchange" id="exchange-btn"
+									aria-controls="exchange--content" aria-expanded="false">
+									<svg aria-label="currency menu" class="menu-icon" id="exchange-btn">
 										<use href="#exchange-material" id="ex-btn"></use>
 									</svg>
 								</button>
-								<span class="menu__option--text" data-role="popover" data-popover-text="Currency">Currency</span>
+								<span class="menu__option--text" data-role="popover"
+									data-popover-text="Currency">Currency</span>
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__currency">
 										<div>
@@ -235,21 +252,26 @@
 											</select>
 										</div>
 										<div>
-											<input type="text" name="currency" class="get__currency menu__input--form" id="coin1-input" required>
-											<input type="text" name="currency" class="get__currency menu__input--form" id="coin2-input" required>
+											<input type="text" name="currency" class="get__currency menu__input--form"
+												id="coin1-input" required>
+											<input type="text" name="currency" class="get__currency menu__input--form"
+												id="coin2-input" required>
 										</div>
 									</form>
 								</div>
 							</h3>
 						</div>
-						<div class="accordion-panel units-conversion" aria-hidden="true" aria-labelledby="units-conversion" role="region">
+						<div class="accordion-panel units-conversion" aria-hidden="true"
+							aria-labelledby="units-conversion" role="region">
 							<h3 class="" id="units-header">
-								<button class="trigger-menu menu units" aria-controls="units-conversion" id="units-btn" aria-expanded="false">
-									<svg aria-hidden="true" class="menu-icon" id="units-btn">
+								<button class="trigger-menu menu units" aria-controls="units-conversion" id="units-btn"
+									aria-expanded="false">
+									<svg aria-label="units converter menu" class="menu-icon" id="units-btn">
 										<use href="#regua-material" id="unit-btn"></use>
 									</svg>
 								</button>
-								<span lang="en" class="menu__option--text" data-role="popover" data-popover-text="Units">Units</span>
+								<span lang="en" class="menu__option--text" data-role="popover"
+									data-popover-text="Units">Units</span>
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__units" id="units">
 										<div>
@@ -419,7 +441,8 @@
 	<footer class="footer-content" aria-hidden="true">
 		<!-- Made by Nawsome - from: https://uiverse.io/Nawsome/sour-fly-72 -->
 		<div class="svg-frame">
-			<svg style="--i:0;--j:0;">
+			<!-- <svg style="--i:0;--j:0;"> -->
+			<svg>
 				<g id="out1">
 					<path
 						d="M72 172C72 116.772 116.772 72 172 72C227.228 72 272 116.772 272 172C272 227.228 227.228 272 172 272C116.772 272 72 227.228 72 172ZM197.322 172C197.322 158.015 185.985 146.678 172 146.678C158.015 146.678 146.678 158.015 146.678 172C146.678 185.985 158.015 197.322 172 197.322C185.985 197.322 197.322 185.985 197.322 172Z">
@@ -430,7 +453,8 @@
 				</g>
 			</svg>
 
-			<svg style="--i:1;--j:1;">
+			<!-- <svg style="--i:1;--j:1;"> -->
+			<svg>
 				<g id="out2">
 					<mask fill="white" id="path-2-inside-2_111_3212">
 						<path
@@ -461,7 +485,8 @@
 				</g>
 			</svg>
 
-			<svg style="--i:0;--j:2;">
+			<!-- <svg style="--i:0;--j:2;"> -->
+			<svg>
 				<g id="inner3">
 					<path
 						d="M195.136 135.689C188.115 131.215 179.948 128.873 171.624 128.946C163.299 129.019 155.174 131.503 148.232 136.099L148.42 136.382C155.307 131.823 163.368 129.358 171.627 129.286C179.886 129.213 187.988 131.537 194.954 135.975L195.136 135.689Z">
@@ -478,7 +503,8 @@
 					id="out3"></path>
 			</svg>
 
-			<svg style="--i:1;--j:3;">
+			<!-- <svg style="--i:1;--j:3;"> -->
+			<svg>
 				<g id="inner1">
 					<path fill="#00FFFF"
 						d="M145.949 124.51L148.554 129.259C156.575 124.859 165.672 122.804 174.806 123.331C183.94 123.858 192.741 126.944 200.203 132.236C207.665 137.529 213.488 144.815 217.004 153.261C220.521 161.707 221.59 170.972 220.09 179.997L224.108 180.665L224.102 180.699L229.537 181.607C230.521 175.715 230.594 169.708 229.753 163.795L225.628 164.381C224.987 159.867 223.775 155.429 222.005 151.179C218.097 141.795 211.628 133.699 203.337 127.818C195.045 121.937 185.266 118.508 175.118 117.923C165.302 117.357 155.525 119.474 146.83 124.037C146.535 124.192 146.241 124.349 145.949 124.51ZM224.638 164.522C224.009 160.091 222.819 155.735 221.082 151.563C217.246 142.352 210.897 134.406 202.758 128.634C194.62 122.862 185.021 119.496 175.06 118.922C165.432 118.367 155.841 120.441 147.311 124.914L148.954 127.91C156.922 123.745 165.876 121.814 174.864 122.333C184.185 122.87 193.166 126.019 200.782 131.421C208.397 136.822 214.339 144.257 217.928 152.877C221.388 161.188 222.526 170.276 221.23 179.173L224.262 179.677C224.998 174.671 225.35 169.535 224.638 164.522Z"
@@ -489,7 +515,8 @@
 				</g>
 			</svg>
 
-			<svg style="--i:2;--j:4;">
+			<!-- <svg style="--i:2;--j:4;"> -->
+			<svg>
 				<path fill="#00FFFF"
 					d="M180.956 186.056C183.849 184.212 186.103 181.521 187.41 178.349C188.717 175.177 189.013 171.679 188.258 168.332C187.503 164.986 185.734 161.954 183.192 159.65C180.649 157.346 177.458 155.883 174.054 155.46C170.649 155.038 167.197 155.676 164.169 157.288C161.14 158.9 158.683 161.407 157.133 164.468C155.582 167.528 155.014 170.992 155.505 174.388C155.997 177.783 157.524 180.944 159.879 183.439L161.129 182.259C159.018 180.021 157.648 177.186 157.207 174.141C156.766 171.096 157.276 167.989 158.667 165.245C160.057 162.5 162.261 160.252 164.977 158.806C167.693 157.36 170.788 156.788 173.842 157.167C176.895 157.546 179.757 158.858 182.037 160.924C184.317 162.99 185.904 165.709 186.581 168.711C187.258 171.712 186.992 174.849 185.82 177.694C184.648 180.539 182.627 182.952 180.032 184.606L180.956 186.056Z"
 					id="center1"></path>
@@ -505,4 +532,4 @@
 	</footer>
 </body>
 
-</html
+</html>

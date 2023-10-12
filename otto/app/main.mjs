@@ -12,6 +12,9 @@ import { searchEstimate } from './side-menu/search.menu.mjs';
 import { changeCrateDisplay, openDisplay } from './plotter/layer.controller.mjs';
 import { layersNumber, skipLayer } from './plotter/select.menu.mjs';
 import { logout } from './front-modules/logout.mjs';
+import { installer } from './installation.handler.mjs';
+
+
 
 
 globalThis.onkeydown = (push) => {
@@ -29,6 +32,9 @@ globalThis.document.getElementById('main-app')
 	switch (element.target.id) {
 		case "body-app" :
 			accordionController(element);
+			break;
+		case "buttonInstall":
+			installer();
 			break;
 		case "add-btn":
 			main.catchWork();
@@ -157,6 +163,7 @@ globalThis.document.getElementById('main-app')
 globalThis.document.getElementById('main-app')
 	.addEventListener("input", (element => {
 
+	// console.log('Inputs', element);
 	switch (element.target.id) {
 		case "coin1-input":
 			accordion.getInputOne();
@@ -173,3 +180,22 @@ globalThis.document.getElementById('main-app')
 		default:
 	};
 }), true);
+
+
+globalThis.document.getElementById('estimate_getter')
+	.addEventListener('keypress', (event) => {
+	const BUTTON = globalThis.document.getElementById('fetch-btn');
+	event.key === 'Enter' ? BUTTON.click() : false;
+}, true);
+
+
+await globalThis.navigator.serviceWorker.register('./sw.mjs');
+
+
+globalThis.addEventListener('beforeinstallprompt', (event) => {
+	event.preventDefault();
+	console.log('👍', 'beforeinstallprompt', event);
+	globalThis.deferredPrompt = event;
+	showInstallPromoiton();
+	console.log(`'beforeinstallprompt' event was fired.`);
+});
