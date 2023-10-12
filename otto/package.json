@@ -4,7 +4,6 @@
 	"description": "",
 	"main": "main.mjs",
 	"scripts": {
-		"dev": "vite",
 		"start": "nodemon server.app.js",
 		"buld": "vite build",
 		"preview": "vite preview"
@@ -18,8 +17,7 @@
 		"express": "^4.18.2",
 		"jsonwebtoken": "^9.0.0",
 		"pg": "^8.8.0",
-		"sequelize": "^6.28.0",
-		"vite": "^4.4.11"
+		"sequelize": "^6.28.0"
 	},
 	"devDependencies": {
 		"nodemon": "^3.0.1"

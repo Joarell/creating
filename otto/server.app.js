@@ -18,6 +18,10 @@ const nerdFont4 =		'https://fonts.gstatic.com/s/sairasemicondensed/v13/U9MM6c-2-
 const nerdFont5 =		'https://fonts.gstatic.com/s/sairasemicondensed/v13/U9MM6c-2-nnJkHxyCjRcnMHcWVWV1cWRRXe3TfMRiXk.woff2';
 const nerdFont6 =		'https://fonts.gstatic.com/s/sairasemicondensed/v13/U9MM6c-2-nnJkHxyCjRcnMHcWVWV1cWRRXe3TfMRiXk.woff2';
 
+const iframe1 =			'http://*/panels/status_panel.html'
+const iframe2 =			'http://*/panels/pane1_crates.html'
+const iframe3 =			'http://*/panels/pane2_crates.html'
+
 app.use((req, res, next) => {
 	res.setHeader(
 		'Report-TO',
@@ -26,13 +30,14 @@ app.use((req, res, next) => {
 	res.setHeader(
 		'Content-Security-Policy-Report-Only',
 		`default-src 'self';\
-		font-src ${bigShoulders} ${mitr1} ${mitr2} ${saira1} ${saira2} ${saira3} ${nerdFont1} ${nerdFont2} ${nerdFont3} ${nerdFont4} ${nerdFont5} ${nerdFont6};\
+		font-src 'self' ${bigShoulders} ${mitr1} ${mitr2} ${saira1} ${saira2} ${saira3} ${nerdFont1} ${nerdFont2} ${nerdFont3} ${nerdFont4} ${nerdFont5} ${nerdFont6};\
 		img-src 'self';\
 		script-src 'self';\
-		style-src ${nerdFont1} 'self';\
-		frame-src 'self'`
-	);
-	res.setHeader('Accept', 'text/html, text/css, application/javascript');
+		style-src 'self' ${nerdFont1};\
+		frame-src 'self' ${iframe1} ${iframe2} ${iframe3};\
+		connect-src 'self' ${bigShoulders} ${mitr1} ${mitr2} ${saira1} ${saira2} ${saira3} ${nerdFont1} ${nerdFont2} ${nerdFont3} ${nerdFont4} ${nerdFont5} ${nerdFont6};\
+	`);
+	res.setHeader('Accept', 'text/html, text/css, image/x-icon, image/png application/javascript');
 	// res.setHeader('Cache-Control', 'public, max-age=2592000');
 	next();
 });

@@ -16,20 +16,22 @@
 // ╰────────────────────────────────────────────────╯
 
 
-const express	= require('express');
-const cors		= require('cors');
-const take		= require('./controllers/estimate.controller.js');
-const valid		= require('./middlewares/add.middleware.js');
-const extAPI	= require('./controllers/external.API.request.js');
-const userSet	= require('./controllers/user.controller.js');
-const router	= express.Router();
-const path		= require('path');
+const express =		require('express');
+const compression =	require('compression');
+const cors =		require('cors');
+const take =		require('./controllers/estimate.controller.js');
+const valid =		require('./middlewares/add.middleware.js');
+const extAPI =		require('./controllers/external.API.request.js');
+const userSet =		require('./controllers/user.controller.js');
+const router =		express.Router();
+const path =		require('path');
 
 
 // TODO: should send the home page when all be done.
 router.use(express.json());
 router.use(cors({origin: "http://localhost:80", Credential: true}));
 router.use(express.static(path.join(__dirname)));
+router.use(compression());
 
 
 router.post('/__cspreport__', (req, res) => {
@@ -38,7 +40,8 @@ router.post('/__cspreport__', (req, res) => {
 });
 
 
-router.post('/private/auth', userSet.userTokenMatch, userSet.userTokenExpTime,
+router.post('/private/auth', 
+	userSet.userTokenMatch, userSet.userTokenExpTime,
 	(req, res) => {
 		res.status(200).json({ 'status' : 'active' });
 });
