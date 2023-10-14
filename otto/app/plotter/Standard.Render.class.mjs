@@ -22,7 +22,7 @@ export default class StandarRender {
 		const Y =			this.#pixelSize.y;
 		const EXTPADY =		0;
 		// const EXTPADY =		next[1] ? Y - next[1] : 0; // BUG: rendering wrong in some cases.
-	
+
 		RECT.setAttribute("x", pos[0] + INSET);
 		RECT.setAttribute("y", pos[1] + EXTPADY + INSET);
 
@@ -41,7 +41,7 @@ export default class StandarRender {
 		// const Y =			this.#pixelSize.y;
 		const EXTPADY =		0;
 		// const EXTPADY =	next[1] ? Y - next[1] : 0; // BUG: rendering wrong in some cases.
-		const LETTERPIX =	10;
+		const LETTERPIX =	5;
 		let posX;
 		let posY;
 
@@ -160,8 +160,8 @@ export default class StandarRender {
 	};
 
 	#standardRender() {
-		const X = [];
-		const Y = [];
+		const X =		[];
+		const Y =		[];
 		const MAPWORK = {};
 		const ICON =	`<i class="nf nf-oct-sync"></i>`;
 
@@ -176,6 +176,7 @@ export default class StandarRender {
 			};
 			this.#layoutArranger(MAPWORK, X, Y, art[0]);
 		}, 0);
+		console.log(MAPWORK);
 		return(this.#drawAndWrite(MAPWORK));
 	};
 };
