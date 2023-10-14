@@ -91,9 +91,16 @@ export default class CraterStandard {
 		return(false);
 	}
 
-	#redefineLayerSize(axis, art, procLayer) {
-		(axis[3] === 0) && (axis[2] > 0) ? axis[3] = procLayer.X1 : 0;
-		axis[5] < 0 ? axis[5] = procLayer.Y2 : 0;
+	#redefineLayerSize(axis, art, values) {
+		const restore1 =	(art[0] < values.Y1) || (art[0] < values.Y2);
+		const restore2 =	(art[1] < values.X1) || (art[1] < values.X2);
+		// const check1 =		(art[0] < axis[0]) && (axis[3] !== values.X1);
+		// const check2 =		(art[5] < axis[2]) && (axis[5] !== values.Y2);
+
+		(axis[3] === 0) && (axis[2] > 0) ? axis[3] = values.X1 : 0;
+		axis[5] < 0 ? axis[5] = values.Y2 : 0;
+		// restore1 && axis[3] !== values.X2 ? axis[3] = values.X2 : 0;
+		// restore2 ? axis[5] = values.Y2 : 0;
 	};
 
 	#analysisReduceSpace(axis, art) {
@@ -116,8 +123,11 @@ export default class CraterStandard {
 		(axis[3] === 0) && (axis[2] === Y1) ? axis[5] = Y2 - art[1] : 0;
 
 		(axis[0] === 0) && (axis[5] > 0) ? axis[5] = Y2 - art[1] : 0;
-		(axis[2] === Y1) && (axis[5] === Y2) ? axis[5] = Y2 - art[1] : 0;
-		(axis[5] <= 0) && (axis[3] !== X2) ? axis[0] = X1 - art[0] : 0;
+		(axis[2] === Y1) && (axis[5] === Y2) && (axis[5] >= art[1]) ? 
+			axis[5] = Y2 - art[1] : 0;
+
+		(axis[5] <= 0) && (axis[3] <= 0) ? axis[0] = X1 - art[0] : 0;
+		// (axis[5] <= 0) && (axis[3] !== X2) ? axis[0] = X1 - art[0] : 0;
 
 		(art[0] === X2) && (axis[2] > art[1]) ? axis[2] = Y1 - art[1] : 0;
 		(art[1] === Y2) && (axis[3] === X2) ? axis[0] = X1 - art[0] : 0;
@@ -137,7 +147,7 @@ export default class CraterStandard {
 			return (true);
 		else if (work[0] <= layer[3] / 2 && work[1] <= layer[5])
 			return (false);
-		return(CHECK1 && CHECK2 || CHECK3 && CHECK4 ? true : false);
+		return(CHECK1 && CHECK2 && CHECK3 || CHECK3 && CHECK4 ? true : false);
 	};
 
 	#matchWorkOnLayer(x, y, layer) {
@@ -161,7 +171,7 @@ export default class CraterStandard {
 
 		while (i++ < FLIP) {
 			if (this.#matchWorkOnLayer(x, y, layer)) {
-				if (this.#shiftAxios([x, y], layer)) {
+				if (this.#shiftAxios([x, y], layer) && i === 1) {
 					x !== y ? i++ : false;
 					[x, y] = [y, x];
 				};
@@ -230,10 +240,18 @@ export default class CraterStandard {
 		let checkLen =	true;
 		let i =			this.#hugeCanvasFirst(crate, measure);
 		let len;
+		let innerCrate;
 
 		while (i++ < this.#maxLayers || checkLen && this.#list.length) {
+			innerCrate = {
+				size : measure,
+				x1 : 0,
+				y2 : 0,
+				x1 : 0,
+				y2 : 0
+			};
 			len = this.#list.length - 1;
-			this.#matchCanvasInLayer(greb, [...measure, ...measure], len);
+			this.#matchCanvasInLayer(greb, innerCrate, len);
 			if (greb.length > 0) {
 				greb.map(art => this.#list.splice(this.#list.indexOf(art), 1));
 				this.#setLayer.call(i, crate, greb);
