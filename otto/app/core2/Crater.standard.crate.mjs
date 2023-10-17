@@ -60,132 +60,187 @@ export default class CraterStandard {
 		return([X, z, Y]);
 	};
 
-	// TODO: one method to handle each X and Y pairs.
-	//					 axis[0]
+	//						x1
 	//		   ╭──────────────────────────╮
 	//		   │                          │
 	//		   │                          │
 	//		   │                          │
-	// axis[5] │                          │ axis[2]
+	//		y1 │                          │ y2
 	//		   │                          │
 	//		   │                          │
 	//		   │                          │
 	//		   ╰──────────────────────────╯
-	//					 axis[3]
+	//						x2
 
-	#perfectMatch(work, sizes, axis) {
-		const METCHX1 = work[0] === sizes.X1;
-		const METCHY1 = work[1] === sizes.Y1;
-		const METCHX2 = work[0] === sizes.X2;
-		const METCHY2 = work[1] === sizes.Y2;
+	#selectAxioToAddworks(work, layer, size) {
+		let sizeX = work.length > 5 ? work[3] / size[0] : work[1] / size[0];
+		let sizeY = work.length > 5 ? work[1] / size[2] : work[3] / size[2];
+		const avlX = layer[0].x1 < 1 ? sizeX + layer[0].x1 <= 1 : 0;
+		const avlY = layer[0].y1 < 1 ? sizeY + layer[0].y1 <= 1 : 0;
 
-		if(METCHX1 && METCHY1 && METCHX2 && METCHY2) {
-			axis[0] = 0;
-			axis[1] = 0;
-			axis[2] = 0;
-			axis[3] = 0;
-			axis[4] = 0;
-			axis[5] = 0;
-			return(true);
+		return({ avlX, avlY });
+	};
+
+	#updateWorkCoordinates(art, sizeX, sizeY, layer) {
+		const check1 = layer[0].x1 + sizeX <= 1;
+		const check2 = layer[0].y1 + sizeY <= 1;
+
+		if(art[1].x2 === 0) {
+			check2 || !check1 && check2 ? 
+				art[1].x2 += +sizeX.toFixed(2) : 0;
+			art[1].y2 < 1 && check1 || !check2 ?
+				art[1].y2 += +sizeY.toFixed(2) : 0;
+		}
+		else {
+			art[1].x2 < 1 && !check1 && !check2 ?
+				art[1].x2 = +(art[1].x2 + sizeX).toFixed(2) :
+				check1 ? art[1].y2 = +(art[1].y2 + sizeY).toFixed(2) : 0;
+			art[1].x2 > 1 ? art[1] = 1 : 0;
 		};
-		return(false);
-	}
-
-	#redefineLayerSize(axis, art, values) {
-		const restore1 =	(art[0] < values.Y1) || (art[0] < values.Y2);
-		const restore2 =	(art[1] < values.X1) || (art[1] < values.X2);
-		// const check1 =		(art[0] < axis[0]) && (axis[3] !== values.X1);
-		// const check2 =		(art[5] < axis[2]) && (axis[5] !== values.Y2);
-
-		(axis[3] === 0) && (axis[2] > 0) ? axis[3] = values.X1 : 0;
-		axis[5] < 0 ? axis[5] = values.Y2 : 0;
-		// restore1 && axis[3] !== values.X2 ? axis[3] = values.X2 : 0;
-		// restore2 ? axis[5] = values.Y2 : 0;
+		return(art);
 	};
 
-	#analysisReduceSpace(axis, art) {
-		const X1 = axis[0];
-		const Y1 = axis[2];
-		const X2 = axis[3];
-		const Y2 = axis[5];
+	#updateAllWorksCoordinates(work, layer, size) {
+		const filled =		[...layer];
+		const place =	this.#selectAxioToAddworks(work, layer, size);
+		const LEN =			layer.length - 1;
 
-		if (this.#perfectMatch(art, { X1, X2, Y1, Y2 }, axis))
-			return (axis);
-		art[0] <= X2 ? axis[3] = X2 - art[0] : axis[0] = X1 - art[0];
-		(art[2] <= Y2) && (axis[3] !== X2) ? axis[5] = Y2 - art[1] : 0;
-
-		(axis[0] !== X1) && (X1 === art[0]) && Y2 > 0 ? axis[2] = Y2 - art[1] : 0;
-		(axis[3] === 0) && (Y1 > Y2) ? axis[2] = Y1 - art[1] : 0;
-
-		(Y2 === 0) && (Y1 > 0) && (axis[3] === X2) ? axis[0] = X1 - art[0] : 0;
-
-		(axis[3] === X2) && (Y2 <= X1) ? axis[0] = X1 - art[0] : 0;
-		(axis[3] === 0) && (axis[2] === Y1) ? axis[5] = Y2 - art[1] : 0;
-
-		(axis[0] === 0) && (axis[5] > 0) ? axis[5] = Y2 - art[1] : 0;
-		(axis[2] === Y1) && (axis[5] === Y2) && (axis[5] >= art[1]) ? 
-			axis[5] = Y2 - art[1] : 0;
-
-		(axis[5] <= 0) && (axis[3] <= 0) ? axis[0] = X1 - art[0] : 0;
-		// (axis[5] <= 0) && (axis[3] !== X2) ? axis[0] = X1 - art[0] : 0;
-
-		(art[0] === X2) && (axis[2] > art[1]) ? axis[2] = Y1 - art[1] : 0;
-		(art[1] === Y2) && (axis[3] === X2) ? axis[0] = X1 - art[0] : 0;
-		(axis[0] === X1) && (axis[5] === 0) ? axis[0] = X1 - art[0] : 0;
-
-		return(this.#redefineLayerSize(axis, art, { X1, Y1, X2, Y2 }));
+		filled.reverse().map((art, i) => {
+			if (i >= LEN)
+				return ;
+			let sizeX;
+			let sizeY;
+			const artX = art[0].length > 5 ? art[0][3] : art[0][1];
+			const artY = art[0].length > 5 ? art[0][1] : art[0][3];
+			
+			if (place.avlX && place.avlY)
+				sizeX = work.length > 5 ? work[3] / size[0] : work[1] / size[0];
+			else
+				sizeX = work.length > 5 ? work[3] / artX : work[1] / artX;
+			if (place.avlY)
+				sizeY = work.length > 5 ? work[1] / size[2] : work[3] / size[2];
+			else
+				sizeY = work.length > 5 ? work[1] / artY : work[3] / artY;
+			this.#updateWorkCoordinates(art, sizeX, sizeY, layer);
+		}, 0);
+		return(layer);
 	};
 
-	#shiftAxios(work, layer) {
-		const CHECK1 = layer[0] >= work[1];
-		const CHECK2 = layer[2] >= work[0];
-		const CHECK3 = layer[3] >= work[1];
-		const CHECK4 = layer[5] >= work[0];
-		const CHECK5 = work[1] === layer[0] || work[0] === layer[1];
+	#updateLayerSpace(layer, work, valX, valY) {
+		const { size } =	layer[0];
 
-		if (CHECK5)
-			return (true);
-		else if (work[0] <= layer[3] / 2 && work[1] <= layer[5])
-			return (false);
-		return(CHECK1 && CHECK2 && CHECK3 || CHECK3 && CHECK4 ? true : false);
+		if (layer.length > 1) {
+			layer[0].x1 + valX <= 1 ? layer[0].x1 = layer[0].x1 + valX : 0;
+			layer[0].y1 + valY <= 1 ? layer[0].y1 = layer[0].y1 + valY : 0;
+			layer[0].y1 === 1 ? layer[0].x2 = layer[0].x2 + valX : 0;
+			layer[0].x1 === 1 ? layer[0].y2 = layer[0].y2 + valY : 0;
+		}
+		else {
+			layer[0].x1 = layer[0].x1 > 0 ? layer[0].x1 + valX : valX;
+			layer[0].y1 = layer[0].y1 > 0 ? layer[0].y1 + valY : valY;
+			layer[0].x2 = work[3] === size[2] ? 1 : 0;
+			layer[0].y2 = work[1] === size[0] ? 1 : 0;
+		};
+		return(layer);
 	};
 
-	#matchWorkOnLayer(x, y, layer) {
-		const check1 = x <= layer[0] && y <= layer[5];
-		const check2 = x <= layer[3] && y <= layer[2];
-		const check3 = x <= layer[0] && y <= layer[2] && layer[3] === 0;
-		const check4 = x <= layer[0] && y <= layer[2] && layer[5] === 0;
+	#setLayerCoordinates(work, layer, { size }, pos) {
+		const sizeX = work.length > 5 ? work[3] / size[0] : work[1] / size[0];
+		const sizeY = work.length > 5 ? work[1] / size[2] : work[3] / size[2];
+		const x1 = 1;
+		const y1 = 1;
+		let x2;
+		let y2;
 
+		if (layer.length > 1) {
+			this.#updateAllWorksCoordinates(work, layer, size);
+			x2 = sizeY + layer[pos][1].x2 === 1 ? 1 : 0;
+			y2 = sizeX + layer[pos][1].y2 === 1 ? 1 : 0;
+		}
+		else {
+			x2 = sizeY + layer[0].x2 === 1 ? 1 : 0;
+			y2 = sizeX + layer[0].y2 === 1 ? 1 : 0;
+		};
+		this.#updateLayerSpace(layer, work, sizeX, sizeY);
+		layer.push([work, { x1, y1, x2, y2 }]);
+		return(layer);
+	};
+
+	#findWorksToMatchInLayer(work, layer, { size }) {
+		const ICON =	`<i class="nf nf-oct-sync"></i>`;
+		let workX =		work[1];
+		let workY =		work[3];
+		let len =		layer.length;
+		let spin =		0;
+		let check1;
+		let check2;
+
+		while(len-- >= 0) {
+			check1 =	workX / size[0] <= 1 && workY / size[2] <= 1;
+			check2 =	workX / size[0] <= 1 && workY / size[2] <= 1;
+			if (check1 || check2) {
+				spin === 1 ? work.push(ICON) : 0;
+				return(this.#setLayerCoordinates(work, layer, layer[0]));
+			};
+			[workX, workY] = [workY, workX];
+			spin = 1;
+		};
+		return(layer);
+	};
+
+	#fitSizesCheckIn(work, layer, flip) {
+		const { size, x1, y1, x2 } =	layer[0];
+		let workX =						work[1];
+		let workY =						work[3];
+		let check1 =					false;
+		let check2 =					false;
+		let check3 =					false;
+		let check4 =					false;
+		let i =							layer.length;
+		let height;
+
+		flip === 1 ? [workX, workY] = [workY, workX] : 0;
+		workX /= size[0];
+		workY /= size[2];
+		while (i-- > 1) {
+			height = layer[i][0].length > 5 ? layer[i][0][1] : layer[i][0][3];
+			check1 = layer[i][1].y2 >= workY && x1 + workX <= 1;
+			!check1 ?  check2 = y1 + workY <= 1 && x2 + workX <= 1 : i = 0;
+			!check2 ? check3 = y1 + workY <= 1 && x1 + workX <= 1 : i = 0;
+			!check3 ? check4 = height >= work[3] && layer.length > 2 : i = 0;
+			check4 ? i = 0 : 0;
+		};
 		return(check1 || check2 || check3 || check4 ? true : false);
 	};
 
-	#matchCanvasInLayer(matched, layer, len) {
-		if(layer[0] === 0 && layer[2] === 0 || len < 0)
-			return ;
-		const SPIN =	6
-		const FLIP =	2;
+	#metchCloseWorkOnLayer(work, layer) {
 		const ICON =	`<i class="nf nf-oct-sync"></i>`;
-		let i =			0;
-		let x =			this.#list[len][1];
-		let y =			this.#list[len][3];
+		let len =		layer.length;
+		let spin =		0;
 
-		while (i++ < FLIP) {
-			if (this.#matchWorkOnLayer(x, y, layer)) {
-				if (this.#shiftAxios([x, y], layer) && i === 1) {
-					x !== y ? i++ : false;
-					[x, y] = [y, x];
-				};
-				this.#analysisReduceSpace(layer, [x, y]);
-				if (i === 2 && this.#list[len].length < SPIN)
-					this.#list[len].push(ICON);
-					// this.#list[len].push(" ");
-				else if (this.#list[len].lenght === SPIN)
-					this.#list[len].pop();
-				matched.push(this.#list[len]);
-				return (this.#matchCanvasInLayer(matched, layer, len - 1));
+		if (layer.length === 1)
+			return(this.#findWorksToMatchInLayer(work, layer, layer[0]));
+		while(len-- > 1) {
+			if (this.#fitSizesCheckIn(work, layer, spin)) {
+				work.length === 6 ? work.pop() : 0;
+				spin === 1 ? work.push(ICON) : 0;
+				return(this.#setLayerCoordinates(work, layer, layer[0], len));
 			};
-			[x, y] = [y, x];
+			spin === 0 ? spin = 1 : spin = 0;
+			spin === 1 ? len++ : 0;
 		};
+		return(layer);
+	};
+
+	#matchCanvasInLayer(matched, layer, len) {
+		const { x1, y1, x2, y2 } = layer[0];
+		const emptyLayer = (x1 === 1 && y1 === 1 && x2 === 1 && y2 === 1);
+
+		if(emptyLayer || len < 0) {
+			layer.map((work, i) => i > 0 ? matched.push(work[0]) : 0 , 0);
+			return ;
+		}
+		this.#metchCloseWorkOnLayer(this.#list[len], layer, layer[0]);
 		return (this.#matchCanvasInLayer(matched, layer, len - 1));
 	};
 
@@ -243,15 +298,9 @@ export default class CraterStandard {
 		let innerCrate;
 
 		while (i++ < this.#maxLayers || checkLen && this.#list.length) {
-			innerCrate = {
-				size : measure,
-				x1 : 0,
-				y2 : 0,
-				x1 : 0,
-				y2 : 0
-			};
+			innerCrate = { size : measure, x1 : 0, y1 : 0, x2 : 0, y2 : 0 };
 			len = this.#list.length - 1;
-			this.#matchCanvasInLayer(greb, innerCrate, len);
+			this.#matchCanvasInLayer(greb, [innerCrate], len);
 			if (greb.length > 0) {
 				greb.map(art => this.#list.splice(this.#list.indexOf(art), 1));
 				this.#setLayer.call(i, crate, greb);
