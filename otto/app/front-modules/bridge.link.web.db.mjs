@@ -45,7 +45,6 @@ async function getNewTokens(content) {
 			headers: HEADER,
 		}).then(code => code.status)
 		.catch(err => console.error(`ALERT ${err}`));
-		console.log('UPDATE TOKEN:', result);
 		postDataFromClientSide(content);
 	}
 	catch(err) {
@@ -55,7 +54,6 @@ async function getNewTokens(content) {
 
 
 function checkStatusCode(code, info, data, header) {
-	console.log('CODE', code);
 	switch(code) {
 		case 409 :
 			upDateEstimateClient(data, header, info);
@@ -128,5 +126,5 @@ export async function saveTheCurrentEstimate (estimate) {
 };
 
 
-export function deleteEstimateClient (estimaateCode) {
-};
+// export function deleteEstimateClient (estimaateCode) {
+// };
