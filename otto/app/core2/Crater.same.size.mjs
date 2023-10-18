@@ -123,6 +123,7 @@ export default class CraterSameSize {
 			else
 				baseCrate.unshift(false);
 		};
+		Array.isArray(works[0][0]) ? works = works.flat() : false;
 		return ({ crate: this.#orderSizes(baseCrate, works), works: works });
 	};
 
@@ -171,7 +172,6 @@ export default class CraterSameSize {
 		const BACKUP =			JSON.parse(JSON.stringify(crateDone));
 
 		countDiffSizes =		null;
-		Array.isArray(crateDone[0][0]) ? crateDone = crateDone[0] : 0;
 		return ({ crates : crateDone, backUp : BACKUP });
 	};
 };
