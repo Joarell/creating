@@ -99,12 +99,12 @@ async function getIDBData (ref) {
 
 
 function airPortStatus(crate, sizeUnit) {
-	const MAXX =	sizeUnit === 'cm' ? 300 : 118.110;
-	const MAXZ =	sizeUnit === 'cm' ? 200 : 78.740;
-	const MAXY =	sizeUnit === 'cm' ? 165 : 64.960 ;
-	const X =		crate[0][0];
-	const Z =		crate[0][1];
-	const Y =		crate[0][2];
+	const MAXX =	sizeUnit === 'cm' ? 300 : 118.110; // INFO: cm and in max size
+	const MAXZ =	sizeUnit === 'cm' ? 200 : 78.740;  // INFO: cm and in max size
+	const MAXY =	sizeUnit === 'cm' ? 165 : 64.960 ; // INFO: cm and in max size
+	const X =		crate[0];
+	const Z =		crate[1];
+	const Y =		crate[2];
 
 	return(X <= MAXX && Z <= MAXZ && Y <= MAXY ? 'PAX' : 'CARGO');
 };
@@ -112,9 +112,10 @@ function airPortStatus(crate, sizeUnit) {
 
 function addHTMLTableLine (data, unit, table) {
 	const { crates } =	data;
-	const port =		airPortStatus(crates, unit);
-	crates.map(crate => {
-		if (crate.length === 4)
+
+	crates.map((crate, i) => {
+		if (i % 2 === 0) {
+			const port = airPortStatus(crate, unit);
 			table.innerHTML += crate.map((info, i) => {
 				switch(i) {
 					case 0 :
@@ -127,6 +128,7 @@ function addHTMLTableLine (data, unit, table) {
 						return(`<td>${info}</td><td>${unit}</td></tr>`);
 				};
 			}, 0).join("");
+		};
 	}, 0);
 };
 

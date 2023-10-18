@@ -150,12 +150,12 @@ function addHTMLLayerWorksLine ({ works }, table, unit, kind) {
 
 
 function airPortStatus(crate, sizeUnit) {
-	const MAXX =	sizeUnit === 'cm' ? 300 : 118.110; // INFO: cm and in max size
-	const MAXZ =	sizeUnit === 'cm' ? 200 : 78.740; // INFO: cm and in max size
-	const MAXY =	sizeUnit === 'cm' ? 165 : 64.960 ; // INFO: cm and in max size
-	const X =		crate[0][0];
-	const Z =		crate[0][1];
-	const Y =		crate[0][2];
+	const MAXX =	sizeUnit === 'cm' ? 300 : 118.110;	// INFO: cm and in max size
+	const MAXZ =	sizeUnit === 'cm' ? 200 : 78.740;	// INFO: cm and in max size
+	const MAXY =	sizeUnit === 'cm' ? 165 : 64.960 ;	// INFO: cm and in max size
+	const X =		crate[0];
+	const Z =		crate[1];
+	const Y =		crate[2];
 
 	return(X <= MAXX && Z <= MAXZ && Y <= MAXY ? 'PAX' : 'CARGO');
 };
@@ -178,12 +178,11 @@ function setStatusCrateType(kind, unit) {
 
 
 function addHTMLTableLine({ crates }, table, kind) {
-	const UNIT =	localStorage.getItem('metrica') === 'cm - centimeters' ?
-		'cm' : 'in';
-	let port =		airPortStatus(crates, UNIT);
+	const UNIT = localStorage.getItem('metrica') === 'cm - centimeters' ? 'cm' : 'in';
 
 	crates.map((done, i) => {
-		if (i % 2 === 0)
+		if (i % 2 === 0) {
+			const port = airPortStatus(done, UNIT);
 			table.innerHTML += done.map((info, i) => {
 				switch(i) {
 					case 0 :
@@ -196,6 +195,7 @@ function addHTMLTableLine({ crates }, table, kind) {
 						return(setStatusCrateType(kind, UNIT));
 				};
 			}, 0).join("");
+		}
 		else
 			addHTMLLayerWorksLine(crates[i], table, UNIT, kind);
 	}, 0);
