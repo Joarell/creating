@@ -101,9 +101,9 @@ export default class CraterStandard {
 	};
 
 	#updateAllWorksCoordinates(work, layer, size) {
-		const filled =		[...layer];
+		const filled =	[...layer];
 		const place =	this.#selectAxioToAddworks(work, layer, size);
-		const LEN =			layer.length - 1;
+		const LEN =		layer.length - 1;
 
 		filled.reverse().map((art, i) => {
 			if (i >= LEN)
@@ -127,7 +127,7 @@ export default class CraterStandard {
 	};
 
 	#updateLayerSpace(layer, work, valX, valY) {
-		const { size } =	layer[0];
+		const { size } = layer[0];
 
 		if (layer.length > 1) {
 			layer[0].x1 + valX <= 1 ? layer[0].x1 = layer[0].x1 + valX : 0;
@@ -136,15 +136,15 @@ export default class CraterStandard {
 			layer[0].x1 === 1 ? layer[0].y2 = layer[0].y2 + valY : 0;
 		}
 		else {
-			layer[0].x1 = layer[0].x1 > 0 ? layer[0].x1 + valX : valX;
-			layer[0].y1 = layer[0].y1 > 0 ? layer[0].y1 + valY : valY;
+			layer[0].x1 = layer[0].x1 !== 0 ? layer[0].x1 + valX : valX;
+			layer[0].y1 = layer[0].y1 !== 0 ? layer[0].y1 + valY : valY;
 			layer[0].x2 = work[3] === size[2] ? 1 : 0;
 			layer[0].y2 = work[1] === size[0] ? 1 : 0;
 		};
 		return(layer);
 	};
 
-	#setLayerCoordinates(work, layer, { size }, pos) {
+	#setLayerCoordinates(work, layer, { size }, prev) {
 		const sizeX = work.length > 5 ? work[3] / size[0] : work[1] / size[0];
 		const sizeY = work.length > 5 ? work[1] / size[2] : work[3] / size[2];
 		const x1 = 1;
@@ -154,15 +154,15 @@ export default class CraterStandard {
 
 		if (layer.length > 1) {
 			this.#updateAllWorksCoordinates(work, layer, size);
-			x2 = sizeY + layer[pos][1].x2 === 1 ? 1 : 0;
-			y2 = sizeX + layer[pos][1].y2 === 1 ? 1 : 0;
+			x2 = sizeY + layer[prev][1].x2 === 1 ? 1 : 0;
+			y2 = sizeX + layer[prev][1].y2 === 1 ? 1 : 0;
 		}
 		else {
 			x2 = sizeY + layer[0].x2 === 1 ? 1 : 0;
 			y2 = sizeX + layer[0].y2 === 1 ? 1 : 0;
 		};
 		this.#updateLayerSpace(layer, work, sizeX, sizeY);
-		layer.push([work, { x1, y1, x2, y2 }]);
+		layer.push([work, { x1, y1, x2, y2, prev }]);
 		return(layer);
 	};
 
@@ -188,46 +188,64 @@ export default class CraterStandard {
 		return(layer);
 	};
 
-	#fitSizesCheckIn(work, layer, flip) {
-		const { size, x1, y1, x2 } =	layer[0];
-		let workX =						work[1];
-		let workY =						work[3];
-		let check1 =					false;
-		let check2 =					false;
-		let check3 =					false;
-		let check4 =					false;
-		let i =							layer.length;
-		let height;
+	#checkPrevAvailableSpace(nextX, layer, base) {
+		if (!base)
+			return(false);
+		const { x1 } =	layer[0];
+		const { x2 } =	 layer[base][1];
+		const avlX =	 1 - x1;
+		let place;
 
-		flip === 1 ? [workX, workY] = [workY, workX] : 0;
+		place = x1 < 1 ? x2 + nextX + avlX : x2 + nextX;
+		return(place <= 1);
+	};
+
+	#fitSizesCheckIn(work, layer, spin) {
+		const { size, x1, y1 } =	layer[0];
+		let workX =					work[1];
+		let workY =					work[3];
+		let check1 =				false;
+		let check2 =				false;
+		let check3 =				false;
+		let seeking =				true;
+		let i =						layer.length;
+		let height;
+		let support;
+
+		spin === 1 ? [workX, workY] = [workY, workX] : 0;
 		workX /= size[0];
 		workY /= size[2];
-		while (i-- > 1) {
+		while (i > 1 && seeking && (workY <= 1)) {
+			i--;
+			support = this.#checkPrevAvailableSpace(workX, layer, layer[i][1].prev);
 			height = layer[i][0].length > 5 ? layer[i][0][1] : layer[i][0][3];
-			check1 = layer[i][1].y2 >= workY && x1 + workX <= 1;
-			!check1 ?  check2 = y1 + workY <= 1 && x2 + workX <= 1 : i = 0;
-			!check2 ? check3 = y1 + workY <= 1 && x1 + workX <= 1 : i = 0;
-			!check3 ? check4 = height >= work[3] && layer.length > 2 : i = 0;
-			check4 ? i = 0 : 0;
+			check1 = layer[i][1].y2 <= workY && x1 + workX <= 1;
+			!check1 ? check2 = layer[i][1].x2 <= workX && y1 + workY <= 1 : 0;
+			!check2 ? check3 = height >= work[3] && support : 0;
+			check1 || check2 || check3 ? seeking = false : 0;
 		};
-		return(check1 || check2 || check3 || check4 ? true : false);
+		if(check1 || check2 || check3)
+			return(check3 ? layer[i][1]?.prev : i);
+		return(false);
 	};
 
 	#metchCloseWorkOnLayer(work, layer) {
 		const ICON =	`<i class="nf nf-oct-sync"></i>`;
-		let len =		layer.length;
+		let flip =		true;
 		let spin =		0;
+		let baseWork;
 
 		if (layer.length === 1)
 			return(this.#findWorksToMatchInLayer(work, layer, layer[0]));
-		while(len-- > 1) {
-			if (this.#fitSizesCheckIn(work, layer, spin)) {
+		while(flip) {
+			baseWork = this.#fitSizesCheckIn(work, layer, spin);
+			if(baseWork) {
 				work.length === 6 ? work.pop() : 0;
 				spin === 1 ? work.push(ICON) : 0;
-				return(this.#setLayerCoordinates(work, layer, layer[0], len));
+				return(this.#setLayerCoordinates(work, layer, layer[0], baseWork));
 			};
+			spin === 1 ? flip = false : 0;
 			spin === 0 ? spin = 1 : spin = 0;
-			spin === 1 ? len++ : 0;
 		};
 		return(layer);
 	};
@@ -290,6 +308,7 @@ export default class CraterStandard {
 	};
 
 	#fillCrate(measure) {
+		const GC =		new WeakSet();
 		let crate =		[];
 		let greb =		[];
 		let checkLen =	true;
@@ -304,6 +323,7 @@ export default class CraterStandard {
 			if (greb.length > 0) {
 				greb.map(art => this.#list.splice(this.#list.indexOf(art), 1));
 				this.#setLayer.call(i, crate, greb);
+				GC.add(innerCrate);
 				greb =		null;
 				greb =		[];
 			};
@@ -331,23 +351,19 @@ export default class CraterStandard {
 		let z =			0;
 		let y =			0;
 
-		if (CRATE1) {
-			x = list.at(-1)[1];
-			z = list.at(-1)[2];
-			y = list.at(-1)[3];
-		}
-		else
-			while(len--) {
-				(x + x + list[len][1]) <= MAXX ? x += list[len][1] :
-					x < list[len][1] && list[len][1] <= MAXX ? x = list[len][1]:
-						list[len][1] > MAXX ? x = list[len][1] : false;
+		if (CRATE1)
+			return([list.at(-1)[1], list.at(-1)[2], list.at(-1)[3]]);
+		while(len--) {
+			(x + x + list[len][1]) <= MAXX ? x += list[len][1] :
+				x < list[len][1] && list[len][1] <= MAXX ? x = list[len][1]:
+					list[len][1] > MAXX ? x = list[len][1] : false;
 
-				z = list[len][2] ?? z;
+			z = list[len][2] ?? z;
 
-				(y + y + list[len][3]) <= MAXY ? y += list[len][3]:
-					y < list[len][3] && list[len][3] <= MAXY ? y = list[len][3]:
-						list[len][3] > MAXY ? y = list[len][3] : false;
-			};
+			(y + y + list[len][3]) <= MAXY ? y += list[len][3]:
+				y < list[len][3] && list[len][3] <= MAXY ? y = list[len][3]:
+					list[len][3] > MAXY ? y = list[len][3] : false;
+		};
 		return([x, z, y]);
 	};
 
