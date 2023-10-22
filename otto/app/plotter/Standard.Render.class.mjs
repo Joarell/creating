@@ -147,15 +147,14 @@ export default class StandarRender {
 
 	#layoutMapWorks(info, weight, height, code) {
 		const ART =	code.at(-1);
-		let found =	0;
 		let result;
 		let ref;
 
 		for (ref of code) {
 			result = this.#verifyPlaceWork(info[ref], weight, height);
-			if (result && found === 0) {
+			if (result) {
 				this.#setNewWork(ART, info, info[ref], result, weight, height);
-				found++;
+				break ;
 			};
 		};
 		return (info);
