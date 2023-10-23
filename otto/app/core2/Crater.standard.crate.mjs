@@ -10,7 +10,7 @@ export default class CraterStandard {
 			return({ standard: false});
 
 		this.#list =		canvas;
-		this.#maxLayers =	4 ?? maxLayer;
+		this.#maxLayers =	maxLayer ?? 4;
 		this.#backUp =		backUp;
 		return(this.#startCrate());
 	}
@@ -86,7 +86,7 @@ export default class CraterStandard {
 		const check2 = layer[0].y1 + sizeY <= 1;
 
 		if(art[1].x2 === 0) {
-			check2 || !check1 && check2 ? 
+			check2 || !check1 && check2 ?
 				art[1].x2 += +sizeX.toFixed(2) : 0;
 			art[1].y2 < 1 && check1 || !check2 ?
 				art[1].y2 += +sizeY.toFixed(2) : 0;
@@ -94,7 +94,7 @@ export default class CraterStandard {
 		else {
 			art[1].x2 < 1 && !check1 && !check2 ?
 				art[1].x2 = +(art[1].x2 + sizeX).toFixed(2) :
-				check1 ? art[1].y2 = +(art[1].y2 + sizeY).toFixed(2) : 0;
+					check1 ? art[1].y2 = +(art[1].y2 + sizeY).toFixed(2) : 0;
 			art[1].x2 > 1 ? art[1] = 1 : 0;
 		};
 		return(art);
@@ -179,7 +179,8 @@ export default class CraterStandard {
 			check1 =	workX / size[0] <= 1 && workY / size[2] <= 1;
 			check2 =	workX / size[0] <= 1 && workY / size[2] <= 1;
 			if (check1 || check2) {
-				spin === 1 ? work.push(ICON) : 0;
+				work.length >= 6 ? work.pop() : 0;
+				spin === 1 && work.length === 5 ? work.push(ICON) : 0;
 				return(this.#setLayerCoordinates(work, layer, layer[0]));
 			};
 			[workX, workY] = [workY, workX];
@@ -188,16 +189,16 @@ export default class CraterStandard {
 		return(layer);
 	};
 
-	#checkPrevAvailableSpace(nextX, layer, base) {
-		if (!base)
+	#checkPrevAvailableSpace(nextX, nextY, layer, work) {
+		if (!work)
 			return(false);
-		const { x1 } =	layer[0];
-		const { x2 } =	 layer[base][1];
-		const avlX =	 1 - x1;
+		const { x1, y2 } =	layer[0];
+		const { x2 } =	layer[work][1];
+		const avlX =	1 - x1;
 		let place;
 
-		place = x1 < 1 ? x2 + nextX + avlX : x2 + nextX;
-		return(place <= 1);
+		place = x1 < 1 ? x2 + nextX + avlX <= 1 : x2 + nextX <= 1;
+		return(place && y2 + nextY <= 1 || place && nextX <= x2);
 	};
 
 	#fitSizesCheckIn(work, layer, spin) {
@@ -217,7 +218,7 @@ export default class CraterStandard {
 		workY /= size[2];
 		while (i > 1 && seeking && (workY <= 1)) {
 			i--;
-			support = this.#checkPrevAvailableSpace(workX, layer, layer[i][1].prev);
+			support = this.#checkPrevAvailableSpace(workX, workY, layer, layer[i][1].prev);
 			height = layer[i][0].length > 5 ? layer[i][0][1] : layer[i][0][3];
 			check1 = layer[i][1].y2 <= workY && x1 + workX <= 1;
 			!check1 ? check2 = layer[i][1].x2 <= workX && y1 + workY <= 1 : 0;
@@ -240,8 +241,8 @@ export default class CraterStandard {
 		while(flip) {
 			baseWork = this.#fitSizesCheckIn(work, layer, spin);
 			if(baseWork) {
-				work.length === 6 ? work.pop() : 0;
-				spin === 1 ? work.push(ICON) : 0;
+				work.length >= 6 ? work.splice(5, Infinity) : 0;
+				spin === 1 && work.length === 5 ? work.push(ICON) : 0;
 				return(this.#setLayerCoordinates(work, layer, layer[0], baseWork));
 			};
 			spin === 1 ? flip = false : 0;
