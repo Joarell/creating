@@ -45,7 +45,7 @@ export default class StandarRender {
 		// const Y =			this.#pixelSize.y;
 		const EXTPADY =		0;
 		// const EXTPADY =	next[1] ? Y - next[1] : 0; // BUG: rendering wrong in some cases.
-		const LETTERPIX =	5;
+		const LETTERPIX =	7;
 		let posX;
 		let posY;
 
@@ -66,17 +66,16 @@ export default class StandarRender {
 		test1 ? this.#filled.y -= y : 0;
 		test2 ? this.#filled.x -= x : 0;
 
-		test3 = this.#filled.y === 0 && this.#filled.x2 >= x;
-		test4 = this.#filled.x === 0 && this.#filled.y2 >= y;
+		test3 = this.#filled.y === y || this.#filled.y2 === y;
+		test4 = this.#filled.x === 0;
 
 		test3 ? this.#filled.x2 -= x : 0;
 		test4 ? this.#filled.y2 -= y : 0;
-		console.log(this.#filled);
 	};
 
 	#lastWorkUpdateNextValues(place, data, x, y) {
 		Object.entries(data).map((info) => {
-			const { fillX, fillY, pos, next } =	info[1];
+			const { fillX, fillY, next } =	info[1];
 			const propX =	+(x / info[1].values[0]).toFixed(2);
 			const propY =	+(y / info[1].values[1]).toFixed(2);
 			const updateX =	place.y === next[1] && fillX + propX <= 1;
@@ -122,39 +121,39 @@ export default class StandarRender {
 		const { next, pos, values, fillX, fillY } = data;
 		const lastX =	pos[0] === 0 ? next[0] : pos[0];
 		const lastY =	pos[1] === 0 ? next[1] : pos[1];
+		const testY =	fillY + valY / values[1] <= 1;
 
 		if (lastX + valX <= this.#pixelSize.x) {
-			x = next[0];
-			y = pos[1];
+			x = next[0] + valX <= this.#pixelSize.x ? next[0] : undefined;
+			y = pos[1] + valY <= this.#pixelSize.y ? pos[1] : undefined;
 		}
 		else if (lastY + valY <= this.#pixelSize.y) {
-			x = pos[0];
-			y = next[1];
+			x = pos[0] + valX <= this.#pixelSize.x  ? pos[0] : undefined;
+			y = next[1] + valY <= this.#pixelSize.y ? next[1] : undefined;
 		};
-		if (x >= this.#pixelSize.x && valX <= values[0]){
-			x = pos[0];
-			y = this.#pixelSize.y - this.#filled.y2;
-			console.log('Y2', y);
-		}
-		else if (this.#filled.x === 0 && next[0] !== null) {
-			x = next[0];
-			y = this.#pixelSize.y - this.#filled.y2;
-		};
+
 		x === 0 && fillX > 0 || x === null ? x = undefined : 0;
-		y === 0 && fillY > 0 || y === null ? y = undefined : 0;
+		x === undefined && this.#filled.y >= valY ? x = pos[0] : 0;
+
+		y === 0 && !testY ? y = undefined : 0;
+		y === 0 && testY ? y = fillY * values[1] + pos[1] : 0;
+		y === 0 && this.#filled.x === 0 ? y = next[1]: 0;
 		return (x !== undefined && y !== undefined ? { x, y } : false);
 	};
 
 	#layoutMapWorks(info, weight, height, code) {
 		const ART =	code.at(-1);
+		let len =	code.length;
 		let result;
 		let ref;
 
 		for (ref of code) {
-			result = this.#verifyPlaceWork(info[ref], weight, height);
-			if (result) {
-				this.#setNewWork(ART, info, info[ref], result, weight, height);
-				break ;
+			if (len-- > 1 ) {
+				result = this.#verifyPlaceWork(info[ref], weight, height);
+				if (result) {
+					this.#setNewWork(ART, info, info[ref], result, weight, height);
+					break ;
+				};
 			};
 		};
 		return (info);
@@ -171,8 +170,6 @@ export default class StandarRender {
 			y = this.#pixelSize.y - height === 0 ? null : height;
 			fillX = this.#filled.x + weigth === this.#pixelSize.x ? 1 : 0;
 			fillY = this.#filled.y + height === this.#pixelSize.y ? 1 : 0;
-			this.#filled.x -= x;
-			this.#filled.y -= y;
 			map[code] = {
 				values: [weigth, height],
 				pos: [0, 0],
@@ -180,6 +177,7 @@ export default class StandarRender {
 				fillX,
 				fillY
 			};
+			this.#updateInnerCrate(weigth, height);
 		}
 		else
 			this.#layoutMapWorks(map, weigth, height, code);
@@ -204,7 +202,7 @@ export default class StandarRender {
 		const ICON =	`<i class="nf nf-oct-sync"></i>`;
 		const CODES =	[];
 
-		this.#canvas.map(art => {
+		this.#canvas.map( async art => {
 			if (art.at(-1) === ICON) {
 				x = coord.proportion(art[3], this.#pixelSize.x, this.#inCrate[0]);
 				y = coord.proportion(art[1], this.#pixelSize.y, this.#inCrate[2]);
@@ -214,9 +212,8 @@ export default class StandarRender {
 				y = coord.proportion(art[3], this.#pixelSize.y, this.#inCrate[2]);
 			};
 			CODES.push(art[0]);
-			this.#layoutArranger(MAPWORK, x, y, CODES);
+			await this.#layoutArranger(MAPWORK, x, y, CODES);
 		}, 0);
-		console.log(MAPWORK);
 		return(this.#drawAndWrite(MAPWORK));
 	};
 };
