@@ -129,6 +129,7 @@
 	--back-gray: #222725;
 	--menu-col: #00C2DD;
 	--pressed: #77797E;
+	scroll-behavior: smooth;
 }
 
 
@@ -275,17 +276,6 @@ input {
 
 select {
 	display: block;
-}
-
-
-tr, td, th {
-	text-align: center;
-	padding: .1rem .3rem;
-	border-radius: 0.3rem;
-	color: var(--table-font);
-	font-family: Saira Semi Condensed, sans-serif;
-	font-weight: 500;
-	font-size: calc(var(--fonts) - .08rem);
 }
 
 
@@ -1010,25 +1000,6 @@ label:hover + .IO__sizes--popup {
 .accordion-panel > h3{
 	cursor: pointer;
 	margin: 0;
-}
-
-
-.accordion-panel:has([aria-expanded="false"]) {
-	width: var(--accordion-width, 1rem);
-	transition: width 2s ease-in-out;
-	fill: var(--p__color--mode);
-}
-
-
-.accordion-panel:has([aria-expanded="true"]) {
-	& .menu-icon {
-		box-shadow: var(--shadow1);
-		cursor: pointer;
-		background: var(--menu-col);
-		fill: var(--__icon-color);
-	}
-	width: 18vw;
-	transition: width 2s ease-in-out;
 }
 
 

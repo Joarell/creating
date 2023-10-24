@@ -1,10 +1,22 @@
 /* TODO: link the screen sizes passing through actual min -> next max sizes. */
 /* @media only screen and (min-width: 1080px) and (max-width: 4000px) { */
-@media not all and (max-width: 80rem) {
+/* @media not all and (aspect-ratio: 16 / 9) and (max-width: 4000px) { */
+/* @media not all and (max-width: 80rem) { */
+@media only screen and (min-width: 80rem) {
 	/* ╭─────────────────────╮
 	   │ 	main container.  │
 	   ╰─────────────────────╯
 	*/
+	tr, td, th {
+		text-align: center;
+		padding: .1rem .3rem;
+		border-radius: 0.3rem;
+		color: var(--table-font);
+		font-family: Saira Semi Condensed, sans-serif;
+		font-weight: 500;
+		font-size: calc(var(--fonts) - .08rem);
+	}
+
 	.container {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
@@ -12,6 +24,24 @@
 		row-gap: var(--rowg);
 		padding: 2% 20%;
 	}
+
+	.accordion-panel:has([aria-expanded="false"]) {
+		width: var(--accordion-width, 1rem);
+		transition: width 2s ease-in-out;
+		fill: var(--p__color--mode);
+	}
+
+	.accordion-panel:has([aria-expanded="true"]) {
+		& .menu-icon {
+			box-shadow: var(--shadow1);
+			cursor: pointer;
+			background: var(--menu-col);
+			fill: var(--__icon-color);
+		}
+		width: 18vw;
+		transition: width 2s ease-in-out;
+	}
+
 	/* ╭──────────────────────────────────────────────────────────╮
 	   │                     Container bottom                     │
 	   ╰──────────────────────────────────────────────────────────╯
@@ -386,18 +416,16 @@
 	*/
 	.container__status__pane {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(auto-fit, minmax(min(8rem, 100%), 1fr));
 		column-gap: 2rem;
 		row-gap: 4rem;
+		& > .container__status__pane__frame {
+			grid-row: span 2;
+			grid-column: span 2;
+			width: auto;
+			height: max(14.2vw);
+		}
 	}
-
-
-	.container__status__pane__frame {
-		grid-row: span 2;
-		grid-column: span 2;
-		height: 100%;
-	}
-
 
 	.IO__add--form {
 		border: .1rem solid var(--iframes-bg);
@@ -754,9 +782,8 @@
    ╰──────────────────────────────────────────────────────────╯
 */
 
-@media only screen
-	and ( min-width: 390px)
-	and ( max-width: 840px) {
+@media only screen and
+	(min-width: 24rem) and (max-width: 80rem) and (orientation: portrait) {
 
 	header {
 		height: 10%;
@@ -1137,6 +1164,22 @@
 		margin-top: 4.2rem;
 	}
 
+	.accordion-panel:has([aria-expanded="false"]) {
+		width: var(--accordion-width, 1rem);
+		transition: width 2s ease-in-out;
+		fill: var(--p__color--mode);
+	}
+
+	.accordion-panel:has([aria-expanded="true"]) {
+		& .menu-icon {
+			box-shadow: var(--shadow1);
+			cursor: pointer;
+			background: var(--menu-col);
+			fill: var(--__icon-color);
+		}
+		width: 100%;
+		transition: width 2s ease-in-out;
+	}
 
 	.container,
 	.container__status__pane,
@@ -1422,7 +1465,7 @@
    ╰──────────────────────────────────────────────────────────╯
 */
 /* @media only screen and ( min-width: 840px) and ( max-width: 1700px) { */
-@media not all and(min-width: 45rem) {
+@media only screen and (max-width: 80rem) and (orientation: landscape) {
 
 	header {
 		height: 10%;
@@ -1799,14 +1842,57 @@
 	   │ 	main container.  │
 	   ╰─────────────────────╯
 	*/
+	tr, td, th {
+		text-align: center;
+		padding: .1rem .3rem;
+		border-radius: 0.3rem;
+		color: var(--table-font);
+		font-family: Saira Semi Condensed, sans-serif;
+		font-weight: 500;
+		font-size: calc(var(--fonts) - .08rem);
+	}
+
 	.container {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(min(25rem, 100%), 1fr));
 		column-gap: var(--colg-mobile);
 		row-gap: var(--rowg-mobile);
 		margin-top: 4rem;
 	}
 
+	.container-bottom {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		justify-content: flex-end;
+		gap: 1rem;
+		& > .container--span {
+			&:nth-of-type(1) {
+				width: 100%;
+			}
+		}
+		& {
+			grid-column: span 2;
+			transition: all 2s ease-in-out;
+		}
+	}
+
+	.accordion-panel:has([aria-expanded="false"]) {
+		width: var(--accordion-width, 1rem);
+		transition: width 2s ease-in-out;
+		fill: var(--p__color--mode);
+	}
+
+	.accordion-panel:has([aria-expanded="true"]) {
+		& .menu-icon {
+			box-shadow: var(--shadow1);
+			cursor: pointer;
+			background: var(--menu-col);
+			fill: var(--__icon-color);
+		}
+		width: 100%;
+		transition: width 2s ease-in-out;
+	}
 
 	/* ╭─────────────────────────────╮
 	   │ 	Right status container.  │
