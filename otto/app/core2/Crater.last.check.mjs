@@ -1,6 +1,7 @@
 import CraterStandard from "./Crater.standard.crate.mjs";
 
 
+// TODO: alocate the 5th layer after all arrange done.
 export default class CraterLastCheckReArranger {
 	#cratesDone;
 
@@ -44,19 +45,19 @@ export default class CraterLastCheckReArranger {
 // │ Simulates if the crate with 5 layer can consolidate all same size canvas. │
 // ╰───────────────────────────────────────────────────────────────────────────╯
 	#processingCratesList (listCrates, attCrate) {
+		const GC =			new WeakSet();
 		const LEN =			attCrate.works.length;
 		const CUBPOS =		4;
-		const MAXLAYER =	5;
+		const MAXLAYER =	4;
 		let i =				0;
 		let bool =			true;
 		let extracted =		LEN === 1 ? [...attCrate.works[0]]: [...attCrate.works];
-		let backUp;
 		let result;
 
 		while(i++ < listCrates.length && bool) {
 			if (i % 2 === 1) {
 				result =	[...extracted];
-				backUp =	this.#removeCrate(listCrates, i, result);
+				this.#removeCrate(listCrates, i, result);
 				result =	this.#quickSort(result, CUBPOS);
 				result =	new CraterStandard(result, false, MAXLAYER);
 				if (result.crates.length === 2) {
@@ -64,7 +65,7 @@ export default class CraterLastCheckReArranger {
 					listCrates.splice(i - 1, 1, result.crates[0]);
 					bool =	false;
 				}
-				result = null;
+				GC.add(result);
 			};
 		};
 		return(!bool);
@@ -81,6 +82,78 @@ export default class CraterLastCheckReArranger {
 		return(this.#consolidationTrail(standard, sameSizes, pos - 1));
 	};
 
+	#extractTheFifthLayer(data) {
+		let works;
+		let info;
+		let i = 0;
+
+		for (info in data) {
+			if (i % 2 === 1)
+				data[info].works.length === 5 ? 
+					works = data[info].works[4].layer5 : 0;
+			if(works)
+				break;
+			i++;
+		};
+		return(works ? { info, works } : false);
+	}
+
+	#newCrateSet(works, layers) {
+		const CUBPOS =	4;
+		let newList =	[];
+		let listSorted;
+
+		Object.entries(layers).map(arr => {
+			arr[1].map(data => {
+				let info;
+
+				for (info in data) {
+					if (data[info].length > 0 && Array.isArray(data[info]))
+						data[info].map(art => newList.push(art));
+				}
+			});
+		});
+		works.map(art => newList.push(art));
+		listSorted = this.#quickSort(newList, CUBPOS);
+		return(listSorted);
+	};
+
+	#updatesCrates(crates, pos, newCrate, target) {
+		const PAD = 10;
+
+		crates[target].works.pop();
+		crates[target - 1][1] -= PAD;
+		crates.splice(pos - 1, 1, newCrate.crates[0]);
+		crates.splice(pos, 1, newCrate.crates[1]);
+		return(crates);
+	};
+
+	#allocateTheFifthLayer() {
+		const { crates } =	this.#cratesDone.standardCrate;
+		const list =		this.#extractTheFifthLayer(crates);
+		let count =			0;
+		let newList;
+		let newCrate;
+		let check;
+		let i;
+
+		if (!list)
+			return;
+		for (i in crates) {
+			if (!Array.isArray(crates[i]) && crates[i].works.length <= 4) {
+				newList = this.#newCrateSet(list.works, crates[i]);
+				newCrate = new CraterStandard(newList, false);
+				check = newCrate.crates.length === 2 && 
+					newCrate.crates[1].works.length <= 4;
+				if (check) {
+					this.#updatesCrates(crates, count, newCrate, list.info);
+					break ;
+				};
+			};
+			count++;
+		};
+	};
+
 	#consolidationStarted() {
 		const sameSize =	this.#cratesDone.sameSizeCrate.crates;
 		const checkBackUp =	this.#cratesDone.sameSizeCrate.backUp;
@@ -94,6 +167,8 @@ export default class CraterLastCheckReArranger {
 		if (sameSize.length === checkBackUp.length) {
 			this.#cratesDone.sameSizeCrate.backUp = false;
 			this.#cratesDone.standardCrate.backUp = false;
+			return ;
 		};
+		this.#allocateTheFifthLayer();
 	};
 };
