@@ -14,7 +14,7 @@ export async function getIDBData (ref) {
 		};
 	});
 	return(request);
-}
+};
 
 
 export async function populateOptions() {
@@ -40,30 +40,43 @@ export async function populateOptions() {
 };
 
 
+function findLayersNumber(data, counter, key) {
+	let layers;
+
+	if (key === 'sameSizeCrate') {
+		data[key].crates.map((info, i) => {
+			if (counter === 0 && layers === undefined)
+				layers = info.works.length;
+			i % 2 === 0 || i === 0 ? counter-- : false;
+		}, 0);
+	}
+	else
+		data[key].crates.map((box, i) => {
+			if (counter === 0 && i % 2 === 1)
+				key === 'tubeCrate' || key === 'noCanvasCrate' ?
+					layers = 1 : layers = box.works.length;
+			i % 2 === 0 || i === 0 ? counter-- : false;
+		}, 0);
+	return({ layers , counter });
+};
+
+
 export async function layersNumber(list) {
 	const crate =	document.getElementById('selected-crate').value;
 	let selected =	+crate.split(' ')[1];
 	let data =		list ?? JSON.parse(localStorage.getItem('doneList'));
-	let layers;
+	let number;
 	let key;
 
 	for (key in data) {
 		if (data[key].hasOwnProperty('crates') && selected > 0) {
 			if (data[key].crates.length > 0 ) {
-				if (key === 'sameSizeCrate')
-					layers = data[key].crates[1].works[0].length - 1;
-				else
-					data[key].crates.map((box, i) => {
-						if (selected === 0 && i % 2 === 1)
-							key === 'tubeCrate' || key === 'noCanvasCrate' ?
-								layers = 1 : layers = box.works.length;
-						else if (i % 2 === 0)
-							selected--;
-					}, 0);
+				number = findLayersNumber(data, selected, key)
+				selected = number.counter;
 			};
 		};
 	};
-	sessionStorage.setItem('layers', layers);
+	sessionStorage.setItem('layers', number.layers);
 	sessionStorage.setItem('numLayer', 1);
 	setLayerDisplay();
 };
@@ -120,4 +133,4 @@ export function displayClean() {
 		while(display.firstChild)
 			display.removeChild(display.firstChild)
 	return ;
-}
+};
