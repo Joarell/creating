@@ -1,5 +1,3 @@
-
-
 import * as main from './front-modules/start.front.mjs';
 import * as accordion from './side-menu/menu.currency.conversion.mjs';
 import * as unit from './side-menu/menu.units.mjs';
@@ -13,7 +11,6 @@ import { changeCrateDisplay, openDisplay } from './plotter/layer.controller.mjs'
 import { layersNumber, skipLayer } from './plotter/select.menu.mjs';
 import { logout } from './front-modules/logout.mjs';
 import { installer } from './installation.handler.mjs';
-
 
 
 
@@ -75,6 +72,9 @@ globalThis.document.getElementById('main-app')
 			accordionController(element);
 			break;
 		case "units-header":
+			accordionController(element);
+			break;
+		case "button-seek":
 			accordionController(element);
 			break;
 		case "search-btn":
@@ -182,8 +182,14 @@ globalThis.document.getElementById('main-app')
 }), true);
 
 
+globalThis.onsubmit = (event) => {
+	event.preventDefault();
+};
+
+
 globalThis.document.getElementById('estimate_getter')
 	.addEventListener('keypress', (event) => {
+
 	const BUTTON = globalThis.document.getElementById('fetch-btn');
 	event.key === 'Enter' ? BUTTON.click() : false;
 }, true);
