@@ -17,12 +17,12 @@
 	<link rel="shortcut icon" type="image/x-icon" href="./images/favicon-dark.ico" media="(prefers-color-schem: dark)">
 	<link rel="icon" type="image/x-icon" href="./images/favicon-light.ico" media="(prefers-color-schem: light)">
 	<link rel="short icon" type="image/x-icon" href="./images/favicon-light.ico" media="(prefers-color-schem: light)">
-	<script async type="module" src="./main.mjs"></script>
-	<link rel="stylesheet" href="./index.css" />
+	<script async type="module" src="./main.min.mjs"></script>
+	<script async type="module" src="./bundle.mjs"></script>
+	<link rel="stylesheet" href="./index.min.css"/>
 	<link rel="manifest" href="./manifest.json" crossorigin="use-credentials">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <body>
 	<header>
 		<div class="header-content">
@@ -210,13 +210,13 @@
 					<div class="accordion">
 						<div class="accordion-panel get-estimate" aria-labelledby="search-header" aria-hidden="true" role="region">
 							<h3 class="" id="search-header">
-								<button class="trigger-menu menu search" data-role="popover" aria-controls="search--content" aria-expanded="false">
+								<button class="trigger-menu menu search" id="button-seek" data-role="popover" aria-controls="search--content" aria-expanded="false">
 									<svg aria-label="search menu" class="menu-icon" id="search-btn">
 										<use href="#lupa-material" id="seek-btn"></use>
 									</svg>
 								</button>
 								<div class="menu__input" aria-hidden="true" role="region">
-									<form class="menu__fetch" onsubmit="return false">
+									<form class="menu__fetch">
 										<input type="text" class="get__estimate" id="estimate_getter"
 											placeholder="Doc reference" autocomplete="on" required>
 										<button type="button" class="IO__press--btn menu__search-btn"
@@ -245,9 +245,9 @@
 											</select>
 										</div>
 										<div>
-											<input type="text" name="currency" class="get__currency menu__input--form"
+											<input type="text" name="currency" inputmode="numeric" class="get__currency menu__input--form"
 												id="coin1-input" required>
-											<input type="text" name="currency" class="get__currency menu__input--form"
+											<input type="text" name="currency" inputmode="numeric" class="get__currency menu__input--form"
 												id="coin2-input" required>
 										</div>
 									</form>
@@ -278,10 +278,8 @@
 											</select>
 										</div>
 										<div>
-											<input type="text" name="measure" class="get__measure menu__input--form"
-												id="input-unit1" required value=0>
-											<input type="text" name="measures" class="get__measure menu__input--form"
-												id="input-unit2" required value=0>
+											<input type="text" name="measure" inputmode="numeric" class="get__measure menu__input--form" id="input-unit1" required value=0>
+											<input type="text" name="measures" inputmode="numeric" class="get__measure menu__input--form" id="input-unit2" required value=0>
 										</div>
 									</form>
 								</div>
