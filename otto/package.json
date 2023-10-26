@@ -5,12 +5,12 @@
 	"main": "main.mjs",
 	"scripts": {
 		"start": "nodemon server.app.js",
-		"buld": "vite build",
-		"preview": "vite preview"
+		"build": "rollup -c --watch"
 	},
 	"keywords": [],
-	"author": "",
-	"license": "ISC",
+	"author": "Jospeh Joarell",
+	"license": "MIT",
+	"privaate": true,
 	"dependencies": {
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
@@ -21,6 +21,10 @@
 		"sequelize": "^6.28.0"
 	},
 	"devDependencies": {
-		"nodemon": "^3.0.1"
+		"@rollup/plugin-json": "^6.0.1",
+		"@rollup/plugin-terser": "^0.4.4",
+		"css-minify": "^2.0.0",
+		"nodemon": "^3.0.1",
+		"rollup-plugin-css-only": "^4.3.0"
 	}
 }
