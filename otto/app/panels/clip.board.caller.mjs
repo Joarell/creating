@@ -8,7 +8,9 @@ import { findCrates, findCratesAndWorks } from "./clip.board.formatter.mjs";
 
 
 export function copyButton1 () {
-	const crates =		new Worker('./panels/worker.IDB.crates.mjs');
+	const crates =		new Worker(
+		new URL('./worker.IDB.crates.mjs', import.meta.url), { type: "module" }
+	);
 	const estimate =	document.getElementById("input_estimate").value;
 	const checker =		sessionStorage.getItem(estimate);
 
@@ -22,7 +24,9 @@ export function copyButton1 () {
 
 
 export function copyButton2 () {
-	const crates =		new Worker('./panels/worker.IDB.crates.mjs');
+	const crates =		new Worker(
+		new URL('./worker.IDB.crates.mjs', import.meta.url), { type: "module" }
+	);
 	const estimate =	document.getElementById("input_estimate").value;
 	const checker =		sessionStorage.getItem(estimate);
 

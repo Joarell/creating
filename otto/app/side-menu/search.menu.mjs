@@ -13,7 +13,9 @@ function resetList(list) {
 
 
 export async function checkBrowserDB(doc) {
-	const workerDB =	new Worker('./panels/worker.IDB.crates.mjs');
+	const workerDB =	new Worker(
+		new URL('./panels/worker.IDB.crates.mjs', import.meta.url), { type: "module" }
+	);
 	const checkIDB =	await new Promise((resolve, reject) => {
 		workerDB.postMessage(doc);
 		workerDB.onmessage = (result => {

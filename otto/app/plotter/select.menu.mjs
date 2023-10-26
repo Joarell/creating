@@ -1,9 +1,12 @@
 
 
-import { renderLayer } from "./layer.controller.mjs";
+import { plotter } from "./layers.mjs";
 
-export async function getIDBData (ref) {
-	const WORKER = new Worker('../app/panels/worker.IDB.crates.mjs');
+
+export async function getDataIDB (ref) {
+	const WORKER = new Worker(
+		new URL('./worker.IDB.crates.mjs', import.meta.url), { type: "module" }
+	);
 	let request;
 
 	WORKER.postMessage(ref);
@@ -19,7 +22,7 @@ export async function getIDBData (ref) {
 
 export async function populateOptions() {
 	const estimate =	localStorage.getItem("refNumb");
-	const crates =		await getIDBData(estimate);
+	const crates =		await getDataIDB(estimate);
 	const select =		document.getElementById('selected-crate');
 	const unit =		localStorage
 		.getItem("metrica") === 'cm - centimeters' ? 'cm' : 'in';
@@ -37,6 +40,39 @@ export async function populateOptions() {
 	}, 0);
 	localStorage.setItem('doneList', JSON.stringify({...crates}));
 	await layersNumber(crates);
+};
+
+
+function getCurrentCrate() {
+	const crates =	JSON.parse(localStorage.getItem('doneList'));
+	let crateNum =	document.getElementById('selected-crate').value.split(' ')[1];
+	let key
+	let works;
+	let data;
+
+	for (key in crates) {
+		if (crates[key]?.hasOwnProperty('crates')) {
+			crates[key].crates.map((crate, i) => {
+				if (Array.isArray(crate) && --crateNum === 0) {
+					works = crates[key].crates[i + 1];
+					data = { type : key, crate : crate, works : works };
+				}
+			}, 0);
+		};
+	};
+	return (data);
+};
+
+
+// ╭─────────────────────────────────────────╮
+// │ Functions to preparete rendering works. │
+// ╰─────────────────────────────────────────╯
+export function renderLayer() {
+	const display =	document.getElementById('layers');
+	const crate =	getCurrentCrate();
+	const layer =	+sessionStorage.getItem('numLayer');
+
+	display.appendChild(plotter(crate, layer - 1));
 };
 
 

@@ -3,8 +3,10 @@
 // TODO: develop a closure class to preserve the access and refresh token
 // on the client side towards future http requests using Map().
 
-async function getIDBData (ref) {
-	const WORKER = new Worker('./panels/worker.IDB.crates.mjs');
+async function getIDB (ref) {
+	const WORKER = new Worker(
+		new URL('./worker.IDB.crates.mjs', import.meta.url), { type: "module" }
+	);
 	let request;
 
 	WORKER.postMessage(ref);
@@ -114,7 +116,7 @@ async function postDataFromClientSide(content) {
 
 
 export async function saveTheCurrentEstimate (estimate) {
-	const contentStorage =	await getIDBData(estimate);
+	const contentStorage =	await getIDB(estimate);
 	const { reference, list, crates } = contentStorage;
 	const result = Object.assign({}, crates);
 	const INFO = {

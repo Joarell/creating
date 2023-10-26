@@ -13,6 +13,7 @@ export default class UnitAdapter {
 		this.#list = works;
 		this.#unit = unit;
 
+		console.log(works);
 		return(this.#definePath());
 	};
 
@@ -43,6 +44,7 @@ export default class UnitAdapter {
 		return('pass');
 	};
 
+	// BUG: minified version of the file is not working properly to convert data to ArtWork class.
 	async #definePath() {
 		let result;
 		const checker =	this.#checkInput();

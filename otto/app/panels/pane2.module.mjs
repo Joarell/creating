@@ -80,8 +80,10 @@ export function createHeader(table){
 };
 
 
-async function getIDBData (ref) {
-	const WORKER = new Worker('./worker.IDB.crates.mjs');
+async function getIDBDataBrowser (ref) {
+	const WORKER = new Worker(
+		new URL('./worker.IDB.crates.mjs', import.meta.url), { type: "module" }
+	);
 	let request;
 
 	WORKER.postMessage(ref);
@@ -206,7 +208,7 @@ function addHTMLTableLine({ crates }, table, kind) {
 // │ Returns all crates from the indexedDB or gets from cloud. │
 // ╰───────────────────────────────────────────────────────────╯
 export async function showCrates2(estimate) {
-	const { crates } =	await getIDBData(estimate);
+	const { crates } =	await getIDBDataBrowser(estimate);
 	const element =		document.createElement("table");
 	const pane =		document.getElementById("opened-crates");
 	let key;
