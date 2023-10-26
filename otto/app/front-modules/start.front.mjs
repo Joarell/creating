@@ -37,8 +37,7 @@ export function checkWork(work) {
 			return (false);
 	}
 	checkReference();
-	return (
-		Array.isArray(checked) ? 
+	return ( Array.isArray(checked) ? 
 		new ArtWork(work[0], checked[0], checked[1], checked[2]) : false
 	);
 }
