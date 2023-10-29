@@ -4,22 +4,20 @@
 <!-- <meta http-equiv="refresh" content="3"> -->
 
 <head>
-	<title>OTC</title>
+	<title>Otto Crate Solver</title>
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="description" content="Otto web app to solve art work list. All measures and 90% all kinds.">
+	<meta name="description" content="Otto web app to solve art work list of almost all kinds.">
 	<meta name="dashboard controls" content="Main Page">
 	<meta name="author" content="Joseph Joarell">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="theme-color" media="(prefers-color-scheme: light)" content="#BEBBBB">
 	<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#222725">
-	<link rel="icon" type="image/x-icon" href="./images/favicon-dark.ico" media="(prefers-color-schem: dark)">
-	<link rel="shortcut icon" type="image/x-icon" href="./images/favicon-dark.ico" media="(prefers-color-schem: dark)">
-	<link rel="icon" type="image/x-icon" href="./images/favicon-light.ico" media="(prefers-color-schem: light)">
-	<link rel="short icon" type="image/x-icon" href="./images/favicon-light.ico" media="(prefers-color-schem: light)">
-	<script async type="module" src="./main.min.mjs"></script>
+	<link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
+	<!-- <script async type="module" src="./main.mjs"></script> -->
 	<script async type="module" src="./bundle.mjs"></script>
-	<link rel="stylesheet" href="./index.min.css"/>
+	<link rel="stylesheet" href="./index.css"/>
 	<link rel="manifest" href="./manifest.json" crossorigin="use-credentials">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -215,6 +213,7 @@
 										<use href="#lupa-material" id="seek-btn"></use>
 									</svg>
 								</button>
+								<span class="menu__option--text" data-role="popover" data-popover-text="Search">Search</span>
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__fetch">
 										<input type="text" class="get__estimate" id="estimate_getter"
@@ -232,8 +231,7 @@
 										<use href="#exchange-material" id="ex-btn"></use>
 									</svg>
 								</button>
-								<span class="menu__option--text" data-role="popover"
-									data-popover-text="Currency">Currency</span>
+								<span class="menu__option--text" data-role="popover" data-popover-text="Currency">Currency</span>
 								<div class="menu__input" aria-hidden="true" role="region">
 									<form class="menu__currency">
 										<div>

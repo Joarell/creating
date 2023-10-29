@@ -123,6 +123,7 @@ globalThis.document.getElementById('main-app')
 	.addEventListener("change", (element => {
 
 	// console.log(element.target.id);
+	element.preventDefault();
 	switch (element.target.id) {
 		case "input_estimate":
 			createDB();
@@ -195,13 +196,12 @@ globalThis.document.getElementById('estimate_getter')
 }, true);
 
 
-await globalThis.navigator.serviceWorker.register('./sw.mjs');
+globalThis.navigator.serviceWorker.register('./sw.mjs');
 
 
 globalThis.addEventListener('beforeinstallprompt', (event) => {
 	event.preventDefault();
 	console.log('👍', 'beforeinstallprompt', event);
 	globalThis.deferredPrompt = event;
-	showInstallPromoiton();
 	console.log(`'beforeinstallprompt' event was fired.`);
 });

@@ -4,9 +4,10 @@
 	"name": "Otto Web Crater.",
 	"icons": [
 		{
-			"src": "/images/logo-vec.svg",
-			"type": "image/svg+xml",
-			"sizes": "512x512"
+			"src": "./images/raw-icon.png",
+			"type": "image/png",
+			"sizes": "449x416",
+			"purpose": "maskable"
 		},
 		{
 			"src": "./images/maskable_icon_x512.png",
@@ -26,8 +27,7 @@
 		{
 			"src": "./images/maskable_icon_x128.png",
 			"sizes": "128x128",
-			"type": "image/png",
-			"purpose": "maskable"
+			"type": "image/png"
 		},
 		{
 			"src": "./images/maskable_icon_x96.png",
@@ -45,24 +45,24 @@
 			"type": "image/png"
 		}
 	],
-	"id": "/app/",
-	"start_url": "http://localhost/app/",
+	"id": "/",
+	"start_url": "https://ottocratesolver.com",
 	"background_color": "#162789",
 	"display_override": ["fullscreen", "minimal-ui"],
 	"display": "standalone",
-	"scope": "http://localhost/app/",
-	"theme_color": "#03d9f4",
+	"scope": "https://ottocratesolver.com",
+	"theme_color": "#002A3D",
 	"shortcuts": [],
 	"description": "Progressive Web App art work crate solver list.",
 	"screenshots": [
 		{
-			"src": "/images/screenshot1.png",
+			"src": "",
 			"type": "image/png",
 			"sizes": "540x720",
 			"form_factor": "narrow"
 		},
 		{
-			"src": "/images/screenshot2.jpg",
+			"src": "",
 			"type": "image/jpg",
 			"sizes": "720x540",
 			"form_factor": "wide"
