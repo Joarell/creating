@@ -1,35 +1,53 @@
 
 
-const cacheName =	'craterCache_v1';
+
+const CACHENAME =	'craterCache_v1';
+const assets =		[
+	'/currency',
+	'/app/',
+	'./main.min.mjs',
+	'./index.html',
+	'./index.css',
+	'./bundle.mjs',
+	'./index-01.css',
+	'./responsive_sheet.css',
+	'./images/favicon.ico',
+	'./images/icon-192.png',
+	'./images/logo-512.png',
+	'./images/raw-icon.png',
+	'./images/notification.png',
+	'./images/favicon-16x16.png',
+	'./images/favicon-32x32.png',
+	'./images/apple-touch-icon.png',
+	'./images/maskable_icon_x48.png',
+	'./images/maskable_icon_x72.png',
+	'./images/maskable_icon_x96.png',
+	'./images/maskable_icon_x128.png',
+	'./images/maskable_icon_x192.png',
+	'./images/maskable_icon_x384.png',
+	'./images/maskable_icon_x512.png',
+	'./images/android-chrome-192x192.png',
+];
+
 
 globalThis.addEventListener('install', (event) => {
 	console.log('Inside the install handler:', event);
+	event.waitUntil(caches.open(CACHENAME).then((cache) => {
+		return (cache.addAll(assets));
+	}));
 });
 
 
-globalThis.addEventListener('activate', (event) => {
-	console.log('Inside the activate handler:', event);
-});
-
-
-globalThis.addEventListener(fetch, (event) => {
-	console.log('Inside the fetch handler:', event);
+globalThis.addEventListener('activate', () => {
+	console.log('Inside the activate handler!');
 });
 
 
 self.addEventListener('fetch', (event) => {
+	console.log('Fetching DATA', event.request.url);
 	event.respondWith(
-		caches.match(event.request).then((response) => {
-			return response || fetch(event.request);
-		}),
+		caches.match(event.request).then(cachedResponse => {
+			return (cachedResponse ? cachedResponse : fetch(event.request));
+		})
 	);
 });
-
-
-// self.addEventListener('fetch', (event) => {
-// 	event.respondWith(fetch(event.request).catch(() => {
-// 			return caches.match(event.request);
-// 		}),
-// 	);
-// });
-//

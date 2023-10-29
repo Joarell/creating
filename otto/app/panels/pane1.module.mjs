@@ -1,6 +1,8 @@
 // ╭────────────────────────────────────────────────────╮
 // │ This is the trigger activated by the crate button. │
 // ╰────────────────────────────────────────────────────╯
+
+
 globalThis.onstorage = () => {
 	const press =	sessionStorage.getItem("pane1");
 	const getter =	localStorage.getItem("refNumb");
@@ -26,7 +28,7 @@ globalThis.onstorage = () => {
 };
 
 
-document.onreadystatechange = () => {
+globalThis.document.onreadystatechange = () => {
 	const pane =	document.getElementById("crates-only");
 	const len =		pane.childNodes.length;
 	const getter =	localStorage.getItem("refNumb");
@@ -185,3 +187,6 @@ function finishedRender(table, info) {
 		</tr>`;
 	return(table);
 };
+
+
+globalThis.navigator.serviceWorker.register('./sw.pane1.mjs');

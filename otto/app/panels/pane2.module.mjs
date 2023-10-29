@@ -1,6 +1,8 @@
 // ╭────────────────────────────────────────────────────╮
 // │ This is the trigger activated by the crate button. │
 // ╰────────────────────────────────────────────────────╯
+
+
 globalThis.onstorage = () => {
 	const press =	sessionStorage.getItem("pane2");
 	const getter =	localStorage.getItem("refNumb");
@@ -24,7 +26,7 @@ globalThis.onstorage = () => {
 };
 
 
-document.onreadystatechange = () => {
+globalThis.document.onreadystatechange = () => {
 	const pane =	document.getElementById("opened-crates");
 	const len =		pane.childNodes.length;
 	const getter =	localStorage.getItem("refNumb");
@@ -44,6 +46,7 @@ function loadingPage() {
 	animation.style.display = "none";
 	animation.setAttribute("aria-hidden", true)
 	pageApp.setAttribute("aria-hidden", false)
+	pageApp.setAttribute("aria-hidden", true)
 }
 
 
@@ -223,3 +226,6 @@ export async function showCrates2(estimate) {
 	sessionStorage.removeItem("pane2");
 	pane.appendChild(element);
 };
+
+
+globalThis.navigator.serviceWorker.register('./sw.pane2.mjs');

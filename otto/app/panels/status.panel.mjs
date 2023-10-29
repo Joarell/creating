@@ -1,6 +1,11 @@
 // ╭───────────────────────────────────────────────────────────────────╮
 // │ Calls to each change on the localStorage to update the list pane. │
 // ╰───────────────────────────────────────────────────────────────────╯
+
+
+globalThis.navigator.serviceWorker.register('./sw.status.mjs');
+
+
 globalThis.onstorage = () => {
 	const check =	localStorage.getItem("storage");
 	const newList =	sessionStorage.getItem("FETCHED");
@@ -26,7 +31,7 @@ globalThis.onload = () => {
 	const mode =	localStorage.getItem("mode");
 	const stPanel =	document.getElementById("status");
 
-	stPanel.hasChildNodes() ? true : setTimeout(() => {statusTable()}, 200);
+	stPanel.hasChildNodes() ? true : setTimeout(async () => await statusTable(), 200);
 	changeMode(mode);
 	setTimeout(statusTable, 200);
 }
@@ -69,7 +74,7 @@ export function statusTablePopulate(data) {
 // ╭────────────────────────────────────────────────────╮
 // │ Returns the HTML table with all works in the list. │
 // ╰────────────────────────────────────────────────────╯
-export function statusTable() {
+export async function statusTable() {
 	const element =	document.createElement("table");
 	const plot =	document.getElementById("status");
 	const list =	localStorage;
@@ -109,6 +114,10 @@ function getOrder () {
 // ╰───────────────────────────────────────────────────────────────────────╯
 export function createHeader(table) {
 	const head = document.createElement("tr");
+
+	if(table.parentNode)
+		while(table.firstChild)
+			table.removeChild(table.firstChild)
 
 	head.innerHTML = `
 		<tr>
