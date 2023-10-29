@@ -1,13 +1,12 @@
 {
 	"permissions": ["webRequest"],
 	"short_name": "Otto",
-	"name": "Otto Web Crater.",
+	"name": "Otto",
 	"icons": [
 		{
-			"src": "./images/raw-icon.png",
+			"src": "./images/maskable_icon_x1024.png",
 			"type": "image/png",
-			"sizes": "449x416",
-			"purpose": "maskable"
+			"sizes": "1024x1024"
 		},
 		{
 			"src": "./images/maskable_icon_x512.png",
@@ -17,7 +16,18 @@
 		{
 			"src": "./images/maskable_icon_x384.png",
 			"type": "image/png",
-			"sizes": "384x384"
+			"sizes": "384x384",
+			"purpose": "maskable"
+		},
+		{
+			"src": "./images/maskable_icon.png",
+			"sizes": "384x384",
+			"type": "image/png"
+		},
+		{
+			"src": "./images/maskable_icon_x256.png",
+			"type": "image/png",
+			"sizes": "256x256"
 		},
 		{
 			"src": "./images/maskable_icon_x192.png",
@@ -40,8 +50,23 @@
 			"type": "image/png"
 		},
 		{
+			"src": "./images/maskable_icon_x64.png",
+			"sizes": "64x64",
+			"type": "image/png"
+		},
+		{
 			"src": "./images/maskable_icon_x48.png",
 			"sizes": "48x48",
+			"type": "image/png"
+		},
+		{
+			"src": "./images/favicon-32x32.png",
+			"sizes": "32x32",
+			"type": "image/png"
+		},
+		{
+			"src": "./images/favicon-16x16.png",
+			"sizes": "16x16",
 			"type": "image/png"
 		}
 	],
