@@ -6,12 +6,13 @@ function resetList(list) {
 
 	list.map(work => {
 		const { code, x , z, y } = work;
-		reseted.push({ code, x, z ,y });
+		reseted.push({ code, x, z, y });
 	});
 	return(reseted);
 };
 
 
+// NOTE: the path is different with or without the bundle file.
 export async function checkBrowserDB(doc) {
 	const workerDB =	new Worker(
 		new URL('./panels/worker.IDB.crates.mjs', import.meta.url), { type: "module" }
