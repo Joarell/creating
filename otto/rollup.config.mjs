@@ -6,7 +6,7 @@ import css from 'rollup-plugin-css-only';
 export default {
 	input: './app/main.mjs',
 	wtach: {
-		includes: './**',
+		includes: './app/**',
 		clearScreen: false
 	},
 	output: [
