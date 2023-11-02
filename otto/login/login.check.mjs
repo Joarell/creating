@@ -66,7 +66,7 @@ async function appAccessCheckIn(userAuth) {
 		'Content-Type': 'application/javascript',
 		'Accept': 'text/html; text/css; application/javascript',
 	};
-	const request =		new Request(`/app/`, {
+	const request =		new Request(`/app`, {
 		Method: "POST",
 		Mode: 'cors',
 		Headers: header,
