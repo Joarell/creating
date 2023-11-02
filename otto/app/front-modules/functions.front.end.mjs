@@ -71,22 +71,21 @@ export async function crate() {
 	let list;
 	const estimate =	{};
 	const e_code =		document.getElementById("input_estimate").value;
-	const works =		 sessionStorage.getItem('codes')
 
-	if (confirm("Ready to crate all works?") && works) {
-		crates =				await checkMetric();
-		estimate["reference"] =	e_code;
-		list =					parseArtWork();
-		estimate["list"] =		list.map(art => art.data);
-		estimate["crates"] =	crates;
-		addNewWorksToIndexedDB (estimate);
+	if (confirm("Ready to crate all works?")) {
+		crates =					await checkMetric();
+		if (crates !== undefined) {
+			estimate["reference"] =	e_code;
+			list =					parseArtWork();
+			estimate["list"] =		list.map(art => art.data);
+			estimate["crates"] =	crates;
+			addNewWorksToIndexedDB(estimate);
 
-		// INFO: Efemeral triggers to each panel render the result
-		sessionStorage.setItem("pane1", "populate");
-		sessionStorage.setItem("pane2", "populate");
+			// INFO: Efemeral triggers to each panel render the result
+			sessionStorage.setItem("pane1", "populate");
+			sessionStorage.setItem("pane2", "populate");
+		};
 	}
-	else
-		alert('Pease, add a some works to be crated!');
 };
 
 
@@ -110,16 +109,24 @@ function parseArtWork() {
 	const temp =	[];
 	let works;
 	const avoid =	[
-		"doneList" ,"mode", "storage", "currency", "currency", "metrica", "refNumb" 
+		"doneList",
+		"mode",
+		"storage",
+		"currency",
+		"currency",
+		"metrica",
+		"refNumb",
+		"FETCHED",
 	]
 	
 	Object.entries(DB).map(data => {
 		!avoid.includes(data[0]) ? temp.push(JSON.parse(data[1])) : false;
 	});
-	works = temp.map(work => {
-		return(new ArtWork(work.code, work.x, work.z, work.y));
-	})
-	return(works.length > 0 ? works : undefined);
+	if (temp.length > 0)
+		works = temp.map(work => {
+			return(new ArtWork(work.code, work.x, work.z, work.y));
+		});
+	return(works ? works : undefined);
 }
 
 
@@ -132,9 +139,8 @@ async function checkMetric() {
 	const list =		parseArtWork();
 	let crates;
 
-	if (storageUnit.length === 1)
-		return(alert("Oops! Sounds like you not added any work yet.\
-		Please, try again!"));
+	if (!list)
+		return(alert("Oops! Sounds like you do not added any work yet. Please, try again!"));
 	crates = await Promise.resolve(new UnitAdapter(list, UNIT));
 	return (crates);
 }

@@ -3,9 +3,6 @@
 // ╰───────────────────────────────────────────────────────────────────╯
 
 
-globalThis.navigator.serviceWorker.register('./sw.status.mjs');
-
-
 globalThis.onstorage = () => {
 	const check =	localStorage.getItem("storage");
 	const newList =	sessionStorage.getItem("FETCHED");
@@ -28,13 +25,14 @@ globalThis.onstorage = () => {
 
 
 globalThis.onload = () => {
-	const mode =	localStorage.getItem("mode");
-	const stPanel =	document.getElementById("status");
+	const mode =		localStorage.getItem("mode");
+	const stPanel =		document.getElementById("status");
+	const searched =	sessionStorage.getItem("FETCHED");
 
-	stPanel.hasChildNodes() ? true : setTimeout(async () => await statusTable(), 200);
+	stPanel.hasChildNodes() ? true : setTimeout(statusTable(), 200);
 	changeMode(mode);
-	setTimeout(statusTable, 200);
-}
+	searched ? setTimeout(statusTable, 200) : setTimeout(restorePanel, 200);
+};
 
 
 function changeMode (color) {
@@ -42,7 +40,34 @@ function changeMode (color) {
 
 	body.remove("light-mode");
 	body.remove("dark-mode");
-	return (color === "dark" ? body.add("dark-mode"): body.add("light-mode"));
+	return (color === "dark" ? body.add("dark-mode") : body.add("light-mode"));
+};
+
+
+function restorePanel() {
+	const list =	localStorage;
+	const element =	document.createElement("table");
+	const plot =	document.getElementById("status");
+	const avoid =	['refNumb', 'metrica', 'mode'];
+	let metric;
+	let works =		Object.entries(list).filter(data => {
+		if (!avoid.includes(data[0]))
+			return(data[1]);
+	});
+
+	if (works.length === 0)
+		return ;
+	list.getItem("metrica") === "in - inches" ? metric = "in": metric = "cm";
+	works = works.map(art => JSON.parse(art[1]));
+	createHeader(element);
+	works.map(art => {
+		const { code, x, z, y } = art;
+		const line = `<tr><td>${code}</td><td>${x}</td><td>${z}</td><td>${y}</td>
+				<td>${metric}</td></tr>`
+
+		element.innerHTML += line;
+	});
+	plot.appendChild(element);
 };
 
 
@@ -50,8 +75,8 @@ export function statusTablePopulate(data) {
 	let metric;
 	let codes;
 	const doc =					JSON.parse(data);
-	const { reference, list } =	doc;
 	const mode =				localStorage.getItem("mode");
+	const { reference, list } =	doc;
 		
 	localStorage.getItem("metrica") === "in - inches" ?
 		metric = "in - inches":
@@ -66,7 +91,6 @@ export function statusTablePopulate(data) {
 	localStorage.setItem("refNumb", reference);
 	localStorage.setItem("metrica", metric);
 	localStorage.setItem("mode", mode);
-	sessionStorage.removeItem("FETCHED");
 	globalThis.location.reload();
 };
 
@@ -130,3 +154,6 @@ export function createHeader(table) {
 	`
 	return (table.appendChild(head));
 }
+
+
+globalThis.navigator.serviceWorker.register('./sw.status.mjs');
