@@ -18,7 +18,7 @@
 	<!-- <script async type="module" src="./main.mjs"></script> -->
 	<script async type="module" src="./bundle.mjs"></script>
 	<link rel="stylesheet" href="./index.css"/>
-	<link rel="manifest" href="./manifest.json" crossorigin="use-credentials">
+	<!-- <link rel="manifest" href="./manifest.json" crossorigin="use-credentials"> -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <body>
@@ -76,7 +76,7 @@
 		<!-- </div> -->
 		<section class="side-menu">
 			<div class="section__menu">
-				<div class="section-left-up">
+				<div class="section-right-up">
 					<div class="mode">
 						<form class="mode" id="mode-seg">
 							<input type="radio" name="mode" value="light" class="light" id="light-mode">
@@ -92,23 +92,23 @@
 								</svg>
 							</label>
 							<span class="mode--color"></span>
+							<span class="side__menu">Mode</span>
 						</form>
 					</div>
 					<div class="section__menu--btn">
-						<a aria-label="Checking layer" role="button" class="layers-btn" data-popup="" id="crate-layers"
-							disabled>
-							<svg aria-hidden="true" class="logout-icon" id="layer-crate" preserveAspectRatio="none">
+						<a aria-label="Checking layer" role="button" class="layers-btn" data-popup="" id="crate-layers" disabled>
+							<svg aria-hidden="true" class="preview-icon" id="layer-crate" preserveAspectRatio="none">
 								<use href="#layer-material" id="layer-crate"></use>
 							</svg>
+							<span class="side__menu">Preview</span>
 						</a>
-						<span class="menu__option--text" data-popover-text="Preview">Preview</span>
 					</div>
-					<div class="section__menu--btn">
-						<a aria-label="logout button" role="button" class="logout-btn" data-popup="Logout"
-							id="logout-btn">
+					<div class="section__menu--btn logout">
+						<a aria-label="logout button" role="button" class="logout-btn" data-popup="Logout" id="logout-btn">
 							<svg aria-hidden="true" class="logout-icon" id="logout" preserveAspectRatio="none">
 								<use href="#logout-material" id="logout"></use>
 							</svg>
+							<span class="side__menu">Logout</span>
 						</a>
 					</div>
 				</div>
@@ -121,8 +121,7 @@
 					<div class="IO__top info" id="estimate">
 						<form class="IO__add--form">
 							<label for="input_estimate">Doc:</label>
-							<input type="text" autofocus class="IO__top__estimate" id="input_estimate" name="estimate"
-								required="true">
+							<input type="text" autofocus class="IO__top__estimate" id="input_estimate" name="estimate" required="true">
 						</form>
 					</div>
 					<div class="IO__sizes info">

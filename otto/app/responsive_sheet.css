@@ -7,16 +7,6 @@
 	   │ 	main container.  │
 	   ╰─────────────────────╯
 	*/
-	tr, td, th {
-		text-align: center;
-		padding: .1rem .3rem;
-		border-radius: 0.3rem;
-		color: var(--table-font);
-		font-family: Saira Semi Condensed, sans-serif;
-		font-weight: 500;
-		font-size: calc(var(--fonts) - .08rem);
-	}
-
 	.container {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
@@ -493,7 +483,7 @@
 	}
 
 
-	.section-left-up {
+	.section-right-up {
 		display: flex;
 		flex-wrap: wrap;
 		align-content: center;
@@ -517,6 +507,24 @@
 	}
 
 
+	.side__menu {
+		visibility: hidden;
+		color: var(--popup);
+		overflow: hidden;
+		transition: .5s ease-in-out;
+		& {
+			font-size: var(--fonts);
+			font-weight: 400;
+			max-width: 80ch;
+			box-shadow: var(--shadow1);
+			border-radius: var(--bord);
+			padding: 0.3rem 1rem;
+			position: absolute;
+			margin-top: 7rem;
+		}
+	}
+
+
 	.mode {
 		& label > svg {
 			fill: var(--color4);
@@ -530,16 +538,42 @@
 		.mode--color {
 			box-shadow: var(--inner-shadow);
 		}
+		&:hover > .side__menu {
+			visibility: visible;
+			transition: all .5s ease-in-out;
+			-webkit-animation: fadeIn 2s;
+			animation: fadeIn 1.5s linear;
+		}
 	}
 
 
-	.logout-icon {
+	.logout-icon,
+	.preview-icon {
 		fill: var(--color4);
 		width: 1.4rem;
 		height: 1.4rem;
 		transition: all 500ms ease-in-out;
-		&:hover {
-			fill: var(--color1);
+	}
+
+
+	.logout-icon:hover {
+		fill: var(--color1);
+		& + .side__menu {
+			visibility: visible;
+			transition: all .5s ease-in-out;
+			-webkit-animation: fadeIn 2s;
+			animation: fadeIn 1.5s linear;
+		}
+	}
+
+
+	.preview-icon:hover {
+		fill: var(--color1);
+		& + .side__menu {
+			visibility: visible;
+			transition: all .5s ease-in-out;
+			-webkit-animation: fadeIn 2s;
+			animation: fadeIn 1.5s linear;
 		}
 	}
 
@@ -589,6 +623,8 @@
 		.layer-button {
 			order: 3;
 			flex-direction: column-reverse;
+			align-items: space-between;
+			justify-content: space-between;
 			animation: emerge 4s ease;
 			animation-fill-mode: forwards;
 			transition: all 3s linear;

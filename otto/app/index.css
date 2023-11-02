@@ -172,6 +172,7 @@ body {
 	--stroke: var(--box);
 	--background-select: var(--bg-col);
 	--background-option: var(--color4);
+	--popup: var(--color5);
 }
 
 
@@ -190,6 +191,7 @@ body {
 	--work-hover: var(--pressed);
 	--stroke: var(--color1);
 	--background-select: var(--color5);
+	--popup: var(--color4);
 }
 
 
@@ -276,6 +278,17 @@ input {
 
 select {
 	display: block;
+}
+
+
+tr, td, th {
+	text-align: center;
+	padding: .1rem .3rem;
+	border-radius: 0.3rem;
+	color: var(--table-font);
+	font-family: Saira Semi Condensed, sans-serif;
+	font-weight: 500;
+	font-size: calc(var(--fonts) - .08rem);
 }
 
 
@@ -674,13 +687,14 @@ span[data-popup]::before {
 	border-radius: var(--bord);
 	color: var(--color4);
 	position: relative;
-	margin-top: 2%;
+	margin-top: 3%;
 	left: 7.0%;
 }
 
 
 .IO__sizes--popup,
-.menu__option--text {
+.menu__option--text
+.side__menu {
 	font-family: Mitr, sans-serif;
 	font-size: cals(var(--fonts) - .4rem);
 	font-weight: 400;
@@ -959,7 +973,7 @@ label:hover + .IO__sizes--popup {
 
 .menu__option--text {
 	visibility: hidden;
-	color: var(--color4);
+	color: var(--popup);
 	overflow: hidden;
 	transition: .5s ease-in-out;
 	& {
@@ -970,7 +984,7 @@ label:hover + .IO__sizes--popup {
 		border-radius: var(--bord);
 		padding: 0.3rem 1rem;
 		position: absolute;
-		margin: -2.9% 0 0 5%;
+		margin: -2.5% 0 0 7%;
 	}
 }
 
