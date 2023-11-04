@@ -10,12 +10,14 @@ globalThis.onstorage = () => {
 	const clear =	sessionStorage.getItem("pane-1");
 	const mode =	localStorage.getItem("mode");
 	const works =	sessionStorage.getItem('codes')
+	const fetched =	sessionStorage.getItem('FETCHED');
 
 	changeMode(mode);
-	if (clear) {
-		globalThis.location.reload();
+	if (clear || fetched) {
+		sessionStorage.removeItem('FETCHED');
 		sessionStorage.removeItem("pane-1");
 		sessionStorage.setItem("pane-2", "clear");
+		globalThis.location.reload();
 	};
 	if (copy && works) {
 		sessionStorage.removeItem("copy1");

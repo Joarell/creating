@@ -4,11 +4,11 @@
 
 
 globalThis.onstorage = () => {
-	const check =	localStorage.getItem("storage");
-	const newList =	sessionStorage.getItem("FETCHED");
-	const clear =	sessionStorage.getItem("clean");
-	const mode =	localStorage.getItem("mode");
-	const works =	sessionStorage.getItem('codes')
+	const check = localStorage.getItem("storage");
+	const newList = sessionStorage.getItem("FETCHED");
+	const clear = sessionStorage.getItem("clean");
+	const mode = localStorage.getItem("mode");
+	const works = sessionStorage.getItem('codes')
 
 	changeMode(mode);
 	if (clear) {
@@ -25,9 +25,9 @@ globalThis.onstorage = () => {
 
 
 globalThis.onload = () => {
-	const mode =		localStorage.getItem("mode");
-	const stPanel =		document.getElementById("status");
-	const searched =	sessionStorage.getItem("FETCHED");
+	const mode = localStorage.getItem("mode");
+	const stPanel = document.getElementById("status");
+	const searched = sessionStorage.getItem("FETCHED");
 
 	stPanel.hasChildNodes() ? true : setTimeout(statusTable(), 200);
 	changeMode(mode);
@@ -35,7 +35,7 @@ globalThis.onload = () => {
 };
 
 
-function changeMode (color) {
+function changeMode(color) {
 	const body = document.body.classList;
 
 	body.remove("light-mode");
@@ -45,19 +45,19 @@ function changeMode (color) {
 
 
 function restorePanel() {
-	const list =	localStorage;
-	const element =	document.createElement("table");
-	const plot =	document.getElementById("status");
-	const avoid =	['refNumb', 'metrica', 'mode'];
+	const list = localStorage;
+	const element = document.createElement("table");
+	const plot = document.getElementById("status");
+	const avoid = ['refNumb', 'metrica', 'mode', 'layers', 'numLyaer', 'pane1', 'pane2'];
 	let metric;
-	let works =		Object.entries(list).filter(data => {
+	let works = Object.entries(list).filter(data => {
 		if (!avoid.includes(data[0]))
-			return(data[1]);
+			return (data[1]);
 	});
 
 	if (works.length === 0)
-		return ;
-	list.getItem("metrica") === "in - inches" ? metric = "in": metric = "cm";
+		return;
+	list.getItem("metrica") === "in - inches" ? metric = "in" : metric = "cm";
 	works = works.map(art => JSON.parse(art[1]));
 	createHeader(element);
 	works.map(art => {
@@ -74,12 +74,12 @@ function restorePanel() {
 export function statusTablePopulate(data) {
 	let metric;
 	let codes;
-	const doc =					JSON.parse(data);
-	const mode =				localStorage.getItem("mode");
-	const { reference, list } =	doc;
-		
+	const doc = JSON.parse(data);
+	const mode = localStorage.getItem("mode");
+	const { reference, list } = doc;
+
 	localStorage.getItem("metrica") === "in - inches" ?
-		metric = "in - inches":
+		metric = "in - inches" :
 		metric = "cm - centimeters";
 	localStorage.clear();
 	codes = list.map((art, index) => {
@@ -99,13 +99,13 @@ export function statusTablePopulate(data) {
 // │ Returns the HTML table with all works in the list. │
 // ╰────────────────────────────────────────────────────╯
 export async function statusTable() {
-	const element =	document.createElement("table");
-	const plot =	document.getElementById("status");
-	const list =	localStorage;
-	const codes =	getOrder();
+	const element = document.createElement("table");
+	const plot = document.getElementById("status");
+	const list = localStorage;
+	const codes = getOrder();
 	let metric;
-	
-	list.getItem("metrica") === "in - inches" ? metric = "in": metric = "cm";
+
+	list.getItem("metrica") === "in - inches" ? metric = "in" : metric = "cm";
 	createHeader(element);
 	if (codes)
 		codes.map(code => {
@@ -116,8 +116,8 @@ export async function statusTable() {
 			element.innerHTML += work.map((item, index) => {
 				return (
 					index === 0 ? `<tr><td>${item}</td>` :
-					index === 3 ? `<td>${item}</td><td>${metric}</td></tr>` :
-					`<td>${item}</td>`
+						index === 3 ? `<td>${item}</td><td>${metric}</td></tr>` :
+							`<td>${item}</td>`
 				);
 			}, 0).join("");
 		});
@@ -125,11 +125,11 @@ export async function statusTable() {
 };
 
 
-function getOrder () {
-	const session =		JSON.parse(sessionStorage.getItem("codes"));
-	const allCodes =	session ? session.map(code => code[1]): false;
-	const result =		allCodes? allCodes.reverse(): false;
-	return (result ? [...new Set(result)]: false);
+function getOrder() {
+	const session = JSON.parse(sessionStorage.getItem("codes"));
+	const allCodes = session ? session.map(code => code[1]) : false;
+	const result = allCodes ? allCodes.reverse() : false;
+	return (result ? [...new Set(result)] : false);
 };
 
 
@@ -139,8 +139,8 @@ function getOrder () {
 export function createHeader(table) {
 	const head = document.createElement("tr");
 
-	if(table.parentNode)
-		while(table.firstChild)
+	if (table.parentNode)
+		while (table.firstChild)
 			table.removeChild(table.firstChild)
 
 	head.innerHTML = `
