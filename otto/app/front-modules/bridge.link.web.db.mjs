@@ -5,7 +5,7 @@
 
 async function getIDB (ref) {
 	const WORKER = new Worker(
-		new URL('./worker.IDB.crates.mjs', import.meta.url), { type: "module" }
+		new URL('./panels/worker.IDB.crates.mjs', import.meta.url), { type: "module" }
 	);
 	let request;
 
