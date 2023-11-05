@@ -1,12 +1,12 @@
 
 
-
 const CACHENAME =	'craterCache_v1';
 const assets =		[
 	'/currency',
 	'/app/',
 	'./manifest.json',
 	'./main.min.mjs',
+	'./main.mjs',
 	'./index.html',
 	'./index.css',
 	'./bundle.mjs',
@@ -40,15 +40,15 @@ globalThis.addEventListener('install', (event) => {
 });
 
 
-globalThis.addEventListener('activate', () => {
+globalThis.addEventListener('activate', (event) => {
 	console.log('Inside the activate handler!');
+	event.waitUntil(globalThis.registration?.navigationPreload.enable());
 });
 
 
 self.addEventListener('fetch', (event) => {
 	console.log('Fetching DATA', event.request.url);
-	event.respondWith(
-		caches.match(event.request).then(cachedResponse => {
+	event.respondWith(caches.match(event.request).then(cachedResponse => {
 			return (cachedResponse ? cachedResponse : fetch(event.request));
 		})
 	);
