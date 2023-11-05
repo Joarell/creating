@@ -13,7 +13,6 @@ export default class UnitAdapter {
 		this.#list = works;
 		this.#unit = unit;
 
-		console.log(works);
 		return(this.#definePath());
 	};
 
