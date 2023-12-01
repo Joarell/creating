@@ -72,56 +72,110 @@ export default class CraterStandard {
 	//		   ╰──────────────────────────╯
 	//						x2
 
-	#selectAxioToAddworks(work, layer, size) {
-		let sizeX = work.length > 5 ? work[3] / size[0] : work[1] / size[0];
-		let sizeY = work.length > 5 ? work[1] / size[2] : work[3] / size[2];
-		const avlX = layer[0].x1 < 1 ? sizeX + layer[0].x1 <= 1 : 0;
-		const avlY = layer[0].y1 < 1 ? sizeY + layer[0].y1 <= 1 : 0;
+	#selectAxioToAddWorks(work, layer, size) {
+		let sizeX =		work.length > 5 ? work[3] / size[0] : work[1] / size[0];
+		let sizeY =		work.length > 5 ? work[1] / size[2] : work[3] / size[2];
+		const avlX1 =	layer[0].x1 < 1 ? sizeX + layer[0].x1 <= 1 : false;
+		const avlY1 =	layer[0].y1 < 1 ? sizeY + layer[0].y1 <= 1 : false;
+		const avlX2 =	layer[0].x2 < 1 ? sizeX + layer[0].x2 <= 1 : false;
+		const avlY2 =	layer[0].y2 < 1 ? sizeY + layer[0].y2 <= 1 : false;
 
-		return({ avlX, avlY });
+		return({ avlX1, avlY1, avlX2, avlY2 });
 	};
 
-	#updateWorkCoordinates(art, sizeX, sizeY, layer) {
-		const check1 = layer[0].x1 + sizeX <= 1;
-		const check2 = layer[0].y1 + sizeY <= 1;
+	// #updateCurrentWorkBasedOnNewOne(art, sizeX, sizeY, layer) {
+	// 	const check1 = layer[0].x1 + sizeX <= 1;
+	// 	const check2 = layer[0].y1 + sizeY <= 1;
+	//
+	// 	if(art[1].x2 === 0) {
+	// 		!check1 && check2 ? art[1].x2 += +sizeX.toFixed(2) : 0;
+	// 		art[1].y2 < 1 && check1 || !check2 ? art[1].y2 += +sizeY.toFixed(2) : 0;
+	// 	}
+	// 	else {
+	// 		art[1].x2 < 1 && !check1 && !check2 ?
+	// 			art[1].x2 = +(art[1].x2 + sizeX).toFixed(2) :
+	// 				check1 ? art[1].y2 = +(art[1].y2 + sizeY).toFixed(2) : 0;
+	// 		art[1].x2 > 1 ? art[1] = 1 : 0;
+	// 	};
+	// 	return(art);
+	// };
 
-		if(art[1].x2 === 0) {
-			check2 || !check1 && check2 ?
-				art[1].x2 += +sizeX.toFixed(2) : 0;
-			art[1].y2 < 1 && check1 || !check2 ?
-				art[1].y2 += +sizeY.toFixed(2) : 0;
+	// #updateAllWorksCoordinates(work, layer, size) {
+	// 	const GC =		new WeakSet();
+	// 	const filled =	[...layer];
+	// 	const place =	this.#selectAxioToAddWorks(work, layer, size);
+	// 	const LEN =		layer.length - 1;
+	//
+	// 	filled.reverse().map((art, i) => {
+	// 		if (i >= LEN)
+	// 			return ;
+	// 		let sizeX;
+	// 		let sizeY;
+	// 		const artX = art[0].length > 5 ? art[0][3] : art[0][1];
+	// 		const artY = art[0].length > 5 ? art[0][1] : art[0][3];
+	// 	
+	// 		if (place.avlX1 && place.avlY1)
+	// 			sizeX = work.length > 5 ? work[3] / size[0] : work[1] / size[0];
+	// 		else
+	// 			sizeX = work.length > 5 ? work[3] / artX : work[1] / artX;
+	// 		if (place.avlY1)
+	// 			sizeY = work.length > 5 ? work[1] / size[2] : work[3] / size[2];
+	// 		else
+	// 			sizeY = work.length > 5 ? work[1] / artY : work[3] / artY;
+	// 		this.#updateCurrentWorkBasedOnNewOne(art, sizeX, sizeY, layer);
+	// 	}, 0);
+	// 	GC.add(place);
+	// 	return(layer);
+	// };
+
+	#updateBaseWork(work, base, layerSpace, ref) {
+		const axioX = !layerSpace.avlX1 && layerSpace.avlY1 && layerSpace.avlY2;
+		const axioY = !layerSpace.avlY1 && layerSpace.avlX1 && layerSpace.avlX2;
+
+		if(axioX)
+			base.x2 += +(work.valX / ref.artX).toFixed(2);
+		else if(axioY)
+			base.y2 += +(work.valY / ref.artY).toFixed(2);
+		return(base);
+	}
+
+	#updateAdjacentWork(work, closeArt, layer, ref, layerSpace) {
+		if(ref !== closeArt[1].prev)
+			return(closeArt);
+		const axioX = layer[ref][0][1] + work.valX <= layer[0].size[0];
+		const axioY = layer[ref][0][3] + work.valY <= layer[0].size[2];
+
+		if(axioX && !layerSpace.avlX1 && layerSpace.avlY1) {
+			work.valX / layer[0].size[0] <= layer[0].x1 ?
+				closeArt[1].y2 += +(closeArt[0][3] / work.valY).toFixed(2) : 0;
 		}
-		else {
-			art[1].x2 < 1 && !check1 && !check2 ?
-				art[1].x2 = +(art[1].x2 + sizeX).toFixed(2) :
-					check1 ? art[1].y2 = +(art[1].y2 + sizeY).toFixed(2) : 0;
-			art[1].x2 > 1 ? art[1] = 1 : 0;
+		else if(axioY && !layerSpace.avlY1 && layerSpace.avlX1) {
+			work.valY / layer[0].size[2] <= layer[0].y1 ?
+				closeArt[1].x2 += +(closeArt[0][1] / work.valX).toFixed(2) : 0;
 		};
-		return(art);
+		return(layer);
 	};
 
-	#updateAllWorksCoordinates(work, layer, size) {
-		const filled =	[...layer];
-		const place =	this.#selectAxioToAddworks(work, layer, size);
-		const LEN =		layer.length - 1;
+	#updateClosestWorks(work, layer, size, ref) {
+		const filled =		[...layer];
+		const LEN =			layer.length - 1;
+		const checkLayer =	this.#selectAxioToAddWorks(work, layer, size);
 
 		filled.reverse().map((art, i) => {
 			if (i >= LEN)
 				return ;
-			let sizeX;
-			let sizeY;
-			const artX = art[0].length > 5 ? art[0][3] : art[0][1];
-			const artY = art[0].length > 5 ? art[0][1] : art[0][3];
+			const artX =		art[0].length > 5 ? art[0][3] : art[0][1];
+			const artY =		art[0].length > 5 ? art[0][1] : art[0][3];
+			const valX =		work.length > 5 ? work[3] : work[1];
+			const valY =		work.length > 5 ? work[1] : work[3];
+			const { prev } =	art[1];
 			
-			if (place.avlX && place.avlY)
-				sizeX = work.length > 5 ? work[3] / size[0] : work[1] / size[0];
-			else
-				sizeX = work.length > 5 ? work[3] / artX : work[1] / artX;
-			if (place.avlY)
-				sizeY = work.length > 5 ? work[1] / size[2] : work[3] / size[2];
-			else
-				sizeY = work.length > 5 ? work[1] / artY : work[3] / artY;
-			this.#updateWorkCoordinates(art, sizeX, sizeY, layer);
+			if (prev !== ref) {
+				art[0][0] === layer[ref][0][0] ? this.#updateBaseWork(
+					{valX, valY}, layer[ref][1], checkLayer, {artX, artY}) : 0;
+				return ;
+			};
+			this.#updateAdjacentWork({valX, valY}, art, layer, ref, checkLayer);
 		}, 0);
 		return(layer);
 	};
@@ -144,7 +198,7 @@ export default class CraterStandard {
 		return(layer);
 	};
 
-	#setLayerCoordinates(work, layer, { size }, prev) {
+	#addNewWorkSetupAndLayerUpdate(work, layer, { size }, prev) {
 		const sizeX = work.length > 5 ? work[3] / size[0] : work[1] / size[0];
 		const sizeY = work.length > 5 ? work[1] / size[2] : work[3] / size[2];
 		const x1 = 1;
@@ -153,13 +207,13 @@ export default class CraterStandard {
 		let y2;
 
 		if (layer.length > 1) {
-			this.#updateAllWorksCoordinates(work, layer, size);
-			x2 = sizeY + layer[prev][1].x2 === 1 ? 1 : 0;
-			y2 = sizeX + layer[prev][1].y2 === 1 ? 1 : 0;
+			this.#updateClosestWorks(work, layer, size, prev);
+			y2 = sizeX + layer[0].x1 === 1 ? 1 : 0;
+			x2 = sizeY + layer[0].y1 === 1 ? 1 : 0;
 		}
 		else {
-			x2 = sizeY + layer[0].x2 === 1 ? 1 : 0;
-			y2 = sizeX + layer[0].y2 === 1 ? 1 : 0;
+			y2 = sizeX + layer[0].x2 === 1 ? 1 : 0;
+			x2 = sizeY + layer[0].y2 === 1 ? 1 : 0;
 		};
 		this.#updateLayerSpace(layer, work, sizeX, sizeY);
 		layer.push([work, { x1, y1, x2, y2, prev }]);
@@ -181,7 +235,7 @@ export default class CraterStandard {
 			if (check1 || check2) {
 				work.length >= 6 ? work.pop() : 0;
 				spin === 1 && work.length === 5 ? work.push(ICON) : 0;
-				return(this.#setLayerCoordinates(work, layer, layer[0]));
+				return(this.#addNewWorkSetupAndLayerUpdate(work, layer, layer[0]));
 			};
 			[workX, workY] = [workY, workX];
 			spin = 1;
@@ -189,45 +243,78 @@ export default class CraterStandard {
 		return(layer);
 	};
 
-	#checkPrevAvailableSpace(nextX, nextY, layer, work) {
-		if (!work)
+	#checkPrevAvailableSpace(art, layer, i) {
+		const { prev } =	layer[i][1];
+		if (!prev)
 			return(false);
-		const { x1, y2 } =	layer[0];
-		const { x2 } =	layer[work][1];
-		const avlX =	1 - x1;
+		const { x1, y1 } =	layer[0];
+		const { x2, y2 } =	layer[prev][1];
 		let place;
 
-		place = x1 < 1 ? x2 + nextX + avlX <= 1 : x2 + nextX <= 1;
-		return(place && y2 + nextY <= 1 || place && nextX <= x2);
+		place = art.y + y2 <= 1 && x1 + art.x <= 1;
+		!place ? place = art.y + y1 <= 1 && art.x + x2 <= 1 : 0;
+		!place ? place = art.x + x1 <= 1 && art.y + y2 <= 1 : 0;
+		!place && x1 === 1 ?
+			place = layer[0].x2 + art.x <= 1 && layer[0]. y2 + art.y <= 1 : 0;
+		return(place);
 	};
 
-	#fitSizesCheckIn(work, layer, spin) {
-		const { size, x1, y1 } =	layer[0];
-		let workX =					work[1];
-		let workY =					work[3];
-		let check1 =				false;
-		let check2 =				false;
-		let check3 =				false;
-		let seeking =				true;
-		let i =						layer.length;
-		let height;
-		let support;
+	#searchWorkSpace(layer, workProp, i, result) {
+		let check;
+		const { x1, y1 } =	layer[0];
 
-		spin === 1 ? [workX, workY] = [workY, workX] : 0;
-		workX /= size[0];
-		workY /= size[2];
-		while (i > 1 && seeking && (workY <= 1)) {
-			i--;
-			support = this.#checkPrevAvailableSpace(workX, workY, layer, layer[i][1].prev);
-			height = layer[i][0].length > 5 ? layer[i][0][1] : layer[i][0][3];
-			check1 = layer[i][1].y2 <= workY && x1 + workX <= 1;
-			!check1 ? check2 = layer[i][1].x2 <= workX && y1 + workY <= 1 : 0;
-			!check2 ? check3 = height >= work[3] && support : 0;
-			check1 || check2 || check3 ? seeking = false : 0;
+		check = layer[i][0][3] >= workProp.sizeY && x1 + workProp.x <= 1;
+		!check && layer[i][1].x2 <= workProp.x && y1 + workProp.y <= 1 ? check = 2 : 0;
+		!check && this.#checkPrevAvailableSpace(workProp, layer, i) ? check = 3 : 0;
+		switch(check) {
+			case true:
+				result.loop = false;
+				return(result.value = 'check1');
+			case 2:
+				result.loop = false;
+				return(result.value = 'check2');
+			case 3:
+				result.loop = false;
+				return(result.value = 'check3');
+			default:
+				return(result);
 		};
-		if(check1 || check2 || check3)
-			return(check3 ? layer[i][1]?.prev : i);
-		return(false);
+	};
+
+	#defineWorkData(work, flip, layer) {
+		let art;
+		let workX =	work[1];
+		let workY =	work[3];
+		const { size } =	layer[0];
+
+		if(flip === 1) {
+			[workX, workY] = [workY, workX];
+			workX /= size[0];
+			workY /= size[2];
+			art = { x : workX, y : workY, sizeX : work[3], sizeY : work[1] };
+		}
+		else {
+			workX /= size[0];
+			workY /= size[2];
+			art = { x : workX, y : workY, sizeX : work[1], sizeY : work[3] };
+		};
+		return(art);
+	}
+
+	#fitSizesCheckIn(work, layer, spin) {
+		let seeking =	{ loop : true, value : undefined };
+		let i =			layer.length;
+		let result;
+		const GC =		new WeakSet();
+		const info =	this.#defineWorkData(work, spin, layer);
+
+		while (i > 1 && seeking.loop && (info.y <= 1)) {
+			i--;
+			this.#searchWorkSpace(layer, info, i, seeking);
+		};
+		result = seeking.value === 'check3' ? layer[i][1]?.prev : i;
+		GC.add(seeking);
+		return(seeking.value !== false && seeking.value ? result : false);
 	};
 
 	#metchCloseWorkOnLayer(work, layer) {
@@ -241,9 +328,9 @@ export default class CraterStandard {
 		while(flip) {
 			baseWork = this.#fitSizesCheckIn(work, layer, spin);
 			if(baseWork) {
-				work.length >= 6 ? work.splice(5, Infinity) : 0;
+				work.length >= 6 ? work.splice(5, 1) : 0;
 				spin === 1 && work.length === 5 ? work.push(ICON) : 0;
-				return(this.#setLayerCoordinates(work, layer, layer[0], baseWork));
+				return(this.#addNewWorkSetupAndLayerUpdate(work, layer, layer[0], baseWork));
 			};
 			spin === 1 ? flip = false : 0;
 			spin === 0 ? spin = 1 : spin = 0;

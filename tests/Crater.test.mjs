@@ -12,24 +12,20 @@ import Arranger from '../otto/app/core2/Arranger.class.mjs';
 
 
 describe("These are tests to Crater class.", () => {
-	// it("TEST-48: returns the number of crate to PAX or Cargo airport.", () => {
-	// 	const works =		new Arranger(mock.artWorksList());
-	// 	const test =		new Crater(works);
-	// 	const current =		new Crater(works).crates.wichAirPort;
-	// 	const expected =	mock.fakeCrater().crates.wichAirPort;
-	//
-	// 	assert.deepStrictEqual(current, expected);
-	// });
-
-	it("TEST-59: returns all works in one crate.", () => {
+	it("TEST-60: returns all works in one crate.", () => {
 		const list = [
-			['5908', 100, 5, 100],
-			['5901', 100, 5, 50],
-			['5901', 100, 5, 100],
-			['71219', 50, 5, 50],
-			['71279', 100, 5, 70],
-			['71149', 50, 5, 50],
-			['048', 100, 5, 30],
+			['SF', 214, 8, 214],
+			['JP-2023', 190, 5, 190],
+			['AL-2014', 130, 10, 10],
+			['L-1986', 33, 5, 24],
+			['HU-1989-20', 33, 3,  23],
+			['HU-1989-10', 33, 3,  23],
+			['HU-1989-02', 33, 3,  23],
+			['HU-1989-16', 33, 3,  23],
+			['HU-1989-16', 33, 3,  23],
+			['HU-1989-11', 33, 3,  23],
+			['HU-1989-03', 33, 3,  23],
+			['HU-1989-04', 33, 3,  23],
 		];
 
 		const works =		new Arranger(mock.artWorksList(list));
@@ -865,4 +861,21 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
+	it("TEST-59: returns all works in one crate.", () => {
+		const list = [
+			['5908', 100, 5, 100],
+			['5901', 100, 5, 50],
+			['5901', 100, 5, 100],
+			['71219', 50, 5, 50],
+			['71279', 100, 5, 70],
+			['71149', 50, 5, 50],
+			['048', 100, 5, 30],
+		];
+
+		const works =		new Arranger(mock.artWorksList(list));
+		const current =		new Crater(works).crates.airCubTotal;
+		const expected =	217.792;
+
+		assert.deepStrictEqual(current, expected);
+	});
 });
