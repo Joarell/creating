@@ -193,7 +193,7 @@ globalThis.document.getElementById('estimate_getter')
 
 	const BUTTON = globalThis.document.getElementById('fetch-btn');
 	event.key === 'Enter' ? BUTTON.click() : false;
-}, true);
+});
 
 
 globalThis.navigator.serviceWorker.register('./sw.mjs');
@@ -203,5 +203,4 @@ globalThis.addEventListener('beforeinstallprompt', (event) => {
 	event.preventDefault();
 	console.log('👍', 'beforeinstallprompt', event);
 	globalThis.deferredPrompt = event;
-	console.log(`'beforeinstallprompt' event was fired.`);
 });
