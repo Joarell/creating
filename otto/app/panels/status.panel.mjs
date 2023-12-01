@@ -114,6 +114,8 @@ export async function statusTable() {
 			work = JSON.parse(list.getItem(code));
 			work = Object.values(work);
 			element.innerHTML += work.map((item, index) => {
+				if(!item)
+					return ;
 				return (
 					index === 0 ? `<tr><td>${item}</td>` :
 						index === 3 ? `<td>${item}</td><td>${metric}</td></tr>` :
