@@ -48,7 +48,9 @@ services:
   #     DB_NAME: ${PG_DB}
   #   restart: unless-stopped
 
-
+#  ╭──────────────────────────────────────────────────────────╮
+#  │               cloudflare tunnel container.               │
+#  ╰──────────────────────────────────────────────────────────╯
   tunnel:
     command: tunnel run
 
@@ -147,46 +149,6 @@ services:
       - ../database/DB/data/:/var/lib/postgresql/data
 
 
-#  ╭──────────────────────────────────────────────────────────╮
-#  │                 Proxy container settings                 │
-#  ╰──────────────────────────────────────────────────────────╯
-  reverse_proxy:
-    # build: 
-    #   context: ./
-    # depends_on:
-    #   - docker-auth_server*
-    #   - docker-web_app*
-    #   - postgres_container
-    deploy:
-      mode: replicated
-      replicas: 1
-      resources:
-        limits:
-          cpus: '0.75'
-          memory: 512M
-        reservations:
-          cpus: '0.50'
-          memory: 100M
-
-    env_file: .env
-    image: nginx:mainline-alpine3.18
-    networks:
-      - front-tier
-      - back-tier
-    ports:
-    # These ports are in format <host-port>:<container-port>
-      - '${PROXY_WEB_PORT}:${PROXY_WEB_PORT}' # Public HTTP Port
-      - '${WEB_HTTPS_PORT}:${WEB_HTTPS_PORT}' # Public HTTPS Port
-      # - '${ADM_PORT}:${ADM_PORT}' # Admin web Port
-      # - '${PORT1}:${PORT1}' # Public HTTP Port
-    restart: always
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./mime.types:/etc/nginx/mime.types
-      - ../proxy/nginx:/var/log/nginx
-      - ../otto/:/home/crater
-
-
 # ╭──────────────────────────────────────────────────────────╮
 # │               Main app container settings                │
 # ╰──────────────────────────────────────────────────────────╯
@@ -218,5 +180,49 @@ services:
       - ../otto/:/crater/app
     working_dir: /crater/app
     # TODO: try out another work directory to pass the '/', as a root path.
+
+
+#  ╭──────────────────────────────────────────────────────────╮
+#  │                 Proxy container settings                 │
+#  ╰──────────────────────────────────────────────────────────╯
+  reverse_proxy:
+    # build: 
+    #   context: ./
+    # depends_on:
+      # - tunnel-3
+      # - docker-auth_server-1
+      # - docker-auth_server-2
+      # - docker-auth_server-3
+      # - docker-web_app-1
+      # - postgres_container
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: 512M
+        reservations:
+          cpus: '0.50'
+          memory: 100M
+
+    env_file: .env
+    image: nginx:mainline-alpine3.18
+    networks:
+      - front-tier
+      - back-tier
+    ports:
+    # These ports are in format <host-port>:<container-port>
+      - '${PROXY_WEB_PORT}:${PROXY_WEB_PORT}' # Public HTTP Port
+      - '${WEB_HTTPS_PORT}:${WEB_HTTPS_PORT}' # Public HTTPS Port
+      # - '${ADM_PORT}:${ADM_PORT}' # Admin web Port
+      # - '${PORT1}:${PORT1}' # Public HTTP Port
+    restart: always
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./mime.types:/etc/nginx/mime.types
+      - ../proxy/nginx:/var/log/nginx
+      - ../otto/:/home/crater
+
 
 version: "3.9"
