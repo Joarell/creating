@@ -129,8 +129,8 @@ const userTokenMatch = async(req, res, next) => {
 		let result;
 
 		if (!cookieData.authToken) {
-			cookieData.authToken = dbUsers[0].auth_token;
-			cookieData.refToken = dbUsers[0].refresh_token;
+			cookieData.authToken =	dbUsers[0].auth_token;
+			cookieData.refToken =	dbUsers[0].refresh_token;
 		};
 		if (cookieData.session) {
 			result = await tokensCheckOut(cookieData, dbUsers[0]);
@@ -155,7 +155,6 @@ const userTokenMatch = async(req, res, next) => {
 	}
 	catch(err) {
 		console.error('TOKEN MATCH:', err);
-		return(res.status(403).send('Acess Denied!'));
 	};
 };
 
