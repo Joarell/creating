@@ -24,7 +24,7 @@
 		"@rollup/plugin-terser": "^0.4.4",
 		"css-minify": "^2.0.0",
 		"nodemon": "^3.0.1",
-		"rollup-plugin-css-only": "^4.3.0",
-		"rollup": "^4.0.2"
+		"rollup": "^4.0.2",
+		"rollup-plugin-css-only": "^4.3.0"
 	}
 }
