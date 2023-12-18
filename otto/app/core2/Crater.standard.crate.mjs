@@ -263,8 +263,6 @@ export default class CraterStandard {
 		place = art.y + y2 <= 1 && x1 + art.x <= 1;
 		!place ? place = art.y + y1 <= 1 && art.x + x2 <= 1 : 0;
 		!place ? place = art.x + x1 <= 1 && art.y + y2 <= 1 : 0;
-		!place && x1 === 1 ?
-			place = layer[0].x2 + art.x <= 1 && layer[0]. y2 + art.y <= 1 : 0;
 		return(place);
 	};
 
@@ -310,6 +308,34 @@ export default class CraterStandard {
 		return(art);
 	}
 
+	#checkFirstWorkOnLayer(layer, i, work, flip) {
+		const { x1, y1, size } = layer[0];
+		const { x2, y2 } = layer[i];
+		const firstX =	layer[i][0].length > 5 ? layer[i][0][3] : layer[i][0][1];
+		const firstY =	layer[i][0].length > 5 ? layer[i][0][1] : layer[i][0][3];
+		const artX =	flip === 1 ? work[3] : work[1];
+		const artY =	flip === 1 ? work[1] : work[3];
+		let x;
+		let y;
+
+		if (x1 < 1) {
+			firstX + artX <= size[0] ? x = 'ok' : 0;
+			x && artY / firstY + y2 <= 1 ? y = 'ok' : 0;
+		};
+		!x && artY / firstY + layer[i][1].y2 <= 1 && firstX + artX <= size[0] ?
+		x = 'ok': 0;
+
+		if (y1 < 1 && !x) {
+			firstY + artY <= size[2] ? y = 'ok' : 0;
+			y && artX / firstX + x2 <= 1 ? x = 'ok' : 0;
+		};
+		!y && artX / firstX + layer[i][1].x2 <= 1 && firstY + artY <= size[2] ?
+		y = 'ok': 0;
+		
+		x && !y ?
+		return(!x || !y ? false : i);
+	};
+
 	#fitSizesCheckIn(work, layer, spin) {
 		let seeking =	{ loop : true, value : undefined };
 		let i =			layer.length;
@@ -321,9 +347,22 @@ export default class CraterStandard {
 			i--;
 			this.#searchWorkSpace(layer, info, i, seeking);
 		};
-		result = seeking.value === 'check3' ? layer[i][1]?.prev : i;
+		switch (seeking.value) {
+			case 'check1':
+				result = i;
+				break;
+			case 'check2':
+				result = i;
+				break;
+			case 'check3':
+				result = layer[i][1]?.prev;
+				break;
+			case undefined: 
+				result = this.#checkFirstWorkOnLayer(layer, i , work, spin);
+				break;
+		};
 		GC.add(seeking);
-		return(seeking.value !== false && seeking.value ? result : false);
+		return(result);
 	};
 
 	#metchCloseWorkOnLayer(work, layer) {
