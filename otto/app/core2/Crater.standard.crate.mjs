@@ -191,8 +191,8 @@ export default class CraterStandard {
 
 			layer[0].x1 + decX <= 1 ? layer[0].x1 = +(layer[0].x1 + decX).toFixed(2) : 0;
 			layer[0].y1 + decY <= 1 ? layer[0].y1 = +(layer[0].y1 + decY).toFixed(2) : 0;
-			layer[0].y1 === 1 && layer[0].x2 === 0 || innerY ? layer[0].x2 = layer[0].x2 + decX : 0;
-			layer[0].x1 === 1 && layer[0].y2 === 0 || innerX ? layer[0].y2 = layer[0].y2 + decY : 0;
+			innerY ? layer[0].x2 = layer[0].x2 + decX : 0;
+			innerX ? layer[0].y2 = layer[0].y2 + decY : 0;
 		}
 		else {
 			layer[0].x1 = layer[0].x1 !== 0 ? layer[0].x1 + decX : decX;
@@ -309,30 +309,33 @@ export default class CraterStandard {
 	}
 
 	#checkFirstWorkOnLayer(layer, i, work, flip) {
-		const { x1, y1, size } = layer[0];
-		const { x2, y2 } = layer[i];
+		const { x1, y1, size } =	layer[0];
+		const { x2, y2 } =			layer[i][1];
 		const firstX =	layer[i][0].length > 5 ? layer[i][0][3] : layer[i][0][1];
 		const firstY =	layer[i][0].length > 5 ? layer[i][0][1] : layer[i][0][3];
 		const artX =	flip === 1 ? work[3] : work[1];
 		const artY =	flip === 1 ? work[1] : work[3];
+		const extraX =	y2 < 1 ? +((size[0] - firstX) / size[0]).toFixed(2) : 0;
+		const extraY =	x2 < 1 ? +((size[2] - firstY) / size[2]).toFixed(2) : 0;
 		let x;
 		let y;
 
 		if (x1 < 1) {
 			firstX + artX <= size[0] ? x = 'ok' : 0;
-			x && artY / firstY + y2 <= 1 ? y = 'ok' : 0;
+			x && artY / firstY + y2 <= 1 + extraY? y = 'ok' : 0;
+		}
+		else if(!x && artY / firstY + y2 <= 1 + extraY && firstX + artX <= size[0]) {
+			x = 'ok';
+			y = 'ok';
 		};
-		!x && artY / firstY + layer[i][1].y2 <= 1 && firstX + artX <= size[0] ?
-		x = 'ok': 0;
-
 		if (y1 < 1 && !x) {
 			firstY + artY <= size[2] ? y = 'ok' : 0;
-			y && artX / firstX + x2 <= 1 ? x = 'ok' : 0;
+			y && artX / firstX + x2 <= 1 + extraX ? x = 'ok' : 0;
+		}
+		else if(!y && artX / firstX + x2 <= 1 + extraX && firstY + artY <= size[2]) {
+			y = 'ok';
+			x = 'ok';
 		};
-		!y && artX / firstX + layer[i][1].x2 <= 1 && firstY + artY <= size[2] ?
-		y = 'ok': 0;
-		
-		x && !y ?
 		return(!x || !y ? false : i);
 	};
 
