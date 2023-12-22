@@ -79,7 +79,7 @@ export default class CraterSameSize {
 			z =		DEPTH * PACKAGECM;
 			y =		base[2];
 		};
-		return (this.#setPad([x, z, y]));
+		return (this.#setPad([x, z, y], STACK));
 	};
 
 	#sizeStacking(base, newBase) {
@@ -91,16 +91,16 @@ export default class CraterSameSize {
 			]:
 			newBase;
 		const LIMIT =	132;
-		let x =			base[0][0];
-		let z =			base[0][1];
-		let y =			base[0][2] + extraSizes[2];
+		let x =			base[0];
+		let z =			base[1];
+		let y =			base[2] + extraSizes[2];
 		let stack =		false;
 
 		if (y > LIMIT && x < LIMIT) {
 			[y, x] =	[x, y];
 			stack =		true;
 		}
-		else if (y > base[0][2])
+		else if (y > base[2])
 			stack =		true;
 		return ([stack, [x, z, y]]);
 	};
@@ -123,8 +123,9 @@ export default class CraterSameSize {
 			else
 				baseCrate.unshift(false);
 		};
+		console.log('On layer:', works);
 		Array.isArray(works[0][0]) ? works = works.flat() : false;
-		return ({ crate: this.#orderSizes(baseCrate, works), works: works });
+		return ({ crate: this.#orderSizes(baseCrate.flat(), works), works });
 	};
 
 	#compCrate(list) {

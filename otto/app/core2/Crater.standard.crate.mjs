@@ -89,20 +89,22 @@ export default class CraterStandard {
 		const decY =		+(art.valY / baseSize.artY + base.y2).toFixed(2);
 		const checkX2 =		base.x2 < 1 && baseSize.artY + art.valY <= size[2];
 		const checkY2 =		base.y2 < 1 && baseSize.artX + art.valX <= size[0];
+		const extraX =		+((size[0] - baseSize.artX) / size[0]).toFixed(2);
+		const extraY =		+((size[2] - baseSize.artY) / size[2]).toFixed(2);
 		let x;
 		let y;
 
 		if (checkX2) {
-			decX <= 1 ?
+			decX + base.x2 <= 1 ?
 				x = true :
 				x = baseSize.artX * base.x2 + art.valX <= size[0];
 		}
 		else
 			x = false;
 		if (checkY2) {
-			decY <= 1 ?
+			decY + base.y2 <= 1 ?
 				y = true :
-				y = baseSize.artX * base.y2 + art.valY <= size[2];
+				y = baseSize.artY * base.y2 + art.valY <= size[2];
 		}
 		else
 			y = false;
@@ -309,6 +311,8 @@ export default class CraterStandard {
 	}
 
 	#checkFirstWorkOnLayer(layer, i, work, flip) {
+		if (!layer[i])
+			return(false);
 		const { x1, y1, size } =	layer[0];
 		const { x2, y2 } =			layer[i][1];
 		const firstX =	layer[i][0].length > 5 ? layer[i][0][3] : layer[i][0][1];

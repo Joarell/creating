@@ -3,7 +3,7 @@
 export default class RegexChecker {
 	#values;
 
-	constructor (...args) {
+	constructor(...args) {
 		this.#values = [...args];
 	};
 
@@ -13,19 +13,19 @@ export default class RegexChecker {
 };
 
 
-function regexWorks () {
+function regexWorks() {
 	try {
-		const regx =	this.map(val => {
+		const regx = this.map(val => {
 			const reg = /[0-9]{1,3}/.test(val)
-			return(Number.isNaN(reg) ? true : reg);
+			return (Number.isNaN(val) ? false : reg);
 		});
-		const error =	"Not a valid entry to RegexChecker!";
+		const error = "Not a valid entry to RegexChecker!";
 
-		if (regx.includes(false)) {
+		if (regx.includes(false))
 			throw new TypeError(error);
-		};
 	}
 	catch (err) {
+		console.error(err);
 		return (err);
 	}
 };
