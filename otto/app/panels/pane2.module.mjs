@@ -13,8 +13,8 @@ globalThis.onstorage = () => {
 
 	changeMode(mode);
 	if (clear) {
-		globalThis.location.reload();
 		sessionStorage.removeItem("pane-2");
+		globalThis.location.reload();
 	};
 	if (copy && works) {
 		sessionStorage.removeItem("copy2");
@@ -47,7 +47,7 @@ function loadingPage() {
 	animation.setAttribute("aria-hidden", true)
 	pageApp.setAttribute("aria-hidden", false)
 	pageApp.setAttribute("aria-hidden", true)
-}
+};
 
 
 function changeMode (color) {

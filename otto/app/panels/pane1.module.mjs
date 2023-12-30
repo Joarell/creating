@@ -14,7 +14,6 @@ globalThis.onstorage = () => {
 
 	changeMode(mode);
 	if (clear || fetched) {
-		sessionStorage.removeItem('FETCHED');
 		sessionStorage.removeItem("pane-1");
 		sessionStorage.setItem("pane-2", "clear");
 		globalThis.location.reload();
@@ -50,7 +49,7 @@ function loadingPage() {
 	animation.style.display = "none";
 	animation.setAttribute("aria-hidden", true)
 	pageApp.setAttribute("aria-hidden", false)
-}
+};
 
 
 function changeMode (color) {
@@ -191,4 +190,4 @@ function finishedRender(table, info) {
 };
 
 
-globalThis.navigator.serviceWorker.register('./sw.pane1.mjs');
+// globalThis.navigator.serviceWorker.register('./sw.pane1.mjs');

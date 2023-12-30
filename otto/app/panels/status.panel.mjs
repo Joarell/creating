@@ -21,7 +21,8 @@ globalThis.onstorage = () => {
 		localStorage.removeItem("storage");
 	};
 	newList !== null ? statusTablePopulate(newList) : false;
-}
+	setTimeout(sessionStorage.removeItem('FETCHED'), 200);
+};
 
 
 globalThis.onload = () => {
@@ -158,4 +159,4 @@ export function createHeader(table) {
 }
 
 
-globalThis.navigator.serviceWorker.register('./sw.status.mjs');
+// globalThis.navigator.serviceWorker.register('./sw.status.mjs');
