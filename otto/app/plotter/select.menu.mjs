@@ -5,7 +5,7 @@ import { plotter } from "./layers.mjs";
 
 export async function getDataIDB (ref) {
 	const WORKER = new Worker(
-		new URL('./panels/worker.IDB.crates.mjs', import.meta.url), { type: "module" }
+		new URL('../panels/worker.IDB.crates.mjs', import.meta.url), { type: "module" }
 	);
 	let request;
 
