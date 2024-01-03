@@ -1,7 +1,7 @@
 {
-	"name": "otto-app-server",
-	"version": "1.0.0",
-	"description": "",
+	"name": "Otto",
+	"version": "1",
+	"description": "Art work solver list and crater.",
 	"main": "main.mjs",
 	"scripts": {
 		"start": "nodemon server.app.js",
@@ -26,5 +26,6 @@
 		"nodemon": "^3.0.1",
 		"rollup": "^4.0.2",
 		"rollup-plugin-css-only": "^4.3.0"
-	}
+	},
+	"private": true
 }
