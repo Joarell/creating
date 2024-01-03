@@ -94,18 +94,16 @@ export default class CraterStandard {
 		let x;
 		let y;
 
-		if (checkX2) {
-			decX + base.x2 <= 1 ?
+		if (checkX2)
+			base.x2 < 1 && decX <= 1 + extraX ?
 				x = true :
 				x = baseSize.artX * base.x2 + art.valX <= size[0];
-		}
 		else
 			x = false;
-		if (checkY2) {
-			decY + base.y2 <= 1 ?
+		if (checkY2)
+			base.y2 < 1 && decY <= 1 + extraY ?
 				y = true :
 				y = baseSize.artY * base.y2 + art.valY <= size[2];
-		}
 		else
 			y = false;
 		return ({ x, y });
@@ -144,12 +142,12 @@ export default class CraterStandard {
 		const lastPlace =	this.#prevLocationWork({closeX, closeY}, {refX, refY}, layer);
 
 		if(axioX) {
-			if (lastPlace.X)
+			if (lastPlace.X && closeArt[1].x2 < 1)
 				work.valX / layer[0].size[0] <= layer[0].x1 ?
 				closeArt[1].x2 += +(work.valX / closeX).toFixed(2) : 0;
 		}
 		else {
-			if (lastPlace.Y && axioY)
+			if (lastPlace.Y && axioY && closeArt[1].y2 < 1)
 				work.valY / layer[0].size[2] <= layer[0].y1 ?
 				closeArt[1].y2 += +(work.valY / closeY).toFixed(2) : 0;
 		};
@@ -193,6 +191,8 @@ export default class CraterStandard {
 
 			layer[0].x1 + decX <= 1 ? layer[0].x1 = +(layer[0].x1 + decX).toFixed(2) : 0;
 			layer[0].y1 + decY <= 1 ? layer[0].y1 = +(layer[0].y1 + decY).toFixed(2) : 0;
+			innerX && layer[0].x1 < 1 ? layer[0].x1 = 1: 0;
+			innerY && layer[0].y1 < 1 ? layer[0].y1 = 1: 0;
 			innerY ? layer[0].x2 = layer[0].x2 + decX : 0;
 			innerX ? layer[0].y2 = layer[0].y2 + decY : 0;
 		}
@@ -207,27 +207,37 @@ export default class CraterStandard {
 
 	#addNewWorkSetupAndLayerUpdate(work, layer, { size }, prev) {
 		const sizeX = work.length > 5 ?
-			+(work[3] / size[0]).toFixed(2) :
-			+(work[1] / size[0]).toFixed(2);
+			+(work[3] / size[0]).toFixed(2) : +(work[1] / size[0]).toFixed(2);
 		const sizeY = work.length > 5 ?
-			+(work[1] / size[2]).toFixed(2) :
-			+(work[3] / size[2]).toFixed(2);
-		const x1 = 1;
-		const y1 = 1;
+			+(work[1] / size[2]).toFixed(2) : +(work[3] / size[2]).toFixed(2);
+		const newWorkX = work.length > 5 ? work[3] : work[1];
+		const newWorkY = work.length > 5 ? work[1] : work[3];
 		let x2;
 		let y2;
 
 		if (layer.length > 1) {
 			this.#updateClosestWorks(work, layer, size, prev);
-			y2 = sizeX + layer[0].x1 === 1 ? 1 : 0;
-			x2 = sizeY + layer[0].y1 === 1 ? 1 : 0;
+			if (prev) {
+				const artX =	layer[prev][0].length > 5 ?
+					layer[prev][0][3] : layer[prev][0][1];
+				const artY =	layer[prev][0].length > 5 ?
+					layer[prev][0][1] : layer[prev][0][3];
+				const placeX =	artX + newWorkX === size[0];
+				const placeY =	artY + newWorkY === size[2];
+				x2 = placeY ? 1 : 0;
+				y2 = placeX ? 1 : 0;
+			}
+			else {
+				y2 = sizeX + layer[0].x1 === 1 ? 1 : 0;
+				x2 = sizeY + layer[0].y1 === 1 ? 1 : 0;
+			}
 		}
 		else {
 			y2 = sizeX + layer[0].x2 === 1 ? 1 : 0;
 			x2 = sizeY + layer[0].y2 === 1 ? 1 : 0;
 		};
 		this.#updateLayerSpace(layer, work, sizeX, sizeY, prev);
-		layer.push([work, { x1, y1, x2, y2, prev }]);
+		layer.push([work, { x1: 1, y1: 1, x2, y2, prev }]);
 		return(layer);
 	};
 
