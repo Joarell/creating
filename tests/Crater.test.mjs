@@ -12,29 +12,6 @@ import Arranger from '../otto/app/core2/Arranger.class.mjs';
 
 
 describe("These are tests to Crater class.", () => {
-	it("TEST-60: returns all works in one crate.", () => {
-		const list = [
-			['SF', 214, 8, 214],
-			['JP-2023', 190, 5, 190],
-			['AL-2014', 130, 10, 10],
-			['L-1986', 33, 5, 24],
-			['HU-1989-20', 33, 3,  23],
-			['HU-1989-10', 33, 3,  23],
-			['HU-1989-02', 33, 3,  23],
-			['HU-1989-16', 33, 3,  23],
-			['HU-1989-16', 33, 3,  23],
-			['HU-1989-11', 33, 3,  23],
-			['HU-1989-03', 33, 3,  23],
-			['HU-1989-04', 33, 3,  23],
-		];
-
-		const works =		new Arranger(mock.artWorksList(list));
-		const current =		new Crater(works).crates.airCubTotal;
-		const expected =	217.792;
-
-		assert.deepStrictEqual(current, expected);
-	});
-
 	it("TEST-1: returns false to no tube list.", () => {
 		const current =		new CraterTube();
 		const expected =	{ tube: false };
@@ -878,4 +855,25 @@ describe("These are tests to Crater class.", () => {
 
 		assert.deepStrictEqual(current, expected);
 	});
+
+	it("TEST-60: returns all works in one crate.", () => {
+		const list = [
+			['SF', 160, 5, 160],
+			['HU-1989-20', 130, 5, 100],
+			['HU-1989-10', 60, 5, 60],
+			['HU-1989-02', 60, 5, 60],
+			['HU-1989-16', 50, 3, 50],
+			['HU-1989-16', 30, 3, 30],
+			['HU-1989-11', 30, 3, 30],
+			['HU-1989-03', 30, 3, 30],
+			['HU-1989-04', 30, 3, 30],
+		];
+
+		const works =		new Arranger(mock.artWorksList(list));
+		const current =		new Crater(works).crates.airCubTotal;
+		const expected =	217.792;
+
+		assert.deepStrictEqual(current, expected);
+	});
+
 });
