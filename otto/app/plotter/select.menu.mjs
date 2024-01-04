@@ -81,8 +81,13 @@ function findLayersNumber(data, counter, key) {
 
 	if (key === 'sameSizeCrate') {
 		data[key].crates.map((info, i) => {
-			if (counter === 0 && layers === undefined)
-				layers = info.works.length;
+			if (counter === 0 && layers === undefined) {
+				const PAD =		28;
+				const CRATE =	data[key].crates[i - 1];
+				const STACK =	CRATE[2] === (info.works[0][3] + info.works[1][3] + PAD);
+
+				STACK ? layers = info.works.length / 2 : layers = info.works.length;
+			}
 			i % 2 === 0 || i === 0 ? counter-- : false;
 		}, 0);
 	}
@@ -93,7 +98,7 @@ function findLayersNumber(data, counter, key) {
 					layers = 1 : layers = box.works.length;
 			i % 2 === 0 || i === 0 ? counter-- : false;
 		}, 0);
-	return({ layers , counter });
+	return({ layers, counter });
 };
 
 

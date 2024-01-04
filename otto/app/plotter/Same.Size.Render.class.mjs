@@ -10,32 +10,33 @@ export default class sameSizeRender {
 	constructor ({ works }, layerSize, dim, layer) {
 		this.#pixSize =	layerSize;
 		this.#inCrate =	dim;
-		this.#canvas =	Array.isArray(works[0]) ? [works[layer]] : works[0];
+		this.#canvas =	works;
 
 		return (this.#canvasRender());
 	};
 
-	#worksPositionLayer({ x, y }) {
+	#worksPositionLayer({ X, Y }) {
 		const RECT =	document.createElementNS("http://www.w3.org/2000/svg", "rect");
 		const INSET =	1;
 		const PAD =		20;
-		const Y =		y.length > 1 ? nextPointY(y) : 0;
+		const y =		Y.length > 1 ? nextPointY(Y) : 0;
 
+		console.log("Y",Y);
 		RECT.setAttribute("x", 0 + INSET);
-		RECT.setAttribute("y", Y + INSET);
-		RECT.setAttribute("width", x.at(-1) - PAD);
-		RECT.setAttribute("height", y.at(-1) - PAD);
+		RECT.setAttribute("y", y + INSET);
+		RECT.setAttribute("width", X.at(-1) - PAD);
+		RECT.setAttribute("height", Y.at(-1) - PAD);
 		return(RECT);
 	};
 
-	#textOnCenter({ x, y }, work) {
+	#textOnCenter({ X, Y }, work) {
 		const text =		document.createElementNS("http://www.w3.org/2000/svg", "text");
 		const MID =			0.5;
 		const LETTERPIX =	10;
-		const X =			x.at(-1);
-		const Y =			y.at(-1) * MID;
-		const CENTERX =		X * MID;
-		const POS =			y.length === 1 ? Y : nextPointY(y) + Y;
+		const x =			X.at(-1);
+		const y =			Y.at(-1) * MID;
+		const CENTERX =		x * MID;
+		const POS =			Y.length === 1 ? y : nextPointY(Y) + y;
 
 		text.setAttribute("x", CENTERX - ((work.length * LETTERPIX) * MID));
 		text.setAttribute("y", POS);
@@ -49,12 +50,11 @@ export default class sameSizeRender {
 		const Y =		[];
 		let txt;
 
-
 		this.#canvas.map(art => {
 			X.push(coord.proportion(art[1], this.#pixSize.x, this.#inCrate[0]));
 			Y.push(coord.proportion(art[3], this.#pixSize.y, this.#inCrate[2]));
-			element.appendChild(this.#worksPositionLayer({ x: X, y: Y }));
-			txt = [ { x: X , y: Y }, art, this.#inCrate, ];
+			element.appendChild(this.#worksPositionLayer({ X, Y }));
+			txt = [ { X , Y }, art, this.#inCrate, ];
 			element.appendChild(this.#textOnCenter.apply(null, txt))
 		});
 		return (element);
@@ -62,10 +62,6 @@ export default class sameSizeRender {
 }
 
 function nextPointY(info) {
-	let result;
-
-	if (info.length === 2)
-		return (info.at(-2));
-	result = info.reduce((sum, val) => (sum + val), 0);
-	return (result - info.at(-1));
+	const RESULT = info.reduce((sum, val) => (sum + val), 0);
+	return (info.length === 2 ? info.at(-2): RESULT - info.at(-1));
 };

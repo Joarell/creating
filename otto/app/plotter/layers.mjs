@@ -1,7 +1,7 @@
 
 
 import TubeRender from './Tube.Render.class.mjs';
-import StandarRender from './Standard.Render.class.mjs';
+import StandardRender from './Standard.Render.class.mjs';
 import * as coord from './layer.coordinate.mjs';
 import LargestRender from './Largest.Canvas.Render.class.mjs';
 import sameSizeRender from './Same.Size.Render.class.mjs';
@@ -33,7 +33,7 @@ export function plotter({ type, crate, works }, layerNum) {
 			draw.appendChild(new noCanvasRender(works, layerV, inCrate));
 			break ;
 		case 'standardCrate' : //Renders all cnvas on each layer.
-			draw.appendChild(new StandarRender(works, layerV, inCrate, layerNum));
+			draw.appendChild(new StandardRender(works, layerV, inCrate, layerNum));
 			break ;
 	};
 	return (draw);
