@@ -13,8 +13,8 @@ globalThis.onstorage = () => {
 
 	changeMode(mode);
 	if (clear) {
-		sessionStorage.removeItem("pane-2");
 		globalThis.location.reload();
+		sessionStorage.removeItem("pane-2");
 	};
 	if (copy && works) {
 		sessionStorage.removeItem("copy2");
@@ -47,7 +47,7 @@ function loadingPage() {
 	animation.setAttribute("aria-hidden", true)
 	pageApp.setAttribute("aria-hidden", false)
 	pageApp.setAttribute("aria-hidden", true)
-};
+}
 
 
 function changeMode (color) {
@@ -123,10 +123,37 @@ function layerInterface(layer, num, unit) {
 };
 
 
-function addHTMLLayerWorksLine ({ works }, table, unit, kind) {
+function addSameSizeLayerWorksLine ({ works }, table, unit, crate) {
+	const AUX =		Array.isArray(works[0][0]) ? works[0] : works;
+	const PAD =		28;
+	const STACKED =	~~((+AUX[0][3] + +AUX[1][3]) + PAD) === crate[2];
+	let tmp =		[];
+	let count =		1;
+
+	if (STACKED) {
+		AUX.map((art, counter) => {
+			tmp.push(art)
+			if (counter % 2 === 1) {
+				table.innerHTML += tmp.map(work => {
+					return (layerInterface(work, count, unit));
+				}).join("");
+				tmp = [];
+				count++;
+			};
+		}, 0);
+	}
+	else {
+		AUX.map((art, count) => {
+			table.innerHTML += layerInterface(art, count + 1, unit);
+		});
+	};
+	return(table);
+};
+
+
+function addHTMLLayerWorksLine ({ works }, table, unit, kind, crate) {
 	let layer;
 	let i =	0;
-	let aux;
 
 	while (i < works.length) {
 		if (!Array.isArray(works[i])) {
@@ -137,20 +164,17 @@ function addHTMLLayerWorksLine ({ works }, table, unit, kind) {
 			};
 		}
 		else if (kind === 'sameSizeCrate') {
-			aux = Array.isArray(works[0][0]) ? works[0] : works;
-			aux.map((art, count) => {
-				i = count;
-				table.innerHTML += layerInterface(art, i + 1, unit);
-			});
+			return(addSameSizeLayerWorksLine({ works }, table, unit, crate));
 		}
 		else if (Array.isArray(works[i])) {
 			works.map((art, count) => {
-				i = count;
-				table.innerHTML += layerInterface(art, i + 1, unit);
+				table.innerHTML += layerInterface(art, count + 1, unit);
 			});
+			return(table);
 		};
 		i++;
 	};
+	return(table);
 };
 
 
@@ -202,7 +226,7 @@ function addHTMLTableLine({ crates }, table, kind) {
 			}, 0).join("");
 		}
 		else
-			addHTMLLayerWorksLine(crates[i], table, UNIT, kind);
+			addHTMLLayerWorksLine(crates[i], table, UNIT, kind, crates[i - 1]);
 	}, 0);
 };
 
@@ -228,4 +252,4 @@ export async function showCrates2(estimate) {
 };
 
 
-globalThis.navigator.serviceWorker.register('./sw.pane2.mjs');
+// globalThis.navigator.serviceWorker.register('./sw.pane2.mjs');
