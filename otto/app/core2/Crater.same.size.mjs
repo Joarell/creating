@@ -123,7 +123,6 @@ export default class CraterSameSize {
 			else
 				baseCrate.unshift(false);
 		};
-		console.log('On layer:', works);
 		Array.isArray(works[0][0]) ? works = works.flat() : false;
 		return ({ crate: this.#orderSizes(baseCrate.flat(), works), works });
 	};
