@@ -1,7 +1,6 @@
 import CraterStandard from "./Crater.standard.crate.mjs";
 
 
-// TODO: alocate the 5th layer after all arrange done.
 export default class CraterLastCheckReArranger {
 	#cratesDone;
 
@@ -51,12 +50,13 @@ export default class CraterLastCheckReArranger {
 		const MAXLAYER =	4;
 		let i =				0;
 		let bool =			true;
-		let extracted =		LEN === 1 ? [...attCrate.works[0]]: [...attCrate.works];
 		let result;
 
 		while(i++ < listCrates.length && bool) {
 			if (i % 2 === 1) {
-				result =	[...extracted];
+				result =	LEN === 1 ? 
+					JSON.parse(JSON.stringify(attCrate.works[0])):
+					JSON.parse(JSON.stringify(attCrate.works));
 				this.#removeCrate(listCrates, i, result);
 				result =	this.#quickSort(result, CUBPOS);
 				result =	new CraterStandard(result, false, MAXLAYER);
