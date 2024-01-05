@@ -1,7 +1,7 @@
 
 import * as coord from './layer.coordinate.mjs';
 
-export default class StandarRender {
+export default class StandardRender {
 	#canvas;
 	#pixelSize;
 	#inCrate;
@@ -12,9 +12,9 @@ export default class StandarRender {
 		this.#filled = JSON.parse(JSON.stringify(layerSize));
 		this.#inCrate = dim;
 		this.#canvas = Object.values(works[layer])[0];
-
 		this.#filled.x2 = this.#filled.x;
 		this.#filled.y2 = this.#filled.y;
+		
 		return (this.#standardRender());
 	};
 
@@ -158,28 +158,28 @@ export default class StandarRender {
 		return (info);
 	};
 
-	#layoutArranger(map, weigth, height, code) {
+	#layoutArranger(map, weight, height, code) {
 		let x;
 		let y;
 		let fillX;
 		let fillY;
 
 		if (Object.entries(map).length === 0) {
-			x = this.#pixelSize.x - weigth === 0 ? null : weigth;
+			x = this.#pixelSize.x - weight === 0 ? null : weight;
 			y = this.#pixelSize.y - height === 0 ? null : height;
-			fillX = this.#filled.x + weigth === this.#pixelSize.x ? 1 : 0;
+			fillX = this.#filled.x + weight === this.#pixelSize.x ? 1 : 0;
 			fillY = this.#filled.y + height === this.#pixelSize.y ? 1 : 0;
 			map[code] = {
-				values: [weigth, height],
+				values: [weight, height],
 				pos: [0, 0],
 				next: [x, y],
 				fillX,
 				fillY
 			};
-			this.#updateInnerCrate(weigth, height);
+			this.#updateInnerCrate(weight, height);
 		}
 		else
-			this.#layoutMapWorks(map, weigth, height, code);
+			this.#layoutMapWorks(map, weight, height, code);
 		return (map)
 	};
 
