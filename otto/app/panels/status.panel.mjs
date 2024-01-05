@@ -62,11 +62,13 @@ function restorePanel() {
 	works = works.map(art => JSON.parse(art[1]));
 	createHeader(element);
 	works.map(art => {
-		const { code, x, z, y } = art;
-		const line = `<tr><td>${code}</td><td>${x}</td><td>${z}</td><td>${y}</td>
-				<td>${metric}</td></tr>`
+		if (art?.hasOwnProperty('code')) {
+			const { code, x, z, y } = art;
+			const line = `<tr><td>${code}</td><td>${x}</td><td>${z}</td><td>${y}</td>
+					<td>${metric}</td></tr>`
 
-		element.innerHTML += line;
+			element.innerHTML += line;
+		}
 	});
 	plot.appendChild(element);
 };
