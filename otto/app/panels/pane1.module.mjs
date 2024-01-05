@@ -175,12 +175,12 @@ function finishedRender(table, info) {
 	table.innerHTML += `<tr>
 		<td>AIRPORT</td>
 		<td>PAX</td>
-		<td>${info.wichAirPort[0].PAX}</td>
+		<td>${info.whichAirPort[0].PAX}</td>
 		</tr>`;
 	table.innerHTML += `<tr>
 		<td>AIRPORT</td>
 		<td>CARGO</td>
-		<td>${info.wichAirPort[1].CARGO}</td>
+		<td>${info.whichAirPort[1].CARGO}</td>
 		</tr>`;
 	table.innerHTML += `<tr>
 		<td>Total Cub:</td>

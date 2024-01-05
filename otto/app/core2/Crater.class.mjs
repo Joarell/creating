@@ -199,7 +199,7 @@ export default class Crater {
 				tmp =	this.#airPortOptions(crate);
 				tmp === 'PAX' ? pax++ : tmp === 'CARGO' ? cargo++ : false;
 			});
-		this.#crates.wichAirPort = [{ PAX : pax }, { CARGO : cargo }];
+		this.#crates.whichAirPort = [{ PAX : pax }, { CARGO : cargo }];
 	};
 
 	#whichAirPortBackUp () {
@@ -225,6 +225,6 @@ export default class Crater {
 					tmp === 'PAX' ? pax++ : tmp === 'CARGO' ? cargo++ : false;
 				});
 		};
-		this.#crates.wichAirPortBackUp = [{ PAX : pax }, { CARGO : cargo }];
+		this.#crates.whichAirPortBackUp = [{ PAX : pax }, { CARGO : cargo }];
 	};
 };
