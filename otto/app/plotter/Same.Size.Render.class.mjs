@@ -21,7 +21,6 @@ export default class sameSizeRender {
 		const PAD =		20;
 		const y =		Y.length > 1 ? nextPointY(Y) : 0;
 
-		console.log("Y",Y);
 		RECT.setAttribute("x", 0 + INSET);
 		RECT.setAttribute("y", y + INSET);
 		RECT.setAttribute("width", X.at(-1) - PAD);
