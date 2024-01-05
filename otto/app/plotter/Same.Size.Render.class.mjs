@@ -8,11 +8,26 @@ export default class sameSizeRender {
 	#inCrate;
 
 	constructor ({ works }, layerSize, dim, layer) {
-		this.#pixSize =	layerSize;
-		this.#inCrate =	dim;
-		this.#canvas =	works;
+		this.#pixSize =			layerSize;
+		this.#inCrate =			dim;
+		this.#canvas =			this.#defineLayers(works, layer);
 
-		return (this.#canvasRender());
+		return(this.#canvasRender());
+	};
+
+	#defineLayers(list, layer) {
+		const STACK =	this.#inCrate[2] / list[0][3];
+		let works =		[];
+		let aux =		[];
+
+		list.map(art => {
+			if (aux.length === STACK) {
+				works.push([...aux]);
+				aux = [];
+			}
+			aux.push(art);
+		});
+		return(works[layer]);
 	};
 
 	#worksPositionLayer({ X, Y }) {
