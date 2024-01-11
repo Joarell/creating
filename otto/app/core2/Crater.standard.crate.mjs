@@ -83,74 +83,96 @@ export default class CraterStandard {
 		return({ avlX1, avlY1, avlX2, avlY2 });
 	};
 
-	#innerCheckerPlace(art, base, baseSize, layer) {
+	#checkPlacedWorks (code, base, {artX, artY}, {valX, valY}, layer) {
 		const { size } =	layer[0];
-		const decX =		+(art.valX / baseSize.artX + base.x2).toFixed(2);
-		const decY =		+(art.valY / baseSize.artY + base.y2).toFixed(2);
-		const checkX2 =		base.x2 < 1 && baseSize.artY + art.valY <= size[2];
-		const checkY2 =		base.y2 < 1 && baseSize.artX + art.valX <= size[0];
+		const prevWork =	layer[base[1].prev];
+		const VALX =		prevWork && prevWork[1].axioX.includes(code) ?
+			prevWork[0][1] : 0;
+		const VALY =		prevWork && prevWork[1].axioY.includes(code) ?
+			prevWork[0][3] : 0;
+		const checkX2 =		base[1].x2 < 1 && artY + valY + VALX <= size[2];
+		const checkY2 =		base[1].y2 < 1 && artX + valX + VALY <= size[0];
+
+		return({ checkX2, checkY2 });
+	};
+
+	#innerCheckerPlace(art, base, baseSize, layer, code) {
+		const { size } =	layer[0];
+		const GC =			new WeakSet();
+		const decX =		+(art.valX / baseSize.artX + base[1].x2).toFixed(2);
+		const decY =		+(art.valY / baseSize.artY + base[1].y2).toFixed(2);
 		const extraX =		+((size[0] - baseSize.artX) / size[0]).toFixed(2);
 		const extraY =		+((size[2] - baseSize.artY) / size[2]).toFixed(2);
+		const checkWorks =	this.#checkPlacedWorks(code, base, baseSize, art, layer);
 		let x;
 		let y;
 
-		if (checkX2)
-			base.x2 < 1 && decX <= 1 + extraX ?
+		if (checkWorks.checkX2)
+			base[1].x2 < 1 && decX <= 1 + extraX ?
 				x = true :
-				x = baseSize.artX * base.x2 + art.valX <= size[0];
+				x = baseSize.artX * base[1].x2 + art.valX <= size[0];
 		else
 			x = false;
-		if (checkY2)
-			base.y2 < 1 && decY <= 1 + extraY ?
+		if (checkWorks.checkY2)
+			base[1].y2 < 1 && decY <= 1 + extraY ?
 				y = true :
-				y = baseSize.artY * base.y2 + art.valY <= size[2];
+				y = baseSize.artY * base[1].y2 + art.valY <= size[2];
 		else
 			y = false;
+		GC.add(checkWorks);
 		return ({ x, y });
 	};
 
-	#updateBaseWork(work, base, layerSpace, ref, layerSize) {
+	#updateBaseWork(work, base, layerSpace, ref, layerSize, code) {
 		const axioX = !layerSpace.avlX1 && layerSpace.avlY1 && layerSpace.avlY2;
 		const axioY = !layerSpace.avlY1 && layerSpace.avlX1 && layerSpace.avlX2;
-		const inner = this.#innerCheckerPlace(work, base, ref, layerSize);
+		const inner = this.#innerCheckerPlace(work, base, ref, layerSize, base[0][0]);
 
-		if(axioX || inner.x)
-			base.x2 = +(work.valX / ref.artX + base.x2).toFixed(2);
-		else if(axioY || inner.y)
-			base.y2 = +(work.valY / ref.artY + base.y2).toFixed(2);
+		if(axioX || inner.x) {
+			base[1].x2 = +(work.valX / ref.artX + base[1].x2).toFixed(2);
+			base[1].axioX.push(code);
+		}
+		else if(axioY || inner.y) {
+			base[1].y2 = +(work.valY / ref.artY + base[1].y2).toFixed(2);
+			base[1].axioY.push(code);
+		}
 		return(base);
 	};
 
-	#prevLocationWork(lastWork, refWork, layer) {
-		const X = refWork.refX + lastWork.closeX <= layer[0].size[0];
-		const Y = refWork.refY + lastWork.closeY <= layer[0].size[2];
+	#prevLocationWork(lastWork, refWork, size, work) {
+		const { x2, y2 } =	work[1];
+		const extraX =	x2 > 0 ? x2 * lastWork.closeX : lastWork.closeX;
+		const extraY =	y2 > 0 ? y2 * lastWork.closeY : lastWork.closeY;
+		const X =			refWork.refY + extraY <= size[0];
+		const Y =			refWork.refX + extraX <= size[2];
 
 		return({ X, Y });
 	};
 
-	#updateAdjacentWork(work, closeArt, layer, ref) {
-		if(ref !== closeArt[1].prev)
-			return(closeArt);
-		const { size } =	layer[0];
+	#updateAdjacentWork(work, closeArt, layer, ref, code) {
+		const { size } =		layer[0];
 		const { length } =	closeArt[0];
-		const refX =		layer[ref][0].length > 5 ? layer[ref][0][3] : layer[ref][0][1];
-		const refY =		layer[ref][0].length > 5 ? layer[ref][0][1] : layer[ref][0][3];
+		const refX =		layer[ref][0].length > 5 ?
+			layer[ref][0][3] : layer[ref][0][1];
+		const refY =		layer[ref][0].length > 5 ?
+			layer[ref][0][1] : layer[ref][0][3];
 		const closeX =		length > 5 ? closeArt[0][3] : closeArt[0][1];
 		const closeY =		length > 5 ? closeArt[0][1] : closeArt[0][3];
-		const axioX =		refX + work.valX <= size[0];
-		const axioY =		refY + work.valY <= size[2];
-		const lastPlace =	this.#prevLocationWork({closeX, closeY}, {refX, refY}, layer);
+		const axioX =	refX + work.valX <= size[0];
+		const axioY =	refY + work.valY <= size[2];
+		const lastPlace =	this.#prevLocationWork({closeX, closeY}, {refX, refY}, size, closeArt);
 
-		if(axioX) {
-			if (lastPlace.X && closeArt[1].x2 < 1)
-				work.valX / layer[0].size[0] <= layer[0].x1 ?
-				closeArt[1].x2 += +(work.valX / closeX).toFixed(2) : 0;
-		}
-		else {
-			if (lastPlace.Y && axioY && closeArt[1].y2 < 1)
-				work.valY / layer[0].size[2] <= layer[0].y1 ?
-				closeArt[1].y2 += +(work.valY / closeY).toFixed(2) : 0;
-		};
+
+		if (axioX && lastPlace.X && closeArt[1].x2 < 1)
+			if(work.valX / layer[0].size[0] <= layer[0].x1) {
+				closeArt[1].x2 += +(work.valX / closeX).toFixed(2);
+				closeArt[1].axioX.push(code);
+			}
+		else if (lastPlace.Y && axioY && closeArt[1].y2 < 1)
+			if(work.valY / layer[0].size[2] <= layer[0].y1) {
+				closeArt[1].y2 += +(work.valY / closeY).toFixed(2);
+				closeArt[1].axioY.push(code);
+			}
 		return(layer);
 	};
 
@@ -158,43 +180,50 @@ export default class CraterStandard {
 		const filled =		[...layer];
 		const LEN =			layer.length - 1;
 		const checkLayer =	this.#selectAxioToAddWorks(work, layer, size);
+		const CODE =		work[0];
 
 		filled.reverse().map((art, i) => {
 			if (i >= LEN)
 				return ;
-			const artX =		art[0].length > 5 ? art[0][3] : art[0][1];
-			const artY =		art[0].length > 5 ? art[0][1] : art[0][3];
-			const valX =		work.length > 5 ? work[3] : work[1];
-			const valY =		work.length > 5 ? work[1] : work[3];
-			const { prev } =	art[1];
-			
-			if (prev !== ref) {
-				art[0][0] === layer[ref][0][0] ? this.#updateBaseWork(
-					{valX, valY}, layer[ref][1], checkLayer, {artX, artY}, layer) : 0;
-				return ;
-			};
-			this.#updateAdjacentWork({valX, valY}, art, layer, ref);
+			const artX =	art[0].length > 5 ? art[0][3] : art[0][1];
+			const artY =	art[0].length > 5 ? art[0][1] : art[0][3];
+			const valX =	work.length > 5 ? work[3] : work[1];
+			const valY =	work.length > 5 ? work[1] : work[3];
+
+			art[0][0] === layer[ref][0][0] ?
+				this.#updateBaseWork(
+				{valX, valY}, layer[ref], checkLayer, {artX, artY}, layer, CODE) :
+				this.#updateAdjacentWork({valX, valY}, art, layer, ref, CODE);
 		}, 0);
 		return(layer);
 	};
 
 	#updateLayerSpace(layer, work, decX, decY, ref) {
-		const { size } =	layer[0];
+		const { size } =			layer[0];
 
 		if (layer.length > 1) {
+			const { axioX, axioY } =	layer[ref][1];
+			const checkX =	axioX.includes(work[0]);
+			const checkY =	axioY.includes(work[0]);
 			const artX =	layer[ref][0].length > 5 ? layer[ref][0][3] : layer[ref][0][1];
 			const artY =	layer[ref][0].length > 5 ? layer[ref][0][1] : layer[ref][0][3];
 			const valX =	work.length > 5 ? work[3] : work[1];
 			const valY =	work.length > 5 ? work[1] : work[3];
 			const innerX =	valX + artX === size[0];
 			const innerY =	valY + artY === size[2];
+			const copyX2 =	layer[0].x2;
+			const copyY2 =	layer[0].y2;
+			const setX =	checkX && layer[0].x1 + decX <= 1;
+			const setY =	checkY && layer[0].y1 + decY <= 1;
 
-			layer[0].x1 + decX <= 1 ? layer[0].x1 = +(layer[0].x1 + decX).toFixed(2) : 0;
-			layer[0].y1 + decY <= 1 ? layer[0].y1 = +(layer[0].y1 + decY).toFixed(2) : 0;
+			setX ? layer[0].x1 = +(layer[0].x1 + decX).toFixed(2) : 0;
+			setY ? layer[0].y1 = +(layer[0].y1 + decY).toFixed(2) : 0;
 			innerX && layer[0].x1 < 1 ? layer[0].x1 = 1: 0;
 			innerY && layer[0].y1 < 1 ? layer[0].y1 = 1: 0;
-			innerY ? layer[0].x2 = layer[0].x2 + decX : 0;
-			innerX ? layer[0].y2 = layer[0].y2 + decY : 0;
+			innerX || layer[0].x1 === 1 && copyX2 < 1 ?
+				layer[0].y2 = layer[0].y2 + decY : 0;
+			innerY || layer[0].y1 === 1 && copyY2 < 1 && copyY2 === 1 ?
+				layer[0].x2 = layer[0].x2 + decX : 0;
 		}
 		else {
 			layer[0].x1 = layer[0].x1 !== 0 ? layer[0].x1 + decX : decX;
@@ -237,7 +266,7 @@ export default class CraterStandard {
 			x2 = sizeY + layer[0].y2 === 1 ? 1 : 0;
 		};
 		this.#updateLayerSpace(layer, work, sizeX, sizeY, prev);
-		layer.push([work, { x1: 1, y1: 1, x2, y2, prev }]);
+		layer.push([work, { axioX: [], axioY: [], x1: 1, y1: 1, x2, y2, prev }]);
 		return(layer);
 	};
 
@@ -278,9 +307,49 @@ export default class CraterStandard {
 		return(place);
 	};
 
+	#getTheOriginTrackWorksInLayer(point, layer) {
+		if (point === 1 || layer.length === 2)
+			return;
+		const { prev } =	layer[point][1];
+		const baseWork =	layer[prev];
+		const copy =		[...layer];
+		let code =			layer[point][0][0];
+		let x =				baseWork[1]?.axioY?.includes(code) ? layer[point][0][3]: 0;
+		let y =				baseWork[1]?.axioX?.includes(code) ? layer[point][0][1]: 0;
+		let firstX;
+		let firstY;
+
+		copy.reverse().map(art => {
+			if (!Array.isArray(art))
+				return;
+			if(art[1].axioX.includes(code)) {
+				code = art[0][0];
+				if (firstX || firstY) {
+					y += art[0][3];
+				}
+				else {
+					firstX = art[0][1];
+					firstY = art[0][3];
+				};
+			}
+			else if (art[1].axioY.includes(code)) {
+				code = art[0][0];
+				if (firstX || firstY) {
+					x += art[0][3];
+				}
+				else {
+					firstX = art[0][1];
+					firstY = art[0][3];
+				};
+			};
+		});
+		return({ x, y });
+	};
+
 	#searchWorkSpace(layer, workProp, i, result) {
 		let check;
 		const { x1, y1 } =	layer[0];
+		// const TRACKER =		this.#getTheOriginTrackWorksInLayer(i, layer, workProp);
 
 		check = layer[i][0][3] >= workProp.sizeY && x1 + workProp.x <= 1;
 		!check && layer[i][1].x2 <= workProp.x && y1 + workProp.y <= 1 ? check = 2 : 0;
@@ -334,9 +403,11 @@ export default class CraterStandard {
 		let x;
 		let y;
 
+		if (extraX === 0 || extraY === 0)
+			return(false);
 		if (x1 < 1) {
 			firstX + artX <= size[0] ? x = 'ok' : 0;
-			x && artY / firstY + y2 <= 1 + extraY? y = 'ok' : 0;
+			x && artY / firstY + y2 <= 1 + extraY ? y = 'ok' : 0;
 		}
 		else if(!x && artY / firstY + y2 <= 1 + extraY && firstX + artX <= size[0]) {
 			x = 'ok';
@@ -360,23 +431,17 @@ export default class CraterStandard {
 		const GC =		new WeakSet();
 		const info =	this.#defineWorkData(work, spin, layer);
 
-		while (i > 1 && seeking.loop && (info.y <= 1)) {
-			i--;
+		while (--i > 1 && seeking.loop && (info.y <= 1))
 			this.#searchWorkSpace(layer, info, i, seeking);
-		};
 		switch (seeking.value) {
-			case 'check1':
-				result = i;
-				break;
-			case 'check2':
-				result = i;
-				break;
 			case 'check3':
 				result = layer[i][1]?.prev;
 				break;
-			case undefined: 
+			case undefined:
 				result = this.#checkFirstWorkOnLayer(layer, i , work, spin);
 				break;
+			default:
+				result = i;
 		};
 		GC.add(seeking);
 		return(result);
