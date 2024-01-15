@@ -146,11 +146,13 @@ export default class StandardRender {
 		let result;
 		let ref;
 
+		//TODO: check if the 'pos' has 2 equals to the already works set
 		for (ref of code) {
 			if (len-- > 1) {
 				result = this.#verifyPlaceWork(info[ref], weight, height);
 				if (result) {
 					this.#setNewWork(ART, info, info[ref], result, weight, height);
+					console.log(info);
 					break;
 				};
 			};
