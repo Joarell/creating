@@ -50,7 +50,7 @@ export default class Crater {
 		};
 		return({ crates: this.#crates });
 	};
-	
+
 	#tubeCrate() {
 		const tubeCrate = new CraterTube(this.#works?.tubes);
 		this.#crates.tubeCrate = tubeCrate;
@@ -60,7 +60,7 @@ export default class Crater {
 		const largestcrates = new CraterPythagoras(this.#works?.largest);
 		this.#crates.largestCrate = largestcrates;
 	};
-	
+
 	#sameSizeCrate() {
 		const sameMeasure =	new CraterSameSize(this.#works?.sameSize);
 		this.#crates.sameSizeCrate = sameMeasure;
@@ -106,7 +106,7 @@ export default class Crater {
 			check1 = this.#crates[key] === 'sameSizeCrate';
 			check2 = this.#crates[key] === 'standardCrate';
 
-			if (check1 || check2) 
+			if (check1 || check2)
 				this.#crates[key]?.backUp?.map(filterCrates);
 			this.#crates[key]?.crates?.map(filterCrates);
 		};
@@ -165,7 +165,7 @@ export default class Crater {
 			check1 = this.#crates[key] === 'sameSizeCrate';
 			check2 = this.#crates[key] === 'standardCrate';
 
-			if (check1 || check2) 
+			if (check1 || check2)
 				this.#crates[key]?.backUp?.map(setTotalCub);
 			else if (!(check1 || check2))
 				this.#crates[key]?.crates?.map(setTotalCub);
@@ -214,7 +214,7 @@ export default class Crater {
 			check1 = this.#crates[key] === 'sameSizeCrate';
 			check2 = this.#crates[key] === 'standardCrate';
 
-			if (check1 || check2) 
+			if (check1 || check2)
 				this.#crates[key]?.backUp?.map(crate => {
 				tmp =	this.#airPortOptions(crate);
 				tmp === 'PAX' ? pax++ : tmp === 'CARGO' ? cargo++ : false;
