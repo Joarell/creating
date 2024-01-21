@@ -54,7 +54,7 @@ export default class CraterLastCheckReArranger {
 
 		while(i++ < listCrates.length && bool) {
 			if (i % 2 === 1) {
-				result =	LEN === 1 ? 
+				result =	LEN === 1 ?
 					JSON.parse(JSON.stringify(attCrate.works[0])):
 					JSON.parse(JSON.stringify(attCrate.works));
 				this.#removeCrate(listCrates, i, result);
@@ -88,12 +88,10 @@ export default class CraterLastCheckReArranger {
 		let i = 0;
 
 		for (info in data) {
-			if (i % 2 === 1)
-				data[info].works.length === 5 ? 
-					works = data[info].works[4].layer5 : 0;
+			if (i++ % 2 === 1)
+				data[info].works.length === 5 ? works = data[info].works[4].layer5 : 0;
 			if(works)
 				break;
-			i++;
 		};
 		return(works ? { info, works } : false);
 	}
@@ -128,23 +126,24 @@ export default class CraterLastCheckReArranger {
 		return(crates);
 	};
 
-	#allocateTheFifthLayer() {
+	#removeTheFifthLayer() {
 		const { crates } =	this.#cratesDone.standardCrate;
 		const list =		this.#extractTheFifthLayer(crates);
+		const LIMITLAYER =	5;
 		let count =			0;
 		let newList;
 		let newCrate;
 		let check;
-		let i;
+		let layers;
 
 		if (!list)
 			return;
-		for (i in crates) {
-			if (!Array.isArray(crates[i]) && crates[i].works.length <= 4) {
-				newList = this.#newCrateSet(list.works, crates[i]);
-				newCrate = new CraterStandard(newList, false);
-				check = newCrate.crates.length === 2 && 
-					newCrate.crates[1].works.length <= 4;
+		for (layers in crates) {
+			if (!Array.isArray(crates[layers]) && count !== +list.info) {
+				newList = this.#newCrateSet(list.works, crates[layers]);
+				newCrate = new CraterStandard(newList, false, LIMITLAYER);
+				check = newCrate.crates.length === 2;
+				console.log(newCrate, 'and', count);
 				if (check) {
 					this.#updatesCrates(crates, count, newCrate, list.info);
 					break ;
@@ -169,6 +168,6 @@ export default class CraterLastCheckReArranger {
 			this.#cratesDone.standardCrate.backUp = false;
 			return ;
 		};
-		this.#allocateTheFifthLayer();
+		this.#removeTheFifthLayer();
 	};
 };
