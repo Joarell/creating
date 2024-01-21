@@ -12,6 +12,25 @@ import Arranger from '../otto/app/core2/Arranger.class.mjs';
 
 
 describe("These are tests to Crater class.", () => {
+	it("TEST-63: returns false to no tube list.", () => {
+		const list = [
+			['SF', 160, 5, 160],
+			['HU-19-20', 120, 5, 100],
+			['HU-1989-20', 50, 5, 50],
+			['HU-1989-10', 60, 5, 60],
+			['HU-1923-15', 40, 3, 50],
+			['HU-1989-66', 40, 3, 50],
+			['HU-1989-17', 40, 3, 50],
+			['HU-1989-02', 30, 3, 30],
+		];
+
+		const works =		new Arranger(mock.artWorksList(list));
+		const current =		new Crater(works).crates.airCubTotal;
+		const expected =	217.792;
+
+		assert.deepStrictEqual(current, expected);
+	});
+
 	it("TEST-1: returns false to no tube list.", () => {
 		const current =		new CraterTube();
 		const expected =	{ tube: false };
@@ -867,6 +886,46 @@ describe("These are tests to Crater class.", () => {
 			['HU-1989-11', 30, 3, 30],
 			['HU-1989-03', 30, 3, 30],
 			['HU-1989-04', 30, 3, 30],
+		];
+
+		const works =		new Arranger(mock.artWorksList(list));
+		const current =		new Crater(works).crates.airCubTotal;
+		const expected =	217.792;
+
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-61: returns false to no tube list.", () => {
+		const list = [
+			['SF', 160, 5, 160],
+			['HU-19-20', 150, 5, 90],
+			['HU-1989-20', 120, 5, 100],
+			['HU-1989-10', 60, 5, 60],
+			['HU-1923-15', 50, 3, 50],
+			['HU-1989-16', 40, 3, 50],
+			['HU-1989-11', 40, 3, 50],
+			['HU-1989-03', 40, 3, 50],
+			['HU-1989-04', 40, 3, 50],
+		];
+
+		const works =		new Arranger(mock.artWorksList(list));
+		const current =		new Crater(works).crates.airCubTotal;
+		const expected =	217.792;
+
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-62: returns false to no tube list.", () => {
+		const list = [
+			['SF', 160, 5, 160],
+			['HU-19-20', 130, 5, 100],
+			['HU-1989-20', 50, 5, 50],
+			['HU-1989-10', 50, 5, 50],
+			['HU-1923-15', 50, 3, 50],
+			['HU-1989-66', 30, 3, 30],
+			['HU-1989-17', 30, 3, 30],
+			['HU-1989-02', 30, 3, 30],
+			['HU-1989-07', 30, 3, 30],
 		];
 
 		const works =		new Arranger(mock.artWorksList(list));
