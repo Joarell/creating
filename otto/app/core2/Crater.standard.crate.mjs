@@ -327,7 +327,6 @@ export default class CraterStandard {
 		let sumY
 
 		if (prev) {
-			// TODO: find all prev sizes.
 			const locations = this.#seekPreviousBaseWork(layer, layer[i][0][0]);
 			const { axioX, axioY } =	layer[prev][1];
 			sumX = axioX.includes(layer[i][0][0]) ?
@@ -336,21 +335,17 @@ export default class CraterStandard {
 				+(size[2] - layer[prev][0][3] * layer[prev][1].y2).toFixed(3) : 0;
 
 			if (x2 < 1) {
-				// gapX1 = x2 === 0 && y1 < 1 ?
-				// 	size[0] : size[0] - (layer[i][0][1] + locations.sumY);
 				gapX1 = size[0] - (layer[i][0][1] + locations.sumY);
 				gapY1 = sumY
 			}
 			else if (y2 < 1) {
-				// gapY1 = y2 === 0 && x1 < 1 ?
-				// 	size[2] : size[2] - (layer[i][0][3] + locations.sumX);
 				gapY1 = size[2] - (layer[i][0][3] + locations.sumX);
 				gapX1 = sumX
 			};
 		}
 		else {
 			if (x2 < 1 || x1 < 1){
-				gapX1 = y2 < 1 ?
+				gapX1 = y2 <= 1 ?
 				+(((1 - x2) * layer[i][0][1]) + size[0] - layer[i][0][1]).toFixed(4) :
 				+((1 - x2) * layer[i][0][1]).toFixed(4);
 				gapY1 = x2 <= 1 && y1 === 0 ?

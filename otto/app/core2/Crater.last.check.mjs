@@ -143,7 +143,6 @@ export default class CraterLastCheckReArranger {
 				newList = this.#newCrateSet(list.works, crates[layers]);
 				newCrate = new CraterStandard(newList, false, LIMITLAYER);
 				check = newCrate.crates.length === 2;
-				console.log(newCrate, 'and', count);
 				if (check) {
 					this.#updatesCrates(crates, count, newCrate, list.info);
 					break ;
