@@ -203,16 +203,16 @@ export default class CraterStandard {
 	};
 
 	#updateLayerSpace(layer, work, decX, decY, ref) {
-		const { size } =			layer[0];
+		const { size } =	layer[0];
+		const valX =		work.length > 5 ? work[3] : work[1];
+		const valY =		work.length > 5 ? work[1] : work[3];
 
-		if (layer.length > 1) {
+		if (ref) {
 			const { axioX, axioY } =	layer[ref][1];
 			const checkX =	axioX.includes(work[0]);
 			const checkY =	axioY.includes(work[0]);
 			const artX =	layer[ref][0].length > 5 ? layer[ref][0][3] : layer[ref][0][1];
 			const artY =	layer[ref][0].length > 5 ? layer[ref][0][1] : layer[ref][0][3];
-			const valX =	work.length > 5 ? work[3] : work[1];
-			const valY =	work.length > 5 ? work[1] : work[3];
 			const innerX =	valX + artX === size[0];
 			const innerY =	valY + artY === size[2];
 			const copyX2 =	layer[0].x2;
@@ -230,10 +230,10 @@ export default class CraterStandard {
 				layer[0].x2 = layer[0].x2 + decX : 0;
 		}
 		else {
-			layer[0].x1 = layer[0].x1 !== 0 ? layer[0].x1 + decX : decX;
-			layer[0].y1 = layer[0].y1 !== 0 ? layer[0].y1 + decY : decY;
-			layer[0].x2 = work[3] === size[2] ? 1 : 0;
-			layer[0].y2 = work[1] === size[0] ? 1 : 0;
+			layer[0].x1 = decX;
+			layer[0].y1 = decY;
+			layer[0].x2 = layer[0].y1 < 1 ? 0 : decX;
+			layer[0].y2 = layer[0].x1 < 1 ? 0 : decY;
 		};
 		return(layer);
 	};
@@ -310,8 +310,8 @@ export default class CraterStandard {
 			const CHECKER = axioX.includes(newCode) || axioY.includes(newCode);
 
 			if (CHECKER) {
-				sumX += axioX.includes(newCode) ? work[0][3] : 0;
-				sumY += axioY.includes(newCode) ? work[0][1] : 0;
+				sumX += axioY.includes(newCode) ? work[0][1] : 0;
+				sumY += axioX.includes(newCode) ? work[0][3] : 0;
 				newCode = work[0][0];
 			};
 		});
@@ -323,67 +323,73 @@ export default class CraterStandard {
 		const { x2, y2, prev } = layer[i][1];
 		let gapX1;
 		let gapY1;
+		let gapX2;
+		let gapY2;
 		let sumX;
 		let sumY
 
 		if (prev) {
 			const locations = this.#seekPreviousBaseWork(layer, layer[i][0][0]);
 			const { axioX, axioY } =	layer[prev][1];
+
+			gapX1 = layer[prev][1].y2 < 1 ?
+				size[0] - layer[prev][0][1]:
+				+((1 - layer[prev][1].x2) * size[0]).toFixed(4);
+			gapY1 = layer[prev][1].x2 < 1 ?
+				size[2] - layer[prev][0][3]:
+				+(size[2] - y1 * size[2]).toFixed(4);
 			sumX = axioX.includes(layer[i][0][0]) ?
 				+(size[0] - layer[prev][0][1] * layer[prev][1].x2).toFixed(3) : 0;
 			sumY = axioY.includes(layer[i][0][0]) ?
 				+(size[2] - layer[prev][0][3] * layer[prev][1].y2).toFixed(3) : 0;
 
 			if (x2 < 1) {
-				gapX1 = size[0] - (layer[i][0][1] + locations.sumY);
-				gapY1 = sumY
+				gapX2 = size[0] - (layer[i][0][1] + locations.sumX);
+				gapY2 = sumY === 0 ? size[2] : sumY;
 			}
 			else if (y2 < 1) {
-				gapY1 = size[2] - (layer[i][0][3] + locations.sumX);
-				gapX1 = sumX
+				gapY2 = gapX1 > 0 ?
+					size[2] : size[2] - (layer[i][0][3] + locations.sumY);
+				gapX2 = sumX === 0 ? size[0] : sumX;
 			};
 		}
 		else {
+			gapX1 = +((1 - x1) * size[0]).toFixed(4);
+			gapY1 = x2 < 1 ? size[2] - layer[i][0][3] : +((1 - y1) * size[2]).toFixed(4);
 			if (x2 < 1 || x1 < 1){
-				gapX1 = y2 <= 1 ?
+				gapX2 = y2 <= 1 ?
 				+(((1 - x2) * layer[i][0][1]) + size[0] - layer[i][0][1]).toFixed(4) :
 				+((1 - x2) * layer[i][0][1]).toFixed(4);
-				gapY1 = x2 <= 1 && y1 === 0 ?
+				gapY2 = x2 < 1 ?
 					size[2] :
 					+(((1 - y2) * layer[i][0][3]) + size[0] - layer[i][0][3]).toFixed(4);
 			}
 			else if (y2 < 1 || y1 < 1) {
-				gapY1 = x2 < 1 && y2 < 1 ? size[2] : +((1 - y2) * layer[i][0][3]).toFixed(4);
-				gapX1 = x1 < 1 ? size[0] : size[0] - layer[i][0][1];
+				gapY2 = x2 < 1 && y2 < 1 ? size[2] : +((1 - y2) * layer[i][0][3]).toFixed(4);
+				gapX2 = x1 < 1 ? size[0] : size[0] - layer[i][0][1];
 			};
 		};
-		return({ gapX1, gapY1 });
+		return({ gapX1, gapX2, gapY1, gapY2 });
 	}
 
 	#searchWorkSpace(layer, workProp, i, result) {
 		const { x1, y1, size } =	layer[0];
-		const { x2, y2, } =	layer[i][1];
+		const { x2, y2, } =			layer[i][1];
 		if (x2 === 1 && y2 === 1)
 			return(result);
 		const GAPS =	this.#extraAvailableGap(layer, i );
-		const GAPX =	x2 < 1 && GAPS.gapX1 > 0 && GAPS.gapX1 - workProp.sizeX <= size[0];
-		const GAPY =	y2 < 1 && GAPS.gapY1 > 0 && GAPS.gapY1 - workProp.sizeY <= size[2];
-		const X =		+(GAPS.gapX1 / size[0] - workProp.x).toFixed(4);
-		const Y =		+(GAPS.gapY1 / size[2] - workProp.y).toFixed(4);
-		let placeX =	y2 < 1 && X >= 0 && X <= 1 + GAPS.gapX1 / size[0];
-		let placeY =	x2 < 1 && Y >= 0 && Y <= 1 + GAPS.gapY1 / size[2];
+		const testX =	GAPS.gapY1 > 0 && GAPS.gapY1 - workProp.sizeY >= 0;
+		const testY =	GAPS.gapX1 > 0 && GAPS.gapX1 - workProp.sizeX >= 0;
+		const AXIOX =	x2 < 1 && testX;
+		const AXIOY =	y2 < 1 && testY;
+		const X =		+(GAPS.gapX2 / size[0]).toFixed(4);
+		const Y =		+(GAPS.gapY2 / size[2]).toFixed(4);
 		let check;
 
-		if(X < 0 || Y < 0) {
-			placeX = false;
-			placeY = false;
-		};
 		check = y1 + workProp.y <= 1 && x2 + workProp.x <= 1;
-		!check ? check = y1 + workProp.y <= 1 && workProp.sizeX <= GAPS.gapX1 : 0;
-		!check ? check = x1 + workProp.x <= 1 && y2 + workProp.y <= 1 : 0;
-		!check ? check = x1 + workProp.x <= 1 && workProp.sizeY <= GAPS.gapY1 : 0;
-		!check ? check = GAPX && placeY && y2 >= workProp.y : 0;
-		!check ? check = GAPY && placeX && x2 >= workProp.x : 0;
+		!check ? check = x1 + workProp.x <= 1 && x2 + workProp.y <= 1: 0;
+		!check ? check = AXIOX && x2 + workProp.x <= 1 + X: 0;
+		!check ? check = AXIOY && y2 + workProp.y <= 1 + Y: 0;
 		if(check) {
 			result.loop = false;
 			result.value = i;
