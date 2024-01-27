@@ -1,10 +1,17 @@
 
-
+/**
+ * @class Class to comping the Crater class as a method towards solve canvas with different sizes.
+*/
 export default class CraterStandard {
 	#list;
 	#maxLayers;
 	#backUp;
 
+	/**
+	* @param {Array} canvas - The list to be solved.
+	* @param {Array} backUp - The backUp from the first solved tried.
+	* @param {Number} maxLayer - The max number of layers to the crate.
+	*/
 	constructor(canvas, backUp, maxLayer) {
 		if(!canvas || canvas.length === 0)
 			return({ standard: false});
@@ -159,24 +166,26 @@ export default class CraterStandard {
 		const closeX =		length > 5 ? closeArt[0][3] : closeArt[0][1];
 		const closeY =		length > 5 ? closeArt[0][1] : closeArt[0][3];
 		const lastPlace =	this.#prevLocationWork({closeX, closeY}, {refX, refY}, size, closeArt);
+		const X1 =			+(refX * layer[ref][1].x2).toFixed(4);
+		const Y1 =			+(refY * layer[ref][1].y2).toFixed(4);
 		const AXIOX =		lastPlace.X ?
-			refX + closeX + work.valX <= size[0]: false;
+			X1 + work.valX <= size[0]: false;
 		const AXIOY =		lastPlace.Y ?
-			refY + closeY + work.valY <= size[2]: false;
-		const PROPX =			work.valX / closeX + closeArt[1].x2 <= 1;
-		const PROPY =			work.valY / closeY + closeArt[1].y2 <= 1;
+			Y1 + work.valY <= size[2]: false;
+		const PROPX =		work.valX / closeX + closeArt[1].x2 <= 1;
+		const PROPY =		work.valY / closeY + closeArt[1].y2 <= 1;
 
-		if (AXIOX && PROPX) {
-			if(work.valX / layer[0].size[0] <= layer[0].x1) {
+		if (AXIOY && PROPX) {
+			if(work.valX / layer[0].size[0] <= layer[0].x1 && closeArt[1].x2 < 1) {
 				closeArt[1].x2 += +(work.valX / closeX).toFixed(2);
 				closeArt[1].axioX.push(code);
-			}
+			};
 		}
-		else if (AXIOY && PROPY) {
-			if(work.valY / layer[0].size[2] <= layer[0].y1) {
+		else if (AXIOX && PROPY) {
+			if(work.valY / layer[0].size[2] <= layer[0].y1 && closeArt[1].y2 < 1) {
 				closeArt[1].y2 += +(work.valY / closeY).toFixed(2);
 				closeArt[1].axioY.push(code);
-			}
+			};
 		};
 		return(layer);
 	};
@@ -226,7 +235,7 @@ export default class CraterStandard {
 			innerY && layer[0].y1 < 1 ? layer[0].y1 = 1: 0;
 			innerX || layer[0].x1 === 1 && copyX2 < 1 ?
 				layer[0].y2 = layer[0].y2 + decY : 0;
-			innerY || layer[0].y1 === 1 && copyY2 < 1 && copyY2 === 1 ?
+			innerY || layer[0].y1 === 1 && copyY2 < 1 && copyX2 === 1 ?
 				layer[0].x2 = layer[0].x2 + decX : 0;
 		}
 		else {
@@ -318,6 +327,29 @@ export default class CraterStandard {
 		return({ sumX, sumY });
 	};
 
+	#firstGapsAndExtraSpace(layer, prev, index) {
+		const { size } =					layer[0];
+		const { axioX, axioY, x2, y2 } =	layer[prev][1];
+		const calcX1 =	y2 <= 1 ?
+			size[0] - (layer[prev][0][1] + layer[index][0][1]) : 0;
+		const calcY1 =	x2 <= 1 ?
+			size[2] - (layer[prev][0][3] + layer[index][0][3]) : 0;
+		const ext1 =	+(size[0] - layer[prev][0][1] * layer[prev][1].x2).toFixed(3);
+		const ext2 =	y2 <= 1 ?
+			+(size[2] - layer[prev][0][3] * layer[prev][1].y2).toFixed(3): 0;
+
+		const gapX1 =	y2 < 1 ? size[0] - layer[prev][0][1]: calcX1;
+		const gapY1 =	x2 < 1 ? size[2] - layer[prev][0][3]: calcY1;
+		const extraX =	axioX.includes(layer[index][0][0]) ? ext1 : 0;
+		const extraY =	axioY.includes(layer[index][0][0]) ? ext2 : 0;
+
+		return({ gapX1, gapY1, extraX, extraY });
+	};
+
+	/**
+	 * @param {Array} layer - Array list with sizes and works added.
+	 * @param {Number} i - Index of the work inside the layer.
+	 */
 	#extraAvailableGap(layer, i) {
 		const { x1, y1, size } = layer[0];
 		const { x2, y2, prev } = layer[i][1];
@@ -325,32 +357,32 @@ export default class CraterStandard {
 		let gapY1;
 		let gapX2;
 		let gapY2;
-		let sumX;
-		let sumY
 
 		if (prev) {
-			const locations = this.#seekPreviousBaseWork(layer, layer[i][0][0]);
-			const { axioX, axioY } =	layer[prev][1];
+			const locations =	this.#seekPreviousBaseWork(layer, layer[i][0][0]);
+			const possible =	this.#firstGapsAndExtraSpace(layer, prev, i);
+			const allX =		layer[prev][1].x2 * layer[prev][0][1];
 
-			gapX1 = layer[prev][1].y2 < 1 ?
-				size[0] - layer[prev][0][1]:
-				+((1 - layer[prev][1].x2) * size[0]).toFixed(4);
-			gapY1 = layer[prev][1].x2 < 1 ?
-				size[2] - layer[prev][0][3]:
-				+(size[2] - y1 * size[2]).toFixed(4);
-			sumX = axioX.includes(layer[i][0][0]) ?
-				+(size[0] - layer[prev][0][1] * layer[prev][1].x2).toFixed(3) : 0;
-			sumY = axioY.includes(layer[i][0][0]) ?
-				+(size[2] - layer[prev][0][3] * layer[prev][1].y2).toFixed(3) : 0;
-
+			gapX1 = possible.gapX1;
+			gapY1 = possible.gapY1;
 			if (x2 < 1) {
-				gapX2 = size[0] - (layer[i][0][1] + locations.sumX);
-				gapY2 = sumY === 0 ? size[2] : sumY;
+				gapX2 = layer[prev][1].x2 > 1 ? +(size[0] - allX).toFixed(4) :
+					size[0] - (layer[i][0][1] + locations.sumX);
+				gapY2 = possible.extraY === 0 && layer[prev][1].x2 <= 1 && size[2] > layer[prev][0][3] ?
+					size[2] - (size[2] * layer[0].y2) : possible.extraY;
 			}
-			else if (y2 < 1) {
-				gapY2 = gapX1 > 0 ?
-					size[2] : size[2] - (layer[i][0][3] + locations.sumY);
-				gapX2 = sumX === 0 ? size[0] : sumX;
+			else {
+				if (gapX1 > 0 && y2 < 1)
+					gapY2 = layer[prev][1].x2 <= 1 ?
+						size[2] - (size[2] * layer[0].y2):
+						size[2] - (layer[i][0][3] + locations.sumY);
+				else
+					gapY2 = 0;
+				gapX2 = possible.extraX === 0 ? size[0] : possible.extraX;
+				if (x2 >= 1 && y2 >= 1) {
+					gapX2 = 0;
+					gapY2 = 0;
+				}
 			};
 		}
 		else {
@@ -365,35 +397,34 @@ export default class CraterStandard {
 					+(((1 - y2) * layer[i][0][3]) + size[0] - layer[i][0][3]).toFixed(4);
 			}
 			else if (y2 < 1 || y1 < 1) {
-				gapY2 = x2 < 1 && y2 < 1 ? size[2] : +((1 - y2) * layer[i][0][3]).toFixed(4);
+				if (x2 >= 1)
+					gapY2 = layer[i][0][3] - layer[i][1].y2 * layer[i][0][3];
+				else
+					gapY2 = x2 < 1 && y2 < 1 ? size[2] : +((1 - y2) * layer[i][0][3]).toFixed(4);
 				gapX2 = x1 < 1 ? size[0] : size[0] - layer[i][0][1];
 			};
 		};
 		return({ gapX1, gapX2, gapY1, gapY2 });
-	}
+	};
 
+	/**
+	 * @param {Array} layer - All works put in layer and size.
+	 * @param {Object} workProp - The work candidate to get inside the layer with proportion values.
+	 * @param {Number} i - The index of the work reference to find space.
+	 * @param {Object} result - Gets the reference work and stop the while loop by #fitSizesCheckIn method.
+	 */
 	#searchWorkSpace(layer, workProp, i, result) {
-		const { x1, y1, size } =	layer[0];
-		const { x2, y2, } =			layer[i][1];
-		if (x2 === 1 && y2 === 1)
-			return(result);
 		const GAPS =	this.#extraAvailableGap(layer, i );
-		const testX =	GAPS.gapY1 > 0 && GAPS.gapY1 - workProp.sizeY >= 0;
-		const testY =	GAPS.gapX1 > 0 && GAPS.gapX1 - workProp.sizeX >= 0;
-		const AXIOX =	x2 < 1 && testX;
-		const AXIOY =	y2 < 1 && testY;
-		const X =		+(GAPS.gapX2 / size[0]).toFixed(4);
-		const Y =		+(GAPS.gapY2 / size[2]).toFixed(4);
-		let check;
+		const testX1 =	GAPS.gapY1 > 0 && GAPS.gapY1 >= workProp.sizeY; // layer
+		const testX2 =	GAPS.gapX2 > 0 && GAPS.gapX2 >= workProp.sizeX; // work index
+		const testY1 =	GAPS.gapX1 > 0 && GAPS.gapX1 >= workProp.sizeX; // layer
+		const testY2 =	GAPS.gapY2 > 0 && GAPS.gapY2 >= workProp.sizeY; // work index
 
-		check = y1 + workProp.y <= 1 && x2 + workProp.x <= 1;
-		!check ? check = x1 + workProp.x <= 1 && x2 + workProp.y <= 1: 0;
-		!check ? check = AXIOX && x2 + workProp.x <= 1 + X: 0;
-		!check ? check = AXIOY && y2 + workProp.y <= 1 + Y: 0;
-		if(check) {
+		// if (testX1 && testX2 || testY1 && testY2 || testX2 && testY2) {
+		if (testX1 && testX2 || testY1 && testY2) {
 			result.loop = false;
 			result.value = i;
-		}
+		};
 		return(result);
 	};
 
