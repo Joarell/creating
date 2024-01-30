@@ -12,7 +12,7 @@
 function extractWorksLayers({ works }) {
 	let arts = [];
 	const AUX = Array.isArray(works[0][0]) ? works[0] : works;
-	
+
 	AUX?.map(data => {
 		let layer;
 
