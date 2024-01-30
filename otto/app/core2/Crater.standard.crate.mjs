@@ -16,6 +16,7 @@ export default class CraterStandard {
 		if(!canvas || canvas.length === 0)
 			return({ standard: false});
 
+		console.log(canvas.length);
 		this.#list =		canvas;
 		this.#maxLayers =	maxLayer ?? 4;
 		this.#backUp =		backUp;
@@ -143,6 +144,10 @@ export default class CraterStandard {
 			base[1].x2 = +(work.valX / ref.artX + base[1].x2).toFixed(2);
 			base[1].axioX.push(code);
 		}
+		else if (layerSpace.avlX2 && layerSpace.avlY2) {
+			base[1].x2 = +(work.valX / ref.artX + base[1].x2).toFixed(2);
+			base[1].axioX.push(code);
+		};
 		return(base);
 	};
 
@@ -327,19 +332,48 @@ export default class CraterStandard {
 		return({ sumX, sumY });
 	};
 
+	/**
+	 * @param {Array} layer list of works and available sizes.
+	 * @param {Number} index Index of the compare base work.
+	 * @param {Number} prev Index of the based work before the compare one.
+	 */
+	#getTheCurrentWorkInfo(layer, i, prev) {
+		const FLIP =	layer[i][0].length > 5;
+		const propX =	FLIP > 5 ?
+			+(layer[i][0][3] / layer[prev][0][1]).toFixed(3):
+			+(layer[i][0][1] / layer[prev][0][1]).toFixed(3);
+		const propY=	FLIP > 5 ?
+			+(layer[i][0][1] / layer[prev][0][3]).toFixed(3):
+			+(layer[i][0][3] / layer[prev][0][3]).toFixed(3);
+		const spaceX = FLIP ? +(propX * layer[i][0][3]).toFixed(3):
+			+(propX * layer[i][0][1]).toFixed(3);
+		const spaceY = FLIP ? +(propY * layer[i][0][1]).toFixed(3):
+			+(propY * layer[i][0][3]).toFixed(3);
+
+		return ({ propX, propY, spaceX, spaceY });
+	};
+
+	/**
+	 * @param {Array} layer list of works and available sizes.
+	 * @param {Number} index Index of the compare base work.
+	 * @param {Number} prev Index of the based work before the compare one.
+	 */
 	#firstGapsAndExtraSpace(layer, prev, index) {
 		const { size } =					layer[0];
 		const { axioX, axioY, x2, y2 } =	layer[prev][1];
-		const calcX1 =	y2 <= 1 ?
-			size[0] - (layer[prev][0][1] + layer[index][0][1]) : 0;
-		const calcY1 =	x2 <= 1 ?
-			size[2] - (layer[prev][0][3] + layer[index][0][3]) : 0;
-		const ext1 =	+(size[0] - layer[prev][0][1] * layer[prev][1].x2).toFixed(3);
-		const ext2 =	y2 <= 1 ?
+		const SUMS =	this.#seekPreviousBaseWork(layer, layer[index][0][0]);
+		const workProp =	this.#getTheCurrentWorkInfo(layer, index, prev);
+		const calcX1 =	y2 > workProp.propY && y2 <= 1 ?
+			+(size[0] - (layer[prev][0][1] - layer[index][0][1])) : 0;
+			// size[0] - (layer[prev][0][1] + layer[index][0][1]);
+		const calcY1 =	x2 > workProp.propX && x2 <= 1 ? size[2] - SUMS.sumX:
+			size[2] - SUMS.sumX;
+		const ext1 = +(size[0] - layer[prev][0][1] * layer[prev][1].x2).toFixed(3);
+		const ext2 =	y2 <= 0 ?
 			+(size[2] - layer[prev][0][3] * layer[prev][1].y2).toFixed(3): 0;
 
-		const gapX1 =	y2 < 1 ? size[0] - layer[prev][0][1]: calcX1;
-		const gapY1 =	x2 < 1 ? size[2] - layer[prev][0][3]: calcY1;
+		const gapX1 =	layer[index][1].y2 === 0 ? calcX1 : 0;
+		const gapY1 =	layer[index][1].x2 === 0 ? calcY1 : 0;
 		const extraX =	axioX.includes(layer[index][0][0]) ? ext1 : 0;
 		const extraY =	axioY.includes(layer[index][0][0]) ? ext2 : 0;
 
@@ -347,64 +381,91 @@ export default class CraterStandard {
 	};
 
 	/**
-	 * @param {Array} layer - Array list with sizes and works added.
-	 * @param {Number} i - Index of the work inside the layer.
+	 * @param {Array} layer list of works and available sizes.
+	 * @param {Number} ind Index of the compare base work.
+	 * @param {Number} prev Index of the based work before the compare one.
 	 */
-	#extraAvailableGap(layer, i) {
-		const { x1, y1, size } = layer[0];
-		const { x2, y2, prev } = layer[i][1];
+	#setGapsBasedOnPreviousWorkOnLayer(layer, ind, prev) {
+		const { size } =	layer[0];
+		const { x2, y2 } =	layer[prev][1];
+		const locations =	this.#seekPreviousBaseWork(layer, layer[ind][0][0]);
+		const possible =	this.#firstGapsAndExtraSpace(layer, prev, ind);
+		const allX =		layer[prev][1].x2 * layer[prev][0][1];
+		const gapX1 =		possible.gapX1;
+		const gapY1 =		possible.gapY1;
+		let gapX2;
+		let gapY2;
+
+		if (layer[ind][1].x2 === 1 && layer[ind][1].y2 === 1) {
+			gapX2 = 0;
+			gapY2 = 0;
+		}
+		else if (x2 < 1) {
+			gapX2 = x2 > 1 ? +(size[0] - allX).toFixed(4) :
+				size[0] - (layer[ind][0][1] + locations.sumX);
+			gapY2 = possible.extraY === 0 && x2 <= 1 && size[2] > layer[prev][0][3] ?
+				size[2] - (size[2] * layer[0].y2) : possible.extraY;
+		}
+		else {
+			if (gapX1 > 0 && y2 < 1)
+				gapY2 = x2 <= 1 ?
+					size[2] - (size[2] * layer[0].y2):
+					size[2] - (y2 * layer[prev][0][3] + locations.sumY);
+			else
+				gapY2 = 0;
+			gapX2 = possible.extraX === 0 ? size[0] - (locations.sumX + layer[prev][0][1]):
+				possible.extraX;
+		};
+		return({ gapX1, gapX2, gapY1, gapY2 });
+	};
+
+	/**
+	 * @param {Array} layer list of works and available sizes.
+	 * @param {Number} ind Index of the compare base work.
+	 */
+	#setGapsOverTheFirstWorkOnLayer(layer, ind) {
+		const { x1, y1, size } =	layer[0];
+		const { x2, y2 } =			layer[ind][1];
+		const DIM =					layer[ind][0];
 		let gapX1;
 		let gapY1;
 		let gapX2;
 		let gapY2;
 
-		if (prev) {
-			const locations =	this.#seekPreviousBaseWork(layer, layer[i][0][0]);
-			const possible =	this.#firstGapsAndExtraSpace(layer, prev, i);
-			const allX =		layer[prev][1].x2 * layer[prev][0][1];
-
-			gapX1 = possible.gapX1;
-			gapY1 = possible.gapY1;
-			if (x2 < 1) {
-				gapX2 = layer[prev][1].x2 > 1 ? +(size[0] - allX).toFixed(4) :
-					size[0] - (layer[i][0][1] + locations.sumX);
-				gapY2 = possible.extraY === 0 && layer[prev][1].x2 <= 1 && size[2] > layer[prev][0][3] ?
-					size[2] - (size[2] * layer[0].y2) : possible.extraY;
-			}
-			else {
-				if (gapX1 > 0 && y2 < 1)
-					gapY2 = layer[prev][1].x2 <= 1 ?
-						size[2] - (size[2] * layer[0].y2):
-						size[2] - (layer[i][0][3] + locations.sumY);
-				else
-					gapY2 = 0;
-				gapX2 = possible.extraX === 0 ? size[0] : possible.extraX;
-				if (x2 >= 1 && y2 >= 1) {
-					gapX2 = 0;
-					gapY2 = 0;
-				}
-			};
+		gapX1 = y2 <= 1 ? +((1 - x1) * size[0]).toFixed(4) : 0;
+		gapY1 = x2 <= 1 && y2 < 1 ? size[2] - DIM[3] : +((1 - y1) * size[2]).toFixed(4);
+		if (x2 < 1 || x1 < 1) {
+			gapX2 = y2 <= 1 ? +(size[0] - (x2 * DIM[1])).toFixed(0):
+				size[0] - (size[0] * layer[0].x2);
+				// +(((1 - x2) * layer[ind][0][1]) + size[0] - layer[ind][0][1]).toFixed(4) : 0;
+			gapY2 = x2 <= 1 ?
+				size[2] - (size[2] * layer[0].y2):
+				size[2] - (y2 * DIM[3]);
+				// +(((1 - y2) * layer[ind][0][3]) + size[0] - layer[ind][0][3]).toFixed(4);
 		}
-		else {
-			gapX1 = +((1 - x1) * size[0]).toFixed(4);
-			gapY1 = x2 < 1 ? size[2] - layer[i][0][3] : +((1 - y1) * size[2]).toFixed(4);
-			if (x2 < 1 || x1 < 1){
-				gapX2 = y2 <= 1 ?
-				+(((1 - x2) * layer[i][0][1]) + size[0] - layer[i][0][1]).toFixed(4) :
-				+((1 - x2) * layer[i][0][1]).toFixed(4);
-				gapY2 = x2 < 1 ?
-					size[2] :
-					+(((1 - y2) * layer[i][0][3]) + size[0] - layer[i][0][3]).toFixed(4);
-			}
-			else if (y2 < 1 || y1 < 1) {
-				if (x2 >= 1)
-					gapY2 = layer[i][0][3] - layer[i][1].y2 * layer[i][0][3];
-				else
-					gapY2 = x2 < 1 && y2 < 1 ? size[2] : +((1 - y2) * layer[i][0][3]).toFixed(4);
-				gapX2 = x1 < 1 ? size[0] : size[0] - layer[i][0][1];
-			};
+		else if (y2 < 1 || y1 < 1) {
+			if (x2 >= 1)
+				gapY2 = DIM[3] - y2 * DIM[3];
+			else
+				gapY2 = y2 <= 1 ? size[2] : +(size[2] - ((1 - y2) * DIM[3])).toFixed(4);
+			gapX2 = x1 < 1 ? size[0] : size[0] - DIM[1];
 		};
 		return({ gapX1, gapX2, gapY1, gapY2 });
+	};
+
+	/**
+	 * @param {Array} layer - Array list with sizes and works added.
+	 * @param {Number} i - Index of the work inside the layer.
+	 */
+	#extraAvailableGap(layer, i) {
+		const { prev } = layer[i][1];
+
+		switch (Number.isSafeInteger(prev)) {
+			case true:
+				return (this.#setGapsBasedOnPreviousWorkOnLayer(layer, i, prev));
+			default:
+				return(this.#setGapsOverTheFirstWorkOnLayer(layer, i));
+		};
 	};
 
 	/**
@@ -420,10 +481,15 @@ export default class CraterStandard {
 		const testY1 =	GAPS.gapX1 > 0 && GAPS.gapX1 >= workProp.sizeX; // layer
 		const testY2 =	GAPS.gapY2 > 0 && GAPS.gapY2 >= workProp.sizeY; // work index
 
-		// if (testX1 && testX2 || testY1 && testY2 || testX2 && testY2) {
 		if (testX1 && testX2 || testY1 && testY2) {
 			result.loop = false;
 			result.value = i;
+		}
+		else if (GAPS.gapX1 === 0 && GAPS.gapY1 === 0) {
+			if(testX2 && testY2) {
+				result.loop = false;
+				result.value = i;
+			};
 		};
 		return(result);
 	};
