@@ -10,18 +10,20 @@ import CraterNotCanvas from '../otto/app/core2/Crater.no.canvas.mjs';
 import CraterStandard from '../otto/app/core2/Crater.standard.crate.mjs';
 import Arranger from '../otto/app/core2/Arranger.class.mjs';
 
-
 describe("These are tests to Crater class.", () => {
-	it("TEST-63: returns false to no tube list.", () => {
+	it("TEST-64: returns false to no tube list.", () => {
 		const list = [
 			['SF', 160, 5, 160],
 			['HU-19-20', 120, 5, 100],
-			['HU-1989-20', 50, 5, 50],
-			['HU-1989-10', 60, 5, 60],
-			['HU-1923-15', 40, 3, 50],
-			['HU-1989-66', 40, 3, 50],
-			['HU-1989-17', 40, 3, 50],
-			['HU-1989-02', 30, 3, 30],
+			['HU-1989-20', 60, 5, 60],
+			['HU-198923-20', 50, 5, 50],
+			['HU-1982399-20', 50, 5, 50],
+			['HU-82399-20', 50, 5, 50],
+			['HU-829-20', 50, 5, 50],
+			['HU-820989-20', 50, 4, 50],
+			['HU-8210-21', 40, 4, 40],
+			['HU-8211-22', 40, 4, 40],
+			['HU-8212-23', 40, 4, 40],
 		];
 
 		const works =		new Arranger(mock.artWorksList(list));
@@ -935,4 +937,61 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
+	it("TEST-63: returns false to no tube list.", () => {
+		const list = [
+			['SF', 160, 5, 160],
+			['HU-19-20', 120, 5, 100],
+			['HU-1989-20', 50, 5, 50],
+			['HU-1989-10', 60, 5, 60],
+			['HU-1923-15', 40, 3, 50],
+			['HU-1989-66', 40, 3, 50],
+			['HU-1989-17', 40, 3, 50],
+			['HU-1989-02', 30, 3, 30],
+		];
+
+		const works =		new Arranger(mock.artWorksList(list));
+		const current =		new Crater(works).crates.airCubTotal;
+		const expected =	217.792;
+
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-64: returns false to no tube list.", () => {
+		const list = [
+			['SF', 160, 5, 160],
+			['HU-19-20', 130, 5, 100],
+			['HU-1989-20', 60, 5, 60],
+			['HU-198923-20', 60, 5, 60],
+			['HU-1982399-20', 40, 5, 50],
+			['HU-82399-20', 30, 5, 30],
+			['HU-829-20', 30, 5, 30],
+			['HU-820989-20', 30, 4, 30],
+			['HU-8209-20', 30, 4, 30],
+		];
+
+		const works =		new Arranger(mock.artWorksList(list));
+		const current =		new Crater(works).crates.airCubTotal;
+		const expected =	217.792;
+
+		assert.deepStrictEqual(current, expected);
+	});
+
+	it("TEST-65: returns false to no tube list.", () => {
+		const list = [
+			['SF', 160, 5, 160],
+			['HU-19-20', 150, 5, 90],
+			['HU-1989-20', 130, 5, 50],
+			['HU-198923-20', 60, 5, 90],
+			['HU-1982399-20', 60, 5, 60],
+			['HU-82399-20', 60, 5, 60],
+			['HU-829-20', 60, 5, 60],
+			['HU-820989-20', 60, 4, 60],
+		];
+
+		const works =		new Arranger(mock.artWorksList(list));
+		const current =		new Crater(works).crates.airCubTotal;
+		const expected =	217.792;
+
+		assert.deepStrictEqual(current, expected);
+	});
 });
