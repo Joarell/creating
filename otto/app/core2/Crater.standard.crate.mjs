@@ -319,6 +319,27 @@ export default class CraterStandard {
 		return(layer);
 	};
 
+	#seekPreviousBaseWork(layer, code) {
+		let sumX =		0;
+		let sumY =		0;
+		let newCode =	code;
+		const copy =	[...layer];
+
+		copy.reverse().map(work => {
+			if (!Array.isArray(work))
+				return
+			const { axioX, axioY } = work[1];
+			const CHECKER = axioX.includes(newCode) || axioY.includes(newCode);
+
+			if (CHECKER) {
+				sumX += axioY.includes(newCode) ? work[0][1] : 0;
+				sumY += axioX.includes(newCode) ? work[0][3] : 0;
+				newCode = work[0][0];
+			};
+		});
+		return({ sumX, sumY });
+	};
+
 	/**
 	 * @param {Array} layer list of works and available sizes.
 	 * @param {Number} index Index of the compare base work.
