@@ -367,7 +367,7 @@ export default class CraterStandard {
 	 * @param {Array} axioX Array with all codes added below the previous work.
 	 * @param {Array} axioY Array with all codes added aside the previous work.
 	 */
-	#getAllPreviousAxisValues({ axioX, axioY }, work, layer, base) {
+	#getAllPreviousAxisValues({ axioX, axioY }, work, layer) {
 		const { size } =	layer[0];
 		const { x2, y2} =	work[1];
 		let valX =			work[0].length > 5 ? work[0][3] : work[0][1];
@@ -409,7 +409,7 @@ export default class CraterStandard {
 	#gapsAndExtraSpace(layer, prev, index) {
 		const { x1, y1, size } =			layer[0];
 		const { axioX, axioY, x2, y2 } =	layer[prev][1];
-		const AXIS =	this.#getAllPreviousAxisValues({axioX, axioY}, layer[index], layer, prev);
+		const AXIS =	this.#getAllPreviousAxisValues({axioX, axioY}, layer[index], layer);
 		const workProp =	this.#getTheCurrentWorkInfo(layer, index, prev);
 
 		const calcX1 =	y2 < workProp.propY ?
