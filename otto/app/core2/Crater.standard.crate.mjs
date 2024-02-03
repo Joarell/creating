@@ -370,8 +370,6 @@ export default class CraterStandard {
 	#getAllPreviousAxisValues({ axioX, axioY }, work, layer, base) {
 		const { size } =	layer[0];
 		const { x2, y2} =	work[1];
-		const baseX =		layer[base][0].length > 5 ? layer[base][0][3] : layer[base][0][1];
-		const baseY =		layer[base][0].length > 5 ? layer[base][0][1] : layer[base][0][3];
 		let valX =			work[0].length > 5 ? work[0][3] : work[0][1];
 		let valY =			work[0].length > 5 ? work[0][1] : work[0][3];
 		let code;
