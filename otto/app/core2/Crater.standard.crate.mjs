@@ -246,7 +246,7 @@ export default class CraterStandard {
 			setY ? layer[0].y1 = +(layer[0].y1 + decY).toFixed(4) : 0;
 			innerX && layer[0].x1 < 1 ? layer[0].x1 = 1: 0;
 			innerY && layer[0].y1 < 1 ? layer[0].y1 = 1: 0;
-			innerX || layer[0].x1 === 1 && copyX2 < 1 ?
+			innerX || layer[0].x1 === 1 && copyX2 < 1 && !setY ?
 				layer[0].y2 = layer[0].y2 + decY : 0;
 			innerY || layer[0].y1 === 1 && copyY2 < 1 && copyX2 === 1 ?
 				layer[0].x2 = layer[0].x2 + decX : 0;
@@ -476,20 +476,21 @@ export default class CraterStandard {
 	#setGapsOverTheFirstWorkOnLayer(layer, ind) {
 		const { x1, y1, size } =	layer[0];
 		const { x2, y2 } =			layer[ind][1];
-		const DIM =					layer[ind][0];
 		let gapX1;
 		let gapY1;
 		let gapX2;
 		let gapY2;
+		const DIM =					layer[ind][0];
 
-		gapX1 = y2 <= 1 ? +((1 - x1) * size[0]).toFixed(4) : 0;
-		gapY1 = x2 <= 1 && y2 < 1 ? size[2] - DIM[3] : +((1 - y1) * size[2]).toFixed(4);
+		// gapX1 = +((1 - x1) * size[0]).toFixed(4);
+		gapX1 = x2 < 1 && y2 === 1 && y1 === 1 && layer[0].y2 <= 1 ?
+			size[0] - (size[0] * layer[0].x2):
+			+((1 - x1) * size[0]).toFixed(4);
+		gapY1 = x2 < 1 && y2 < 1 ? size[2] - DIM[3] : +((1 - y1) * size[2]).toFixed(4);
 		if (x2 < 1 || x1 < 1) {
 			gapX2 = y2 <= 1 ? +(size[0] - (x2 * DIM[1])).toFixed(4):
 				size[0] - (size[0] * layer[0].x2);
-			gapY2 = x2 <= 1 ?
-				size[2] - (size[2] * layer[0].y2):
-				size[2] - (y2 * DIM[3]);
+			gapY2 = x2 <= 1 ? size[2] - (size[2] * layer[0].y2): size[2] - (y2 * DIM[3]);
 		}
 		else if (y2 < 1 || y1 < 1) {
 			if (x2 >= 1)
@@ -529,9 +530,7 @@ export default class CraterStandard {
 		const testX2 =		GAPS.gapX2 > 0 && GAPS.gapX2 >= workProp.sizeX; // work index
 		const testY1 =		GAPS.gapX1 > 0 && GAPS.gapX1 >= workProp.sizeX; // layer
 		const testY2 =		GAPS.gapY2 > 0 && GAPS.gapY2 >= workProp.sizeY; // work index
-		// const lastTest =	!testX1 && !testY1 && testX2 && testY2;
 
-		// if (testX1 && testX2 || testY1 && testY2 || lastTest) {
 		if (testX1 && testX2 || testY1 && testY2) {
 			result.loop = false;
 			result.value = i;
