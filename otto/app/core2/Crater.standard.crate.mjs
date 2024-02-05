@@ -161,8 +161,9 @@ export default class CraterStandard {
 	};
 
 	#updateAdjacentWork(work, closeArt, layer, ref, code) {
-		const { size } =		layer[0];
-		const { length } =	closeArt[0];
+		const { size } =			layer[0];
+		const { length } =			closeArt[0];
+		const { axioX, axioY } =	layer[ref][1];
 		const refX =		layer[ref][0].length > 5 ?
 			layer[ref][0][3] : layer[ref][0][1];
 		const refY =		layer[ref][0].length > 5 ?
@@ -179,21 +180,21 @@ export default class CraterStandard {
 		const PROPX =		work.valX / closeX + closeArt[1].x2 <= 1;
 		const PROPY =		work.valY / closeY + closeArt[1].y2 <= 1;
 
-		if (AXIOY && PROPX) {
+		if (AXIOY && PROPX && axioX.includes(closeArt[0][0])) {
 			if(work.valX / layer[0].size[0] <= layer[0].x1 && closeArt[1].x2 < 1) {
 				closeArt[1].x2 += +(work.valX / closeX).toFixed(2);
 				closeArt[1].axioX.push(code);
 				closeArt[1].x2 > 1 ? closeArt[1].x2 = 1 : false;
 			};
 		}
-		else if (AXIOX && PROPY) {
+		else if (AXIOX && PROPY && axioY.includes(closeArt[0][0])) {
 			if(work.valY / layer[0].size[2] <= layer[0].y1 && closeArt[1].y2 < 1) {
 				closeArt[1].y2 += +(work.valY / closeY).toFixed(2);
 				closeArt[1].axioY.push(code);
 				closeArt[1].y2 > 1 ? closeArt[1].y2 = 1 : false;
 			};
 		}
-		else if (AXIOX && PROPX) {
+		else if (AXIOX && PROPY && axioY.includes(closeArt[0][0])) {
 			if(work.valY / layer[0].size[2] <= layer[0].y1 && closeArt[1].y2 < 1) {
 				closeArt[1].y2 += +(work.valY / closeY).toFixed(2);
 				closeArt[1].axioY.push(code);
@@ -204,11 +205,10 @@ export default class CraterStandard {
 	};
 
 	#updateClosestWorks(work, layer, size, ref) {
-		const filled =		[...layer];
 		const checkLayer =	this.#selectAxioToAddWorks(work, layer, size);
 		const CODE =		work[0];
 
-		filled.reverse().map(art => {
+		layer.map(art => {
 			if (!Array.isArray(art))
 				return ;
 			const artX =	art[0].length > 5 ? art[0][3] : art[0][1];
@@ -244,11 +244,11 @@ export default class CraterStandard {
 
 			setX ? layer[0].x1 = +(layer[0].x1 + decX).toFixed(4) : 0;
 			setY ? layer[0].y1 = +(layer[0].y1 + decY).toFixed(4) : 0;
-			innerX && layer[0].x1 < 1 ? layer[0].x1 = 1: 0;
-			innerY && layer[0].y1 < 1 ? layer[0].y1 = 1: 0;
-			innerX || layer[0].x1 === 1 && copyX2 < 1 && !setY ?
+			innerX && layer[0].x1 < 1 && !setY ? layer[0].x1 = 1: 0;
+			innerY && layer[0].y1 < 1 && !setX ? layer[0].y1 = 1: 0;
+			!setY && innerX || layer[0].x1 === 1 && copyX2 < 1 && !setY ?
 				layer[0].y2 = layer[0].y2 + decY : 0;
-			innerY || layer[0].y1 === 1 && copyY2 < 1 && copyX2 === 1 ?
+			!setX && innerY || layer[0].y1 === 1 && copyY2 < 1 && copyX2 === 1 ?
 				layer[0].x2 = layer[0].x2 + decX : 0;
 		}
 		else {
@@ -273,14 +273,15 @@ export default class CraterStandard {
 		if (layer.length > 1) {
 			this.#updateClosestWorks(work, layer, size, prev);
 			if (prev) {
+				const { axioX, axioY } = layer[prev][1];
 				const artX =	layer[prev][0].length > 5 ?
 					layer[prev][0][3] : layer[prev][0][1];
 				const artY =	layer[prev][0].length > 5 ?
 					layer[prev][0][1] : layer[prev][0][3];
-				const placeX =	artX + newWorkX === size[0];
-				const placeY =	artY + newWorkY === size[2];
-				x2 = placeY ? 1 : 0;
-				y2 = placeX ? 1 : 0;
+				const placeX =	axioX.includes(work[0]);
+				const placeY =	axioY.includes(work[0]);
+				x2 = placeX && newWorkX + artX === size[0] ? 1 : 0;
+				y2 = placeY && newWorkY + artY === size[2] ? 1 : 0;
 			}
 			else {
 				y2 = sizeX + layer[0].x1 === 1 ? 1 : 0;
@@ -482,7 +483,6 @@ export default class CraterStandard {
 		let gapY2;
 		const DIM =					layer[ind][0];
 
-		// gapX1 = +((1 - x1) * size[0]).toFixed(4);
 		gapX1 = x2 < 1 && y2 === 1 && y1 === 1 && layer[0].y2 <= 1 ?
 			size[0] - (size[0] * layer[0].x2):
 			+((1 - x1) * size[0]).toFixed(4);
@@ -493,11 +493,16 @@ export default class CraterStandard {
 			gapY2 = x2 <= 1 ? size[2] - (size[2] * layer[0].y2): size[2] - (y2 * DIM[3]);
 		}
 		else if (y2 < 1 || y1 < 1) {
-			if (x2 >= 1)
+			if (x2 > 1)
 				gapY2 = DIM[3] - y2 * DIM[3];
 			else
-				gapY2 = y2 <= 1 ? size[2] : +(size[2] - ((1 - y2) * DIM[3])).toFixed(4);
-			gapX2 = x1 < 1 ? size[0] : size[0] - DIM[1];
+				gapY2 = y2 <= 1 ?
+				+(size[2] * (1 - layer[0].y2)).toFixed(4) :
+				+(size[2] - ((1 - y2) * DIM[3])).toFixed(4);
+			gapX2 = x1 < 1 ?
+				+(size[0] * (1 - x1)).toFixed(4) :
+				size[0] - DIM[1];
+			gapX1 === 0 ? gapX1 = gapX2 : 0;
 		};
 		return({ gapX1, gapX2, gapY1, gapY2 });
 	};
