@@ -418,8 +418,12 @@ export default class CraterStandard {
 		const calcY1 =	x2 < workProp.propX ?
 			AXIS.valY: +(size[2] - layer[0].y1 * size[2]).toFixed(4);
 
-		const gapX1 =	layer[index][1].y2 === 0 ? calcX1 : +(size[0] * (1 - x1)).toFixed(4);
-		const gapY1 =	layer[index][1].x2 === 0 ? calcY1 : +(size[2] * (1 - y1)).toFixed(4);
+		const gapX1 =	layer[index][1].y2 === 0 ?
+			calcX1 :
+			x1 === 1 && layer[0].y2 < 1 ? size[0] - workProp.spaceX : 0;
+		const gapY1 =	layer[index][1].x2 === 0 ?
+			calcY1 :
+			y1 === 1 && layer[0].x2 < 1 ? size[2] - workProp.spaceY : 0;
 		return({ gapX1, gapY1 });
 	};
 
@@ -430,15 +434,17 @@ export default class CraterStandard {
 	 */
 	#setGapsBasedOnPreviousWorkOnLayer(layer, ind, base, prev) {
 		const AXIOS =		this.#getAllPreviousAxisValues(layer[prev][1], base, layer, prev);
+		const DATA =		this.#getTheCurrentWorkInfo(layer, ind, prev);
 		const GC =			new WeakSet();
 		const { size } =	layer[0];
-		const { x2, y2 } =	layer[prev][1];
+		const { x2, y2, axioY } =	layer[prev][1];
 		const locations =	this.#seekPreviousBaseWork(layer, base[0]);
 		const possible =	this.#gapsAndExtraSpace(layer, prev, ind);
 		const allX =		layer[prev][0][1] - +(x2 * layer[prev][0][1]).toFixed(4);
 		const allY =		layer[prev][0][3] - +(y2 * layer[prev][0][3]).toFixed(4);
-		const gapX1 =		possible.gapX1;
-		const gapY1 =		possible.gapY1;
+		const checkY2 =		base[1].x2 < 1 && size[2] > DATA.spaceY && axioY.includes(base[0][0]);
+		let gapX1 =			possible.gapX1;
+		let gapY1 =			possible.gapY1;
 		let gapX2;
 		let gapY2;
 
@@ -447,17 +453,15 @@ export default class CraterStandard {
 			gapY2 = 0;
 		}
 		else if (base[1].x2 < 1) {
-			gapX2 = base.x2 === 0 && y2 <= 1 ? size[0] - (allX + possible.gapX1):
+			gapX2 = base[1].y2 === 0 && y2 <= 1 ? size[0] - (allX + possible.gapX1):
 				base[1].y2 < 1 ? AXIOS.valX : 0;
-			gapY2 = possible.extraY === 0 && x2 <= 1 && size[2] > layer[prev][0][3] ?
-				size[2] - (size[2] * layer[0].y2) :
-				base[1].y2 < 1 ? possible.gapY1 : 0;
+			gapY2 = checkY2 && x2 <= 1 ? possible.gapX1: 0;
+				// size[2] - (size[2] * layer[0].y2);
 		}
 		else {
 			if (gapX1 > 0 && base[1].y2 < 1)
 				gapY2 = x2 <= 1 ?
 					size[2] - (allY + base[0][3]) :
-					// size[2] - (size[2] * layer[0].y2):
 					size[2] - (y2 * layer[prev][0][3] + locations.sumX);
 			else
 				gapY2 = 0;
@@ -471,37 +475,52 @@ export default class CraterStandard {
 	};
 
 	/**
+	 * @param {Array} primeWork The first work inside the layer.
+	 */
+	#checkOrientationSizes(primeWork) {
+		const X = primeWork.length > 5 ? primeWork[3] : primeWork[1];
+		const Y = primeWork.length > 5 ? primeWork[1] : primeWork[3];
+
+		return({ X, Y });
+	};
+
+	/**
 	 * @param {Array} layer list of works and available sizes.
 	 * @param {Number} ind Index of the compare base work.
 	 */
-	#setGapsOverTheFirstWorkOnLayer(layer, ind) {
+	#setGapsOverTheFirstWorkOnLayer(layer) {
 		const { x1, y1, size } =	layer[0];
-		const { x2, y2 } =			layer[ind][1];
+		const { x2, y2 } =			layer[1][1];
 		let gapX1;
 		let gapY1;
 		let gapX2;
 		let gapY2;
-		const DIM =					layer[ind][0];
+		const DIM =					this.#checkOrientationSizes(layer[1][0]);
 
 		gapX1 = x2 < 1 && y2 === 1 && y1 === 1 && layer[0].y2 <= 1 ?
 			size[0] - (size[0] * layer[0].x2):
-			+((1 - x1) * size[0]).toFixed(4);
-		gapY1 = x2 < 1 && y2 < 1 ? size[2] - DIM[3] : +((1 - y1) * size[2]).toFixed(4);
+			x1 === 1 ?
+				+((1 - x1) * size[0]).toFixed(4) :
+				y2 < 1 ? size[0] - DIM.X : 0;
+		gapY1 = x2 < 1 && y2 < 1 ?
+			size[2] - DIM.Y : +((1 - y1) * size[2]).toFixed(4);
 		if (x2 < 1 || x1 < 1) {
-			gapX2 = y2 <= 1 ? +(size[0] - (x2 * DIM[1])).toFixed(4):
+			gapX2 = y2 <= 1 ? +(size[0] - (x2 * DIM.X)).toFixed(4):
 				size[0] - (size[0] * layer[0].x2);
-			gapY2 = x2 <= 1 ? size[2] - (size[2] * layer[0].y2): size[2] - (y2 * DIM[3]);
+			gapY2 = x2 <= 1 && y2 <= 1?
+				+((size[2] - DIM.Y) + ((1 - y2) * DIM.Y)).toFixed(4) :
+				size[2] * (1 - layer[0].y2);
 		}
 		else if (y2 < 1 || y1 < 1) {
 			if (x2 > 1)
-				gapY2 = DIM[3] - y2 * DIM[3];
+				gapY2 = DIM.Y - y2 * DIM.Y;
 			else
 				gapY2 = y2 <= 1 ?
 				+(size[2] * (1 - layer[0].y2)).toFixed(4) :
-				+(size[2] - ((1 - y2) * DIM[3])).toFixed(4);
+				+(size[2] - ((1 - y2) * DIM.Y)).toFixed(4);
 			gapX2 = x1 < 1 ?
 				+(size[0] * (1 - x1)).toFixed(4) :
-				size[0] - DIM[1];
+				size[0] - DIM.Y;
 			gapX1 === 0 ? gapX1 = gapX2 : 0;
 		};
 		return({ gapX1, gapX2, gapY1, gapY2 });
@@ -518,7 +537,7 @@ export default class CraterStandard {
 			case true:
 				return (this.#setGapsBasedOnPreviousWorkOnLayer(layer, i, layer[i], prev));
 			default:
-				return(this.#setGapsOverTheFirstWorkOnLayer(layer, i));
+				return(this.#setGapsOverTheFirstWorkOnLayer(layer));
 		};
 	};
 
@@ -539,7 +558,7 @@ export default class CraterStandard {
 		if (testX1 && testX2 || testY1 && testY2) {
 			result.loop = false;
 			result.value = i;
-		}
+		};
 		return(result);
 	};
 
