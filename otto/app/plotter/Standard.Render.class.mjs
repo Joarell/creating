@@ -14,16 +14,16 @@ export default class StandardRender {
 		this.#canvas = Object.values(works[layer])[0];
 		this.#filled.x2 = this.#filled.x;
 		this.#filled.y2 = this.#filled.y;
-		
+
 		return (this.#standardRender());
 	};
 
 	#worksPositionLayer({ next, pos, values }) {
-		const RECT = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-		const INSET = 1;
-		const PAD = 20;
-		const X = this.#pixelSize.x;
-		const Y = this.#pixelSize.y;
+		const RECT =	document.createElementNS("http://www.w3.org/2000/svg", "rect");
+		const INSET =	1;
+		const PAD =		20;
+		const X =		this.#pixelSize.x;
+		const Y =		this.#pixelSize.y;
 		const EXTPADY = 0;
 		// const EXTPADY =		next[1] ? Y - next[1] : 0; // BUG: rendering wrong in some cases.
 
@@ -33,7 +33,7 @@ export default class StandardRender {
 		values[0] >= X || pos[0] + values[0] + INSET >= X ?
 			RECT.setAttribute("width", values[0] - PAD) :
 			RECT.setAttribute("width", values[0]);
-		values[1] + EXTPADY >= Y || pos[1] + values[1] >= Y ?
+		values[1] >= Y || pos[1] + values[1] >= Y ?
 			RECT.setAttribute("height", values[1] - PAD) :
 			RECT.setAttribute("height", values[1]);
 		return (RECT);
@@ -88,6 +88,40 @@ export default class StandardRender {
 		return (data);
 	};
 
+	#checksTheCorrectPlaceToRenderCoordinates(data, code) {
+		const { next, pos, values } = data[code];
+		let testPos1;
+		let testPos2;
+		let ref;
+
+		for (ref in data) {
+			if (ref !== code) {
+				testPos1 = pos[0] === data[ref].pos[0] && pos[0] !== 0;
+				testPos2 = pos[1] === data[ref].pos[1] && pos[1] !== 0;
+
+				if (testPos1 && testPos2) {
+					if (testPos1 && pos[1] < data[ref].next[1]) {
+						pos[0] = data[ref].next[0];
+						next[0] = pos[0] + values[0];
+					}
+					else if (testPos2 && pos[0] < data[ref].next[0]) {
+						pos[1] = data[ref].next[1];
+						next[1] = pos[1] + values[1];
+					};
+				}
+				else if (testPos1 && pos[1] < data[ref].next[1]) {
+					pos[1] = data[ref].next[1];
+					next[1] = pos[1] + values[1];
+				}
+				else if (testPos2 && pos[0] < data[ref].next[0]) {
+					pos[0] = data[ref].next[0];
+					next[0] = pos[0] + values[0];
+				};
+			};
+		};
+		return (data);
+	};
+
 	#setNewWork(code, data, prev, coord, x, y) {
 		let nextX;
 		let nextY;
@@ -110,10 +144,12 @@ export default class StandardRender {
 			fillX,
 			fillY,
 		};
+		this.#checksTheCorrectPlaceToRenderCoordinates(data, code);
 		return (data);
 	};
 
 	#verifyPlaceWork(data, valX, valY) {
+		console.log(data);
 		let x;
 		let y;
 		const { next, pos, values, fillX, fillY } = data;
@@ -123,20 +159,20 @@ export default class StandardRender {
 		const testY = fillY + valY / values[1] <= 1;
 
 		if (lastX + valX <= this.#pixelSize.x) {
-			x = next[0] + valX <= this.#pixelSize.x ? next[0] : undefined;
-			y = pos[1] + valY <= this.#pixelSize.y ? pos[1] : undefined;
+			x = next[0] + valX <= this.#pixelSize.x ? ~~(next[0]): undefined;
+			y = pos[1] + valY <= this.#pixelSize.y ?  ~~(pos[1]): undefined;
 		}
 		else if (lastY + valY <= this.#pixelSize.y) {
-			x = pos[0] + valX <= this.#pixelSize.x ? pos[0] : undefined;
-			y = next[1] + valY <= this.#pixelSize.y ? next[1] : undefined;
+			x = pos[0] + valX <= this.#pixelSize.x ? ~~(pos[0]): undefined;
+			y = next[1] + valY <= this.#pixelSize.y ? ~~(next[1]): undefined;
 		};
 		x === 0 && fillX > 0 || x === null ? x = undefined : 0;
-		!x && this.#filled.y >= valY ? x = pos[0] : 0;
-		!x && !testX && testY ? x = fillX * values[0] + pos[0] : 0;
+		!x && this.#filled.y >= valY ? x = ~~(pos[0]): 0;
+		!x && !testX && testY ? x = ~~(fillX * values[0] + pos[0]): 0;
 
 		y === 0 && !testY ? y = undefined : 0;
-		y === 0 && testY ? y = fillY * values[1] + pos[1] : 0;
-		y === 0 && this.#filled.x === 0 ? y = next[1] : 0;
+		y === 0 && testY ? ~~(y = fillY * values[1] + pos[1]): 0;
+		y === 0 && this.#filled.x === 0 ? y = ~~(next[1]): 0;
 		return (x !== undefined && y !== undefined ? { x, y } : false);
 	};
 
@@ -146,7 +182,6 @@ export default class StandardRender {
 		let result;
 		let ref;
 
-		//TODO: check if the 'pos' has 2 equals to the already works set
 		for (ref of code) {
 			if (len-- > 1) {
 				result = this.#verifyPlaceWork(info[ref], weight, height);
