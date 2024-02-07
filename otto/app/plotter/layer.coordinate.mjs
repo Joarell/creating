@@ -15,16 +15,14 @@ export function spaceAvailable (art, space) {
 
 
 export function proportion (val, pixArea, layer) {
-	const layerArea = +((val / layer) * pixArea).toFixed(3);
+	const layerArea = +((val / layer) * pixArea).toFixed(0);
 	return (layerArea);
 };
 
 
 export function getScreenProportion(screenSize, layerSize) {
 	const DESKTOP =	1024;
-	return( screenSize >= DESKTOP ?
-			deskTopView(layerSize) : mobileView(layerSize)
-	);
+	return( screenSize >= DESKTOP ? deskTopView(layerSize) : mobileView(layerSize));
 };
 
 

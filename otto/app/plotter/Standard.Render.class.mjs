@@ -18,39 +18,43 @@ export default class StandardRender {
 		return (this.#standardRender());
 	};
 
-	#worksPositionLayer({ next, pos, values }) {
-		const RECT =	document.createElementNS("http://www.w3.org/2000/svg", "rect");
+	#worksPositionLayer({ pos, values }) {
+		const url =		"http://www.w3.org/2000/svg";
+		const RECT =	document.createElementNS(url, "rect");
 		const INSET =	1;
 		const PAD =		20;
 		const X =		this.#pixelSize.x;
 		const Y =		this.#pixelSize.y;
-		const EXTPADY = 0;
-		// const EXTPADY =		next[1] ? Y - next[1] : 0; // BUG: rendering wrong in some cases.
+		const EDGE =	0.95;
 
 		RECT.setAttribute("x", pos[0] + INSET);
-		RECT.setAttribute("y", pos[1] + EXTPADY + INSET);
+		RECT.setAttribute("y", pos[1] + INSET);
 
-		values[0] >= X || pos[0] + values[0] + INSET >= X ?
-			RECT.setAttribute("width", values[0] - PAD) :
+		values[0] >= X * EDGE || pos[0] + values[0] + INSET >= X * EDGE ?
+			RECT.setAttribute("width", values[0] - PAD):
 			RECT.setAttribute("width", values[0]);
-		values[1] >= Y || pos[1] + values[1] >= Y ?
-			RECT.setAttribute("height", values[1] - PAD) :
+		values[1] >= Y * EDGE || pos[1] + values[1] >= Y * EDGE ?
+			RECT.setAttribute("height", values[1] - PAD):
 			RECT.setAttribute("height", values[1]);
 		return (RECT);
 	};
 
-	#textOnCenter({ next, pos, values }, code) {
-		const TEXT = document.createElementNS("http://www.w3.org/2000/svg", "text");
-		const MID = 0.5;
-		// const Y =			this.#pixelSize.y;
-		const EXTPADY = 0;
-		// const EXTPADY =	next[1] ? Y - next[1] : 0; // BUG: rendering wrong in some cases.
-		const LETTERPIX = 7;
+	#textOnCenter({ pos, values }, code) {
+		const url =			"http://www.w3.org/2000/svg";
+		const X =			this.#pixelSize.x;
+		const Y =			this.#pixelSize.y;
+		const TEXT =		document.createElementNS(url, "text");
+		const PAD =			20;
+		const MID =			0.5;
+		const LETTERPIX =	7;
+		const EDGE =		0.95;
 		let posX;
 		let posY;
 
-		posX = pos[0] + (values[0] * MID);
-		posY = pos[1] + EXTPADY + (values[1] * MID);
+		posX = values[0] >= X * EDGE ?
+			pos[0] + (values[0] * MID) - PAD : pos[0] + (values[0] * MID);
+		posY = values[0] >= Y * EDGE ?
+			pos[1] + (values[1] * MID) - PAD : pos[1] + (values[1] * MID);
 		TEXT.setAttribute("x", posX - ((code.length * LETTERPIX) * MID));
 		TEXT.setAttribute("y", posY);
 		TEXT.innerHTML = code;
@@ -101,12 +105,12 @@ export default class StandardRender {
 
 				if (testPos1 && testPos2) {
 					if (testPos1 && pos[1] < data[ref].next[1]) {
-						pos[0] = data[ref].next[0];
-						next[0] = pos[0] + values[0];
-					}
-					else if (testPos2 && pos[0] < data[ref].next[0]) {
 						pos[1] = data[ref].next[1];
 						next[1] = pos[1] + values[1];
+					}
+					else if (testPos2 && pos[0] < data[ref].next[0]) {
+						pos[0] = data[ref].next[0];
+						next[0] = pos[0] + values[0];
 					};
 				}
 				else if (testPos1 && pos[1] < data[ref].next[1]) {
@@ -184,7 +188,6 @@ export default class StandardRender {
 		y === 0 && !testY ? y = undefined : 0;
 		y === 0 && testY ? ~~(y = fillY * values[1] + pos[1]): 0;
 		y === 0 && this.#filled.x === 0 ? y = ~~(next[1]): 0;
-		console.log('DATA', data, `and ${x} and ${y}`);
 		return (x !== undefined && y !== undefined ? { x, y } : false);
 	};
 
