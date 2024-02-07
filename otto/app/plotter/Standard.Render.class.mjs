@@ -74,13 +74,13 @@ export default class StandardRender {
 	#lastWorkUpdateNextValues(place, data, x, y) {
 		Object.entries(data).map((info) => {
 			const { fillX, fillY, next } = info[1];
-			const propX = +(x / info[1].values[0]).toFixed(2);
-			const propY = +(y / info[1].values[1]).toFixed(2);
+			const propX = +(x / info[1].values[0]).toFixed(4);
+			const propY = +(y / info[1].values[1]).toFixed(4);
 			const updateX = place.y === next[1] && fillX + propX <= 1;
 			const updateY = place.x === next[0] && fillY + propY <= 1;
 
-			updateX ? info[1].fillX = +(fillX + propX).toFixed(2) : 0;
-			updateY ? info[1].fillY = +(fillY + propY).toFixed(2) : 0;
+			updateX ? info[1].fillX = +(fillX + propX).toFixed(4) : 0;
+			updateY ? info[1].fillY = +(fillY + propY).toFixed(4) : 0;
 			info[1].fillX >= 1 ? info[1].next[1] = null : 0;
 			info[1].fillY >= 1 ? info[1].next[0] = null : 0;
 		});
@@ -133,8 +133,8 @@ export default class StandardRender {
 		const testY = coord.y + prev.next[1] === PIXELY || this.#filled.y === coord.y;
 
 		this.#lastWorkUpdateNextValues(coord, data, x, y);
-		nextX = testY && coord.y === prev.next[1] ? null : coord.x + x;
-		nextY = testX && coord.x === prev.next[0] ? null : coord.y + y;
+		nextX = testY && coord.y * prev.fillY === prev.next[1] ? null : coord.x + x;
+		nextY = testX && coord.x * prev.fillX === prev.next[0] ? null : coord.y + y;
 		fillX = nextX === null || nextY >= PIXELY ? 1 : 0;
 		fillY = nextY === null || nextX >= PIXELX ? 1 : 0;
 		data[code] = {
@@ -161,17 +161,15 @@ export default class StandardRender {
 		const check1 =	lastX === null && values[0] + valX <= PX && pos[0] === 0;
 		const check2 =	lastY === null && values[1] + valY <= PY && pos[1] === 0;
 
-		// if (check1 || check2) {
-		// 	x = check1 ? pos[0] : lastY === null ? next[0] : pos[0];
-		// 	y = check2 ? pos[1] : lastX === null ? next[1] : pos[1];
-		// 	x === 0 && y === 0 ? x = undefined : 0;
-		// 	y === 0 && y === 0 ? y = undefined : 0;
-		// 	x === 0 && fillX > 0 ? x = fillX * values[0] : 0;
-		// 	y === 0 && fillY > 0 ? x = fillY * values[1] : 0;
-		//
-		// 	return (x !== undefined && y !== undefined ? { x, y } : false);
-		// }
-		if (lastX + valX <= this.#pixelSize.x) {
+		if (check1 || check2) {
+			x = check1 ? pos[0] : lastY === null ? next[0] : pos[0];
+			y = check2 ? pos[1] : lastX === null ? next[1] : pos[1];
+			x === 0 && y === 0 ? x = undefined : 0;
+			y === 0 && y === 0 ? y = undefined : 0;
+			x === 0 && fillX > 0 ? x = fillX * values[0] : 0;
+			y === 0 && fillY > 0 ? x = fillY * values[1] : 0;
+		}
+		else if (lastX + valX <= this.#pixelSize.x) {
 			x = next[0] + valX <= this.#pixelSize.x ? next[0]: undefined;
 			y = pos[1] + valY <= this.#pixelSize.y ?  pos[1]: undefined;
 		}
