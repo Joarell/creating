@@ -11,6 +11,27 @@ import CraterStandard from '../otto/app/core2/Crater.standard.crate.mjs';
 import Arranger from '../otto/app/core2/Arranger.class.mjs';
 
 describe("These are tests to Crater class.", () => {
+	it("TEST-64: returns false to no tube list.", () => {
+		const list = [
+			['SF', 145, 5, 117],
+			['HU-19-20', 115, 5, 115],
+			['HU-1989-20', 33, 5, 23],
+			['HU-1989-21', 33, 5, 23],
+			['HU-1989-22', 33, 5, 23],
+			['HU-1989-23', 33, 5, 23],
+			['HU-1989-24', 33, 5, 23],
+			['HU-1989-25', 33, 5, 23],
+			['HU-1989-26', 33, 5, 23],
+			['HU-1989-27', 33, 5, 23],
+			['HU-1989-28', 33, 5, 23],
+		];
+
+		const works =		new Arranger(mock.artWorksList(list));
+		const current =		new Crater(works).crates.airCubTotal;
+		const expected =	217.792;
+
+		assert.deepStrictEqual(current, expected);
+	});
 	it("TEST-1: returns false to no tube list.", () => {
 		const current =		new CraterTube();
 		const expected =	{ tube: false };
