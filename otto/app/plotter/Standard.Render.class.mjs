@@ -88,7 +88,7 @@ export default class StandardRender {
 		return (data);
 	};
 
-	#checksTheCorrectPlaceToRenderCoordinates(data, code) {
+	#alignCoordinates(data, code) {
 		const { next, pos, values } = data[code];
 		let testPos1;
 		let testPos2;
@@ -144,28 +144,41 @@ export default class StandardRender {
 			fillX,
 			fillY,
 		};
-		this.#checksTheCorrectPlaceToRenderCoordinates(data, code);
+		this.#alignCoordinates(data, code);
 		return (data);
 	};
 
 	#verifyPlaceWork(data, valX, valY) {
-		console.log(data);
 		let x;
 		let y;
 		const { next, pos, values, fillX, fillY } = data;
-		const lastX = pos[0] === 0 ? next[0] : pos[0];
-		const lastY = pos[1] === 0 ? next[1] : pos[1];
-		const testX = fillX + valX / values[0] <= 1;
-		const testY = fillY + valY / values[1] <= 1;
+		const PX =		this.#pixelSize.x;
+		const PY =		this.#pixelSize.y;
+		const lastX =	pos[0] === 0 ? next[0] : pos[0];
+		const lastY =	pos[1] === 0 ? next[1] : pos[1];
+		const testX =	fillX + valX / values[0] <= 1;
+		const testY =	fillY + valY / values[1] <= 1;
+		const check1 =	lastX === null && values[0] + valX <= PX && pos[0] === 0;
+		const check2 =	lastY === null && values[1] + valY <= PY && pos[1] === 0;
 
+		// if (check1 || check2) {
+		// 	x = check1 ? pos[0] : lastY === null ? next[0] : pos[0];
+		// 	y = check2 ? pos[1] : lastX === null ? next[1] : pos[1];
+		// 	x === 0 && y === 0 ? x = undefined : 0;
+		// 	y === 0 && y === 0 ? y = undefined : 0;
+		// 	x === 0 && fillX > 0 ? x = fillX * values[0] : 0;
+		// 	y === 0 && fillY > 0 ? x = fillY * values[1] : 0;
+		//
+		// 	return (x !== undefined && y !== undefined ? { x, y } : false);
+		// }
 		if (lastX + valX <= this.#pixelSize.x) {
-			x = next[0] + valX <= this.#pixelSize.x ? ~~(next[0]): undefined;
-			y = pos[1] + valY <= this.#pixelSize.y ?  ~~(pos[1]): undefined;
+			x = next[0] + valX <= this.#pixelSize.x ? next[0]: undefined;
+			y = pos[1] + valY <= this.#pixelSize.y ?  pos[1]: undefined;
 		}
 		else if (lastY + valY <= this.#pixelSize.y) {
-			x = pos[0] + valX <= this.#pixelSize.x ? ~~(pos[0]): undefined;
-			y = next[1] + valY <= this.#pixelSize.y ? ~~(next[1]): undefined;
-		};
+			x = pos[0] + valX <= this.#pixelSize.x ? pos[0]: undefined;
+			y = next[1] + valY <= this.#pixelSize.y ? next[1]: undefined;
+		}
 		x === 0 && fillX > 0 || x === null ? x = undefined : 0;
 		!x && this.#filled.y >= valY ? x = ~~(pos[0]): 0;
 		!x && !testX && testY ? x = ~~(fillX * values[0] + pos[0]): 0;
@@ -173,6 +186,7 @@ export default class StandardRender {
 		y === 0 && !testY ? y = undefined : 0;
 		y === 0 && testY ? ~~(y = fillY * values[1] + pos[1]): 0;
 		y === 0 && this.#filled.x === 0 ? y = ~~(next[1]): 0;
+		console.log('DATA', data, `and ${x} and ${y}`);
 		return (x !== undefined && y !== undefined ? { x, y } : false);
 	};
 
@@ -184,7 +198,8 @@ export default class StandardRender {
 
 		for (ref of code) {
 			if (len-- > 1) {
-				result = this.#verifyPlaceWork(info[ref], weight, height);
+				if (info[ref])
+					result = this.#verifyPlaceWork(info[ref], weight, height);
 				if (result) {
 					this.#setNewWork(ART, info, info[ref], result, weight, height);
 					console.log(info);
