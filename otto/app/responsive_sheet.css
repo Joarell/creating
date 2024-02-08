@@ -205,7 +205,7 @@
 		right: var(--right);
 		bottom: var(--bottom);
 		left: var(--left);
-		transform: 
+		transform:
 			rotateY(var(--rotateY))
 			rotateX(var(--rotateX))
 			translateZ(var(--translateZ));
@@ -355,7 +355,7 @@
 	}
 
 	.svg-frame:hover svg {
-		transform: 
+		transform:
 		rotate(-80deg)
 		skew(30deg)
 		translateX(calc(45px * var(--i)))
@@ -993,7 +993,7 @@
 		right: var(--right);
 		bottom: var(--bottom);
 		left: var(--left);
-		transform: 
+		transform:
 			rotateY(var(--rotateY))
 			rotateX(var(--rotateX))
 			translateZ(var(--translateZ));
@@ -1447,12 +1447,12 @@
 	}
 
 
-	.IO__sizes__mesure {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		gap: 1rem;
-	}
+	/* .IO__sizes__measure { */
+	/* 	display: flex; */
+	/* 	flex-wrap: wrap; */
+	/* 	justify-content: space-between; */
+	/* 	gap: 1rem; */
+	/* } */
 
 
 	.IO__add--form {
@@ -1482,7 +1482,7 @@
 		animation-fill-mode: forwards;
 	}
 
-	
+
 	.plotter__menu:is([aria-hidden="true"]),
 	.plotter:is([aria-hidden="true"]) {
 		animation: fade-close 500ms ease-out;
@@ -1662,7 +1662,7 @@
 		right: var(--right);
 		bottom: var(--bottom);
 		left: var(--left);
-		transform: 
+		transform:
 			rotateY(var(--rotateY))
 			rotateX(var(--rotateX))
 			translateZ(var(--translateZ));
@@ -1954,8 +1954,8 @@
 	.IO__press * {
 		display: none;
 	}
-	
-	
+
+
 	.IO__press-mobile > * {
 		position: fixed;
 		inset: 0;
@@ -1963,8 +1963,8 @@
 			pointer-events: none;
 		}
 	}
-	
-	
+
+
 	.press--btn-mobile {
 		color: var(--color4);
 		height: 3rem;
@@ -2050,7 +2050,7 @@
 	.fan-options:is([aria-hidden="true"]) {
 		display: none;
 	}
-	
+
 
 	.fan-options:is([aria-hidden="false"]) {
 		display: flex;
@@ -2154,7 +2154,7 @@
 		stroke-width: 5rem;
 	}
 
-	
+
 	.mobile-menu {
 		fill: var(--color4);
 		width: 1.5rem;
@@ -2169,12 +2169,12 @@
 	}
 
 
-	.IO__sizes__mesure {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		gap: 1rem;
-	}
+	/* .IO__sizes__measure { */
+	/* 	display: flex; */
+	/* 	flex-wrap: wrap; */
+	/* 	justify-content: space-between; */
+	/* 	gap: 1rem; */
+	/* } */
 
 
 	.IO__add--form {
@@ -2200,7 +2200,7 @@
 		animation-fill-mode: forwards;
 	}
 
-	
+
 	.result:is([aria-hidden="false"]) {
 		display: block;
 		animation: emerge 2.5s linear;
