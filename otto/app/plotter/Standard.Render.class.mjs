@@ -203,7 +203,6 @@ export default class StandardRender {
 					result = this.#verifyPlaceWork(info[ref], weight, height);
 				if (result) {
 					this.#setNewWork(ART, info, info[ref], result, weight, height);
-					console.log(info);
 					break;
 				};
 			};
