@@ -77,7 +77,7 @@
 	--font-title: 1.5rem;
 	--fonts: .8rem;
 	--color1: #03e9f4;
-	--color2: #162789; 
+	--color2: #162789;
 	--color3: #FC007A;
 	--color4: #FFF;
 	--color5: #333;
@@ -123,7 +123,7 @@
 	--iframes-bg: #96979C;
 	--table-line: #96979C30;
 	--add-col: #0B8325;
-	--mesure: #2DD751;
+	--measure: #2DD751;
 	--result-col: #BF5E30;
 	--dark: #121113;
 	--back-gray: #222725;
@@ -165,7 +165,7 @@ body {
 	--inner-shadow: var(--inner-shadow-dark);
 	--input-bg: var(--bg-col);
 	--input-font-col: var(--color4);
-	--slection-bg: transparent;
+	--selection-bg: transparent;
 	--crate-btn-col: var(--color3);
 	--p__color--mode: var(--back-gray);
 	--pack-works: var(--light-blue2);
@@ -273,7 +273,6 @@ input {
 		font-size: var(--fonts);
 		transition: .5s ease-in-out;
 	}
-	height: 1.5rem;
 }
 
 
@@ -1294,17 +1293,17 @@ label:hover + .IO__sizes--popup {
    ╰──────────────────────────────────────────────────────────╯
 */
 
-.IO__sizes__mesure {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	& input {
-		width: 3.5rem;
-		height: 1.5rem;
-	}
-	& input:focus {
-		width: 3rem;
-		font-size: 1.1rem;
-		transition: input 1s ease-in-out;
-	}
-}
+/* .IO__sizes__measure { */
+/* 	display: flex; */
+/* 	align-items: center; */
+/* 	justify-content: space-between; */
+/* 	& > input { */
+/* 		width: 3.5rem; */
+/* 		height: 1.5rem; */
+/* 	} */
+/* 	& input:focus { */
+/* 		width: 1rem; */
+/* 		font-size: 1.1rem; */
+/* 		transition: input 1s ease-in-out; */
+/* 	} */
+/* } */
