@@ -29,6 +29,7 @@ globalThis.onload = () => {
 	browserStoragePrepare();
 	color === null ? localStorage.setItem("mode", "light") : false;
 	setCheckRadio();
+	setModeColor();
 	setTimeout(loadingPage, 1500);
 };
 
@@ -132,8 +133,6 @@ function browserStoragePrepare() {
 
 function setCheckRadio() {
 	const measure = localStorage.getItem("metrica");
-	const color = localStorage.getItem("mode");
-	const body = document.body;
 
 	switch (measure) {
 		case 'cm - centimeters':
@@ -143,6 +142,13 @@ function setCheckRadio() {
 			document.getElementById('in').checked = true;
 			break;
 	}
+};
+
+
+function setModeColor() {
+	const color = localStorage.getItem("mode");
+	const body = document.body;
+
 	switch (color) {
 		case ('light' || null):
 			document.getElementById('light-mode').checked = true;
@@ -155,4 +161,4 @@ function setCheckRadio() {
 			body.classList.toggle("dark-mode");
 			break;
 	}
-};
+}
