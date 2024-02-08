@@ -66,7 +66,7 @@ function changeMode (color) {
 // ╰───────────────────────────────────────────────────────────────────────╯
 export function createHeader(table) {
 	const head = document.createElement("tr");
-	
+
 	if(table.parentNode)
 		while(table.firstChild)
 			table.removeChild(table.firstChild)
@@ -190,4 +190,4 @@ function finishedRender(table, info) {
 };
 
 
-// globalThis.navigator.serviceWorker.register('./sw.pane1.mjs');
+globalThis.navigator.serviceWorker.register('./sw.pane1.mjs');

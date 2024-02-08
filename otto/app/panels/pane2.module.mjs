@@ -64,7 +64,7 @@ function changeMode (color) {
 // ╰───────────────────────────────────────────────────────────────────────╯
 export function createHeader(table){
 	const head = document.createElement("tr");
-	
+
 	if(table.parentNode)
 		while(table.firstChild)
 			table.removeChild(table.firstChild)
@@ -252,4 +252,4 @@ export async function showCrates2(estimate) {
 };
 
 
-// globalThis.navigator.serviceWorker.register('./sw.pane2.mjs');
+globalThis.navigator.serviceWorker.register('./sw.pane2.mjs');

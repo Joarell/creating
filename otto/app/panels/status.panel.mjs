@@ -161,4 +161,4 @@ export function createHeader(table) {
 }
 
 
-// globalThis.navigator.serviceWorker.register('./sw.status.mjs');
+globalThis.navigator.serviceWorker.register('./sw.status.mjs');
