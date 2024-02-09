@@ -78,19 +78,5 @@
 	"scope": "https://ottocratesolver.com",
 	"theme_color": "#002A3D",
 	"shortcuts": [],
-	"description": "Progressive Web App art work crate solver list.",
-	"screenshots": [
-		{
-			"src": "",
-			"type": "image/png",
-			"sizes": "540x720",
-			"form_factor": "narrow"
-		},
-		{
-			"src": "",
-			"type": "image/jpg",
-			"sizes": "720x540",
-			"form_factor": "wide"
-		}
-	]
+	"description": "Progressive Web App art work crate solver list."
 }
