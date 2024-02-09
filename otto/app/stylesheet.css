@@ -1293,17 +1293,17 @@ label:hover + .IO__sizes--popup {
    ╰──────────────────────────────────────────────────────────╯
 */
 
-/* .IO__sizes__measure { */
-/* 	display: flex; */
-/* 	align-items: center; */
-/* 	justify-content: space-between; */
-/* 	& > input { */
-/* 		width: 3.5rem; */
-/* 		height: 1.5rem; */
-/* 	} */
-/* 	& input:focus { */
-/* 		width: 1rem; */
-/* 		font-size: 1.1rem; */
-/* 		transition: input 1s ease-in-out; */
-/* 	} */
-/* } */
+.IO__sizes__measure {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	& input {
+		width: 3.5rem;
+		height: 1.5rem;
+	}
+	& input:focus {
+		width: 4rem;
+		font-size: 1.1rem;
+		transition: input 1s ease-in-out;
+	}
+}

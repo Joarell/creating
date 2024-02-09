@@ -1447,12 +1447,12 @@
 	}
 
 
-	/* .IO__sizes__measure { */
-	/* 	display: flex; */
-	/* 	flex-wrap: wrap; */
-	/* 	justify-content: space-between; */
-	/* 	gap: 1rem; */
-	/* } */
+	.IO__sizes__measure {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 1rem;
+	}
 
 
 	.IO__add--form {
@@ -1475,7 +1475,7 @@
 	}
 
 	.exchange--content:is([aria-hidden="false"]),
-	.units-convertion:is([aria-hidden="false"]),
+	.units-conversion:is([aria-hidden="false"]),
 	.get-estimate:is([aria-hidden="false"]) {
 		display: block;
 		animation: emerge 1.5s linear;
@@ -2169,12 +2169,12 @@
 	}
 
 
-	/* .IO__sizes__measure { */
-	/* 	display: flex; */
-	/* 	flex-wrap: wrap; */
-	/* 	justify-content: space-between; */
-	/* 	gap: 1rem; */
-	/* } */
+	.IO__sizes__measure {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 1rem;
+	}
 
 
 	.IO__add--form {
@@ -2193,7 +2193,7 @@
 
 
 	.exchange--content:is([aria-hidden="false"]),
-	.units-convertion:is([aria-hidden="false"]),
+	.units-conversion:is([aria-hidden="false"]),
 	.get-estimate:is([aria-hidden="false"]) {
 		display: block;
 		animation: emerge 1.5s linear;
