@@ -12,7 +12,8 @@ function resetList(list) {
 // NOTE: the path is different with or without the bundle file.
 export async function checkBrowserDB(doc) {
 	const workerDB = new Worker(
-		new URL("../panels/worker.IDB.crates.mjs", import.meta.url),
+		// new URL("../panels/worker.IDB.crates.mjs", import.meta.url),
+		new URL("./panels/worker.IDB.crates.mjs", import.meta.url),
 		{ type: "module" },
 	);
 	const checkIDB = await new Promise((resolve, reject) => {
@@ -87,20 +88,3 @@ export function searchEstimate() {
 
 	return !regexChecker(docEstimate) ? checkBrowserDB(docEstimate) : false;
 }
-
-// INFO: Closure test.
-// function testClosure (num) {
-// 	let count = num;
-//
-// 	const res = (() => {
-// 		const num = 10;
-//
-// 		console.log(count * num);
-// 		count += 10;
-// 	});
-// 	return (res);
-// };
-// const x = testClosure(3);
-// x();
-// x();
-// x();

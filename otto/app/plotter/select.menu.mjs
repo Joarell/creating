@@ -5,7 +5,8 @@ import { plotter } from "./layers.mjs";
 
 export async function getDataIDB (ref) {
 	const WORKER = new Worker(
-		new URL('../panels/worker.IDB.crates.mjs', import.meta.url), { type: "module" }
+		// new URL('../panels/worker.IDB.crates.mjs', import.meta.url), { type: "module" }
+		new URL('./panels/worker.IDB.crates.mjs', import.meta.url), { type: "module" }
 	);
 	let request;
 
@@ -138,7 +139,7 @@ export function skipLayer(button) {
 	const layersVal =	Number.parseInt(storage.getItem('layers'));
 	const currentVal =	Number.parseInt(storage.getItem('numLayer'));
 	let sum;
-	
+
 	if (button.target.id === "next" || button.target.id === "layer-next") {
 		sum = currentVal + 1;
 		if (sum <= layersVal) {
@@ -153,7 +154,7 @@ export function skipLayer(button) {
 	}
 	else {
 		sum = currentVal - 1;
-		if (sum >= 1 ) { 
+		if (sum >= 1 ) {
 			setLayerDisplay(sum);
 			storage.setItem('numLayer', sum);
 		}
