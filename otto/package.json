@@ -8,7 +8,7 @@
 		"build": "rollup -c --watch"
 	},
 	"keywords": [],
-	"author": "Jospeh Joarell",
+	"author": "Joseph Joarell",
 	"license": "MIT",
 	"privaate": true,
 	"dependencies": {

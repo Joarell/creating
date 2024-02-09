@@ -8,19 +8,14 @@ export default {
 		clearScreen: false
 	},
 	output: [
-		// {
-		// 	file: './app/bundle.mjs',
-		// 	format: 'esm'
-		// },
 		{
 			file: './app/main.min.mjs',
 			format: 'esm',
 			assetFileNames: './app/[name]-[hash][extname]',
 			preserverModules: true,
 			plugins: [terser({
-				format: {
-					quote_style: 3,
-				},
+				format: 'cjs',
+				maxWorkers: 4,
 				keep_classnames: true,
 				ecma: 2023
 			})],
