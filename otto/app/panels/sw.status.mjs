@@ -4,7 +4,7 @@ const CACHENAME =	'status_V1';
 const assets =		[
 	'/',
 	'./status_panel.html',
-	'../index.css',
+	'../stylesheet.min.css',
 	'./status.panel.mjs',
 ];
 
@@ -18,7 +18,10 @@ globalThis.addEventListener('install', (event) => {
 
 globalThis.addEventListener('activate', (event) => {
 	// console.log('Inside the activate handler!');
-	event.waitUntil(globalThis.registration?.navigationPreload.enable());
+	event.waitUntil(async () => {
+		globalThis.registration.navigationPreload ?
+		await globalThis.registration.navigationPreload.enable() : 0;
+	});
 });
 
 
@@ -28,4 +31,3 @@ globalThis.addEventListener('fetch', (event) => {
 		})
 	);
 });
-
