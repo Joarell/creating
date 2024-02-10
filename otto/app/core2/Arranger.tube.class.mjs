@@ -11,8 +11,13 @@ export default class ArrangerTube {
 	#findTubesOnTheList() {
 		const { noCanvas } =	this.#list;
 		const tubes =			noCanvas.filter(pece => {
-			if(pece[1] !== pece[2] && pece[2] === pece[3])
-				return(pece);
+			const MAXDIM =	35;
+			const LIMIT =	pece[2] < MAXDIM && pece[3] < MAXDIM;
+			const CHECK =	pece[2] === pece[3];
+
+			if (LIMIT && CHECK)
+				if(pece[1] !== pece[2] && CHECK)
+					return(pece);
 			return ;
 		});
 
