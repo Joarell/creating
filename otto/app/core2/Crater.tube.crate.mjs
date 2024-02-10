@@ -3,7 +3,7 @@ export default class CraterTube {
 	#tubes;
 
 	constructor(list) {
-		if(!list || list.length === 0) 
+		if(!list || list.length === 0)
 			return({ tube : false });
 
 		this.#tubes = list;
@@ -19,7 +19,7 @@ export default class CraterTube {
 		let x = this[0][1];
 		let z = this[0][2];
 		let y = 0;
-		
+
 		this.map(tube => {
 			x = tube[1] > x ? tube[1]: x;
 			z = tube[2] > z ? tube[2]: z;
@@ -81,7 +81,7 @@ export default class CraterTube {
 	};
 
 	#checkHugeTubes() {
-		const DIAMETER =	40;
+		const DIAMETER =	35;
 		const getter =		this.#tubes.filter(tube => {
 			if (tube[2] > DIAMETER)
 				return (tube);
