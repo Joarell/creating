@@ -92,7 +92,6 @@ services:
           cpus: '0.50'
           memory: 100M
 
-
     container_name: postgres_container
     env_file: .env
     environment:
@@ -111,6 +110,8 @@ services:
     restart: on-failure
     volumes:
       - ../database/DB/data/:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone/:/etc/timezone:ro
 
 
 # ╭──────────────────────────────────────────────────────────╮
@@ -131,17 +132,17 @@ services:
           cpus: '0.50'
           memory: 100M
 
-
     env_file: .env
     expose:
       - ${PORT1}
     image: node:21.1-alpine3.18
     networks:
       - front-tier
- 
+
     restart: on-failure
     volumes:
       - ../otto/:/crater/app
+
     working_dir: /crater/app
     # TODO: try out another work directory to pass the '/', as a root path.
 
@@ -150,7 +151,7 @@ services:
 #  │                 Proxy container settings                 │
 #  ╰──────────────────────────────────────────────────────────╯
   reverse_proxy:
-    # build: 
+    # build:
     #   context: ./
     # depends_on:
       # - tunnel-3
