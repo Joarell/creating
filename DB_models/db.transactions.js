@@ -1,8 +1,8 @@
 // ╭────────────────────────────────────────────────────────────╮
 // │ ╭────────────────────────────────────────────────────────╮ │
 // │ │ INFO: Here you will find the database layer functions: │ │
-// │ │                   retriveDataUsers()                   │ │
-// │ │                 retriveDataEstimates()                 │ │
+// │ │                   retrieveDataUsers()                   │ │
+// │ │                 retrieveDataEstimates()                 │ │
 // │ │                      addNewUser()                      │ │
 // │ │                   addUserNewToken()                    │ │
 // │ │                 addResultToDataBase()                  │ │
@@ -17,7 +17,7 @@ const encryption	=		require('../auth/encriptation.module.js');
 const { randomBytes } =		require('crypto');
 
 
-async function retriveDataUsers(user, target) {
+async function retrieveDataUsers(user, target) {
 	console.log('GET users:', user);
 	const client	= await pool.connect();
 
@@ -54,7 +54,7 @@ async function retriveDataUsers(user, target) {
 }
 
 
-async function retriveDataEstimates(doc) {
+async function retrieveDataEstimates(doc) {
 	const client	= await pool.connect();
 
 	try {
@@ -93,7 +93,7 @@ async function addNewUser (user) {
 	try {
 		await client.query('BEGIN');
 		const userData = `
-			INSERT INTO craters.users 
+			INSERT INTO craters.users
 			(id, name, last_name, birth_date, email, pass_frase, auth_token,
 			refresh_token) VALUES
 			('${id}', '${user_name}', '${lastName}', '${birthday}', '${email}',
@@ -142,20 +142,45 @@ async function addResultToDataBase(estimate, userData) {
 }
 
 
-async function updateData (content, session) {
-	console.log('UPDATE', content);
-	const { reference, user_name } = content;
-	const list		= JSON.stringify({ "list": content.list }, null, "");
-	const crates	= JSON.stringify({ "crates": content.crates }, null, "");
-	const dataUTC	= new Date(Date.now()).toLocaleString();
+async function retrieveSessionNumber(num) {
 	const client	= await pool.connect();
 
+	try {
+		const { rows }	= await pool.query(`
+			SELECT
+				user_name
+			FROM
+				data_solved
+			WHERE
+				session = '${num}'
+		`);
+		return (rows);
+	}
+	catch (err) {
+		console.error(`ALERT, ${err}`);
+		await pool.query('ROLLBACK');
+	}
+	finally {
+		client.release();
+	};
+};
+
+
+async function updateData (content, session) {
+	console.log('UPDATE DATA', content);
+	const { reference } = content;
+	const list			= JSON.stringify({ "list": content.list }, null, "");
+	const crates		= JSON.stringify({ "crates": content.crates }, null, "");
+	const client		= await pool.connect();
+	const userSession	= await retrieveSessionNumber(session);
+	const { user_name } = userSession[0];
+
+	console.log(`User on the SESSION: ${user_name}`);
 	try {
 		await client.query('BEGIN');
 		const up = `UPDATE data_solved SET
 			works = '${list}',
 			crates = '${crates}',
-			update_state = '${dataUTC}',
 			updated_by = '${user_name}',
 			session = '${session}'
 			WHERE reference_id = '${reference}'`;
@@ -183,8 +208,8 @@ async function delEstimate (ref) {
 
 module.exports = {
 	addNewUser,
-	retriveDataUsers,
-	retriveDataEstimates,
+	retrieveDataUsers,
+	retrieveDataEstimates,
 	addResultToDataBase,
 	delEstimate,
 	updateData,
