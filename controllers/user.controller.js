@@ -100,7 +100,7 @@ function extractCookieData (request) {
 	session?.at(-1) === ';' ? session = session.slice(0, -1) : 0;
 	refToken?.at(-1) === ';' ? refToken = refToken.slice(0, -1) : 0;
 
-	cookied = {name, authToken, refToken, session, id} 
+	cookied = {name, authToken, refToken, session, id}
 	return(authToken ? cookied : {name, id, session});
 };
 
@@ -125,7 +125,7 @@ async function tokensCheckOut(info, users) {
 const userTokenMatch = async(req, res, next) => {
 	try {
 		const cookieData =	extractCookieData(req);
-		const dbUsers =		await db.retriveDataUsers(cookieData.id, 'auth');
+		const dbUsers =		await db.retrieveDataUsers(cookieData.id, 'auth');
 		let result;
 
 		if (!cookieData.authToken) {
@@ -162,7 +162,7 @@ const userTokenMatch = async(req, res, next) => {
 const userTokenExpTime = async (req, res, next) => {
 	try {
 		const cookieData =	extractCookieData(req);
-		const dbUser =		await db.retriveDataUsers(cookieData.id, 'auth');
+		const dbUser =		await db.retrieveDataUsers(cookieData.id, 'auth');
 
 		if (!cookieData.authToken) {
 			cookieData.authToken =	dbUser[0].auth_token;

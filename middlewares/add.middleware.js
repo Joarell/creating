@@ -27,7 +27,7 @@ const userDataValidation = async (req, res, next) => {
 	if (!req.body)
 		return( res.status(406).json({msg: "Missing data"}));
 	const { name } = cookie;
-	const dbUser = await db.retriveDataUsers(name, 'auth');
+	const dbUser = await db.retrieveDataUsers(name, 'auth');
 
 	if (!dbUser)
 		return (res.status(406).json({msg: "User error!"}));
@@ -52,7 +52,7 @@ const dataEstimateChecker = async (req, res, next) => {
 	if (!req.body)
 		return( res.status(406).json({msg: "Missing data"}));
 	const { reference } = req.body;
-	const estimate		= await db.retriveDataEstimates(reference);
+	const estimate		= await db.retrieveDataEstimates(reference);
 
 	if (!estimate) {
 		return (res.status(409).json({
@@ -66,7 +66,7 @@ const validationBodyUserAdd = async (req, res, next) => {
 	if (!req.body)
 		return( res.status(406).json({msg: "Missing data"}));
 	const { user_name, email, lastName, passFrase, birthday } = req.body;
-	const data = validationData([user_name, lastName, email, passFrase, birthday]); 
+	const data = validationData([user_name, lastName, email, passFrase, birthday]);
 
 	if (data) {
 		return (res.status(206).json({
@@ -81,7 +81,7 @@ const dataUserChecker = async (req, res, next) => {
 	if (!req.body)
 		return(res.status(406).json({msg: "Missing data"}));
 	const { name }	= req.body;
-	const prevUsers = await db.retriveDataUsers(req.body.user_name);
+	const prevUsers = await db.retrieveDataUsers(req.body.user_name);
 	const checkUser = prevUsers.find(usr => usr.name === name);
 
 	if (checkUser)
@@ -89,7 +89,7 @@ const dataUserChecker = async (req, res, next) => {
 	next();
 }
 
-module.exports = { 
+module.exports = {
 	validationBodyUserAdd,
 	validationBodyEstimate,
 	dataEstimateChecker,

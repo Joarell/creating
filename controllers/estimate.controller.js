@@ -18,7 +18,7 @@ const { randomBytes } =			require('crypto');
 const { extractCookieData } =	require('./user.controller');
 
 const getDataUsers = async (req, res) => {
-	const result = await db.retriveDataUsers();
+	const result = await db.retrieveDataUsers();
 	return (res.status(200).send(result));
 }
 
@@ -32,8 +32,8 @@ const getDataEstimates = async (req, res) => {
 const addResultToDataBase = async (req, res) => {
 	const cookie =		extractCookieData(req);
 	const result =		await db.addResultToDataBase(req.body, cookie);
-	return (result === 201 ? 
-		res.status(201).send(req.body) : 
+	return (result === 201 ?
+		res.status(201).send(req.body) :
 		res.status(409).send('DATA ERROR!')
 	);
 };
@@ -66,9 +66,9 @@ const shiftTokens = async (req, res) => {
 
 	if(result !== 500) {
 		res.set({'Set-Cookie': [
-			`user=${result.newAuthToken}; 
+			`user=${result.newAuthToken};
 				Max-Age=300; HttpOnly; SameSite=Strict; Secure;`,
-			`token=${result.newRefToken}; 
+			`token=${result.newRefToken};
 				Max-Age=300; HttpOnly; SameSite=Strict; Secure;`,
 		]});
 		res.status(201).json({ msg: 'active', result });
@@ -81,7 +81,7 @@ const shiftTokens = async (req, res) => {
 // TODO: HTTPS cookie tests.
 const newLogin = async (req, res) => {
 	const session =	randomBytes(5).toString('hex');
-	const dbUsers =	await db.retriveDataUsers(req.body.name, 'login');
+	const dbUsers =	await db.retrieveDataUsers(req.body.name, 'login');
 	const user =	dbUsers[0];
 	const body =	{id : user.id, token: user.refresh_token, name : user.name};
 	const result =	await keepTokens

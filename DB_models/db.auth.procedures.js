@@ -16,7 +16,7 @@ const db	= require('./db.transactions');
 
 
 async function getUserData (authToken, info) {
-	const dataUser	= await db.retriveDataUsers(info.name);
+	const dataUser	= await db.retrieveDataUsers(info.name);
 	const checkAuth = dataUser[0].auth_token === authToken;
 	const checkRef	= dataUser[0].refresh_token === info.token;
 	const checkId	= dataUser[0].id === info.id;
@@ -33,7 +33,7 @@ async function getUserData (authToken, info) {
 
 async function tokenProcedures (accessToken, body, session) {
 	const userDB = await getUserData(accessToken, body);
-	
+
 	if(userDB) {
 		const newAuthToken	= authTokenGen();
 		const newRefToken	= refTokenGen(userDB.email);
@@ -78,7 +78,7 @@ async function storeOldTokensGetNew (expTokens, newTokens, user, session) {
 
 async function addUserNewToken (newToken) {
 	const { name, token } = newToken;
-	const dbUser	= await db.retriveDataUsers();
+	const dbUser	= await db.retrieveDataUsers();
 	const checkUser = dbUser.find(user => user.name === name);
 	const client	= await pool.connect();
 
