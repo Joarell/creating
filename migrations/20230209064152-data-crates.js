@@ -25,7 +25,7 @@ module.exports = {
 			},
 			user_id: {
 				type: Sequelize.STRING(20),
-				references: { 
+				references: {
 					model: {
 						tableName:'users',
 						schema: 'craters'
@@ -39,12 +39,14 @@ module.exports = {
 				allowNull: false,
 			},
 			update_state: {
-				type: Sequelize.STRING(50),
+				type: Sequelize.DATE,
+				defaultValue: Sequelize.fn('now'),
+				timestamp: true,
 				allowNull: false,
 			},
 			updated_by: {
 				type: Sequelize.STRING(50),
-				allowNull: true,
+				allowNull: false,
 			}
 		});
 	},
