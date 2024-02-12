@@ -74,6 +74,8 @@ services:
     restart: on-failure
     volumes:
       - ../:/usr/api
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone/:/etc/timezone:ro
     working_dir: /usr/api
 
 
@@ -142,6 +144,8 @@ services:
     restart: on-failure
     volumes:
       - ../otto/:/crater/app
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone/:/etc/timezone:ro
 
     working_dir: /crater/app
     # TODO: try out another work directory to pass the '/', as a root path.
