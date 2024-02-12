@@ -1,8 +1,8 @@
 // ╭────────────────────────────────────────────────────────────╮
 // │ ╭────────────────────────────────────────────────────────╮ │
 // │ │ INFO: Here you will find the database layer functions: │ │
-// │ │                   retrieveDataUsers()                   │ │
-// │ │                 retrieveDataEstimates()                 │ │
+// │ │                   retrieveDataUsers()                  │ │
+// │ │                 retrieveDataEstimates()                │ │
 // │ │                      addNewUser()                      │ │
 // │ │                   addUserNewToken()                    │ │
 // │ │                 addResultToDataBase()                  │ │
@@ -13,17 +13,17 @@
 
 
 const pool			=		require('./db.settings');
-const encryption	=		require('../auth/encriptation.module.js');
+const encryption	=		require('../auth/encryptation.module.js');
 const { randomBytes } =		require('crypto');
 
 
 async function retrieveDataUsers(user, target) {
-	console.log('GET users:', user);
+	console.log('GET users:', user, 'and', target);
 	const client	= await pool.connect();
 
 	console.log('TG', target);
 	try {
-		if (target !== undefined && target === 'auth') {
+		if (target === 'auth') {
 			const { rows }	= await client.query(`
 				SELECT
 					*
@@ -82,14 +82,14 @@ async function addNewUser (user) {
 	const {
 		user_name, email, lastName, passFrase, birthday, accessToken, refreshToken
 	} = user;
-	const criptPass =	encryption.passEncriptProcedure (passFrase);
+	const criptPass =	encryption.passEncryptProcedure (passFrase);
 	const client =		await pool.connect();
 	const id =			randomBytes(10).toString('hex');
 
-	if (criptPass === 500 || criptPass === undefined) {
-		client.release();
-		return (500);
-	}
+	// if (criptPass === 500 || criptPass === undefined) {
+	// 	client.release();
+	// 	return (500);
+	// }
 	try {
 		await client.query('BEGIN');
 		const userData = `
@@ -182,6 +182,7 @@ async function updateData (content, session) {
 			works = '${list}',
 			crates = '${crates}',
 			updated_by = '${user_name}',
+			update_state = '${new Date().toLocaleString()}',
 			session = '${session}'
 			WHERE reference_id = '${reference}'`;
 		await pool.query(up);
