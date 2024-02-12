@@ -40,7 +40,7 @@ router.post('/__cspreport__', (req, res) => {
 });
 
 
-router.post('/private/auth', 
+router.post('/private/auth',
 	userSet.userTokenMatch, userSet.userTokenExpTime,
 	(req, res) => {
 		res.status(200).json({ 'status' : 'active' });
@@ -57,6 +57,7 @@ router.get("/", (req, res) => {
 
 
 router.post("/new/users",
+	// (req, res) => res.redirect('/'),
 	valid.validationBodyUserAdd,
 	valid.dataUserChecker,
 	userSet.insertNewUser
