@@ -1,11 +1,4 @@
-.package.json.kate-swp
-builder.kdev4
-nginx
-database
-.env
-result.test
-.eslintrc.js
-.eslintrc.json
+.vimspector.json
 works.txt
 .vscode
 node_modules
