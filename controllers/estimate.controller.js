@@ -24,7 +24,7 @@ const getDataUsers = async (req, res) => {
 
 
 const getDataEstimates = async (req, res) => {
-	const result = await db.retriveDataEstimates(req.params.ref_id);
+	const result = await db.retrieveDataEstimates(req.params.ref_id);
 	return (res.status(200).send(result));
 }
 

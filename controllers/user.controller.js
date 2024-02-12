@@ -3,7 +3,7 @@
 // │ │ INFO: Here is the functions to handle user requests │ │
 // │ │                dbSuspiciousTokens()                 │ │
 // │ │                  dbTokensCheckOut()                 │ │
-// │ │                   inserNewUser()                    │ │
+// │ │                   insertNewUser()                    │ │
 // │ │                userLoginValidation()                │ │
 // │ │                  userTokenMatch()                   │ │
 // │ │                 userTokenExpTime()                  │ │
@@ -53,7 +53,6 @@ const userLoginValidation = async (req, res, next) => {
 };
 
 
-// NOTE: database should do this search.
 async function dbSuspiciousTokens (tokens) {
 	const dbTokens =			await dataTokens.retrieveOldTokens();
 	const checkedAuthToken =	dbTokens.includes(tokens[0]);
