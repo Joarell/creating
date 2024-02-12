@@ -10,31 +10,36 @@ module.exports = {
 		host: process.env.PG_HOST,
 		dialect: process.env.DB_DIALECT,
 		logging: true,
-		define: {
-			charset: 'utf8',
-			timezone: '-03:00',
-			dialectOptions: {
-				useUTC: false,
-			}
-		},
-	},
-	test: {
-		username: process.env.PGUSER,
-		password: process.env.PGPASSWORD,
-		database: process.env.PGDATABASE,
-		port: process.env.PORT,
-		host: process.env.PGHOST,
-		dialect: process.env.DB_DIALECT,
-		logging: true,
-		define: {
+		define : {
 			charset: "utf8",
 			dialectOptions: {
-				collate: "utf8_general_ci"
+				useUTC: false,
+				timezone: "America/Sao_Paulo"
 			}
+
 		},
-		dialectOptions: { useUTC: false },
-		timezone: '-03:00'
+		// dialectOptions: {
+		// 	timezone: "America/Sao_Paulo",
+		// },
+		timezone: "-03:00"
 	},
+	// test: {
+	// 	username: process.env.PGUSER,
+	// 	password: process.env.PGPASSWORD,
+	// 	database: process.env.PGDATABASE,
+	// 	port: process.env.PORT,
+	// 	host: process.env.PGHOST,
+	// 	dialect: process.env.DB_DIALECT,
+	// 	logging: true,
+	// 	define: {
+	// 		charset: "utf8",
+	// 		dialectOptions: {
+	// 			collate: "utf8_general_ci"
+	// 		}
+	// 	},
+	// 	dialectOptions: { useUTC: false },
+	// 	timezone: '-03:00'
+	// },
 	production: {
 		username: process.env.PGUSER,
 		password: process.env.PGPASSWORD,

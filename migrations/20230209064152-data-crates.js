@@ -40,13 +40,12 @@ module.exports = {
 			},
 			update_state: {
 				type: Sequelize.DATE,
-				defaultValue: Sequelize.fn('now'),
-				timestamp: true,
+				onUpdate: Sequelize.literal('CURRENT_TIMESTAMP'),
 				allowNull: false,
 			},
 			updated_by: {
 				type: Sequelize.STRING(50),
-				allowNull: false,
+				allowNull: true,
 			}
 		});
 	},
