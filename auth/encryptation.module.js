@@ -17,21 +17,21 @@ function decryptChecker(pass, hash) {
 };
 
 
-function passEncriptProcedure (passFrase) {
+function passEncryptProcedure (passFrase) {
 	try {
 		const salt =	randomBytes(16).toString('hex');
 		const hashed =	encryptPassWord(passFrase, salt) + salt;
-	
+
 		return (hashed);
 	}
 	catch (err) {
-		console.error(`Pass failed ${err}`); 
+		console.error(`Pass failed ${err}`);
 		return (500);
 	};
 };
 
-module.exports = { 
+module.exports = {
 	decryptChecker,
 	encryptPassWord,
-	passEncriptProcedure 
+	passEncryptProcedure
 };
