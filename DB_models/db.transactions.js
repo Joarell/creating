@@ -82,11 +82,11 @@ async function addNewUser (user) {
 	const {
 		user_name, email, lastName, passFrase, birthday, accessToken, refreshToken
 	} = user;
-	const criptPass =	encryption.passEncryptProcedure (passFrase);
+	const cryptPass =	encryption.passEncryptProcedure (passFrase);
 	const client =		await pool.connect();
 	const id =			randomBytes(10).toString('hex');
 
-	// if (criptPass === 500 || criptPass === undefined) {
+	// if (cryptPass === 500 || criptPass === undefined) {
 	// 	client.release();
 	// 	return (500);
 	// }
@@ -97,7 +97,7 @@ async function addNewUser (user) {
 			(id, name, last_name, birth_date, email, pass_frase, auth_token,
 			refresh_token) VALUES
 			('${id}', '${user_name}', '${lastName}', '${birthday}', '${email}',
-			'${criptPass}', '${accessToken}', '${refreshToken}')
+			'${cryptPass}', '${accessToken}', '${refreshToken}')
 		`;
 		await pool.query(userData);
 		await pool.query('COMMIT');
@@ -148,13 +148,13 @@ async function retrieveSessionNumber(num) {
 	try {
 		const { rows }	= await pool.query(`
 			SELECT
-				user_name
+				name
 			FROM
-				data_solved
+				craters.users
 			WHERE
-				session = '${num}'
+				active_session = '${num}'
 		`);
-		return (rows);
+		return (rows[0]);
 	}
 	catch (err) {
 		console.error(`ALERT, ${err}`);
@@ -172,16 +172,15 @@ async function updateData (content, session) {
 	const list			= JSON.stringify({ "list": content.list }, null, "");
 	const crates		= JSON.stringify({ "crates": content.crates }, null, "");
 	const client		= await pool.connect();
-	const userSession	= await retrieveSessionNumber(session);
-	const { user_name } = userSession[0];
+	const { name }	= await retrieveSessionNumber(session);
 
-	console.log(`User on the SESSION: ${user_name}`);
+	console.log(`Crater USER: ${ name }`);
 	try {
 		await client.query('BEGIN');
 		const up = `UPDATE data_solved SET
 			works = '${list}',
 			crates = '${crates}',
-			updated_by = '${user_name}',
+			updated_by = '${name}',
 			update_state = '${new Date().toLocaleString()}',
 			session = '${session}'
 			WHERE reference_id = '${reference}'`;
