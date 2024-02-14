@@ -20,7 +20,8 @@
 		"sequelize": "^6.28.0"
 	},
 	"devDependencies": {
-		"nodemon": "^3.0.1"
+		"nodemon": "^3.0.1",
+		"sequelize-cli": "^6.6.2"
 	},
 	"repository": "git@github.com:Joarell/creating.git",
 	"private": true
