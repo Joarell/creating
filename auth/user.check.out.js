@@ -2,7 +2,6 @@
 
 const cryptics =	require('./encryptation.module.js');
 const db =			require('../DB_models/db.transactions');
-require('dotenv').config();
 
 
 async function checkUserAuthDB (userLogin) {
