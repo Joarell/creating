@@ -48,6 +48,7 @@ async function tokenProcedures (accessToken, body, session) {
 async function storeOldTokensGetNew (expTokens, newTokens, user, session) {
 	const client = await pool.connect();
 
+	console.log(`Active session: ${session}`);
 	try {
 		await client.query('BEGIN');
 		const oldTokens = `INSERT INTO craters.expired_tokens (
@@ -57,7 +58,8 @@ async function storeOldTokensGetNew (expTokens, newTokens, user, session) {
 			)`;
 		const addNewTokens = `UPDATE craters.users SET
 			auth_token = '${newTokens[0]}',
-			refresh_token = '${newTokens[1]}'
+			refresh_token = '${newTokens[1]}',
+			active_session = '${session}'
 			WHERE id = '${user.id}'
 			RETURNING *`;
 		await client.query(oldTokens);
@@ -107,7 +109,7 @@ function authTokenGen(userName) {
 	const authtoken = jwt.sign(
 		{ data: userName },
 		process.env.SECRET_TOKEN,
-		{ expiresIn: '12h' }
+		{ expiresIn: '8h' }
 	);
 	return (authtoken);
 };
