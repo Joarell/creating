@@ -3,7 +3,7 @@
 // │ │ INFO: Here is the functions to handle user requests │ │
 // │ │                dbSuspiciousTokens()                 │ │
 // │ │                  dbTokensCheckOut()                 │ │
-// │ │                   insertNewUser()                    │ │
+// │ │                   insertNewUser()                   │ │
 // │ │                userLoginValidation()                │ │
 // │ │                  userTokenMatch()                   │ │
 // │ │                 userTokenExpTime()                  │ │
@@ -154,6 +154,7 @@ const userTokenMatch = async(req, res, next) => {
 	}
 	catch(err) {
 		console.error('TOKEN MATCH:', err);
+		return(res.status(401).redirect('/'));
 	};
 };
 
@@ -177,6 +178,7 @@ const userTokenExpTime = async (req, res, next) => {
 	}
 	catch (err) {
 		console.error('TOKEN EXP:', err);
+		return(res.status(401).redirect('/'));
 	}
 };
 

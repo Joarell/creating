@@ -78,7 +78,6 @@ const shiftTokens = async (req, res) => {
 };
 
 
-// TODO: HTTPS cookie tests.
 const newLogin = async (req, res) => {
 	const session =	randomBytes(5).toString('hex');
 	const dbUsers =	await db.retrieveDataUsers(req.body.name, 'login');
