@@ -45,11 +45,15 @@ module.exports = {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			added: {
+			created: {
 				field: 'created_at',
 				type: Sequelize.DATEONLY,
 				allowNull: false,
 				defaultValue: Sequelize.fn('now')
+			},
+			active_session: {
+				type: Sequelize.STRING,
+				allowNull: true,
 			}
 		},
 		{
