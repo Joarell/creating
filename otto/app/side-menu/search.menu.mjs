@@ -7,7 +7,7 @@ function resetList(list) {
 		reset.push({ code, x, z, y });
 	});
 	return reset;
-}
+};
 
 // NOTE: the path is different with or without the bundle file.
 export async function checkBrowserDB(doc) {
@@ -26,16 +26,20 @@ export async function checkBrowserDB(doc) {
 	if (checkIDB) {
 		document.getElementById("input_estimate").value = doc;
 		sessionStorage.setItem("FETCHED", JSON.stringify(checkIDB));
-	} else if (!checkIDB) return fetchDB(doc);
-}
+		return(setDBFetched([checkIDB]));
+	};
+	return fetchDB(doc);
+};
 
 function setDBFetched(result) {
 	try {
-		if (result.length > 0) {
+		if (result.length > 0 || result?.hasOwnProperty('crates')) {
 			const { crates, works, reference_id } = result[0];
 			const fetched = {
 				crates,
-				list: resetList(works.list),
+				list: result[1]?.hasOwnProperty('crates') ?
+					resetList(result[1]):
+					resetList(works.list),
 				reference: reference_id,
 			};
 			const data = JSON.stringify(fetched);
@@ -43,12 +47,13 @@ function setDBFetched(result) {
 			document.getElementById("input_estimate").value = reference_id;
 			globalThis.sessionStorage.clear();
 			globalThis.sessionStorage.setItem("FETCHED", data);
-		} else throw new TypeError("Data not found!");
+		}
+		else throw new TypeError("Data not found!");
 	} catch (err) {
 		console.log(`ATTENTION: ${err}`);
 		alert(`Document not found! Please, try again.`);
-	}
-}
+	};
+};
 
 async function fetchDB(doc) {
 	const url = `/estimates/${doc}`;
@@ -60,16 +65,15 @@ async function fetchDB(doc) {
 			await fetch(url, {
 				method: "GET",
 				headers: HEADER,
-			})
-				.then((estimate) => estimate.json())
-				.then(setDBFetched)
-				.catch((err) => console.error(`ALERT ${err}`));
+			}).then((estimate) => estimate.json())
+			.then(setDBFetched)
+			.catch((err) => console.error(`ALERT ${err}`));
 		} catch (err) {
 			console.log(`ATTENTION: ${err}`);
-			alert(`Document not found! Please, try again.`);
+			alert(`Document not found on database! Please, try again.`);
 		}
 	}
-}
+};
 
 function regexChecker(data) {
 	const regex = /[^-a-z-A-Z-0-9]/g;
@@ -81,10 +85,10 @@ function regexChecker(data) {
 		case false:
 			return false;
 	}
-}
+};
 
 export function searchEstimate() {
 	const docEstimate = document.getElementById("estimate_getter").value;
 
 	return !regexChecker(docEstimate) ? checkBrowserDB(docEstimate) : false;
-}
+};
