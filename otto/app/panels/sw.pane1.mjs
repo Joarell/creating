@@ -16,7 +16,6 @@ globalThis.addEventListener('install', (event) => {
 
 
 globalThis.addEventListener('activate', (event) => {
-	// console.log('Inside the activate handler!');
 	event.waitUntil(async () => {
 		globalThis.registration.navigationPreload ?
 		await globalThis.registration.navigationPreload.enable() : 0;
