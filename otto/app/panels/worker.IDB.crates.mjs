@@ -13,7 +13,7 @@ globalThis.onmessage = (estimate) => {
 		.transaction("Results")
 		.objectStore("Results")
 		.get(estimate.data);
-	
+
 		db.onerror = () => {
 			globalThis.postMessage(false);
 		}
