@@ -5,6 +5,7 @@ const assets =		[
 	'/',
 	'/app/',
 	'./main.min.mjs',
+	'./bundle.mjs',
 	'./manifest.json',
 	'./index.html',
 	'./stylesheet.min.css',
@@ -28,16 +29,14 @@ const assets =		[
 ];
 
 
-globalThis.addEventListener('install', (event) => {
-	// console.log('Inside the install handler:', event);
+globalThis.addEventListener('install', event => {
 	event.waitUntil(caches.open(CACHENAME).then(async (cache) => {
 		return (cache.addAll(assets));
 	}));
 });
 
 
-globalThis.addEventListener('activate', (event) => {
-	// console.log('Inside the activate handler!');
+globalThis.addEventListener('activate', event => {
 	event.waitUntil(async () => {
 		globalThis.registration.navigationPreload ?
 		await globalThis.registration.navigationPreload.enable() : 0;
@@ -45,10 +44,23 @@ globalThis.addEventListener('activate', (event) => {
 });
 
 
+// // NOTE:Cache strategy: Network falling back to cache;
+// globalThis.addEventListener('fetch', event => {
+// 	event.respondWith(fetch(event.request).catch(() => {
+// 		return (cache.match(event.request));
+// 	}))
+// });
+
+
+// NOTE:Cache strategy: Stale-while-revalidate;
 globalThis.addEventListener('fetch', event => {
-	// console.log('Fetching DATA', event.request.url);
-	event.respondWith(caches.match(event.request).then(cachedResponse => {
-			return (cachedResponse ? cachedResponse : fetch(event.request));
-		})
-	);
+	event.respondWith(caches.open(CACHENAME).then((cache) => {
+		return(cache.match(event.request).then((response) => {
+			const fetchPromise = fetch(event.request).then(networkResponse => {
+				cache.put(event.request, networkResponse.clone());
+				return(networkResponse);
+			});
+			return (response || fetchPromise);
+		}))
+	}))
 });
