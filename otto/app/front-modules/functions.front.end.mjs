@@ -116,9 +116,10 @@ function parseArtWork() {
 		"currency",
 		"metrica",
 		"refNumb",
+		"offResults",
 		"FETCHED",
 	]
-	
+
 	Object.entries(DB).map(data => {
 		!avoid.includes(data[0]) ? temp.push(JSON.parse(data[1])) : false;
 	});
