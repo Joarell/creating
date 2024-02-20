@@ -1,7 +1,8 @@
 // ╭────────────────────────────────────────────────────╮
 // │ ╭────────────────────────────────────────────────╮ │
 // │ │ INFO: These are functions to handle indexedDB: │ │
-// │ │                  createDB();                   │ │
+// │ │                  createIDB();                  │ │
+// │ │              createOffLineIDB();               │ │
 // │ │                 addNewWorks();                 │ │
 // │ │                 deleteData();                  │ │
 // │ │          movingDataToSesseionStorage();        │ │
@@ -11,7 +12,7 @@
 import { saveTheCurrentEstimate } from "./bridge.link.web.db.mjs";
 
 
-export function createDB() {
+export function createIDB() {
 	const dataName =	"Results";
 	const request =		globalThis.indexedDB.open(dataName);
 
@@ -21,16 +22,32 @@ export function createDB() {
 	request.onupgradeneeded = (event) => {
 		const db = event.target.result;
 		let object;
-	
+
 		object = db.createObjectStore(dataName, {keyPath: "reference"});
 		object.createIndex( "reference", "reference", { unique: true });
-		console.log('Done!');
 	};
-}
+};
 
 
-export function addNewWorksToIndexedDB (works) {
-	const dataName =	"Results";
+export function createOffLineIDB() {
+	const dataName =	"off_line_results";
+	const request =		globalThis.indexedDB.open(dataName);
+
+	request.onerror = (event) => {
+		alert(`ATTENTION! ${event.target.errorCode}`);
+	};
+	request.onupgradeneeded = (event) => {
+		const db = event.target.result;
+		let object;
+
+		object = db.createObjectStore(dataName, {keyPath: "reference"});
+		object.createIndex( "reference", "reference", { unique: true });
+	};
+};
+
+
+export function addNewWorksToIndexedDBOffLine (works) {
+	const dataName =	"off_line_results";
 	const list =		document.getElementById("input_estimate").value;
 	const request =		globalThis.indexedDB.open(dataName);
 
@@ -39,10 +56,10 @@ export function addNewWorksToIndexedDB (works) {
 	}
 	request.onsuccess = async (event) => {
 		const db =			event.target.result;
-		const object =		db.transaction("Results", "readwrite")
-			.objectStore("Results");
+		const object =		db.transaction(dataName, "readwrite")
+			.objectStore(dataName);
 		const existsInIDB =	object.get(works.reference);
-		
+
 		existsInIDB.onsuccess = () => {
 			existsInIDB.result === undefined ? object.add(works):
 			(object.delete(existsInIDB.result.reference)) &&
@@ -50,7 +67,33 @@ export function addNewWorksToIndexedDB (works) {
 			movingDataToSesseionStorage(list);
 		};
 	}
-}
+};
+
+
+export function addNewWorksToIndexedDB (works) {
+	const dataName =	"Results";
+	const list =		document.getElementById("input_estimate").value;
+	const request =		globalThis.indexedDB.open(dataName);
+	const onLine =		globalThis.navigator.onLine;
+
+	request.onerror = (event) => {
+		alert(`ERROR: ${event.target.errorCode}`);
+	}
+	request.onsuccess = async (event) => {
+		const db =			event.target.result;
+		const object =		db.transaction(dataName, "readwrite")
+			.objectStore(dataName);
+		const existsInIDB =	object.get(works.reference);
+
+		existsInIDB.onsuccess = () => {
+			existsInIDB.result === undefined ? object.add(works):
+			(object.delete(existsInIDB.result.reference)) &&
+			(object.add(works));
+			movingDataToSesseionStorage(list);
+		};
+		onLine ? 'ok' : addNewWorksToIndexedDBOffLine(works);
+	}
+};
 
 
 export function deleteDataFromIndexedDB(reference) {
@@ -64,7 +107,7 @@ export function deleteDataFromIndexedDB(reference) {
 		db.transaction("Results", "readwrite")
 			.objectStore("Results").delete(reference);
 	}
-}
+};
 
 
 // TODO: refectory this function to use the worker script
@@ -79,7 +122,7 @@ export async function movingDataToSesseionStorage(reference) {
 			.result
 			.transaction("Results")
 			.objectStore("Results").get(reference);
-		
+
 		db.onsuccess = async () => {
 			const reference = document.getElementById("input_estimate").value;
 			const obj = db.result;
@@ -88,4 +131,4 @@ export async function movingDataToSesseionStorage(reference) {
 			await saveTheCurrentEstimate(reference);
 		};
 	};
-}
+};
