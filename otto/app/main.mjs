@@ -3,7 +3,7 @@ import * as accordion from './side-menu/menu.currency.conversion.mjs';
 import * as unit from './side-menu/menu.units.mjs';
 import { crate, clearAll, setUnit } from './front-modules/checkout.mjs';
 import { copyButton1, copyButton2 } from './panels/clip.board.caller.mjs';
-import { createDB } from './front-modules/link.storage.mjs';
+import { createIDB } from './front-modules/link.storage.mjs';
 import { switchMode } from './front-modules/mode.color.mjs';
 import { accordionController } from './side-menu/interactive.menu.mjs';
 import { searchEstimate } from './side-menu/search.menu.mjs';
@@ -24,7 +24,7 @@ globalThis.onkeydown = (push) => {
 
 globalThis.document.getElementById('main-app')
 	.addEventListener("click", (element => {
-	
+
 	// console.log(element.target.id);
 	switch (element.target.id) {
 		case "body-app" :
