@@ -22,6 +22,10 @@ const iframe1 =			'http://*/panels/status_panel.html'
 const iframe2 =			'http://*/panels/pane1_crates.html'
 const iframe3 =			'http://*/panels/pane2_crates.html'
 
+// const script1 =			'https://*/panels/status.panel.mjs'
+// const script2 =			'https://*/panels/pane1.module.mjs'
+// const script3 =			'https://*/panels/pane2.module.mjs'
+
 app.use((req, res, next) => {
 	res.setHeader(
 		'Report-TO',
