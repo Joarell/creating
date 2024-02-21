@@ -1,7 +1,7 @@
 //╭───────────────────────────────────────────────────────────────────────────╮
 //│ ╭───────────────────────────────────────────────────────────────────────╮ │
 //│ │ INFO:          These are the functions to the first layer:            │ │
-//│ │                           Function checWork();                        │ │
+//│ │                           Function checkWork();                       │ │
 //│ │                           Function regValid();                        │ │
 //│ │                          Function catchWork();                        │ │
 //│ │                         Function catchRemove();                       │ │
@@ -22,7 +22,7 @@ export function checkWork(work) {
 	const regex =		/[^-a-z-A-Z-0-9]/g;
 	const estimate =	document.getElementById("input_estimate").value;
 	let i;
-	
+
 	i = 0;
 	for (i in localStorage.key(i)){
 		if(work[0] === localStorage.key(i)){
@@ -37,7 +37,7 @@ export function checkWork(work) {
 			return (false);
 	}
 	checkReference();
-	return ( Array.isArray(checked) ? 
+	return ( Array.isArray(checked) ?
 		new ArtWork(work[0], checked[0], checked[1], checked[2]) : false
 	);
 }
@@ -121,7 +121,7 @@ export function catchWork() {
 // ╰─────────────────────────────────────────────────────────────────╯
 export function catchRemove() {
 	const work = prompt("Please enter the work code to be removed:", "code?");
-	
+
 	if(localStorage.getItem(work)){
 		orderRemove(work);
 		localStorage.removeItem(work);
@@ -144,7 +144,7 @@ export function catchRemove() {
 export function checkReference() {
 	const ref =		localStorage.getItem("refNumb");
 	const actual =	document.getElementById("input_estimate").value;
-	
+
 	if (ref){
 		if (ref !== actual) {
 			if (confirm("ATTENTION! The refNumb has changed")){
