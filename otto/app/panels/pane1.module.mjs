@@ -148,6 +148,8 @@ export async function showCrates1(estimate) {
 	let key =			0;
 	let metric;
 
+	if(!crates)
+		return ;
 	localStorage.getItem("metrica") === "in - inches" ?
 		metric = "in": metric = "cm";
 	createHeader(element);

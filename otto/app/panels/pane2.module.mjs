@@ -240,6 +240,8 @@ export async function showCrates2(estimate) {
 	const pane =		document.getElementById("opened-crates");
 	let key;
 
+	if(!crates)
+		return ;
 	createHeader(element);
 	for (key in crates) {
 		if (crates[key].hasOwnProperty('crates')) {
