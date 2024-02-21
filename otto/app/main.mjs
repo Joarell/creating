@@ -126,7 +126,7 @@ globalThis.document.getElementById('main-app')
 	element.preventDefault();
 	switch (element.target.id) {
 		case "input_estimate":
-			createDB();
+			createIDB();
 			break;
 		case "in":
 			setUnit();
