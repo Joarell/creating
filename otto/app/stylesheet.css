@@ -164,7 +164,7 @@ body {
 	--table-bg: var(--light-blue1);
 	--inner-shadow: var(--inner-shadow-dark);
 	--input-bg: var(--bg-col);
-	--input-font-col: var(--color4);
+	--input-font-col: var(--iframes-bg);
 	--selection-bg: transparent;
 	--crate-btn-col: var(--color3);
 	--p__color--mode: var(--back-gray);
@@ -272,8 +272,20 @@ input {
 		color: var(--color4);
 		font-size: var(--fonts);
 		transition: .5s ease-in-out;
+		&::placeholder {
+			opacity: 0;
+		}
+	}
+	&::placeholder {
+		opacity: .45;
+		font-weight: 300;
+		font-style: italic;
+		font-size: .8rem;
+		color: var(--table-font);
 	}
 }
+
+
 
 
 select {
@@ -916,7 +928,7 @@ label:hover + .IO__sizes--popup {
 	background: linear-gradient(
 		to bottom right,
 		var(--color4) 0%,
-		var(--backgroud) 100%
+		var(--background) 100%
 	);
 	transition: all .2s linear;
 	animation: waves 2000ms linear infinite;
@@ -930,8 +942,8 @@ label:hover + .IO__sizes--popup {
 	-.2rem -.2rem .5rem white;
 	background: linear-gradient(
 		to bottom right,
-		var(--backgroud) 0%,
-		var(--color4) 100%
+		var(--background) 0%,
+		var(--color8) 100%
 	);
 	transition: all .2s linear;
 	animation: waves 2000ms linear 1000ms infinite;
