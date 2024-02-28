@@ -25,18 +25,21 @@ export function loginInto () {
 		name: userName,
 		passFrase: userPass
 	};
-	
+
 	if (userName && !checkingPass (userPass))
 		return (backEndLoginAuth(badge));
+	// document.getElementById("warning").open = true;
 	alert(`Opss! Wrong credentials. Please try again!`);
 };
 
 
 async function setLogin(info) {
-	if (info.msg === 'active') 
+	if (info.msg === 'active')
 		await appAccessCheckIn(info)
-	else
+	else {
+		warningDialog();
 		alert('Wrong credentials. Please try again!');
+	}
 	return(info);
 };
 
