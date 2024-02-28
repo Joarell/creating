@@ -164,7 +164,7 @@ body {
 	--table-bg: var(--light-blue1);
 	--inner-shadow: var(--inner-shadow-dark);
 	--input-bg: var(--bg-col);
-	--input-font-col: var(--iframes-bg);
+	--input-font-col: var(--mob-col);
 	--selection-bg: transparent;
 	--crate-btn-col: var(--color3);
 	--p__color--mode: var(--back-gray);
@@ -535,9 +535,7 @@ tbody:nth-child(even) {
    ╰──────────────────────────────────────────────────────────╯
 */
 
-.table,
-.crates-only,
-.crates-opened {
+:is(.table, .crates-only, .crates-opened) {
 	display: flex;
 	align-items: space-evenly;
 	justify-content: space-evenly;
@@ -571,13 +569,8 @@ tbody:nth-child(even) {
    ╰──────────────────────────────────────────────────────────╯
 */
 
-.popup,
-.plotter,
-.container__insert,
-.container__status,
-.result-left,
-.result,
-.menu {
+:is(.popup, .plotter, .container__insert, .container__status, .result-left,
+.result, .menu) {
 	padding: 2rem 2rem;
 	font-size: var(--fonts);
 	font-weight: 600;
@@ -704,9 +697,7 @@ span[data-popup]::before {
 }
 
 
-.IO__sizes--popup,
-.menu__option--text
-.side__menu {
+:is(.IO__sizes--popup, .menu__option--text .side__menu) {
 	font-family: Mitr, sans-serif;
 	font-size: cals(var(--fonts) - .4rem);
 	font-weight: 400;
@@ -744,9 +735,7 @@ label:hover + .IO__sizes--popup {
    ╰──────────────────────────────────────────────────────────╯
 */
 
-.IO__press,
-.IO__press-mobile,
-.IO__add--form {
+:is(.IO__press, .IO__press-mobile, .IO__add--form) {
 	display: flex;
 	justify-content: space-between;
 }
@@ -777,8 +766,7 @@ label:hover + .IO__sizes--popup {
 }
 
 
-.press--btn-mobile,
-.IO__press--btn {
+:is(.press--btn-mobile, .IO__press--btn) {
 	font-family: Saira Semi Condensed, sans-serif;
 	font-weight: 700;
 	font-size: calc(var(--fonts) + .5rem);
@@ -910,8 +898,7 @@ label:hover + .IO__sizes--popup {
 }
 
 
-.IO__crate--shadow1,
-.IO__crate--shadow2 {
+:is(.IO__crate--shadow1, .IO__crate--shadow2) {
 	grid-row: 1 / 2;
 	grid-column: 1 / 2;
 	border-radius: 50%;
@@ -1190,8 +1177,7 @@ label:hover + .IO__sizes--popup {
 }
 
 
-.exchange--content,
-.units-conversion {
+:is(.exchange--content, .units-conversion) {
 	transition: width 3s ease-in-out;
 	transition: padding 5s ease-in-out;
 }

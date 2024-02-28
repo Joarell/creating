@@ -2,7 +2,7 @@
 /* @media only screen and (min-width: 1080px) and (max-width: 4000px) { */
 /* @media not all and (aspect-ratio: 16 / 9) and (max-width: 4000px) { */
 /* @media not all and (max-width: 80rem) { */
-@media only screen and (min-width: 80rem) {
+@media only screen and (min-width: 40rem) {
 	/* ╭─────────────────────╮
 	   │ 	main container.  │
 	   ╰─────────────────────╯
@@ -429,8 +429,7 @@
 		display: none;
 	}
 
-	.IO__sizes--code,
-	.IO__top__estimate {
+	:is(.IO__sizes--code, .IO__top__estimate) {
 		width: auto;
 		&:focus {
 			font-size: 1.1rem;
@@ -447,8 +446,7 @@
 	}
 
 
-	.header-content,
-	.section__menu {
+	:is(.header-content, .section__menu) {
 		display: flex;
 		justify-content: space-between;
 	}
@@ -465,8 +463,7 @@
 		}
 	}
 
-	.layers-btn,
-	.logout-btn {
+	:is(.layers-btn, .logout-btn) {
 		border: .1rem solid var(--gradient1);
 		border-radius: 40%;
 		background: var(--inner-shadow);
@@ -547,8 +544,7 @@
 	}
 
 
-	.logout-icon,
-	.preview-icon {
+	:is(.logout-icon, .preview-icon) {
 		fill: var(--color4);
 		width: 1.4rem;
 		height: 1.4rem;
