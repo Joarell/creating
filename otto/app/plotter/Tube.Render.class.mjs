@@ -16,7 +16,8 @@ export default class TubeRender {
 	};
 
 	#worksPositionLayer({ x, y }) {
-		const RECT =	document.createElementNS("http://www.w3.org/2000/svg", "rect");
+		const URL =		"http://www.w3.org/2000/svg";
+		const RECT =	document.createElementNS(URL, "rect");
 		const INSET =	1;
 		const PAD =		20;
 		const Y =		y.length > 1 ? nextPointY(y) : 0;
@@ -29,7 +30,8 @@ export default class TubeRender {
 	};
 
 	#textOnCenter({ x, y }, work) {
-		const text =		document.createElementNS("http://www.w3.org/2000/svg", "text");
+		const URL =			"http://www.w3.org/2000/svg";
+		const text =		document.createElementNS(URL, "text");
 		const MID =			0.5;
 		const X =			x.at(-1);
 		const Y =			y.at(-1) * MID;
