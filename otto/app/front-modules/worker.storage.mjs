@@ -1,6 +1,5 @@
 
 
-
 globalThis.onmessage = (estimate) => {
 	const request = globalThis.indexedDB.open("Results");
 
@@ -13,7 +12,7 @@ globalThis.onmessage = (estimate) => {
 		.transaction("Results")
 		.objectStore("Results")
 		.get(estimate.data);
-	
+
 		db.onerror = () => {
 			globalThis.postMessage(undefined);
 		}
