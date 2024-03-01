@@ -580,12 +580,9 @@ tbody:nth-child(even) {
 }
 
 
-span[data-popup]::before {
-	content: attr(data-popup);
-	color: var(--color4);
-	font-size: var(--fonts);
-	cursor: pointer;
-	position: absolute;
+:is(.popup, .plotter, .container__insert, .container__status, .result-left,
+.result) {
+	container-type: inline-size;
 }
 
 
@@ -680,53 +677,6 @@ span[data-popup]::before {
 	visibility: visible;
 	-webkit-animation: fadeIn 1s;
 	animation: fadeIn 1s;
-}
-
-/* ╭──────────────────────────────────────────────────────────╮
-   │                   Popup hover settings                   │
-   ╰──────────────────────────────────────────────────────────╯
-*/
-
-.IO__sizes--popup {
-	visibility: hidden;
-	border-radius: var(--bord);
-	color: var(--color4);
-	position: relative;
-	margin-top: 3%;
-	left: 7.0%;
-}
-
-
-:is(.IO__sizes--popup, .menu__option--text .side__menu) {
-	font-family: Mitr, sans-serif;
-	font-size: cals(var(--fonts) - .4rem);
-	font-weight: 400;
-}
-
-label:hover + .IO__sizes--popup {
-	visibility: visible;
-	-webkit-animation: fadeIn 1s;
-	animation: fadeIn 2s;
-}
-
-
-@-webkit-keyframes fadeIn {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
-}
-
-
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
 }
 
 

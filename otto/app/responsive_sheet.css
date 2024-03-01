@@ -2,7 +2,7 @@
 /* @media only screen and (min-width: 1080px) and (max-width: 4000px) { */
 /* @media not all and (aspect-ratio: 16 / 9) and (max-width: 4000px) { */
 /* @media not all and (max-width: 80rem) { */
-@media only screen and (min-width: 40rem) {
+@media only screen and (width >= 80rem) {
 	/* ╭─────────────────────╮
 	   │ 	main container.  │
 	   ╰─────────────────────╯
@@ -814,8 +814,7 @@
    ╰──────────────────────────────────────────────────────────╯
 */
 
-@media only screen and
-	(min-width: 24rem) and (max-width: 80rem) and (orientation: portrait) {
+@media only screen and (width < 80rem) and (orientation: portrait) {
 
 	header {
 		height: 10%;
@@ -1497,7 +1496,7 @@
    ╰──────────────────────────────────────────────────────────╯
 */
 /* @media only screen and ( min-width: 840px) and ( max-width: 1700px) { */
-@media only screen and (max-width: 80rem) and (orientation: landscape) {
+@media only screen and (width < 80rem) and (orientation: landscape) {
 
 	header {
 		height: 10%;
