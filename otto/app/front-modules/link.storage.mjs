@@ -12,6 +12,9 @@
 import { saveTheCurrentEstimate } from "./bridge.link.web.db.mjs";
 
 
+/**
+ * @function Creates a new indexedDB table in the browser for all results.
+*/
 export function createIDB() {
 	const dataName =	"Results";
 	const request =		globalThis.indexedDB.open(dataName);
@@ -29,6 +32,9 @@ export function createIDB() {
 };
 
 
+/**
+ * @function Creates a new indexedDB table in the browser for all off-line results.
+*/
 export function createOffLineIDB() {
 	const dataName =	"off_line_results";
 	const request =		globalThis.indexedDB.open(dataName);
@@ -46,6 +52,9 @@ export function createOffLineIDB() {
 };
 
 
+/**
+ * @param {Crater} works The list to add in indexed DB when the page is off-line.
+*/
 export function addNewWorksToIndexedDBOffLine (works) {
 	const dataName =	"off_line_results";
 	const list =		document.getElementById("input_estimate").value;
@@ -70,6 +79,9 @@ export function addNewWorksToIndexedDBOffLine (works) {
 };
 
 
+/**
+ * @param {Crater} works The list to add in indexedDB when all crates is done.
+*/
 export function addNewWorksToIndexedDB (works) {
 	const dataName =	"Results";
 	const list =		document.getElementById("input_estimate").value;
@@ -96,6 +108,9 @@ export function addNewWorksToIndexedDB (works) {
 };
 
 
+/**
+ * @param {String} reference The code/reference to delete from indexedDB.
+*/
 export function deleteDataFromIndexedDB(reference) {
 	const request = globalThis.indexedDB.open("Results");
 
@@ -110,7 +125,9 @@ export function deleteDataFromIndexedDB(reference) {
 };
 
 
-// TODO: refectory this function to use the worker script
+/**
+ * @param {String} reference The code/reference to the crates process.
+*/
 export async function movingDataToSesseionStorage(reference) {
 	const request = globalThis.indexedDB.open("Results");
 

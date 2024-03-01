@@ -1,8 +1,8 @@
 
 
-// TODO: develop a closure class to preserve the access and refresh token
-// on the client side towards future http requests using Map().
-
+/**
+ * @param {String} ref The reference/document code estimate to get from DB.
+*/
 async function getIDB (ref) {
 	const WORKER = new Worker(
 		new URL('./panels/worker.IDB.crates.mjs', import.meta.url), { type: "module" }
@@ -21,6 +21,9 @@ async function getIDB (ref) {
 };
 
 
+/**
+ * @param {String} doc The reference/document code estimate when the page is offline.
+*/
 function setOfflineRef(doc) {
 	const STORAGE =	localStorage;
 	const offList =	STORAGE.getItem('offResults');
@@ -36,7 +39,11 @@ function setOfflineRef(doc) {
 }
 
 
-// TODO: test.
+// TODO: develop a closure class to preserve the access and refresh token
+// on the client side towards future http requests using Map().
+/**
+ * @param {Crater} content The solved list result from the algorithm.
+*/
 async function getNewTokens(content) {
 	const url =		'/shift/tokens';
 	const HEADER =	{ 'Content-Type': 'application/json; charset=UTF-8' };
@@ -55,6 +62,12 @@ async function getNewTokens(content) {
 };
 
 
+/**
+ * @param {Number} code HTTP code.
+ * @param {String} info The server answer about the user access token.
+ * @param {Crater} data The crater object result serialized.
+ * @param {Object} header Object header to HTTP request.
+*/
 function checkStatusCode(code, info, data, header) {
 	switch(code) {
 		case 409 :
@@ -67,6 +80,11 @@ function checkStatusCode(code, info, data, header) {
 };
 
 
+/**
+ * @param {String} content The server answer about the user access token.
+ * @param {Crater} data The crater object result serialized.
+ * @param {Object} header Object header to HTTP request.
+*/
 async function upDateEstimateClient(data, header, content) {
 	if (confirm("This estimate already exist. Would you like to update it?")){
 		const url = '/update/estimate';
@@ -88,7 +106,9 @@ async function upDateEstimateClient(data, header, content) {
 		alert(`Not updated!`);
 };
 
-
+/**
+ * @param {Crater} content The solved list result from the algorithm.
+*/
 async function postDataFromClientSide(content) {
 	const DATA =	JSON.stringify(content);
 	const url =		`/new/estimate/`;
@@ -111,10 +131,12 @@ async function postDataFromClientSide(content) {
 	}
 	else
 		setOfflineRef(content.reference);
-		// TODO: set offline estimates to LocalStorage for upploading online.
 };
 
 
+/**
+ * @param {Crater} estimate The algorithm solved result.
+*/
 export async function saveTheCurrentEstimate (estimate) {
 	const contentStorage =	await getIDB(estimate);
 	const { reference, list, crates } = contentStorage;

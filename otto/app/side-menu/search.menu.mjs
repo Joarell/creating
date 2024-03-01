@@ -1,4 +1,7 @@
 // NOTE: reset the code changed by the data base in order to render on status panel.
+/**
+ * @param {Crater} list The Crater object fetched from the DB.
+*/
 function resetList(list) {
 	const reset = [];
 
@@ -9,7 +12,11 @@ function resetList(list) {
 	return reset;
 };
 
+
 // NOTE: the path is different with or without the bundle file.
+/**
+ * @param {String} doc The reference/document with artwork list.
+*/
 export async function checkBrowserDB(doc) {
 	const workerDB = new Worker(
 		// new URL("../panels/worker.IDB.crates.mjs", import.meta.url),
@@ -31,6 +38,10 @@ export async function checkBrowserDB(doc) {
 	return fetchDB(doc);
 };
 
+
+/**
+ * @param {Crater} result The Crater object with the solved list from DB.
+*/
 function setDBFetched(result) {
 	try {
 		if (result.length > 0 || result?.hasOwnProperty('crates')) {
@@ -55,6 +66,10 @@ function setDBFetched(result) {
 	};
 };
 
+
+/**
+ * @param {String} doc The reference/document with artwork list.
+*/
 async function fetchDB(doc) {
 	const url = `/estimates/${doc}`;
 	const HEADER = {
@@ -75,6 +90,10 @@ async function fetchDB(doc) {
 	}
 };
 
+
+/**
+ * @param {String} doc The reference/document with artwork list.
+*/
 function regexChecker(data) {
 	const regex = /[^-a-z-A-Z-0-9]/g;
 
@@ -87,6 +106,10 @@ function regexChecker(data) {
 	}
 };
 
+
+/**
+ * @function Gets the reference/document number from the page in order to search.
+*/
 export function searchEstimate() {
 	const docEstimate = document.getElementById("estimate_getter").value;
 
