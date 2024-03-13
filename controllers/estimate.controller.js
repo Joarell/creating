@@ -55,7 +55,7 @@ const updateEstimate = async (req, res) => {
 
 const shiftTokens = async (req, res) => {
 	const cookie =	extractCookieData(req);
-	console.log('RENEW', cookie, 'and', typeof cookie.id);
+	console.log('RENEWED', cookie, 'and', typeof cookie.id);
 	const body =	{
 		id : cookie.id,
 		token: cookie.refToken,
