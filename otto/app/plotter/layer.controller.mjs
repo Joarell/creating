@@ -4,29 +4,44 @@ import { plotter } from "./layers.mjs";
 import { displayClean, populateOptions } from "./select.menu.mjs";
 
 
-export function openCloseDisplay (element) {
-	const works = sessionStorage.getItem('codes');
+export function openCloseDisplay (element, template) {
 	element.map(plotter => {
-		if (plotter.ariaHidden === 'true' && works) {
-			plotter.setAttribute("aria-hidden", false);
-			plotter.setAttribute("aria-expanded", true);
-		}
-		else {
-			plotter.setAttribute("aria-hidden", true);
-			plotter.setAttribute("aria-expanded", false);
-		}
+		plotter.setAttribute("aria-hidden", false);
+		plotter.setAttribute("aria-expanded", true);
+		console.log("element open");
 	})
 };
 
 
+function closeDisplay(element, display) {
+	element.map(plotter => {
+		console.log("Close element");
+		plotter.setAttribute("aria-hidden", true);
+		plotter.setAttribute("aria-expanded", false);
+		while(display.firstChild)
+			display.removeChild(display.firstChild);
+	});
+};
+
+
 export async function openDisplay() {
+	const RENDER =		document.getElementById("show-layer");
+	const template =	document.getElementById("Render");
+	const clone =		template.content.cloneNode(true);
 	const estimate =	document.getElementById("input_estimate").value;
-	const display =		document.querySelector(".plotter");
-	const menu =		document.querySelector(".plotter__menu");
-	
+	const display =		clone.childNodes[1];
+	const menu =		clone.childNodes[1].children[0].children[1];
+
 	if(!estimate)
 		return(alert("Please, start an 'Doc', add works and press the 'Crate' button."));
-	openCloseDisplay([display, menu]);
+	switch (RENDER.hasChildNodes()) {
+		case false :
+			RENDER.appendChild(clone);
+			openCloseDisplay([display, menu]);
+			break;
+		default :
+			closeDisplay([display, menu], RENDER);
+	};
 	if (display.ariaHidden === 'false') {
 		await populateOptions();
 		renderLayer();

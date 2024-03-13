@@ -13,7 +13,6 @@ import { logout } from './front-modules/logout.mjs';
 import { installer } from './installation.handler.mjs';
 
 
-
 globalThis.onkeydown = (push) => {
 	const task1 = ((push.key === "Enter") && (push.ctrlKey === true));
 	task1 ? crate() : false;
