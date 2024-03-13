@@ -33,8 +33,6 @@ globalThis.onload = () => {
 	setTimeout(loadingPage, 1500);
 };
 
-// globalThis.onbeforeunload = checkTokens();
-
 
 // ╭────────────────────────────────────────────────────────╮
 // │ Defines the measure of the works selected by the user. │

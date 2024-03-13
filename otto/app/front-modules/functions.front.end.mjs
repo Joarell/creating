@@ -81,7 +81,7 @@ export async function crate() {
 			estimate["crates"] =	crates;
 			addNewWorksToIndexedDB(estimate);
 
-			// INFO: Efemeral triggers to each panel render the result
+			// INFO: triggers to each panel render the result
 			sessionStorage.setItem("pane1", "populate");
 			sessionStorage.setItem("pane2", "populate");
 		};
