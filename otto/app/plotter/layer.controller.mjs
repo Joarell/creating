@@ -33,7 +33,7 @@ export async function openDisplay() {
 	const menu =		clone.childNodes[1].children[0].children[1];
 
 	if(!estimate)
-		return(alert("Please, start an 'Doc', add works and press the 'Crate' button."));
+		return(alert("Please, add some works and press the 'Crate' button."));
 	switch (RENDER.hasChildNodes()) {
 		case false :
 			RENDER.appendChild(clone);
