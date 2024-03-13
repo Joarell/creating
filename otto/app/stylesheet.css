@@ -141,17 +141,6 @@
 }
 
 
-body {
-	box-sizing: border-box;
-	font-family: Saira Semi Condensed, Mitr, sans-serif;
-	font-size: var(--fonts);
-	background-position: center;
-	scroll-behavior: slow;
-	background-color: var(--bg-col);
-	transition: padding 1s ease-in-out;
-}
-
-
 [popover] {
 	font-size: 3rem;
 }
@@ -193,6 +182,17 @@ body {
 	--stroke: var(--color1);
 	--background-select: var(--color5);
 	--popup: var(--color4);
+}
+
+
+body {
+	box-sizing: border-box;
+	font-family: Saira Semi Condensed, Mitr, sans-serif;
+	font-size: var(--fonts);
+	background-position: center;
+	scroll-behavior: slow;
+	background-color: var(--bg-col);
+	transition: padding 1s ease-in-out;
 }
 
 
@@ -1114,6 +1114,7 @@ tbody:nth-child(even) {
 			background: var(--background-select);
 			color: var(--p__color--mode);
 			box-shadow: var(--inner-shadow);
+			text-align-last: center;
 		}
 	}
 	& .get__currency, .get__measure {

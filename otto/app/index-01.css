@@ -8,7 +8,7 @@ header {
 	text-align: center;
 	height: 8rem;
 	font-family: 'Big Shoulders Stencil Display', cursive;
-	overflow: hidden;
+	overflow: clip;
 	border-radius: 1rem;
 }
 
@@ -21,7 +21,7 @@ footer {
 	text-align: center;
 	height: 8rem;
 	font-family: 'Big Shoulders Stencil Display', cursive;
-	overflow: hidden;
+	overflow: clip;
 	border-radius: 1rem;
 }
 
@@ -43,25 +43,21 @@ footer {
 	align-items: center;
 	justify-content: space-evenly;
 	transition: all .3s ease-in-out;
+	& {
+		width: 4rem;
+		height: 2.3rem;
+		border-radius: 1rem;
+		transition: .5s ease;
+	}
+	& > input:checked + label > svg {
+		transition: all .5s ease;
+		fill: var(--dark);
+		z-index: 5;
+	}
 	&:hover {
 		border: none;
 		box-shadow: var(--shadow1);
 	}
-}
-
-
-.mode {
-	width: 4rem;
-	height: 2.3rem;
-	border-radius: 1rem;
-	transition: .5s ease;
-}
-
-
-.mode > input:checked + label > svg {
-	transition: all .5s ease;
-	fill: var(--dark);
-	z-index: 5;
 }
 
 
@@ -117,4 +113,3 @@ footer {
 	transform: translateX(1.9rem);
 	transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)
 }
-
