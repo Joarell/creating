@@ -5,7 +5,7 @@ import { crate, clearAll, setUnit } from './front-modules/checkout.mjs';
 import { copyButton1, copyButton2 } from './panels/clip.board.caller.mjs';
 import { createIDB } from './front-modules/link.storage.mjs';
 import { switchMode } from './front-modules/mode.color.mjs';
-import { accordionController } from './side-menu/interactive.menu.mjs';
+import { accordionController, closeMenu } from './side-menu/interactive.menu.mjs';
 import { searchEstimate } from './side-menu/search.menu.mjs';
 import { changeCrateDisplay, openDisplay } from './plotter/layer.controller.mjs';
 import { layersNumber, skipLayer } from './plotter/select.menu.mjs';
@@ -15,9 +15,12 @@ import { installer } from './installation.handler.mjs';
 
 globalThis.onkeydown = (push) => {
 	const task1 = ((push.key === "Enter") && (push.ctrlKey === true));
-	task1 ? crate() : false;
 	const task2 = ((push.ctrlKey === true) && (push.key === "V"));
+	const task3 = push.key === "Escape";
+
+	task1 ? crate() : false;
 	task2 ? openDisplay() : false;
+	task3 ? closeMenu() : false;
 };
 
 

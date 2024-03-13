@@ -5,17 +5,17 @@
 // ╰──────────────────────────────────────────────────────────╯
 export function accordionController (event){
 	const activePanel = event.target.closest(".accordion-panel");
-	const menu =		document.querySelector(".accordion-panel");
 
 	if (event.target.id === "body-app")
-		return(closeMenu(menu));
+		return(closeMenu());
 	if (!activePanel)
 		return;
 	toggleAccordion(activePanel);
 };
 
 
-function closeMenu(element) {
+export function closeMenu() {
+	const element = document.querySelector(".accordion-panel");
 	let menu;
 	let buttons;
 	let panel;
