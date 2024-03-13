@@ -51,7 +51,7 @@ router.post("/start", userSet.userLoginValidation, take.newLogin);
 
 
 router.get("/", (req, res) => {
-	res.status(200).redirect('./otto/login/');
+	res.status(200).redirect('/app');
 	console.log('Running');
 });
 
