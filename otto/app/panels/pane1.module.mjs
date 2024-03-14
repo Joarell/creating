@@ -71,7 +71,7 @@ export function createHeader(table) {
 		while(table.firstChild)
 			table.removeChild(table.firstChild)
 	head.innerHTML =`
-		<tr>
+		<tbody><tr>
 			<th>STATUS</th>
 			<th>TYPE</th>
 			<th>LENGTH</th>
@@ -79,7 +79,7 @@ export function createHeader(table) {
 			<th>HEIGHT</th>
 			<th>CUB</th>
 			<th>UNIT</th>
-		</tr>
+		</tr></tbody>
 	`
 	return(table.append(head));
 };
@@ -124,13 +124,13 @@ function addHTMLTableLine (data, unit, table) {
 			table.innerHTML += crate.map((info, i) => {
 				switch(i) {
 					case 0 :
-						return(`<tr><td>${port}</td><td>CRATE</td><td>${info}</td>`);
+						return(`<tbody><tr><td>${port}</td><td>CRATE</td><td>${info}</td>`);
 					case 1 :
 						return(`<td>${info}</td>`)
 					case 2 :
 						return(`<td>${info}</td>`)
 					case 3 :
-						return(`<td>${info}</td><td>${unit}</td></tr>`);
+						return(`<td>${info}</td><td>${unit}</td></tr></tbody>`);
 				};
 			}, 0).join("");
 		};

@@ -98,7 +98,7 @@
 	--colg-mobile: 1rem;
 	--rowg: 2rem;
 	--rowg-mobile: 1rem;
-	--bord: .5rem;
+	--bord: .3rem;
 	--mob-col: #12111385;
 	--gradient: linear-gradient(270deg, var(--color8), var(--dark-blue2));
 	--gradient1: linear-gradient(90deg, var(--color8), var(--dark-blue));
@@ -138,11 +138,6 @@
 	transform:scaleX(1);
 	background:var(--gradient);
 	box-shadow: var(--shadow1);
-}
-
-
-[popover] {
-	font-size: 3rem;
 }
 
 
@@ -193,6 +188,32 @@ body {
 	scroll-behavior: slow;
 	background-color: var(--bg-col);
 	transition: padding 1s ease-in-out;
+}
+
+
+
+
+dialog {
+	container-type: normal;
+	border-radius: 1rem;
+	background: var(--dark-blue2);
+	border: var(--box);
+	padding: 20cqb 23cqb;
+	position: absolute;
+	opacity: .8;
+	z-index: 100;
+	& .padding-dialog {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		align-items: space-evenly;
+	}
+	&::backdrop {
+		background-color: var(--dark);
+		opacity: .7;
+		z-index: 100;
+	}
+	transition: backdrop 2s ease-in-out;
 }
 
 
@@ -293,21 +314,24 @@ select {
 }
 
 
-tr, td, th {
+:is(td, th) {
 	text-align: center;
 	padding: .1rem .3rem;
-	border-radius: 0.3rem;
-	color: var(--table-font);
 	font-family: Saira Semi Condensed, sans-serif;
 	font-weight: 500;
 	font-size: calc(var(--fonts) - .08rem);
+	border-radius: var(--bord);
+	background: var(--table-bg);
 }
 
 
+
 tbody:nth-child(even) {
-	background: var(--table-bg);
 	text-align: center;
-	border-radius: var(--bord);
+	background: var(--table-bg);
+	&, tr > * {
+		background: none;
+	}
 }
 
 

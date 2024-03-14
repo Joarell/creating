@@ -69,7 +69,7 @@ export function createHeader(table){
 		while(table.firstChild)
 			table.removeChild(table.firstChild)
 	head.innerHTML =`
-		<tr>
+		<tbody><tr>
 			<th>INFO</th>
 			<th>DATA</th>
 			<th>LENGTH</th>
@@ -77,7 +77,7 @@ export function createHeader(table){
 			<th>HEIGHT</th>
 			<th>UNIT</th>
 			<th>STATE</th>
-		</tr>
+		</tr></tbody>
 	`
 	return(table.appendChild(head));
 };
@@ -105,7 +105,7 @@ function layerInterface(layer, num, unit) {
 	const content = layer.map((info, i) => {
 		switch(i) {
 			case 0 :
-				return(`<tr><td>LAYER-${num}</td><td>${info}</td>`);
+				return(`<tbody><tr><td>LAYER-${num}</td><td>${info}</td>`);
 			case 1 :
 				return(`<td>${info}</td>`)
 			case 2 :
@@ -114,9 +114,9 @@ function layerInterface(layer, num, unit) {
 				return(`<td>${info}</td>`)
 			case 4 :
 				return(layer[i + 1] !== undefined ? `<td>${unit}</td>`:
-						`<td>${unit}</td><td>N/A</td></tr>`);
+						`<td>${unit}</td><td>N/A</td></tr></tbody>`);
 			case 5 :
-				return(`<td>${info}</td></tr>`);
+				return(`<td>${info}</td></tr></tbody>`);
 		};
 	}, 0).join("");
 	return (content);
@@ -193,15 +193,15 @@ function airPortStatus(crate, sizeUnit) {
 function setStatusCrateType(kind, unit) {
 	switch(kind) {
 		case 'tubeCrate' :
-			return(`<td>${unit}</td><td><i class="nf nf-md-cylinder"></i></td></tr>`);
+			return(`<td>${unit}</td><td><i class="nf nf-md-cylinder"></i></td></tr></tbody>`);
 		case 'largestCrate' :
-			return(`<td>${unit}</td><td><i class="nf nf-fae-triangle_ruler"></i></td></tr>`);
+			return(`<td>${unit}</td><td><i class="nf nf-fae-triangle_ruler"></i></td></tr></tbody>`);
 		case 'sameSizeCrate' :
-			return(`<td>${unit}</td><td><i class="nf nf-fae-equal"></i></td></tr>`);
+			return(`<td>${unit}</td><td><i class="nf nf-fae-equal"></i></td></tr></tbody>`);
 		case 'noCanvasCrate' :
-			return(`<td>${unit}</td><td><i class="nf nf-md-sync_off"></i></td></tr>`);
+			return(`<td>${unit}</td><td><i class="nf nf-md-sync_off"></i></td></tr></tbody>`);
 		case 'standardCrate' :
-			return(`<td>${unit}</td><td><i class="nf nf-fa-picture_o"></i></td></tr>`);
+			return(`<td>${unit}</td><td><i class="nf nf-fa-picture_o"></i></td></tr></tbody>`);
 	};
 };
 
@@ -215,7 +215,7 @@ function addHTMLTableLine({ crates }, table, kind) {
 			table.innerHTML += done.map((info, i) => {
 				switch(i) {
 					case 0 :
-						return(`<tr><td>${port}</td><td>CRATE</td><td>${info}</td>`);
+						return(`<tbody><tr><td>${port}</td><td>CRATE</td><td>${info}</td>`);
 					case 1 :
 						return(`<td>${info}</td>`)
 					case 2 :

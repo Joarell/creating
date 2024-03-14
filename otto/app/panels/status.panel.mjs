@@ -72,8 +72,8 @@ function restorePanel() {
 				if(!item)
 					return ;
 				return (
-					index === 0 ? `<tr><td>${item}</td>` :
-						index === 3 ? `<td>${item}</td><td>${metric}</td></tr>` :
+					index === 0 ? `<tbody><tr><td>${item}</td>` :
+						index === 3 ? `<td>${item}</td><td>${metric}</td></tr></tbody>` :
 							`<td>${item}</td>`
 				);
 			}, 0).join("");
@@ -82,11 +82,11 @@ function restorePanel() {
 		works.map(art => {
 			if (art?.hasOwnProperty('code')) {
 				const { code, x, z, y } = art;
-				const line = `<tr><td>${code}</td>
+				const line = `<tbody><tr><td>${code}</td>
 					<td>${x}</td>
 					<td>${z}</td>
 					<td>${y}</td>
-					<td>${metric}</td></tr>
+					<td>${metric}</td></tr></tbody>
 				`
 				element.innerHTML += line;
 			}
@@ -141,8 +141,8 @@ export async function statusTable() {
 			if(!item)
 				return ;
 			return (
-				index === 0 ? `<tr><td>${item}</td>` :
-					index === 3 ? `<td>${item}</td><td>${metric}</td></tr>` :
+				index === 0 ? `<tbody><tr><td>${item}</td>` :
+					index === 3 ? `<td>${item}</td><td>${metric}</td></tr></tbody>` :
 						`<td>${item}</td>`
 			);
 		}, 0).join("");
