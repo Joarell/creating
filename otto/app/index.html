@@ -105,6 +105,28 @@
 					</div>
 				</div>
 			</div>
+			<dialog id="modal">
+				<h3 class="title">Padding setup.</h3>
+				<form class="padding-dialog" method="dialog">
+					<iframe>
+						<div id="test-dialog">
+							<input type="checkbox" name="1" value=""/>
+							<label for="1">120 x 10 x 100 -cm</label>
+							<input type="checkbox" name="2" value=""/>
+							<label for="2">120 x 10 x 100 -cm</label>
+						</div>
+					</iframe>
+					<div class="pads-sizes" id="">
+							<input type="text" inputmode="numeric" class="IO__sizes__len" id="pad_length" placeholder="Length" name="length" maxlength="7" required>
+							<input type="text" inputmode="numeric" class="IO__sizes__dep" id="pad_depth" name="depth" placeholder="Depth" maxlength="7" required>
+							<input type="text" inputmode="numeric" class="IO__sizes__hei" id="pad_height" placeholder="Height" name="height" maxlength="7" required>
+					</div>
+					<div class="pad__buttons" id="">
+						<button formmethod="dialog" type="button" class="IO__press--btn padding--btn" id="padding--apply">Apply</button>
+						<button formmethod="dialog" type="button" class="IO__press--btn padding--btn" id="padding--close" onclick="modal.close()">Close</button>
+					</div>
+				</form>
+			</dialog>
 		</section>
 		<div class="container" id="body-app">
 			<div class="container__insert">
@@ -121,22 +143,18 @@
 						<div class="IO__sizes__code">
 							<form class="IO__add--form">
 								<label for="input_code">Art:</label>
-								<input type="text" class="IO__sizes--code" id="input_code" name="art-code" required
-									placeholder="code number">
+								<input type="text" class="IO__sizes--code" id="input_code" name="art-code" required placeholder="code number">
 							</form>
 						</div>
 					</div>
 					<div class="IO__sizes__measure IO--span2 info">
 						<form class="IO__add--form">
 							<label for="input_length">L:</label>
-							<input type="text" inputmode="numeric" class="IO__sizes__len" id="input_length" placeholder="Length"
-								name="length" maxlength="7" required>
+							<input type="text" inputmode="numeric" class="IO__sizes__len" id="input_length" placeholder="Length" name="length" maxlength="7" required>
 							<label for="input_depth">D:</label>
-							<input type="text" inputmode="numeric" class="IO__sizes__dep" id="input_depth" name="depth"
-								placeholder="Depth" maxlength="7" required>
+							<input type="text" inputmode="numeric" class="IO__sizes__dep" id="input_depth" name="depth" placeholder="Depth" maxlength="7" required>
 							<label for="input_height">H:</label>
-							<input type="text" inputmode="numeric" class="IO__sizes__hei" id="input_height" placeholder="Height"
-								name="height" maxlength="7" required>
+							<input type="text" inputmode="numeric" class="IO__sizes__hei" id="input_height" placeholder="Height" name="height" maxlength="7" required>
 						</form>
 						<div class="IO__sizes__units info">
 							<form class="IO__sizes__units" id="unit-seg">
@@ -152,14 +170,7 @@
 						<button type="button" class="IO__press--btn add--btn" id="add-btn">ADD</button>
 						<button type="button" class="IO__press--btn del--btn" id="remove-btn">DEL</button>
 						<button type="button" class="IO__press--btn clear--btn" id="clear-btn">Clear</button>
-						<template id="padding-button">
-							<dialog id="padding--dialog">
-								<form method="dialog">
-									<button type="button" class="IO__press--btn padding--btn" id="padding--btn">Padding</button>
-									<button type="button" class="IO__press--btn padding--btn" id="padding--btn">Abort</button>
-								</form>
-							</dialog>
-						</template>
+						<button formmethod="dialog" type="button" class="IO__press--btn padding--btn" id="padding--btn" onclick="modal.showModal()">Padding</button>
 					</div>
 				</div>
 			</div>
@@ -175,7 +186,7 @@
 					</div>
 					<div class="IO__press__crate">
 						<button name="waves" class="IO__crate" id="crate-btn">
-							<p class="IO__crate__txt" id="crate_btn">Create!</p>
+							<p class="IO__crate__txt" id="crate_btn">Crate!</p>
 						</button>
 						<span name="waves" class="IO__crate--shadow1 wave"></span>
 						<span name="waves" class="IO__crate--shadow2 wave"></span>
@@ -288,50 +299,52 @@
 				</div>
 			</div>
 		</div>
-		<div class="IO__press-mobile">
-			<div class="fixed-menu">
-				<button class="press--btn-mobile add--btn" value="add" onclick="globalThis.fns.catchWork()">
-					<svg class="mobile-menu" preserveAspectRatio="none">
-						<use href="#add-material"></use>
-					</svg>
-					<span>Add</span>
-				</button>
-				<button class="press--btn-mobile del--btn" id="remove" value="del" onclick="globalThis.fns.catchRemove()">
-					<svg class="mobile-menu" preserveAspectRatio="none">
-						<use href="#remove-material"></use>
-					</svg>
-					<span>Del</span>
-				</button>
-				<button class="press--btn-mobile clear--btn" value="clear" onclick="globalThis.fns.clearAll()">
-					<svg class="mobile-menu" preserveAspectRatio="none">
-						<use href="#mop-material"></use>
-					</svg>
-					<span>Clear</span>
-				</button>
-				<button class="press--btn-mobile option--btn" id="menu-options" value="menu">
-					<svg class="mobile-menu" preserveAspectRatio="none">
-						<use href="#options-material"></use>
-					</svg>
-				</button>
+		<template>
+			<div class="IO__press-mobile">
+				<div class="fixed-menu">
+					<button class="press--btn-mobile add--btn" value="add" onclick="globalThis.fns.catchWork()">
+						<svg class="mobile-menu" preserveAspectRatio="none">
+							<use href="#add-material"></use>
+						</svg>
+						<span>Add</span>
+					</button>
+					<button class="press--btn-mobile del--btn" id="remove" value="del" onclick="globalThis.fns.catchRemove()">
+						<svg class="mobile-menu" preserveAspectRatio="none">
+							<use href="#remove-material"></use>
+						</svg>
+						<span>Del</span>
+					</button>
+					<button class="press--btn-mobile clear--btn" value="clear" onclick="globalThis.fns.clearAll()">
+						<svg class="mobile-menu" preserveAspectRatio="none">
+							<use href="#mop-material"></use>
+						</svg>
+						<span>Clear</span>
+					</button>
+					<button class="press--btn-mobile option--btn" id="menu-options" value="menu">
+						<svg class="mobile-menu" preserveAspectRatio="none">
+							<use href="#options-material"></use>
+						</svg>
+					</button>
+				</div>
+				<div aria-hidden="true" class="fan-options" aria-controls="menu-options">
+					<a aria-hidden="true" role="button" href="#search" id="fetch-mob">
+						<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none" id="fetch-mob">
+							<use href="#lupa-material" id="fetch-mob"></use>
+						</svg>
+					</a>
+					<a aria-hidden="true" role="button" href="#exchange" id="currency-mob">
+						<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none" id="currency-mob">
+							<use href="#exchange-material" id="currency-mob"></use>
+						</svg>
+					</a>
+					<a aria-hidden="true" role="button" href="#measures" id="units-mob">
+						<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none" id="units-mob">
+							<use href="#regua-material" id="units-mob"></use>
+						</svg>
+					</a>
+				</div>
 			</div>
-			<div aria-hidden="true" class="fan-options" aria-controls="menu-options">
-				<a aria-hidden="true" role="button" href="#search" id="fetch-mob">
-					<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none" id="fetch-mob">
-						<use href="#lupa-material" id="fetch-mob"></use>
-					</svg>
-				</a>
-				<a aria-hidden="true" role="button" href="#exchange" id="currency-mob">
-					<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none" id="currency-mob">
-						<use href="#exchange-material" id="currency-mob"></use>
-					</svg>
-				</a>
-				<a aria-hidden="true" role="button" href="#measures" id="units-mob">
-					<svg aria-hidden="true" class="mobile-icon" preserveAspectRatio="none" id="units-mob">
-						<use href="#regua-material" id="units-mob"></use>
-					</svg>
-				</a>
-			</div>
-		</div>
+		</template>
 		<div id="show-layer"></div>
 		<template id="Render">
 			<div class="plotter" id="layers" aria-hidden="true" aria-controls="crate-layers" aria-expanded="false">

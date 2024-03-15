@@ -191,32 +191,6 @@ body {
 }
 
 
-
-
-dialog {
-	container-type: normal;
-	border-radius: 1rem;
-	background: var(--dark-blue2);
-	border: var(--box);
-	padding: 20cqb 23cqb;
-	position: absolute;
-	opacity: .8;
-	z-index: 100;
-	& .padding-dialog {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-evenly;
-		align-items: space-evenly;
-	}
-	&::backdrop {
-		background-color: var(--dark);
-		opacity: .7;
-		z-index: 100;
-	}
-	transition: backdrop 2s ease-in-out;
-}
-
-
 h2 {
 	font-size: var(--font-title);
 }
@@ -1279,4 +1253,80 @@ tbody:nth-child(even) {
 		font-size: 1.1rem;
 		transition: input 1s ease-in-out;
 	}
+}
+
+
+/*
+ * ╭─────────────────────────────────────────────────────────╮
+ * │                  Dialog padding setup.                  │
+ * ╰─────────────────────────────────────────────────────────╯
+*/
+
+dialog {
+	container-type: normal;
+	container-name: pad-crates;
+	border-radius: 1rem;
+	background: var(--yellow-select);
+	border: solid var(--iframes-bg);
+	position: absolute;
+	opacity: .9;
+	z-index: 100;
+	margin: 10.5rem 82% auto auto;
+	&::backdrop {
+		background-color: var(--dark);
+		opacity: .7;
+	}
+	& .crates-done {
+		height: 18cqb;
+	}
+	&:hover {
+		border: solid var(--color1);
+	}
+	&:focus {
+		border: solid var(--color3);
+	}
+	transition: backdrop 2s ease-in-out;
+}
+
+
+.padding-dialog {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 8cqh 8cqh;
+	grid-template-areas:
+		"iframe"
+		"pads"
+		"pad-btns";
+	row-gap: 1rem;
+	justify-items: center;
+	align-items: center;
+	& > iframe {
+		grid-area: iframe;
+		height: 40cqh;
+	}
+}
+
+
+.IO__padding, .pad__buttons, .pads-sizes {
+	display: flex;
+	/* flex-basis: 33%; */
+	/* flex-grow: 33%; */
+	flex-direction: row;
+	align-content: space-evenly ;
+	justify-content: space-evenly;
+	gap: 1rem;
+}
+
+
+.pads-sizes {
+	grid-area: pads;
+	& > input {
+		max-width: 4rem;
+	}
+}
+
+
+.pad__buttons {
+	grid-area: pad-btns;
+	width: auto;
 }

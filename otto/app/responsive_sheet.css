@@ -1940,10 +1940,10 @@
 	}
 
 
-	/* .container__status__pane__frame { */
-	/* 	flex-shrink: 1; */
-	/* 	flex-grow: 3; */
-	/* } */
+	.container__status__pane__frame {
+		flex-shrink: 1;
+		flex-grow: 3;
+	}
 
 
 	.IO__press * {
