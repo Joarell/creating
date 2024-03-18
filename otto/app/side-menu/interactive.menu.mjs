@@ -57,62 +57,62 @@ function openPanel(panel) {
 // ╭──────────────────────────────────────────────────────────╮
 // │                 Mobile side menu setup.                  │
 // ╰──────────────────────────────────────────────────────────╯
-function mobileMenu (selected, id) {
-	if(selected.ariaHidden) {
-		selected.setAttribute("aria-expanded", true);
-		selected.setAttribute("aria-hidden", false);
-	};
-	setTimeout(() => globalThis.scroll({top: 1000, behavior: "smooth"}), 200);
-	setTimeout(document.getElementById(id).click(), 100);
-};
-
-
-function closeFan(menu) {
-	menu.setAttribute("aria-expanded", false);
-	menu.setAttribute("aria-hidden", true);
-}
-
-
-function optionToggle(id, option) {
-	let menu;
-
-	switch (id) {
-		case "fetch-mob":
-			menu =	document.querySelector(".get-estimate");
-			mobileMenu(menu, 'search-btn');
-			closeFan(option);
-			break;
-		case "currency-mob":
-			menu =	document.querySelector(".exchange--content");
-			mobileMenu(menu, 'exchange-btn');
-			closeFan(option);
-			setTimeout(() => {
-				document.getElementById('exchange-header').click()
-			}, 250);
-			break;
-		case "units-mob":
-			menu =	document.querySelector(".units-conversion");
-			mobileMenu(menu, 'units-btn');
-			closeFan(option);
-			break;
-		default:
-			break;
-	}
-};
-
-
-globalThis.document.querySelector(".IO__press-mobile")
-	.addEventListener("click", (element) => {
-	const { id } =		element.target;
-	const menuOpts =	document.querySelector(".fan-options");
-
-	if (id === "menu-options" && menuOpts.ariaHidden) {
-		menuOpts.setAttribute("aria-expanded", true);
-		menuOpts.setAttribute("aria-hidden", false);
-	}
-	else {
-		menuOpts.setAttribute("aria-expanded", false);
-		menuOpts.setAttribute("aria-hidden", true);
-	}
-	optionToggle(id, menuOpts);
-}, true);
+// function mobileMenu (selected, id) {
+// 	if(selected.ariaHidden) {
+// 		selected.setAttribute("aria-expanded", true);
+// 		selected.setAttribute("aria-hidden", false);
+// 	};
+// 	setTimeout(() => globalThis.scroll({top: 1000, behavior: "smooth"}), 200);
+// 	setTimeout(document.getElementById(id).click(), 100);
+// };
+//
+//
+// function closeFan(menu) {
+// 	menu.setAttribute("aria-expanded", false);
+// 	menu.setAttribute("aria-hidden", true);
+// }
+//
+//
+// function optionToggle(id, option) {
+// 	let menu;
+//
+// 	switch (id) {
+// 		case "fetch-mob":
+// 			menu =	document.querySelector(".get-estimate");
+// 			mobileMenu(menu, 'search-btn');
+// 			closeFan(option);
+// 			break;
+// 		case "currency-mob":
+// 			menu =	document.querySelector(".exchange--content");
+// 			mobileMenu(menu, 'exchange-btn');
+// 			closeFan(option);
+// 			setTimeout(() => {
+// 				document.getElementById('exchange-header').click()
+// 			}, 250);
+// 			break;
+// 		case "units-mob":
+// 			menu =	document.querySelector(".units-conversion");
+// 			mobileMenu(menu, 'units-btn');
+// 			closeFan(option);
+// 			break;
+// 		default:
+// 			break;
+// 	}
+// };
+//
+//
+// globalThis.document.querySelector(".IO__press-mobile")
+// 	.addEventListener("click", (element) => {
+// 	const { id } =		element.target;
+// 	const menuOpts =	document.querySelector(".fan-options");
+//
+// 	if (id === "menu-options" && menuOpts.ariaHidden) {
+// 		menuOpts.setAttribute("aria-expanded", true);
+// 		menuOpts.setAttribute("aria-hidden", false);
+// 	}
+// 	else {
+// 		menuOpts.setAttribute("aria-expanded", false);
+// 		menuOpts.setAttribute("aria-hidden", true);
+// 	}
+// 	optionToggle(id, menuOpts);
+// }, true);
