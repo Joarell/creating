@@ -114,7 +114,7 @@ function layerInterface(layer, num, unit) {
 				return(`<td>${info}</td>`)
 			case 4 :
 				return(layer[i + 1] !== undefined ? `<td>${unit}</td>`:
-						`<td>${unit}</td><td>N/A</td></tr></tbody>`);
+					`<td>${unit}</td><td>N/A</td></tr></tbody>`);
 			case 5 :
 				return(`<td>${info}</td></tr></tbody>`);
 		};
@@ -158,8 +158,9 @@ function addHTMLLayerWorksLine ({ works }, table, unit, kind, crate) {
 	while (i < works.length) {
 		if (!Array.isArray(works[i])) {
 			for (layer in works[i]) {
-				table.innerHTML += works[i][layer].map(layer => {
-					return(layerInterface(layer, i + 1, unit));
+				table.innerHTML += works[i][layer].map(info => {
+					const data = Array.isArray(info) ? info : works[i][layer];
+					return(layerInterface(data, i + 1, unit));
 				}).join("");
 			};
 		}
