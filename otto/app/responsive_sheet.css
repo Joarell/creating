@@ -4,7 +4,7 @@
 /* @media not all and (max-width: 80rem) { */
 @media only screen and (width >= 80rem) {
 	/* ╭─────────────────────╮
-	   │ 	main container.  │
+	   │ 	main container.    │
 	   ╰─────────────────────╯
 	*/
 	.container {
@@ -58,7 +58,7 @@
 
 
 	/* ╭───────────────────╮
-	   │ 	Spinner setup  │
+	   │ 	Spinner setup    │
 	   ╰───────────────────╯
 	*/
 	/* Made by Kailoyan Todorov - from https://uiverse.io/bociKond/wise-bat-13 */
@@ -127,7 +127,7 @@
 	}
 
 	/* ╭────────────────────╮
-	   │ 	Boxes loading.  │
+	   │ 	Boxes loading.    │
 	   ╰────────────────────╯
 	*/
 	/* Made by Nawsome- from : https://uiverse.io/Nawsome/cold-liger-90 */
@@ -331,7 +331,7 @@
 	}
 
 	/* ╭────────────────────────────────╮
-	   │ 	Animation footer settings.  │
+	   │ 	Animation footer settings.    │
 	   ╰────────────────────────────────╯
 	*/
 	.svg-frame {
@@ -401,7 +401,7 @@
 	}
 
 	/* ╭─────────────────────────────╮
-	   │ 	Right status container.  │
+	   │ 	Right status container.    │
 	   ╰─────────────────────────────╯
 	*/
 	.container__status__pane {
@@ -438,7 +438,7 @@
 	}
 
 	/* ╭──────────────────────╮
-	   │ 	Header settings:  │
+	   │ 	Header settings:    │
 	   ╰──────────────────────╯
 	*/
 	.header--title {
@@ -825,7 +825,7 @@
 	}
 
 	/* ╭──────────────────────╮
-	   │ 	Header settings:  │
+	   │ 	Header settings:    │
 	   ╰──────────────────────╯
 	*/
 	.header--title {
@@ -841,7 +841,7 @@
 
 
 	/* ╭───────────────────╮
-	   │ 	Spinner setup  │
+	   │ 	Spinner setup    │
 	   ╰───────────────────╯
 	*/
 	/* Made by Kailoyan Todorov - from https://uiverse.io/bociKond/wise-bat-13 */
@@ -910,7 +910,7 @@
 	}
 
 	/* ╭────────────────────╮
-	   │ 	Boxes loading.  │
+	   │ 	Boxes loading.    │
 	   ╰────────────────────╯
 	*/
 	/* Made by Nawsome- from : https://uiverse.io/Nawsome/cold-liger-90 */
@@ -1188,7 +1188,7 @@
 
 
 	/* ╭─────────────────────╮
-	   │ 	main container.  │
+	   │ 	main container.    │
 	   ╰─────────────────────╯
 	*/
 	.container {
@@ -1496,7 +1496,7 @@
    ╰──────────────────────────────────────────────────────────╯
 */
 /* @media only screen and ( min-width: 840px) and ( max-width: 1700px) { */
-@media only screen and (width < 80rem) and (orientation: landscape) {
+@media only screen and (width < 80rem) {
 
 	header {
 		height: 10%;
@@ -1507,7 +1507,7 @@
 	}
 
 	/* ╭───────────────────╮
-	   │ 	Spinner setup  │
+	   │ 	Spinner setup    │
 	   ╰───────────────────╯
 	*/
 	/* Made by Kailoyan Todorov - from https://uiverse.io/bociKond/wise-bat-13 */
@@ -1578,7 +1578,7 @@
 
 
 	/* ╭────────────────────╮
-	   │ 	Boxes loading.  │
+	   │ 	Boxes loading.    │
 	   ╰────────────────────╯
 	*/
 	/* Made by Nawsome- from : https://uiverse.io/Nawsome/cold-liger-90 */
@@ -1785,7 +1785,7 @@
 
 
 	/* ╭──────────────────────╮
-	   │ 	Header settings:  │
+	   │ 	Header settings:    │
 	   ╰──────────────────────╯
 	*/
 	.header--title {
@@ -1817,7 +1817,7 @@
 	}
 
 
-	.section-left-up {
+	.section-right-up {
 		display: flex;
 		flex-wrap: wrap;
 		align-content: center;
@@ -1868,9 +1868,77 @@
 		margin: 2rem 1rem;
 	}
 
+	.side__menu {
+		visibility: hidden;
+		color: var(--popup);
+		overflow: hidden;
+		transition: .5s ease-in-out;
+		& {
+			font-size: var(--fonts);
+			font-weight: 400;
+			/* max-width: 80ch; */
+			box-shadow: var(--shadow1);
+			border-radius: var(--bord);
+			padding: 0.3rem 1rem;
+			position: absolute;
+			margin-top: 7rem;
+		}
+	}
+
+
+	.mode {
+		& label > svg {
+			fill: var(--color4);
+			width: 1rem;
+			height: 1rem;
+			transition: all 500ms ease-in-out;
+			&:hover {
+				fill: var(--dark);
+			}
+		}
+		.mode--color {
+			box-shadow: var(--inner-shadow);
+		}
+		&:hover > .side__menu {
+			visibility: visible;
+			transition: all .5s ease-in-out;
+			-webkit-animation: fadeIn 2s;
+			animation: fadeIn 1.5s linear;
+		}
+	}
+
+
+	:is(.logout-icon, .preview-icon) {
+		fill: var(--color4);
+		width: 1.4rem;
+		height: 1.4rem;
+		transition: all 500ms ease-in-out;
+	}
+
+
+	.logout-icon:hover {
+		fill: var(--color1);
+		& + .side__menu {
+			visibility: visible;
+			transition: all .5s ease-in-out;
+			-webkit-animation: fadeIn 2s;
+			animation: fadeIn 1.5s linear;
+		}
+	}
+
+
+	.preview-icon:hover {
+		fill: var(--color1);
+		& + .side__menu {
+			visibility: visible;
+			transition: all .5s ease-in-out;
+			-webkit-animation: fadeIn 2s;
+			animation: fadeIn 1.5s linear;
+		}
+	}
 
 	/* ╭─────────────────────╮
-	   │ 	main container.  │
+	   │ 	main container.    │
 	   ╰─────────────────────╯
 	*/
 	tr, td, th {
@@ -1926,7 +1994,7 @@
 	}
 
 	/* ╭─────────────────────────────╮
-	   │ 	Right status container.  │
+	   │ 	Right status container.    │
 	   ╰─────────────────────────────╯
 	*/
 	.container__status__pane,
@@ -1935,7 +2003,7 @@
 		flex-wrap: wrap;
 		flex-shrink: 1;
 		flex-basis: clamp(80%, 70%, 100%);
-		gap: 1rem;
+		gap: 2rem;
 		justify-content: space-between;
 	}
 
@@ -1946,9 +2014,9 @@
 	}
 
 
-	.IO__press * {
-		display: none;
-	}
+	/* .IO__press * { */
+	/* 	display: none; */
+	/* } */
 
 
 	.IO__press-mobile > * {
