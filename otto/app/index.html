@@ -2,7 +2,6 @@
 <html lang="en">
 <!-- this tag is used to autorefresh the page. Rememeter to get rid of it.-->
 <!-- <meta http-equiv="refresh" content="3"> -->
-
 <head>
 	<title>Otto Create Solver</title>
 	<meta charset="UTF-8">
@@ -16,6 +15,7 @@
 	<link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
 	<script async type="module" src="./main.min.mjs"></script>
+	<script async type="module" src="./front-modules/shadowElements/dialog.padding.update.mjs"></script>
 	<link rel="stylesheet" href="./stylesheet.css" type="text/css" />
 	<link rel="manifest" href="./manifest.json" crossorigin="use-credentials">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,7 +65,7 @@
 			</div>
 		</div>
 	</div>
-	<main class="app" aria-hidden="true" id="main-app">
+	<main class="app" id="main-app">
 		<section class="side-menu">
 			<div class="section__menu">
 				<div class="section-right-up">
@@ -105,28 +105,26 @@
 					</div>
 				</div>
 			</div>
-			<dialog id="modal">
-				<h3 class="title">Padding setup.</h3>
-				<form class="padding-dialog" method="dialog">
-					<iframe>
-						<div id="test-dialog">
-							<input type="checkbox" name="1" value=""/>
-							<label for="1">120 x 10 x 100 -cm</label>
-							<input type="checkbox" name="2" value=""/>
-							<label for="2">120 x 10 x 100 -cm</label>
-						</div>
-					</iframe>
-					<div class="pads-sizes" id="">
+			<template id="padding-template">
+				<dialog id="modal">
+					<h2 class="title">class="title"><i class="nf nf-cod-settings"> </i>Padding setup.</h2>
+					<form class="padding-dialog" method="dialog">
+						<iframe>
+							<div id="test-dialog">
+							</div>
+						</iframe>
+						<div class="pads-sizes" id="">
 							<input type="text" inputmode="numeric" class="IO__sizes__len" id="pad_length" placeholder="Length" name="length" maxlength="7" required>
 							<input type="text" inputmode="numeric" class="IO__sizes__dep" id="pad_depth" name="depth" placeholder="Depth" maxlength="7" required>
 							<input type="text" inputmode="numeric" class="IO__sizes__hei" id="pad_height" placeholder="Height" name="height" maxlength="7" required>
-					</div>
-					<div class="pad__buttons" id="">
-						<button formmethod="dialog" type="button" class="IO__press--btn padding--btn" id="padding--apply">Apply</button>
-						<button formmethod="dialog" type="button" class="IO__press--btn padding--btn" id="padding--close" onclick="modal.close()">Close</button>
-					</div>
-				</form>
-			</dialog>
+						</div>
+						<div class="pad__buttons" id="">
+							<button formmethod="dialog" type="button" class="IO__press--btn padding--btn" id="padding--apply">Apply</button>
+							<button formmethod="dialog" type="button" class="IO__press--btn padding--btn" id="padding--close" onclick="modal.close()">Close</button>
+						</div>
+					</form>
+				</dialog>
+			</template>
 		</section>
 		<div class="container" id="body-app">
 			<div class="container__insert">
@@ -135,8 +133,7 @@
 					<div class="IO__top info" id="estimate">
 						<form class="IO__add--form">
 							<label for="input_estimate">Doc:</label>
-							<input type="text" autofocus class="IO__top__estimate" id="input_estimate" name="estimate" required="true"
-								placeholder="reference number">
+							<input type="text" autofocus class="IO__top__estimate" id="input_estimate" name="estimate" required="true" placeholder="reference number">
 						</form>
 					</div>
 					<div class="IO__sizes info">
@@ -170,7 +167,7 @@
 						<button type="button" class="IO__press--btn add--btn" id="add-btn">ADD</button>
 						<button type="button" class="IO__press--btn del--btn" id="remove-btn">DEL</button>
 						<button type="button" class="IO__press--btn clear--btn" id="clear-btn">Clear</button>
-						<button formmethod="dialog" type="button" class="IO__press--btn padding--btn" id="padding--btn" onclick="modal.showModal()">Padding</button>
+						<!-- <button formmethod="dialog" type="button" class="IO__press--btn padding--btn" id="padding--btn" onclick="modal.showModal()">Padding</button> -->
 					</div>
 				</div>
 			</div>
@@ -205,8 +202,7 @@
 							</button>
 						</div>
 						<div class="copy-pane2">
-							<iframe loading="lazy" class="container__results--crates" title="List done"
-								src="./panels/pane2_crates_open.html"></iframe>
+							<iframe loading="lazy" class="container__results--crates" title="List done" src="./panels/pane2_crates_open.html"></iframe>
 							<button class="IO__press--btn copy" id="copy-pane2">COPY <p class="copy-message">Copied!</p>
 							</button>
 						</div>
