@@ -168,7 +168,7 @@ export function createHeader(table) {
 		while (table.firstChild)
 			table.removeChild(table.firstChild)
 
-	head.innerHTML = `
+	head.innerHTML =`
 		<tr>
 			<th>CODE</th>
 			<th>LENGTH</th>
