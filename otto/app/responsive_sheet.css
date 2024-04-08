@@ -36,7 +36,6 @@
 	   │                     Container bottom                     │
 	   ╰──────────────────────────────────────────────────────────╯
 	*/
-
 	.container-bottom {
 		display: flex;
 		flex-wrap: wrap;
@@ -130,17 +129,14 @@
 	   │ 	Boxes loading.    │
 	   ╰────────────────────╯
 	*/
-	/* Made by Nawsome- from : https://uiverse.io/Nawsome/cold-liger-90 */
-
-	/* Page load */
+	/* Made by Nawsome- from : https://uiverse.io/Nawsome/cold-liger-90
+	 Page load
+	 */
 	.loading {
-		z-index: 40;
 		margin-top: 20%;
-		& {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.boxes {

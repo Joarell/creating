@@ -210,6 +210,11 @@ iframe {
 	animation-name: fill-pane 2s ease;
 	animation-fill-mode: both;
 	animation-delay: 1s;
+	& > {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 	&:hover {
 		border: none;
 		box-shadow: var(--shadow1);
@@ -239,6 +244,15 @@ ul, li, a {
 	list-style: none;
 }
 
+
+li {
+	text-align: center;
+	font-family: Mitr, sans-serif;
+	font-size: calc(var(--fonts) + .1rem);
+	font-weight: 400;
+	color: var(--pressed);
+	line-height: 0.1rem;
+}
 
 label {
 	position: relative;
@@ -356,15 +370,14 @@ tbody:nth-child(even) {
 .loading-panels {
 	display: flex;
 	align-items: center;
-	justify-self: center;
-	position: absolute;
+	justify-content: center;
 }
 
 .cube {
-	inset: 4rem 0 0 9rem;
+	inset-block: 30%;
 	width: 6.25rem;
 	height: 6.25rem;
-	position: relative;
+	position: absolute;
 	transform-style: preserve-3d;
 	animation: spin 3s infinite cubic-bezier(0.16, 0.61, 0.49, 0.91);
 }
@@ -683,9 +696,14 @@ tbody:nth-child(even) {
    ╰──────────────────────────────────────────────────────────╯
 */
 
-:is(.IO__press, .IO__press-mobile, .IO__add--form) {
+:is(.IO__press, .IO__press-mobile) {
 	display: flex;
 	justify-content: space-between;
+}
+
+.IO__add--form {
+	display: flex;
+	justify-content: space-evenly;
 }
 
 
@@ -1266,12 +1284,12 @@ dialog {
 	container-type: normal;
 	container-name: pad-crates;
 	border-radius: 1rem;
-	background: var(--yellow-select);
+	background: none;
 	border: solid var(--iframes-bg);
 	position: absolute;
 	opacity: .9;
 	z-index: 100;
-	margin: 10.5rem 82% auto auto;
+	margin: 2.5rem 82% auto auto;
 	&::backdrop {
 		background-color: var(--dark);
 		opacity: .7;
@@ -1279,12 +1297,8 @@ dialog {
 	& .crates-done {
 		height: 18cqb;
 	}
-	&:hover {
-		border: solid var(--color1);
-	}
-	&:focus {
-		border: solid var(--color3);
-	}
+	animation: emerge 2s ease-in;
+	animation-fill-mode: forwards;
 	transition: backdrop 2s ease-in-out;
 }
 
@@ -1309,8 +1323,6 @@ dialog {
 
 .IO__padding, .pad__buttons, .pads-sizes {
 	display: flex;
-	/* flex-basis: 33%; */
-	/* flex-grow: 33%; */
 	flex-direction: row;
 	align-content: space-evenly ;
 	justify-content: space-evenly;
@@ -1329,4 +1341,14 @@ dialog {
 .pad__buttons {
 	grid-area: pad-btns;
 	width: auto;
+}
+
+.crate-list li > input {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	width: 1rem;
+	height: 1rem;
+	border-radius: 1rem;
 }
