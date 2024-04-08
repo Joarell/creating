@@ -18,9 +18,9 @@ const nerdFont4 =		'https://fonts.gstatic.com/s/sairasemicondensed/v13/U9MM6c-2-
 const nerdFont5 =		'https://fonts.gstatic.com/s/sairasemicondensed/v13/U9MM6c-2-nnJkHxyCjRcnMHcWVWV1cWRRXe3TfMRiXk.woff2';
 const nerdFont6 =		'https://fonts.gstatic.com/s/sairasemicondensed/v13/U9MM6c-2-nnJkHxyCjRcnMHcWVWV1cWRRXe3TfMRiXk.woff2';
 
-const iframe1 =			'http://*/panels/status_panel.html'
-const iframe2 =			'http://*/panels/pane1_crates.html'
-const iframe3 =			'http://*/panels/pane2_crates.html'
+const iframe1 =			'https://ottocratesolver.com/app/panels/status_panel.html'
+const iframe2 =			'https://ottocratesolver.com/app/panels/pane1_crates.html'
+const iframe3 =			'https://ottocratesolver.com/app/panels/pane2_crates.html'
 
 // const script1 =			'https://*/panels/status.panel.mjs'
 // const script2 =			'https://*/panels/pane1.module.mjs'
@@ -29,10 +29,11 @@ const iframe3 =			'http://*/panels/pane2_crates.html'
 app.use((req, res, next) => {
 	res.setHeader(
 		'Report-TO',
-		'{"group":"csp-endpoint", "max_age":10886400, "endpoints":[{"url":"http://localhost:3000/__cspreport__"}], "include_subdomains":true}'
+		'{"group":"csp-endpoint", "max_age":10886400, "endpoints":[{"url":"https://ottocratesolver.com/__cspreport__"}], "include_subdomains":true}'
+		// '{"group":"csp-endpoint", "max_age":10886400, "endpoints":[{"url":"http://localhost:3000/__cspreport__"}], "include_subdomains":true}'
 	);
 	res.setHeader(
-		'Content-Security-Policy-Report-Only',
+		'Content-Security-Policy',
 		`default-src 'self';\
 		font-src 'self' ${bigShoulders} ${mitr1} ${mitr2} ${saira1} ${saira2} ${saira3} ${nerdFont1} ${nerdFont2} ${nerdFont3} ${nerdFont4} ${nerdFont5} ${nerdFont6};\
 		img-src 'self';\
@@ -49,7 +50,7 @@ app.use((req, res, next) => {
 app.get('/app', (req, res) => {
 	app.use('/app', express.static(__dirname + '/app'));
 	res.status(200).sendFile(path.join(__dirname));
-	console.log('App Actived!');
+	console.log('App Activated!');
 });
 
 app.listen(port, () => {
