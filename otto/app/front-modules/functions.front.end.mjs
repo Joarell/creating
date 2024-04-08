@@ -71,9 +71,11 @@ export async function crate() {
 	let list;
 	const estimate =	{};
 	const e_code =		document.getElementById("input_estimate").value;
+	const padding =		document.createElement('padding-dialog');
 
 	if (confirm("Ready to crate all works?")) {
 		crates =					await checkMetric();
+
 		if (crates !== undefined) {
 			estimate["reference"] =	e_code;
 			list =					parseArtWork();
@@ -84,6 +86,7 @@ export async function crate() {
 			// INFO: triggers to each panel render the result
 			sessionStorage.setItem("pane1", "populate");
 			sessionStorage.setItem("pane2", "populate");
+			document.querySelector('.side-menu').appendChild(padding);
 		};
 	}
 };
