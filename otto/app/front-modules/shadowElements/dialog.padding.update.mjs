@@ -1,46 +1,56 @@
 /*
- * TODO: ShadowRoot element;
- * TODO: Style custom Element;
  * TODO: Populate input list with crates sizes;
  * TODO: Updates indexDB and DB server with new crates sizes;
  * TODO: input fields to new LENGTH, DEPTH, and HEIGHT paddings to selected crates;
  * TODO: Confirmation and abort buttons;
- * TODO: attach the shadow element to 'div id="IO--btn"';
 */
 
-import styleSheet from './dialog.css';
+
+import { htmlDialog } from "./html.content.mjs";
 const shadowRoots = new WeakMap();
-let test = "Try";
 
 /**
  * @class Build the <dialog> element to popup when the user needs to customize the crate padding;
 */
-class DialogPadding extends HTMLElement {
+export class DialogPadding extends HTMLElement {
 	constructor () {
 		super();
-		const shadow =				this.attachShadow({ mode: "open" });
+		const shadow =		this.attachShadow({ mode: "open" });
 
-		this.adoptedStyleSheet =	[styleSheet];
-		this.close =				this.close.bind(this);
-		this._watchEscape =			this._watchEscape.bind(this);
-		shadowRoots.set(this, shadowRoot);
+		this.close =		this.close.bind(this);
+		this.apply =		this.apply.bind(this);
+		this._watchEscape =	this._watchEscape.bind(this);
+		shadowRoots.set(this, shadow);
 	};
 
 	/**
 	 * @method Populates the dialog popup when clicked.;
 	*/
 	connectedCallback() {
-		const panel =	document.getElementById('IO--btn');
-		const node =	document.importNode(panel.content, true);
-		const shadow =	this.attachShadow({ mode: "close" });
+		const shadowRoot =	shadowRoots.get(this);
+		const link =	document.createElement('link');
 
-		this.appendChild(node);
+		link.rel =	'stylesheet';
+		link.type =	'text/css';
+		link.href = './stylesheet.css';
+		shadowRoot.innerHTML = htmlDialog;
+		shadowRoot.appendChild(link);
+
+		shadowRoot.getElementById('padding-close')
+			.addEventListener('click', this.close);
+		shadowRoot.getElementById('padding-apply')
+			.addEventListener('click', this.apply);
+		shadowRoot.getElementById('modal').setAttribute('open', '');
 	};
 
 	/**
 	 * @method Removes the dialog popup when clicked.;
 	*/
 	disconnectedCallback() {
+		this.shadowRoot.getElementById('padding-apply')
+			.removeEventListener('click', this.close, true);
+		this.shadowRoot.getElementById('padding-close')
+			.removeEventListener('click', this.close, true);
 	};
 
 	/**
@@ -52,15 +62,22 @@ class DialogPadding extends HTMLElement {
 	/**
 	 * @method Update when the dialog popup.
 	*/
-	attributeChangeCallback() {
-	};
-
-	close() {
-		this.open !== false ? this.open = false: 0;
+	attributeChangeCallback(attrName, oldVal, newVal) {
+		console.log(`Setup values ${attrName}, ${oldVal}, and ${newVal}`);
 	};
 
 	_watchEscape(event) {
 		event.key === 'Escape' ? this.close() : 0;
+	};
+
+	apply() {
+		console.log('pressed');
+	}
+
+	close() {
+		this.shadowRoot.getElementById('modal').removeAttribute('open');
+		document.querySelector(".side-menu")
+			.lastElementChild.remove();
 	};
 };
 
