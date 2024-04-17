@@ -67,9 +67,8 @@ function changeMode (color) {
 export function createHeader(table) {
 	const head = document.createElement("tr");
 
-	if(table.parentNode)
-		while(table.firstChild)
-			table.removeChild(table.firstChild)
+	while(table.firstChild)
+		table.removeChild(table.firstChild)
 	head.innerHTML =`
 		<tbody><tr>
 			<th>STATUS</th>
@@ -98,7 +97,6 @@ async function getIDBINFO (ref) {
 			data?.reference === ref ? resolve(data) : reject(res);
 		};
 	});
-
 	return(request);
 };
 

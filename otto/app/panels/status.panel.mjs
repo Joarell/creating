@@ -1,8 +1,6 @@
 // ╭───────────────────────────────────────────────────────────────────╮
 // │ Calls to each change on the localStorage to update the list pane. │
 // ╰───────────────────────────────────────────────────────────────────╯
-
-
 globalThis.onstorage = () => {
 	const check =	localStorage.getItem("storage");
 	const newList =	sessionStorage.getItem("FETCHED");
@@ -164,10 +162,8 @@ function getOrder() {
 export function createHeader(table) {
 	const head = document.createElement("tr");
 
-	if (table.parentNode)
-		while (table.firstChild)
-			table.removeChild(table.firstChild)
-
+	while (table.firstChild)
+		table.removeChild(table.firstChild)
 	head.innerHTML =`
 		<tr>
 			<th>CODE</th>
