@@ -1,13 +1,10 @@
 /*
- * TODO: Populate input list with crates sizes;
  * TODO: Updates indexDB and DB server with new crates sizes;
- * TODO: input fields to new LENGTH, DEPTH, and HEIGHT paddings to selected crates;
- * TODO: Confirmation and abort buttons;
 */
-
 
 import { htmlDialog } from "./html.content.mjs";
 const shadowRoots = new WeakMap();
+
 
 /**
  * @class Build the <dialog> element to popup when the user needs to customize the crate padding;
@@ -19,7 +16,6 @@ export class DialogPadding extends HTMLElement {
 
 		this.close =		this.close.bind(this);
 		this.apply =		this.apply.bind(this);
-		this._watchEscape =	this._watchEscape.bind(this);
 		shadowRoots.set(this, shadow);
 	};
 
@@ -36,11 +32,16 @@ export class DialogPadding extends HTMLElement {
 		shadowRoot.innerHTML = htmlDialog;
 		shadowRoot.appendChild(link);
 
+		globalThis.sessionStorage.setItem('ChangeCrate', "call");
 		shadowRoot.getElementById('padding-close')
 			.addEventListener('click', this.close);
 		shadowRoot.getElementById('padding-apply')
 			.addEventListener('click', this.apply);
 		shadowRoot.getElementById('modal').setAttribute('open', '');
+		globalThis.onstorage = () => {
+			const closeDialog = sessionStorage.getItem('FETCHED');
+			closeDialog ? shadowRoot.getElementById('padding-close').click(): 0;
+		};
 	};
 
 	/**
@@ -66,14 +67,23 @@ export class DialogPadding extends HTMLElement {
 		console.log(`Setup values ${attrName}, ${oldVal}, and ${newVal}`);
 	};
 
-	_watchEscape(event) {
-		event.key === 'Escape' ? this.close() : 0;
-	};
-
+	/**
+	 * @function call worker to updates the solved list applying the new sizes
+	*/
 	apply() {
-		console.log('pressed');
+		const X =	this.shadowRoot.getElementById('pad_length');
+		const Z =	this.shadowRoot.getElementById('pad_depth');
+		const Y =	this.shadowRoot.getElementById('pad_height');
+
+		sessionStorage.setItem('SetCrates', JSON.stringify([X.value, Z.value, Y.value]));
+		X.value = '';
+		Z.value = '';
+		Y.value = '';
 	}
 
+	/**
+	 * @function close the dialog when the button is pressed
+	*/
 	close() {
 		this.shadowRoot.getElementById('modal').removeAttribute('open');
 		document.querySelector(".side-menu")
