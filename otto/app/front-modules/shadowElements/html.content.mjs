@@ -1,5 +1,5 @@
 export const htmlDialog = `
-<dialog id="modal" role="dialog" aria-labelledby="title" aria-describedby="content">
+<div class="dialog" id="modal" role="dialog" aria-labelledby="title" aria-describedby="content">
 	<h2 class="title"><i class="nf nf-cod-settings"></i> Padding setup</h2>
 	<form class="padding-dialog" method="dialog" id="dialog-form">
 		<iframe loading="lazy" class="container__results--open" title="Works set" src="./front-modules/shadowElements/padding_status.html"></iframe>
@@ -13,5 +13,5 @@ export const htmlDialog = `
 			<button formmethod="dialog" type="button" class="IO__press--btn padding--btn" id="padding-close">Close</button>
 		</div>
 	</form>
-</dialog>
+</div>
 `

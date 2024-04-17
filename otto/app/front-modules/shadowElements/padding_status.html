@@ -8,20 +8,13 @@
 	<meta name="author" content="Joseph joarell">
 	<meta name="viwport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../../stylesheet.css">
-	<!-- <script type="module" src="../../panels/status.panel.mjs"></script> -->
-	<!-- <script type="module" src="./sw.status.mjs"></script> -->
+	<script type="module" src="./populate.dialog.mjs"></script>
 </head>
 
 <body>
 	<main>
-		<div class="table padding-crate" id="status">
-			<ul class="crate-list">
-				<li><input type="checkbox" name="crate-1" value="0" placeholder="TEST"><i class="nf nf-md-sync_off"></i> CRATE - 1: 123 x 33 x 130 - cm</li>
-				<li><input type="checkbox" name="crate-2" value="0" placeholder="TEST"> CRATE - 1: 123 x 33 x 130 - cm</li>
-				<!--<label for="crate-1">Test-1</label>-->
-				<!--<input type="checkbox" name="crate-2" value="1">-->
-				<!--<label for="crate-2">Test-2</label>-->
-			</ul>
+		<div class="table padding-crate" id="status-padding">
+			<ul class="all-crates" id="crate-list"></ul>
 		</div>
 	</main>
 </body>
