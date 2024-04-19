@@ -37,7 +37,7 @@ export default class CraterLastCheckReArranger {
 					arts[1].map(works => list.push(works));
 			});
 		});
-		return(JSON.parse(JSON.stringify(list)));
+		return(structuredClone(list));
 	};
 
 // ╭───────────────────────────────────────────────────────────────────────────╮
@@ -55,8 +55,8 @@ export default class CraterLastCheckReArranger {
 		while(i++ < listCrates.length && bool) {
 			if (i % 2 === 1) {
 				result =	LEN === 1 ?
-					JSON.parse(JSON.stringify(attCrate.works[0])):
-					JSON.parse(JSON.stringify(attCrate.works));
+					structuredClone(attCrate.works[0]):
+					structuredClone(attCrate.works);
 				this.#removeCrate(listCrates, i, result);
 				result =	this.#quickSort(result, CUBPOS);
 				result =	new CraterStandard(result, false, MAXLAYER);

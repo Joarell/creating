@@ -28,7 +28,7 @@ export default class CraterStandard {
 		this.#provideCrate(ARTS);
 		if (!this.#backUp)
 			return ({ crates : ARTS });
-		return({ crates : ARTS, backUp : JSON.parse(JSON.stringify(ARTS)) });
+		return({ crates : ARTS, backUp : structuredClone(ARTS) });
 	};
 
 	#quickSort(arts, pos) {
