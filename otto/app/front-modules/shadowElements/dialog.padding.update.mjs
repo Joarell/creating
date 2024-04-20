@@ -32,15 +32,20 @@ export class DialogPadding extends HTMLElement {
 		shadowRoot.innerHTML = htmlDialog;
 		shadowRoot.appendChild(link);
 
-		globalThis.sessionStorage.setItem('ChangeCrate', "call");
+		globalThis.sessionStorage.setItem('PopulateCrates', "call");
 		shadowRoot.getElementById('padding-close')
 			.addEventListener('click', this.close);
 		shadowRoot.getElementById('padding-apply')
 			.addEventListener('click', this.apply);
 		shadowRoot.getElementById('modal').setAttribute('open', '');
+
 		globalThis.onstorage = () => {
-			const closeDialog = sessionStorage.getItem('FETCHED');
-			closeDialog ? shadowRoot.getElementById('padding-close').click(): 0;
+			const closeDialog = sessionStorage.getItem('CLOSED');
+
+			if (closeDialog === 'NOW') {
+				shadowRoot.getElementById('padding-close').click();
+				sessionStorage.removeItem('CLOSED');
+			};
 		};
 	};
 
