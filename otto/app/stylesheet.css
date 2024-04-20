@@ -1291,10 +1291,24 @@ tbody:nth-child(even) {
 	& .crates-done {
 		height: 18cqb;
 	}
-	padding: 1rem;
-	animation: emerge 2s ease-in;
-	animation-fill-mode: forwards;
-	transition: backdrop 2s ease-in-out;
+	& {
+		padding: 1rem;
+		animation: emerge 2s ease-in;
+		animation-fill-mode: forwards;
+		transition: backdrop 2s ease-in-out;
+	}
+}
+
+
+.pad {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	line-height: 1;
+	color: black;
+	background: var(--table-bg);
+	font-size: 500;
+	text-decoration: underline;
 }
 
 
@@ -1340,12 +1354,22 @@ tbody:nth-child(even) {
 }
 
 
-.all-crates li > input {
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	inset: 1rem;
-	width: 1rem;
-	height: 1rem;
+.all-crates {
+	& li > label > input {
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		inset: 1rem;
+		width: 1rem;
+		height: 1rem;
+	}
+	& > li > label {
+		display: block;
+		cursor: pointer;
+		font-family: Mitr, sans-serif;
+		font-size: var(--fonts);
+		font-weight: 400;
+		color: var(--pressed);
+	}
 }
