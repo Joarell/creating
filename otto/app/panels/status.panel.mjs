@@ -10,7 +10,6 @@ globalThis.onstorage = () => {
 
 	changeMode(mode);
 	if (clear) {
-		globalThis.location.reload();
 		sessionStorage.removeItem("clean");
 		sessionStorage.setItem("pane-1", "clear");
 	};
@@ -18,7 +17,7 @@ globalThis.onstorage = () => {
 		globalThis.location.reload();
 		localStorage.removeItem("storage");
 	};
-	newList !== null ? statusTablePopulate(newList) : false;
+	newList !== null ? setTimeout(statusTablePopulate(newList), 400) : false;
 	newList ? setTimeout(globalThis.sessionStorage.removeItem('FETCHED'), 200) : 0;
 };
 
