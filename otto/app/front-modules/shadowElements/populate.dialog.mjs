@@ -1,12 +1,17 @@
 
+import CubCalc from '../../core2/CubCalc.class.mjs';
+import { addNewWorksToIndexedDB } from '../link.storage.mjs';
 
 globalThis.onstorage = () => {
-	const apply =	globalThis.sessionStorage.getItem('ChangeCrate');
-	const change =	globalThis.sessionStorage.getItem('SetCrates');
+	const apply =	globalThis.sessionStorage.getItem('PopulateCrates');
+	const change =		globalThis.sessionStorage.getItem('SetCrates');
 
+	change ? alterCrateSizes() : false;
 	apply ? populateCrates() : false;
-	change ? alterCrateSizes.call(change) : false;
 };
+
+
+globalThis.onload = () => populateCrates();
 
 
 /**
@@ -47,7 +52,7 @@ function setNewCrateLine(kind, crate, num) {
 	kindMap.set('sameSizeCrate', ' <i class="nf nf-fae-equal"></i>');
 	kindMap.set('noCanvasCrate', ' <i class="nf nf-md-sync_off"></i>');
 	kindMap.set('standardCrate', ' <i class="nf nf-fa-picture_o"></i>');
-	li.innerHTML = `<input type="checkbox" name="crate-${num}">CRATE - ${num}: ${size} ${kindMap.get(kind)}`;
+	li.innerHTML = `<label><input type="checkbox" name="crate-${num}"> CRATE - ${num}: ${size} ${kindMap.get(kind)}</label>`;
 	return(li);
 };
 
@@ -59,6 +64,7 @@ async function populateCrates() {
 	const { crates } =	await catchAllCrates();
 	const frame =		document.getElementById('crate-list');
 	const list =		new DocumentFragment();
+	const change =		globalThis.sessionStorage.getItem('SetCrates');
 	let count =			0;
 	let option;
 
@@ -76,21 +82,113 @@ async function populateCrates() {
 		};
 	};
 	frame.appendChild(list);
-	globalThis.sessionStorage.setItem('pane-1', 'populate');
+	change ? globalThis.sessionStorage.setItem('pane-1', 'populate') : false;
+	globalThis.sessionStorage.removeItem('PopulateCrates');
 };
 
 
-function alterCrateSizes() {
-	const list =	document.getElementById('crate-list');
-	const crates =	[];
-	const LEN =		list.childNodes.length;
-	let item =		0;
+/**
+ * @function Gets the selected crate towards be altered.
+*/
+async function alterCrateSizes() {
+	const selectedCrates =	[];
+	const list =			document.getElementById('crate-list');
+	let crate =				0;
+	let item;
 
-	console.log(LEN);
-	while(LEN > item) {
-		list.childNodes[item].childNodes[item].checked ? crates.push(item + 1) : false;
-		item++;
+	for (item of list.childNodes) {
+		item.childNodes[0].childNodes[0].checked ? selectedCrates.push(crate) : false;
+		crate++;
 	};
-	console.log(crates);
+	globalThis.sessionStorage.removeItem('PopulateCrates');
+	updateCrateSizes(selectedCrates);
+};
+
+
+/**
+ * @param {Array} sizes Array with the crates coordinates: [X, Z, Y].
+ * @param {Array} list Array with the crate number to update.
+*/
+async function updateCrateSizes(list) {
+	const SOLVED =		await catchAllCrates();
+	const { crates } =	SOLVED;
+	const memoCrate =	[];
+	let count =			0;
+
+	Object.entries(crates).map(data => {
+		if (data[1].hasOwnProperty('crates')) {
+			const { crates } = data[1];
+
+			crates.map((info, num) => {
+				if (num % 2 === 0 && +count === +list[0]) {
+					addNewSize(info);
+					memoCrate.push(+list[0]);
+					memoCrate.push(info);
+					list.shift();
+				};
+				num % 2 === 0 ? count++ : false;
+				return(info);
+			}, 0);
+		};
+		return(data);
+	});
+	updateCratesData(SOLVED, memoCrate);
 	globalThis.sessionStorage.removeItem('SetCrates');
+	globalThis.location.reload();
+};
+
+
+/**
+ * @param {Array} crate The current crate size
+*/
+function addNewSize(crate) {
+	const DEFAULTPAD =	[23, 23, 28];
+	const sizes =		JSON.parse(sessionStorage.getItem('SetCrates'));
+	const checkX =		DEFAULTPAD[0] >= +sizes[0];
+	const checkZ =		DEFAULTPAD[1] >= +sizes[1];
+	const checkY =		DEFAULTPAD[2] >= +sizes[2];
+
+	if (!checkX || !checkZ || !checkY)
+		alert('Please, recheck the input new sizes. Some value is too high');
+	crate[0] = crate[0] - (DEFAULTPAD[0] - +sizes[0]);
+	crate[1] = crate[1] - (DEFAULTPAD[1] - +sizes[1]);
+	crate[2] = crate[2] - (DEFAULTPAD[2] - +sizes[2]);
+	crate[3] = new CubCalc(crate[0], crate[1], crate[2]).cubCalcAir;
+	return(crate);
+};
+
+
+function airPortOptions (crate) {
+	const MAXX =	300;
+	const MAXZ =	200;
+	const MAXY =	160;
+
+	if (Array.isArray(crate)) {
+		const X = crate[0];
+		const Z = crate[1];
+		const Y = crate[2];
+
+		return (!(X > MAXX || Z > MAXZ || Y > MAXY) ? 'PAX' : 'CARGO');
+	};
+};
+
+
+function updateCratesData(data, newSizes) {
+	let airCubTotal = 0;
+	let PAX			= 0;
+	let CARGO		= 0;
+
+	data.crates.allCrates.map((crate, index) => {
+		if (index === newSizes[0]) {
+			crate = newSizes[1];
+			newSizes.splice(0, 2);
+		};
+		airPortOptions(crate) === 'PAX' ? PAX++ : CARGO++;
+		airCubTotal += crate[3];
+		return(crate);
+	}, 0);
+	data.crates.airCubTotal = +(airCubTotal).toFixed(3);
+	data.whichAirPort = [{ PAX, CARGO}];
+	addNewWorksToIndexedDB(data);
+	return(globalThis.sessionStorage.setItem('pane-1', 'populate'));
 };
