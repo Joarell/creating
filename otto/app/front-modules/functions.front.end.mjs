@@ -17,8 +17,8 @@ import { addNewWorksToIndexedDB } from "./link.storage.mjs";
 // │ This function adds the new work and counts. │
 // ╰─────────────────────────────────────────────╯
 export function countWorks() {
-	const result =		parseArtWork();
-	let counter =		document.getElementById("count");
+	const result =	parseArtWork();
+	let counter =	document.getElementById("count");
 
 	counter.innerText =	result ? "Counting: " + result?.length : "Counting 0";
 	return (counter);
@@ -74,7 +74,7 @@ export async function crate() {
 	const padding =		document.createElement('padding-dialog');
 
 	if (confirm("Ready to crate all works?")) {
-		crates =					await checkMetric();
+		crates =		await checkMetric();
 
 		if (crates !== undefined) {
 			estimate["reference"] =	e_code;
