@@ -83,8 +83,8 @@ export function addNewWorksToIndexedDBOffLine (works) {
  * @param {Crater} works The list to add in indexedDB when all crates is done.
 */
 export function addNewWorksToIndexedDB (works) {
+	const list =		localStorage.getItem('refNumb');
 	const dataName =	"Results";
-	const list =		document.getElementById("input_estimate").value;
 	const request =		globalThis.indexedDB.open(dataName);
 	const onLine =		globalThis.navigator.onLine;
 
@@ -141,7 +141,7 @@ export async function movingDataToSesseionStorage(reference) {
 			.objectStore("Results").get(reference);
 
 		db.onsuccess = async () => {
-			const reference = document.getElementById("input_estimate").value;
+			const reference = localStorage.getItem('refNumb');
 			const obj = db.result;
 
 			globalThis.sessionStorage.setItem(reference, JSON.stringify(obj));
