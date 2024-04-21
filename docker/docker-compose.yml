@@ -65,7 +65,7 @@ services:
       NODE_ENV: development
     expose:
       - ${PORT}
-    image: node:21.1-alpine3.18
+    image: node:21.7-alpine3.19
     networks:
       # - front-tier
       - back-tier
@@ -137,7 +137,7 @@ services:
     env_file: .env
     expose:
       - ${PORT1}
-    image: node:21.1-alpine3.18
+    image: node:21.7-alpine3.19
     networks:
       - front-tier
 
@@ -176,7 +176,7 @@ services:
           memory: 100M
 
     env_file: .env
-    image: nginx:mainline-alpine3.18
+    image: nginx:mainline-alpine3.19
     networks:
       - front-tier
       - back-tier
