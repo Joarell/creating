@@ -192,6 +192,3 @@ services:
       - ./mime.types:/etc/nginx/mime.types
       - ../proxy/nginx:/var/log/nginx
       - ../otto/:/home/crater
-
-
-version: "3.9"
