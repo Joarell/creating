@@ -57,7 +57,7 @@ export default class UnitAdapter {
 			case 'cm' :
 				result = await this.#cmPath()
 				return (result);
-			
+
 			case 'in' :
 				result = await this.#inPath();
 				return (result);
@@ -170,7 +170,7 @@ function layerInterface(layer) {
 
 	for (key in layer) {
 		if (layer[key].length === 1) {
-			layer[key] = swapUnitReversion(layer[key][0]);
+			layer[key] = [swapUnitReversion(layer[key][0])];
 		}
 		else
 			layer[key] = layer[key].map(swapUnitReversion);
