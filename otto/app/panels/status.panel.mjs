@@ -12,6 +12,7 @@ globalThis.onstorage = () => {
 	if (clear) {
 		sessionStorage.removeItem("clean");
 		sessionStorage.setItem("pane-1", "clear");
+		globalThis.location.reload();
 	};
 	if (check && works) {
 		globalThis.location.reload();
