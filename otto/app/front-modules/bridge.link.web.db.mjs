@@ -146,7 +146,7 @@ export async function saveTheCurrentEstimate (estimate) {
 		list,
 		crates : result,
 	};
-	return (postDataFromClientSide(INFO));
+	await postDataFromClientSide(INFO)
 };
 
 
