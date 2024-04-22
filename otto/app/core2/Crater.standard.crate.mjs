@@ -340,6 +340,7 @@ export default class CraterStandard {
 		return({ sumX, sumY });
 	};
 
+<<<<<<< HEAD
 	/**
 	 * @param {Array} layer list of works and available sizes.
 	 * @param {Number} index Index of the compare base work.
@@ -447,6 +448,76 @@ export default class CraterStandard {
 		let gapY1 =			possible.gapY1;
 		let gapX2;
 		let gapY2;
+=======
+	#extraAvailableGap(layer, i) {
+		const { x1, y1, size } = layer[0];
+		const { x2, y2, prev } = layer[i][1];
+		let gapX1;
+		let gapY1;
+		let gapX2;
+		let gapY2;
+		let sumX;
+		let sumY
+
+		if (prev) {
+			gapX1 = layer[prev][1].y2 < 1 ?
+				size[0] - layer[prev][0][1]:
+				+((1 - layer[prev][1].x2) * size[0]).toFixed(4);
+			gapY1 = layer[prev][1].x2 < 1 ?
+				size[2] - layer[prev][0][3]:
+				+((1 - layer[prev][1].y2) * size[2]).toFixed(4);
+			const locations = this.#seekPreviousBaseWork(layer, layer[i][0][0]);
+			const { axioX, axioY } =	layer[prev][1];
+			sumX = axioX.includes(layer[i][0][0]) ?
+				+(size[0] - layer[prev][0][1] * layer[prev][1].x2).toFixed(3) : 0;
+			sumY = axioY.includes(layer[i][0][0]) ?
+				+(size[2] - layer[prev][0][3] * layer[prev][1].y2).toFixed(3) : 0;
+
+			if (x2 < 1) {
+				gapX2 = size[0] - (layer[i][0][1] + locations.sumY);
+				gapY2 = sumY === 0 ? size[2] :  sumY;
+			}
+			else if (y2 < 1) {
+				gapY2 = gapX1 > 0 ?
+					size[2] : size[2] - (layer[i][0][3] + locations.sumX);
+				gapX2 = sumX === 0 ? size[0] : sumX;
+			};
+		}
+		else {
+			gapX1 = +((1 - x1) * size[0]).toFixed(4);
+			gapY1 = x2 < 1 ? size[2] - layer[i][0][3] : +((1 - y1) * size[2]).toFixed(4);
+			if (x2 < 1 || x1 < 1){
+				gapX2 = y2 <= 1 ?
+				+(((1 - x2) * layer[i][0][1]) + size[0] - layer[i][0][1]).toFixed(4) :
+				+((1 - x2) * layer[i][0][1]).toFixed(4);
+				gapY2 = x2 < 1 ?
+					size[2] :
+					+(((1 - y2) * layer[i][0][3]) + size[0] - layer[i][0][3]).toFixed(4);
+			}
+			else if (y2 < 1 || y1 < 1) {
+				gapY2 = x2 < 1 && y2 < 1 ? size[2] : +((1 - y2) * layer[i][0][3]).toFixed(4);
+				gapX2 = x1 < 1 ? size[0] : size[0] - layer[i][0][1];
+			};
+		};
+		return({ gapX1, gapX2, gapY1, gapY2 });
+	}
+
+	#searchWorkSpace(layer, workProp, i, result) {
+		const { x1, y1, size } =	layer[0];
+		const { x2, y2, } =	layer[i][1];
+		if (x2 === 1 && y2 === 1)
+			return(result);
+		const GAPS =	this.#extraAvailableGap(layer, i );
+		const testX =	GAPS.gapY1 > 0 && GAPS.gapY1 - workProp.sizeY >= 0;
+		const testY =	GAPS.gapX1 > 0 && GAPS.gapX1 - workProp.sizeX >= 0;
+		const AXIOX =	x2 < 1 && testX;
+		const AXIOY =	y2 < 1 && testY;
+		const X =		+(GAPS.gapX2 / size[0] - workProp.x).toFixed(4);
+		const Y =		+(GAPS.gapY2 / size[2] - workProp.y).toFixed(4);
+		let placeX =	y2 < 1 && X >= 0 && X <= 1 + GAPS.gapX1 / size[0];
+		let placeY =	x2 < 1 && Y >= 0 && Y <= 1 + GAPS.gapY1 / size[2];
+		let check;
+>>>>>>> dbf45db (fix (clas): improves the accurate result of the class)
 
 		if (base[1].x2 === 1 && base[1].y2 === 1) {
 			gapX2 = 0;
@@ -468,6 +539,7 @@ export default class CraterStandard {
 				gapX2 = possible.extraX === 0 ? size[0] - (locations.sumX + layer[prev][0][1]):
 				possible.gapX1;
 		};
+<<<<<<< HEAD
 		GC.add(locations);
 		GC.add(possible);
 		GC.add(AXIOS);
@@ -556,6 +628,15 @@ export default class CraterStandard {
 		const testY2 =		GAPS.gapY2 > 0 && GAPS.gapY2 >= workProp.sizeY; // work index
 
 		if (testX1 && testX2 || testY1 && testY2) {
+=======
+		check = y1 + workProp.y <= 1 && x2 + workProp.x <= 1;
+		!check ? check = y1 + workProp.y <= 1 && workProp.sizeX <= GAPS.gapX1 : 0;
+		!check ? check = x1 + workProp.x <= 1 && y2 + workProp.y <= 1 : 0;
+		!check ? check = x1 + workProp.x <= 1 && workProp.sizeY <= GAPS.gapY1 : 0;
+		!check ? check = AXIOX && placeY && y2 + workProp.y <= 1: 0;
+		!check ? check = AXIOY && placeX && x2 + workProp.x <= 1: 0;
+		if(check) {
+>>>>>>> dbf45db (fix (clas): improves the accurate result of the class)
 			result.loop = false;
 			result.value = i;
 		};
