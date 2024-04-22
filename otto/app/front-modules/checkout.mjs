@@ -53,7 +53,7 @@ export function setUnit() {
 		localStorage.setItem("metrica",
 			document.getElementById("cm").value
 		);
-	// This is the trigger to the "create" and clear button.
+	// INFO: This is the trigger to the "create" and clear button.
 	}
 	else if (check) {
 		const storage = localStorage.getItem('metrica');
@@ -61,6 +61,7 @@ export function setUnit() {
 		storage === 'cm - centimeters' ?
 			localStorage.setItem("metrica", "in - inches") :
 			localStorage.setItem("metrica", "cm - centimeters");
+		sessionStorage.setItem('clean', 'reload');
 		return;
 	}
 	setCheckRadio();
