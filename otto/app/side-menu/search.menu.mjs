@@ -17,7 +17,7 @@ function closeDialog() {
 // NOTE: reset the code changed by the data base in order to render on status panel.
 /**
  * @param {Crater} list The Crater object fetched from the DB.
-*/
+ */
 function resetList(list) {
 	const reset = [];
 
@@ -32,7 +32,7 @@ function resetList(list) {
 // NOTE: the path is different with or without the bundle file.
 /**
  * @param {String} doc The reference/document with artwork list.
-*/
+ */
 export async function checkBrowserDB(doc) {
 	const workerDB =	new Worker(
 		// new URL("../panels/worker.IDB.crates.mjs", import.meta.url),
@@ -50,24 +50,25 @@ export async function checkBrowserDB(doc) {
 		document.getElementById("input_estimate").value = doc;
 		sessionStorage.setItem("FETCHED", JSON.stringify(checkIDB));
 		closeDialog();
-		return(setDBFetched([checkIDB]));
+		setDBFetched([checkIDB]);
+		return("IDB data Found.");
 	};
-	return fetchDB(doc);
+	return(false);
 };
 
 
 /**
  * @param {Crater} result The Crater object with the solved list from DB.
-*/
-function setDBFetched(result) {
+ */
+async function setDBFetched(result) {
 	try {
 		if (result.length > 0 || result?.hasOwnProperty('crates')) {
 			const { crates, works, reference_id } = result[0];
 			const fetched = {
 				crates,
 				list: result[1]?.hasOwnProperty('crates') ?
-					resetList(result[1]):
-					resetList(works.list),
+				resetList(result[1]):
+				resetList(works.list),
 				reference: reference_id,
 			};
 			const data = JSON.stringify(fetched);
@@ -77,32 +78,34 @@ function setDBFetched(result) {
 			globalThis.sessionStorage.setItem("FETCHED", data);
 			closeDialog();
 		}
-		else throw new TypeError("Data not found!");
+		else
+			throw new TypeError("Data not found!");
 	} catch (err) {
-		//alert(`Document not found! Please, try again.`);
+		return(err);
 	};
 };
 
 
 /**
  * @param {String} doc The reference/document with artwork list.
-*/
+ */
 async function fetchDB(doc) {
-	const url = `/estimates/${doc}`;
-	const HEADER = {
+	const url =		`/estimates/${doc}`;
+	const HEADER =	{
 		"Content-Type": "application/json; charset=UTF-8",
 	};
+
 	if (globalThis.navigator.onLine) {
-		try {
-			await fetch(url, {
-				method: "GET",
-				headers: HEADER,
-			}).then((estimate) => estimate.json())
-			.then(setDBFetched)
-			.catch((err) => console.error(`ALERT ${err}`));
-		} catch (err) {
-			alert(`Document not found on database! Please, try again.`);
-		}
+		let data;
+
+		await fetch(url, {
+			method: "GET",
+			headers: HEADER,
+		}).then((estimate) => {
+			data = estimate.json();
+			return(data);
+		}).then(setDBFetched);
+		return(data);
 	}
 };
 
@@ -126,8 +129,15 @@ function regexChecker(data) {
 /**
  * @function Gets the reference/document number from the page in order to search.
 */
-export function searchEstimate() {
+export async function searchEstimate() {
 	const docEstimate = document.getElementById("estimate_getter").value;
 
-	return !regexChecker(docEstimate) ? checkBrowserDB(docEstimate) : false;
+	if (!regexChecker(docEstimate)) {
+		const data = [checkBrowserDB(docEstimate), fetchDB(docEstimate)];
+
+		Promise.all(data).then(val => {
+			!val[0] && val[1].length === 0 ?
+				alert(`Document not found! Please, try again.`): 'DONE';
+		});
+	};
 };
