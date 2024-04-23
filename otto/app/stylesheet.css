@@ -210,14 +210,10 @@ iframe {
 	animation-name: fill-pane 2s ease;
 	animation-fill-mode: both;
 	animation-delay: 1s;
-	& > {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
 	&:hover {
 		border: none;
 		box-shadow: var(--shadow1);
+		cursor: pointer;
 	}
 	&:focus-within {
 		outline: .1rem solid var(--dark-blue);
@@ -1301,14 +1297,18 @@ tbody:nth-child(even) {
 
 
 .pad {
+	visibility: hidden;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	line-height: 1;
 	color: black;
 	background: var(--table-bg);
-	font-size: 500;
-	text-decoration: underline;
+	& {
+		font-size: 500;
+		font-family: Mitr, sans-serif;
+		text-decoration: underline;
+	}
 }
 
 
@@ -1328,6 +1328,13 @@ tbody:nth-child(even) {
 		grid-area: iframe;
 		height: 40cqh;
 	}
+	/*& > iframe:hover .pad {*/
+	/*	visibility: visible;*/
+	/*	padding: 1rem;*/
+	/*	animation: emerge 2s ease-in;*/
+	/*	animation-fill-mode: forwards;*/
+	/*	transition: backdrop 2s ease-in-out;*/
+	/*}*/
 }
 
 
@@ -1365,8 +1372,8 @@ tbody:nth-child(even) {
 		height: 1rem;
 	}
 	& > li > label {
-		display: block;
-		cursor: pointer;
+		/*display: block;*/
+		/*cursor: pointer;*/
 		font-family: Mitr, sans-serif;
 		font-size: var(--fonts);
 		font-weight: 400;
