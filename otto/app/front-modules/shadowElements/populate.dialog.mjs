@@ -2,6 +2,7 @@
 import CubCalc from '../../core2/CubCalc.class.mjs';
 import { addNewWorksToIndexedDB } from '../link.storage.mjs';
 
+globalThis.onload = () => populateCrates();
 globalThis.onstorage = () => {
 	const apply =	globalThis.sessionStorage.getItem('PopulateCrates');
 	const change =		globalThis.sessionStorage.getItem('SetCrates');
@@ -9,9 +10,6 @@ globalThis.onstorage = () => {
 	change ? alterCrateSizes() : false;
 	apply ? populateCrates() : false;
 };
-
-
-globalThis.onload = () => populateCrates();
 
 
 /**
@@ -158,6 +156,9 @@ function addNewSize(crate) {
 };
 
 
+/**
+ * @param {Array} crate all crate sizes to define which airport
+*/
 function airPortOptions (crate) {
 	const MAXX =	300;
 	const MAXZ =	200;
@@ -173,6 +174,10 @@ function airPortOptions (crate) {
 };
 
 
+/**
+ * @param {Array} data all crates from solved list
+ * @param {Array} newSizes new sizes to subtract from the solved crates
+*/
 function updateCratesData(data, newSizes) {
 	let airCubTotal = 0;
 	let PAX			= 0;

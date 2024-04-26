@@ -1273,6 +1273,34 @@ tbody:nth-child(even) {
  * │                  Dialog padding setup.                  │
  * ╰─────────────────────────────────────────────────────────╯
 */
+.pad {
+	visibility: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	line-height: 1;
+	color: var(--dark);
+	background: var(--light-blue1);
+	border-radius: 1rem;
+	position: relative;
+	z-index: 1;
+	padding: .3rem;
+	& {
+		font-size: 500;
+		font-family: Mitr, sans-serif;
+	}
+	&::after {
+		content: " ";
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		margin-left: -.5rem;
+		border-width: .5rem;
+		border-style: solid;
+		border-color: var(--light-blue1) transparent transparent transparent
+	}
+}
+
 
 .dialog {
 	container-type: normal;
@@ -1289,25 +1317,15 @@ tbody:nth-child(even) {
 	}
 	& {
 		padding: 1rem;
-		animation: emerge 2s ease-in;
+		animation: emerge 2s ease-in-out;
 		animation-fill-mode: forwards;
 		transition: backdrop 2s ease-in-out;
 	}
-}
-
-
-.pad {
-	visibility: hidden;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	line-height: 1;
-	color: black;
-	background: var(--table-bg);
-	& {
-		font-size: 500;
-		font-family: Mitr, sans-serif;
-		text-decoration: underline;
+	&:hover .pad {
+		visibility: visible;
+		animation: emerge 500ms ease-in;
+		animation-fill-mode: forwards;
+		transition: backdrop 500ms ease-in-out;
 	}
 }
 
@@ -1318,9 +1336,9 @@ tbody:nth-child(even) {
 	grid-template-columns: 1fr;
 	grid-template-rows: 1fr 8cqh 8cqh;
 	grid-template-areas:
-		"iframe"
-		"pads"
-		"pad-btns";
+	"iframe"
+	"pads"
+	"pad-btns";
 	row-gap: 1rem;
 	justify-items: center;
 	align-items: center;
@@ -1328,15 +1346,7 @@ tbody:nth-child(even) {
 		grid-area: iframe;
 		height: 40cqh;
 	}
-	/*& > iframe:hover .pad {*/
-	/*	visibility: visible;*/
-	/*	padding: 1rem;*/
-	/*	animation: emerge 2s ease-in;*/
-	/*	animation-fill-mode: forwards;*/
-	/*	transition: backdrop 2s ease-in-out;*/
-	/*}*/
 }
-
 
 .IO__padding, .pad__buttons, .pads-sizes {
 	display: flex;

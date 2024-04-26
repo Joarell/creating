@@ -67,28 +67,26 @@ export function displayAirCub() {
 // │                         list to possible crates.                         │
 // ╰──────────────────────────────────────────────────────────────────────────╯
 export async function crate() {
-	let crates;
-	let list;
+	const crates = await checkMetric();
 	const estimate =	{};
 	const e_code =		document.getElementById("input_estimate").value;
 	const padding =		document.createElement('padding-dialog');
+	const weak =		new WeakMap();
+	let list;
 
-	if (confirm("Ready to crate all works?")) {
-		crates =		await checkMetric();
+	if (confirm("Ready to crate all works?") && crates) {
+		estimate["reference"] =	e_code;
+		list =					parseArtWork();
+		estimate["list"] =		list.map(art => art.data);
+		estimate["crates"] =	crates;
+		addNewWorksToIndexedDB(estimate);
 
-		if (crates !== undefined) {
-			estimate["reference"] =	e_code;
-			list =					parseArtWork();
-			estimate["list"] =		list.map(art => art.data);
-			estimate["crates"] =	crates;
-			addNewWorksToIndexedDB(estimate);
-
-			// INFO: triggers to each panel render the result
-			sessionStorage.setItem("pane1", "populate");
-			sessionStorage.setItem("pane2", "populate");
-			document.querySelector('.side-menu').appendChild(padding);
-		};
+		// INFO: triggers to each panel render the result
+		sessionStorage.setItem("pane1", "populate");
+		sessionStorage.setItem("pane2", "populate");
+		document.querySelector(".side-menu").appendChild(padding);
 	}
+	weak.set(e_code, estimate);
 };
 
 

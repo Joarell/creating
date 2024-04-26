@@ -44,7 +44,9 @@ export class DialogPadding extends HTMLElement {
 
 			if (closeDialog === 'NOW') {
 				shadowRoot.getElementById('padding-close').click();
-				sessionStorage.removeItem('CLOSED');
+				setTimeout(() => {
+					sessionStorage.removeItem('CLOSED');
+				}, 300);
 			};
 		};
 	};
