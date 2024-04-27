@@ -105,6 +105,7 @@ export function cleanInputs() {
 		countWorks();
 		displayCub();
 		displayAirCub();
+		sessionStorage.setItem('pane-1', 'clear');
 	}, 200);
 }
 
