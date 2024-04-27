@@ -93,7 +93,7 @@ export class DialogPadding extends HTMLElement {
 		const closeDialog =	document.querySelector('.side-menu');
 
 		this.shadowRoot.getElementById('modal').removeAttribute('open');
-		closeDialog.getElementsByTagName('padding-dialog').length > 0 ?
+		closeDialog.getElementsByTagName('padding-dialog').length === 1 ?
 			document.querySelector(".side-menu").lastElementChild.remove() : false;
 	};
 };

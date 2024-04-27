@@ -5,7 +5,7 @@ import * as status from '../front-modules/functions.front.end.mjs';
 function closeDialog() {
 	const closeDialog =	document.querySelector('.side-menu');
 
-	closeDialog.getElementsByTagName('padding-dialog').length > 0 ?
+	closeDialog?.getElementsByTagName('padding-dialog')?.length === 1 ?
 		sessionStorage.setItem('CLOSED', 'NOW') : false;
 	status.displayCub();
 	status.displayAirCub();

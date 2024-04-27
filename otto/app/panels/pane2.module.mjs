@@ -4,18 +4,20 @@
 
 
 globalThis.onstorage = () => {
-	const press =	sessionStorage.getItem("pane2");
-	const getter =	localStorage.getItem("refNumb");
-	const copy =	sessionStorage.getItem("copy2");
-	const clear =	sessionStorage.getItem("pane-2");
-	const mode =	localStorage.getItem("mode");
-	const works =	sessionStorage.getItem('codes')
+	const press =		sessionStorage.getItem("pane2");
+	const getter =		localStorage.getItem("refNumb");
+	const copy =		sessionStorage.getItem("copy2");
+	const clear =		sessionStorage.getItem("pane-2");
+	const mode =		localStorage.getItem("mode");
+	const works =		sessionStorage.getItem('codes')
+	const closeDialog =	document.querySelector('.side-menu');
 
 	changeMode(mode);
 	if (clear) {
 		globalThis.location.reload();
 		sessionStorage.removeItem("pane-2");
-		sessionStorage.setItem('CLOSED', 'NOW');
+		closeDialog?.getElementsByTagName('padding-dialog')?.length === 1 ?
+			sessionStorage.setItem('CLOSED', 'NOW') : false;
 	};
 	if (copy && works) {
 		sessionStorage.removeItem("copy2");
