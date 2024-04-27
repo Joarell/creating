@@ -53,7 +53,7 @@ export function setUnit() {
 		localStorage.setItem("metrica",
 			document.getElementById("cm").value
 		);
-	// INFO: This is the trigger to the "create" and clear button.
+		// INFO: This is the trigger to the "create" and clear button.
 	}
 	else if (check) {
 		const storage = localStorage.getItem('metrica');
@@ -62,7 +62,6 @@ export function setUnit() {
 			localStorage.setItem("metrica", "in - inches") :
 			localStorage.setItem("metrica", "cm - centimeters");
 		sessionStorage.setItem('clean', 'reload');
-		return;
 	}
 	setCheckRadio();
 };
@@ -86,15 +85,14 @@ export const crate = () => {
 
 
 export const clearAll = () => {
-	const clear = confirm("Do you really want to delete the whole list?");
 	const mode = localStorage.getItem("mode");
 	const unit = localStorage.getItem("metrica");
 	const element = document.querySelector(".result");
 	const plotter = document.getElementById('layers');
 	const menu = document.querySelector(".plotter__menu");
 
-	if (clear === true) {
-		mod.countWorks() && mod.displayAirCub() && mod.displayCub();
+	if (confirm("Do you really want to delete the whole list?")) {
+		mod.cleanInputs();
 		localStorage.clear();
 		sessionStorage.clear();
 		sessionStorage.setItem("clean", "eraser");
@@ -103,8 +101,6 @@ export const clearAll = () => {
 		globalThis.document.getElementById("input_estimate").value = "";
 		openCloseDisplay([element, plotter, menu]);
 	}
-	mod.cleanInputs();
-	document.getElementById("input_estimate").select();
 };
 
 
@@ -125,8 +121,8 @@ function browserStoragePrepare() {
 
 	if (ref)
 		document.getElementById("input_estimate").value = ref;
-		createIDB();
-		createOffLineIDB();
+	createIDB();
+	createOffLineIDB();
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
 };
 

@@ -88,7 +88,7 @@ export async function crate() {
 			document.querySelector(".side-menu").appendChild(padding);
 		}, 200);
 	}
-	weak.add(estimate);
+weak.add(estimate);
 };
 
 
@@ -97,10 +97,15 @@ export async function crate() {
 //╰───────────────────────────────────────────────────────────────────────────╯
 export function cleanInputs() {
 	document.getElementById("input_code").value = "";
-	document.getElementById("input_code").select();
+	document.getElementById("input_estimate").select();
 	document.getElementById("input_length").value = "";
 	document.getElementById("input_depth").value = "";
 	document.getElementById("input_height").value = "";
+	setTimeout(() => {
+		countWorks();
+		displayCub();
+		displayAirCub();
+	}, 200);
 }
 
 

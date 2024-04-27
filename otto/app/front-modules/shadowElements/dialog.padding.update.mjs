@@ -42,11 +42,9 @@ export class DialogPadding extends HTMLElement {
 		globalThis.onstorage = () => {
 			const closeDialog = sessionStorage.getItem('CLOSED');
 
-			if (closeDialog === 'NOW') {
+			if (closeDialog) {
 				shadowRoot.getElementById('padding-close').click();
-				setTimeout(() => {
-					sessionStorage.removeItem('CLOSED');
-				}, 300);
+				sessionStorage.removeItem('CLOSED');
 			};
 		};
 	};
@@ -92,9 +90,11 @@ export class DialogPadding extends HTMLElement {
 	 * @function close the dialog when the button is pressed
 	*/
 	close() {
+		const closeDialog =	document.querySelector('.side-menu');
+
 		this.shadowRoot.getElementById('modal').removeAttribute('open');
-		document.querySelector(".side-menu")
-			.lastElementChild.remove();
+		closeDialog.getElementsByTagName('padding-dialog').length > 0 ?
+			document.querySelector(".side-menu").lastElementChild.remove() : false;
 	};
 };
 

@@ -15,6 +15,7 @@ globalThis.onstorage = () => {
 	if (clear) {
 		globalThis.location.reload();
 		sessionStorage.removeItem("pane-2");
+		sessionStorage.setItem('CLOSED', 'NOW');
 	};
 	if (copy && works) {
 		sessionStorage.removeItem("copy2");

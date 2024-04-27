@@ -159,7 +159,6 @@ function addNewSize(crate) {
 		+sizes[1] + (crate[1] - DEFAULTPAD[1]);
 	crate[2] = metrica === "in" ?
 		+(+sizes[3] + (crate[3] - DEFAULTPAD[3])).toFixed(3):
-	console.log(crate);
 	crate[3] = new CubCalc(crate[0], crate[1], crate[2]).cubCalcAir;
 	return(crate);
 };
