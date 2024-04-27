@@ -1279,14 +1279,14 @@ tbody:nth-child(even) {
 	justify-content: center;
 	align-items: center;
 	line-height: 1;
-	color: var(--dark);
+	color: var(--dark-blue);
 	background: var(--light-blue1);
 	border-radius: 1rem;
 	position: relative;
 	z-index: 1;
 	padding: .3rem;
 	& {
-		font-size: 500;
+		font-size: 100;
 		font-family: Mitr, sans-serif;
 	}
 	&::after {
@@ -1382,8 +1382,6 @@ tbody:nth-child(even) {
 		height: 1rem;
 	}
 	& > li > label {
-		/*display: block;*/
-		/*cursor: pointer;*/
 		font-family: Mitr, sans-serif;
 		font-size: var(--fonts);
 		font-weight: 400;
