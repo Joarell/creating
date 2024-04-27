@@ -1,7 +1,7 @@
 export const htmlDialog = `
 <div class="dialog" id="modal" role="dialog" aria-labelledby="title" aria-describedby="content">
 	<h2 class="title"><i class="nf nf-cod-settings"></i> Padding setup </h2>
-	<span class="pad">*Centimeters padding: L: 23 D: 23 H: 28<br>*Inches padding: L: 9.039 D: 9.039 H: 11</span>
+	<span class="pad">*Centimeters padding: L = 23 D = 23 H = 28<br>*Inches padding: L = 9.039 D = 9.039 H = 11</span>
 	<form class="padding-dialog" method="dialog" id="dialog-form">
 		<iframe loading="lazy" class="dialog-crates" title="Works set" src="./front-modules/shadowElements/padding_status.html"></iframe>
 		<div class="pads-sizes" id="">
