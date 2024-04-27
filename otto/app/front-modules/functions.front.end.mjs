@@ -71,7 +71,7 @@ export async function crate() {
 	const estimate =	{};
 	const e_code =		document.getElementById("input_estimate").value;
 	const padding =		document.createElement('padding-dialog');
-	const weak =		new WeakMap();
+	const weak =		new WeakSet();
 	let list;
 
 	if (confirm("Ready to crate all works?") && crates) {
@@ -84,9 +84,11 @@ export async function crate() {
 		// INFO: triggers to each panel render the result
 		sessionStorage.setItem("pane1", "populate");
 		sessionStorage.setItem("pane2", "populate");
-		document.querySelector(".side-menu").appendChild(padding);
+		setTimeout(() => {
+			document.querySelector(".side-menu").appendChild(padding);
+		}, 200);
 	}
-	weak.set(e_code, estimate);
+	weak.add(estimate);
 };
 
 
