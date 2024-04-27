@@ -99,7 +99,7 @@ async function alterCrateSizes() {
 		crate++;
 	};
 	globalThis.sessionStorage.removeItem('PopulateCrates');
-	updateCrateSizes(selectedCrates);
+	return(updateCrateSizes(selectedCrates));
 };
 
 
@@ -138,19 +138,28 @@ async function updateCrateSizes(list) {
 
 /**
  * @param {Array} crate The current crate size
+ * @function Subtracts from default padding values the new ones.
 */
 function addNewSize(crate) {
-	const DEFAULTPAD =	[23, 23, 28];
+	const metrica =		localStorage.getItem('metrica').split('-')[0].trimEnd();
+	const DEFAULTPAD =	metrica === "cm" ? [23, 23, 28] : [9.039, 9.039, 11];
 	const sizes =		JSON.parse(sessionStorage.getItem('SetCrates'));
 	const checkX =		DEFAULTPAD[0] >= +sizes[0];
 	const checkZ =		DEFAULTPAD[1] >= +sizes[1];
 	const checkY =		DEFAULTPAD[2] >= +sizes[2];
 
+	// TODO: REGEX to ensure only numbers with a '.'
 	if (!checkX || !checkZ || !checkY)
 		alert('Please, recheck the input new sizes. Some value is too high');
-	crate[0] = crate[0] - (DEFAULTPAD[0] - +sizes[0]);
-	crate[1] = crate[1] - (DEFAULTPAD[1] - +sizes[1]);
-	crate[2] = crate[2] - (DEFAULTPAD[2] - +sizes[2]);
+	crate[0] = metrica === "in" ?
+		+(+sizes[0] + (crate[0] - DEFAULTPAD[0])).toFixed(3):
+		+sizes[0] + (crate[0] - DEFAULTPAD[0]);
+	crate[1] = metrica === "in" ?
+		+(+sizes[1] + (crate[1] - DEFAULTPAD[1])).toFixed(3):
+		+sizes[1] + (crate[1] - DEFAULTPAD[1]);
+	crate[2] = metrica === "in" ?
+		+(+sizes[3] + (crate[3] - DEFAULTPAD[3])).toFixed(3):
+	console.log(crate);
 	crate[3] = new CubCalc(crate[0], crate[1], crate[2]).cubCalcAir;
 	return(crate);
 };
