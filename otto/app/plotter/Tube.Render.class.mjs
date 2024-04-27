@@ -1,5 +1,6 @@
 
 
+import Converter from '../core2/Converter.class.mjs';
 import * as coord from './layer.coordinate.mjs';
 
 export default class TubeRender {
@@ -46,12 +47,20 @@ export default class TubeRender {
 	};
 
 	#tubeRender () {
+		let txt;
 		const element =	document.createDocumentFragment();
 		const X =		[];
 		const Y =		[];
-		let txt;
+		const unit =	localStorage
+			.getItem("metrica") === 'cm - centimeters' ? 'cm' : 'in';
 
 		this.#tubes.map(tube => {
+			if (unit === 'in') {
+				const code = tube[0];
+
+				tube = new Converter(tube[1], tube[2], tube[3]).cmConvert;
+				tube.unshift(code);
+			}
 			X.push(coord.proportion(tube[1], this.#pixSize.x, this.#inCrate[0]));
 			Y.push(coord.proportion(tube[3], this.#pixSize.y, this.#inCrate[2]));
 			element.appendChild(this.#worksPositionLayer({ x: X, y: Y }));

@@ -1,4 +1,5 @@
 
+import Converter from '../core2/Converter.class.mjs';
 import * as coord from './layer.coordinate.mjs';
 
 export default class StandardRender {
@@ -252,8 +253,16 @@ export default class StandardRender {
 		const MAPWORK = {};
 		const ICON = `<i class="nf nf-oct-sync"></i>`;
 		const CODES = [];
+		const unit =	localStorage
+			.getItem("metrica") === 'cm - centimeters' ? 'cm' : 'in';
 
 		this.#canvas.map(async art => {
+			if (unit === 'in') {
+				const code = art[0];
+
+				art = Array.from(new Converter(art[1], art[2], art[3]).cmConvert);
+				art.unshift(code);
+			}
 			if (art.at(-1) === ICON) {
 				x = coord.proportion(art[3], this.#pixelSize.x, this.#inCrate[0]);
 				y = coord.proportion(art[1], this.#pixelSize.y, this.#inCrate[2]);

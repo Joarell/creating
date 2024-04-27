@@ -1,5 +1,5 @@
 
-
+import Converter from '../core2/Converter.class.mjs';
 import * as coord from './layer.coordinate.mjs';
 
 export default class noCanvasRender {
@@ -40,7 +40,7 @@ export default class noCanvasRender {
 
 		RECT.setAttribute("x", POS.posX + INSET);
 		RECT.setAttribute("y", POS.posY + INSET);
-		X.at(-1) >= x || POS.posX + X.at(-1) + INSET >= x ? 
+		X.at(-1) >= x || POS.posX + X.at(-1) + INSET >= x ?
 			RECT.setAttribute("width", X.at(-1) - PAD):
 			RECT.setAttribute("width", X.at(-1));
 		Y.at(-1) >= y || POS.posY + Y.at(-1) >= y ?
@@ -95,12 +95,20 @@ export default class noCanvasRender {
 	};
 
 	#canvasRender () {
+		let txt;
 		const element =	document.createDocumentFragment();
 		const X =		[];
 		const Y =		[];
-		let txt;
+		const unit =	localStorage
+			.getItem("metrica") === 'cm - centimeters' ? 'cm' : 'in';
 
 		this.#items.map((item, i) => {
+			if (unit === 'in') {
+				const code = item[0];
+
+				item = new Converter(item[1], item[2], item[3]).cmConvert;
+				item.unshift(code);
+			}
 			X.push(coord.proportion(item[1], this.#pixelSize.x, this.#inCrate[0]));
 			Y.push(coord.proportion(item[2], this.#pixelSize.y, this.#inCrate[1]));
 			element.appendChild(this.#worksPositionLayer({ X, Y }));

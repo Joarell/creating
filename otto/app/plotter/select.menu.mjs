@@ -1,6 +1,7 @@
 
 
 import { plotter } from "./layers.mjs";
+import Converter from "../core2/Converter.class.mjs";
 
 
 export async function getDataIDB (ref) {
@@ -21,11 +22,35 @@ export async function getDataIDB (ref) {
 };
 
 
+async function unitAdapterSetCrates(unit, solved) {
+	if (unit === 'in') {
+		const crates = structuredClone(solved)
+
+		Object.entries(crates).map(data => {
+			let i;
+
+			for (i in data) {
+				if (data[i].hasOwnProperty('crates')) {
+					data[i].crates = data[i].crates.map((info, j) => {
+						if (j % 2 === 0) {
+							info = new Converter(info[0], info[1], info[2]).cmConvert;
+						};
+						return (info);
+					}, 0);
+				}
+			};
+		});
+		localStorage.setItem('doneList', JSON.stringify({...crates}));
+	}
+	else
+		localStorage.setItem('doneList', JSON.stringify({...solved}));
+}
+
+
 export async function populateOptions() {
-	const estimate =	localStorage.getItem("refNumb");
-	const crates =		await getDataIDB(estimate);
-	const select =		document.getElementById('selected-crate');
-	const unit =		localStorage
+	const crates =	await getDataIDB(localStorage.getItem("refNumb"));
+	const select =	document.getElementById('selected-crate');
+	const unit =	localStorage
 		.getItem("metrica") === 'cm - centimeters' ? 'cm' : 'in';
 
 	if(select.hasChildNodes())
@@ -39,7 +64,7 @@ export async function populateOptions() {
 			</option>
 		`);
 	}, 0);
-	localStorage.setItem('doneList', JSON.stringify({...crates}));
+	await unitAdapterSetCrates(unit, crates);
 	await layersNumber(crates);
 };
 

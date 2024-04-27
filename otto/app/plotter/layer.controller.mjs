@@ -16,7 +16,6 @@ export function openCloseDisplay (element, template) {
 
 function closeDisplay(element, display) {
 	element.map(plotter => {
-		console.log("Close element");
 		plotter.setAttribute("aria-hidden", true);
 		plotter.setAttribute("aria-expanded", false);
 		while(display.firstChild)

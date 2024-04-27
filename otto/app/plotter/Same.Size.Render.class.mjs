@@ -1,5 +1,6 @@
 
 
+import Converter from '../core2/Converter.class.mjs';
 import * as coord from './layer.coordinate.mjs';
 
 export default class sameSizeRender {
@@ -59,12 +60,20 @@ export default class sameSizeRender {
 	};
 
 	#canvasRender () {
+		let txt;
 		const element =	document.createDocumentFragment();
 		const X =		[];
 		const Y =		[];
-		let txt;
+		const unit =	localStorage
+			.getItem("metrica") === 'cm - centimeters' ? 'cm' : 'in';
 
 		this.#canvas.map(art => {
+			if (unit === 'in') {
+				const code = art[0];
+
+				art = new Converter(art[1], art[2], art[3]).cmConvert;
+				art.unshift(code);
+			}
 			X.push(coord.proportion(art[1], this.#pixSize.x, this.#inCrate[0]));
 			Y.push(coord.proportion(art[3], this.#pixSize.y, this.#inCrate[2]));
 			element.appendChild(this.#worksPositionLayer({ X, Y }));
