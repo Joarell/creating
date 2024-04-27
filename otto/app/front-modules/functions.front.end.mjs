@@ -85,10 +85,14 @@ export async function crate() {
 		sessionStorage.setItem("pane1", "populate");
 		sessionStorage.setItem("pane2", "populate");
 		setTimeout(() => {
+			const closeDialog =	document.querySelector('.side-menu');
+
+			closeDialog?.getElementsByTagName('padding-dialog')?.length > 0 ?
+				sessionStorage.setItem('CLOSED', 'NOW') : false;
 			document.querySelector(".side-menu").appendChild(padding);
 		}, 200);
 	}
-weak.add(estimate);
+	weak.add(estimate);
 };
 
 

@@ -16,7 +16,7 @@ globalThis.onstorage = () => {
 	if (clear) {
 		globalThis.location.reload();
 		sessionStorage.removeItem("pane-2");
-		closeDialog?.getElementsByTagName('padding-dialog')?.length === 1 ?
+		closeDialog?.getElementsByTagName('padding-dialog')?.length > 0 ?
 			sessionStorage.setItem('CLOSED', 'NOW') : false;
 	};
 	if (copy && works) {
