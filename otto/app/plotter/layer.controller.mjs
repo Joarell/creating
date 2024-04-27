@@ -6,9 +6,10 @@ import { displayClean, populateOptions } from "./select.menu.mjs";
 
 export function openCloseDisplay (element, template) {
 	element.map(plotter => {
-		plotter.setAttribute("aria-hidden", false);
-		plotter.setAttribute("aria-expanded", true);
-		console.log("element open");
+		if (plotter) {
+			plotter.setAttribute("aria-hidden", false);
+			plotter.setAttribute("aria-expanded", true);
+		};
 	})
 };
 
