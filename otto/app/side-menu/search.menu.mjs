@@ -130,6 +130,8 @@ function regexChecker(data) {
  */
 export async function searchEstimate() {
 	const docEstimate =	document.getElementById("estimate_getter").value;
+	const update =		memoization(document.getElementById("input_estimate").value);
+	update(docEstimate);
 
 	if (!regexChecker(docEstimate)) {
 		const data = [checkBrowserDB(docEstimate), fetchDB(docEstimate)];
@@ -140,3 +142,10 @@ export async function searchEstimate() {
 		});
 	};
 };
+
+
+function memoization(before) {
+	return (after) => {
+		before !== after ? status.cleanInputs() : false;
+	};
+}
