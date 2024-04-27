@@ -3,14 +3,13 @@ import * as status from '../front-modules/functions.front.end.mjs';
 
 
 function closeDialog() {
-	const closeDialog =	document.querySelector('.side-menu').childNodes;
+	const closeDialog =	document.querySelector('.side-menu');
 
-	closeDialog.length === 6 ? sessionStorage.setItem('CLOSED', 'NOW') : 0;
-	setTimeout(() => {
-		status.displayCub();
-		status.displayAirCub();
-		status.countWorks();
-	}, 200);
+	closeDialog.getElementsByTagName('padding-dialog').length > 0 ?
+		sessionStorage.setItem('CLOSED', 'NOW') : false;
+	status.displayCub();
+	status.displayAirCub();
+	status.countWorks();
 };
 
 
@@ -112,7 +111,7 @@ async function fetchDB(doc) {
 
 /**
  * @param {String} doc The reference/document with artwork list.
-*/
+ */
 function regexChecker(data) {
 	const regex = /[^-a-z-A-Z-0-9]/g;
 
@@ -128,9 +127,9 @@ function regexChecker(data) {
 
 /**
  * @function Gets the reference/document number from the page in order to search.
-*/
+ */
 export async function searchEstimate() {
-	const docEstimate = document.getElementById("estimate_getter").value;
+	const docEstimate =	document.getElementById("estimate_getter").value;
 
 	if (!regexChecker(docEstimate)) {
 		const data = [checkBrowserDB(docEstimate), fetchDB(docEstimate)];
