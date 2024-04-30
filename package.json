@@ -16,7 +16,8 @@
 		"express": "^4.18.2",
 		"jsonwebtoken": "^9.0.0",
 		"pg": "^8.8.0",
-		"sequelize": "^6.28.0"
+		"sequelize": "^6.28.0",
+		"typescript-language-server": "2"
 	},
 	"devDependencies": {
 		"nodemon": "^3.0.1",
