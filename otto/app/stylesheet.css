@@ -331,7 +331,7 @@ tbody:nth-child(even) {
 
 
 ::-webkit-scrollbar-thumb {
-	background: var(--color1);
+	background: var(--pressed);
 	border-radius: 10vh;
 	border: .1rem solid white;
 }
@@ -1303,7 +1303,9 @@ tbody:nth-child(even) {
 
 
 .dialog {
+	display: none;
 	container-type: normal;
+	visibility: hidden;
 	container-name: pad-crates;
 	border-radius: 1rem;
 	background: none;
@@ -1317,9 +1319,9 @@ tbody:nth-child(even) {
 	}
 	& {
 		padding: 1rem;
-		animation: emerge 2s ease-in-out;
+		animation: emerge 1s ease-in-out;
 		animation-fill-mode: forwards;
-		transition: backdrop 2s ease-in-out;
+		transition: backdrop 1s ease-in-out;
 	}
 	&:hover .pad {
 		visibility: visible;
