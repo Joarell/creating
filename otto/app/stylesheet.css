@@ -86,6 +86,7 @@
 	--color8: #B80056;
 	--color9: #141E30;
 	--color10: #243B55;
+	--color11: #B8005670;
 	--box: #57420C;
 	--light-blue1: #CCDBDC;
 	--light-blue2: #9AD1D4;
@@ -93,6 +94,7 @@
 	--dark-blue: #00547A;
 	--dark-blue1: #003852;
 	--dark-blue2: #002A3D;
+	--dark-blue3: #002A3D50;
 	--font-weight: 600;
 	--colg: 2rem;
 	--colg-mobile: 1rem;
@@ -100,8 +102,8 @@
 	--rowg-mobile: 1rem;
 	--bord: .3rem;
 	--mob-col: #12111385;
-	--gradient: linear-gradient(270deg, var(--color8), var(--dark-blue2));
-	--gradient1: linear-gradient(90deg, var(--color8), var(--dark-blue));
+	--gradient: linear-gradient(270deg, var(--dark-blue2), var(--bg-col));
+	--gradient1: linear-gradient(90deg, var(--dark-blue1), var(--bg-col));
 	--shadow1: .3rem .3rem .6rem var(--iframes-bg),
 		-.2rem -.2rem .5rem var(--color4);
 	--inner-shadow1: inset .2rem .2rem .5rem var(--pressed),
