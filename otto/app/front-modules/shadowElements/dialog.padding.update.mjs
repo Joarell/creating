@@ -1,6 +1,3 @@
-/*
- * TODO: Updates indexDB and DB server with new crates sizes;
-*/
 
 import { htmlDialog } from "./html.content.mjs";
 const shadowRoots = new WeakMap();
@@ -47,6 +44,10 @@ export class DialogPadding extends HTMLElement {
 				sessionStorage.removeItem('CLOSED');
 			};
 		};
+		setTimeout(() => {
+			shadowRoot.getElementById("modal").style.display = "unset";
+			shadowRoot.getElementById("modal").style.visibility = "visible";
+		}, 500);
 	};
 
 	/**
