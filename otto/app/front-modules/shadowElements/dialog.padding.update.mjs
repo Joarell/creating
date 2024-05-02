@@ -22,9 +22,8 @@ export class DialogPadding extends HTMLElement {
 		const shadowRoot =	shadowRoots.get(this);
 		const link =		document.createElement('link');
 		const template =	document.getElementById('padding-template');
-		const node =		document.importNode(
-			template.content.cloneNode(true), true
-		);
+		const clone =		template.content.cloneNode(true);
+		const node =		document.importNode(clone, true);
 
 		link.rel =	'stylesheet';
 		link.type =	'text/css';
@@ -50,12 +49,12 @@ export class DialogPadding extends HTMLElement {
 		setTimeout(() => {
 			shadowRoot.getElementById("modal").style.display = "unset";
 			shadowRoot.getElementById("modal").style.visibility = "visible";
-		}, 500);
+		}, 400);
 	};
 
 	/**
 	 * @method Removes the dialog popup when clicked.;
-	*/
+	 */
 	disconnectedCallback() {
 		this.shadowRoot.getElementById('padding-apply')
 			.removeEventListener('click', this.close, true);
@@ -65,20 +64,20 @@ export class DialogPadding extends HTMLElement {
 
 	/**
 	 * @method Called when the dialog popup moves to the another document.
-	*/
+	 */
 	adoptedCallback() {
 	};
 
 	/**
 	 * @method Update when the dialog popup.
-	*/
+	 */
 	attributeChangeCallback(attrName, oldVal, newVal) {
 		console.log(`Setup values ${attrName}, ${oldVal}, and ${newVal}`);
 	};
 
 	/**
 	 * @function call worker to updates the solved list applying the new sizes
-	*/
+	 */
 	apply() {
 		const X =	this.shadowRoot.getElementById('pad_length');
 		const Z =	this.shadowRoot.getElementById('pad_depth');
@@ -92,7 +91,7 @@ export class DialogPadding extends HTMLElement {
 
 	/**
 	 * @function close the dialog when the button is pressed
-	*/
+	 */
 	close() {
 		const closeDialog =	document.querySelector('.side-menu');
 
