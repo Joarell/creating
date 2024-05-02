@@ -1,0 +1,1 @@
+/home/jev/Otto/Rust/CRATER/target/debug/crater: /home/jev/Otto/Rust/CRATER/crater/src/main.rs /home/jev/Otto/Rust/CRATER/labors/src/art_work.rs /home/jev/Otto/Rust/CRATER/labors/src/hexagon.rs /home/jev/Otto/Rust/CRATER/labors/src/lib.rs

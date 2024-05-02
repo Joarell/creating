@@ -1,9 +1,6 @@
-[package]
-name = "CRATER"
-version = "0.1.0"
-edition = "2024"
-authors = "Joseph Joarell"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
+[workspace]
+members = [
+	"crater",
+	"labors"
+]
+resolver = "2"
