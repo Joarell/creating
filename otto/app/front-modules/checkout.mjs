@@ -14,15 +14,6 @@ import { openCloseDisplay } from '../plotter/layer.controller.mjs'
 // import { checkTokens } from './token.checkout.mjs';
 
 
-// ╭───────────────────────────────────────────────────────────────────╮
-// │ Calls to each change on the localStorage to update the list pane. │
-// ╰───────────────────────────────────────────────────────────────────╯
-globalThis.onstorage = () => {
-	mod.displayCub();
-	mod.displayAirCub();
-	mod.countWorks();
-};
-
 globalThis.onload = () => {
 	const color = localStorage.getItem("mode");
 

@@ -13,11 +13,21 @@ import UnitAdapter from "../core2/Unit.Adapter.class.mjs";
 import { addNewWorksToIndexedDB } from "./link.storage.mjs";
 
 
+// ╭───────────────────────────────────────────────────────────────────╮
+// │ Calls to each change on the localStorage to update the list pane. │
+// ╰───────────────────────────────────────────────────────────────────╯
+globalThis.onstorage = () => {
+	displayCub();
+	displayAirCub();
+	countWorks();
+};
+
+
 // ╭─────────────────────────────────────────────╮
 // │ This function adds the new work and counts. │
 // ╰─────────────────────────────────────────────╯
-export function countWorks() {
-	const result =	parseArtWork();
+export async function countWorks() {
+	const result =	await parseArtWork();
 	let counter =	document.getElementById("count");
 
 	counter.innerText =	result ? "Counting: " + result?.length : "Counting 0";
@@ -28,12 +38,12 @@ export function countWorks() {
 // ╭─────────────────────────────────────────────────────────────────────╮
 // │ This function do the calculation of the cub of all works in meters. │
 // ╰─────────────────────────────────────────────────────────────────────╯
-export function displayCub() {
+export async function displayCub() {
 	let result;
 	const COMA =	1000;
 	const element =	document.getElementById("cub-meter");
 
-	result =		parseArtWork();
+	result =		await parseArtWork();
 	result =		result?.reduce((sum, val) => {
 		return (sum + val.cubed);
 	}, 0) ?? 0;
@@ -45,7 +55,7 @@ export function displayCub() {
 // ╭──────────────────────────────────────────────────────────────────────────╮
 // │ Returns a calculation of the cub of all works based on the air companies.│
 // ╰──────────────────────────────────────────────────────────────────────────╯
-export function displayAirCub() {
+export async function displayAirCub() {
 	let result;
 	let element;
 	let std_msg;
@@ -53,7 +63,7 @@ export function displayAirCub() {
 
 	std_msg =		"Air-Cub: ";
 	element =		document.getElementById("cub-air");
-	result =		parseArtWork();
+	result =		await parseArtWork();
 	result =		result?.reduce((sum, val) => {
 		return (sum + val.cAir);
 	}, 0) ?? 0;
@@ -66,58 +76,59 @@ export function displayAirCub() {
 // │ This function is the main function of the webapp. It solves the art work │
 // │                         list to possible crates.                         │
 // ╰──────────────────────────────────────────────────────────────────────────╯
-export async function crate() {
-	const crates = await checkMetric();
+export async function crate(fetched = false) {
+	const cratesAsCm = await checkMetric();
 	const estimate =	{};
-	const e_code =		document.getElementById("input_estimate").value;
 	const padding =		document.createElement('padding-dialog');
 	const weak =		new WeakSet();
+	const fragment =	new DocumentFragment();
+	const e_code =		localStorage.getItem('refNumb') ??
+		document.getElementById('input_estimate').value;
 	let list;
 
-	if (confirm("Ready to crate all works?") && crates) {
-		estimate["reference"] =	e_code;
-		list =					parseArtWork();
-		estimate["list"] =		list.map(art => art.data);
-		estimate["crates"] =	crates;
-		addNewWorksToIndexedDB(estimate);
+	if (fetched || confirm("Ready to crate all works?") && cratesAsCm) {
+		estimate.reference =	e_code;
+		list =					await parseArtWork();
+		estimate.list =			list.map(art => art.data);
+		estimate.crates =		cratesAsCm;
+		addNewWorksToIndexedDB(estimate, fetched);
 
 		// INFO: triggers to each panel render the result
 		sessionStorage.setItem("pane1", "populate");
-		sessionStorage.setItem("pane2", "populate");
 		setTimeout(() => {
 			const closeDialog =	document.querySelector('.side-menu');
 
 			closeDialog?.getElementsByTagName('padding-dialog')?.length > 0 ?
 				sessionStorage.setItem('CLOSED', 'NOW') : false;
-			document.querySelector(".side-menu").appendChild(padding);
-		}, 200);
+			fragment.appendChild(padding);
+			document.querySelector(".side-menu").appendChild(fragment);
+		}, 150);
 	}
 	weak.add(estimate);
+	return ('Crated');
 };
 
 
 //╭───────────────────────────────────────────────────────────────────────────╮
 //│ This function cleans all fields and puts the cursor in the code input box.│
 //╰───────────────────────────────────────────────────────────────────────────╯
-export function cleanInputs() {
+export function cleanInputs(fetched = false) {
 	document.getElementById("input_code").value = "";
 	document.getElementById("input_estimate").select();
 	document.getElementById("input_length").value = "";
 	document.getElementById("input_depth").value = "";
 	document.getElementById("input_height").value = "";
-	setTimeout(() => {
-		countWorks();
-		displayCub();
-		displayAirCub();
-		sessionStorage.setItem('pane-1', 'clear');
-	}, 200);
+	countWorks();
+	displayCub();
+	displayAirCub();
+	fetched ? sessionStorage.setItem('pane1', 'clear') : 'Done';
 }
 
 
 // ╭──────────────────────────────────────────────────────╮
 // │ Converts the localStorage data in to ArtWork object. │
 // ╰──────────────────────────────────────────────────────╯
-function parseArtWork() {
+async function parseArtWork() {
 	const DB =		localStorage;
 	const temp =	[];
 	let works;
@@ -150,7 +161,7 @@ function parseArtWork() {
 async function checkMetric() {
 	const storageUnit =	localStorage.getItem('metrica');
 	const UNIT =		storageUnit === 'cm - centimeters' ? 'cm' : 'in';
-	const list =		parseArtWork();
+	const list =		await parseArtWork();
 	let crates;
 
 	if (!list)
