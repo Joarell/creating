@@ -172,10 +172,9 @@ async function updateData (content, session) {
 	const list			= JSON.stringify({ "list": content.list }, null, "");
 	const crates		= JSON.stringify({ "crates": content.crates }, null, "");
 	const client		= await pool.connect();
-	const { name }	= await retrieveSessionNumber(session);
 
-	console.log(`Crater USER: ${ name }`);
 	try {
+		const { name }	= await retrieveSessionNumber(session);
 		await client.query('BEGIN');
 		const up = `UPDATE data_solved SET
 			works = '${list}',
@@ -190,7 +189,7 @@ async function updateData (content, session) {
 	catch (err) {
 		console.error("ATTENTION", err);
 		await pool.query('ROLLBACK');
-		throw err;
+		return (500);
 	}
 	finally {
 		client.release();

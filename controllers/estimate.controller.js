@@ -48,8 +48,11 @@ const removeEstimates = async (req, res) => {
 
 const updateEstimate = async (req, res) => {
 	const session =	extractCookieData(req).session;
-	await db.updateData(req.body, session);
-	return(res.status(202).send(req.body));
+	const checker = await db.updateData(req.body, session);
+	return(checker === 500 ?
+		res.status(500):
+		res.status(202).send(req.body)
+	);
 };
 
 
