@@ -193,8 +193,8 @@ globalThis.onsubmit = (event) => {
 globalThis.document.getElementById('estimate_getter')
 	.addEventListener('keypress', (event) => {
 
-	const BUTTON = globalThis.document.getElementById('fetch-btn');
-	event.key === 'Enter' ? BUTTON.click() : false;
+	//const BUTTON = globalThis.document.getElementById('fetch-btn');
+	event.key === 'Enter' ? searchEstimate() : false;
 });
 
 
