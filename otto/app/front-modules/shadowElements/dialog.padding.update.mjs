@@ -1,5 +1,4 @@
 
-import { htmlDialog } from "./html.content.mjs";
 const shadowRoots = new WeakMap();
 
 
@@ -21,12 +20,16 @@ export class DialogPadding extends HTMLElement {
 	*/
 	connectedCallback() {
 		const shadowRoot =	shadowRoots.get(this);
-		const link =	document.createElement('link');
+		const link =		document.createElement('link');
+		const template =	document.getElementById('padding-template');
+		const node =		document.importNode(
+			template.content.cloneNode(true), true
+		);
 
 		link.rel =	'stylesheet';
 		link.type =	'text/css';
 		link.href = './stylesheet.css';
-		shadowRoot.innerHTML = htmlDialog;
+		shadowRoot.append(node);
 		shadowRoot.appendChild(link);
 
 		globalThis.sessionStorage.setItem('PopulateCrates', "call");
