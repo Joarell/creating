@@ -1,5 +1,6 @@
 
 import * as status from '../front-modules/functions.front.end.mjs';
+import { addNewWorksToIndexedDB } from '../front-modules/link.storage.mjs';
 
 
 function closeDialog() {
@@ -131,21 +132,35 @@ function regexChecker(data) {
 export async function searchEstimate() {
 	const docEstimate =	document.getElementById("estimate_getter").value;
 	const update =		memoization(document.getElementById("input_estimate").value);
-	update(docEstimate);
 
 	if (!regexChecker(docEstimate)) {
 		const data = [checkBrowserDB(docEstimate), fetchDB(docEstimate)];
 
-		Promise.all(data).then(val => {
+		await Promise.all(data).then(async val => {
 			!val[0] && val[1].length === 0 ?
-				alert(`Document not found! Please, try again.`): 'DONE';
+				alert(`Document not found! Please, try again.`):
+				await Promise.resolve(update(docEstimate))
+				.then(async () => {
+					if (val[1].length > 0) {
+						const result = {
+							reference: val[1][0].reference_id,
+							crates: val[1][0].crates.crates,
+							list: val[1][0].works.list
+						};
+						addNewWorksToIndexedDB(result, true);
+					}
+					else
+						status.crate(true)
+				});
 		});
 	};
 };
 
-
+/**
+ * @function check if the fetch to doc/reference was successful and updates the app status.
+ */
 function memoization(before) {
-	return (after) => {
-		before !== after ? status.cleanInputs() : false;
+	return async (after) => {
+		before !== after ? status.cleanInputs(true) : false;
 	};
 }
