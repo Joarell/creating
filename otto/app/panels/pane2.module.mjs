@@ -1,32 +1,33 @@
 // ╭────────────────────────────────────────────────────╮
 // │ This is the trigger activated by the crate button. │
 // ╰────────────────────────────────────────────────────╯
-
-
-globalThis.onstorage = () => {
+globalThis.addEventListener("storage", async () => {
 	const press =		sessionStorage.getItem("pane2");
 	const getter =		localStorage.getItem("refNumb");
 	const copy =		sessionStorage.getItem("copy2");
-	const clear =		sessionStorage.getItem("pane-2");
 	const mode =		localStorage.getItem("mode");
 	const works =		sessionStorage.getItem('codes')
 	const closeDialog =	document.querySelector('.side-menu');
 
 	changeMode(mode);
-	if (clear) {
-		globalThis.location.reload();
-		sessionStorage.removeItem("pane-2");
-		closeDialog?.getElementsByTagName('padding-dialog')?.length > 0 ?
-			sessionStorage.setItem('CLOSED', 'NOW') : false;
-	};
-	if (copy && works) {
-		sessionStorage.removeItem("copy2");
-		return(globalThis.location.reload() && showCrates2(getter));
-	};
-	return(press && press === "populate" ?
-		globalThis.location.reload() && showCrates2(getter) : false
+	await Promise.resolve(() => {
+		if (press === 'clear') {
+			globalThis.location.reload();
+			sessionStorage.removeItem("pane2");
+			closeDialog?.getElementsByTagName('padding-dialog')?.length > 0 ?
+				sessionStorage.setItem('CLOSED', 'NOW') : false;
+		};
+	}).then(async () => {
+		if (copy && works) {
+			sessionStorage.removeItem("copy2");
+			await Promise.resolve(globalThis.location.reload())
+				.then(showCrates2(getter))
+		};
+	});
+	return(press && press === "populate" ? await Promise.resolve(
+		globalThis.location.reload()).then(showCrates2(getter)) : false
 	);
-};
+}, true);
 
 
 globalThis.document.onreadystatechange = () => {
@@ -249,11 +250,12 @@ export async function showCrates2(estimate) {
 	for (key in crates) {
 		if (crates[key].hasOwnProperty('crates')) {
 			crates[key].crates.length > 0 ?
-			addHTMLTableLine(crates[key], element, key) : false;
+				addHTMLTableLine(crates[key], element, key) : false;
 		};
 	};
 	sessionStorage.removeItem("pane2");
 	pane.appendChild(element);
+	return('done');
 };
 
 

@@ -1,32 +1,33 @@
 // ╭────────────────────────────────────────────────────╮
 // │ This is the trigger activated by the crate button. │
 // ╰────────────────────────────────────────────────────╯
-
-
-globalThis.onstorage = () => {
+globalThis.addEventListener("storage", async () => {
 	const press =	sessionStorage.getItem("pane1");
 	const getter =	localStorage.getItem("refNumb");
 	const copy =	sessionStorage.getItem("copy1");
-	const clear =	sessionStorage.getItem("pane-1");
 	const mode =	localStorage.getItem("mode");
 	const works =	sessionStorage.getItem('codes')
 	const fetched =	sessionStorage.getItem('FETCHED');
 
 	changeMode(mode);
-	if (clear || fetched) {
-		sessionStorage.removeItem("pane-1");
-		sessionStorage.setItem("pane-2", "clear");
-		globalThis.location.reload();
-	};
-	if (copy && works) {
-		sessionStorage.removeItem("copy1");
-		sessionStorage.setItem("pane1", "populate");
-		return(globalThis.location.reload() && showCrates1(getter));
-	};
-	return(press && press === "populate" ?
-		globalThis.location.reload() && showCrates1(getter) : false
+	await Promise.resolve(() => {
+		if (press === 'clear' || fetched) {
+			sessionStorage.removeItem("pane1");
+			sessionStorage.setItem("pane2", "clear");
+			globalThis.location.reload();
+		};
+	}).then (async () => {
+		if (copy && works) {
+			sessionStorage.removeItem("copy1");
+			await Promise.resolve(globalThis.location.reload())
+				.then(showCrates1(getter));
+		};
+	});
+	return(press && press === "populate" ? await Promise.resolve(
+		globalThis.location.reload()).then(showCrates1(getter))
+		.then(sessionStorage.setItem("pane2", "populate")): false
 	);
-};
+}, true);
 
 
 globalThis.document.onreadystatechange = () => {
@@ -72,11 +73,11 @@ export function createHeader(table) {
 	head.innerHTML =`
 		<tbody><tr>
 			<th>STATUS</th>
-			<th>TYPE</th>
+		<th>TYPE</th>
 			<th>LENGTH</th>
-			<th>DEPTH</th>
+		<th>DEPTH</th>
 			<th>HEIGHT</th>
-			<th>CUB</th>
+		<th>CUB</th>
 			<th>UNIT</th>
 		</tr></tbody>
 	`
@@ -159,6 +160,7 @@ export async function showCrates1(estimate) {
 	};
 	sessionStorage.removeItem("pane1");
 	pane.appendChild(finishedRender(element, crates));
+	return('done');
 };
 
 

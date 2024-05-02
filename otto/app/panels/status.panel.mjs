@@ -1,7 +1,7 @@
 // ╭───────────────────────────────────────────────────────────────────╮
 // │ Calls to each change on the localStorage to update the list pane. │
 // ╰───────────────────────────────────────────────────────────────────╯
-globalThis.onstorage = () => {
+globalThis.addEventListener("storage", async () => {
 	const check =	localStorage.getItem("storage");
 	const newList =	sessionStorage.getItem("FETCHED");
 	const clear =	sessionStorage.getItem("clean");
@@ -9,28 +9,31 @@ globalThis.onstorage = () => {
 	const works =	sessionStorage.getItem('codes')
 
 	changeMode(mode);
-	if (clear) {
-		sessionStorage.removeItem("clean");
-		sessionStorage.setItem("pane-1", "clear");
-		globalThis.location.reload();
-	};
-	if (check && works) {
-		globalThis.location.reload();
-		localStorage.removeItem("storage");
-	};
-	newList !== null ? setTimeout(statusTablePopulate(newList), 400) : false;
-	newList ? setTimeout(globalThis.sessionStorage.removeItem('FETCHED'), 200) : 0;
-};
+	await Promise.resolve(() => {
+		if (clear) {
+			sessionStorage.removeItem("clean");
+			sessionStorage.setItem("pane1", "clear");
+			globalThis.location.reload();
+		}
+	}).then(() => {;
+		if (check && works) {
+			globalThis.location.reload();
+			localStorage.removeItem("storage");
+		}
+	});
+	newList !== null ? await Promise.resolve(statusTablePopulate(newList))
+	.then(setTimeout(globalThis.sessionStorage.removeItem('FETCHED'), 200)) : 0;
+}, true);
 
 
-globalThis.onload = () => {
+globalThis.onload = async () => {
 	const mode =		localStorage.getItem("mode");
 	const stPanel =		document.getElementById("status");
 	const searched =	sessionStorage.getItem("FETCHED");
 
-	stPanel.hasChildNodes() ? true : setTimeout(statusTable(), 200);
+	stPanel.hasChildNodes() ? true : setTimeout(await statusTable(), 200);
 	changeMode(mode);
-	searched ? setTimeout(statusTable, 200) : setTimeout(restorePanel, 200);
+	searched ? setTimeout(await statusTable, 200) : setTimeout(restorePanel, 200);
 };
 
 
@@ -71,8 +74,8 @@ function restorePanel() {
 					return ;
 				return (
 					index === 0 ? `<tbody><tr><td>${item}</td>` :
-						index === 3 ? `<td>${item}</td><td>${metric}</td></tr></tbody>` :
-							`<td>${item}</td>`
+					index === 3 ? `<td>${item}</td><td>${metric}</td></tr></tbody>` :
+					`<td>${item}</td>`
 				);
 			}, 0).join("");
 		});
@@ -140,12 +143,13 @@ export async function statusTable() {
 				return ;
 			return (
 				index === 0 ? `<tbody><tr><td>${item}</td>` :
-					index === 3 ? `<td>${item}</td><td>${metric}</td></tr></tbody>` :
-						`<td>${item}</td>`
+				index === 3 ? `<td>${item}</td><td>${metric}</td></tr></tbody>` :
+				`<td>${item}</td>`
 			);
 		}, 0).join("");
 	});
 	plot.appendChild(element);
+	return ('done');
 };
 
 
