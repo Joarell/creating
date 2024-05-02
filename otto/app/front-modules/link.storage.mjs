@@ -55,7 +55,7 @@ export function createOffLineIDB() {
 /**
  * @param {Crater} works The list to add in indexed DB when the page is off-line.
 */
-export function addNewWorksToIndexedDBOffLine (works) {
+export function addNewWorksToIndexedDBOffLine (works, fetched) {
 	const dataName =	"off_line_results";
 	const list =		document.getElementById("input_estimate").value;
 	const request =		globalThis.indexedDB.open(dataName);
@@ -73,7 +73,7 @@ export function addNewWorksToIndexedDBOffLine (works) {
 			existsInIDB.result === undefined ? object.add(works):
 			(object.delete(existsInIDB.result.reference)) &&
 			(object.add(works));
-			movingDataToSesseionStorage(list);
+			movingDataToSesseionStorage(list, fetched);
 		};
 	}
 };
@@ -82,7 +82,7 @@ export function addNewWorksToIndexedDBOffLine (works) {
 /**
  * @param {Crater} works The list to add in indexedDB when all crates is done.
 */
-export function addNewWorksToIndexedDB (works) {
+export function addNewWorksToIndexedDB (works, fetched = false) {
 	const list =		localStorage.getItem('refNumb');
 	const dataName =	"Results";
 	const request =		globalThis.indexedDB.open(dataName);
@@ -97,11 +97,11 @@ export function addNewWorksToIndexedDB (works) {
 			.objectStore(dataName);
 		const existsInIDB =	object.get(works.reference);
 
-		existsInIDB.onsuccess = () => {
+		existsInIDB.onsuccess = async () => {
 			existsInIDB.result === undefined ? object.add(works):
-			(object.delete(existsInIDB.result.reference)) &&
-			(object.add(works));
-			movingDataToSesseionStorage(list);
+			await Promise.resolve(object.delete(existsInIDB.result.reference))
+				.then(object.add(works));
+			movingDataToSesseionStorage(list, fetched);
 		};
 		onLine ? 'ok' : addNewWorksToIndexedDBOffLine(works);
 	}
@@ -128,7 +128,7 @@ export function deleteDataFromIndexedDB(reference) {
 /**
  * @param {String} reference The code/reference to the crates process.
 */
-export async function movingDataToSesseionStorage(reference) {
+export async function movingDataToSesseionStorage(reference, fetched = false) {
 	const request = globalThis.indexedDB.open("Results");
 
 	request.onerror = (event) => {
@@ -145,7 +145,9 @@ export async function movingDataToSesseionStorage(reference) {
 			const obj = db.result;
 
 			globalThis.sessionStorage.setItem(reference, JSON.stringify(obj));
-			await saveTheCurrentEstimate(reference);
+			!fetched ?
+				await saveTheCurrentEstimate(reference) :
+				sessionStorage.setItem('pane1', "populate");
 		};
 	};
 };
