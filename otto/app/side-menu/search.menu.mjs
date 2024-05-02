@@ -161,6 +161,6 @@ export async function searchEstimate() {
  */
 function memoization(before) {
 	return async (after) => {
-		before !== after ? status.cleanInputs(true) : false;
+		before && before !== after ? status.cleanInputs(true) : false;
 	};
 }
