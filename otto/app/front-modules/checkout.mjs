@@ -21,7 +21,7 @@ globalThis.onload = () => {
 	color === null ? localStorage.setItem("mode", "light") : false;
 	setCheckRadio();
 	setModeColor();
-	setTimeout(loadingPage, 1500);
+	setTimeout(loadingPage, 2000);
 };
 
 

@@ -136,7 +136,7 @@ export async function searchEstimate() {
 	if (!regexChecker(docEstimate)) {
 		const data = [checkBrowserDB(docEstimate), fetchDB(docEstimate)];
 
-		await Promise.all(data).then(async val => {
+		await Promise.any(data).then(async val => {
 			!val[0] && val[1].length === 0 ?
 				alert(`Document not found! Please, try again.`):
 				await Promise.resolve(update(docEstimate))
@@ -155,6 +155,7 @@ export async function searchEstimate() {
 		});
 	};
 };
+
 
 /**
  * @function check if the fetch to doc/reference was successful and updates the app status.
