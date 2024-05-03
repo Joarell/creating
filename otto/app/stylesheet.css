@@ -102,8 +102,8 @@
 	--rowg-mobile: 1rem;
 	--bord: .3rem;
 	--mob-col: #12111385;
-	--gradient: linear-gradient(270deg, var(--dark-blue2), var(--bg-col));
-	--gradient1: linear-gradient(90deg, var(--dark-blue1), var(--bg-col));
+	--gradient: linear-gradient(270deg, var(--bg-col), var(--dark-blue2));
+	--gradient1: linear-gradient(90deg, var(--bg-col), var(--dark-blue1));
 	--shadow1: .3rem .3rem .6rem var(--iframes-bg),
 		-.2rem -.2rem .5rem var(--color4);
 	--inner-shadow1: inset .2rem .2rem .5rem var(--pressed),
@@ -1275,6 +1275,13 @@ tbody:nth-child(even) {
  * │                  Dialog padding setup.                  │
  * ╰─────────────────────────────────────────────────────────╯
 */
+
+#padding-template {
+	display: none;
+	visibility: hidden;
+}
+
+
 .pad {
 	visibility: hidden;
 	display: flex;

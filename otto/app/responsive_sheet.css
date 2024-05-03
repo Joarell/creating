@@ -64,7 +64,7 @@
 	.spinner {
 		width: 10rem;
 		height: 10rem;
-		--clr: var(--color1);
+		--clr: var(--dark-blue2);
 		--clr-alpha: var(--gradient);
 		animation: spinner 3.6s infinite ease;
 		transform-style: preserve-3d;
