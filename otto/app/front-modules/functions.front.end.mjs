@@ -27,7 +27,6 @@ globalThis.onstorage = () => {
 // │ This function adds the new work and counts. │
 // ╰─────────────────────────────────────────────╯
 export async function countWorks() {
-	console.log('Counter');
 	const result =	await parseArtWork();
 	let counter =	document.getElementById("count");
 
@@ -118,6 +117,7 @@ export async function cleanInputs(fetched = false) {
 	document.getElementById("input_length").value =	"";
 	document.getElementById("input_depth").value =	"";
 	document.getElementById("input_height").value =	"";
+	const dialog = document.querySelectorAll('padding-dialog').length;
 
 	fetched ? await Promise.resolve(sessionStorage.setItem('pane1', 'clear'))
 		.then(document.getElementById("input_code").select()):
@@ -126,6 +126,7 @@ export async function cleanInputs(fetched = false) {
 	countWorks();
 	displayCub();
 	displayAirCub();
+	dialog > 0 ? sessionStorage.setItem("CLOSED", "NOW") : false;
 };
 
 
