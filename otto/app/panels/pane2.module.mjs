@@ -7,21 +7,22 @@ globalThis.addEventListener("storage", async () => {
 	const copy =	sessionStorage.getItem("copy2");
 	const mode =	localStorage.getItem("mode");
 	const works =	sessionStorage.getItem("codes");
+	const fetched =	sessionStorage.getItem("FETCHED");
 
 	changeMode(mode);
-	if (press === "clear") {
-		globalThis.location.reload();
+	if (press) {
 		sessionStorage.removeItem("pane2");
+		sessionStorage.removeItem("FETCHED");
+		press === "populate" && fetched ?
+			await Promise.resolve(globalThis.location.reload())
+			.then(showCrates2(getter))
+			.finally(sessionStorage.removeItem('pane2')):
+			globalThis.location.reload();
 	}
 	else if (copy && works) {
 		sessionStorage.removeItem("copy2");
 		globalThis.location.reload();
-	}
-	else if (press === 'populate')
-		await Promise.resolve(globalThis.location.reload())
-			.then(showCrates2(getter))
-			.finally(sessionStorage.removeItem('pane2'));
-
+	};
 }, true);
 
 globalThis.document.onreadystatechange = () => {

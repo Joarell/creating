@@ -10,20 +10,20 @@ globalThis.addEventListener("storage", async () => {
 	const fetched =	sessionStorage.getItem("FETCHED");
 
 	changeMode(mode);
-	if (press === "clear" || fetched) {
+	if (press) {
 		sessionStorage.removeItem("pane1");
-		sessionStorage.setItem("pane2", "clear");
-		globalThis.location.reload();
+		press === "populate" && fetched ?
+			await Promise.resolve(globalThis.location.reload())
+			.then(showCrates1(getter))
+			.then(sessionStorage.setItem("pane2", "populate"))
+			.finally(sessionStorage.removeItem('pane1')):
+			await Promise.resolve(sessionStorage.setItem("pane2", "clear"))
+			.finally(globalThis.location.reload());
 	}
 	else if (copy && works) {
 		sessionStorage.removeItem("copy1");
 		globalThis.location.reload();
-	}
-	else if (press === 'populate')
-		await Promise.resolve(globalThis.location.reload())
-			.then(showCrates1(getter))
-			.then(sessionStorage.setItem("pane2", "populate"))
-			.finally(sessionStorage.removeItem('pane1'));
+	};
 }, true);
 
 globalThis.document.onreadystatechange = () => {
