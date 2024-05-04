@@ -1,34 +1,30 @@
 // ╭────────────────────────────────────────────────────╮
-// │ This is the trigger activated by the crate button. │
+// │ This is the trigger activated by the create button. │
 // ╰────────────────────────────────────────────────────╯
 globalThis.addEventListener("storage", async () => {
 	const press =	sessionStorage.getItem("pane1");
 	const getter =	localStorage.getItem("refNumb");
 	const copy =	sessionStorage.getItem("copy1");
 	const mode =	localStorage.getItem("mode");
-	const works =	sessionStorage.getItem('codes')
-	const fetched =	sessionStorage.getItem('FETCHED');
+	const works =	sessionStorage.getItem("codes");
+	const fetched =	sessionStorage.getItem("FETCHED");
 
 	changeMode(mode);
-	await Promise.resolve(() => {
-		if (press === 'clear' || fetched) {
-			sessionStorage.removeItem("pane1");
-			sessionStorage.setItem("pane2", "clear");
-			globalThis.location.reload();
-		};
-	}).then (async () => {
-		if (copy && works) {
-			sessionStorage.removeItem("copy1");
-			await Promise.resolve(globalThis.location.reload())
-				.then(showCrates1(getter));
-		};
-	});
-	return(press && press === "populate" ? await Promise.resolve(
-		globalThis.location.reload()).then(showCrates1(getter))
-		.then(sessionStorage.setItem("pane2", "populate")): false
-	);
+	if (press === "clear" || fetched) {
+		sessionStorage.removeItem("pane1");
+		sessionStorage.setItem("pane2", "clear");
+		globalThis.location.reload();
+	}
+	else if (copy && works) {
+		sessionStorage.removeItem("copy1");
+		globalThis.location.reload();
+	}
+	else if (press === 'populate')
+		await Promise.resolve(globalThis.location.reload())
+			.then(showCrates1(getter))
+			.then(sessionStorage.setItem("pane2", "populate"))
+			.finally(sessionStorage.removeItem('pane1'));
 }, true);
-
 
 globalThis.document.onreadystatechange = () => {
 	const pane =	document.getElementById("crates-only");
@@ -37,30 +33,27 @@ globalThis.document.onreadystatechange = () => {
 	const mode =	localStorage.getItem("mode");
 
 	if (len && getter)
-		len > 1 ? true: setTimeout(() => showCrates1(getter), 50);
+		len > 1 ? true : setTimeout(() => showCrates1(getter), 50);
 	setTimeout(loadingPage, 2300);
 	changeMode(mode);
 };
-
 
 function loadingPage() {
 	const animation =	document.querySelector(".loading-panels");
 	const pageApp =		document.querySelector(".panel-content");
 
 	animation.style.display = "none";
-	animation.setAttribute("aria-hidden", true)
-	pageApp.setAttribute("aria-hidden", false)
-};
+	animation.setAttribute("aria-hidden", true);
+	pageApp.setAttribute("aria-hidden", false);
+}
 
-
-function changeMode (color) {
+function changeMode(color) {
 	const body = document.body.classList;
 
 	body.remove("light-mode");
 	body.remove("dark-mode");
-	return (color === "dark" ? body.add("dark-mode"): body.add("light-mode"));
-};
-
+	return color === "dark" ? body.add("dark-mode") : body.add("light-mode");
+}
 
 // ╭───────────────────────────────────────────────────────────────────────╮
 // │ This is the header creator when the page or localStorage are updated. │
@@ -68,9 +61,8 @@ function changeMode (color) {
 export function createHeader(table) {
 	const head = document.createElement("tr");
 
-	while(table.firstChild)
-		table.removeChild(table.firstChild)
-	head.innerHTML =`
+	while (table.firstChild) table.removeChild(table.firstChild);
+	head.innerHTML = `
 		<tbody><tr>
 			<th>STATUS</th>
 		<th>TYPE</th>
@@ -80,14 +72,14 @@ export function createHeader(table) {
 		<th>CUB</th>
 			<th>UNIT</th>
 		</tr></tbody>
-	`
-	return(table.append(head));
-};
+	`;
+	return table.append(head);
+}
 
-
-async function getIDBINFO (ref) {
+async function getIDBINFO(ref) {
 	const WORKER = new Worker(
-		new URL('./worker.IDB.crates.mjs', import.meta.url), { type: "module" }
+		new URL("./worker.IDB.crates.mjs", import.meta.url),
+		{ type: "module" },
 	);
 	let request;
 
@@ -98,44 +90,43 @@ async function getIDBINFO (ref) {
 			data?.reference === ref ? resolve(data) : reject(res);
 		};
 	});
-	return(request);
-};
+	return request;
+}
 
+function airPortStatus(create, sizeUnit) {
+	const MAXX = sizeUnit === "cm" ? 300 : 118.11; // INFO: cm and in max size
+	const MAXZ = sizeUnit === "cm" ? 200 : 78.74; // INFO: cm and in max size
+	const MAXY = sizeUnit === "cm" ? 165 : 64.96; // INFO: cm and in max size
+	const X = create[0];
+	const Z = create[1];
+	const Y = create[2];
 
-function airPortStatus(crate, sizeUnit) {
-	const MAXX =	sizeUnit === 'cm' ? 300 : 118.110; // INFO: cm and in max size
-	const MAXZ =	sizeUnit === 'cm' ? 200 : 78.740;  // INFO: cm and in max size
-	const MAXY =	sizeUnit === 'cm' ? 165 : 64.960 ; // INFO: cm and in max size
-	const X =		crate[0];
-	const Z =		crate[1];
-	const Y =		crate[2];
+	return X <= MAXX && Z <= MAXZ && Y <= MAXY ? "PAX" : "CARGO";
+}
 
-	return(X <= MAXX && Z <= MAXZ && Y <= MAXY ? 'PAX' : 'CARGO');
-};
+function addHTMLTableLine(data, unit, table) {
+	const { crates } = data;
 
-
-function addHTMLTableLine (data, unit, table) {
-	const { crates } =	data;
-
-	crates.map((crate, i) => {
+	crates.map((create, i) => {
 		if (i % 2 === 0) {
-			const port = airPortStatus(crate, unit);
-			table.innerHTML += crate.map((info, i) => {
-				switch(i) {
-					case 0 :
-						return(`<tbody><tr><td>${port}</td><td>CRATE</td><td>${info}</td>`);
-					case 1 :
-						return(`<td>${info}</td>`)
-					case 2 :
-						return(`<td>${info}</td>`)
-					case 3 :
-						return(`<td>${info}</td><td>${unit}</td></tr></tbody>`);
-				};
-			}, 0).join("");
-		};
+			const port = airPortStatus(create, unit);
+			table.innerHTML += create
+				.map((info, i) => {
+					switch (i) {
+						case 0:
+							return `<tbody><tr><td>${port}</td><td>CREATE</td><td>${info}</td>`;
+						case 1:
+							return `<td>${info}</td>`;
+						case 2:
+							return `<td>${info}</td>`;
+						case 3:
+							return `<td>${info}</td><td>${unit}</td></tr></tbody>`;
+					}
+				}, 0)
+				.join("");
+		}
 	}, 0);
-};
-
+}
 
 // ╭───────────────────────────────────────────────────────────╮
 // │ Returns all crates from the indexedDB or gets from cloud. │
@@ -147,22 +138,22 @@ export async function showCrates1(estimate) {
 	let key =			0;
 	let metric;
 
-	if(!crates)
-		return ;
-	localStorage.getItem("metrica") === "in - inches" ?
-		metric = "in": metric = "cm";
+	if (!crates) return;
+	localStorage.getItem("metrica") === "in - inches"
+		? (metric = "in")
+		: (metric = "cm");
 	createHeader(element);
 	for (key in crates) {
-		if (crates[key].hasOwnProperty('crates')) {
-			crates[key].crates.length > 0 ?
-			addHTMLTableLine(crates[key], metric, element) : false;
-		};
-	};
+		if (crates[key].hasOwnProperty("crates")) {
+			crates[key].crates.length > 0
+				? addHTMLTableLine(crates[key], metric, element)
+				: false;
+		}
+	}
 	sessionStorage.removeItem("pane1");
 	pane.appendChild(finishedRender(element, crates));
-	return('done');
-};
-
+	return "done";
+}
 
 function finishedRender(table, info) {
 	table.innerHTML += `<tr>
@@ -188,8 +179,7 @@ function finishedRender(table, info) {
 		<td>Total Cub:</td>
 		<td>${info.airCubTotal}</td>
 		</tr>`;
-	return(table);
-};
+	return table;
+}
 
-
-globalThis.navigator.serviceWorker.register('./sw.pane1.mjs');
+globalThis.navigator.serviceWorker.register("./sw.pane1.mjs");
