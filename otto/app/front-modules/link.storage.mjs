@@ -9,7 +9,7 @@
 // │ ╰────────────────────────────────────────────────╯ │
 // ╰────────────────────────────────────────────────────╯
 
-import { saveTheCurrentEstimate } from "./bridge.link.web.db.mjs";
+import { saveTheCurrentEstimate, upDateCrateSizes } from "./bridge.link.web.db.mjs";
 
 
 /**
@@ -46,7 +46,7 @@ export function createOffLineIDB() {
 		const db = event.target.result;
 		let object;
 
-		object = db.createObjectStore(dataName, {keyPath: "reference"});
+		object = db.createObjectStore(dataName, { keyPath: "reference" });
 		object.createIndex( "reference", "reference", { unique: true });
 	};
 };
@@ -83,7 +83,7 @@ export function addNewWorksToIndexedDBOffLine (works, fetched) {
  * @param {Crater} works The list to add in indexedDB when all crates is done.
 */
 export function addNewWorksToIndexedDB (works, fetched = false) {
-	const list =		localStorage.getItem('refNumb');
+	const reference =	localStorage.getItem('refNumb');
 	const dataName =	"Results";
 	const request =		globalThis.indexedDB.open(dataName);
 	const onLine =		globalThis.navigator.onLine;
@@ -101,7 +101,7 @@ export function addNewWorksToIndexedDB (works, fetched = false) {
 			existsInIDB.result === undefined ? object.add(works):
 			await Promise.resolve(object.delete(existsInIDB.result.reference))
 				.then(object.add(works));
-			movingDataToSesseionStorage(list, fetched);
+			movingDataToSesseionStorage(reference, fetched);
 		};
 		onLine ? 'ok' : addNewWorksToIndexedDBOffLine(works);
 	}
@@ -145,9 +145,9 @@ export async function movingDataToSesseionStorage(reference, fetched = false) {
 			const obj = db.result;
 
 			globalThis.sessionStorage.setItem(reference, JSON.stringify(obj));
-			!fetched ?
-				await saveTheCurrentEstimate(reference) :
+			fetched === false ? await saveTheCurrentEstimate(db.result) :
 				sessionStorage.setItem('pane1', "populate");
+			fetched === 'crate' ? await upDateCrateSizes(db.result): 0;
 		};
 	};
 };
