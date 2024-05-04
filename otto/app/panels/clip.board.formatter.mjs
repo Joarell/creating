@@ -1,6 +1,6 @@
 // ╭──────────────────────────────────────────────────────────╮
 // │ ╭──────────────────────────────────────────────────────╮ │
-// │ │ INFO: Here you are goint to find the copy functions: │ │
+// │ │ INFO: Here you are going to find the copy functions: │ │
 // │ │                    charRemover()                     │ │
 // │ │                 findCratesAndWorks()                 │ │
 // │ │                     findCrates()                     │ │

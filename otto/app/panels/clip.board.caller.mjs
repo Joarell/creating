@@ -18,7 +18,8 @@ export function copyButton1 () {
 		return(alert(`Please, press the \"Crate\" button if already added works.`));
 	crates.postMessage(estimate);
 	crates.onmessage = (test) => {
-		return (Array.isArray(test.data.crates) ? findCrates(test.data): false);
+		const data = Array.isArray(test.data.crates) || test.data.hasOwnProperty('crates')
+		data ? findCrates(test.data): false;
 	};
 };
 
