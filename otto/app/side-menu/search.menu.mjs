@@ -136,12 +136,12 @@ export async function searchEstimate() {
 	if (!regexChecker(docEstimate)) {
 		const data = [checkBrowserDB(docEstimate), fetchDB(docEstimate)];
 
-		await Promise.any(data).then(async val => {
-			!val[0] && val[1].length === 0 ?
+		await Promise.all(data).then(async val => {
+			!val[0] && val[1]?.length === 0 ?
 				alert(`Document not found! Please, try again.`):
 				await Promise.resolve(update(docEstimate))
 				.then(async () => {
-					if (val[1].length > 0) {
+					if (val[1]?.length > 0) {
 						const result = {
 							reference: val[1][0].reference_id,
 							crates: val[1][0].crates.crates,
