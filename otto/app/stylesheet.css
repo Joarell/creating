@@ -1379,6 +1379,12 @@ tbody:nth-child(even) {
 .pad__buttons {
 	grid-area: pad-btns;
 	width: auto;
+	& button:disabled,
+	button[disabled] {
+		visibility: hidden;
+		opacity: .1;
+		text-decoration-color: var(--color3);
+	}
 }
 
 
