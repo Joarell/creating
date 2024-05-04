@@ -7,16 +7,14 @@ async function getIDB (ref) {
 	const WORKER = new Worker(
 		new URL('./panels/worker.IDB.crates.mjs', import.meta.url), { type: "module" }
 	);
-	let request;
 
 	WORKER.postMessage(ref);
-	request = await new Promise((resolve, reject) => {
+	const request = await new Promise((resolve, reject) => {
 		WORKER.onmessage = (res) => {
 			const { data } = res;
 			data.reference === ref ? resolve(data) : reject(res);
 		};
 	});
-
 	return(request);
 };
 
@@ -55,6 +53,7 @@ async function getNewTokens(content) {
 		}).then(code => code.status)
 		.catch(err => console.error(`ALERT ${err}`));
 		postDataFromClientSide(content);
+		console.log(result);
 	}
 	catch(err) {
 		alert(`ATTENTION: ${err}`);
@@ -81,10 +80,38 @@ function checkStatusCode(code, info, data, header) {
 
 
 /**
+ * @param {Object} solved the solved list with new crates sizes
+*/
+export async function upDateCrateSizes(solved) {
+	const HEADER =	{ 'Content-Type': 'application/json; charset=UTF-8', };
+	const url = '/update/estimate';
+	const { reference, list, crates } = solved;
+	const INFO = {
+		reference,
+		list,
+		crates: Object.assign({}, crates)
+	};
+	try {
+		await fetch (url, {
+			method: "PUT",
+			body: JSON.stringify(INFO),
+			headers: HEADER,
+		}).then(code => code.status).catch(err => console.error(`ALERT ${err}`));
+	}
+	catch(err) {
+		alert(`ATTENTION: ${err}`);
+	}
+	finally {
+		return('updated');
+	}
+}
+
+
+/**
  * @param {String} content The server answer about the user access token.
  * @param {Crater} data The crater object result serialized.
  * @param {Object} header Object header to HTTP request.
-*/
+ */
 async function upDateEstimateClient(data, header, content) {
 	if (confirm("This estimate already exist. Would you like to update it?")){
 		const url = '/update/estimate';
@@ -95,7 +122,7 @@ async function upDateEstimateClient(data, header, content) {
 				body: data,
 				headers: header,
 			}).then(code => code.status)
-			.catch(err => console.error(`ALERT ${err}`));
+				.catch(err => console.error(`ALERT ${err}`));
 			result === 403 ? checkStatusCode(result, content) : false;
 		}
 		catch(err) {
@@ -108,7 +135,7 @@ async function upDateEstimateClient(data, header, content) {
 
 /**
  * @param {Crater} content The solved list result from the algorithm.
-*/
+ */
 async function postDataFromClientSide(content) {
 	const DATA =	JSON.stringify(content);
 	const url =		`/new/estimate/`;
@@ -122,7 +149,7 @@ async function postDataFromClientSide(content) {
 				body: DATA,
 				headers: HEADER,
 			}).then(code => code.status)
-			.catch(err => console.error(`ALERT ${err}`));
+				.catch(err => console.error(`ALERT ${err}`));
 			checkStatusCode(result, content, DATA, HEADER);
 		}
 		catch(err) {
@@ -135,16 +162,14 @@ async function postDataFromClientSide(content) {
 
 
 /**
- * @param {Crater} estimate The algorithm solved result.
-*/
+ * @param {String} estimate The algorithm solved result.
+ */
 export async function saveTheCurrentEstimate (estimate) {
-	const contentStorage =	await getIDB(estimate);
-	const { reference, list, crates } = contentStorage;
-	const result = Object.assign({}, crates);
+	const { reference, list, crates } = estimate;
 	const INFO = {
 		reference,
 		list,
-		crates : result,
+		crates: Object.assign({}, crates)
 	};
 	await postDataFromClientSide(INFO)
 };
