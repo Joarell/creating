@@ -1,16 +1,15 @@
 // ╭────────────────────────────────────────────────────╮
 // │ This is the trigger activated by the create button. │
 // ╰────────────────────────────────────────────────────╯
-globalThis.addEventListener( "storage", async () => {
-	const press =		sessionStorage.getItem("pane2");
-	const getter =		localStorage.getItem("refNumb");
-	const copy =		sessionStorage.getItem("copy2");
-	const mode =		localStorage.getItem("mode");
-	const works =		sessionStorage.getItem("codes");
+globalThis.addEventListener("storage", async () => {
+	const press =	sessionStorage.getItem("pane2");
+	const getter =	localStorage.getItem("refNumb");
+	const copy =	sessionStorage.getItem("copy2");
+	const mode =	localStorage.getItem("mode");
+	const works =	sessionStorage.getItem("codes");
 
 	changeMode(mode);
 	if (press === "clear") {
-		sessionStorage.setItem("CLOSED", "NOW");
 		globalThis.location.reload();
 		sessionStorage.removeItem("pane2");
 	}
