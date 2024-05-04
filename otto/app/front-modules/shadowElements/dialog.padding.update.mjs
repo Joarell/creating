@@ -79,15 +79,20 @@ export class DialogPadding extends HTMLElement {
 	 * @function call worker to updates the solved list applying the new sizes
 	 */
 	apply() {
-		const X =	this.shadowRoot.getElementById('pad_length');
-		const Z =	this.shadowRoot.getElementById('pad_depth');
-		const Y =	this.shadowRoot.getElementById('pad_height');
+		const X =		this.shadowRoot.getElementById('pad_length');
+		const Z =		this.shadowRoot.getElementById('pad_depth');
+		const Y =		this.shadowRoot.getElementById('pad_height');
+		const storage =	sessionStorage;
 
-		sessionStorage.setItem('SetCrates', JSON.stringify([X.value, Z.value, Y.value]));
+		if ([X, Z, Y].includes(""))
+			return(alert('ATTENTION: Character not allow found!'));
+		storage.setItem(
+			'SetCrates', JSON.stringify([X.value, Z.value, Y.value])
+		);
 		X.value = '';
 		Z.value = '';
 		Y.value = '';
-	}
+	};
 
 	/**
 	 * @function close the dialog when the button is pressed

@@ -99,7 +99,11 @@ async function alterCrateSizes() {
 		crate++;
 	};
 	globalThis.sessionStorage.removeItem('PopulateCrates');
-	return(updateCrateSizes(selectedCrates));
+	return(
+		selectedCrates.length === 0 ?
+		alert("WARNING: None crate selected!"):
+		updateCrateSizes(selectedCrates)
+	);
 };
 
 
@@ -148,6 +152,8 @@ function addNewSize(crate) {
 	const checkZ =		DEFAULTPAD[1] >= +sizes[1];
 	const checkY =		DEFAULTPAD[2] >= +sizes[2];
 
+	if (sizes.includes(""))
+		return (crate);
 	// TODO: REGEX to ensure only numbers with a '.'
 	if (!checkX || !checkZ || !checkY)
 		alert('Please, recheck the input new sizes. Some value is too high');
@@ -186,7 +192,7 @@ function airPortOptions (crate) {
  * @param {Array} data all crates from solved list
  * @param {Array} newSizes new sizes to subtract from the solved crates
 */
-function updateCratesData(data, newSizes) {
+async function updateCratesData(data, newSizes) {
 	let airCubTotal = 0;
 	let PAX			= 0;
 	let CARGO		= 0;
@@ -202,6 +208,6 @@ function updateCratesData(data, newSizes) {
 	}, 0);
 	data.crates.airCubTotal = +(airCubTotal).toFixed(3);
 	data.whichAirPort = [{ PAX, CARGO}];
-	addNewWorksToIndexedDB(data);
-	return(globalThis.sessionStorage.setItem('pane-1', 'populate'));
+	await Promise.resolve(addNewWorksToIndexedDB(data, 'crate'))
+	.finally(globalThis.sessionStorage.setItem('pane1', 'populate'));
 };
