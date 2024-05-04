@@ -27,6 +27,7 @@ globalThis.onstorage = () => {
 // │ This function adds the new work and counts. │
 // ╰─────────────────────────────────────────────╯
 export async function countWorks() {
+	console.log('Counter');
 	const result =	await parseArtWork();
 	let counter =	document.getElementById("count");
 
@@ -59,7 +60,7 @@ export async function displayAirCub() {
 	let result;
 	let element;
 	let std_msg;
-	const COMA =	1000;
+	const COMA = 1000;
 
 	std_msg =		"Air-Cub: ";
 	element =		document.getElementById("cub-air");
@@ -112,17 +113,20 @@ export async function crate(fetched = false) {
 //╭───────────────────────────────────────────────────────────────────────────╮
 //│ This function cleans all fields and puts the cursor in the code input box.│
 //╰───────────────────────────────────────────────────────────────────────────╯
-export function cleanInputs(fetched = false) {
-	document.getElementById("input_code").value = "";
-	document.getElementById("input_estimate").select();
-	document.getElementById("input_length").value = "";
-	document.getElementById("input_depth").value = "";
-	document.getElementById("input_height").value = "";
+export async function cleanInputs(fetched = false) {
+	document.getElementById("input_code").value =	"";
+	document.getElementById("input_length").value =	"";
+	document.getElementById("input_depth").value =	"";
+	document.getElementById("input_height").value =	"";
+
+	fetched ? await Promise.resolve(sessionStorage.setItem('pane1', 'clear'))
+		.then(document.getElementById("input_code").select()):
+		await Promise.resolve(sessionStorage.setItem('clean', 'eraser'))
+		.then(document.getElementById("input_estimate").select());
 	countWorks();
 	displayCub();
 	displayAirCub();
-	fetched ? sessionStorage.setItem('pane1', 'clear') : 'Done';
-}
+};
 
 
 // ╭──────────────────────────────────────────────────────╮
@@ -152,7 +156,7 @@ async function parseArtWork() {
 			return(new ArtWork(work.code, work.x, work.z, work.y));
 		});
 	return(works ? works : undefined);
-}
+};
 
 
 // ╭──────────────────────────────────────────────────────────────────────────────╮
@@ -168,4 +172,4 @@ async function checkMetric() {
 		return(alert("Oops! Sounds like you do not added any work yet. Please, try again!"));
 	crates = await Promise.resolve(new UnitAdapter(list, UNIT));
 	return (crates);
-}
+};
