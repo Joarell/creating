@@ -1,24 +1,3 @@
-
-
-/**
- * @param {String} ref The reference/document code estimate to get from DB.
-*/
-async function getIDB (ref) {
-	const WORKER = new Worker(
-		new URL('./panels/worker.IDB.crates.mjs', import.meta.url), { type: "module" }
-	);
-
-	WORKER.postMessage(ref);
-	const request = await new Promise((resolve, reject) => {
-		WORKER.onmessage = (res) => {
-			const { data } = res;
-			data.reference === ref ? resolve(data) : reject(res);
-		};
-	});
-	return(request);
-};
-
-
 /**
  * @param {String} doc The reference/document code estimate when the page is offline.
 */
