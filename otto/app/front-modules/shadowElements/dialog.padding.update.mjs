@@ -32,11 +32,18 @@ export class DialogPadding extends HTMLElement {
 		shadowRoot.appendChild(link);
 
 		globalThis.sessionStorage.setItem('PopulateCrates', "call");
+		shadowRoot.getElementById('modal').setAttribute('open', '');
 		shadowRoot.getElementById('padding-close')
 			.addEventListener('click', this.close);
 		shadowRoot.getElementById('padding-apply')
-			.addEventListener('click', this.apply);
-		shadowRoot.getElementById('modal').setAttribute('open', '');
+			.addEventListener('click', () => {
+			const applyBtn = shadowRoot.getElementById('padding-apply');
+
+			if (this.apply()) {
+				applyBtn.disabled = true;
+				setTimeout(() => applyBtn.disabled = false, 10000);
+			}
+		});
 
 		globalThis.onstorage = () => {
 			const closeDialog = sessionStorage.getItem('CLOSED');
@@ -84,14 +91,15 @@ export class DialogPadding extends HTMLElement {
 		const Y =		this.shadowRoot.getElementById('pad_height');
 		const storage =	sessionStorage;
 
-		if ([X, Z, Y].includes(""))
-			return(alert('ATTENTION: Character not allow found!'));
-		storage.setItem(
-			'SetCrates', JSON.stringify([X.value, Z.value, Y.value])
-		);
-		X.value = '';
-		Z.value = '';
-		Y.value = '';
+		if ([X.value, Z.value, Y.value].includes("")) {
+			alert('ATTENTION: Character not allow found!');
+			return (false);
+		};
+		storage.setItem('SetCrates', JSON.stringify(
+			structuredClone([X.value, Z.value, Y.value]
+		)));
+		[ X, Z, Y].map(size => size.value = '');
+		return (true);
 	};
 
 	/**
