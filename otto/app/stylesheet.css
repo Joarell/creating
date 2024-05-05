@@ -235,6 +235,13 @@ p {
 }
 
 
+button:disabled,
+button[disabled] {
+	cursor: not-allowed;
+	filter: blur(.3rem);
+}
+
+
 ul, li, a {
 	position: relative;
 	margin: 0;
@@ -1333,6 +1340,9 @@ tbody:nth-child(even) {
 		transition: backdrop 1s ease-in-out;
 	}
 	&:hover .pad {
+		margin-bottom: .7rem;
+		border-radius: .5rem;
+		font-size: .6rem;
 		visibility: visible;
 		animation: emerge 500ms ease-in;
 		animation-fill-mode: forwards;
@@ -1379,12 +1389,6 @@ tbody:nth-child(even) {
 .pad__buttons {
 	grid-area: pad-btns;
 	width: auto;
-	& button:disabled,
-	button[disabled] {
-		visibility: hidden;
-		opacity: .1;
-		text-decoration-color: var(--color3);
-	}
 }
 
 
@@ -1400,7 +1404,7 @@ tbody:nth-child(even) {
 	}
 	& > li > label {
 		font-family: Mitr, sans-serif;
-		font-size: var(--fonts);
+		font-size: .7rem;
 		font-weight: 400;
 		color: var(--pressed);
 	}
