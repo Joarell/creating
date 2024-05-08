@@ -70,9 +70,9 @@ const shiftTokens = async (req, res) => {
 	if(result !== 500) {
 		res.set({'Set-Cookie': [
 			`user=${result.newAuthToken};
-				Max-Age=300; HttpOnly; SameSite=Strict; Secure;`,
+				Max-Age=10; HttpOnly; SameSite=Strict; Secure;`,
 			`token=${result.newRefToken};
-				Max-Age=300; HttpOnly; SameSite=Strict; Secure;`,
+				Max-Age=10; HttpOnly; SameSite=Strict; Secure;`,
 		]});
 		res.status(201).json({ msg: 'active', result });
 	}
@@ -95,8 +95,8 @@ const newLogin = async (req, res) => {
 		'Set-Cookie': [
 		`name=${user.name}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
 		`session=${session}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
-		`user=${result[1]}; Max-Age=10; HttpOnly; SameSite=Strict; Secure;`,
-		`token=${result[0]}; Max-Age=10; HttpOnly; SameSite=Strict; Secure;`,
+		`user=${result[1]}; Max-Age=3; HttpOnly; SameSite=Strict; Secure;`,
+		`token=${result[0]}; Max-Age=3; HttpOnly; SameSite=Strict; Secure;`,
 		`id=${user.id}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
 		],
 	});
