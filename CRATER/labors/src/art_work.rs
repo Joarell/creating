@@ -8,7 +8,7 @@ use crate::hexagon::{ Hexagon, Sizes };
 #[derive(Debug)]
 pub struct ArtWork {
 	pub code: &'static str,
-	pub sizes: &'static Sizes,
+	pub sizes: Sizes
 }
 
 
@@ -29,7 +29,7 @@ impl ArtWork {
 
 impl Hexagon for ArtWork {
 	fn size(&self) -> &Sizes {
-		self.sizes
+		&self.sizes
 	}
 
 	fn cub_area(&self) -> f32 {
