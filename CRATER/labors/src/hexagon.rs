@@ -1,26 +1,32 @@
 use std::fmt::{ Debug, Display, Formatter, Result };
 
 /**
-  Crate and art work dimensions.
-  */
-pub struct Hexagon {
-	pub x: u32,
-	pub z: u32,
-	pub y: u32
-}
-
-impl Debug for Hexagon {
-	fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-		f.debug_struct("Hexagon")
-		.field("x", &self.x)
-		.field("z", &self.z)
-		.field("y", &self.y).finish()
+ Crate and art work dimensions.
+*/
+#[derive(Debug)]
+pub enum Sizes {
+	Values {
+		x: f32, 
+		z: f32,
+		y: f32
 	}
 }
 
-impl Display for Hexagon {
-	fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-		write!(f, "[x: {}, z: {}, y: {}]", self.x, self.z, self.y)
-	}
+
+pub trait Hexagon {
+	fn size(&self) -> &Sizes;
+
+	fn cub_area(&self) -> f32;
+
+	fn cub_aircomp_area(&self) -> f32;
 }
 
+
+impl Display for Sizes {
+	fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+		match self {
+			Sizes::Values { x, z, y } =>
+				writeln!(f, "[x: {x}, z: {z}, y: {y}]")
+		}
+	}
+}

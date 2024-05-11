@@ -1,18 +1,20 @@
 use labors::{
 	art_work::ArtWork,
-	hexagon::Hexagon
+	hexagon::{Hexagon, Sizes}
 };
 
 
 fn main() {
 	let art_work: ArtWork = ArtWork {
-		code: String::from("LT-23809"),
-		sizes: Hexagon {
-			x: 100,
-			z: 5,
-			y: 100
+		code: "LT-23809",
+		sizes: &Sizes::Values {
+			x: 100_f32,
+			z: 5_f32,
+			y: 100_f32
 		},
-		cub_area: 100.00
 	};
+
 	art_work.show();
+	println!("Cub {}", art_work.cub_area());
+	println!("Cub Air value {}", art_work.cub_aircomp_area());
 }
