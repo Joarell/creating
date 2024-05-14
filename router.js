@@ -29,7 +29,7 @@ const path =		require('path');
 
 // TODO: should send the home page when all be done.
 router.use(express.json());
-router.use(cors({origin: "http://localhost:80", Credential: true}));
+router.use(cors({origin: "http://localhost:82", Credential: true}));
 router.use(express.static(path.join(__dirname)));
 router.use(compression());
 
@@ -46,6 +46,9 @@ router.post('/private/auth',
 		res.status(200).json({ 'status' : 'active' });
 });
 
+router.get("/home", (req, res) => {
+	console.log('Running');
+});
 
 router.post("/start", userSet.userLoginValidation, take.newLogin);
 

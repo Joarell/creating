@@ -22,7 +22,7 @@ export default class Converter {
 
 function checkValues () {
 	const checker = this.filter(val => {
-		if (Number(val)) 
+		if (Number(val))
 			return (val);
 		else if (typeof(val) === 'string' && val)
 			return (+val.trim());
@@ -65,7 +65,7 @@ function inConvert () {
 		const result =	this.map(val => {
 			return (+(val * INCH).toFixed(0));
 		});
-		
+
 		return (result);
 	};
 	return (trimmer);
