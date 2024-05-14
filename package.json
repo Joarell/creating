@@ -4,7 +4,7 @@
 	"description": "Art work solver list and crater.",
 	"main": "main.mjs",
 	"scripts": {
-		"start": "nodemon server.js"
+		"start": "DEBUG=* nodemon server.js"
 	},
 	"keywords": [],
 	"author": "Joarell <josephjoarell@gmail.com>",
@@ -19,6 +19,7 @@
 		"sequelize": "^6.28.0"
 	},
 	"devDependencies": {
+		"debug": "^4.3.4",
 		"nodemon": "^3.0.1",
 		"sequelize-cli": "^6.6.2"
 	},
