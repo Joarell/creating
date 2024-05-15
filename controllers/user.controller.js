@@ -43,7 +43,7 @@ const userLoginValidation = async (req, res, next) => {
 	const auth = await checker.checkUserAuthDB(req.body);
 
 	console.log("login", auth);
-	log(`LOGIN: ${auth}`);
+	log(`LOGIN: ${auth}`, `Timestamp: ${new Dat().toISOString()}`);
 	switch (auth) {
 		case 404:
 			return(res.status(404).json({msg: "User not found"}));
