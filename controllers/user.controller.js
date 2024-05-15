@@ -17,6 +17,7 @@ const db =			require('../DB_models/db.transactions');
 const jwt =			require('jsonwebtoken');
 const tokenMan =	require('../DB_models/db.auth.procedures');
 const dataTokens =	require('../DB_models/db.tokens.stored');
+const log =			require('debug')('api:back-server');
 
 
 const insertNewUser = async (req, res) => {
@@ -42,6 +43,7 @@ const userLoginValidation = async (req, res, next) => {
 	const auth = await checker.checkUserAuthDB(req.body);
 
 	console.log("login", auth);
+	log(`LOGIN: ${auth}`);
 	switch (auth) {
 		case 404:
 			return(res.status(404).json({msg: "User not found"}));
