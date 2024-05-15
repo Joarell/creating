@@ -53,10 +53,13 @@ router.get("/home", (req, res) => {
 
 router.post("/start", userSet.userLoginValidation, take.newLogin);
 
+router.use((req, res, next) => {
+	log(req.query, 'Running');
+	return(next());
+});
 
 router.get("/", (req, res) => {
 	res.status(200).redirect('/app');
-	log(req.query, 'Running');
 });
 
 
