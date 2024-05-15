@@ -54,7 +54,7 @@ router.get("/home", (req, res) => {
 router.post("/start", userSet.userLoginValidation, take.newLogin);
 
 router.use((req, res, next) => {
-	log(req.body, `Running:${new Date().toISOString()`);
+	log(req.body, `Running: ${new Date().toISOString()}`);
 	return(next());
 });
 
