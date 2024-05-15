@@ -2,13 +2,11 @@ use std::fmt::{ Debug, Display, Formatter, Result };
 use crate::hexagon::{ Hexagon, Sizes };
 
 
-/**
-  The art work composition with all information needed.
-*/
+/// The art work composition with all information needed.
 #[derive(Debug)]
 pub struct ArtWork {
 	pub code: &'static str,
-	pub sizes: Sizes
+	pub sizes: Box<Sizes>
 }
 
 
@@ -48,5 +46,33 @@ impl Hexagon for ArtWork {
 			Sizes::Values { x, z, y } =>
 				(x * z * y ) / CUBAIR
 		}
+	}
+
+	fn convert_to_cm(mut self) -> Self {
+		match *self.size() {
+			Sizes::Values {mut x, mut z, mut y } => {
+				const INCH: f32 = 2.54;
+
+				x /= INCH;
+				z /= INCH;
+				y /= INCH;
+				*self.sizes = Sizes::Values { x, z, y };
+			}
+		};
+		self
+	}
+
+	fn convert_to_in(mut self) -> Self {
+		match *self.size() {
+			Sizes::Values {mut x, mut z, mut y } => {
+				const INCH: f32 = 2.54;
+
+				x *= INCH;
+				z *= INCH;
+				y *= INCH;
+				*self.sizes = Sizes::Values { x, z, y };
+			}
+		};
+		self
 	}
 }
