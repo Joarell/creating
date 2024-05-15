@@ -12,12 +12,12 @@
 // ╰─────────────────────────────────────────────────────────╯
 
 
+const log = require('debug')('user:check');
 const checker =		require('../auth/user.check.out');
 const db =			require('../DB_models/db.transactions');
 const jwt =			require('jsonwebtoken');
 const tokenMan =	require('../DB_models/db.auth.procedures');
 const dataTokens =	require('../DB_models/db.tokens.stored');
-const log =			require('debug')('api:back-server');
 
 
 const insertNewUser = async (req, res) => {
@@ -42,7 +42,7 @@ const insertNewUser = async (req, res) => {
 const userLoginValidation = async (req, res, next) => {
 	const auth = await checker.checkUserAuthDB(req.body);
 
-	console.log("login", auth);
+	log("login", auth);
 	log(`LOGIN: ${auth}`, `Timestamp: ${new Date().toISOString()}`);
 	switch (auth) {
 		case 404:
@@ -107,7 +107,7 @@ function extractCookieData (request) {
 
 
 async function tokensCheckOut(info, users) {
-	console.log(info, 'and', users);
+	log(info, 'and', users);
 	if (!users && info.id !== users.id)
 		return(404);
 	const a_token =				info.authToken === users.auth_token;
@@ -135,7 +135,7 @@ const userTokenMatch = async(req, res, next) => {
 		};
 		if (cookieData.session) {
 			result = await tokensCheckOut(cookieData, dbUsers[0]);
-			console.log("Match-access", result);
+			log("Match-access", result);
 			switch(result) {
 				case true:
 					next();
@@ -155,7 +155,7 @@ const userTokenMatch = async(req, res, next) => {
 			throw new TypeError();
 	}
 	catch(err) {
-		console.error('TOKEN MATCH:', err);
+		log('TOKEN MATCH:', err);
 		return(res.status(401).redirect('/'));
 	};
 };
@@ -170,16 +170,16 @@ const userTokenExpTime = async (req, res, next) => {
 			cookieData.authToken =	dbUser[0].auth_token;
 			cookieData.refToken =	dbUser[0].refresh_token;
 		};
-		console.log("ExpToken", cookieData, 'and user:', dbUser[0]);
+		log("ExpToken", cookieData, 'and user:', dbUser[0]);
 		if (!dbUser[0] && dbUser[0].session !== cookieData.session)
 			return(res.status(401).json({msg: "Not authorized"}));
 		jwt.verify(cookieData.authToken, process.env.SECRET_TOKEN, async (err) => {
-			console.log('JWT', err);
+			log('JWT', err);
 			err ? res.status(403).json({msg: "Token access denied!"}) : next();
 		});
 	}
 	catch (err) {
-		console.error('TOKEN EXP:', err);
+		log('TOKEN EXP:', err);
 		return(res.status(401).redirect('/'));
 	}
 };
