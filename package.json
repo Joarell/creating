@@ -4,7 +4,7 @@
 	"description": "Art work solver list and crater.",
 	"main": "main.mjs",
 	"scripts": {
-		"start": "nodemon server.js"
+		"start": "DEBUG=* nodemon server.js"
 	},
 	"keywords": [],
 	"author": "Joarell <josephjoarell@gmail.com>",
