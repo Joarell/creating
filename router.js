@@ -25,6 +25,7 @@ const extAPI =		require('./controllers/external.API.request.js');
 const userSet =		require('./controllers/user.controller.js');
 const router =		express.Router();
 const path =		require('path');
+const log =			require('debug')('server:back');
 
 
 // TODO: should send the home page when all be done.
@@ -55,7 +56,7 @@ router.post("/start", userSet.userLoginValidation, take.newLogin);
 
 router.get("/", (req, res) => {
 	res.status(200).redirect('/app');
-	console.log('Running');
+	log(req.query, 'Running');
 });
 
 
