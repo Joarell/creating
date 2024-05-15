@@ -7,8 +7,8 @@ const port =	process.env.PORT || 3000;
 
 app.use(router);
 app.use((req, res, next) => {
-	log('app running and listening on port:', port)
+	log('app running and listening on port:', req.body)
 	return(next());
 }).listen(port, () => {
-	log(`App running and listening on port ${port}!`)
+	console.log(`App running and listening on port ${port}!`)
 });
