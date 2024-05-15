@@ -1,5 +1,5 @@
 
-const log = require('debug')('api:back-server');
+const log = require('debug')('api:back_server');
 const express =	require('express');
 const router=	require('./router.js');
 const app =		express();
