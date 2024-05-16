@@ -774,12 +774,12 @@ tbody:nth-child(even) {
 		visibility: visible;
 		-webkit-animation: fadeIn .5s;
 		animation: fadeIn 1s;
-		transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
 		transform: translateY(.1rem);
 		background: goldenrod;
 		box-shadow: var(--shadow1);
 		border: .5rem solid var(--color8);
 		transition: all .5s ease-in-out;
+		transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
 		color: var(--color5);
 		& > p {
 			color: var(--color5);
