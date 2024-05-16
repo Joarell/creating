@@ -659,7 +659,7 @@
 			stroke: var(--stroke);
 			animation: stroke-draw 2.5s ease-in-out, emerge 1s ease-in;
 			animation-fill-mode: forwards;
-			/* animation-timing-function: cubic-bezier(.5, -100, .5, 100); */
+			animation-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
 			transition: animation 2.5s ease-in-out;
 		}
 		.crate-layer rect:hover {
