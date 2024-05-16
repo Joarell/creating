@@ -774,6 +774,7 @@ tbody:nth-child(even) {
 		visibility: visible;
 		-webkit-animation: fadeIn .5s;
 		animation: fadeIn 1s;
+		animation-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
 		transform: translateY(.1rem);
 		background: goldenrod;
 		box-shadow: var(--shadow1);
