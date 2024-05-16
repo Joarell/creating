@@ -665,7 +665,8 @@
 		.crate-layer rect:hover {
 			fill: var(--work-hover);
 			animation: emerge 2s ease-in-out;
-			transition: animation 1s ease;
+			animation-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
+			transition: animation 1s ease-in-out;
 		}
 		.crate-layer {
 			padding: .5rem;
