@@ -659,14 +659,15 @@
 			stroke: var(--stroke);
 			animation: stroke-draw 2.5s ease-in-out, emerge 1s ease-in;
 			animation-fill-mode: forwards;
-			animation-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
 			transition: animation 2.5s ease-in-out;
+			transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
 		}
 		.crate-layer rect:hover {
 			fill: var(--work-hover);
 			animation: emerge 2s ease-in-out;
 			animation-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
 			transition: animation 1s ease-in-out;
+			transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
 		}
 		.crate-layer {
 			padding: .5rem;
