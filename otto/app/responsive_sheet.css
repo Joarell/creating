@@ -579,6 +579,7 @@
 		animation: fade-close 500ms ease-out;
 		animation-fill-mode: forwards;
 		transition: all 1000ms ease-in-out;
+		transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
 	}
 
 	.plotter:is([aria-hidden="false"]) {
