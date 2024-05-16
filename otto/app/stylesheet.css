@@ -774,7 +774,7 @@ tbody:nth-child(even) {
 		visibility: visible;
 		-webkit-animation: fadeIn .5s;
 		animation: fadeIn 1s;
-		animation-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
+		transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
 		transform: translateY(.1rem);
 		background: goldenrod;
 		box-shadow: var(--shadow1);
@@ -792,6 +792,7 @@ tbody:nth-child(even) {
 		transition: .5s ease-in-out;
 		box-shadow: var(--inner-shadow);
 		transition: .3s ease-in-out;
+		transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
 		background: red;
 	}
 	&:active ~ span {
