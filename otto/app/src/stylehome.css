@@ -3,7 +3,6 @@
 	╰─────────────────────────────────────────────────────────╯
 */
 
-@import "responsive_sheet.css";
 @import "https://www.nerdfonts.com/assets/css/webfont.css";
 
 
@@ -99,7 +98,7 @@
 	--colg-mobile: 1rem;
 	--rowg: 2rem;
 	--rowg-mobile: 1rem;
-	--bord3: 3rem;
+	--bord3: 2rem;
 	--mob-col: #12111385;
 	--gradient: linear-gradient(270deg, var(--bg-col), var(--dark-blue2));
 	--gradient1: linear-gradient(90deg, var(--bg-col), var(--dark-blue1));
@@ -189,7 +188,7 @@ body {
 	box-sizing: border-box;
 	font-family: Saira Semi Condensed, Mitr, sans-serif;
 	font-size: var(--fonts);
-	scroll-behavior: slow;
+	/*scroll-behavior: slow;*/
 	background: var(--dark-blue);
 }
 
@@ -348,43 +347,33 @@ tbody:nth-child(even) {
 	border: .1rem solid white;
 }
 
-
-.loading-panels {
-	display: none;
-	&:is([aria-hidden="false"]) {
-		display: block;
-		animation: fill-pane 1s linear;
-		animation-fill-mode: forwards;
-		transition: all .3s linear;
-	}
-}
-
-
-.app {
-	display: none;
-	&:is([aria-hidden="false"]) {
-		display: unset;
-	}
-}
-
+/*
+ * ╭─────────────────────────────────────────────────────────╮
+ * │                       Home setup                        │
+ * ╰─────────────────────────────────────────────────────────╯
+*/
 
 .container__home {
 	container-name: home;
+	container-type: inline-size;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	grid-template-rows: 0.02fr repeat(7, 1fr);
-	row-gap: 4rem;
-	column-gap: 5rem;
+	grid-template-rows: 0.02fr 1fr repeat(6, 1fr);
+	row-gap: 5rem;
+	column-gap: 7rem;
+	padding: 0 20rem;
+	position: relative;
 	& {
 		grid-template-areas:
 			"nav nav"
 			"svg-logo hero"
-			"about svg-about"
+			"about about"
 			"svg-tubes tubes"
 			"same-sizes svg-same-sizes"
 			"svg-sculptures sculptures"
 			"huge-canvas svg-huge-canvas"
 			"svg-diff-sizes diff-sizes"
+			"footer footer"
 		;
 	}
 	& {
@@ -399,13 +388,17 @@ tbody:nth-child(even) {
 		border: solid .1rem var(--light-blue3);
 		box-shadow: inset 0 0 20rem var(--dark)
 	}
-	& svg {
-		border: solid .5rem tomato;
-	}
 	& div {
-		border: solid .5rem brown;
 		border-radius: var(--bord3);
 		background: var(--dark-blue1);
+		padding: 3rem;
+	}
+	& video {
+		justify-self: center;
+		align-self: center;
+		width: 100%;
+		/*-webkit-mask-image: url(#hero-logo);*/
+		/*mask-image: url(#hero-logo);*/
 	}
 }
 
@@ -413,11 +406,36 @@ tbody:nth-child(even) {
 nav {
 	border: solid .1rem yellow;
 	grid-area: nav;
+	padding: .5rem;
+	& .nav-header {
+		height: 6cqh;
+		width: 6cqw;
+		fill: none;
+		cursor: pointer;
+	}
+}
+
+
+header {
+	grid-area: header;
 }
 
 
 .logo {
 	grid-area: svg-logo;
+	position: absolute;
+	justify-self: center;
+	align-self: center;
+	inset: 0;
+	& .app_name {
+		font-family: 'Big Shoulders Stencil Display', cursive;
+		font-size: 62ch;
+		font-weight: bold;
+		stroke: var(--color1);
+		stroke-width: 0;
+		fill: var(--light-blue2);
+		border-radius: .3rem;
+	}
 }
 
 
@@ -426,18 +444,75 @@ nav {
 }
 
 
-.tubes {
-	grid-area: svg-tubes;
-}
-
-
 .info {
 	grid-area: about;
 }
 
 
-.about {
-	grid-area: about;
+.tubes {
+	grid-area: svg-tubes;
+	height: 100%;
+	width: 100%;
+}
+
+
+.content-tubes {
+	grid-area: tubes;
+}
+
+
+.same-size {
+	grid-area: svg-same-sizes;
+	height: 100%;
+	width: 50%;
+	justify-self: center;
+	align-self: center;
+}
+
+
+.content-same-sizes {
+	grid-area: same-sizes;
+}
+
+
+.sculptures {
+	grid-area: svg-sculptures;
+	height: 100%;
+	width: 100%;
+}
+
+
+.content-sculptures {
+	grid-area: sculptures;
+}
+
+
+.huge-canvas{
+	grid-area: svg-huge-canvas;
+	height: 50cqh;
+	width: 50cqw;
+}
+
+
+.content-huge-canvas {
+	grid-area: huge-canvas;
+}
+
+
+.diff-sizes {
+	grid-area: svg-diff-sizes;
+	height: 50cqh;
+	width: 50cqw;
+}
+
+
+.content-diff-sizes {
+	grid-area: diff-sizes;
+};
+
+
+footer {
+	grid-area: footer;
 }
 
 
