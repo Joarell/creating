@@ -98,7 +98,7 @@
 	--colg-mobile: 1rem;
 	--rowg: 2rem;
 	--rowg-mobile: 1rem;
-	--bord3: 2rem;
+	--bord3: .3rem;
 	--mob-col: #12111385;
 	--gradient: linear-gradient(270deg, var(--bg-col), var(--dark-blue2));
 	--gradient1: linear-gradient(90deg, var(--bg-col), var(--dark-blue1));
@@ -357,24 +357,22 @@ tbody:nth-child(even) {
 	container-name: home;
 	container-type: inline-size;
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	grid-template-rows: 0.02fr 1fr repeat(6, 1fr);
-	row-gap: 5rem;
-	column-gap: 7rem;
-	padding: 0 20rem;
+	grid-template-columns: repeat(6, 1fr);
+	grid-template-rows: 6.5cqh 1.3fr repeat(5, 1fr);
+	row-gap: 4cqh;
+	column-gap: 6cqw;
+	padding: 0 5cqw;
 	position: relative;
 	& {
 		grid-template-areas:
-			"nav nav"
-			"svg-logo hero"
-			"about about"
-			"svg-tubes tubes"
-			"same-sizes svg-same-sizes"
-			"svg-sculptures sculptures"
-			"huge-canvas svg-huge-canvas"
-			"svg-diff-sizes diff-sizes"
-			"footer footer"
-		;
+			". . nav nav . ."
+			"svg-logo svg-logo svg-logo svg-logo hero hero"
+			"about about about about about about"
+			"svg-tubes svg-tubes svg-tubes tubes tubes ."
+			". same-sizes same-sizes svg-same-sizes svg-same-sizes svg-same-sizes"
+			"svg-sculptures svg-sculptures svg-sculptures sculptures sculptures ."
+			". huge-canvas huge-canvas svg-huge-canvas svg-huge-canvas svg-huge-canvas"
+			"svg-diff-sizes svg-diff-sizes svg-diff-sizes diff-sizes diff-sizes ."
 	}
 	& {
 		background-image:
@@ -388,30 +386,31 @@ tbody:nth-child(even) {
 		border: solid .1rem var(--light-blue3);
 		box-shadow: inset 0 0 20rem var(--dark)
 	}
-	& div {
+	& div, header {
 		border-radius: var(--bord3);
 		background: var(--dark-blue1);
 		padding: 3rem;
-	}
-	& video {
-		justify-self: center;
-		align-self: center;
-		width: 100%;
-		/*-webkit-mask-image: url(#hero-logo);*/
-		/*mask-image: url(#hero-logo);*/
+		height: 75%;
+		place-self: center;
+		opacity: .95;
 	}
 }
 
 
 nav {
 	border: solid .1rem yellow;
-	grid-area: nav;
+	grid-area: 1 / 2 / 1 / 6;
 	padding: .5rem;
 	& .nav-header {
-		height: 6cqh;
-		width: 6cqw;
+		justify-self: stretch;
+		align-self: stretch;
+		height: 5cqh;
+		width: 5cqw;
 		fill: none;
 		cursor: pointer;
+	}
+	& {
+		display: flex;
 	}
 }
 
@@ -421,38 +420,46 @@ header {
 }
 
 
-.logo {
-	grid-area: svg-logo;
-	position: absolute;
-	justify-self: center;
-	align-self: center;
+svg {
 	inset: 0;
-	& .app_name {
-		font-family: 'Big Shoulders Stencil Display', cursive;
-		font-size: 62ch;
-		font-weight: bold;
-		stroke: var(--color1);
-		stroke-width: 0;
-		fill: var(--light-blue2);
-		border-radius: .3rem;
+	height: 100%;
+	width: 100%;
+	backdrop-filter: blur(.1rem);
+	place-self: center stretch;
+}
+
+.logo {
+	grid-area: 2 / 1 / 3 / 5;
+	inset: 0;
+	backdrop-filter: none;
+	& {
+		height: 100%;
+		width: 90%;
+		z-index: -1;;
 	}
 }
 
 
+.svg__logo__bkg {
+	fill-opacity: .7;
+	width: 100%;
+	height: 100%;
+}
+
+
 .main-background {
-	grid-area: hero;
+	grid-area: 2 / 4 / 3 / 7;
 }
 
 
 .info {
-	grid-area: about;
+	grid-area: 3 / 1 / 3 / 7;
 }
 
 
 .tubes {
-	grid-area: svg-tubes;
-	height: 100%;
-	width: 100%;
+	grid-area: 4 / 1 / 4 / 4; place-self: center stretch;
+	border-radius: .4rem;
 }
 
 
@@ -464,7 +471,6 @@ header {
 .same-size {
 	grid-area: svg-same-sizes;
 	height: 100%;
-	width: 50%;
 	justify-self: center;
 	align-self: center;
 }
@@ -477,8 +483,8 @@ header {
 
 .sculptures {
 	grid-area: svg-sculptures;
-	height: 100%;
-	width: 100%;
+	height: 70cqh;
+	width: 40cqw;
 }
 
 
@@ -490,7 +496,7 @@ header {
 .huge-canvas{
 	grid-area: svg-huge-canvas;
 	height: 50cqh;
-	width: 50cqw;
+	width: 40cqw;
 }
 
 
@@ -501,8 +507,8 @@ header {
 
 .diff-sizes {
 	grid-area: svg-diff-sizes;
-	height: 50cqh;
-	width: 50cqw;
+	height: 60cqh;
+	/*width: 40cqw;*/
 }
 
 
@@ -512,7 +518,9 @@ header {
 
 
 footer {
-	grid-area: footer;
+	& div > p {
+		padding: 10rem;
+	}
 }
 
 
