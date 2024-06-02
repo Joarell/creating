@@ -72,6 +72,7 @@
 
 
 :root {
+	color-scheme:  light dark;
 	--font-title: 3rem;
 	--fonts: .7rem;
 	--color1: #03e9f4;
@@ -190,7 +191,7 @@ body {
 	font-size: var(--fonts);
 	background: var(--dark-blue1);
 	scroll-behavior: smooth;
-	height: 80vh;
+	height: 80dvh;
 	transition: scroll 500ms ease-out;
 }
 
@@ -388,7 +389,7 @@ section {
 }
 
 
-strong {
+b {
 	font-family: 'Mitr';
 	font-size: 1.5ch;
 	color: var(--color3);
@@ -405,13 +406,14 @@ svg {
 	inset: 0;
 	height: 100%;
 	width: 100%;
+	border: .1rem solid var(--color4);
+	background-color: #12111330;
 	backdrop-filter: invert(5%);
 	place-self: center;
 	justify-content: center;
 	animation: 1s ease-in-out forwards fill-path;
 	transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
 	filter: drop-shadow(0 0 1rem var(--dark));
-	/*box-shadow: 0 0 1rem var(--dark);*/
 }
 
 
@@ -426,7 +428,7 @@ svg {
 	container-type: inline-size;
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
-	grid-template-rows: repeat(8, 90vh);
+	grid-template-rows: repeat(8, 90dvh);
 	row-gap: 6cqh;
 	column-gap: 7cqw;
 	padding: 0 5cqw;
@@ -453,18 +455,20 @@ svg {
 		background-attachment: fixed;
 		background-color: var(--dark-blue);
 		border: solid .1rem var(--light-blue3);
-		box-shadow: inset 0 0 20rem var(--dark)
+		box-shadow: inset 0 0 20rem var(--dark);
 	}
 	& svg + div, section > div {
-		border: .1rem solid var(--color4);
-		border-radius: var(--bord3);
+		/*border: .1rem solid var(--color4);*/
+		/*border-radius: 50%;*/
+		border: unset;
 		background-color: var(--dark-blue1);
-		background: url(https://grainy-gradients.vercel.app/noise.svg);
+		background: url(https://grainy-gradients.vercel.app/noise.svg),
+			var(--gradient1);
 		padding: 3rem;
-		height: 50vh;
+		height: minmax(50dvh, max-content);
 		place-self: center stretch;
-		mix-blend-mode: difference;
-		opacity: .8;
+		mix-blend-mode: hard-light;
+		opacity: 1;
 		z-index: -1;
 	}
 	scroll-snap-type: y mandatory;
@@ -476,19 +480,24 @@ svg {
 
 .sub__grid {
 	display: grid;
-	grid-template-columns: subgrid;
+	grid-template-columns: repeat(6, 1fr);
 	grid-template-rows: 1fr;
+	column-gap: 7cqw;
 	& .svg__left {
-		grid-area: 1 / 2 / 2 / 4;
+		grid-area: 1 / 2 / 1 / 3;
 		place-self: center stretch;
 		height: 80%;
 		width: 50cqw;
 	}
 	& .svg__right {
-		grid-area: 1 / 3 / 1 / 7;
+		grid-area: 1 / 4 / 1 / 6;
 		place-self: center stretch;
 		height: 80%;
-		width: 50cqw;
+		width: 45cqw;
+	}
+	& .text-content > p {
+		font-size: 1rem;
+		opacity: 1;
 	}
 }
 
@@ -500,6 +509,7 @@ nav {
 	margin: 1cqh 0;
 	backdrop-filter: blur(.1rem);
 	& .nav-logo {
+		border: unset;
 		height: 5cqh;
 		width: 2.4cqw;
 		fill: none;
@@ -536,10 +546,10 @@ nav {
 
 
 .hero {
-	grid-area: 1 / 1 / 2 / 7;
+	grid-area: 1 / 1 / 1 / 7;
 	inset: 0;
 	& .logo {
-		grid-area: 1 / 1 / 1 / 5;
+		grid-area: 1 / 1 / 1 / 6;
 		background-color: transparent;
 		backdrop-filter: none;
 		box-shadow: none;
@@ -547,7 +557,7 @@ nav {
 		z-index: -1;
 	}
 	& .main-background {
-		grid-area: 1 / 4 / 1 / 7;
+		grid-area: 1 / 5 / 1 / 7;
 		position: relative;
 		display: flex;
 		flex-direction: column;
@@ -555,7 +565,9 @@ nav {
 		height: 80%;
 		mix-blend-mode: unset;
 		backdrop-filter: unset;
+		border: .1rem solid var(--color4);
 		opacity: .9;
+		border-radius: .3rem;
 		background: var(--dark-blue1);
 		&::before {
 			content: "";
@@ -646,7 +658,7 @@ nav {
 	grid-area: 3 / 1 / 3 / 7;
 	inset: 0;
 	& .content-tubes {
-		grid-area: 1 / 4 / 1 / 6;
+		grid-area: 1 / 3 / 1 / 6;
 		position: relative;
 		inset: 0;
 		&::before {
@@ -656,7 +668,7 @@ nav {
 			background-repeat: no-repeat;
 			background-position: center;
 			background-image: url(../images/formao-removebg-preview.png);
-			filter: blur(.2rem);
+			filter: blur(.1rem);
 			backdrop-filter: invert(60%);
 			background-size: 30cqh;
 			z-index: -1;
@@ -669,7 +681,7 @@ nav {
 	grid-area: 4 / 1 / 4 / 7;
 	inset: 0;
 	& .content-same-sizes {
-		grid-area: 1 / 2 / 1 / 3;
+		grid-area: 1 / 2 / 1 / 4;
 		position: relative;
 		&::before {
 			content: "";
@@ -678,7 +690,7 @@ nav {
 			background-repeat: no-repeat;
 			background-position: center;
 			background-image: url(../images/disc-blade-removebg-preview.png);
-			filter: blur(.2rem);
+			filter: blur(.1rem);
 			background-size: 30cqh;
 			backdrop-filter: invert(60%);
 			z-index: -1;
@@ -691,7 +703,7 @@ nav {
 	grid-area: 5 / 1 / 5 / 7;
 	inset: 0;
 	& .content-sculptures {
-		grid-area: 1 / 4 / 1 / 6;
+		grid-area: 1 / 3 / 1 / 6;
 		position: relative;
 		backdrop-filter: unset;
 		&::after {
@@ -700,11 +712,12 @@ nav {
 			inset: 0;
 			background-repeat: no-repeat;
 			background-position: center;
-			background-image: url(../images/furadeira-removebg-preview.png);
+			background-image: url(../images/jig-saw-removebg-preview.png);
 			backdrop-filter: invert(60%);
-			filter: blur(.2rem);
-			background-size: 30cqh;
-			z-index: -10;
+			filter: blur(.1rem);
+			background-size: 25cqh;
+			z-index: -1;
+			border: unset;
 		}
 	}
 }
@@ -715,7 +728,7 @@ nav {
 .huge-canvas{
 	grid-area: 6 / 1 / 6 / 7;
 	& .content-huge-canvas {
-		grid-area: 1 / 2 / 1 / 3;
+		grid-area: 1 / 2 / 1 / 4;
 		position: relative;
 		&::before {
 			content: "";
@@ -737,7 +750,7 @@ nav {
 	grid-area: 7 / 1 / 7 / 7;
 	inset: 0;
 	& .content-diff-sizes {
-		grid-area: 1 / 4 / 1 / 6;
+		grid-area: 1 / 3 / 1 / 6;
 		position: relative;
 		&::before {
 			content: "";
@@ -748,7 +761,7 @@ nav {
 			background-image: url(../images/tape-measure-removebg-preview.png);
 			background-size: 40cqh;
 			backdrop-filter: invert(60%);
-			filter: blur(.2rem);
+			filter: blur(.1rem);
 			z-index: -1;
 		}
 	};
