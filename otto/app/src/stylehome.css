@@ -190,9 +190,9 @@ body {
 	font-family: Saira Semi Condensed, Mitr, sans-serif;
 	font-size: var(--fonts);
 	background: var(--dark-blue1);
-	scroll-behavior: smooth;
-	height: 80dvh;
+	height: 90dvh;
 	transition: scroll 500ms ease-out;
+	scroll-behavior: smooth;
 }
 
 
@@ -391,7 +391,7 @@ section {
 
 b {
 	font-family: 'Mitr';
-	font-size: 1.5ch;
+	font-size: 2.5ch;
 	color: var(--color3);
 	text-decoration: underline;
 }
@@ -428,15 +428,16 @@ svg {
 	container-type: inline-size;
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
-	grid-template-rows: repeat(8, 90dvh);
+	grid-template-rows: repeat(9, 90dvh);
 	row-gap: 6cqh;
 	column-gap: 7cqw;
 	padding: 0 5cqw;
-	height: 90vh;
+	height: 100%;
 	& {
 		grid-template-areas:
 			"svg-logo svg-logo svg-logo svg-logo hero hero"
 			"about about about about about about"
+			"utils utils utils utils utils utils"
 			"svg-tubes svg-tubes svg-tubes tubes tubes ."
 			". same-sizes same-sizes svg-same-sizes svg-same-sizes svg-same-sizes"
 			"svg-sculptures svg-sculptures svg-sculptures sculptures sculptures ."
@@ -458,19 +459,25 @@ svg {
 		box-shadow: inset 0 0 20rem var(--dark);
 	}
 	& svg + div, section > div {
-		/*border: .1rem solid var(--color4);*/
-		/*border-radius: 50%;*/
+		scale: .2;
+		opacity: 0;
 		border: unset;
-		background-color: var(--dark-blue1);
+		box-shadow: var(--inner-shadow-dark);
 		background: url(https://grainy-gradients.vercel.app/noise.svg),
-			var(--gradient1);
+			radial-gradient(transparent, var(--doark));
+		background-color: var(--dark-blue1);
 		padding: 3rem;
 		height: minmax(50dvh, max-content);
+		border-radius: .3rem;
 		place-self: center stretch;
 		mix-blend-mode: hard-light;
-		opacity: 1;
 		z-index: -1;
+		animation: show-up linear forwards;
+		animation-timeline: view();
+		animation-range: 1% 50%;
+		animation-timing-function: ease-in-out;
 	}
+	scroll-behavior: smooth;
 	scroll-snap-type: y mandatory;
 	scroll-padding: 0;
 	overflow-y: scroll;
@@ -487,13 +494,13 @@ svg {
 		grid-area: 1 / 2 / 1 / 3;
 		place-self: center stretch;
 		height: 80%;
-		width: 50cqw;
+		width: 35cqw;
 	}
 	& .svg__right {
 		grid-area: 1 / 4 / 1 / 6;
 		place-self: center stretch;
 		height: 80%;
-		width: 45cqw;
+		width: 35cqw;
 	}
 	& .text-content > p {
 		font-size: 1rem;
@@ -548,6 +555,15 @@ nav {
 .hero {
 	grid-area: 1 / 1 / 1 / 7;
 	inset: 0;
+	animation: fade-out linear;
+	animation-timeline: view();
+	animation-range: exit 1rem;
+	animation-timing-function: ease-in-out;
+	& > svg {
+		animation: zoomer linear;
+		animation-timeline: view();
+		animation-range: exit 1rem;
+	}
 	& .logo {
 		grid-area: 1 / 1 / 1 / 6;
 		background-color: transparent;
@@ -557,6 +573,8 @@ nav {
 		z-index: -1;
 	}
 	& .main-background {
+		animation: unset;
+		scale: 1;
 		grid-area: 1 / 5 / 1 / 7;
 		position: relative;
 		display: flex;
@@ -591,21 +609,9 @@ nav {
 		animation: 800ms ease-in-out infinite alternate eye-blink;
 		transition-timing-function: animation 300ms cubic-bezier(0.6, 0.04, 0.98, 0.335);
 		cursor: pointer;
-		filter: drop-shadow(0 0 2rem crimson);
-	}
-}
-
-
-@keyframes eye-blink {
-	0% {
-		fill: none;
-	}
-	50% {
-		fill-opacity: .5;
-	}
-	100% {
-		fill: var(--color3);
-		fill-opacity: 1;
+		/*animation: border-waves 2000ms linear infinite;*/
+		/*animation-play-state: running;*/
+		/*cursor: pointer;*/
 	}
 }
 
@@ -617,16 +623,16 @@ nav {
 }
 
 
-.info {
+.info, .utils {
 	grid-area: 2 / 1 / 2 / 7;
 	inset: 0;
+	z-index: -1;
 	& .info-content {
 		height: fit-content;
 		border: .1rem solid var(--color4);
 		grid-area: 1 / 1 / 1 / 7;
 		position: relative;
-		mix-blend-mode: unset;
-		opacity: .9;
+		/*mix-blend-mode: unset;*/
 		&::before {
 			content: "";
 			position: absolute;
@@ -645,9 +651,74 @@ nav {
 			padding: 1rem;
 			z-index: 10;
 			& div {
-				border: var(--color4) .1rem solid;
-				border-radius: .3rem;
+				backdrop-filter: blur(1rem);
 				padding: 2rem;
+				z-index: 1;
+				&:hover {
+					z-index: 0;
+					mix-blend-mode: unset;
+					border-radius: .3rem;
+					box-shadow: var(--shadow1);
+					opacity: 1;
+					content: "";
+					position: relative;
+					filter: drop-shadow(0 0 .5rem var(--color1));
+					transition: all 1s ease-in-out;
+					transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+					& > P {
+						text-wrap: pretty;
+						filter: unset;
+						opacity: 1;
+					}
+				}
+				& > P {
+					filter: unset;
+				}
+			}
+		}
+	}
+}
+
+
+.utils {
+	grid-area: 3 / 1 / 3 / 7;
+	& .info-content {
+		/*background: unset;*/
+		opacity: .3;
+		&::before {
+			background-image: url(../images/time-removebg-preview.png);
+		}
+		& .solve__content > div {
+			mix-blend-mode: difference;
+			&::before {
+				content: "";
+				background-size: 3rem;
+				background-repeat: no-repeat;
+				background-position: center;
+				float: left;
+				height: 4rem;
+				width: 4rem;
+				font-size: 3rem;
+				shape-outside: circle();
+				clip-path: circle();
+				background-color: purple;
+				padding: 1rem;
+				margin: 1rem;
+				border: solid 1rem solid;
+				border-radius: 50%;
+				color: black;
+			}
+			&:nth-of-type(1)::before {
+				background-image: url(../images/chat.svg);
+			}
+			&:nth-of-type(2)::before {
+				background-image: url(../images/pencil.svg);
+			}
+			&:nth-of-type(3)::before {
+				background-image: url(../images/lamp.svg);
+			}
+			&:nth-of-type(4)::before {
+				background-image: url(../images/laptop.svg);
 			}
 		}
 	}
@@ -655,7 +726,7 @@ nav {
 
 
 .tubes {
-	grid-area: 3 / 1 / 3 / 7;
+	grid-area: 4 / 1 / 4 / 7;
 	inset: 0;
 	& .content-tubes {
 		grid-area: 1 / 3 / 1 / 6;
@@ -678,7 +749,7 @@ nav {
 
 
 .same-size {
-	grid-area: 4 / 1 / 4 / 7;
+	grid-area: 5 / 1 / 5 / 7;
 	inset: 0;
 	& .content-same-sizes {
 		grid-area: 1 / 2 / 1 / 4;
@@ -700,7 +771,7 @@ nav {
 
 
 .sculptures {
-	grid-area: 5 / 1 / 5 / 7;
+	grid-area: 6 / 1 / 6 / 7;
 	inset: 0;
 	& .content-sculptures {
 		grid-area: 1 / 3 / 1 / 6;
@@ -723,10 +794,8 @@ nav {
 }
 
 
-
-
 .huge-canvas{
-	grid-area: 6 / 1 / 6 / 7;
+	grid-area: 7 / 1 / 7 / 7;
 	& .content-huge-canvas {
 		grid-area: 1 / 2 / 1 / 4;
 		position: relative;
@@ -747,7 +816,7 @@ nav {
 
 
 .diff-sizes {
-	grid-area: 7 / 1 / 7 / 7;
+	grid-area: 8 / 1 / 8 / 7;
 	inset: 0;
 	& .content-diff-sizes {
 		grid-area: 1 / 3 / 1 / 6;
@@ -782,12 +851,70 @@ footer {
 }
 
 
-@keyframes fill-path {
+@keyframes border-waves {
 	0% {
-		stroke-dashoffset: 0;
+		transform: scale(1);
+		/*border: solid .3rem white scale(1);*/
+		opacity: 1;
+	}
+	50% {
+		opacity: 1;
 	}
 	100% {
-		stroke-dashoffset: 1000;
+		/*border: solid .7rem white scale(2.5);*/
+		transform: scale(1.05);
+		opacity: 0;
+	}
+}
+
+
+
+@keyframes eye-blink {
+	0% {
+		fill: none;
+	}
+	50% {
+		fill-opacity: .5;
+	}
+	100% {
+		fill: var(--color3);
+		fill-opacity: 1;
+		/*transform: scale(1.05);*/
+		filter: drop-shadow(0 0 4rem crimson);
+	}
+}
+
+
+@keyframes show-up {
+	to {
+		scale: 1;
+		opacity: 1;
+	}
+}
+
+
+@keyframes zoomer {
+	from {
+		scale: 1;
+		opacity: 1;
+	}
+	to {
+		scale: 0;
+		opacity: 0;
+	}
+}
+
+
+@keyframes fade-out {
+	20%, 100% {
+		opacity: 0;
+	}
+}
+
+
+@keyframes fill-path {
+	to {
+		offset-distance: 100%;
 	}
 }
 
