@@ -21,7 +21,7 @@
 }
 
 @font-face {
-	font-family: 'Mitr';
+	font-family: 'mItr';
 	font-style: normal;
 	font-weight: 400;
 	font-display: swap;
@@ -191,8 +191,9 @@ body {
 	font-size: var(--fonts);
 	background: var(--dark-blue1);
 	height: 90dvh;
-	transition: scroll 500ms ease-out;
 	scroll-behavior: smooth;
+	transition: all 1s ease-in-out;
+	position: relative;
 }
 
 
@@ -244,6 +245,9 @@ p, a {
 	font-family: 'Mitr', sans-serif;
 	font-weight: 500;
 	color: white;
+	/*text-indent: 3rem;*/
+	text-shadow: unset;
+	text-wrap: balance;
 }
 
 
@@ -257,8 +261,16 @@ button[disabled] {
 ul, li {
 	position: relative;
 	margin: 0;
-	padding: 0;
-	list-style: none;
+	list-style: inside;
+	list-style-type: circle;
+	background: transparent;
+	text-align-last: left;
+	line-height: 1rem;
+	font-size: var(--fonts);
+	font-family: 'Mitr', sans-serif;
+	font-weight: 500;
+	color: white;
+	text-wrap: pretty;
 }
 
 
@@ -267,7 +279,7 @@ li {
 	font-family: Mitr, sans-serif;
 	font-size: var(--fonts);
 	font-weight: 400;
-	color: var(--pressed);
+	color: white;
 	line-height: 2rem;
 }
 
@@ -406,14 +418,18 @@ svg {
 	inset: 0;
 	height: 100%;
 	width: 100%;
-	border: .1rem solid var(--color4);
-	background-color: #12111330;
-	backdrop-filter: invert(5%);
 	place-self: center;
 	justify-content: center;
-	animation: 1s ease-in-out forwards fill-path;
-	transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
-	filter: drop-shadow(0 0 1rem var(--dark));
+	position: relative;
+	transition: all 2s ease-in-out;
+	& {
+		scroll-timeline-axis: y;
+		scroll-timeline-axis: vertical;
+		animation: svg-back-ground linear forwards;
+		animation-timeline: view();
+		animation-range: 10% contain;
+		animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+	}
 }
 
 
@@ -433,6 +449,7 @@ svg {
 	column-gap: 7cqw;
 	padding: 0 5cqw;
 	height: 100%;
+	inset: 0;
 	& {
 		grid-template-areas:
 			"svg-logo svg-logo svg-logo svg-logo hero hero"
@@ -454,28 +471,26 @@ svg {
 		background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
 		background-position: center;
 		background-attachment: fixed;
-		background-color: var(--dark-blue);
+		background-color:
+			color-mix(in srgb, var(--dark-blue), black 0%);
 		border: solid .1rem var(--light-blue3);
 		box-shadow: inset 0 0 20rem var(--dark);
+		filter: drop-shadow(0 0 .01rem var(--dark-blue1));
 	}
 	& svg + div, section > div {
 		scale: .2;
-		opacity: 0;
-		border: unset;
-		box-shadow: var(--inner-shadow-dark);
-		background: url(https://grainy-gradients.vercel.app/noise.svg),
-			radial-gradient(transparent, var(--doark));
-		background-color: var(--dark-blue1);
+		border: .1rem solid var(--color4);
+		box-shadow: var(--shadow1);
+		border-radius: 2rem;
 		padding: 3rem;
-		height: minmax(50dvh, max-content);
-		border-radius: .3rem;
+		background: radial-gradient(#00000000, #00000085);
 		place-self: center stretch;
-		mix-blend-mode: hard-light;
 		z-index: -1;
 		animation: show-up linear forwards;
 		animation-timeline: view();
 		animation-range: 1% 50%;
 		animation-timing-function: ease-in-out;
+		filter: drop-shadow(0 0 3rem white);
 	}
 	scroll-behavior: smooth;
 	scroll-snap-type: y mandatory;
@@ -515,7 +530,12 @@ nav {
 	padding: .6rem;
 	margin: 1cqh 0;
 	backdrop-filter: blur(.1rem);
+	& ul, li {
+		padding: unset;
+		list-style: none;
+	}
 	& .nav-logo {
+		animation: unset;
 		border: unset;
 		height: 5cqh;
 		width: 2.4cqw;
@@ -523,6 +543,7 @@ nav {
 		cursor: pointer;
 		background-color: transparent;
 		box-shadow: none;
+		background: unset;
 		filter: none;
 		&:hover {
 			box-shadow: 0 0 1rem #FFFFFF50;
@@ -543,6 +564,10 @@ nav {
 			&:hover {
 				box-shadow: 0 0 1rem #FFFFFF50;
 			}
+		}
+		& > * {
+			flex-basis: 1;
+			flex-grow: 100%;
 		}
 	}
 	& span {
@@ -565,8 +590,10 @@ nav {
 		animation-range: exit 1rem;
 	}
 	& .logo {
-		grid-area: 1 / 1 / 1 / 6;
+		grid-area: 2 / 1 / 1 / 6;
 		background-color: transparent;
+		background: unset;
+		filter: unset;
 		backdrop-filter: none;
 		box-shadow: none;
 		filter: unset;
@@ -587,6 +614,7 @@ nav {
 		opacity: .9;
 		border-radius: .3rem;
 		background: var(--dark-blue1);
+		box-shadow: unset;
 		&::before {
 			content: "";
 			position: absolute;
@@ -595,7 +623,7 @@ nav {
 			background-position: center;
 			background-image: url(../images/ampulheta-removebg-preview.png);
 			background-size: 30cqh;
-			mix-blend-mode: color-dodge;
+			mix-blend-mode: difference;
 			opacity: .1;
 			z-index: -1;
 		}
@@ -629,10 +657,8 @@ nav {
 	z-index: -1;
 	& .info-content {
 		height: fit-content;
-		border: .1rem solid var(--color4);
 		grid-area: 1 / 1 / 1 / 7;
 		position: relative;
-		/*mix-blend-mode: unset;*/
 		&::before {
 			content: "";
 			position: absolute;
@@ -640,39 +666,50 @@ nav {
 			background-repeat: no-repeat;
 			background-position: center;
 			background-image: url(../images/compass-removebg-preview.png);
-			background-color: #333330;
-			z-index: -1;
+			filter: drop-shadow(0 0 3rem white);
+			z-index: -10;
 		}
 		& .about-content {
 			display: flex;
 			flex-direction: row;
-			justify-content: space-evenly;
+			justify-content: space-between;
 			gap: 10rem;
 			padding: 1rem;
 			z-index: 10;
 			& div {
+				mix-blend-mode: difference;
+				border-radius: 1rem;
 				backdrop-filter: blur(1rem);
-				padding: 2rem;
+				border-radius: 1rem;
+				padding: 1rem;
 				z-index: 1;
+				flex-grow: 1;
+				flex-basis: 100%;
+				inset: 0;
+				position: relative;
+				background-origin: content-box;
 				&:hover {
 					z-index: 0;
-					mix-blend-mode: unset;
-					border-radius: .3rem;
 					box-shadow: var(--shadow1);
 					opacity: 1;
 					content: "";
 					position: relative;
-					filter: drop-shadow(0 0 .5rem var(--color1));
 					transition: all 1s ease-in-out;
 					transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
-					& > P {
-						text-wrap: pretty;
-						filter: unset;
-						opacity: 1;
-					}
+					filter: drop-shadow(0 0 .01rem var(--dark-blue1));
 				}
-				& > P {
-					filter: unset;
+				&::after {
+					content: "";
+					position: absolute;
+					inset: 0;
+					border-radius: 1rem;
+					padding: .5rem;
+					background-image: linear-gradient(45deg, #00000000, #00000085),
+						radial-gradient(circle at top left, transparent, #00000085);
+					background-origin: border-box;
+					background-clip: content-box, border-box;
+					mix-blend-mode: difference;
+					z-index: 1;
 				}
 			}
 		}
@@ -683,13 +720,15 @@ nav {
 .utils {
 	grid-area: 3 / 1 / 3 / 7;
 	& .info-content {
-		/*background: unset;*/
 		opacity: .3;
 		&::before {
 			background-image: url(../images/time-removebg-preview.png);
+			background-repeat: no-repeat;
+			background-position: center;
+			filter: hue-rotate(90deg);
+			z-index: -10;
 		}
 		& .solve__content > div {
-			mix-blend-mode: difference;
 			&::before {
 				content: "";
 				background-size: 3rem;
@@ -701,12 +740,11 @@ nav {
 				font-size: 3rem;
 				shape-outside: circle();
 				clip-path: circle();
-				background-color: purple;
+				background-color: var(--light-blue1);
 				padding: 1rem;
 				margin: 1rem;
 				border: solid 1rem solid;
 				border-radius: 50%;
-				color: black;
 			}
 			&:nth-of-type(1)::before {
 				background-image: url(../images/chat.svg);
@@ -719,6 +757,9 @@ nav {
 			}
 			&:nth-of-type(4)::before {
 				background-image: url(../images/laptop.svg);
+			}
+			&:hover {
+					filter: drop-shadow(0 0 .5rem var(--color1));
 			}
 		}
 	}
@@ -739,8 +780,7 @@ nav {
 			background-repeat: no-repeat;
 			background-position: center;
 			background-image: url(../images/formao-removebg-preview.png);
-			filter: blur(.1rem);
-			backdrop-filter: invert(60%);
+			filter: contrast(.5);
 			background-size: 30cqh;
 			z-index: -1;
 		}
@@ -761,9 +801,8 @@ nav {
 			background-repeat: no-repeat;
 			background-position: center;
 			background-image: url(../images/disc-blade-removebg-preview.png);
-			filter: blur(.1rem);
 			background-size: 30cqh;
-			backdrop-filter: invert(60%);
+			filter: contrast(.5);
 			z-index: -1;
 		}
 	}
@@ -784,8 +823,8 @@ nav {
 			background-repeat: no-repeat;
 			background-position: center;
 			background-image: url(../images/jig-saw-removebg-preview.png);
-			backdrop-filter: invert(60%);
-			filter: blur(.1rem);
+			/*backdrop-filter: invert(60%);*/
+			filter: contrast(.5);
 			background-size: 25cqh;
 			z-index: -1;
 			border: unset;
@@ -806,9 +845,8 @@ nav {
 			background-repeat: no-repeat;
 			background-position: center;
 			background-image: url(../images/clamp-tool-removebg-preview.png);
-			backdrop-filter: invert(60%);
 			background-size: 20cqh;
-			filter: blur(.1rem);
+			filter: contrast(.5);
 			z-index: -1;
 		}
 	}
@@ -829,24 +867,105 @@ nav {
 			background-position: center;
 			background-image: url(../images/tape-measure-removebg-preview.png);
 			background-size: 40cqh;
-			backdrop-filter: invert(60%);
-			filter: blur(.1rem);
+			filter: contrast(.5);
 			z-index: -1;
 		}
 	};
 }
 
 
-
 footer {
 	grid-area: footer;
-	height: 100%;
 	scroll-snap-align: start;
 	scroll-snap-stop: always;
 	inset: 0;
-	& > div {
-		background-color: var(--dark);
-		mix-blend-mode: difference;
+	& {
+		display: grid;
+		grid-template-columns: repeat(6 1fr);
+		grid-template-rows: 1fr 0.3fr;
+		row-gap: 2rem;
+	}
+	& .tools {
+		inset: 0;
+		grid-area: 1 / 1 / 1 / 7;
+		&::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background-repeat: no-repeat;
+			background-image: url(../images/metric-tools-removebg-preview.png);
+			background-position: bottom 50%;
+			mix-blend-mode: overlay;
+			transform: translateX(40%) translateY(40%);
+			filter: drop-shadow(0 0 1rem white);
+			overflow: clip;
+			z-index: -10;
+			opacity: .4;
+		}
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background-repeat: no-repeat;
+			background-image: url(../images/sharpper-removebg-preview.png);
+			background-position: bottom 40% left;
+			mix-blend-mode: overlay;
+			transform: translateX(0%) translateY(30%);
+			filter: drop-shadow(0 0 1rem white);
+			overflow: clip;
+			z-index: -10;
+			opacity: .3;
+		}
+	}
+	& .start-footer {
+		inset: 0;
+		border: .1rem solid white;
+		grid-area: 1 / 1 / 1 / 7;
+		position: relative;
+		&::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background-repeat: no-repeat;
+			background-image: url(../images/electric-driller-hand-drawn-by-Vexels.svg);
+			background-position: bottom 40% right;
+			filter: hue-rotate(90deg);
+			transform: translateX(7%) translateY(60%);
+			filter: drop-shadow(0 0 1rem white);
+			overflow: clip;
+			z-index: -10;
+			opacity: .3;
+		}
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background-repeat: no-repeat;
+			background-image: url(../images/BLADE.png);
+			filter: drop-shadow(0 0 1rem white);
+			mix-blend-mode: overlay;
+			overflow: clip;
+			z-index: -10;
+		}
+	}
+	& .footer-content {
+		grid-area: 3 / 1 / 4 / 7;
+		background: radial-gradient(var(--color1), var(--dark));
+		filter: drop-shadow(0 0 2rem white);
+		border-radius: .8rem .8rem 0 0;
+		padding: 2rem;
+		position: absolute;
+		& {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			gap: 5rem;
+			height: 100%;
+			& > * {
+				flex-grow: 1;
+				flex-basis: 1;
+			}
+		}
 	}
 }
 
@@ -868,7 +987,6 @@ footer {
 }
 
 
-
 @keyframes eye-blink {
 	0% {
 		fill: none;
@@ -879,7 +997,6 @@ footer {
 	100% {
 		fill: var(--color3);
 		fill-opacity: 1;
-		/*transform: scale(1.05);*/
 		filter: drop-shadow(0 0 4rem crimson);
 	}
 }
@@ -912,9 +1029,20 @@ footer {
 }
 
 
-@keyframes fill-path {
-	to {
-		offset-distance: 100%;
+@keyframes svg-back-ground {
+	0%, 50% {
+		transform: scaleX(0);
+		opacity: 0;
+		background: unset;
+		border-radius: .2rem;
+	}
+	100% {
+		opacity: 1;
+		filter: drop-shadow(0 0 .01rem var(--dark-blue1));
+		background: radial-gradient(#00000000, #00000085);
+		border-radius: 2rem;
+		scale: 1.1;
+		perspective: 14rem;
 	}
 }
 
