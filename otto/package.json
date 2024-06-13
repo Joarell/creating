@@ -1,6 +1,6 @@
 {
 	"name": "Otto",
-	"version": "1",
+	"version": "1.22.22",
 	"description": "Art work solver list and crater.",
 	"main": "main.mjs",
 	"scripts": {
@@ -21,7 +21,6 @@
 	"devDependencies": {
 		"@rollup/plugin-json": "^6.0.1",
 		"@rollup/plugin-terser": "^0.4.4",
-		"css-minify": "^2.0.0",
 		"nodemon": "^3.0.1",
 		"rollup": "^4.0.2"
 	},
