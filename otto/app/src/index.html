@@ -20,8 +20,9 @@
 	<body>
 		<nav>
 			<ul class="nav__bar">
-				<svg class="nav-logo" href="./">
-					<use xlink:href="#nav-logo"></use>
+				<svg class="nav-logo" href="localhost:5173">
+					<use xlink:href="#nav-logo"> </use>
+					<a href="#main-logo"></a>
 				</svg>
 				<span></span>
 				<li><a href="#about">About</a></li>
@@ -44,7 +45,7 @@
 				</svg>
 				<div class="main-card">
 					<span></span>
-					<h1>DOES<br>YOUR<br>TIME <text><b>MATTER?</b></text></h1>
+					<h1 id="main-logo">DOES<br>YOUR<br>TIME <text><b>MATTER?</b></text></h1>
 					<span></span>
 					<h2>Design your crates as fast as a click!</h2>
 					<p>Powered by the most precise and </p>
@@ -61,7 +62,8 @@
 						<p id="info__text">Hi!<br><br> Before introduce <b class="otto-color">Otto</b>,<br> and explain what it is. Would you mind<br> to think about a few questions?</p>
 						<ol type="1">
 							<li>Assuming a list with 40 mixed art works.<br><mark>How many hours do you take to design crates? </mark></li>
-							<li>Occasionally 50% of this art works list has changed or increased.<br> <mark>How much time do you need to redesign all crates, and answer your clients?</mark></li>
+							<li>Occasionally 50% of this art works list has changed or increased.<br><mark>Would you be frustrated whether you forget to reply your most valued costumer?</mark></li>
+							<li>How good would be <b class="retention">saving 30% or more of your day time</b>, and not need to work from home?</li>
 						</ol>
 						<p>It took years dealing with import, <br>and export projects of all kinds and complexities.<br><br>
 					</div>
@@ -69,7 +71,7 @@
 						<p><b class="otto-color otto-name"></b> came alive feed by ideas, <br>and solutions to each proper case of works list.<br> Specially during the fine art fairs <br>circuit over the world, expositions,<br> biennials and much more.</p><br><br>
 						<p>Its mission is only one:</p><br><br>
 						<p><ul><li>To return the maximum amount <br>of something you would like to have more:<br><br> <b class="empty-time"></b></li></ul></p>
-						<p>In other words, it can help you to save a lot of <b class="otto-color">TIME.</b></p>
+						<p>In other words, it can help you to avoid the waste of your <b class="otto-color">TIME.</b></p>
 					</div>
 				</div>
 				<span></span>
@@ -78,12 +80,14 @@
 			<!--	<div class="info-content">-->
 			<!--	<h3 id="about">The daily dilemma.</h3>-->
 			<!--		<div class="about-content solve__content">-->
+			<!--			<div></div>-->
 			<!--			<div class="">-->
-			<!--				<p id="info__text">Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.</p>-->
-			<!--			</div>-->
-			<!--			<div class="">-->
-			<!--				<p id="info__text">Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.</p>-->
-			<!--			</div>-->
+			<!--				<p>First, a little of bit of context.<br>-->
+			<!--					We all know it is pretty normal unto you to get the estimate approval, some changes might to happen a long way.-->
+			<!--					The average between <b class="otto-color">this updates takes around 2 days </b>for getting all cost to revert them-->
+			<!--					towards clients.<br><br> However, the caveat on theses situations are the number of works on the list,-->
+			<!--					and how complexity the works are to design new crates. Thereby, in the most cases, <b class="otto-color">it can reduces the chances to get some approval caused by increasing the time reply</b>.-->
+			<!--				</p>-->
 			<!--		</div>-->
 			<!--		<span></span>-->
 			<!--	</div>-->
@@ -92,19 +96,19 @@
 				<div class="info-content">
 				<h3 id="about">Solving the problem.</h3>
 					<div class="about-content solve__content">
-						<div>
-
-						</div>
 						<div class="">
-							<p> A little of bit of context.<br>
-								We all know it is normal during the estimate inquiry some changes happen to the works list.
+							<p>First, a little of bit of context.<br>
+								We all know it is pretty normal unto you to get the estimate approval, some changes might to happen a long way.
 								The average between <b class="otto-color">this updates takes around 2 days </b>for getting all cost to revert them
 								towards clients.<br><br> However, the caveat on theses situations are the number of works on the list,
-								and how complexity the works are to design new crates. Thereby, in the most cases, <b class="otto-color">it can reduces the chances to get some approval caused by increasing the time reply</b>.</p>
+								and how complexity the works are to design new crates. Thereby, in the most cases, <b class="otto-color">it can reduces the chances to get some approval caused by increasing the time reply</b>.<br><br>
+								By using <b class="otto-color">Otto</b>, you will be able to spent more attention to your costumers, and provide efficiency to them!
+							</p>
 						</div>
+						<div></div>
 						<div class="intro-otto">
 							<p id="info__text">
-								The Otto crate solver has been created to reduce this time to 1 day or less.<br>
+								The <b class="otto-color">Otto Crate Solver</b> has been created to reduce your estimate lead time as fast as possible.<br><br>
 								It can handle 5 types of works crate:</p><br><br>
 							<ul>
 								<li><a href="#tubes">Tubes; <i class="nf nf-oct-link_external"></i></a></li>
@@ -207,52 +211,90 @@
 						<li> [ ] CARGO - <mark class="green-check">AVAILABLE;</mark></li>
 						<li> [ ] SEA - <mark class="green-check">AVAILABLE;</mark></li>
 					</ul>
-					<h5>Max crate layers:</h5>
-					<ul class="content__indent">
-						<li> [ <i class="nf nf-md-check_bold"></i> ] - 4 LAYERS;</Li>
-						<li> [ ] - 5 LAYERS - <mark class="green-check">AVAILABLE;</mark></Li>
-					</ul>
+						<h5>Max crate layers:</h5>
+						<ul class="content__indent">
+							<li> [ <i class="nf nf-md-check_bold"></i> ] - 4 LAYERS;</Li>
+							<li> [ ] - 5 LAYERS - <mark class="green-check">AVAILABLE;</mark></Li>
+						</ul>
 				</div>
+			</section>
+			<section class="end__up sub__grid">
+				<div class="info-content">
+					<h3 id="about">Statement</h3>
+					<span></span>
+				<div class="about-content">
+						<div>
+							<p>The <b class="otto-color">Otto is in continuous improvements</b> with the most sophisticated math algorithms and user interface.
+								Thereby, our team can offer the best solution, and reliability to you as a logistic agent, art adviser, gallery or even museums.<br><br>
+								All predicted solving are assuming:
+							</p>
+							<ol>
+								<li>The smallest possible sized crates; </li>
+								<li>Ensuring integrity of the art works over transportation scenarios;</li>
+								<li>Best space optimization to each crate and type;</li>
+							</ol>
+						</div>
+						<div>
+							<svg class="otto--logo" href="./">
+								<use xlink:href="#nav-logo"></use>
+							</svg>
+					</div>
 			</section>
 			<footer>
 				<div class="start-footer">
-					<div>
-						<span></span>
-						<h4>Acknowledgments.</h4>
-						<!--<span></span>-->
-					<div>
-						<p>The code base is over continuous improvement with the most sophisticated math algorithms.<br><br> Thereby, offering the best solution and reliability to you as a logistic agent, art adviser, gallery or even museums.</p><br><br>
-						<p>All predicted solving are assuming:<br><br>
-						<ul>
-							<li>The smallest possible sized crates; </li>
-							<li>Ensuring integrity of the art works over transportation scenarios;</li>
-							<li>Best space optimization to each crate and type;</li>
-						</ul>
-						</p>
+					<h4>Acknowledgments.</h4>
+					<div class="tools">
+						<div>
+						</div>
+						<div>
+							<p>
+								First of all, I would like to thank my wife to support me every single day. With out you this project won't be possible.
+								THANK my dear love <b class="otto-color">Jessica!</b>
+							</p>
+							<p>
+								Secondly, Thank you my dear friend <b class="otto-color">João Lacerda</b>, through all nights long, advice, tests, and for being a true friend!
+								THANK you!
+							</p>
+							<p>
+								Finally, I would like to thank all team involved on MDN documentaions, and almost all You Tube web dev producers!
+								I have watched almost all of you about HTML, CSS and JavaScript.<br>
+								In special:
+								<ul>
+									<li><a href="https://www.youtube.com/@KevinPowell">Kevin Powell;</a></li>
+									<li><a href="https://www.youtube.com/@WebDevSimplified">Web Dev Simplified;</a></li>
+									<li><a href="https://www.youtube.com/@freecodecamp">Free Code Camp;</a></li>
+									<li><a href="https://www.youtube.com/@ThePrimeagen">The Primeagen;</a></li>
+								</ul>
+							</p>
+							<p>
+								There is a lot more content creators that a learned from.<br>
+								But anyways, THANK you a lot guys!
+							</p>
+						</div>
 					</div>
-					</div>
-					<div></div>
-					<div class="tools"></div>
 				</div>
 				<div class="footer-content">
-							<p>Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.</p>
-							<p>Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.</p>
-							<p>Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.</p>
+					<p>Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.</p>
+					<p>Please, feel free to send us a feedback about improvements you would like do see on <b class="otto-color">Otto.</b></p>
+					<p>Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.</p>
+					<div>
+						<p>Otto Company. All rights reserved.</p>
+					</div>
 				</div>
 			</footer>
 		</div>
 	</body>
 	<!--
-		!   ╭───────────────────────────────────────────────────────╮
-		!   │                      SVG images                       │
-		!   ╰───────────────────────────────────────────────────────╯
-	-->
+!   ╭───────────────────────────────────────────────────────╮
+!   │                      SVG images                       │
+!   ╰───────────────────────────────────────────────────────╯
+-->
 	<svg class="ilustrations" display="none" preserveAspectRatio="none">
 
 		<symbol id="blue-tube" viewBox="100 0 1123 543" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<path d="M-76.3292 248.105C-76.271 248.839 -75.6288 249.387 -74.8947 249.329C-74.1606 249.271 -73.6127 248.629 -73.6708 247.895C-73.729 247.161 -74.3712 246.613 -75.1053 246.671C-75.8394 246.729 -76.3873 247.371 -76.3292 248.105ZM1135.67 152.105C1135.73 152.839 1136.37 153.387 1137.11 153.329C1137.84 153.271 1138.39 152.629 1138.33 151.895C1138.27 151.161 1137.63 150.613 1136.89 150.671C1136.16 150.729 1135.61 151.371 1135.67 152.105ZM-74.9803 248.249L1137.02 152.249L1136.98 151.751L-75.0197 247.751L-74.9803 248.249Z" fill="white"/>
-		<path d="M-89.3314 394.929C-89.3706 395.664 -88.8062 396.292 -88.0709 396.331C-87.3356 396.371 -86.7077 395.806 -86.6686 395.071C-86.6294 394.336 -87.1938 393.708 -87.9291 393.669C-88.6644 393.629 -89.2923 394.194 -89.3314 394.929ZM1112.67 458.929C1112.63 459.664 1113.19 460.292 1113.93 460.331C1114.66 460.371 1115.29 459.806 1115.33 459.071C1115.37 458.336 1114.81 457.708 1114.07 457.669C1113.34 457.629 1112.71 458.194 1112.67 458.929ZM-88.0133 395.25L1113.99 459.25L1114.01 458.75L-87.9867 394.75L-88.0133 395.25Z" fill="white"/>
-		<path d="M-87.3312 401.924C-87.3731 402.659 -86.8112 403.289 -86.076 403.331C-85.3408 403.373 -84.7108 402.811 -84.6688 402.076C-84.6269 401.341 -85.1888 400.711 -85.924 400.669C-86.6592 400.627 -87.2892 401.189 -87.3312 401.924ZM1155.67 472.867C1155.63 473.602 1156.19 474.232 1156.93 474.274C1157.66 474.316 1158.29 473.754 1158.33 473.019C1158.38 472.284 1157.81 471.654 1157.08 471.612C1156.34 471.57 1155.71 472.132 1155.67 472.867ZM-86.0142 402.25L1156.99 473.193L1157.02 472.694L-85.9858 401.75L-86.0142 402.25Z" fill="white"/>
+			<path d="M-76.3292 248.105C-76.271 248.839 -75.6288 249.387 -74.8947 249.329C-74.1606 249.271 -73.6127 248.629 -73.6708 247.895C-73.729 247.161 -74.3712 246.613 -75.1053 246.671C-75.8394 246.729 -76.3873 247.371 -76.3292 248.105ZM1135.67 152.105C1135.73 152.839 1136.37 153.387 1137.11 153.329C1137.84 153.271 1138.39 152.629 1138.33 151.895C1138.27 151.161 1137.63 150.613 1136.89 150.671C1136.16 150.729 1135.61 151.371 1135.67 152.105ZM-74.9803 248.249L1137.02 152.249L1136.98 151.751L-75.0197 247.751L-74.9803 248.249Z" fill="white"/>
+			<path d="M-89.3314 394.929C-89.3706 395.664 -88.8062 396.292 -88.0709 396.331C-87.3356 396.371 -86.7077 395.806 -86.6686 395.071C-86.6294 394.336 -87.1938 393.708 -87.9291 393.669C-88.6644 393.629 -89.2923 394.194 -89.3314 394.929ZM1112.67 458.929C1112.63 459.664 1113.19 460.292 1113.93 460.331C1114.66 460.371 1115.29 459.806 1115.33 459.071C1115.37 458.336 1114.81 457.708 1114.07 457.669C1113.34 457.629 1112.71 458.194 1112.67 458.929ZM-88.0133 395.25L1113.99 459.25L1114.01 458.75L-87.9867 394.75L-88.0133 395.25Z" fill="white"/>
+			<path d="M-87.3312 401.924C-87.3731 402.659 -86.8112 403.289 -86.076 403.331C-85.3408 403.373 -84.7108 402.811 -84.6688 402.076C-84.6269 401.341 -85.1888 400.711 -85.924 400.669C-86.6592 400.627 -87.2892 401.189 -87.3312 401.924ZM1155.67 472.867C1155.63 473.602 1156.19 474.232 1156.93 474.274C1157.66 474.316 1158.29 473.754 1158.33 473.019C1158.38 472.284 1157.81 471.654 1157.08 471.612C1156.34 471.57 1155.71 472.132 1155.67 472.867ZM-86.0142 402.25L1156.99 473.193L1157.02 472.694L-85.9858 401.75L-86.0142 402.25Z" fill="white"/>
 		<path d="M-91.373 242.622C-91.3065 243.356 -90.6581 243.896 -89.9247 243.83C-89.1914 243.763 -88.6508 243.115 -88.7173 242.382C-88.7838 241.648 -89.4322 241.108 -90.1656 241.174C-90.899 241.241 -91.4396 241.889 -91.373 242.622ZM1219.64 123.712C1219.7 124.446 1220.35 124.986 1221.08 124.92C1221.82 124.853 1222.36 124.205 1222.29 123.472C1222.22 122.738 1221.58 122.198 1220.84 122.264C1220.11 122.331 1219.57 122.979 1219.64 123.712ZM-90.0226 242.751L1220.99 123.841L1220.94 123.343L-90.0677 242.253L-90.0226 242.751Z" fill="white"/>
 		<rect x="171.5" y="218.5" width="137" height="197" rx="8.5" fill="#80CED7" stroke="#00C2DD" stroke-width="3"/>
 		<path d="M180.088 415.503L844.5 455" stroke="#00C2DD" stroke-width="3"/>
