@@ -260,7 +260,8 @@ h5 {
 	text-align: left;
 	font-size: calc(var(--font-title) / 4.8 );
 	font-weight: 700;
-	color: var(--dark-blue2);
+	color: var(--color1);
+	text-shadow: 5px 3px 4px var(--color5);
 	text-transform: uppercase;
 	position: relative;
 	margin: 0;
@@ -538,7 +539,7 @@ svg {
 		border: .1rem solid var(--color4);
 		box-shadow: var(--shadow1);
 		border-radius: var(--bord-default);
-		padding: 2rem;
+		padding: 3rem;
 		background: radial-gradient(#00000000, #00000085);
 		place-self: center stretch;
 		animation: show-up linear forwards;
@@ -550,15 +551,16 @@ svg {
 		inset: 0;
 		height: fit-content;
 		& .content__indent > li {
-			color: var(--dark-blue2);
+			color: white;
 			list-style: none;
 			font-weight: 300;
 			& mark {
 				font-style: italic;
+				font-weight: 700;
 				background: var(--color1);
 				color: white;
 				padding: .1rem 1ch;
-				opacity: .9;
+				opacity: .85;
 				border-radius: .4rem;
 				text-shadow: none;
 				box-shadow: 6px 4px 5px var(--color5);
@@ -566,9 +568,6 @@ svg {
 			& i {
 				color: var(--color1);
 			}
-		}
-		& ul + h5 {
-			margin-top: 1ch;
 		}
 		& a {
 			color: var(--color3);
@@ -592,12 +591,12 @@ svg {
 			inset: 0;
 			position: absolute;
 			padding-top: 0;
-			margin-top: 0;
-			height: 7cqh;
-			width: 14.9cqw;
+			margin-top: -2.4rem;
+			height: 11cqh;
+			width: 13.6ch;
 			box-sizing: border-box;
 			background-color: var(--color1);
-			border-radius: 0 2rem 0 2rem;
+			border-radius: 0rem 2rem 0 3rem;
 			z-index: -15;
 			opacity: .4;
 			box-shadow: inset 6px 4px 5px var(--color8);
@@ -621,6 +620,7 @@ svg {
 		--slide: 1;
 		inset: 0;
 		position: relative;
+		padding: 0;
 		& .content-tubes {
 			grid-area: 2 / 8 / 1 / 10;
 			position: relative;
@@ -1079,7 +1079,6 @@ nav {
 				border-radius: 1rem;
 				padding: 3rem;
 				z-index: 10;
-				/*flex-grow: .2;*/
 				flex-basis: 50%;
 				inset: 0;
 				position: relative;
@@ -1434,7 +1433,7 @@ footer {
 		min-height: 80%;
 		inset: 0;
 		position: relative;
-		background: radial-gradient(#00000000, #00000085);
+		/*background: radial-gradient(#00000000, #00000085);*/
 		&::before {
 			content: "";
 			position: absolute;
@@ -1465,10 +1464,10 @@ footer {
 	& .footer-content {
 		grid-area: 2 / 1 / 2 / 11;
 		background: radial-gradient(var(--dark-blue), var(--dark));
-		border-radius: .3rem .3rem 0 0;
-		padding: 1rem;
+		border-radius: 2rem 2rem 0 0;
+		padding: 1.9rem;
 		inset: 0;
-		width: max(80%);
+		width: max(85%);
 		place-self: center;
 		& {
 			display: flex;
@@ -1483,11 +1482,13 @@ footer {
 			backdrop-filter: none;
 			box-shadow: none;
 			filter: unset;
-			animation: none
+			animation: none;
+			text-align: center;
 		}
-		& > div {
-			flex: 1 1 100%;
+		& div {
+			flex: 1 100%;
 			align-content: end;
+			text-align: center;
 			background-color: transparent;
 			background: unset;
 			filter: unset;
@@ -1503,7 +1504,7 @@ footer {
 				color: var(--color1);
 			}
 			& i {
-				font-size: 1.3cqw;
+				font-size: 1.1cqw;
 			}
 			& a {
 				color: var(--color3);
