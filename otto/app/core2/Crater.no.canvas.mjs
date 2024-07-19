@@ -61,7 +61,7 @@ export default class CraterNotCanvas {
 		let x =				0;
 		let z =				0;
 		let y =				0;
-		let splited;
+		let split;
 
 		peces.map(item => {
 			x +=	item[1];
@@ -69,9 +69,9 @@ export default class CraterNotCanvas {
 			y =		item[3] > y ? item[3] : y;
 		});
 		if (x > LENLIMIT || SPLIT) {
-			splited = this.#splitCrate(peces);
-			x = splited.newX;
-			z = splited.newZ;
+			split = this.#splitCrate(peces);
+			x = split.newX;
+			z = split.newZ;
 		};
 		return (this.#setPadding([x, z, y]));
 	};
@@ -111,7 +111,7 @@ export default class CraterNotCanvas {
 			const bool1 =	art[2] - workRef[2];
 			const bool2 =	workRef[2] - art[2];
 			const check =	bool1 > 0 && bool1 <= PAD || bool2 > 0 && bool2 <= PAD;
-			
+
 			if (compare === true || check) {
 				equals++;
 				x += art[1];
