@@ -5,7 +5,9 @@
 	"main": "main.mjs",
 	"scripts": {
 		"start": "nodemon server.app.js",
-		"build": "rollup -c --watch"
+		"dev": "vite",
+		"build": "vite build --watch",
+		"preview": "vite preview"
 	},
 	"keywords": [],
 	"author": "Joseph Joarell",
@@ -19,11 +21,10 @@
 		"sequelize": "^6.28.0"
 	},
 	"devDependencies": {
-		"@rollup/plugin-json": "^6.0.1",
-		"@rollup/plugin-terser": "^0.4.4",
 		"css-minify": "^2.0.0",
 		"nodemon": "^3.0.1",
-		"rollup": "^4.0.2"
+		"vite": "^5.2.11",
+		"vite-plugin-inspect": "^0.8.4"
 	},
 	"private": true
 }
