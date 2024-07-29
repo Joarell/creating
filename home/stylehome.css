@@ -627,7 +627,7 @@ svg {
 				inset: 0;
 				background-repeat: no-repeat;
 				background-position: center;
-				background-image: url(../images/formao-removebg-preview.png);
+				background-image: url(../otto/app/images/formao-removebg-preview.png);
 				filter: blur(.2rem);
 				background-size: 25cqh;
 				z-index: -1;
@@ -648,7 +648,7 @@ svg {
 				inset: 0;
 				background-repeat: no-repeat;
 				background-position: center;
-				background-image: url(../images/disc-blade-removebg-preview.png);
+				background-image: url(../otto/app/images/disc-blade-removebg-preview.png);
 				background-size: 25cqh;
 				filter: blur(.2rem);
 				z-index: -1;
@@ -670,7 +670,7 @@ svg {
 				inset: 0;
 				background-repeat: no-repeat;
 				background-position: center;
-				background-image: url(../images/jig-saw-removebg-preview.png);
+				background-image: url(../otto/app/images/jig-saw-removebg-preview.png);
 				filter: blur(.2rem);
 				background-size: 25cqh;
 				z-index: -1;
@@ -691,7 +691,7 @@ svg {
 				inset: 0;
 				background-repeat: no-repeat;
 				background-position: center;
-				background-image: url(../images/clamp-tool-removebg-preview.png);
+				background-image: url(../otto/app/images/clamp-tool-removebg-preview.png);
 				background-size: 20cqh;
 				filter: blur(.2rem);
 				z-index: -1;
@@ -712,7 +712,7 @@ svg {
 				inset: 0;
 				background-repeat: no-repeat;
 				background-position: center;
-				background-image: url(../images/tape-measure-removebg-preview.png);
+				background-image: url(../otto/app/images/tape-measure-removebg-preview.png);
 				background-size: 30cqh;
 				/*filter: contrast(.5);*/
 				filter: blur(.2rem);
@@ -1015,7 +1015,7 @@ nav {
 			inset: 0;
 			background-repeat: no-repeat;
 			background-position: center;
-			background-image: url(../images/ampulheta-removebg-preview.png);
+			background-image: url(../otto/app/images/ampulheta-removebg-preview.png);
 			background-size: clamp(15cqw, 75ch, 15rem);
 			mix-blend-mode: difference;
 			opacity: .1;
@@ -1047,7 +1047,7 @@ nav {
 		inset: 0;
 		background-repeat: no-repeat;
 		background-position: center;
-		background-image: url(../images/compass-removebg-preview.png);
+		background-image: url(../otto/app/images/compass-removebg-preview.png);
 		background-size: 12cqw;
 		object-fit: cover;
 		box-shadow: 6px 4px 5px var(--color5);
@@ -1210,7 +1210,7 @@ nav {
 				border-radius: 50%;
 			}
 			& div:nth-of-type(1)::before {
-				background-image: url(../images/chat.svg);
+				background-image: url(../otto/app/images/chat.svg);
 			}
 			& div:nth-of-type(2) {
 				filter: drop-shadow(0 0 3rem var(--color11));
@@ -1227,7 +1227,7 @@ nav {
 					inset: 0;
 					background-repeat: no-repeat;
 					background-position: center;
-					background-image: url(../images/lose-removebg-preview.png);
+					background-image: url(../otto/app/images/lose-removebg-preview.png);
 					object-fit: cover;
 					filter: drop-shadow(0 0 3rem var(--gold));
 					background-size: 10rem;
@@ -1240,7 +1240,7 @@ nav {
 				}
 			}
 			& div:nth-of-type(3)::before {
-				background-image: url(../images/lamp.svg);
+				background-image: url(../otto/app/images/lamp.svg);
 			}
 			& div:hover {
 				filter: drop-shadow(0 0 .5rem var(--color1));
@@ -1393,7 +1393,7 @@ footer {
 			position: absolute;
 			inset: 0;
 			background-repeat: no-repeat;
-			background-image: url(../images/metric-tools-removebg-preview.png);
+			background-image: url(../otto/app/images/metric-tools-removebg-preview.png);
 			background-position: top 50% right;
 			mix-blend-mode: overlay;
 			filter: drop-shadow(0 0 1rem white);
@@ -1407,7 +1407,7 @@ footer {
 			position: absolute;
 			inset: 0;
 			background-repeat: no-repeat;
-			background-image: url(../images/sharpper-removebg-preview.png);
+			background-image: url(../otto/app/images/sharpper-removebg-preview.png);
 			background-position: bottom 40% left;
 			mix-blend-mode: overlay;
 			transform: translateX(0%) translateY(30%);
@@ -1427,7 +1427,7 @@ footer {
 			position: absolute;
 			inset: 0;
 			background-repeat: no-repeat;
-			background-image: url(../images/furadeira-removebg-preview.png);
+			background-image: url(../otto/app/images/furadeira-removebg-preview.png);
 			background-position: center;
 			filter: hue-rotate(90deg);
 			transform: translateX(7%) translateY(35%);
@@ -1443,7 +1443,7 @@ footer {
 			position: absolute;
 			inset: 0;
 			background-repeat: no-repeat;
-			background-image: url(../images/BLADE.png);
+			background-image: url(../otto/app/images/BLADE.png);
 			filter: drop-shadow(0 0 1rem white);
 			mix-blend-mode: overlay;
 			overflow: clip;
