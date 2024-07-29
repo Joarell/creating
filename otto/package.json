@@ -1,0 +1,28 @@
+{
+	"name": "Otto",
+	"version": "1.22.22",
+	"description": "Art work solver list and crater.",
+	"main": "main.mjs",
+	"scripts": {
+		"start": "nodemon server.app.js",
+		"build": "rollup -c --watch"
+	},
+	"keywords": [],
+	"author": "Joseph Joarell",
+	"license": "MIT",
+	"privaate": true,
+	"dependencies": {
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.3",
+		"express": "^4.18.2",
+		"jsonwebtoken": "^9.0.0",
+		"sequelize": "^6.28.0"
+	},
+	"devDependencies": {
+		"@rollup/plugin-json": "^6.0.1",
+		"@rollup/plugin-terser": "^0.4.4",
+		"nodemon": "^3.0.1",
+		"rollup": "^4.0.2"
+	},
+	"private": true
+}

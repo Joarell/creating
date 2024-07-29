@@ -1,0 +1,306 @@
+
+
+
+*, *::before, *::after {
+	box-sizing: inherit;
+}
+
+
+:root {
+	--hue: 204;
+	--saturation: 100%;
+	--lightness: 30%;
+	--color1: #03e9f4;
+	--color2: #162789;
+	--color3: #FC007A;
+	--color4: #FFF;
+	--color5: #554;
+	--color6: #141E30;
+	--color7: #243B55;
+}
+
+body, html, main {
+	height: 100%;
+	margin: 0;
+	font-family: sans-serif;
+	background: linear-gradient(var(--color6), var(--color7));
+	/* background: #141e30; */
+}
+
+input:-webkit-autofill {
+	background-color: transparent;
+	background-image: none;
+	color:transparent;
+	-webkit-text-fill-color: #fff;
+	-webkit-box-shadow: #141e30;
+	transition: background-color 5000s ease-in-out 0s;
+}
+
+
+dialog::backdrop {
+	background: var(--color4);
+	backdrop-filter: blur(4px) ;
+}
+
+:is(dialog) [open="true"] {
+	display: grid;
+	grid-area: 1 / 1;
+}
+
+main {
+	color: #fff;
+	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+
+::-webkit-scrollbar {
+	width: 1rem;
+}
+
+::-webkit-scrollbar-track {
+	background: white;
+	border-radius: 100vw;
+	margin-block: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+	background: linear-gradient(270deg, var(--color3), var(--color1));
+	border-radius: 100vw;
+	border: .3rem solid white;
+	margin-block: 0.5rem;
+}
+
+/* ╭──────────────────────────────────────────────────────────╮
+   │       Starting to edit the elements of the login.        │
+   ╰──────────────────────────────────────────────────────────╯
+*/
+.login-box, from > div {
+	padding: 2.5rem 4rem;
+	background: hsl(var(--hue) var(--saturation) var(--lightness) / .1);
+	box-sizing: border-box;
+	box-shadow: 0 1.5rem 2.5rem #00000099;
+	border-radius: 1rem;
+	align-self: center;
+}
+
+.login-box .user-box {
+	position: relative;
+}
+
+.login-box .user-box input {
+	width: 100%;
+	padding: 1rem 0;
+	font-size: 1rem;
+	color: #fff;
+	margin-bottom: 2rem;
+	border: none;
+	border-bottom: 0.1rem solid #fff;
+	outline: none;
+	background: transparent;
+}
+
+.login-box .user-box label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 0.25rem 0;
+	font-size: 1rem;
+	color: #fff;
+	pointer-events: none;
+	transition: .5s;
+}
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+	top: -0.5rem;
+	left: 0;
+	color: var(--color1);
+	font-size: 0.75rem;
+}
+
+.login-box form a {
+	position: relative;
+	display: inline-block;
+	padding:1rem 1.5rem;
+	color: var(--color1);
+	font-size: 1rem;
+	text-decoration: none;
+	text-transform: uppercase;
+	overflow: hidden;
+	transition: .5s;
+	margin-top: 1rem;
+	letter-spacing: 0.25rem;
+}
+
+login-box a:hover{
+	background: var(--color1);
+	color: #fff;
+	border-radius: 0.25rem;
+	box-shadow: 0 0 0.25rem var(--color1),
+				0 0 0.25rem var(--color1),
+				0 0 5rem var(--color1),
+				0 0 8rem var(--color1),
+}
+
+.login-box a span {
+	position: absolute;
+	display: block;
+}
+
+.login-box a span:nth-child(1) {
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 2px;
+	background: linear-gradient(90deg, transparent, var(--color1));
+	animation: btn-anim1 1s linear infinite;
+}
+
+@keyframes btn-anim1 {
+	0% {
+		left: -100%;
+	}
+	50%,100% {
+		left: 100%;
+	}
+}
+
+.login-box a span:nth-child(2) {
+	top: -100%;
+	right:0;
+	width: 2px;
+	height: 100%;
+	background: linear-gradient(180deg, transparent, var(--color1));
+	animation: btn-anim2 1s linear infinite;
+	animation-delay: .25s;
+}
+
+@keyframes btn-anim2{
+	0%{
+		top: -100%;
+	}
+	50%,100% {
+		top: 100%;
+	}
+}
+
+.login-box a span:nth-child(3) {
+	bottom: 0;
+	right: -100%;
+	width: 100%;
+	height: 2px;
+	background: linear-gradient(270deg, transparent, var(--color1));
+	animation: btn-anim3 1s linear infinite;
+	animation-delay: .5s;
+}
+
+@keyframes btn-anim3{
+	0%{
+		right: -100%;
+	}
+	50%,100% {
+		right: 100%
+	}
+}
+
+.login-box a span:nth-child(4) {
+	bottom: -100;
+	left: 0%;
+	width: 2px;
+	height: 100%;
+	background: linear-gradient(360deg, transparent, var(--color1));
+	animation: btn-anim4 1s linear infinite;
+	animation-delay: .75s;
+}
+
+
+@keyframes btn-anim4{
+	0%{
+		bottom: -100%;
+	}
+	50%,100% {
+		bottom: 100%
+	}
+}
+
+
+/*           iPhone 6+, 7+ and 8+           */
+@media only screen
+	and ( min-width: 414px)
+	and ( max-width: 736px) {
+	.login-box, form > div {
+		color: #fff;
+		text-align: center;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.login-box {
+		margin: 35% 0;
+		background: #00000080;
+		box-sizing: border-box;
+		box-shadow: 0 1.5rem 2.5rem #00000099;
+		border-radius: 1rem;
+		align-self: center;
+	}
+}
+
+
+/*                  iPhone X                 */
+@media only screen
+	and (-webkit-min-device-pixel-ratio: 3)
+	and ( min-width: 375px)
+	and ( max-width: 812px) {
+	.login-box, form > div {
+		color: #fff;
+		text-align: center;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.login-box {
+		margin: 15% 0;
+		background: #00000080;
+		box-sizing: border-box;
+		box-shadow: 0 1.5rem 2.5rem #00000099;
+		border-radius: 1rem;
+		align-self: center;
+	}
+}
+
+
+/*                  Galaxy S6                 */
+@media only screen
+	and (-webkit-min-device-pixel-ratio: 4)
+	and ( min-width: 360px)
+	and ( max-width: 640px) {
+	.login-box, form > div {
+		color: #fff;
+		text-align: center;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.login-box {
+		margin: 15% 0;
+		background: #00000080;
+		box-sizing: border-box;
+		box-shadow: 0 1.5rem 2.5rem #00000099;
+		border-radius: 1rem;
+		align-self: center;
+	}
+}
