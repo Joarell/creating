@@ -1,3 +1,4 @@
+docker-compose.yml
 .package.json.kate-swp
 builder.kdev4
 nginx
@@ -15,3 +16,4 @@ DB
 data
 letsencrypt
 yarn.lock
+otto/app/responsive_sheet.css
