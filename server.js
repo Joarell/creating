@@ -3,7 +3,7 @@ const log = require('debug')('server:back');
 const express =	require('express');
 const router=	require('./router.js');
 const app =		express();
-const port =	process.env.PORT || 3000;
+const port =	process.env.PORT || 3004;
 
 app.use(router);
 app.use((req, res, next) => {

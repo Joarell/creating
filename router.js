@@ -30,7 +30,7 @@ const log =			require('debug')('server:back');
 
 // TODO: should send the home page when all be done.
 router.use(express.json());
-router.use(cors({origin: "http://localhost:82", Credential: true}));
+router.use(cors({origin: "http://localhost:83", Credential: true}));
 router.use(express.static(path.join(__dirname)));
 router.use(compression());
 
@@ -45,10 +45,6 @@ router.post('/private/auth',
 	userSet.userTokenMatch, userSet.userTokenExpTime,
 	(req, res) => {
 		res.status(200).json({ 'status' : 'active' });
-});
-
-router.get("/home", (req, res) => {
-	console.log('Running');
 });
 
 router.post("/start", userSet.userLoginValidation, take.newLogin);

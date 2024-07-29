@@ -15,26 +15,26 @@ services:
 #  ╭──────────────────────────────────────────────────────────╮
 #  │               cloudflare tunnel container.               │
 #  ╰──────────────────────────────────────────────────────────╯
-  tunnel:
-    command: tunnel run
-
-    deploy:
-      mode: replicated
-      replicas: 1
-      resources:
-        limits:
-          cpus: '0.75'
-          memory: 512M
-        reservations:
-          cpus: '0.50'
-          memory: 100M
-
-    env_file: .env
-    environment:
-      - TUNNEL_TOKEN=${CLOUD_TOKEN}
-
-    image: cloudflare/cloudflared:latest
-    restart: unless-stopped
+  # tunnel:
+  #   command: tunnel run
+  #
+  #   deploy:
+  #     mode: replicated
+  #     replicas: 1
+  #     resources:
+  #       limits:
+  #         cpus: '0.75'
+  #         memory: 512M
+  #       reservations:
+  #         cpus: '0.50'
+  #         memory: 100M
+  #
+  #   env_file: .env
+  #   environment:
+  #     - TUNNEL_TOKEN=${CLOUD_TOKEN}
+  #
+  #   image: cloudflare/cloudflared:latest
+  #   restart: unless-stopped
 
 #  ╭──────────────────────────────────────────────────────────╮
 #  │    Authorization and authentication container server     │
