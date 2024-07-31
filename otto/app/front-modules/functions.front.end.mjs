@@ -97,11 +97,13 @@ export async function crate(fetched = false) {
 		sessionStorage.setItem("pane1", "populate");
 		setTimeout(() => {
 			const closeDialog =	document.querySelector('.side-menu');
+			const root =		document.querySelector(':root');
 
 			closeDialog?.getElementsByTagName('padding-dialog')?.length > 0 ?
 				sessionStorage.setItem('CLOSED', 'NOW') : false;
 			fragment.appendChild(padding);
 			document.querySelector(".side-menu").appendChild(fragment);
+			root.style.setProperty("--layer-state", "block");
 		}, 150);
 	}
 	weak.add(estimate);
@@ -117,7 +119,8 @@ export async function cleanInputs(fetched = false) {
 	document.getElementById("input_length").value =	"";
 	document.getElementById("input_depth").value =	"";
 	document.getElementById("input_height").value =	"";
-	const dialog = document.querySelectorAll('padding-dialog').length;
+	const dialog =	document.querySelectorAll('padding-dialog').length;
+	const root =	document.querySelector(':root');
 
 	fetched ? await Promise.resolve(sessionStorage.setItem('pane1', 'clear'))
 		.then(document.getElementById("input_code").select()):
@@ -127,6 +130,7 @@ export async function cleanInputs(fetched = false) {
 	displayCub();
 	displayAirCub();
 	dialog > 0 ? sessionStorage.setItem("CLOSED", "NOW") : false;
+	root.style.setProperty("--layer-state", "none");
 };
 
 
