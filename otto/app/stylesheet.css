@@ -3,7 +3,6 @@
    ╰─────────────────────────────────────────────────────────╯
 */
 
-/*@import "responsive_sheet.css";*/
 @import "index-01.css";
 @import "https://www.nerdfonts.com/assets/css/webfont.css";
 
@@ -190,7 +189,7 @@ body {
 	background-position: center;
 	scroll-behavior: slow;
 	background-color: var(--bg-col);
-	transition: padding 1s ease-in-out;
+	transition: all 1s ease-in-out;
 }
 
 
@@ -586,18 +585,12 @@ tbody:nth-child(even) {
 
 :is(.popup, .plotter, .container__insert, .container__status, .result-left,
 .result, .menu) {
-	padding: 2rem 2rem;
+	padding: 2rem;
 	font-size: var(--fonts);
 	font-weight: 600;
 	box-sizing: border-box;
 	box-shadow: var(--shadow1);
 	border-radius: 2rem;
-}
-
-
-:is(.popup, .plotter, .container__insert, .container__status, .result-left,
-.result) {
-	container-type: inline-size;
 }
 
 
@@ -1332,7 +1325,7 @@ tbody:nth-child(even) {
 	position: absolute;
 	opacity: .9;
 	z-index: 100;
-	margin: 2.5rem 82% auto .3%;
+	margin: 1.5% 82% auto .3%;
 	& .crates-done {
 		height: 18cqb;
 	}
@@ -1341,6 +1334,7 @@ tbody:nth-child(even) {
 		animation: emerge 1s ease-in-out;
 		animation-fill-mode: forwards;
 		transition: backdrop 1s ease-in-out;
+		width: clamp(18dvw, 17rem, 25cqw);
 	}
 	&:hover .pad {
 		margin-bottom: .7rem;
@@ -1350,6 +1344,7 @@ tbody:nth-child(even) {
 		animation: emerge 500ms ease-in;
 		animation-fill-mode: forwards;
 		transition: backdrop 500ms ease-in-out;
+		z-index: 10;
 	}
 }
 
@@ -1357,7 +1352,7 @@ tbody:nth-child(even) {
 .padding-dialog {
 	container: dialog;
 	display: grid;
-	grid-template-columns: 1fr;
+	grid-auto-columns: 1fr;
 	grid-template-rows: 1fr 8cqh 8cqh;
 	grid-template-areas:
 	"iframe"
@@ -1369,6 +1364,7 @@ tbody:nth-child(even) {
 	& > iframe {
 		grid-area: iframe;
 		height: 40cqh;
+		width: 100%;
 	}
 }
 
@@ -1407,7 +1403,7 @@ tbody:nth-child(even) {
 	}
 	& > li > label {
 		font-family: Mitr, sans-serif;
-		font-size: .7rem;
+		font-size: 4.7dvw;
 		font-weight: 400;
 		color: var(--pressed);
 	}
@@ -1418,6 +1414,7 @@ tbody:nth-child(even) {
 	display: var(--layer-state);
 	inset: 0;
 	position: relative;
+	transition: display 1s ease-in-out;
 }
 
 
@@ -1429,7 +1426,7 @@ tbody:nth-child(even) {
 		position: absolute;
 		height: 100%;
 		width: 100%;
-		background: var(--color3);
+		background: var(--light-blue1);
 		/*border: .1px solid var(--color3);*/
 		transition: all .2s linear;
 		animation: waves 2000ms linear infinite;
@@ -1444,7 +1441,7 @@ tbody:nth-child(even) {
 		position: absolute;
 		height: 100%;
 		width: 100%;
-		background: var(--color3);
+		background: var(--light-blue1);
 		/*border: .5px solid var(--color3);*/
 		transition: all .2s linear;
 		animation: waves 2000ms linear 1000ms infinite;
@@ -1470,8 +1467,10 @@ tbody:nth-child(even) {
 	   ╰─────────────────────╯
 	*/
 	.container {
+		container-name: main-app;
+		container-type: inline-size;
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(mian(25rem, 10cqw), 1fr));
 		column-gap: var(--colg);
 		row-gap: var(--rowg);
 		padding: 2% 20%;
@@ -1530,9 +1529,10 @@ tbody:nth-child(even) {
 		--clr-alpha: var(--gradient);
 		animation: spinner 3.6s infinite ease;
 		transform-style: preserve-3d;
-		& > * {
+		& {
 			display:grid;
 			place-items: center;
+			align-items: center;
 		}
 
 		& > div {
@@ -1789,7 +1789,7 @@ tbody:nth-child(even) {
 	}
 
 	/* ╭────────────────────────────────╮
-	   │ 	Animation footer settings.    │
+	   │   Animation footer settings    │
 	   ╰────────────────────────────────╯
 	*/
 	.svg-frame {
@@ -1945,6 +1945,7 @@ tbody:nth-child(even) {
 		align-content: center;
 		flex-direction: row;
 		justify-content: space-around;
+		z-index: 10;
 		& {
 			width: 11%;
 			height: 7%;
@@ -2046,12 +2047,10 @@ tbody:nth-child(even) {
 	}
 
 	.plotter:is([aria-hidden="false"]) {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-wrap: wrap;
-		flex-basis: 100%;
-		gap: 1rem;
+		display: grid;
+		grid-auto-rows: .15fr 1fr .10fr;
+		grid-template-columns: .25fr 1fr 25fr;
+		padding: 0 10ch;
 		& {
 			isolation: isolate;
 			margin: 0% 20%;
@@ -2060,11 +2059,12 @@ tbody:nth-child(even) {
 			border: .1rem solid var(--iframes-bg);
 		}
 		.plotter__header {
-			display: inherit;
+			grid-area: 1 / 1 / 1 / 4;
+			display: flex;
 			min-width: 100%;
 			align-items: baseline;
 			justify-content: space-between;
-			flex-basis: 50%;
+			flex-basis: 1;
 			& > p {
 				font-size: .6rem;
 				background: transparent;
@@ -2077,8 +2077,11 @@ tbody:nth-child(even) {
 			}
 		}
 		.layer-button {
-			order: 3;
-			flex-direction: column-reverse;
+			place-self: center;
+			grid-area: 3 / 3 / 3 / 3;
+			display: flex;
+			flex-direction: row;
+			gap: 2ch;
 			align-items: space-between;
 			justify-content: space-between;
 			animation: emerge 4s ease;
@@ -2095,6 +2098,8 @@ tbody:nth-child(even) {
 			}
 		}
 		.crate-layer {
+			place-self: center;
+			grid-area: 2 / 1 / 2 / 4;
 			animation: fede-open 3s ease;
 			animation-fill-mode: forwards;
 			transition: width height 2s ease;
@@ -2279,7 +2284,7 @@ tbody:nth-child(even) {
    ╰──────────────────────────────────────────────────────────╯
 */
 
-@media only screen and (width < 80rem) and (orientation: portrait) {
+@media only screen and (width <= 80rem) and (orientation: portrait) {
 
 	header {
 		height: 10%;
@@ -2657,6 +2662,7 @@ tbody:nth-child(even) {
 	   │ 	main container.    │
 	   ╰─────────────────────╯
 	*/
+
 	.container {
 		margin-top: 4.2rem;
 	}
@@ -2678,7 +2684,6 @@ tbody:nth-child(even) {
 		transition: width 2s ease-in-out;
 	}
 
-	.container,
 	.container__status__pane,
 	.container__status__pane__frame {
 		display: flex;
@@ -2687,6 +2692,7 @@ tbody:nth-child(even) {
 		flex-basis: clamp(80%, 70%, 100%);
 		gap: 1rem;
 		justify-content: space-between;
+		padding: 2rem;
 	}
 
 
@@ -2961,8 +2967,7 @@ tbody:nth-child(even) {
    │                    iPhone x landscape                    │
    ╰──────────────────────────────────────────────────────────╯
 */
-/* @media only screen and ( min-width: 840px) and ( max-width: 1700px) { */
-@media only screen and (width < 80rem) {
+@media only screen and (width <= 80rem) and (orientation: landscape) {
 
 	header {
 		height: 10%;
@@ -2973,13 +2978,13 @@ tbody:nth-child(even) {
 	}
 
 	/* ╭───────────────────╮
-	   │ 	Spinner setup    │
+	   │  Spinner setup    │
 	   ╰───────────────────╯
 	*/
 	/* Made by Kailoyan Todorov - from https://uiverse.io/bociKond/wise-bat-13 */
 	.spinner {
-		width: 4rem;
-		height: 4rem;
+		width: 8rem;
+		height: 8rem;
 		--clr: var(--color1);
 		--clr-alpha: var(--gradient);
 		animation: spinner 3.6s infinite ease;
@@ -2987,6 +2992,7 @@ tbody:nth-child(even) {
 		& > * {
 			display:grid;
 			place-items: center;
+			align-items: center;
 			position: absolute;
 		}
 
@@ -2995,11 +3001,11 @@ tbody:nth-child(even) {
 			height: 100%;
 			position: absolute;
 			width: 100%;
-			border: .2rem solid var(--clr);
+			border: .2rem solid var(--dark-blue);
 		}
 
 		& div:nth-of-type(1) {
-			transform: translateZ(-2rem) rotateY(180deg);
+			transform: translateZ(-4rem) rotateY(180deg);
 		}
 
 		& div:nth-of-type(2) {
@@ -3023,7 +3029,7 @@ tbody:nth-child(even) {
 		}
 
 		& div:nth-of-type(6) {
-			transform: translateZ(2rem);
+			transform: translateZ(4rem);
 		}
 	}
 
@@ -3051,13 +3057,13 @@ tbody:nth-child(even) {
 
 	.loading {
 		z-index: 40;
-		margin-top: 10%;
-		margin-left: 40%;
-		position: absolute;
+		inset: 0;
+		position: relative;
 		& {
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			position: absolute;
 		}
 	}
 
@@ -3266,6 +3272,12 @@ tbody:nth-child(even) {
 	}
 
 
+	header {
+		height: 10cqw;
+		overflow: clip;
+	}
+
+
 	.layers-btn,
 	.logout-btn {
 		border-radius: 40%;
@@ -3289,12 +3301,14 @@ tbody:nth-child(even) {
 		flex-wrap: wrap;
 		align-content: center;
 		justify-content: space-around;
-		flex-direction: row;
+		flex-direction: row reverse;
 		gap: .3rem;
+		position: fixed;
 		& {
-			width: 30%;
+			width: 15cqw;
 			max-height: 10%;
 			margin-top: 1rem;
+			margin-left: 84%;
 			position: absolute;
 		}
 		& > * {
@@ -3405,7 +3419,7 @@ tbody:nth-child(even) {
 	}
 
 	/* ╭─────────────────────╮
-	   │ 	main container.    │
+	   │  main container.    │
 	   ╰─────────────────────╯
 	*/
 	tr, td, th {
@@ -3423,15 +3437,14 @@ tbody:nth-child(even) {
 		grid-template-columns: repeat(auto-fit, minmax(min(25rem, 100%), 1fr));
 		column-gap: var(--colg-mobile);
 		row-gap: var(--rowg-mobile);
-		margin-top: 4rem;
+		padding: 1cqw 22cqw;
 	}
+
 
 	.container-bottom {
 		display: flex;
-		flex-wrap: wrap;
-		align-items: flex-end;
-		justify-content: flex-end;
 		gap: 1rem;
+		flex-direction: row;
 		& > .container--span {
 			&:nth-of-type(1) {
 				width: 100%;
@@ -3470,6 +3483,7 @@ tbody:nth-child(even) {
 		flex-wrap: wrap;
 		flex-shrink: 1;
 		flex-basis: clamp(80%, 70%, 100%);
+		/*flex-basis: 1;*/
 		gap: 2rem;
 		justify-content: space-between;
 	}
@@ -3713,12 +3727,9 @@ tbody:nth-child(even) {
 		border-radius: 1rem;
 		padding: .8rem .5rem;
 		transition: .5s ease;
-	}
-
-
-	.result:is([aria-hidden="true"]),
-	.accordion div:is([aria-hidden="true"]) {
-		display: none;
+		& label {
+			margin-right: 1ch;
+		}
 	}
 
 
@@ -3774,10 +3785,10 @@ tbody:nth-child(even) {
 	}
 
 	.plotter:is([aria-hidden="false"]) {
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-		flex-basis: 100%;
+		display: grid;
+		grid-auto-rows: .15fr 1fr .10fr;
+		grid-template-columns: .25fr 1fr 25fr;
+		margin: 0 12cqw;
 		& {
 			animation: emerge 2.5s ease;
 			animation-fill-mode: forwards;
@@ -3785,11 +3796,13 @@ tbody:nth-child(even) {
 			border: .1rem solid var(--iframes-bg);
 		}
 		.plotter__header {
-			display: inherit;
-			min-width: 100%;
+			grid-area: 1 / 1 / 1 / 4;
+			display: flex;
+			flex-direction: row;
+			/* min-width: 100%; */
 			align-items: baseline;
 			justify-content: space-between;
-			flex-basis: 50%;
+			flex-basis: 1;
 			& > p {
 				font-size: .7rem;
 				background: var(--work-hover);
@@ -3797,10 +3810,15 @@ tbody:nth-child(even) {
 				box-shadow: var(--inner-shadow);
 				border-radius: 1rem;
 				padding: .5rem;
+				margin: 0;
 			}
 		}
 		.layer-button {
-			order: 3;
+			place-self: center;
+			grid-area: 3 / 3 / 3 / 3;
+			display: flex;
+			flex-direction: row;
+			gap: 2ch;
 			animation: emerge 4s ease;
 			animation-fill-mode: forwards;
 			transition: all 3s linear;
@@ -3817,6 +3835,8 @@ tbody:nth-child(even) {
 			min-width: 100%;
 		}
 		.crate-layer {
+			place-self: center;
+			grid-area: 2 / 1 / 2 / 4;
 			animation: fede-open 3s ease;
 			animation-fill-mode: forwards;
 			transition: all 2s linear;
@@ -3856,7 +3876,7 @@ tbody:nth-child(even) {
 		.crate-layer {
 			padding: .5rem;
 			justify-content: center;
-			border-radius: 2rem;
+			border-radius: 3.5ch;
 			border: .1rem solid var(--iframes-bg);
 			box-shadow: var(--inner-shadow);
 		}
