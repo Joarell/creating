@@ -1430,13 +1430,13 @@ tbody:nth-child(even) {
 		position: absolute;
 		height: 100%;
 		width: 100%;
-		background: var(--light-blue1);
+		background: var(--color3);
+		box-shadow: var(--shadow1);
 		/*border: .1px solid var(--color3);*/
 		transition: all .2s linear;
 		animation: waves 2000ms linear infinite;
 		animation-play-state: running;
 		border-radius: .8rem;
-		opacity: .01;
 		z-index: -30;
 	}
 	&::after {
@@ -1445,13 +1445,13 @@ tbody:nth-child(even) {
 		position: absolute;
 		height: 100%;
 		width: 100%;
-		background: var(--light-blue1);
+		background: var(--color3);
+		box-shadow: var(--shadow1);
 		/*border: .5px solid var(--color3);*/
 		transition: all .2s linear;
 		animation: waves 2000ms linear 1000ms infinite;
 		animation-play-state: running;
 		border-radius: .8rem;
-		opacity: .01;
 		z-index: -30;
 	}
 }
