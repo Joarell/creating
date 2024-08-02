@@ -1382,6 +1382,7 @@ tbody:nth-child(even) {
 	border: .1rem solid var(--iframes-bg);
 	border-radius: 1rem;
 	padding: 4ch 5ch;
+	padding: 10% 12%;
 	& > input {
 		max-width: 4rem;
 	}
@@ -3443,6 +3444,13 @@ tbody:nth-child(even) {
 		padding: 1cqw 22cqw;
 	}
 
+	.pads-sizes {
+		grid-area: pads;
+		border: unset;
+		& > input {
+			max-width: 4rem;
+		}
+	}
 
 	.container-bottom {
 		display: flex;
