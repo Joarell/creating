@@ -1381,7 +1381,6 @@ tbody:nth-child(even) {
 	grid-area: pads;
 	border: .1rem solid var(--iframes-bg);
 	border-radius: 1rem;
-	padding: 4ch 5ch;
 	padding: 10% 12%;
 	& > input {
 		max-width: 4rem;
@@ -1407,7 +1406,7 @@ tbody:nth-child(even) {
 	}
 	& > li > label {
 		font-family: Mitr, sans-serif;
-		font-size: 3.5dvw;
+		font-size: 5dvw;
 		font-weight: 400;
 		color: var(--pressed);
 	}
