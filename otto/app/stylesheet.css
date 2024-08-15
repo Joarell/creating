@@ -1406,7 +1406,7 @@ tbody:nth-child(even) {
 	}
 	& > li > label {
 		font-family: Mitr, sans-serif;
-		font-size: 5dvw;
+		font-size: calc(var(--fonts) - .08rem);
 		font-weight: 400;
 		color: var(--pressed);
 	}
