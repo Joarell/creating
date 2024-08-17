@@ -80,24 +80,27 @@ async function retrieveDataEstimates(doc) {
 
 async function addNewUser (user) {
 	const {
-		user_name, email, lastName, passFrase, birthday, accessToken, refreshToken
+		user_name,
+		email,
+		lastName,
+		passFrase,
+		birthday,
+		accessToken,
+		refreshToken,
+		access
 	} = user;
 	const cryptPass =	encryption.passEncryptProcedure (passFrase);
 	const client =		await pool.connect();
 	const id =			randomBytes(10).toString('hex');
 
-	// if (cryptPass === 500 || criptPass === undefined) {
-	// 	client.release();
-	// 	return (500);
-	// }
 	try {
 		await client.query('BEGIN');
 		const userData = `
 			INSERT INTO craters.users
 			(id, name, last_name, birth_date, email, pass_frase, auth_token,
-			refresh_token) VALUES
+			refresh_token, grant_access) VALUES
 			('${id}', '${user_name}', '${lastName}', '${birthday}', '${email}',
-			'${cryptPass}', '${accessToken}', '${refreshToken}')
+			'${cryptPass}', '${accessToken}', '${refreshToken}', '${access}')
 		`;
 		await pool.query(userData);
 		await pool.query('COMMIT');
@@ -204,6 +207,7 @@ async function delEstimate (ref) {
 	await client.query(command);
 	client.release();
 }
+
 
 module.exports = {
 	addNewUser,

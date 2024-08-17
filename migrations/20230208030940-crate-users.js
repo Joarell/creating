@@ -54,6 +54,10 @@ module.exports = {
 			active_session: {
 				type: Sequelize.STRING,
 				allowNull: true,
+			},
+			grant_access: {
+				type: Sequelize.STRING(10),
+				allowNull: false
 			}
 		},
 		{
