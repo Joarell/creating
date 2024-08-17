@@ -5,7 +5,6 @@ const assets =		[
 	'/',
 	'/app/',
 	'./main.min.mjs',
-	'./bundle.mjs',
 	'./manifest.json',
 	'./index.html',
 	'./stylesheet.min.css',
