@@ -27,10 +27,13 @@ globalThis.onload = async () => {
 	const mode =		localStorage.getItem("mode");
 	const stPanel =		document.getElementById("status");
 	const searched =	sessionStorage.getItem("FETCHED");
+	const grants =		sessionStorage.getItem("tier");
 
 	stPanel.hasChildNodes() ? true : setTimeout(await statusTable(), 200);
 	changeMode(mode);
 	searched ? setTimeout(statusTable, 200) : setTimeout(restorePanel, 200);
+	grants === "OFF" || grants === "FULL" ?
+		globalThis.navigator.serviceWorker.register("./sw.status.mjs") : false;
 };
 
 function changeMode(color) {
@@ -179,5 +182,3 @@ export function createHeader(table) {
 	`;
 	return table.appendChild(head);
 }
-
-globalThis.navigator.serviceWorker.register("./sw.status.mjs");

@@ -30,11 +30,14 @@ globalThis.document.onreadystatechange = () => {
 	const len =		pane.childNodes.length;
 	const getter =	localStorage.getItem("refNumb");
 	const mode =	localStorage.getItem("mode");
+	const grants =	sessionStorage.getItem("tier");
 
 	if (len && getter)
 		len > 1 ? true : setTimeout(() => showCrates2(getter), 50);
 	setTimeout(loadingPage, 2300);
 	changeMode(mode);
+	grants === "OFF" || grants === "FULL" ?
+		globalThis.navigator.serviceWorker.register("./sw.pane2.mjs") : false;
 };
 
 function loadingPage() {
@@ -249,5 +252,3 @@ export async function showCrates2(estimate) {
 	pane.appendChild(element);
 	return "done";
 }
-
-globalThis.navigator.serviceWorker.register("./sw.pane2.mjs");

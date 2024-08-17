@@ -198,9 +198,6 @@ globalThis.document.getElementById('estimate_getter')
 });
 
 
-globalThis.navigator.serviceWorker.register('./sw.mjs');
-
-
 globalThis.addEventListener('beforeinstallprompt', (event) => {
 	event.preventDefault();
 	console.log('👍', 'beforeinstallprompt', event);

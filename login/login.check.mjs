@@ -62,8 +62,7 @@ async function backEndLoginAuth(userInfo) {
 };
 
 
-async function appAccessCheckIn(userAuth) {
-	const { result } =	userAuth;
+async function appAccessCheckIn({result, access }) {
 	const header =	{
 		'Authorization': `Bearer ${result[0]}`,
 		'Content-Type': 'application/javascript',
@@ -82,8 +81,10 @@ async function appAccessCheckIn(userAuth) {
 		const checkOut = await fetch(request)
 			.catch(err => alert(`Warning! ${err}`));
 
-		if (checkOut.status <= 350)
+		if (checkOut.status <= 350) {
+			globalThis.sessionStorage.setItem('tier', access);
 			globalThis.location.assign(checkOut.url);
+		}
 		else {
 			alert("Not authorized. Please, try again!");
 			globalThis.location.reload();

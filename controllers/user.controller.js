@@ -26,7 +26,7 @@ const insertNewUser = async (req, res) => {
 	let userData = {
 		...req.body,
 		accessToken: token,
-		refreshToken: refToken
+		refreshToken: refToken,
 	};
 	const confirmation = await db.addNewUser(userData);
 
@@ -181,6 +181,7 @@ const userTokenExpTime = async (req, res, next) => {
 		return(res.status(401).redirect('/'));
 	}
 };
+
 
 module.exports = {
 	extractCookieData,

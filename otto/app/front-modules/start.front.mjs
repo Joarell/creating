@@ -21,9 +21,8 @@ export function checkWork(work) {
 	const checked =		regValid(intParser([work[1], work[2], work[3]]));
 	const regex =		/[^-a-z-A-Z-0-9]/g;
 	const estimate =	document.getElementById("input_estimate").value;
-	let i;
+	let i =				0;
 
-	i = 0;
 	for (i in localStorage.key(i)){
 		if(work[0] === localStorage.key(i)){
 			alert(`${work[0]} already added to the list. Please, try again`);

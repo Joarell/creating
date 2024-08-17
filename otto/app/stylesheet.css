@@ -777,6 +777,8 @@ tbody:nth-child(even) {
 		color: var(--color5);
 		& > p {
 			color: var(--color5);
+			text-decoration: underline overline;
+			opacity: 1;
 		}
 		.popup {
 			display: block;
@@ -845,21 +847,19 @@ tbody:nth-child(even) {
 	text-transform: uppercase;
 	width: 6rem;
 	height: 6rem;
-	text-decoration: underline;
-	text-underline-offset: .09rem;
 	color: var(--crate-btn-col);
 	isolation: isolate;
 }
 
 
 .IO__crate > p {
-	color: var(--crate-btn-col);
-	font-size: 1rem;
-	font-family: Mitr, sans-serif;
-	font-weight: 500;
-	text-decoration: underline;
-	text-underline-offset: -.8rem;
-	opacity: .6;
+	/*color: var(--crate-btn-col);*/
+	color: var(--dark-blue1);
+	font-size: 2rem;
+	font-family: 'Big Shoulders Stencil Display';
+	font-weight: 900;
+	text-decoration-style: bold;
+	opacity: .8;
 }
 
 

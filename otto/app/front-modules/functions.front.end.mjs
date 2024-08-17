@@ -82,6 +82,7 @@ export async function crate(fetched = false) {
 	const padding =		document.createElement('padding-dialog');
 	const weak =		new WeakSet();
 	const fragment =	new DocumentFragment();
+	const grant =		sessionStorage.getItem('tier');
 	const e_code =		localStorage.getItem('refNumb') ??
 		document.getElementById('input_estimate').value;
 	let list;
@@ -103,7 +104,8 @@ export async function crate(fetched = false) {
 				sessionStorage.setItem('CLOSED', 'NOW') : false;
 			fragment.appendChild(padding);
 			document.querySelector(".side-menu").appendChild(fragment);
-			root.style.setProperty("--layer-state", "block");
+			grant === 'FULL' || grant === 'PLOTTER' ?
+				root.style.setProperty("--layer-state", "block") : false;
 		}, 150);
 	}
 	weak.add(estimate);

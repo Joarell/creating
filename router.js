@@ -34,6 +34,10 @@ router.use(cors({origin: "http://localhost:83", Credential: true}));
 router.use(express.static(path.join(__dirname)));
 router.use(compression());
 
+router.use((req, res, next) => {
+	log(req.body, `Running: ${new Date().toISOString()}`);
+	return(next());
+});
 
 router.post('/__cspreport__', (req, res) => {
 	console.log(req.body);
@@ -47,12 +51,9 @@ router.post('/private/auth',
 		res.status(200).json({ 'status' : 'active' });
 });
 
+
 router.post("/start", userSet.userLoginValidation, take.newLogin);
 
-router.use((req, res, next) => {
-	log(req.body, `Running: ${new Date().toISOString()}`);
-	return(next());
-});
 
 router.get("/", (req, res) => {
 	res.status(200).redirect('/app');
