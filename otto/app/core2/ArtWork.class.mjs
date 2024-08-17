@@ -51,5 +51,4 @@ export default class ArtWork extends Hexaedro {
 	get data () {
 		return ({ code : this.#code, x : this.#x, z : this.#z, y : this.#y});
 	};
-
 };
