@@ -18,3 +18,4 @@ data
 letsencrypt
 yarn.lock
 otto/app/responsive_sheet.css
+docker/nginx.conf
