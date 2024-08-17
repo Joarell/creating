@@ -4,7 +4,7 @@ export async function logout() {
 	const cookies = "id=deleted; sessin=deleted; name=deleted; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 
 	if (confirm("Are you sure to logout?")) {
-		globalThis.location.replace('/otto/login/');
+		globalThis.location.replace('/login/');
 		try {
 			await fetch(url, {
 				method: "GET",

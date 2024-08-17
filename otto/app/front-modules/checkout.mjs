@@ -21,7 +21,7 @@ globalThis.onload = () => {
 	color === null ? localStorage.setItem("mode", "light") : false;
 	setCheckRadio();
 	setModeColor();
-	setTimeout(loadingPage, 2500);
+	setTimeout(loadingPage, 1500);
 };
 
 
@@ -108,12 +108,16 @@ function loadingPage() {
 
 
 function browserStoragePrepare() {
-	const ref = localStorage.getItem("refNumb");
+	const ref =		localStorage.getItem("refNumb");
+	const grants =	sessionStorage.getItem("tier");
 
 	if (ref)
 		document.getElementById("input_estimate").value = ref;
 	createIDB();
-	createOffLineIDB();
+	if (grants === "OFF" || grants === "FULL") {
+		createOffLineIDB();
+		globalThis.navigator.serviceWorker.register('./sw.mjs');
+	}
 	return (mod.displayCub() && mod.displayAirCub() && mod.countWorks());
 };
 
