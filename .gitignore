@@ -1,3 +1,4 @@
+.envrc
 *.log
 .package.json.kate-swp
 builder.kdev4
