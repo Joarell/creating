@@ -1,8 +1,5 @@
-docker-compose.yml
 .package.json.kate-swp
 builder.kdev4
-nginx.conf
-nginx
 database
 .env
 result.test
@@ -19,3 +16,4 @@ letsencrypt
 yarn.lock
 otto/app/responsive_sheet.css
 docker/nginx.conf
+proxy

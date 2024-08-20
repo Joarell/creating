@@ -15,26 +15,26 @@ services:
 #  ╭──────────────────────────────────────────────────────────╮
 #  │               cloudflare tunnel container.               │
 #  ╰──────────────────────────────────────────────────────────╯
-  # tunnel:
-  #   command: tunnel run
-  #
-  #   deploy:
-  #     mode: replicated
-  #     replicas: 1
-  #     resources:
-  #       limits:
-  #         cpus: '0.75'
-  #         memory: 512M
-  #       reservations:
-  #         cpus: '0.50'
-  #         memory: 100M
-  #
-  #   env_file: .env
-  #   environment:
-  #     - TUNNEL_TOKEN=${CLOUD_TOKEN}
-  #
-  #   image: cloudflare/cloudflared:latest
-  #   restart: unless-stopped
+  tunnel:
+    command: tunnel run
+
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: 512M
+        reservations:
+          cpus: '0.50'
+          memory: 100M
+
+    env_file: .env
+    environment:
+      - TUNNEL_TOKEN=${CLOUD_TOKEN}
+
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
 
 
 #  ╭──────────────────────────────────────────────────────────╮
@@ -225,7 +225,7 @@ services:
     # These ports are in format <host-port>:<container-port>
       - '${PROXY_WEB_PORT}:${PROXY_WEB_PORT}' # Public HTTP Port
       - '${WEB_HTTPS_PORT}:${WEB_HTTPS_PORT}' # Public HTTPS Port
-      # - '${ADM_PORT}:${ADM_PORT}' # Admin web Port
+       # - '${ADM_PORT}:${ADM_PORT}' # Admin web Port
       # - '${PORT1}:${PORT1}' # Public HTTP Port
     restart: always
     volumes:
