@@ -68,8 +68,8 @@ services:
       # - db-pqsql
       # db-pqsql:
       #   ipv4_address: 172.21.0.8
-    # ports:
-    #   - "${DB_PORT}:${DB_PORT}"
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
     restart: on-failure
     volumes:
       - ../database/DB/data/:/var/lib/postgresql/data
