@@ -233,6 +233,8 @@ body {
 h2 {
 	font-size: var(--font-title);
 	font-weight: 500;
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
 }
 
 
