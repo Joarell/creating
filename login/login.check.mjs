@@ -62,7 +62,7 @@ async function backEndLoginAuth(userInfo) {
 };
 
 
-async function appAccessCheckIn({result, access }) {
+async function appAccessCheckIn({ result, access }) {
 	const header =	{
 		'Authorization': `Bearer ${result[0]}`,
 		'Content-Type': 'application/javascript',
