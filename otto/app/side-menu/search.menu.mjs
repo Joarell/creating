@@ -45,10 +45,12 @@ export async function checkBrowserDB(doc) {
 			result !== undefined ? resolve(result.data) : reject(undefined);
 		};
 	});
+	const tier = sessionStorage.getItem('tier');
 
 	if (checkIDB) {
 		document.getElementById("input_estimate").value = doc;
 		sessionStorage.setItem("FETCHED", JSON.stringify(checkIDB));
+		globalThis.sessionStorage.setItem('tier', tier);
 		closeDialog();
 		setDBFetched([checkIDB]);
 		return("IDB data Found.");
@@ -72,10 +74,12 @@ async function setDBFetched(result) {
 				reference: reference_id,
 			};
 			const data = JSON.stringify(fetched);
+			const tier = sessionStorage.getItem('tier');
 
 			document.getElementById("input_estimate").value = reference_id;
 			globalThis.sessionStorage.clear();
 			globalThis.sessionStorage.setItem("FETCHED", data);
+			globalThis.sessionStorage.setItem("tier", tier);
 			closeDialog();
 		}
 		else

@@ -109,6 +109,7 @@ export function catchWork() {
 		mod.countWorks();
 		mod.displayAirCub();
 		mod.displayCub();
+		mod.cleanInputs();
 	}
 	return (mod.cleanInputs());
 }
