@@ -59,7 +59,7 @@ function checkStatusCode(code, info, data, header) {
 
 
 /**
- * @param {Object} solved the solved list with new crates sizes
+ * @param {Object} solve the solved list with new crates sizes
 */
 export async function upDateCrateSizes(solved) {
 	const HEADER =	{ 'Content-Type': 'application/json; charset=UTF-8', };

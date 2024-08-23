@@ -853,8 +853,9 @@ tbody:nth-child(even) {
 
 
 .IO__crate > p {
-	color: var(--crate-btn-col);
-	font-size: 2rem;
+	/*color: var(--crate-btn-col);*/
+	color: var(--dark-blue1);
+	font-size: 1.5rem;
 	font-family: 'Big Shoulders Stencil Display';
 	font-weight: 900;
 	text-decoration-style: bold;
@@ -1261,7 +1262,7 @@ tbody:nth-child(even) {
 	align-items: center;
 	justify-content: space-between;
 	& input {
-		width: 3.5rem;
+		width: 4.5rem;
 		height: 1.5rem;
 	}
 	& input:focus {
@@ -1890,7 +1891,8 @@ tbody:nth-child(even) {
 	}
 
 	:is(.IO__sizes--code, .IO__top__estimate) {
-		width: auto;
+		width: 95%;
+		height: 2rem;
 		&:focus {
 			font-size: 1.1rem;
 			transition: input 1s ease-in-out;

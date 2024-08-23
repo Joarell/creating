@@ -16,6 +16,8 @@ const db =						require('../DB_models/db.transactions');
 const keepTokens =				require('../DB_models/db.auth.procedures');
 const { randomBytes } =			require('crypto');
 const { extractCookieData } =	require('./user.controller');
+const DF =						require('ioredis');
+const cache =					new DF(process.env.CACHE_ACCESS);
 
 const getDataUsers = async (req, res) => {
 	const result = await db.retrieveDataUsers();
@@ -24,14 +26,16 @@ const getDataUsers = async (req, res) => {
 
 
 const getDataEstimates = async (req, res) => {
-	const result = await db.retrieveDataEstimates(req.params.ref_id);
+	const cookie =	extractCookieData(req);
+	const result =	await db.retrieveDataEstimates(req.params.ref_id, cookie);
 	return (res.status(200).send(result));
 }
 
 
 const addResultToDataBase = async (req, res) => {
-	const cookie =		extractCookieData(req);
-	const result =		await db.addResultToDataBase(req.body, cookie);
+	const cookie =	extractCookieData(req);
+	const result =	await db.addResultToDataBase(req.body, cookie);
+
 	return (result === 201 ?
 		res.status(201).send(req.body) :
 		res.status(409).send('DATA ERROR!')
@@ -47,8 +51,8 @@ const removeEstimates = async (req, res) => {
 
 
 const updateEstimate = async (req, res) => {
-	const session =	extractCookieData(req).session;
-	const checker = await db.updateData(req.body, session);
+	const cookie =	extractCookieData(req);
+	const checker = await db.updateData(req.body, cookie.session, cookie);
 	return(checker === 500 ?
 		res.status(500):
 		res.status(202).send(req.body)
@@ -100,6 +104,7 @@ const newLogin = async (req, res) => {
 		`id=${user.id}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
 		],
 	});
+	await cache.set(user.name, user.company);
 	res.status(201).json({
 		msg: 'active', result, id : user.id, access: user.grant_access
 	});

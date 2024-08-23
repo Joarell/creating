@@ -12,14 +12,16 @@
 // ╰────────────────────────────────────────────────────────────╯
 
 
-const pool			=		require('./db.settings');
-const encryption	=		require('../auth/encryptation.module.js');
+const pool =				require('./db.settings');
+const encryption =			require('../auth/encryptation.module.js');
 const { randomBytes } =		require('crypto');
+const DFRedis =				require('ioredis');
+const cache =				new DFRedis(process.env.CACHE_ACCESS);
 
 
 async function retrieveDataUsers(user, target) {
 	console.log('GET users:', user, 'and', target);
-	const client	= await pool.connect();
+	const client = await pool.connect();
 
 	console.log('TG', target);
 	try {
@@ -54,15 +56,17 @@ async function retrieveDataUsers(user, target) {
 }
 
 
-async function retrieveDataEstimates(doc) {
-	const client	= await pool.connect();
+async function retrieveDataEstimates(doc, cookie) {
+	const client =	await pool.connect();
+	const table =	await cache.get(cookie.name);
 
+	console.log(`Searching to : ${table}`)
 	try {
 		const { rows }	= await pool.query(`
 			SELECT
 				*
 			FROM
-				data_solved
+				"${table}"
 			WHERE
 				reference_id = '${doc}'
 		`);
@@ -80,6 +84,7 @@ async function retrieveDataEstimates(doc) {
 
 async function addNewUser (user) {
 	const {
+		company,
 		user_name,
 		email,
 		lastName,
@@ -97,9 +102,9 @@ async function addNewUser (user) {
 		await client.query('BEGIN');
 		const userData = `
 			INSERT INTO craters.users
-			(id, name, last_name, birth_date, email, pass_frase, auth_token,
+			(id, company, name, last_name, birth_date, email, pass_frase, auth_token,
 			refresh_token, grant_access) VALUES
-			('${id}', '${user_name}', '${lastName}', '${birthday}', '${email}',
+			('${id}', '${company}', '${user_name}', '${lastName}', '${birthday}', '${email}',
 			'${cryptPass}', '${accessToken}', '${refreshToken}', '${access}')
 		`;
 		await pool.query(userData);
@@ -117,16 +122,16 @@ async function addNewUser (user) {
 
 
 async function addResultToDataBase(estimate, userData) {
-	console.log('RESULT DATA:', estimate);
 	const { reference } = estimate;
-	const list		= JSON.stringify({ "list": estimate.list }, null, "");
-	const crates	= JSON.stringify({ "crates": estimate.crates }, null, "");
-	const dataUTC	= new Date(Date.now()).toLocaleString();
-	const client	= await pool.connect();
+	const list =	JSON.stringify({ "list": estimate.list }, null, "");
+	const crates =	JSON.stringify({ "crates": estimate.crates }, null, "");
+	const dataUTC =	new Date(Date.now()).toLocaleString();
+	const client =	await pool.connect();
+	const table =	await cache.get(userData.name);
 
 	try {
 		await client.query('BEGIN');
-		const content = ` INSERT INTO data_solved
+		const content = ` INSERT INTO "${table}"
 			(reference_id, works, crates, user_name, user_id, session, update_state)
 			VALUES ('${reference}', '${list}', '${crates}', '${userData.name}',
 			'${userData.id}', '${userData.session}', '${dataUTC}')`;
@@ -169,17 +174,18 @@ async function retrieveSessionNumber(num) {
 };
 
 
-async function updateData (content, session) {
-	console.log('UPDATE DATA', content);
-	const { reference } = content;
-	const list			= JSON.stringify({ "list": content.list }, null, "");
-	const crates		= JSON.stringify({ "crates": content.crates }, null, "");
-	const client		= await pool.connect();
+async function updateData (content, session, cookie) {
+	const { reference } =	content;
+	const list =			JSON.stringify({ "list": content.list }, null, "");
+	const crates =			JSON.stringify({ "crates": content.crates }, null, "");
+	const client =			await pool.connect();
+	const table =			await cache.get(cookie.name);
 
+	console.log(`UPDATE TO: ${table}`)
 	try {
 		const { name }	= await retrieveSessionNumber(session);
 		await client.query('BEGIN');
-		const up = `UPDATE data_solved SET
+		const up = `UPDATE "${table}" SET
 			works = '${list}',
 			crates = '${crates}',
 			updated_by = '${name}',
@@ -200,9 +206,10 @@ async function updateData (content, session) {
 };
 
 
-async function delEstimate (ref) {
-	const command	= `DELETE FROM data_solved WHERE reference_id = '${ref}'`;
-	const client	= await pool.connect();
+async function delEstimate (ref, cookie) {
+	const table =	await cache.get(cookie.name);
+	const command =	`DELETE FROM "${table}" WHERE reference_id = '${ref}'`;
+	const client =	await pool.connect();
 
 	await client.query(command);
 	client.release();

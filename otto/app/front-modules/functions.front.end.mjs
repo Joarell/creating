@@ -125,10 +125,9 @@ export async function cleanInputs(fetched = false) {
 	const root =	document.querySelector(':root');
 
 	fetched ? await Promise.resolve(sessionStorage.setItem('pane1', 'clear'))
-		.then(document.getElementById("input_code").select()):
+		.then(globalThis.document.getElementById("input_estimate").select()):
 		await Promise.resolve(sessionStorage.setItem('clean', 'eraser'))
-		.then(document.getElementById("input_estimate").select());
-	!fetched ? document.getElementById('input_code').select(): false;
+		.then(globalThis.document.getElementById("input_code").select());
 	countWorks();
 	displayCub();
 	displayAirCub();

@@ -17,14 +17,36 @@
 	--color5: #554;
 	--color6: #141E30;
 	--color7: #243B55;
+	--dark-blue: #00547A;
+	--dark-blue1: #003852;
+	--blueprint1: #FFFFFF80;
+	--blueprint2: #FFFFFF47;
 }
 
 body, html, main {
 	height: 100%;
+	width: 100%;
 	margin: 0;
 	font-family: sans-serif;
 	background: linear-gradient(var(--color6), var(--color7));
-	/* background: #141e30; */
+}
+
+
+main {
+	isolation: isolate;
+	background-image:
+		linear-gradient(var(--blueprint1) .01px, transparent 1px),
+		linear-gradient(90deg, var(--blueprint1) .01px, transparent 1px),
+		linear-gradient(var(--blueprint2) .01px, transparent 1px),
+		linear-gradient(90deg, var(--blueprint2) .01px, transparent 1px);
+	background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+	background-position: center;
+	background-attachment: fixed;
+	background-color:
+		color-mix(in srgb, var(--dark-blue), black 0%);
+	border: solid .1rem var(--dark-blue1);
+	box-shadow: inset 0 0 20rem var(--dark);
+	filter: drop-shadow(0 0 .01rem var(--dark-blue1));
 }
 
 input:-webkit-autofill {
@@ -79,20 +101,110 @@ main {
    │       Starting to edit the elements of the login.        │
    ╰──────────────────────────────────────────────────────────╯
 */
-.login-box, from > div {
+@property --angle {
+	syntax: "<angle>";
+	inherits: true;
+	initial-value: 0deg;
+}
+
+
+.login-box  {
 	padding: 2.5rem 4rem;
-	background: hsl(var(--hue) var(--saturation) var(--lightness) / .1);
+	background: linear-gradient(var(--color6), var(--color7));
 	box-sizing: border-box;
 	box-shadow: 0 1.5rem 2.5rem #00000099;
 	border-radius: 1rem;
 	align-self: center;
+	position: relative;
+	&::before, &::after {
+		content: "";
+		inset: 0;
+		background-color: var(--color3);
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+		--angle: 0deg;
+		background-image: conic-gradient(
+			from var(--angle), var(--color3), var(--color1), var(--color3)
+		);
+		animation: autoRotate 3s linear infinite;
+		justify-self: center;
+		align-self: center;
+		scale: 1.01;
+		z-index: -1;
+	}
+	&::after {
+		filter: blur(60px);
+	}
+	& form a {
+		position: relative;
+		display: inline-block;
+		padding:1rem 1.5rem;
+		color: var(--color1);
+		font-size: 1rem;
+		text-decoration: none;
+		text-transform: uppercase;
+		overflow: hidden;
+		transition: .5s;
+		margin-top: 1rem;
+		letter-spacing: 0.25rem;
+	}
+	& a:hover{
+		background: var(--color1);
+		color: #fff;
+		border-radius: 0.25rem;
+		box-shadow: 0 0 0.25rem var(--color1),
+			0 0 0.25rem var(--color1),
+			0 0 5rem var(--color1),
+			0 0 8rem var(--color1),
+	}
+	& a span {
+		position: absolute;
+		display: block;
+	}
+	& a span:nth-child(1) {
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 2px;
+		background: linear-gradient(90deg, transparent, var(--color1));
+		animation: btn-anim1 1s linear infinite;
+	}
+	& a span:nth-child(2) {
+		top: -100%;
+		right:0;
+		width: 2px;
+		height: 100%;
+		background: linear-gradient(180deg, transparent, var(--color1));
+		animation: btn-anim2 1s linear infinite;
+		animation-delay: .25s;
+	}
+	& a span:nth-child(3) {
+		bottom: 0;
+		right: -100%;
+		width: 100%;
+		height: 2px;
+		background: linear-gradient(270deg, transparent, var(--color1));
+		animation: btn-anim3 1s linear infinite;
+		animation-delay: .5s;
+	}
+	& a span:nth-child(4) {
+		bottom: -100;
+		left: 0%;
+		width: 2px;
+		height: 100%;
+		background: linear-gradient(360deg, transparent, var(--color1));
+		animation: btn-anim4 1s linear infinite;
+		animation-delay: .75s;
+	}
 }
 
-.login-box .user-box {
+.user-box {
 	position: relative;
 }
 
-.login-box .user-box input {
+.user-box input {
 	width: 100%;
 	padding: 1rem 0;
 	font-size: 1rem;
@@ -104,7 +216,7 @@ main {
 	background: transparent;
 }
 
-.login-box .user-box label {
+.user-box label {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -115,50 +227,12 @@ main {
 	transition: .5s;
 }
 
-.login-box .user-box input:focus ~ label,
-.login-box .user-box input:valid ~ label {
+.user-box input:focus ~ label,
+.user-box input:valid ~ label {
 	top: -0.5rem;
 	left: 0;
 	color: var(--color1);
 	font-size: 0.75rem;
-}
-
-.login-box form a {
-	position: relative;
-	display: inline-block;
-	padding:1rem 1.5rem;
-	color: var(--color1);
-	font-size: 1rem;
-	text-decoration: none;
-	text-transform: uppercase;
-	overflow: hidden;
-	transition: .5s;
-	margin-top: 1rem;
-	letter-spacing: 0.25rem;
-}
-
-login-box a:hover{
-	background: var(--color1);
-	color: #fff;
-	border-radius: 0.25rem;
-	box-shadow: 0 0 0.25rem var(--color1),
-				0 0 0.25rem var(--color1),
-				0 0 5rem var(--color1),
-				0 0 8rem var(--color1),
-}
-
-.login-box a span {
-	position: absolute;
-	display: block;
-}
-
-.login-box a span:nth-child(1) {
-	top: 0;
-	left: -100%;
-	width: 100%;
-	height: 2px;
-	background: linear-gradient(90deg, transparent, var(--color1));
-	animation: btn-anim1 1s linear infinite;
 }
 
 @keyframes btn-anim1 {
@@ -170,16 +244,6 @@ login-box a:hover{
 	}
 }
 
-.login-box a span:nth-child(2) {
-	top: -100%;
-	right:0;
-	width: 2px;
-	height: 100%;
-	background: linear-gradient(180deg, transparent, var(--color1));
-	animation: btn-anim2 1s linear infinite;
-	animation-delay: .25s;
-}
-
 @keyframes btn-anim2{
 	0%{
 		top: -100%;
@@ -187,16 +251,6 @@ login-box a:hover{
 	50%,100% {
 		top: 100%;
 	}
-}
-
-.login-box a span:nth-child(3) {
-	bottom: 0;
-	right: -100%;
-	width: 100%;
-	height: 2px;
-	background: linear-gradient(270deg, transparent, var(--color1));
-	animation: btn-anim3 1s linear infinite;
-	animation-delay: .5s;
 }
 
 @keyframes btn-anim3{
@@ -208,17 +262,6 @@ login-box a:hover{
 	}
 }
 
-.login-box a span:nth-child(4) {
-	bottom: -100;
-	left: 0%;
-	width: 2px;
-	height: 100%;
-	background: linear-gradient(360deg, transparent, var(--color1));
-	animation: btn-anim4 1s linear infinite;
-	animation-delay: .75s;
-}
-
-
 @keyframes btn-anim4{
 	0%{
 		bottom: -100%;
@@ -228,6 +271,12 @@ login-box a:hover{
 	}
 }
 
+
+@keyframes autoRotate {
+	to {
+		--angle: 360deg;
+	}
+}
 
 /*           iPhone 6+, 7+ and 8+           */
 @media only screen
