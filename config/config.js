@@ -7,7 +7,7 @@ module.exports = {
 		password: process.env.PG_PASS,
 		database: process.env.PG_DB,
 		port: process.env.DB_PORT,
-		host: process.env.PG_HOST,
+		host: process.env.PG_HOST_MIG,
 		dialect: process.env.DB_DIALECT,
 		logging: true,
 		define : {
@@ -45,7 +45,7 @@ module.exports = {
 		password: process.env.PGPASSWORD,
 		database: process.env.PGDATABASE,
 		port: process.env.PORT,
-		host: process.env.PGHOST,
+		host: process.env.PG_HOST_MIG,
 		dialect: process.env.DB_DIALECT,
 		logging: false,
 		define: {
