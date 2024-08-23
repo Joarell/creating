@@ -4,7 +4,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
 	async up(queryInterface, Sequelize) {
-		await queryInterface.showAllSchemas({ logging: true })
+		await queryInterface.showAllSchemas({ logging: false })
 			.then(async (data) => {
 				if (!data.includes('craters'))
 					await queryInterface.createSchema('craters');
@@ -16,6 +16,10 @@ module.exports = {
 				primaryKey: true,
 				autoIncrement: false,
 				timestamps: true,
+			},
+			company: {
+				type: Sequelize.STRING(30),
+				allowNull: false,
 			},
 			name: {
 				type: Sequelize.STRING(20),
