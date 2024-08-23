@@ -23,7 +23,6 @@ async function retrieveDataUsers(user, target) {
 	console.log('GET users:', user, 'and', target);
 	const client = await pool.connect();
 
-	console.log('TG', target);
 	try {
 		if (target === 'auth') {
 			const { rows }	= await client.query(`

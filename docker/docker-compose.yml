@@ -62,7 +62,7 @@ services:
       POSTGRES_USER: ${PG_USER}
     expose:
       - "{DB_PORT}"
-    image: postgres:16-alpine3.18
+    image: postgres:16.4-alpine
     networks:
       - back-tier
       # - db-pqsql

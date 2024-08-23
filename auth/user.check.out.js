@@ -5,7 +5,7 @@ const db =			require('../DB_models/db.transactions');
 
 
 async function checkUserAuthDB (userLogin) {
-	const data		= await db.retrieveDataUsers(userLogin.name);
+	const data		= await db.retrieveDataUsers(userLogin.name, 'login');
 
 	console.log('LOGGED', data[0], 'and', userLogin);
 	if(!data[0])
@@ -16,6 +16,7 @@ async function checkUserAuthDB (userLogin) {
 
 		if (cryptics.decryptChecker(pass, hash))
 			return(200);
+		throw new Error("Passwork not match!")
 	}
 	catch (err) {
 		console.error(`WARNING ${err}`);
