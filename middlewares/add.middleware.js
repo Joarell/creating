@@ -25,7 +25,7 @@ function validationData (data) {
 const userDataValidation = async (req, res, next) => {
 	const cookie = extractCookieData(req);
 	if (!req.body)
-		return( res.status(406).json({msg: "Missing data"}));
+		return(res.status(406).json({msg: "Missing data"}));
 	const { name } = cookie;
 	const dbUser = await db.retrieveDataUsers(name, 'auth');
 
@@ -51,8 +51,9 @@ const validationBodyEstimate = async (req, res, next) => {
 const dataEstimateChecker = async (req, res, next) => {
 	if (!req.body)
 		return( res.status(406).json({msg: "Missing data"}));
-	const { reference } = req.body;
-	const estimate		= await db.retrieveDataEstimates(reference);
+	const cookie =			extractCookieData(req);
+	const { reference } =	req.body;
+	const estimate		=	await db.retrieveDataEstimates(reference, cookie);
 
 	if (!estimate) {
 		return (res.status(409).json({
