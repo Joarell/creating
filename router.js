@@ -46,10 +46,10 @@ router.post('/__cspreport__', (req, res) => {
 
 
 router.post('/private/auth',
-	userSet.userTokenMatch, userSet.userTokenExpTime,
-	(req, res) => {
-		res.status(200).json({ 'status' : 'active' });
-});
+	userSet.userTokenMatch,
+	userSet.userTokenExpTime,
+	(req, res) => res.status(200).json({msg: "active"})
+);
 
 
 router.post("/start", userSet.userLoginValidation, take.newLogin);
