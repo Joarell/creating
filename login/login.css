@@ -17,6 +17,7 @@
 	--color5: #554;
 	--color6: #141E30;
 	--color7: #243B55;
+	--dark: #121113;
 	--dark-blue: #00547A;
 	--dark-blue1: #003852;
 	--blueprint1: #FFFFFF80;
@@ -45,7 +46,7 @@ main {
 	background-color:
 		color-mix(in srgb, var(--dark-blue), black 0%);
 	border: solid .1rem var(--dark-blue1);
-	box-shadow: inset 0 0 20rem var(--dark);
+	box-shadow: inset 0 0 30rem var(--dark);
 	filter: drop-shadow(0 0 .01rem var(--dark-blue1));
 }
 
