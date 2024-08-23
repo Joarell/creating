@@ -15,7 +15,7 @@ import { openCloseDisplay } from '../plotter/layer.controller.mjs'
 
 
 globalThis.onload = () => {
-	const color = localStorage.getItem("mode");
+	const color =	localStorage.getItem("mode");
 
 	browserStoragePrepare();
 	color === null ? localStorage.setItem("mode", "light") : false;
@@ -29,7 +29,7 @@ globalThis.onload = () => {
 // │ Defines the measure of the works selected by the user. │
 // ╰────────────────────────────────────────────────────────╯
 if (!localStorage.getItem("metrica")) {
-	const metrica = document.getElementById("cm").value;
+	const metrica =	document.getElementById("cm").value;
 	localStorage.setItem("metrica", metrica);
 }
 
@@ -76,14 +76,14 @@ export const crate = () => {
 
 
 export const clearAll = () => {
-	const mode = localStorage.getItem("mode");
-	const unit = localStorage.getItem("metrica");
-	const element = document.querySelector(".result");
-	const plotter = document.getElementById('layers');
-	const menu = document.querySelector(".plotter__menu");
+	const mode =	localStorage.getItem("mode");
+	const unit =	localStorage.getItem("metrica");
+	const element =	document.querySelector(".result");
+	const plotter =	document.getElementById('layers');
+	const menu =	document.querySelector(".plotter__menu");
 
 	if (confirm("Do you really want to delete the whole list?")) {
-		mod.cleanInputs();
+		mod.cleanInputs(true);
 		localStorage.clear();
 		sessionStorage.clear();
 		sessionStorage.setItem("clean", "eraser");
@@ -96,9 +96,9 @@ export const clearAll = () => {
 
 
 function loadingPage() {
-	const animation = document.querySelector(".loading");
-	const pageApp = document.querySelector(".app");
-	const footer = document.querySelector(".footer-content");
+	const animation =	document.querySelector(".loading");
+	const pageApp =		document.querySelector(".app");
+	const footer =		document.querySelector(".footer-content");
 
 	animation.style.display = "none";
 	animation.setAttribute("aria-hidden", true);
@@ -137,8 +137,8 @@ function setCheckRadio() {
 
 
 function setModeColor() {
-	const color = localStorage.getItem("mode");
-	const body = document.body;
+	const color =	localStorage.getItem("mode");
+	const body =	document.body;
 
 	switch (color) {
 		case ('light' || null):
