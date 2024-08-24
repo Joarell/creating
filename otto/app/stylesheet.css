@@ -152,7 +152,7 @@
 	--input-bg: var(--bg-col);
 	--input-font-col: var(--mob-col);
 	--selection-bg: transparent;
-	--crate-btn-col: var(--color3);
+	--crate-btn-col: var(--color4);
 	--p__color--mode: var(--back-gray);
 	--pack-works: var(--light-blue2);
 	--work-hover: var(--yellow-select);
@@ -853,13 +853,11 @@ tbody:nth-child(even) {
 
 
 .IO__crate > p {
-	/*color: var(--crate-btn-col);*/
-	color: var(--dark-blue1);
+	color: var(--crate-btn-col);
 	font-size: 1.5rem;
 	font-family: 'Big Shoulders Stencil Display';
 	font-weight: 900;
 	text-decoration-style: bold;
-	opacity: .8;
 }
 
 

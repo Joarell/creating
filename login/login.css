@@ -70,16 +70,6 @@ dialog::backdrop {
 	grid-area: 1 / 1;
 }
 
-main {
-	color: #fff;
-	text-align: center;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-}
-
 
 ::-webkit-scrollbar {
 	width: 1rem;
@@ -295,7 +285,6 @@ main {
 
 	.login-box {
 		margin: 35% 0;
-		background: #00000080;
 		box-sizing: border-box;
 		box-shadow: 0 1.5rem 2.5rem #00000099;
 		border-radius: 1rem;
@@ -321,7 +310,6 @@ main {
 
 	.login-box {
 		margin: 15% 0;
-		background: #00000080;
 		box-sizing: border-box;
 		box-shadow: 0 1.5rem 2.5rem #00000099;
 		border-radius: 1rem;
@@ -347,7 +335,6 @@ main {
 
 	.login-box {
 		margin: 15% 0;
-		background: #00000080;
 		box-sizing: border-box;
 		box-shadow: 0 1.5rem 2.5rem #00000099;
 		border-radius: 1rem;
