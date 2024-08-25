@@ -781,7 +781,7 @@ tbody:nth-child(even) {
 		color: var(--color5);
 		& > p {
 			color: var(--color5);
-			/*text-decoration: underline overline;*/
+			text-decoration: underline overline;
 			opacity: 1;
 		}
 		.popup {
@@ -857,7 +857,7 @@ tbody:nth-child(even) {
 
 
 .IO__crate > p {
-	color: var(--crate-btn-col);
+	color: white;
 	font-size: 1.5rem;
 	font-family: 'Big Shoulders Stencil Display';
 	font-weight: 900;
