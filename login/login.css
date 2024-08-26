@@ -24,9 +24,9 @@
 	--blueprint2: #FFFFFF47;
 }
 
-body, html, main {
-	height: 100%;
-	width: 100%;
+body, html {
+	height: 100dvh;
+	width: auto;
 	margin: 0;
 	font-family: sans-serif;
 	background: linear-gradient(var(--color6), var(--color7));
@@ -56,6 +56,8 @@ main {
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
+		height: 100%;
+		overflow: clip;
 	}
 }
 
