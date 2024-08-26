@@ -117,6 +117,7 @@ dialog::backdrop {
 	border-radius: 1rem;
 	align-self: center;
 	position: relative;
+	overflow: clip;
 	&::before, &::after {
 		content: "";
 		inset: 0;
