@@ -94,12 +94,12 @@ const logoutUser = async (req, res) => {
 
 const setCacheLogin = async (user) => {
 	const checker = await cache.get(user.name);
-	return (checker ? 403 : cache.set(user.name, user.company));
+	const expTIME =	{ EX: 28800 }:
+	return (checker ? 403 : cache.set(user.name, user.company, expTIME));
 };
 
 
 const newLogin = async (req, res) => {
-	const eightHours =	28800;
 	const session =		randomBytes(5).toString('hex');
 	const dbUsers =		await db.retrieveDataUsers(req.body.name, 'login');
 	const user =		dbUsers[0];
