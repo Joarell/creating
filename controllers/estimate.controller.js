@@ -94,7 +94,7 @@ const logoutUser = async (req, res) => {
 
 const setCacheLogin = async (user) => {
 	const checker = await cache.get(user.name);
-	const expTIME =	{ EX: 28800 }:
+	const expTIME =	{EX: 28800};
 	return (checker ? 403 : cache.set(user.name, user.company, expTIME));
 };
 
