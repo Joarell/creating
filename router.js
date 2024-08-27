@@ -27,7 +27,6 @@ const router =		express.Router();
 const path =		require('path');
 const log =			require('debug')('server:back');
 
-
 // TODO: should send the home page when all be done.
 router.use(express.json());
 router.use(cors({origin: "http://localhost:83", Credential: true}));
@@ -79,7 +78,7 @@ router.post("/new/estimate",
 );
 
 
-router.get("/logout", (req, res) => res.status(200).redirect('./otto/login/'));
+router.get("/logout", take.logoutUser);
 
 
 router.get("/estimates/:ref_id", take.getDataEstimates);

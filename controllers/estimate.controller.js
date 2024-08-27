@@ -35,7 +35,6 @@ const getDataEstimates = async (req, res) => {
 const addResultToDataBase = async (req, res) => {
 	const cookie =	extractCookieData(req);
 	const result =	await db.addResultToDataBase(req.body, cookie);
-
 	return (result === 201 ?
 		res.status(201).send(req.body) :
 		res.status(409).send('DATA ERROR!')
@@ -85,29 +84,45 @@ const shiftTokens = async (req, res) => {
 };
 
 
+const logoutUser = async (req, res) => {
+	const cookie = extractCookieData(req);
+
+	cache.del(cookie.name);
+	return (res.status(200).redirect('http://localhost:83/login'));
+};
+
+
+const setCacheLogin = async (user) => {
+	const checker = await cache.get(user.name);
+	return (checker ? 403 : cache.set(user.name, user.company));
+};
+
+
 const newLogin = async (req, res) => {
-	const session =	randomBytes(5).toString('hex');
-	const dbUsers =	await db.retrieveDataUsers(req.body.name, 'login');
-	const user =	dbUsers[0];
-	const body =	{id : user.id, token: user.refresh_token, name : user.name};
-	const result =	await keepTokens
+	const eightHours =	28800;
+	const session =		randomBytes(5).toString('hex');
+	const dbUsers =		await db.retrieveDataUsers(req.body.name, 'login');
+	const user =		dbUsers[0];
+	const body =		{id : user.id, token: user.refresh_token, name : user.name};
+	const result =		await keepTokens
 		.tokenProcedures(user.auth_token, body, session);
 
 	if (result === 500)
 		return(res.status(500).json({msg: 'Server error'}));
 	res.set({
 		'Set-Cookie': [
-		`name=${user.name}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
-		`session=${session}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
-		`user=${result[1]}; Max-Age=3; HttpOnly; SameSite=Strict; Secure;`,
-		`token=${result[0]}; Max-Age=3; HttpOnly; SameSite=Strict; Secure;`,
-		`id=${user.id}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
+			`name=${user.name}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
+			`session=${session}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
+			`user=${result[1]}; Max-Age=3; HttpOnly; SameSite=Strict; Secure;`,
+			`token=${result[0]}; Max-Age=3; HttpOnly; SameSite=Strict; Secure;`,
+			`id=${user.id}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
 		],
 	});
-	await cache.set(user.name, user.company);
-	res.status(201).json({
-		msg: 'active', result, id : user.id, access: user.grant_access
-	});
+	return (
+		await setCacheLogin(user) !== 403 ? res.status(201).json({
+			msg: 'active', result, id : user.id, access: user.grant_access
+		}) : res.status(201).json({ msg: 401 })
+	);
 };
 
 
@@ -119,4 +134,5 @@ module.exports = {
 	removeEstimates,
 	shiftTokens,
 	updateEstimate,
+	logoutUser,
 };
