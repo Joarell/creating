@@ -34,11 +34,13 @@ export function loginInto () {
 
 
 async function setLogin(info) {
-	if (info.msg === 'active')
-		await appAccessCheckIn(info)
-	else {
-		warningDialog();
-		alert('Wrong credentials. Please try again!');
+	switch(info.msg) {
+		case 'active':
+			return(await appAccessCheckIn(info));
+		case 401:
+			return (alert("This USER is already logged in. Please, press 'Logout', and try again."));
+		default:
+			alert('Wrong credentials. Please try again!');
 	}
 	return(info);
 };
@@ -54,7 +56,7 @@ async function backEndLoginAuth(userInfo) {
 			headers: { 'Content-Type': 'application/json; charset=UTF-8' },
 		}).then(body => body.json())
 		.then(setLogin)
-		.catch(err => console.error(`Alert response ${err}`));
+		.catch(err => alert(`ATTENTION: ${err}`));
 	}
 	catch(err) {
 		alert(`Attention attempt to login: ${err}`);
