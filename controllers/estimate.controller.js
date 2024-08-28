@@ -120,9 +120,9 @@ const newLogin = async (req, res) => {
 				`id=${user.id}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
 			],
 		});
-		return ( res.status(201).json({
+		return (res.status(201).json({
 				msg: 'active', result, id : user.id, access: user.grant_access
-			});
+			})
 		);
 	}
 	return(res.status(201).json({ msg: 401 }));
