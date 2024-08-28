@@ -104,25 +104,28 @@ const newLogin = async (req, res) => {
 	const dbUsers =		await db.retrieveDataUsers(req.body.name, 'login');
 	const user =		dbUsers[0];
 	const body =		{id : user.id, token: user.refresh_token, name : user.name};
-	const result =		await keepTokens
-		.tokenProcedures(user.auth_token, body, session);
 
-	if (result === 500)
-		return(res.status(500).json({msg: 'Server error'}));
-	res.set({
-		'Set-Cookie': [
-			`name=${user.name}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
-			`session=${session}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
-			`user=${result[1]}; Max-Age=3; HttpOnly; SameSite=Strict; Secure;`,
-			`token=${result[0]}; Max-Age=3; HttpOnly; SameSite=Strict; Secure;`,
-			`id=${user.id}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
-		],
-	});
-	return (
-		await setCacheLogin(user) !== 403 ? res.status(201).json({
-			msg: 'active', result, id : user.id, access: user.grant_access
-		}) : res.status(201).json({ msg: 401 })
-	);
+	if(await setCacheLogin(user) !== 403) {
+		const result =		await keepTokens
+			.tokenProcedures(user.auth_token, body, session);
+
+		if (result === 500)
+			return(res.status(500).json({msg: 'Server error'}));
+		res.set({
+			'Set-Cookie': [
+				`name=${user.name}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
+				`session=${session}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
+				`user=${result[1]}; Max-Age=3; HttpOnly; SameSite=Strict; Secure;`,
+				`token=${result[0]}; Max-Age=3; HttpOnly; SameSite=Strict; Secure;`,
+				`id=${user.id}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
+			],
+		});
+		return ( res.status(201).json({
+				msg: 'active', result, id : user.id, access: user.grant_access
+			});
+		);
+	}
+	return(res.status(201).json({ msg: 401 }));
 };
 
 
