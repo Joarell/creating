@@ -78,7 +78,7 @@ router.post("/new/estimate",
 );
 
 
-router.get("/logout", take.logoutUser);
+router.get("/logout", take.logOutUser);
 
 
 router.get("/estimates/:ref_id", take.getDataEstimates);
