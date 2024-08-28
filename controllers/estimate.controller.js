@@ -84,11 +84,11 @@ const shiftTokens = async (req, res) => {
 };
 
 
-const logoutUser = async (req, res) => {
+const logOutUser = async (req, res) => {
 	const cookie = extractCookieData(req);
 
 	cache.del(cookie.name);
-	return (res.status(200).redirect('http://localhost:83/login'));
+	return (res.status(200).redirect('/login'));
 };
 
 
@@ -137,5 +137,5 @@ module.exports = {
 	removeEstimates,
 	shiftTokens,
 	updateEstimate,
-	logoutUser,
+	logOutUser,
 };
