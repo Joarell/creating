@@ -1483,7 +1483,7 @@ footer {
 			&::before {
 				content: "Technology making the future easier.";
 				inset: 0;
-				top: 10cqw;
+				top: 95%;
 				position: absolute;
 				font-size: var(--fonts);
 				font-family: 'Mitr', sans-serif;
