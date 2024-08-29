@@ -1319,7 +1319,6 @@ footer {
 	scroll-snap-align: start;
 	scroll-snap-stop: always;
 	gap: 3ch;
-	--policy: open;
 	& > div {
 		padding: 0 23cqw;
 	}
