@@ -104,6 +104,7 @@
 	color-scheme: light dark;
 	--font-title: clamp(5cqw, 14ch, 5rem);
 	--fonts: clamp(1rem, .7cqw, 1cqw);
+	--fonts: 1rem;
 	--color1: #03e9f4;
 	--color2: #162789;
 	--color3: #FC007A;
@@ -1112,7 +1113,7 @@ nav {
 					font-style: italic;
 					inset: 0;
 					position: absolute;
-					font-size: clamp(12ch, 2rem, 11ch);
+					font-size: var(--fonts);
 					padding: 0;
 					margin: 0;
 					&:hover::before {
@@ -1711,47 +1712,6 @@ footer {
 }
 
 
-/*╭──────────────────────────────────────────────────────────╮
-/*│                      Buttons setup                       │*/
-/*╰──────────────────────────────────────────────────────────╯*/
-*/
-
-:is(.IO__press, .IO__press-mobile) {
-	display: flex;
-	justify-content: space-between;
-}
-
-.IO__add--form {
-	display: flex;
-	justify-content: space-evenly;
-}
-
-
-/* ADD button style */
-.IO__press--btn {
-	color: var(--color4);
-	height: 2.5rem;
-	width: 5rem;
-	background: transparent;
-	border: 0;
-	border-radius: .8rem;
-	cursor: pointer;
-	transition: transform .3s ease-in-out;
-	opacity: .6;
-	&:hover {
-		transition: all .5s ease-in-out;
-		transform: translateY(.1rem);
-		border-bottom: .05rem solid var(--color4);
-		border-right: .05rem solid var(--color4);
-		box-shadow: var(--shadow1);
-	}
-	&:active {
-		box-shadow: var(--inner-shadow);
-		transition: all .5s ease-in-out;
-	}
-}
-
-
 @keyframes waves {
 	0% {
 		transform: scale(1);
@@ -1811,9 +1771,11 @@ footer {
 			border: 2px solid red;
 			& li {
 				font-size: 1ch;
+				padding: 1rem;
 			}
 		}
 		h4 {
+			padding-top: 1rem;
 			&::before {
 				content: "";
 				inset: 0;
@@ -1941,16 +1903,19 @@ footer {
 					display: flex;
 					flex-direction: column;
 					flex-basis: 1;
-					padding: 0;
+					padding: 1rem;
 					gap: 5cqw;
 					& li {
-						line-height: 1rem;
+						line-height: 1.5rem;
 					}
 				}
 				& div {
 					padding: 0;
 					&::after {
 						background-image: unset;
+					}
+					& p {
+						line-height: .1rem;
 					}
 				}
 			}
@@ -2185,8 +2150,9 @@ footer {
 @media (height > 66rem) {
 	.container__home {
 		& section > div {
+			padding: 4rem;
 			& p {
-				font-size: 2rem;
+				font-size: 1rem;
 			}
 		}
 	}
