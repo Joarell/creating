@@ -1480,6 +1480,12 @@ footer {
 		& .bottom__logo {
 			inset: 0;
 			position: relative;
+			display: flex;
+			flex-direction: column;
+			text-align: center;
+			& > p {
+				justify-content: center;
+			}
 			&::before {
 				content: "Technology making the future easier.";
 				inset: 0;
@@ -1491,7 +1497,7 @@ footer {
 				color: var(--color3);
 				text-indent: 1cqw;
 				text-shadow: unset;
-				text-wrap: balance;
+				text-wrap: nowrap;
 			}
 		}
 		& div {
@@ -1509,7 +1515,7 @@ footer {
 				line-height: 0;
 			}
 			& .note {
-				font-size: .5cqw;
+				font-size: .6cqw;
 				color: var(--color1);
 			}
 			& i {
@@ -1917,7 +1923,7 @@ footer {
 		& .info, .utils {
 			& .info-content {
 				& .about-content {
-	 				& div{
+	 				& div {
 						& .empty-time {
 							inset: 0;
 							position: absolute;
@@ -1959,7 +1965,12 @@ footer {
 			flex-direction: column;
 			width: 100%;
 			& li {
-				line-height: 3ch;
+				line-height: .5ch;
+			}
+			& .footer-content {
+				& svg {
+					height: 10rem;
+				}
 			}
 		}
 	}
@@ -2020,13 +2031,22 @@ footer {
 			}
 			& div {
 				flex-direction: column;
-				align-content: left;
-				& P, i {
-					font-size: var(--fonts);
+				align-content: center;
+				& P {
+					font-size: .6rem;
+					text-wrap: nowrap;
+					text-align: center;
+				}
+				& i {
+					font-size: 1rem;
 				}
 				& .note {
 					font-size: calc(var(--fonts) - .5ch)
 				}
+			}
+			& .bottom__logo::before {
+				font-size: .8rem;
+				text-align: left;
 			}
 		}
 	}
