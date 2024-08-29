@@ -1319,6 +1319,7 @@ footer {
 	scroll-snap-align: start;
 	scroll-snap-stop: always;
 	gap: 3ch;
+	--policy: open;
 	& > div {
 		padding: 0 23cqw;
 	}
@@ -1462,13 +1463,6 @@ footer {
 		place-self: center;
 		& svg {
 			height: 10cqw;
-		}
-		& {
-			display: flex;
-			flex-flow: row;
-			gap: 3cqw;
-		}
-		& .otto--logo {
 			inset: 0;
 			background-color: transparent;
 			background: unset;
@@ -1478,6 +1472,28 @@ footer {
 			filter: unset;
 			animation: none;
 			text-align: center;
+		}
+		& {
+			display: flex;
+			flex-flow: row;
+			gap: 3cqw;
+		}
+		& .bottom__logo {
+			inset: 0;
+			position: relative;
+			&::before {
+				content: "Technology making the future easier.";
+				inset: 0;
+				top: 10cqw;
+				position: absolute;
+				font-size: var(--fonts);
+				font-family: 'Mitr', sans-serif;
+				font-weight: 200;
+				color: var(--color3);
+				text-indent: 1cqw;
+				text-shadow: unset;
+				text-wrap: balance;
+			}
 		}
 		& div {
 			flex: 1 100%;
@@ -1494,11 +1510,11 @@ footer {
 				line-height: 0;
 			}
 			& .note {
-				font-size: .8cqw;
+				font-size: .5cqw;
 				color: var(--color1);
 			}
 			& i {
-				font-size: 1.1cqw;
+				font-size: .8cqw;
 				text-shadow: 3px 3px 4px var(--color5);
 			}
 			& a {
@@ -1514,8 +1530,48 @@ footer {
 			}
 		}
 	}
+	& dialog {
+		background-color: var(--dark-blue);
+		width: 60%;
+		height: 80%;
+		flex-direction: column;
+		flex-wrap: nowrap;
+		text-align: center;
+		border-radius: 1rem;
+		position: absolute;
+		overflow: scroll;
+		z-index: 10;
+		& h3 {
+			font-size: 2rem;
+		}
+		&::backdrop {
+			background-color: var(--color9);
+			backdrop-filter: blur(1rem);
+		}
+		& > form {
+			padding: 2rem 15%;
+			& ol > li {
+				list-style-type: counter;
+				color: var(--color3);
+				list-style-position: initial;
+				margin-top: 2rem;
+				& b {
+					color: var(--color1);
+				}
+			}
+			& ol {
+				padding: 0 10%;
+			}
+		}
+		& .out__side{
+			line-height: 1.4rem;
+			text-indent: 0;
+			text-align: start;
+			padding: 1rem 0%;
+			font-size: 1.2rem;
+		}
+	}
 }
-
 
 @keyframes turning {
 	to {
