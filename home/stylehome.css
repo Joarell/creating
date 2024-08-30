@@ -393,6 +393,12 @@ input {
 }
 
 
+dialog::backdrop {
+	background: var(--color9);
+	backdrop-filter: blur(1rem);
+}
+
+
 select {
 	display: block;
 }
@@ -1549,10 +1555,6 @@ footer {
 		z-index: 10;
 		& h3 {
 			font-size: 2rem;
-		}
-		&::backdrop {
-			background-color: var(--color9);
-			backdrop-filter: blur(1rem);
 		}
 		& > form {
 			padding: 2rem 15%;
