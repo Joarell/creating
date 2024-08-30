@@ -257,7 +257,7 @@
 						<p><b class="otto-color">FONE:</b> +55 (11) 98742-7669</p>
 						<p><b class="otto-color">e-mail:</b> <a href="mailto:j.souza@ottocratesolver.com">Support</a></p>
 						<p> Find us on: </a><a href="https://www.linkedin.com/company/otto-infinite/?viewAsMember=true"><i class="nf nf-md-linkedin"></i></a></p>
-						<p><a data-target="#terms" data-toggle="modal" class="note" href="#terms" role="button" onclick="terms.show()">Policy and Privacy politics.</a></p>
+						<p><a data-target="#terms" data-toggle="modal" class="note" href="#terms" role="button" onclick="openModal()">Policy and Privacy politics.</a></p>
 						<p>Copyright <i class="nf nf-fa-copyright"></i> 2024 Otto Company. All rights reserved.</p>
 					</div>
 				</div>
@@ -321,10 +321,16 @@
 						<button>OK</button>
 					</form>
 				</dialog>
-				<script> const terms = document.getElementById("terms"); </script>
 		</div>
+		<script>
+			const terms = document.getElementById("terms");
+			function openModal() {
+				terms.show();
+				terms.scrollTop = 0;
+			};
+		</script>
 		</body>
-	</body>
+	</html>
 	<!--
 !   ╭───────────────────────────────────────────────────────╮
 !   │                      SVG images                       │
