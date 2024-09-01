@@ -1731,171 +1731,6 @@ footer {
 
 /*
  * ╭─────────────────────────────────────────────────────────╮
- * │                 home container content.                 │
- * ╰─────────────────────────────────────────────────────────╯
-*/
-@container home (height <= 720px) {
-	.container__home > * {
-		h4 {
-			&::before {
-				content: "";
-				inset: 0;
-				position: absolute;
-				padding-top: 0;
-				margin-top: 2cqw;
-				height: auto;
-				width: 2cqh;
-				box-sizing: border-box;
-				background-color: var(--color1);
-				border-radius: 0rem 2rem 0 3rem;
-				z-index: -5;
-				opacity: .4;
-				box-shadow: inset 6px 4px 5px var(--color8);
-				overflow: hidden;
-			}
-		}
-	}
-}
-
-
-/*
- * ╭─────────────────────────────────────────────────────────╮
- * │                 info container content.                 │
- * ╰─────────────────────────────────────────────────────────╯
-*/
-@container info (width > 1920px) {
-	.info__container {
-		inset: 0;
-		position: relative;
-		h4 {
-			&::before {
-				content: "";
-				inset: 0;
-				position: absolute;
-				padding-top: 0;
-				margin-top: -8%;
-				height: 150%;
-				width: 110%;
-				box-sizing: border-box;
-				background-color: var(--color1);
-				border-radius: 0rem 2rem 0 3rem;
-				z-index: -5;
-				opacity: .4;
-				box-shadow: inset 6px 4px 5px var(--color8);
-				overflow: hidden;
-			}
-		}
-	}
-	.text-content {
-		li {
-			font-size: 2rem;
-		}
-	}
-}
-
-
-@container info (width <= 1920px) {
-	.info__container {
-		inset: 0;
-		position: relative;
-		& .text-content {
-			padding: 2cqw;
-		}
-		h4 {
-			margin: 0;
-			margin-bottom: 1rem;
-			padding: 0;
-			&::before {
-				content: "";
-				inset: 0;
-				position: absolute;
-				padding-top: 0;
-				margin-top: -14%;
-				height: 180%;
-				width: 114%;
-				box-sizing: border-box;
-				background-color: var(--color1);
-				border-radius: 0rem 2rem 0 3rem;
-				z-index: -5;
-				opacity: .4;
-				box-shadow: inset 6px 4px 5px var(--color8);
-				overflow: hidden;
-			}
-		}
-	}
-}
-
-
-@container info (width <= 1280px) {
-	.info__container {
-		inset: 0;
-		position: relative;
-		& .text-content {
-			padding: 2rem;
-			width: 21rem;
-			border: 2px solid red;
-			font-size: 6cqw;
-		}
-		h4 {
-			&::before {
-				content: "";
-				inset: 0;
-				position: absolute;
-				margin-top: -12%;
-				height: 180%;
-				width: 112%;
-				box-sizing: border-box;
-				background-color: var(--color1);
-				border-radius: 0rem 2rem 0 3rem;
-				z-index: -5;
-				opacity: .4;
-				box-shadow: inset 6px 4px 5px var(--color8);
-				overflow: hidden;
-			}
-		}
-		.text-content {
-			li {
-				line-height: 4cqh;
-			}
-		}
-	}
-}
-
-
-@container info (width <= 80rem) {
-	.info__container {
-		inset: 0;
-		position: relative;
-		& .text-content {
-			padding: 2cqw;
-		}
-		h4 {
-			margin: 0;
-			margin-bottom: 1rem;
-			padding: 0;
-			&::before {
-				content: "";
-				inset: 0;
-				position: absolute;
-				padding-top: 0;
-				margin-top: -10%;
-				height: 180%;
-				width: 114%;
-				box-sizing: border-box;
-				background-color: var(--color1);
-				border-radius: 0rem 2rem 0 3rem;
-				z-index: -5;
-				opacity: .4;
-				box-shadow: inset 6px 4px 5px var(--color8);
-				overflow: hidden;
-			}
-		}
-	}
-}
-
-
-/*
- * ╭─────────────────────────────────────────────────────────╮
  * │                Main media query portrait                │
  * ╰─────────────────────────────────────────────────────────╯
 */
@@ -1906,9 +1741,6 @@ footer {
 		grid-auto-rows: auto;
 		row-gap: 3cqw;
 		place-self: center;
-		& .text-content {
-			width: 80cqw;
-		}
 		& .hero {
 			animation: unset;
 			height: min(50%);
@@ -2213,6 +2045,134 @@ footer {
 			padding: 4rem;
 			& p {
 				font-size: 1rem;
+			}
+		}
+	}
+}
+/*
+ * ╭─────────────────────────────────────────────────────────╮
+ * │                 home container content.                 │
+ * ╰─────────────────────────────────────────────────────────╯
+*/
+@container home (height <= 720px) {
+	.container__home > * {
+		h4 {
+			&::before {
+				content: "";
+				inset: 0;
+				position: absolute;
+				padding-top: 0;
+				margin-top: 2cqw;
+				height: auto;
+				width: 2cqh;
+				box-sizing: border-box;
+				background-color: var(--color1);
+				border-radius: 0rem 2rem 0 3rem;
+				z-index: -5;
+				opacity: .4;
+				box-shadow: inset 6px 4px 5px var(--color8);
+				overflow: hidden;
+			}
+		}
+	}
+}
+
+
+/*
+ * ╭─────────────────────────────────────────────────────────╮
+ * │                 info container content.                 │
+ * ╰─────────────────────────────────────────────────────────╯
+*/
+@container info (width > 1920px) {
+	.info__container {
+		inset: 0;
+		position: relative;
+		h4 {
+			&::before {
+				content: "";
+				inset: 0;
+				position: absolute;
+				padding-top: 0;
+				margin-top: -8%;
+				height: 150%;
+				width: 110%;
+				box-sizing: border-box;
+				background-color: var(--color1);
+				border-radius: 0rem 2rem 0 3rem;
+				z-index: -5;
+				opacity: .4;
+				box-shadow: inset 6px 4px 5px var(--color8);
+				overflow: hidden;
+			}
+		}
+	}
+	.text-content {
+		li {
+			font-size: 2rem;
+		}
+	}
+}
+
+
+@container info (width <= 1920px) {
+	.info__container {
+		inset: 0;
+		position: relative;
+		& .text-content {
+			padding: 2cqw;
+		}
+		h4 {
+			margin: 0;
+			margin-bottom: 1rem;
+			padding: 0;
+			&::before {
+				content: "";
+				inset: 0;
+				position: absolute;
+				padding-top: 0;
+				margin-top: -14%;
+				height: 180%;
+				width: 114%;
+				box-sizing: border-box;
+				background-color: var(--color1);
+				border-radius: 0rem 2rem 0 3rem;
+				z-index: -5;
+				opacity: .4;
+				box-shadow: inset 6px 4px 5px var(--color8);
+				overflow: hidden;
+			}
+		}
+	}
+}
+
+@container info (width <= 1280px) {
+	.info__container {
+		inset: 0;
+		position: relative;
+		& .text-content {
+			padding: 2rem;
+			width: 21rem;
+			border: 2px solid red;
+			font-size: 6cqw;
+			& li {
+				line-height: 4cqh;
+			}
+		}
+		h4 {
+			&::before {
+				content: "";
+				inset: 0;
+				position: absolute;
+				margin-top: -12%;
+				height: 180%;
+				width: 112%;
+				box-sizing: border-box;
+				background-color: var(--color1);
+				border-radius: 0rem 2rem 0 3rem;
+				z-index: -5;
+				opacity: .4;
+				box-shadow: inset 6px 4px 5px var(--color8);
+				overflow: hidden;
 			}
 		}
 	}
