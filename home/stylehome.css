@@ -103,7 +103,7 @@
 :root {
 	color-scheme: light dark;
 	--font-title: clamp(5cqw, 14ch, 5rem);
-	--fonts: clamp(1rem, .7cqw, 1cqw);
+	/*--fonts: clamp(1rem, .7cqw, 1cqw);*/
 	--fonts: 1rem;
 	--color1: #03e9f4;
 	--color2: #162789;
@@ -1734,7 +1734,7 @@ footer {
  * │                 home container content.                 │
  * ╰─────────────────────────────────────────────────────────╯
 */
-@container home (width < 720px) {
+@container home (height <= 720px) {
 	.container__home > * {
 		h4 {
 			&::before {
@@ -1742,7 +1742,7 @@ footer {
 				inset: 0;
 				position: absolute;
 				padding-top: 0;
-				margin-top: 1cqw;
+				margin-top: 2cqw;
 				height: auto;
 				width: 2cqh;
 				box-sizing: border-box;
@@ -1763,29 +1763,54 @@ footer {
  * │                 info container content.                 │
  * ╰─────────────────────────────────────────────────────────╯
 */
-@container info (width <= 80rem) {
+@container info (width <= 1280px) {
 	.info__container {
 		inset: 0;
 		position: relative;
 		& .text-content {
-			padding: 2rem;
-			width: 17rem;
+			padding: 1rem;
+			width: 21rem;
 			border: 2px solid red;
-			& li {
-				font-size: 1ch;
-				padding: 1rem;
-			}
+			font-size: 6cqw;
 		}
 		h4 {
-			padding-top: 1rem;
+			&::before {
+				content: "";
+				inset: 0;
+				position: absolute;
+				height: auto;
+				width: 0cqw;
+				box-sizing: border-box;
+				background-color: var(--color1);
+				border-radius: 0rem 2rem 0 3rem;
+				z-index: -5;
+				opacity: .4;
+				box-shadow: inset 6px 4px 5px var(--color8);
+				overflow: hidden;
+			}
+		}
+		.text-content {
+			li {
+				line-height: 4cqh;
+			}
+		}
+	}
+}
+
+
+@container info (width > 1920px) {
+	.info__container {
+		inset: 0;
+		position: relative;
+		h4 {
 			&::before {
 				content: "";
 				inset: 0;
 				position: absolute;
 				padding-top: 0;
-				margin-top: -1.8cqw;
-				height: 9cqh;
-				width: 19cqw;
+				margin-top: -8%;
+				height: 150%;
+				width: 110%;
 				box-sizing: border-box;
 				background-color: var(--color1);
 				border-radius: 0rem 2rem 0 3rem;
@@ -1796,36 +1821,9 @@ footer {
 			}
 		}
 	}
-}
-
-
-@container info (width <= 45rem) {
-	.info__container {
-		inset: 0;
-		position: relative;
-		& .text-content {
-			padding: 2rem;
-			width: 17rem;
-			border: 2px solid red;
-			font-size: 6cqw;
-		}
-		h4 {
-			&::before {
-				content: "";
-				inset: 0;
-				position: absolute;
-				padding-top: 0;
-				margin-top: -5.8cqw;
-				height: 10cqh;
-				width: 72cqw;
-				box-sizing: border-box;
-				background-color: var(--color1);
-				border-radius: 0rem 2rem 0 3rem;
-				z-index: -5;
-				opacity: .4;
-				box-shadow: inset 6px 4px 5px var(--color8);
-				overflow: hidden;
-			}
+	.text-content {
+		li {
+			font-size: 2rem;
 		}
 	}
 }
@@ -1835,15 +1833,21 @@ footer {
 	.info__container {
 		inset: 0;
 		position: relative;
+		& .text-content {
+			padding: 2cqw;
+		}
 		h4 {
+			margin: 0;
+			margin-bottom: 1rem;
+			padding: 0;
 			&::before {
 				content: "";
 				inset: 0;
 				position: absolute;
 				padding-top: 0;
-				margin-top: -12%;
-				height: 150%;
-				width: 114%;
+				margin-top: -10%;
+				height: 170%;
+				width: 110%;
 				box-sizing: border-box;
 				background-color: var(--color1);
 				border-radius: 0rem 2rem 0 3rem;
@@ -2023,7 +2027,7 @@ footer {
 }
 
 
-@media (width <= 80em) and (orientation: landscape) {
+@media (width <= 1280px) and (orientation: landscape) {
 	p {
 		line-height: 1.4ch;
 	}
@@ -2039,6 +2043,7 @@ footer {
 		& .hero {
 			animation: unset;
 			& .main-card {
+				height: 80%;
 				& h1 {
 					line-height: 1.7ch;
 					& b{
@@ -2051,26 +2056,30 @@ footer {
 				& p {
 					font-size: 1.2ch;
 				}
+				& h2 + p {
+					margin-top: 10cqh;
+				}
 			}
 		}
 		& .info, .utils {
 			& h3 {
 				margin-top:0;
+				margin-bottom: 1rem;
 				font-size: 3ch;
 			}
 			& .info-content {
 				& .about-content {
-					& div{
+					& div {
 						padding: 2.5cqw;
 						& .empty-time {
 							inset: 0;
 							position: absolute;
-							/* font-size: calc(var(--font-title) - 1.5ch); */
 							&:hover::before {
 								position: relative;
 								inset: 0;
 								top: -4cqw;
-								left: 11cqw;
+								left: 15cqw;
+								font-size: 5rem;
 							}
 						}
 					}
@@ -2080,9 +2089,16 @@ footer {
 		& .utils {
 			& .info-content {
 				& .solve__content {
-					& p {
-						font-size: 1cqw;
-						line-height: .1rem;;
+					height: 70cqh;
+					width: 100%;
+					& div {
+						line-height: 2.5cqh;
+						& > p {
+							font-size: 1cqw;
+							& .retention {
+								font-size: .8cqw;
+							}
+						}
 					}
 				}
 			}
@@ -2102,6 +2118,15 @@ footer {
 					& .time__info {
 						padding: 0;
 					}
+				}
+			}
+		}
+	}
+	& footer {
+		.footer-content {
+			& div {
+				& p > a {
+					font-size: .7rem;
 				}
 			}
 		}
