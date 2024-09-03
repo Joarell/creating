@@ -1119,7 +1119,7 @@ nav {
 					font-style: italic;
 					inset: 0;
 					position: absolute;
-					font-size: var(--fonts);
+					font-size: 10rem;
 					padding: 0;
 					margin: 0;
 					&:hover::before {
