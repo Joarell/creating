@@ -160,6 +160,8 @@
 	--background-select: var(--bg-col);
 	--background-option: var(--color4);
 	--popup: var(--color5);
+	--preview: var(--color3);
+	--preview-hover: var(--menu-col);
 }
 
 
@@ -179,6 +181,8 @@
 	--stroke: var(--color1);
 	--background-select: var(--color5);
 	--popup: var(--color4);
+	--preview: var(--bg-col);
+	--preview-hover: var(--color3);
 }
 
 
@@ -1427,7 +1431,7 @@ tbody:nth-child(even) {
 		position: absolute;
 		height: 100%;
 		width: 100%;
-		background: var(--color3);
+		background: var(--preview);
 		box-shadow: var(--shadow1);
 		/*border: .1px solid var(--color3);*/
 		transition: all .2s linear;
@@ -1442,7 +1446,7 @@ tbody:nth-child(even) {
 		position: absolute;
 		height: 100%;
 		width: 100%;
-		background: var(--color3);
+		background: var(--preview);
 		box-shadow: var(--shadow1);
 		/*border: .5px solid var(--color3);*/
 		transition: all .2s linear;
@@ -2026,8 +2030,8 @@ tbody:nth-child(even) {
 
 
 	.preview-icon:hover {
-		fill: var(--color1);
-		fill-opacity: .4;
+		fill: var(--preview-hover);
+		fill-opacity: .8;
 		& + .side__menu {
 			visibility: visible;
 			transition: all .5s ease-in-out;
