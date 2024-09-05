@@ -29,14 +29,14 @@
 			<h2>Otto Login</h2>
 			<form>
 				<div class="user-box">
-					<input id="user-name" type="text" name="username" required=""></input>
-					<label>Username</label>
+					<input id="user-name" type="text" name="username" placeholder="" minlength="6" required></input>
+					<label>User Name</label>
 				</div>
 				<div class="user-box">
-					<input id="passFrase" type="password" name="password" required=""></input>
+					<input id="passFrase" type="password" name="password" placeholder="" minlength="11" required></input>
 					<label>Password</label>
 				</div>
-				<a href="#" onclick="globalThis.fns.loginInto()" rel="noopener">Get In
+				<a href="#" type="submit" onclick="globalThis.fns.loginInto()" rel="noopener">Get In
 					<span></span>
 					<span></span>
 					<span></span>
