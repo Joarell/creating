@@ -2095,6 +2095,7 @@ tbody:nth-child(even) {
 			transition: all 3s linear;
 			margin: 0 39%;
 			& button {
+				padding: 1rem;
 				margin: 0 1rem;
 			}
 			& button > svg {
