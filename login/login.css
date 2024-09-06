@@ -159,7 +159,7 @@ dialog::backdrop {
 }
 
 .login-box  {
-	padding: 2.5rem 4rem;
+	padding: 4rem;
 	background: linear-gradient(var(--color6), var(--color7));
 	box-sizing: border-box;
 	box-shadow: 0 1.5rem 2.5rem #00000099;
@@ -192,14 +192,14 @@ dialog::backdrop {
 		text-align: center;
 		display: var(--get-in);
 		padding: 1.5rem .2rem;
-		margin: 0 1.5rem;
 		color: var(--color1);
 		font-size: 1rem;
 		text-decoration: none;
 		text-transform: uppercase;
 		overflow: hidden;
 		transition: .5s;
-		margin-top: 1rem;
+		/*margin-top: 1rem;*/
+		margin: 0 1rem;
 		letter-spacing: 0.25rem;
 		& span {
 			position: absolute;
