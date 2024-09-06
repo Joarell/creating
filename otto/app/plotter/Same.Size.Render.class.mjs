@@ -22,11 +22,11 @@ export default class sameSizeRender {
 		let aux =		[];
 
 		list.map(art => {
+			aux.push(art);
 			if (aux.length === STACK) {
 				works.push([...aux]);
 				aux = [];
 			}
-			aux.push(art);
 		});
 		return(works[layer]);
 	};
