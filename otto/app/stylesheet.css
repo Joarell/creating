@@ -2093,11 +2093,7 @@ tbody:nth-child(even) {
 			animation: emerge 4s ease;
 			animation-fill-mode: forwards;
 			transition: all 3s linear;
-			margin: 0 39%;
-			& button {
-				padding: 1rem;
-				margin: 0 1rem;
-			}
+			margin: 1rem;
 			& button > svg {
 				width: 100%;
 				height: 100%;
