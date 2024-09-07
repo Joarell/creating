@@ -1,6 +1,7 @@
 
 import * as status from '../front-modules/functions.front.end.mjs';
 import { addNewWorksToIndexedDB } from '../front-modules/link.storage.mjs';
+import { openDisplay } from '../plotter/layer.controller.mjs';
 
 
 function closeDialog() {
@@ -45,12 +46,12 @@ export async function checkBrowserDB(doc) {
 			result !== undefined ? resolve(result.data) : reject(undefined);
 		};
 	});
-	const tier = sessionStorage.getItem('tier');
+	const tier = localStorage.getItem('tier');
 
 	if (checkIDB) {
 		document.getElementById("input_estimate").value = doc;
 		sessionStorage.setItem("FETCHED", JSON.stringify(checkIDB));
-		globalThis.sessionStorage.setItem('tier', tier);
+		globalThis.localStorage.setItem('tier', tier);
 		closeDialog();
 		setDBFetched([checkIDB]);
 		return("IDB data Found.");
@@ -74,13 +75,14 @@ async function setDBFetched(result) {
 				reference: reference_id,
 			};
 			const data = JSON.stringify(fetched);
-			const tier = sessionStorage.getItem('tier');
+			const tier = localStorage.getItem('tier');
 
 			document.getElementById("input_estimate").value = reference_id;
 			globalThis.sessionStorage.clear();
 			globalThis.sessionStorage.setItem("FETCHED", data);
-			globalThis.sessionStorage.setItem("tier", tier);
-			closeDialog();
+			setTimeout(() => {
+				globalThis.localStorage.setItem("tier", tier);
+			}, 1000)
 		}
 		else
 			throw new TypeError("Data not found!");

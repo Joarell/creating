@@ -109,7 +109,7 @@ function loadingPage() {
 
 function browserStoragePrepare() {
 	const ref =		localStorage.getItem("refNumb");
-	const grants =	sessionStorage.getItem("tier");
+	const grants =	localStorage.getItem("tier");
 
 	if (ref)
 		document.getElementById("input_estimate").value = ref;
