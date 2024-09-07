@@ -84,7 +84,7 @@ async function appAccessCheckIn({ result, access }) {
 			.catch(err => alert(`Warning! ${err}`));
 
 		if (checkOut.status <= 350) {
-			globalThis.sessionStorage.setItem('tier', access);
+			globalThis.localStorage.setItem('tier', access);
 			globalThis.location.assign(checkOut.url);
 		}
 		else {
