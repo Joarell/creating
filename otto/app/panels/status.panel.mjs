@@ -27,7 +27,7 @@ globalThis.onload = async () => {
 	const mode =		localStorage.getItem("mode");
 	const stPanel =		document.getElementById("status");
 	const searched =	sessionStorage.getItem("FETCHED");
-	const grants =		sessionStorage.getItem("tier");
+	const grants =		localStorage.getItem("tier");
 
 	stPanel.hasChildNodes() ? true : setTimeout(await statusTable(), 200);
 	changeMode(mode);
@@ -52,6 +52,7 @@ function restorePanel() {
 		"refNumb",
 		"metrica",
 		"mode",
+		"tier",
 		"layers",
 		"numLyaer",
 		"pane1",

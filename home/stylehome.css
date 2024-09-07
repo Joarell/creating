@@ -103,7 +103,7 @@
 :root {
 	color-scheme: light dark;
 	--font-title: clamp(5cqw, 14ch, 5rem);
-	/*--fonts: clamp(1rem, .7cqw, 1cqw);*/
+	--fonts: clamp(1rem, .7cqw, 1cqw);
 	--fonts: 1rem;
 	--color1: #03e9f4;
 	--color2: #162789;
@@ -1225,7 +1225,6 @@ nav {
 				filter: drop-shadow(0 0 3rem var(--color11));
 				inset: 0;
 				position: relative;
-				padding: 5rem;
 				&::before {
 					content: "";
 					inset: 1cqh 0 0 8cqw;

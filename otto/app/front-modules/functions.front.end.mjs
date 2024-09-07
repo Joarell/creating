@@ -10,6 +10,7 @@
 
 import ArtWork from "../core2/ArtWork.class.mjs";
 import UnitAdapter from "../core2/Unit.Adapter.class.mjs";
+import { openDisplay } from "../plotter/layer.controller.mjs";
 import { addNewWorksToIndexedDB } from "./link.storage.mjs";
 
 
@@ -77,12 +78,12 @@ export async function displayAirCub() {
 // │                         list to possible crates.                         │
 // ╰──────────────────────────────────────────────────────────────────────────╯
 export async function crate(fetched = false) {
-	const cratesAsCm = await checkMetric();
+	const cratesAsCm =	await checkMetric();
 	const estimate =	{};
 	const padding =		document.createElement('padding-dialog');
 	const weak =		new WeakSet();
 	const fragment =	new DocumentFragment();
-	const grant =		sessionStorage.getItem('tier');
+	const grant =		localStorage.getItem('tier');
 	const e_code =		localStorage.getItem('refNumb') ??
 		document.getElementById('input_estimate').value;
 	let list;
@@ -121,9 +122,12 @@ export async function cleanInputs(fetched = false) {
 	document.getElementById("input_length").value =	"";
 	document.getElementById("input_depth").value =	"";
 	document.getElementById("input_height").value =	"";
+	const RENDER =	document.getElementById("show-layer");
 	const dialog =	document.querySelectorAll('padding-dialog').length;
 	const root =	document.querySelector(':root');
+	const granted =	localStorage.getItem('tier');
 
+	RENDER.hasChildNodes() ? openDisplay() : false;
 	fetched ? await Promise.resolve(sessionStorage.setItem('pane1', 'clear'))
 		.then(globalThis.document.getElementById("input_estimate").select()):
 		await Promise.resolve(sessionStorage.setItem('clean', 'eraser'))
@@ -133,6 +137,7 @@ export async function cleanInputs(fetched = false) {
 	displayAirCub();
 	dialog > 0 ? sessionStorage.setItem("CLOSED", "NOW") : false;
 	root.style.setProperty("--layer-state", "none");
+	localStorage.setItem('tier', granted);
 };
 
 
@@ -146,6 +151,7 @@ async function parseArtWork() {
 	const avoid =	[
 		"doneList",
 		"mode",
+		"tier",
 		"storage",
 		"currency",
 		"currency",
