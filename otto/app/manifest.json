@@ -1,82 +1,82 @@
 {
 	"permissions": ["webRequest"],
 	"short_name": "Otto",
-	"name": "Otto",
+	"name": "Otto Crate Solver",
 	"icons": [
 		{
-			"src": "./images/maskable_icon_x1024.png",
+			"src": "images/maskable_icon_x1024.png",
 			"type": "image/png",
 			"sizes": "1024x1024"
 		},
 		{
-			"src": "./images/maskable_icon_x512.png",
+			"src": "images/maskable_icon_x512.png",
 			"type": "image/png",
 			"sizes": "512x512"
 		},
 		{
-			"src": "./images/maskable_icon_x384.png",
+			"src": "images/maskable_icon_x384.png",
 			"type": "image/png",
 			"sizes": "384x384",
 			"purpose": "maskable"
 		},
 		{
-			"src": "./images/maskable_icon.png",
+			"src": "images/maskable_icon.png",
 			"sizes": "384x384",
 			"type": "image/png"
 		},
 		{
-			"src": "./images/maskable_icon_x256.png",
+			"src": "images/maskable_icon_x256.png",
 			"type": "image/png",
 			"sizes": "256x256"
 		},
 		{
-			"src": "./images/maskable_icon_x192.png",
+			"src": "images/maskable_icon_x192.png",
 			"type": "image/png",
 			"sizes": "192x192"
 		},
 		{
-			"src": "./images/maskable_icon_x128.png",
+			"src": "images/maskable_icon_x128.png",
 			"sizes": "128x128",
 			"type": "image/png"
 		},
 		{
-			"src": "./images/maskable_icon_x96.png",
+			"src": "images/maskable_icon_x96.png",
 			"sizes": "96x96",
 			"type": "image/png"
 		},
 		{
-			"src": "./images/maskable_icon_x72.png",
+			"src": "images/maskable_icon_x72.png",
 			"sizes": "72x72",
 			"type": "image/png"
 		},
 		{
-			"src": "./images/maskable_icon_x64.png",
+			"src": "images/maskable_icon_x64.png",
 			"sizes": "64x64",
 			"type": "image/png"
 		},
 		{
-			"src": "./images/maskable_icon_x48.png",
+			"src": "images/maskable_icon_x48.png",
 			"sizes": "48x48",
 			"type": "image/png"
 		},
 		{
-			"src": "./images/favicon-32x32.png",
+			"src": "images/favicon-32x32.png",
 			"sizes": "32x32",
 			"type": "image/png"
 		},
 		{
-			"src": "./images/favicon-16x16.png",
+			"src": "images/favicon-16x16.png",
 			"sizes": "16x16",
 			"type": "image/png"
 		}
 	],
 	"id": "/",
-	"start_url": "https://ottocratesolver.com",
+	"start_url": "/",
 	"background_color": "#162789",
 	"display_override": ["fullscreen", "minimal-ui"],
 	"display": "standalone",
-	"scope": "https://ottocratesolver.com",
+	"scope": "/",
 	"theme_color": "#002A3D",
 	"shortcuts": [],
-	"description": "Progressive Web App art work crate solver list."
+	"description": "Progressive Web App crate solver of art work list."
 }

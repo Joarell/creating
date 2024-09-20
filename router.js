@@ -44,6 +44,13 @@ router.post('/__cspreport__', (req, res) => {
 });
 
 
+router.post('/private/check',
+	userSet.userTokenMatch,
+	userSet.userTokenExpTime,
+	userSet.userChecker,
+);
+
+
 router.post('/private/auth',
 	userSet.userTokenMatch,
 	userSet.userTokenExpTime,
@@ -63,7 +70,6 @@ router.get("/", (req, res) => {
 
 
 router.post("/new/users",
-	// (req, res) => res.redirect('/'),
 	valid.validationBodyUserAdd,
 	valid.dataUserChecker,
 	userSet.insertNewUser
@@ -81,7 +87,13 @@ router.post("/new/estimate",
 );
 
 
+router.get("/loginCheck/:session", take.checkLoginSession);
+
+
 router.get("/logout", take.logOutUser);
+
+
+router.get("/takeLogin/:name", take.takeLogin);
 
 
 router.get("/estimates/:ref_id", take.getDataEstimates);

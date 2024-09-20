@@ -74,7 +74,7 @@ services:
     volumes:
       - ../database/DB/data/:/var/lib/postgresql/data
       - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone/:/etc/timezone:ro
+      - /etc/timezone:/etc/timezone:ro
 
 
 # ╭──────────────────────────────────────────────────────────╮
@@ -153,7 +153,7 @@ services:
     volumes:
       - ../:/usr/api
       - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone/:/etc/timezone:ro
+      - /etc/timezone:/etc/timezone:ro
     working_dir: /usr/api
 
 
@@ -186,7 +186,7 @@ services:
     volumes:
       - ../otto/:/crater/app
       - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone/:/etc/timezone:ro
+      - /etc/timezone:/etc/timezone:ro
 
     working_dir: /crater/app
     # TODO: try out another work directory to pass the '/', as a root path.
