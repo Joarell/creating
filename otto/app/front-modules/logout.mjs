@@ -20,8 +20,10 @@ export async function logout() {
 			cookie: cookies,
 			headers: { 'Content-Type': 'application/json; charset=UTF-8' },
 		}).then(cleanCacheSW).then(res => globalThis.location.assign(res.url))
-		.catch(Promise.resolve(cleanCacheSW)
-			.then(globalThis.location.replace("https://ottocratesolver.com/login")));
+		.catch(async () => {
+			await Promise.resolve(cleanCacheSW)
+			.then(globalThis.location.replace("https://ottocratesolver.com/login"));
+		});
 	}
 };
 
@@ -35,6 +37,8 @@ export async function forceLogout() {
 		cookie: cookies,
 		headers: { 'Content-Type': 'application/json; charset=UTF-8' },
 	}).then(cleanCacheSW).then(res => globalThis.location.assign(res.url))
-		.catch(Promise.resolve(cleanCacheSW)
-			.then(globalThis.location.replace("https://ottocratesolver.com/login")));
+	.catch(async () => {
+		await Promise.resolve(cleanCacheSW)
+		.then(globalThis.location.replace("https://ottocratesolver.com/login"));
+	});
 };
