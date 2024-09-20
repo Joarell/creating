@@ -73,58 +73,94 @@ const shiftTokens = async (req, res) => {
 	if(result !== 500) {
 		res.set({'Set-Cookie': [
 			`user=${result.newAuthToken};
-				Max-Age=10; HttpOnly; SameSite=Strict; Secure;`,
+			Max-Age=10; HttpOnly; SameSite=Strict; Secure;`,
 			`token=${result.newRefToken};
-				Max-Age=10; HttpOnly; SameSite=Strict; Secure;`,
+			Max-Age=10; HttpOnly; SameSite=Strict; Secure;`,
 		]});
 		res.status(201).json({ msg: 'active', result });
 	}
 	else
-		res.status(401).json({msg: "Not authorized!"});
+	res.status(401).json({msg: "Not authorized!"});
 };
 
 
-const logoutUser = async (req, res) => {
+const checkLoginSession = async (req, res) => {
+	await Promise.resolve(setTimeout(async () => {
+			const session =	await cache.get(req.params.session);
+
+			return(session === null ? res.status(201).json({ access: "ended" })
+				: res.status(200).json({ access: true })
+			)
+		}, 5000)
+	)
+};
+
+
+const takeLogin = async (req, res) => {
+	const dbUsers =	await db.retrieveDataUsers(req.params.name, 'login');
+	const user =	dbUsers[0];
+
+	await Promise.resolve(cache.del(user.name))
+	.then(cache.del(user.active_session))
+	.then(res.status(200).json({ msg: "caught" }))
+	.catch(err => console.error(`TAKED: ${err}`))
+	console.log(`DELETED: ${await cache.get(user.name)}`)
+};
+
+
+const logOutUser = async (req, res) => {
 	const cookie = extractCookieData(req);
 
-	cache.del(cookie.name);
-	return (res.status(200).redirect('http://localhost:83/login'));
+	await Promise.resolve(cache.del(cookie.session))
+	.then(res.status(401).redirect('http://localhost:83/login'))
+	.catch(err => console.error(err));
 };
 
 
-const setCacheLogin = async (user) => {
+const setCacheLogin = async (user, session) => {
 	const checker = await cache.get(user.name);
-	return (checker ? 403 : cache.set(user.name, user.company, "EX", 28800));
+
+	if (checker === null) {
+		await Promise.resolve(
+			checker ? true : cache.set(user.name, user.company, "EX", 28800)
+		).then(cache.set(session, user.name, "EX", 28800))
+		.catch(err => console.error(`ADDING ERROR: ${err}`));
+		return(200);
+	}
+	return (401);
 };
 
 
 const newLogin = async (req, res) => {
-	const session =		randomBytes(5).toString('hex');
-	const dbUsers =		await db.retrieveDataUsers(req.body.name, 'login');
-	const user =		dbUsers[0];
-	const body =		{id : user.id, token: user.refresh_token, name : user.name};
+	const session =	randomBytes(5).toString('hex');
+	const dbUsers =	await db.retrieveDataUsers(req.body.name, 'login');
+	const user =	dbUsers[0];
+	const body =	{ id : user.id, token: user.refresh_token, name : user.name };
 
-	if(await setCacheLogin(user) !== 403) {
+	if (await setCacheLogin(user, session) === 200) {
+		const checker = await cache.get(user.name);
+		console.log(`USER SET: ${checker}`)
 		const result =		await keepTokens
 			.tokenProcedures(user.auth_token, body, session);
 
 		if (result === 500)
 			return(res.status(500).json({msg: 'Server error'}));
+
 		res.set({
 			'Set-Cookie': [
 				`name=${user.name}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
-				`session=${session}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
+				`session=${session}; Max-Age=43200; SameSite=Strict; Secure;`,
 				`user=${result[1]}; Max-Age=3; HttpOnly; SameSite=Strict; Secure;`,
 				`token=${result[0]}; Max-Age=3; HttpOnly; SameSite=Strict; Secure;`,
 				`id=${user.id}; Max-Age=43200; HttpOnly; SameSite=Strict; Secure;`,
 			],
 		});
-		return (res.status(201).json({
+		return (res.status(200).json({
 				msg: 'active', result, id : user.id, access: user.grant_access
 			})
 		);
 	}
-	return(res.status(201).json({ msg: 401 }));
+	return(res.status(201).json({ msg: "ended" }));
 };
 
 
@@ -136,5 +172,7 @@ module.exports = {
 	removeEstimates,
 	shiftTokens,
 	updateEstimate,
-	logoutUser,
+	logOutUser,
+	checkLoginSession,
+	takeLogin,
 };

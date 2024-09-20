@@ -1,5 +1,3 @@
-
-
 const CACHENAME =	'craterCache_v1';
 const assets =		[
 	'/',
@@ -30,6 +28,7 @@ const assets =		[
 
 globalThis.addEventListener('install', event => {
 	event.waitUntil(caches.open(CACHENAME).then(async (cache) => {
+		caches.delete(CACHENAME);
 		return (cache.addAll(assets));
 	}));
 });
@@ -53,13 +52,29 @@ globalThis.addEventListener('activate', event => {
 
 // NOTE:Cache strategy: Stale-while-revalidate;
 globalThis.addEventListener('fetch', event => {
-	event.respondWith(caches.open(CACHENAME).then((cache) => {
-		return(cache.match(event.request).then((response) => {
-			const fetchPromise = fetch(event.request).then(networkResponse => {
-				cache.put(event.request, networkResponse.clone());
-				return(networkResponse);
-			});
-			return (response || fetchPromise);
-		}))
-	}))
+	const URL =		"http://localhost:83/loginCheck/*";
+	const OFF =		"http://localhost:83/takeLogin";
+	const LOGOUT =	"http://localhost:83/logout";
+	const LOGIN =	"http://localhost:83/start";
+
+	switch (event.request.url) {
+		case URL:
+			break;
+		case OFF:
+			break;
+		case LOGOUT:
+			break;
+		case LOGIN:
+			break;
+		default:
+			event.respondWith(caches.open(CACHENAME).then((cache) => {
+				return(cache.match(event.request).then((response) => {
+					const fetchPromise = fetch(event.request).then(networkResponse => {
+						cache.put(event.request, networkResponse.clone());
+						return(networkResponse);
+					});
+					return (response || fetchPromise);
+				}))
+			}))
+	}
 });

@@ -17,6 +17,8 @@ const db =			require('../DB_models/db.transactions');
 const jwt =			require('jsonwebtoken');
 const tokenMan =	require('../DB_models/db.auth.procedures');
 const dataTokens =	require('../DB_models/db.tokens.stored');
+const DF =			require('ioredis');
+const cache =		DF.createClient(process.env.CACHE_ACCESS);
 
 
 const insertNewUser = async (req, res) => {
@@ -121,9 +123,21 @@ async function tokensCheckOut(info, users) {
 };
 
 
-const userTokenMatch = async(req, res, next) => {
+const userChecker = async (req, res) => {
+	const cookieData =	extractCookieData(req);
+	const checking =	await cache.get(cookieData.session);
+
+	console.log(`CHECKING USER: ${checking}`)
+	return (checking !== null ?
+		res.status(200).json({ msg: "active" }) :
+		res.status(201).json({ msg: "ended" })
+	);
+};
+
+
+const userTokenMatch = async (req, res, next) => {
 	try {
-		const cookieData =	extractCookieData(req);
+		const cookieData = extractCookieData(req);
 		const dbUsers =		await db.retrieveDataUsers(cookieData.id, 'auth');
 		let result;
 
@@ -189,4 +203,5 @@ module.exports = {
 	userLoginValidation,
 	userTokenExpTime,
 	userTokenMatch,
+	userChecker,
 }

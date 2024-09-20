@@ -1,5 +1,3 @@
-
-
 globalThis.fns = { loginInto };
 
 globalThis.onkeydown = (keyPress) => {
@@ -33,15 +31,29 @@ export function loginInto () {
 };
 
 
-async function setLogin(info) {
+async function takeLogin(userLogin){
+	const url = `/takeLogin/${userLogin.name}`;
+
+	if (confirm("This USER is already logged in. Would you like to take it?")) {
+		const checkOut = fetch(url, {
+			method: "GET",
+			headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+		}).then(body => body.status)
+		.then(status => status === 200 ? backEndLoginAuth(userLogin): false)
+	}
+	return;
+};
+
+
+async function setLogin(info, userData) {
 	switch(info.msg) {
 		case 'active':
 			return(await appAccessCheckIn(info));
-		case 401:
-			return (alert("This USER is already logged in. Please, press 'Logout', and try again."));
+		case "ended":
+			return (takeLogin(userData));
 		default:
 			alert('Wrong credentials. Please try again!');
-	}
+	};
 	return(info);
 };
 
@@ -49,18 +61,14 @@ async function setLogin(info) {
 async function backEndLoginAuth(userInfo) {
 	const USER =	JSON.stringify(userInfo);
 	const url =		'/start';
-	try {
-		await fetch (url, {
-			method: "POST",
-			body: USER,
-			headers: { 'Content-Type': 'application/json; charset=UTF-8' },
-		}).then(body => body.json())
-		.then(setLogin)
-		.catch(err => alert(`ATTENTION: ${err}`));
-	}
-	catch(err) {
-		alert(`Attention attempt to login: ${err}`);
-	};
+
+	await fetch (url, {
+		method: "POST",
+		body: USER,
+		headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+	}).then(body => body.json())
+	.then(data => setLogin(data, userInfo))
+	//.catch(takeLogin(userInfo));
 };
 
 

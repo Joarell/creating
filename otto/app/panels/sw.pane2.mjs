@@ -11,6 +11,7 @@ const assets =		[
 
 globalThis.addEventListener('install', (event) => {
 	event.waitUntil(caches.open(CACHENAME).then((cache) => {
+		caches.delete(CACHENAME);
 		return (cache.addAll(assets));
 	}));
 });

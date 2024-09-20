@@ -15,11 +15,11 @@ import { installer } from './installation.handler.mjs';
 
 globalThis.onkeydown = (push) => {
 	const task1 = ((push.key === "Enter") && (push.ctrlKey === true));
-	const task2 = ((push.ctrlKey === true) && (push.key === "V"));
+	//const task2 = ((push.ctrlKey === true) && (push.key === "V"));
 	const task3 = push.key === "Escape";
 
 	task1 ? crate() : false;
-	task2 ? openDisplay() : false;
+	//task2 ? openDisplay() : false;
 	task3 ? closeMenu() : false;
 };
 
