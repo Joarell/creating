@@ -14,7 +14,7 @@ export async function logout() {
 			await caches.delete('pane2_v1');
 			await registration.unregister();
 		})).then(res => globalThis.location.assign(res.url))
-		.catch(globalThis.location.replace("http://localhost:83/login"));
+		.catch(globalThis.location.replace("https://ottocratesolver.com/login"));
 	}
 };
 
@@ -34,5 +34,5 @@ export async function forceLogout() {
 		await caches.delete('pane2_v1');
 		await registration.unregister();
 	})).then(res => globalThis.location.assign(res.url))
-	.catch(globalThis.location.replace("http://localhost:83/login"));
+		.catch(globalThis.location.replace("https://ottocratesolver.com/login"));
 };

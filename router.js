@@ -29,7 +29,7 @@ const log =			require('debug')('server:back');
 
 // TODO: should send the home page when all be done.
 router.use(express.json());
-router.use(cors({origin: "http://localhost:83", Credential: true}));
+router.use(cors({origin: "https://ottocratesolver.com", Credential: true}));
 router.use(express.static(path.join(__dirname)));
 router.use(compression());
 
