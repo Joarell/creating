@@ -52,10 +52,10 @@ globalThis.addEventListener('activate', event => {
 
 // NOTE:Cache strategy: Stale-while-revalidate;
 globalThis.addEventListener('fetch', event => {
-	const URL =		"http://localhost:83/loginCheck/*";
-	const OFF =		"http://localhost:83/takeLogin";
-	const LOGOUT =	"http://localhost:83/logout";
-	const LOGIN =	"http://localhost:83/start";
+	const URL =		"http://ottocratesolver/loginCheck/*";
+	const OFF =		"http://ottocratesolver/takeLogin";
+	const LOGOUT =	"http://ottocratesolver/logout";
+	const LOGIN =	"http://ottocratesolver/start";
 
 	switch (event.request.url) {
 		case URL:
