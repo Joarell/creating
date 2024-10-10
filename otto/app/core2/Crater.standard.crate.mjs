@@ -689,8 +689,8 @@ export default class CraterStandard {
 				greb.map(art => this.#list.splice(this.#list.indexOf(art), 1));
 				this.#setLayer.call(i, crate, greb);
 				GC.add(innerCrate);
-				greb =		null;
-				greb =		[];
+				greb =	null;
+				greb =	[];
 			};
 			checkLen =	this.#list.length === 1 && i === this.#maxLayers;
 		};
@@ -698,19 +698,23 @@ export default class CraterStandard {
 	};
 
 	#checkOneCrate(list) {
+		let AVG =		0;
 		const BIGGEST =	list.at(-1);
-		const CHECKER =	list.filter(art => {
+		//const CHECKER =	list.filter(art => {
+		list.filter(art => {
+			AVG += art[4];
 			if(BIGGEST[4] >= art[4])
 				return (art);
 		});
-		return (this.#list.length === CHECKER.length ? true : false);
+		return (!(+(AVG).toFixed(4) / list.length > BIGGEST));
+		//return (this.#list.length === CHECKER.length && Z <= MAXZ);
 	};
 
 	// HACK: improvement necessary to define the best crate size 'backtrack'.
 	#defineSizeBaseCrate(list) {
 		const CRATE1 =	this.#checkOneCrate(list);
-		const MAXX =	250;
-		const MAXY =	132;
+		const MAXx =	250;
+		const MAXy =	132;
 		let len =		list.length;
 		let x =			0;
 		let z =			0;
@@ -719,15 +723,15 @@ export default class CraterStandard {
 		if (CRATE1)
 			return([list.at(-1)[1], list.at(-1)[2], list.at(-1)[3]]);
 		while(len--) {
-			(x + x + list[len][1]) <= MAXX ? x += list[len][1] :
-				x < list[len][1] && list[len][1] <= MAXX ? x = list[len][1]:
-					list[len][1] > MAXX ? x = list[len][1] : false;
+			(x + list[len][1]) <= MAXx ? x += list[len][1] :
+				x < list[len][1] && list[len][1] <= MAXx ? x = list[len][1]:
+					list[len][1] > MAXx ? x = list[len][1] : false;
 
 			z = list[len][2] ?? z;
 
-			(y + y + list[len][3]) <= MAXY ? y += list[len][3]:
-				y < list[len][3] && list[len][3] <= MAXY ? y = list[len][3]:
-					list[len][3] > MAXY ? y = list[len][3] : false;
+			(y + list[len][3]) <= MAXy ? y += list[len][3]:
+				y < list[len][3] && list[len][3] <= MAXy ? y = list[len][3]:
+					list[len][3] > MAXy ? y = list[len][3] : false;
 		};
 		return([x, z, y]);
 	};
