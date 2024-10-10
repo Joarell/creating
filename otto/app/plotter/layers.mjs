@@ -1,5 +1,3 @@
-
-
 import TubeRender from './Tube.Render.class.mjs';
 import StandardRender from './Standard.Render.class.mjs';
 import * as coord from './layer.coordinate.mjs';
