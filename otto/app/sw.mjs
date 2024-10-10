@@ -52,29 +52,22 @@ globalThis.addEventListener('activate', event => {
 
 // NOTE:Cache strategy: Stale-while-revalidate;
 globalThis.addEventListener('fetch', event => {
-	const URL =		"http://ottocratesolver/loginCheck/*";
-	const OFF =		"http://ottocratesolver/takeLogin";
-	const LOGOUT =	"http://ottocratesolver/logout";
-	const LOGIN =	"http://ottocratesolver/start";
+	const AVOID = [
+		"http://ottocratesolver/loginCheck/",
+		"http://ottocratesolver/takeLoging",
+		"http://ottocratesolver/logout",
+		"http://ottocratesolver/start",
+	];
 
-	switch (event.request.url) {
-		case URL:
-			break;
-		case OFF:
-			break;
-		case LOGOUT:
-			break;
-		case LOGIN:
-			break;
-		default:
-			event.respondWith(caches.open(CACHENAME).then((cache) => {
-				return(cache.match(event.request).then((response) => {
-					const fetchPromise = fetch(event.request).then(networkResponse => {
-						cache.put(event.request, networkResponse.clone());
-						return(networkResponse);
-					});
-					return (response || fetchPromise);
-				}))
+	return (AVOID.includes(event.request.url) ? "AVOIDED":
+		event.respondWith(caches.open(CACHENAME).then((cache) => {
+			return(cache.match(event.request).then((response) => {
+				const fetchPromise = fetch(event.request).then(networkResponse => {
+					cache.put(event.request, networkResponse.clone());
+					return(networkResponse);
+				});
+				return (response || fetchPromise);
 			}))
-	}
+		}))
+	);
 });
