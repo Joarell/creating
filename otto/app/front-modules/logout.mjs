@@ -20,8 +20,10 @@ export async function logout() {
 			cookie: cookies,
 			headers: { 'Content-Type': 'application/json; charset=UTF-8' },
 		}).then(cleanCacheSW).then(res => globalThis.location.assign(res.url))
-		.catch(Promise.resolve(cleanCacheSW)
-			.then(globalThis.location.replace("http://localhost:83/login")));
+		.catch(async () => {
+			Promise.resolve(cleanCacheSW)
+			.then(globalThis.location.replace("http://localhost:83/login"));
+		});
 	}
 };
 
@@ -35,6 +37,8 @@ export async function forceLogout() {
 		cookie: cookies,
 		headers: { 'Content-Type': 'application/json; charset=UTF-8' },
 	}).then(cleanCacheSW).then(res => globalThis.location.assign(res.url))
-		.catch(Promise.resolve(cleanCacheSW)
-			.then(globalThis.location.replace("http://localhost:83/login")));
+	.catch(async () => {
+		Promise.resolve(cleanCacheSW)
+		.then(globalThis.location.replace("http://localhost:83/login"));
+	});
 };
