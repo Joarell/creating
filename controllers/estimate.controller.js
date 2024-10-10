@@ -112,6 +112,7 @@ const logOutUser = async (req, res) => {
 	const cookie = extractCookieData(req);
 
 	await Promise.resolve(cache.del(cookie.session))
+	.then(cache.del(cookie.name))
 	.then(res.status(401).redirect('http://localhost:83/login'))
 	.catch(err => console.error(err));
 };
