@@ -53,7 +53,7 @@ globalThis.addEventListener('activate', event => {
 // NOTE:Cache strategy: Stale-while-revalidate;
 globalThis.addEventListener('fetch', event => {
 	const AVOID = [
-		"http://ottocratesolver/loginCheck/",
+		"http://ottocratesolver/loginCheck",
 		"http://ottocratesolver/takeLoging",
 		"http://ottocratesolver/logout",
 		"http://ottocratesolver/start",
