@@ -1,5 +1,3 @@
-
-
 export function switchMode(mode) {
 	localStorage.setItem("mode", mode);
 	changeMode(mode);
