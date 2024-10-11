@@ -52,9 +52,7 @@ export function setUnit() {
 		// INFO: This is the trigger to the "create" and clear button.
 	}
 	else if (check) {
-		const storage = localStorage.getItem('metrica');
-
-		storage === 'cm - centimeters' ?
+		measure === 'cm - centimeters' ?
 			localStorage.setItem("metrica", "in - inches") :
 			localStorage.setItem("metrica", "cm - centimeters");
 		sessionStorage.setItem('clean', 'reload');
