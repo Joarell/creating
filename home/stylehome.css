@@ -536,7 +536,6 @@ svg {
 	scroll-padding: 0;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	place-self: center;
 	& {
 		background-image:
 			linear-gradient(var(--blueprint1) .01px, transparent 1px),
@@ -2086,6 +2085,12 @@ footer {
 	.info__container {
 		inset: 0;
 		position: relative;
+		& .text-content {
+			li {
+				font-size: 2rem;
+				text-wrap: nowrap;
+			}
+		}
 		h4 {
 			&::before {
 				content: "";
@@ -2105,11 +2110,6 @@ footer {
 			}
 		}
 	}
-	.text-content {
-		li {
-			font-size: 2rem;
-		}
-	}
 }
 
 
@@ -2119,6 +2119,9 @@ footer {
 		position: relative;
 		& .text-content {
 			padding: 2cqw;
+			& li {
+				text-wrap: nowrap;
+			}
 		}
 		h4 {
 			margin: 0;
@@ -2155,6 +2158,7 @@ footer {
 			font-size: 6cqw;
 			& li {
 				line-height: 4cqh;
+				text-wrap: nowrap;
 			}
 		}
 		h4 {
