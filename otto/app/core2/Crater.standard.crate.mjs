@@ -419,11 +419,9 @@ export default class CraterStandard {
 			AXIS.valY: +(size[2] - layer[0].y1 * size[2]).toFixed(4);
 
 		const gapX1 =	layer[index][1].y2 === 0 ?
-			calcX1 :
-			x1 === 1 && layer[0].y2 < 1 ? size[0] - workProp.spaceX : 0;
+			calcX1 : x1 === 1 && layer[0].y2 < 1 ? size[0] - workProp.spaceX : 0;
 		const gapY1 =	layer[index][1].x2 === 0 ?
-			calcY1 :
-			y1 === 1 && layer[0].x2 < 1 ? size[2] - workProp.spaceY : 0;
+			calcY1 : y1 === 1 && layer[0].x2 < 1 ? size[2] - workProp.spaceY : 0;
 		return({ gapX1, gapY1 });
 	};
 
@@ -627,7 +625,7 @@ export default class CraterStandard {
 		return (this.#matchCanvasInLayer(matched, layer, len - 1));
 	};
 
-	#setLayer(crate, works) {
+	#setLayer(crate, works, status) {
 		switch(this) {
 			case 1:
 				crate.unshift({ layer1 : works });
@@ -649,38 +647,69 @@ export default class CraterStandard {
 		};
 	};
 
+	#defineCrateSize(size) {
+		const COMPMAXSIZE =	230;
+		const LEN =			8
+		const THRESHOLDX =	180;
+		const THRESHOLDY =	132;
+		const PASS =		size[0] >= THRESHOLDX || size[2] >= THRESHOLDX;
+		let x = 0;
+		let z = 0;
+		let y = 0;
+
+		if (this.#list.length > LEN || PASS)
+			return (false);
+		this.#list.reverse().map(art => {
+			x + art[1] <= COMPMAXSIZE ? x += art[1] : false;
+			z < art[2] ? z = art[2] : false;
+			y < art[3] && art[3] <= THRESHOLDY ? y = art[3] : false;
+			y + art[3] <= THRESHOLDY ? y += art[3] : false;
+		});
+		return (x !== size[0] || y !== size[2] ? [x, z, y] : false);
+	}
+
 	#hugeCanvasFirst(crate, layer) {
-		let countLayer =	0;
+		let i =	0;
+		let sized =			this.#defineCrateSize(layer);
 		const GETCANVAS =	[];
 		const HUGE =		this.#list.at(-1);
+		const status =		{
+			size: layer,
+			x1: 1,
+			x2: 1,
+			y1: 1,
+			y2: 1,
+		};
 
-		if (HUGE[1] === layer[0] && HUGE[3] === layer[2]) {
-			countLayer++;
-			this.#setLayer.call(countLayer, crate, [HUGE]);
+		if (!sized && HUGE[1] === layer[0] && HUGE[3] === layer[2]) {
+			i++;
+			this.#setLayer.call(i, crate, [HUGE]);
 			this.#list.pop();
 		}
 		else {
 			this.#list.reverse().map(art => {
-				art[1] === layer[0] ? GETCANVAS.push(art) : false
+				art[1] === sized[0] && art[3] === sized[2] ?
+					GETCANVAS.push(art) : false;
 			});
-			GETCANVAS.map(canvas => {
-				countLayer++;
-				this.#setLayer.call(countLayer, crate, [canvas]);
+			GETCANVAS.length > 0 ? GETCANVAS.map(canvas => {
+				i++;
+				this.#setLayer.call(i, crate, [canvas], status);
 				this.#list.splice(this.#list.indexOf(canvas), 1);
-			});
+			}): false;
 		};
-		return(countLayer);
+		return({ i, sized });
 	};
 
 	#fillCrate(measure) {
-		const GC =		new WeakSet();
-		let crate =		[];
-		let greb =		[];
-		let checkLen =	true;
-		let i =			this.#hugeCanvasFirst(crate, measure);
+		const GC =			new WeakSet();
+		let crate =			[];
+		let greb =			[];
+		let checkLen =		true;
+		let { i, sized } =	this.#hugeCanvasFirst(crate, measure);
 		let len;
 		let innerCrate;
 
+		Array.isArray(size) ? measure = size : false;
 		while (i++ < this.#maxLayers || checkLen && this.#list.length) {
 			innerCrate = { size : measure, x1 : 0, y1 : 0, x2 : 0, y2 : 0 };
 			len = this.#list.length - 1;
@@ -700,14 +729,14 @@ export default class CraterStandard {
 	#checkOneCrate(list) {
 		let AVG =		0;
 		const BIGGEST =	list.at(-1);
-		//const CHECKER =	list.filter(art => {
+		// const CHECKER =	list.filter(art => {
 		list.filter(art => {
 			AVG += art[4];
 			if(BIGGEST[4] >= art[4])
 				return (art);
 		});
 		return (!(+(AVG).toFixed(4) / list.length > BIGGEST));
-		//return (this.#list.length === CHECKER.length && Z <= MAXZ);
+		// return (this.#list.length === CHECKER.length && Z <= MAXZ);
 	};
 
 	// HACK: improvement necessary to define the best crate size 'backtrack'.
@@ -736,8 +765,9 @@ export default class CraterStandard {
 		return([x, z, y]);
 	};
 
-	#addXandYtimes(canvas) {
-		let procList = canvas.map(art => {
+
+	#addXandYtimes() {
+		let procList = this.#list.map(art => {
 			art.push(art[1] * art[3])
 			return(art);
 		});
@@ -749,8 +779,8 @@ export default class CraterStandard {
 
 	#provideCrate(crate) {
 		if (!this.#list.length)
-			return ;
-		this.#addXandYtimes(this.#list);
+			return;
+		this.#addXandYtimes();
 		const size =		this.#defineSizeBaseCrate(this.#list);
 		const crateFilled =	this.#fillCrate(size);
 		const crateDone =	this.#defineFinalSize(size, crateFilled);
