@@ -160,6 +160,10 @@ export default class CraterStandard {
 		return({ X, Y });
 	};
 
+	#adjacentWorkAux(layer, closeArt, ref) {
+
+	}
+
 	#updateAdjacentWork(work, closeArt, layer, ref, code) {
 		const { size } =			layer[0];
 		const { length } =			closeArt[0];
@@ -224,32 +228,53 @@ export default class CraterStandard {
 		return(layer);
 	};
 
+	/**
+	* @param {Array} work has the canvas information
+	* @param {Array} layer has the crate sizes and available gaps
+	* @param {Number} decX has the decimal sizes of the works length
+	* @param {Number} decY has the decimal sizes of the works height
+	* @param {Number} ref hast the works code of the closest work
+	*/
+	#mapSizeCheckOut(work, layer, decX, decY, ref) {
+		const FLIP =				5;
+		const valX =				work.length > FLIP ? work[3] : work[1];
+		const valY =				work.length > FLIP ? work[1] : work[3];
+		const { size } =			layer[0];
+		const { axioX, axioY } =	layer[ref][1];
+		const artX =				layer[ref][0].length > 5 ? layer[ref][0][3] : layer[ref][0][1];
+		const artY =				layer[ref][0].length > 5 ? layer[ref][0][1] : layer[ref][0][3];
+
+		return ({
+			innerX: valX + artX === size[0],
+			innerY: valY + artY === size[2],
+			copyX2: layer[0].x2,
+			copyY2: layer[0].y2,
+			setX: axioY.includes(work[0]) && layer[0].x1 + decX <= 1,
+			setY: axioX.includes(work[0]) && layer[0].y1 + decY <= 1,
+		});
+	}
+
+	/**
+	* @param {Array} work has the canvas information
+	* @param {Array} layer has the crate sizes and available gaps
+	* @param {Number} decX has the decimal sizes of the works length
+	* @param {Number} decY has the decimal sizes of the works height
+	* @param {Number} ref hast the works code of the closest work
+	*/
 	#updateLayerSpace(layer, work, decX, decY, ref) {
-		const { size } =	layer[0];
-		const valX =		work.length > 5 ? work[3] : work[1];
-		const valY =		work.length > 5 ? work[1] : work[3];
-
 		if (ref) {
-			const { axioX, axioY } =	layer[ref][1];
-			const checkX =	axioX.includes(work[0]);
-			const checkY =	axioY.includes(work[0]);
-			const artX =	layer[ref][0].length > 5 ? layer[ref][0][3] : layer[ref][0][1];
-			const artY =	layer[ref][0].length > 5 ? layer[ref][0][1] : layer[ref][0][3];
-			const innerX =	valX + artX === size[0];
-			const innerY =	valY + artY === size[2];
-			const copyX2 =	layer[0].x2;
-			const copyY2 =	layer[0].y2;
-			const setX =	checkY && layer[0].x1 + decX <= 1;
-			const setY =	checkX && layer[0].y1 + decY <= 1;
+			const data = this.#mapSizeCheckOut(work, layer, decX, decY, ref);
+			const check1 = !data.setY && data.innerX || layer[0].x1 === 1
+				&& data.copyX2 < 1 && !data.setY;
+			const check2 = !data.setX && data.innerY || layer[0].y1 === 1
+				&& data.copyY2 < 1 && data.copyX2 === 1;
 
-			setX ? layer[0].x1 = +(layer[0].x1 + decX).toFixed(4) : 0;
-			setY ? layer[0].y1 = +(layer[0].y1 + decY).toFixed(4) : 0;
-			innerX && layer[0].x1 < 1 && !setY ? layer[0].x1 = 1: 0;
-			innerY && layer[0].y1 < 1 && !setX ? layer[0].y1 = 1: 0;
-			!setY && innerX || layer[0].x1 === 1 && copyX2 < 1 && !setY ?
-				layer[0].y2 = layer[0].y2 + decY : 0;
-			!setX && innerY || layer[0].y1 === 1 && copyY2 < 1 && copyX2 === 1 ?
-				layer[0].x2 = layer[0].x2 + decX : 0;
+			data.setX ? layer[0].x1 = +(layer[0].x1 + decX).toFixed(4) : 0;
+			data.setY ? layer[0].y1 = +(layer[0].y1 + decY).toFixed(4) : 0;
+			data.innerX && layer[0].x1 < 1 && !data.setY ? layer[0].x1 = 1: 0;
+			data.innerY && layer[0].y1 < 1 && !data.setX ? layer[0].y1 = 1: 0;
+			check1 ? layer[0].y2 = layer[0].y2 + decY : 0;
+			check2 ? layer[0].x2 = layer[0].x2 + decX : 0;
 		}
 		else {
 			layer[0].x1 = decX;
@@ -260,6 +285,12 @@ export default class CraterStandard {
 		return(layer);
 	};
 
+	/**
+	* @param {Array} work has the canvas information
+	* @param {Array} layer has the crate sizes and available gaps
+	* @param {Number} decX has the decimal sizes of the works length
+	* @param {Number} prev indicates the available space to the closest work previously
+	*/
 	#addNewWorkSetupAndLayerUpdate(work, layer, { size }, prev) {
 		const sizeX = work.length > 5 ?
 			+(work[3] / size[0]).toFixed(4) : +(work[1] / size[0]).toFixed(4);
@@ -497,9 +528,7 @@ export default class CraterStandard {
 
 		gapX1 = x2 < 1 && y2 === 1 && y1 === 1 && layer[0].y2 <= 1 ?
 			size[0] - (size[0] * layer[0].x2):
-			x1 === 1 ?
-				+((1 - x1) * size[0]).toFixed(4) :
-				y2 < 1 ? size[0] - DIM.X : 0;
+			x1 === 1 ? +((1 - x1) * size[0]).toFixed(4) : y2 < 1 ? size[0] - DIM.X : 0;
 		gapY1 = x2 < 1 && y2 < 1 ?
 			size[2] - DIM.Y : +((1 - y1) * size[2]).toFixed(4);
 		if (x2 < 1 || x1 < 1) {
@@ -516,9 +545,7 @@ export default class CraterStandard {
 				gapY2 = y2 <= 1 ?
 				+(size[2] * (1 - layer[0].y2)).toFixed(4) :
 				+(size[2] - ((1 - y2) * DIM.Y)).toFixed(4);
-			gapX2 = x1 < 1 ?
-				+(size[0] * (1 - x1)).toFixed(4) :
-				size[0] - DIM.Y;
+			gapX2 = x1 < 1 ? +(size[0] * (1 - x1)).toFixed(4) : size[0] - DIM.Y;
 			gapX1 === 0 ? gapX1 = gapX2 : 0;
 		};
 		return({ gapX1, gapX2, gapY1, gapY2 });
@@ -709,7 +736,7 @@ export default class CraterStandard {
 		let len;
 		let innerCrate;
 
-		Array.isArray(size) ? measure = size : false;
+		Array.isArray(sized) ? measure = sized : false;
 		while (i++ < this.#maxLayers || checkLen && this.#list.length) {
 			innerCrate = { size : measure, x1 : 0, y1 : 0, x2 : 0, y2 : 0 };
 			len = this.#list.length - 1;
@@ -764,7 +791,6 @@ export default class CraterStandard {
 		};
 		return([x, z, y]);
 	};
-
 
 	#addXandYtimes() {
 		let procList = this.#list.map(art => {
