@@ -25,7 +25,7 @@ export default class CraterNotCanvas {
 	};
 
 	#setPadding(innerCrate) {
-		const PAD =		23;
+		const PAD =		20;
 		const HIGHPAD =	28;
 		const X =		innerCrate[0] + PAD;
 		const Z =		innerCrate[1] + PAD;

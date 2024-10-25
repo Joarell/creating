@@ -48,7 +48,7 @@ export default class CraterStandard {
 	#defineFinalSize(innerSize, works) {
 		const DEFAULTPAD =	23;
 		const HIGHPAD =		28;
-		const LAYERPAD =	10;
+		const LAYERPAD =	2;
 		const X =			innerSize[0] + DEFAULTPAD;
 		const Y =			innerSize[2] + HIGHPAD;
 		let z =				works.length * LAYERPAD + DEFAULTPAD;
@@ -698,8 +698,11 @@ export default class CraterStandard {
 	#hugeCanvasFirst(crate, layer) {
 		let i =	0;
 		let sized =			this.#defineCrateSize(layer);
+		const ICON =	`<i class="nf nf-oct-sync"></i>`;
 		const GETCANVAS =	[];
 		const HUGE =		this.#list.at(-1);
+		const check1 = HUGE[1] === layer[0] && HUGE[3] === layer[2];
+		const check2 = HUGE[1] === layer[2] && HUGE[3] === layer[0];
 		const status =		{
 			size: layer,
 			x1: 1,
@@ -708,8 +711,9 @@ export default class CraterStandard {
 			y2: 1,
 		};
 
-		if (!sized && HUGE[1] === layer[0] && HUGE[3] === layer[2]) {
+		if (!sized && check1 || check2) {
 			i++;
+			HUGE[1] < HUGE[3] ? HUGE.push(ICON): 0;
 			this.#setLayer.call(i, crate, [HUGE]);
 			this.#list.pop();
 		}
@@ -768,16 +772,20 @@ export default class CraterStandard {
 
 	// HACK: improvement necessary to define the best crate size 'backtrack'.
 	#defineSizeBaseCrate(list) {
-		const CRATE1 =	this.#checkOneCrate(list);
-		const MAXx =	250;
-		const MAXy =	132;
-		let len =		list.length;
-		let x =			0;
-		let z =			0;
-		let y =			0;
+		const CRATE1 =		this.#checkOneCrate(list);
+		const MAXx =		250;
+		const MAXy =		132;
+		const SELECTED =	list.at(-1);
+		let len =			list.length;
+		let x =				0;
+		let z =				0;
+		let y =				0;
 
 		if (CRATE1)
-			return([list.at(-1)[1], list.at(-1)[2], list.at(-1)[3]]);
+			return(SELECTED[1] < SELECTED[3] ?
+				[SELECTED[3], SELECTED[2], SELECTED[1]]:
+				[SELECTED[1], SELECTED[2], SELECTED[3]]
+			);
 		while(len--) {
 			(x + list[len][1]) <= MAXx ? x += list[len][1] :
 				x < list[len][1] && list[len][1] <= MAXx ? x = list[len][1]:
