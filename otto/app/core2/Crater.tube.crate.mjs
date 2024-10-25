@@ -1,12 +1,21 @@
 
 export default class CraterTube {
 	#tubes;
+	#DIAMETER
 
 	constructor(list) {
 		if(!list || list.length === 0)
 			return({ tube : false });
 
-		this.#tubes = list;
+		this.#tubes =		list;
+		this.#DIAMETER =	35;
+		const checker =		this.#tubes.filter(item => {
+			return(item[2] < this.#DIAMETER ? item : false);
+		})
+		const works =		checker.find(data => data !== false);
+
+		if (!works)
+			return ({ tube: false });
 		return(this.#crateMaker());
 	};
 
@@ -54,8 +63,8 @@ export default class CraterTube {
 		return (this.#setPaddings.call(baseSize, DEFAULTPAD, HEIGHTPAD));
 	};
 
-	#interfaceCrates(opt, list) {
-		switch(opt) {
+	#interfaceCrates(list) {
+		switch(list.length) {
 			case 1:
 				return(this.#oneTubeCrate.call(list));
 			case 2:
@@ -81,9 +90,8 @@ export default class CraterTube {
 	};
 
 	#checkHugeTubes() {
-		const DIAMETER =	35;
 		const getter =		this.#tubes.filter(tube => {
-			if (tube[2] > DIAMETER)
+			if (tube[2] > this.#DIAMETER)
 				return (tube);
 			return ;
 		});
@@ -104,15 +112,13 @@ export default class CraterTube {
 
 		while(this.#tubes.length) {
 			reduce = this.#tubes.splice(0, MAXCONTENT);
-			crates.push(this.#interfaceCrates(reduce.length, reduce));
+			crates.push(this.#interfaceCrates(reduce));
 			crates.push({ works: reduce });
 		};
 		if (this.#tubes.length >= 1) {
 			crates.push(this.#interfaceCrates(this.#tubes.length, this.#tubes));
 			crates.push({ works: this.#tubes });
 		};
-		return(this.#tubes = { crates: crates });
+		return(this.#tubes = { crates });
 	};
 };
-
-

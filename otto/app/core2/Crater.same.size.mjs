@@ -26,7 +26,7 @@ export default class CraterSameSize {
 			const checkX = (value[0] + test[0]) <= baseLayer[0];
 			const checkZ = (value[1] + test[1]) <= baseLayer[1];
 			const checkY = (value[2] + test[2]) <= baseLayer[2];
-			
+
 			if (checkX && checkZ && checkY)
 				return (value);
 			return
@@ -169,9 +169,9 @@ export default class CraterSameSize {
 		if (countDiffSizes === null)
 			return(null);
 		const crateDone =		this.#compCrate(countDiffSizes);
-		const BACKUP =			JSON.parse(JSON.stringify(crateDone));
 
 		countDiffSizes =		null;
-		return ({ crates : crateDone, backUp : BACKUP });
+		//console.log(crateDone)
+		return ({ crates : crateDone, backUp : structuredClone(crateDone) });
 	};
 };
