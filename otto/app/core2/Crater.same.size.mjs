@@ -12,11 +12,12 @@ export default class CraterSameSize {
 	};
 
 	#setPad(innerCrate) {
-		const PAD =		23;
-		const HIGHPAD =	28;
-		const X =		innerCrate[0] + PAD;
-		const Z =		innerCrate[1] + PAD;
-		const Y =		innerCrate[2] + HIGHPAD;
+		const PAD =			23;
+		const HIGHPAD =		28;
+		const LAYERPAD =	2;
+		const X =			innerCrate[0] + PAD;
+		const Z =			innerCrate[1] + LAYERPAD;
+		const Y =			innerCrate[2] + HIGHPAD;
 
 		return([X, Z, Y]);
 	};
