@@ -14,7 +14,7 @@ export default class CraterSameSize {
 	#setPad(innerCrate) {
 		const PAD =			23;
 		const HIGHPAD =		28;
-		const LAYERPAD =	2;
+		const LAYERPAD =	2.5;
 		const X =			innerCrate[0] + PAD;
 		const Z =			innerCrate[1] + LAYERPAD;
 		const Y =			innerCrate[2] + HIGHPAD;
