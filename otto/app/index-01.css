@@ -1,14 +1,6 @@
 
 
 header {
-	position: relative;
-	place-items: center;
-	grid-area: header;
-	background-image:
-		linear-gradient(var(--blueprint1) .01px, transparent 1px),
-		linear-gradient(90deg, var(--blueprint1) .01px, transparent 1px),
-		linear-gradient(var(--blueprint2) .01px, transparent 1px),
-		linear-gradient(90deg, var(--blueprint2) .01px, transparent 1px);
 	background: var(--gradient);
 	text-align: center;
 	height: 8rem;
