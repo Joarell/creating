@@ -63,7 +63,6 @@ globalThis.addEventListener('fetch', event => {
 	return (AVOID.includes(URL) ? 0 :
 		event.respondWith(caches.open(CACHENAME).then((cache) => {
 			return(cache.match(event.request).then((response) => {
-				console.log(`REQUEST: ${event.request.url}`)
 				const fetchPromise = fetch(event.request).then(networkResponse => {
 					cache.put(event.request, networkResponse.clone());
 					return(networkResponse);
