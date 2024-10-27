@@ -93,32 +93,28 @@ async function getIDBDataBrowser(ref) {
 			data?.reference === ref ? resolve(data) : reject(res);
 		};
 	});
-
-	return request;
+	return(request);
 }
 
 function layerInterface(layer, num, unit) {
-	const content = layer
-		.map((info, i) => {
-			switch (i) {
-				case 0:
-					return `<tbody><tr><td>LAYER-${num}</td><td>${info}</td>`;
-				case 1:
-					return `<td>${info}</td>`;
-				case 2:
-					return `<td>${info}</td>`;
-				case 3:
-					return `<td>${info}</td>`;
-				case 4:
-					return layer[i + 1] !== undefined
-						? `<td>${unit}</td>`
-						: `<td>${unit}</td><td>N/A</td></tr></tbody>`;
-				case 5:
-					return `<td>${info}</td></tr></tbody>`;
-			}
-		}, 0)
-		.join("");
-	return content;
+	const content = layer.map((info, i) => {
+		switch (i) {
+			case 0:
+				return `<tbody><tr><td>LAYER-${num}</td><td>${info}</td>`;
+			case 1:
+				return `<td>${info}</td>`;
+			case 2:
+				return `<td>${info}</td>`;
+			case 3:
+				return `<td>${info}</td>`;
+			case 4:
+				return layer[i + 1] !== undefined ? `<td>${unit}</td>`
+					: `<td>${unit}</td><td>N/A</td></tr></tbody>`;
+			case 5:
+				return `<td>${info}</td></tr></tbody>`;
+		}
+	}, 0).join("");
+	return(content);
 }
 
 function addSameSizeLayerWorksLine({ works }, table, unit, create) {
@@ -132,11 +128,9 @@ function addSameSizeLayerWorksLine({ works }, table, unit, create) {
 		AUX.map((art, counter) => {
 			tmp.push(art);
 			if (counter % 2 === 1) {
-				table.innerHTML += tmp
-					.map((work) => {
+				table.innerHTML += tmp.map((work) => {
 						return layerInterface(work, count, unit);
-					})
-					.join("");
+					}).join("");
 				tmp = [];
 				count++;
 			}
@@ -156,15 +150,11 @@ function addHTMLLayerWorksLine({ works }, table, unit, kind, create) {
 	while (i < works.length) {
 		if (!Array.isArray(works[i])) {
 			for (layer in works[i]) {
-				table.innerHTML += works[i][layer]
-					.map((info) => {
-						const data = Array.isArray(info)
-							? info
-							: works[i][layer];
-						return layerInterface(data, i + 1, unit);
-					})
-					.join("");
-			}
+				table.innerHTML += works[i][layer].map(info => {
+					const data = Array.isArray(info) ? info : works[i][layer];
+					return layerInterface(data, i + 1, unit);
+				}).join("");
+			};
 		} else if (kind === "sameSizeCrate") {
 			return addSameSizeLayerWorksLine({ works }, table, unit, create);
 		} else if (Array.isArray(works[i])) {

@@ -26,6 +26,7 @@ export default class CraterStandard {
 		const ARTS = [];
 
 		this.#provideCrate(ARTS);
+		console.log(`FIRST WORK: ${ARTS[1].works[0].layer1[0]}`)
 		if (!this.#backUp)
 			return ({ crates : ARTS });
 		return({ crates : ARTS, backUp : structuredClone(ARTS) });
@@ -48,7 +49,7 @@ export default class CraterStandard {
 	#defineFinalSize(innerSize, works) {
 		const DEFAULTPAD =	23;
 		const HIGHPAD =		28;
-		const LAYERPAD =	2;
+		const LAYERPAD =	2.5;
 		const X =			innerSize[0] + DEFAULTPAD;
 		const Y =			innerSize[2] + HIGHPAD;
 		let z =				works.length * LAYERPAD + DEFAULTPAD;
@@ -58,7 +59,7 @@ export default class CraterStandard {
 		for (i in works) {
 			Object.entries(works[i]).map(canvas => {
 				canvas[1].map(art => {
-					art[2] > tmp ? tmp = art[2] : false;
+					art[2] > tmp ? tmp = art[2] : art;
 				});
 				z +=	tmp;
 				tmp =	0;
@@ -160,9 +161,9 @@ export default class CraterStandard {
 		return({ X, Y });
 	};
 
-	#adjacentWorkAux(layer, closeArt, ref) {
-
-	}
+	//#adjacentWorkAux(layer, closeArt, ref) {
+	//
+	//}
 
 	#updateAdjacentWork(work, closeArt, layer, ref, code) {
 		const { size } =			layer[0];
@@ -652,7 +653,8 @@ export default class CraterStandard {
 		return (this.#matchCanvasInLayer(matched, layer, len - 1));
 	};
 
-	#setLayer(crate, works, status) {
+	//#setLayer(crate, works, status) {
+	#setLayer(crate, works) {
 		switch(this) {
 			case 1:
 				crate.unshift({ layer1 : works });
@@ -672,6 +674,7 @@ export default class CraterStandard {
 			default:
 				return ;
 		};
+		return(crate);
 	};
 
 	#defineCrateSize(size) {
@@ -695,27 +698,28 @@ export default class CraterStandard {
 		return (x !== size[0] || y !== size[2] ? [x, z, y] : false);
 	}
 
-	#hugeCanvasFirst(crate, layer) {
-		let i =	0;
+	#hugeCanvasFirst(emptyCrate, layer) {
+		let i =				0;
 		let sized =			this.#defineCrateSize(layer);
-		const ICON =	`<i class="nf nf-oct-sync"></i>`;
 		const GETCANVAS =	[];
-		const HUGE =		this.#list.at(-1);
-		const check1 = HUGE[1] === layer[0] && HUGE[3] === layer[2];
-		const check2 = HUGE[1] === layer[2] && HUGE[3] === layer[0];
-		const status =		{
-			size: layer,
-			x1: 1,
-			x2: 1,
-			y1: 1,
-			y2: 1,
-		};
+		const FLIP =		`<i class="nf nf-oct-sync"></i>`;
+		const HUGE =		[...this.#list.at(-1)]
+		const check1 =		HUGE[1] === layer[0] && HUGE[3] === layer[2];
+		const check2 = 		HUGE[1] === layer[2] && HUGE[3] === layer[0];
+		const crate =		[];
+		//const status =		{
+		//	size: layer,
+		//	x1: 1,
+		//	x2: 1,
+		//	y1: 1,
+		//	y2: 1,
+		//};
 
 		if (!sized && check1 || check2) {
 			i++;
-			HUGE[1] < HUGE[3] ? HUGE.push(ICON): 0;
-			this.#setLayer.call(i, crate, [HUGE]);
-			this.#list.pop();
+			HUGE.push(FLIP);
+			this.#setLayer.call(i, emptyCrate, [HUGE]);
+			this.#list.splice(this.#list.indexOf(HUGE), 1)
 		}
 		else {
 			this.#list.reverse().map(art => {
@@ -724,36 +728,40 @@ export default class CraterStandard {
 			});
 			GETCANVAS.length > 0 ? GETCANVAS.map(canvas => {
 				i++;
-				this.#setLayer.call(i, crate, [canvas], status);
+				//this.#setLayer.call(i, crate, [canvas], status);
+				this.#setLayer.call(i, crate, [canvas]);
 				this.#list.splice(this.#list.indexOf(canvas), 1);
 			}): false;
 		};
-		return({ i, sized });
+		return({ i, sized, emptyCrate });
 	};
 
 	#fillCrate(measure) {
 		const GC =			new WeakSet();
 		let crate =			[];
 		let greb =			[];
-		let checkLen =		true;
-		let { i, sized } =	this.#hugeCanvasFirst(crate, measure);
+		let { i, sized, emptyCrate } =	this.#hugeCanvasFirst(crate, measure);
 		let len;
 		let innerCrate;
+		let checkLen =		this.#list.length > 0;
 
+		emptyCrate.length > 0 ? crate = emptyCrate : 0;
 		Array.isArray(sized) ? measure = sized : false;
-		while (i++ < this.#maxLayers || checkLen && this.#list.length) {
-			innerCrate = { size : measure, x1 : 0, y1 : 0, x2 : 0, y2 : 0 };
-			len = this.#list.length - 1;
-			this.#matchCanvasInLayer(greb, [innerCrate], len);
-			if (greb.length > 0) {
-				greb.map(art => this.#list.splice(this.#list.indexOf(art), 1));
-				this.#setLayer.call(i, crate, greb);
-				GC.add(innerCrate);
-				greb =	null;
-				greb =	[];
+		if (checkLen) {
+			while (i++ < this.#maxLayers || checkLen && this.#list.length) {
+				innerCrate = { size : measure, x1 : 0, y1 : 0, x2 : 0, y2 : 0 };
+				len = this.#list.length - 1;
+				this.#matchCanvasInLayer(greb, [innerCrate], len);
+				if (greb.length > 0) {
+					greb.map(art => this.#list.splice(this.#list.indexOf(art), 1));
+					this.#setLayer.call(i, crate, greb);
+					GC.add(innerCrate);
+					greb =	null;
+					greb =	[];
+				};
+				checkLen =	this.#list.length === 1 && i === this.#maxLayers;
 			};
-			checkLen =	this.#list.length === 1 && i === this.#maxLayers;
-		};
+		}
 		return(crate);
 	};
 
@@ -781,11 +789,12 @@ export default class CraterStandard {
 		let z =				0;
 		let y =				0;
 
-		if (CRATE1)
+		if (CRATE1) {
 			return(SELECTED[1] < SELECTED[3] ?
 				[SELECTED[3], SELECTED[2], SELECTED[1]]:
 				[SELECTED[1], SELECTED[2], SELECTED[3]]
 			);
+		}
 		while(len--) {
 			(x + list[len][1]) <= MAXx ? x += list[len][1] :
 				x < list[len][1] && list[len][1] <= MAXx ? x = list[len][1]:
@@ -817,10 +826,11 @@ export default class CraterStandard {
 		this.#addXandYtimes();
 		const size =		this.#defineSizeBaseCrate(this.#list);
 		const crateFilled =	this.#fillCrate(size);
-		const crateDone =	this.#defineFinalSize(size, crateFilled);
 
-		crate.push(crateDone);
-		crate.push({ works: crateFilled });
+		crate.push(this.#defineFinalSize(size, crateFilled));
+		crate.push({ works: crateFilled })
+		console.log(`FIRST FIRST: ${crate[1].works[0].layer1[0]}`)
+		//console.log(crate[3].works[0].layer2[0])
 		return(this.#provideCrate(crate));
 	};
 };

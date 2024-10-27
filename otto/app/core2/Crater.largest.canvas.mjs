@@ -13,7 +13,7 @@ export default class CraterPythagoras {
 	#setPadding(innerCrate, layers) {
 		const PAD =		23;
 		const HIGHPAD =	28;
-		const LAYER =	2;
+		const LAYER =	2.5;
 		const X =		innerCrate[0] + PAD;
 		const Z =		(innerCrate[1] + PAD) + (LAYER * layers);
 		const Y =		innerCrate[2] + HIGHPAD;

@@ -43,7 +43,6 @@ export default class UnitAdapter {
 		return('pass');
 	};
 
-	// BUG: minified version of the file is not working properly to convert data to ArtWork class.
 	async #definePath() {
 		let result;
 		const checker =	this.#checkInput();
@@ -133,6 +132,8 @@ export default class UnitAdapter {
 			.then(cratesDone => this.#convertToIN(cratesDone.crates))
 		.catch(err => err);
 
+		//console.log(`CONVERSION DONE: ${RESULT}`)
+		//console.log(`CONVERSION DONE: ${await RESULT.crates[1].works[0].layer1[0]}`)
 		return (RESULT);
 	};
 };
@@ -145,6 +146,7 @@ function swapUnitReversion(sizes) {
 	let z;
 	let y;
 
+	console.log(`At conversion: ${sizes}`)
 	switch(sizes.length) {
 		case 4 :
 			x =		sizes[0];
@@ -153,13 +155,24 @@ function swapUnitReversion(sizes) {
 			tmp =	Array.from(new Converter(x, z, y).inConvert);
 			tmp.push(+(sizes[3] * CUBCONST).toFixed(3));
 			return(sizes = tmp);
-		case 5 || 6 :
+		case 5 :
 			x =		sizes[1];
 			z =		sizes[2];
 			y =		sizes[3];
 			tmp =	Array.from(new Converter(x, z, y).inConvert);
 			tmp.unshift(sizes[0]);
 			tmp.push(+(sizes[3] * CUBCONST).toFixed(3));
+			console.log(`Conversion accomplished: ${sizes}`)
+			return(sizes = tmp);
+		case 6 :
+			x =		sizes[1];
+			z =		sizes[2];
+			y =		sizes[3];
+			tmp =	Array.from(new Converter(x, z, y).inConvert);
+			tmp.unshift(sizes[0]);
+			tmp.push(+(sizes[3] * CUBCONST).toFixed(3));
+			tmp.push(sizes[5]);
+			console.log(`Conversion accomplished: ${sizes}`)
 			return(sizes = tmp);
 	};
 };
