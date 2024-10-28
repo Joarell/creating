@@ -96,6 +96,8 @@ export default class noCanvasRender {
 
 	#canvasRender () {
 		let txt;
+		let x;
+		let y;
 		const element =	document.createDocumentFragment();
 		const X =		[];
 		const Y =		[];
@@ -109,8 +111,12 @@ export default class noCanvasRender {
 				item = new Converter(item[1], item[2], item[3]).cmConvert;
 				item.unshift(code);
 			}
-			X.push(coord.proportion(item[1], this.#pixelSize.x, this.#inCrate[0]));
-			Y.push(coord.proportion(item[2], this.#pixelSize.y, this.#inCrate[1]));
+			x = coord.proportion(item[1], this.#pixelSize.x, this.#inCrate[0]);
+			y = coord.proportion(item[2], this.#pixelSize.y, this.#inCrate[1]);
+			x > this.#pixelSize.x ? x = this.#pixelSize.x : x;
+			y > this.#pixelSize.y ? y = this.#pixelSize.y : y;
+			X.push(x);
+			Y.push(y);
 			element.appendChild(this.#worksPositionLayer({ X, Y }));
 			txt = [ { X, Y }, item, this.#pixelSize ];
 			element.appendChild(this.#textOnCenter.apply(null, txt));

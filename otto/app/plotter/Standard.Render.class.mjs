@@ -9,12 +9,12 @@ export default class StandardRender {
 	#filled;
 
 	constructor({ works }, layerSize, dim, layer) {
-		this.#pixelSize = layerSize;
-		this.#filled = JSON.parse(JSON.stringify(layerSize));
-		this.#inCrate = dim;
-		this.#canvas = Object.values(works[layer])[0];
-		this.#filled.x2 = this.#filled.x;
-		this.#filled.y2 = this.#filled.y;
+		this.#pixelSize =	layerSize;
+		this.#filled =		structuredClone(layerSize);
+		this.#inCrate =		dim;
+		this.#canvas =		Object.values(works[layer])[0];
+		this.#filled.x2 =	this.#filled.x;
+		this.#filled.y2 = 	this.#filled.y;
 
 		return (this.#standardRender());
 	};
@@ -271,6 +271,8 @@ export default class StandardRender {
 				x = coord.proportion(art[1], this.#pixelSize.x, this.#inCrate[0]);
 				y = coord.proportion(art[3], this.#pixelSize.y, this.#inCrate[2]);
 			};
+			x > this.#pixelSize.x ? x = this.#pixelSize.x : 0;
+			y > this.#pixelSize.y ? y = this.#pixelSize.y : 0;
 			CODES.push(art[0]);
 			await this.#layoutArranger(MAPWORK, x, y, CODES);
 		}, 0);
