@@ -48,6 +48,8 @@ export default class TubeRender {
 
 	#tubeRender () {
 		let txt;
+		let x;
+		let y;
 		const element =	document.createDocumentFragment();
 		const X =		[];
 		const Y =		[];
@@ -61,8 +63,12 @@ export default class TubeRender {
 				tube = new Converter(tube[1], tube[2], tube[3]).cmConvert;
 				tube.unshift(code);
 			}
-			X.push(coord.proportion(tube[1], this.#pixSize.x, this.#inCrate[0]));
-			Y.push(coord.proportion(tube[3], this.#pixSize.y, this.#inCrate[2]));
+			x = coord.proportion(tube[1], this.#pixSize.x, this.#inCrate[0]);
+			y = coord.proportion(tube[3], this.#pixSize.y, this.#inCrate[2]);
+			x > this.#pixSize.x ? x = this.#pixSize.x : x;
+			y > this.#pixSize.y ? y = this.#pixSize.y : y;
+			X.push(x);
+			Y.push(y);
 			element.appendChild(this.#worksPositionLayer({ x: X, y: Y }));
 			txt = [ { x: X , y: Y }, tube, this.#inCrate, ];
 			element.appendChild(this.#textOnCenter.apply(null, txt));

@@ -15,14 +15,11 @@ export default class ArrangerNoCanvas {
 	};
 
 	#noCanvasOut () {
-		let { 
-			sorted, 
-			sameSize 
-		} =					this.#peces;
-		const MAXDEPTH =	10;
-		let checkerOne =	sorted.filter(pece => pece[2] > MAXDEPTH);
-		let checkerTwo =	sameSize.filter(pece => pece[2] > MAXDEPTH);
-		let found =			[];
+		let { sorted, sameSize } =	this.#peces;
+		const MAXDEPTH =			14;
+		let checkerOne =			sorted.filter(pece => pece[2] > MAXDEPTH);
+		let checkerTwo =			sameSize.filter(pece => pece[2] > MAXDEPTH);
+		let found =					[];
 
 		checkerOne.map(pece => found.push(pece));
 		this.#removePeces.call(this.#peces, checkerOne);

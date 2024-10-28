@@ -47,6 +47,8 @@ export default class LargestRender {
 	};
 
 	#canvasRender () {
+		let x;
+		let y;
 		let txt;
 		const element =	document.createDocumentFragment();
 		const X =		[];
@@ -62,8 +64,12 @@ export default class LargestRender {
 				art = new Converter(art[1], art[2], art[3]).cmConvert;
 				art.unshift(code);
 			}
-			X.push(coord.proportion(art[1], this.#pixSize.x, this.#inCrate[0]));
-			Y.push(coord.proportion(art[3], this.#pixSize.y, art[3]));
+			x = coord.proportion(art[1], this.#pixSize.x, this.#inCrate[0]);
+			y = coord.proportion(art[3], this.#pixSize.y, art[3]);
+			x > this.#pixSize.x ? x = this.#pixSize.x : x;
+			y > this.#pixSize.y ? y = this.#pixSize.y : y;
+			X.push(x);
+			Y.push(y);
 			element.appendChild(this.#worksPositionLayer({ x: X, y: Y }));
 			txt = [ { x: X , y: Y }, art, this.#inCrate, ];
 			element.appendChild(this.#textOnCenter.apply(null, txt));

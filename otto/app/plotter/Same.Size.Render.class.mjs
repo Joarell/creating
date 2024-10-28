@@ -61,6 +61,8 @@ export default class sameSizeRender {
 
 	#canvasRender () {
 		let txt;
+		let x;
+		let y;
 		const element =	document.createDocumentFragment();
 		const X =		[];
 		const Y =		[];
@@ -73,9 +75,13 @@ export default class sameSizeRender {
 
 				art = new Converter(art[1], art[2], art[3]).cmConvert;
 				art.unshift(code);
-			}
-			X.push(coord.proportion(art[1], this.#pixSize.x, this.#inCrate[0]));
-			Y.push(coord.proportion(art[3], this.#pixSize.y, this.#inCrate[2]));
+			};
+			x = coord.proportion(art[1], this.#pixSize.x, this.#inCrate[0]);
+			y = coord.proportion(art[3], this.#pixSize.y, this.#inCrate[2]);
+			x > this.#pixSize.x ? x = this.#pixSize.x : x;
+			y > this.#pixSize.y ? y = this.#pixSize.y : y;
+			X.push(x);
+			Y.push(y);
 			element.appendChild(this.#worksPositionLayer({ X, Y }));
 			txt = [ { X , Y }, art, this.#inCrate, ];
 			element.appendChild(this.#textOnCenter.apply(null, txt))

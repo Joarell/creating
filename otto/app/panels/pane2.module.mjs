@@ -195,8 +195,7 @@ function setStatusCrateType(kind, unit) {
 }
 
 function addHTMLTableLine({ crates }, table, kind) {
-	const UNIT =
-		localStorage.getItem("metrica") === "cm - centimeters" ? "cm" : "in";
+	const UNIT = localStorage.getItem("metrica") === "cm - centimeters" ? "cm" : "in";
 
 	crates.map((done, i) => {
 		if (i % 2 === 0) {
