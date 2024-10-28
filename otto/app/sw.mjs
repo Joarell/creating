@@ -52,14 +52,15 @@ globalThis.addEventListener('activate', event => {
 
 // NOTE:Cache strategy: Stale-while-revalidate;
 globalThis.addEventListener('fetch', event => {
-	const AVOID = [
-		"http://localhost:83/loginCheck/",
-		"http://localhost:83/takeLoging",
-		"http://localhost:83/logout",
-		"http://localhost:83/start",
+	const AVOID =	[
+		"loginCheck",
+		"takeLoging",
+		"logout",
+		"start",
 	];
+	const URL =		event.request.url.split("/")[3]
 
-	return (AVOID.includes(event.request.url) ? "AVOIDED":
+	return (AVOID.includes(URL) ? 0 :
 		event.respondWith(caches.open(CACHENAME).then((cache) => {
 			return(cache.match(event.request).then((response) => {
 				const fetchPromise = fetch(event.request).then(networkResponse => {
