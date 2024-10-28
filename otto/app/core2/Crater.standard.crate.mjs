@@ -26,7 +26,6 @@ export default class CraterStandard {
 		const ARTS = [];
 
 		this.#provideCrate(ARTS);
-		console.log(`FIRST WORK: ${ARTS[1].works[0].layer1[0]}`)
 		if (!this.#backUp)
 			return ({ crates : ARTS });
 		return({ crates : ARTS, backUp : structuredClone(ARTS) });
@@ -683,13 +682,14 @@ export default class CraterStandard {
 		const THRESHOLDX =	180;
 		const THRESHOLDY =	132;
 		const PASS =		size[0] >= THRESHOLDX || size[2] >= THRESHOLDX;
+		const LIST =		structuredClone(this.#list)
 		let x = 0;
 		let z = 0;
 		let y = 0;
 
 		if (this.#list.length > LEN || PASS)
 			return (false);
-		this.#list.reverse().map(art => {
+		LIST.reverse().map(art => {
 			x + art[1] <= COMPMAXSIZE ? x += art[1] : false;
 			z < art[2] ? z = art[2] : false;
 			y < art[3] && art[3] <= THRESHOLDY ? y = art[3] : false;
@@ -704,8 +704,8 @@ export default class CraterStandard {
 		const GETCANVAS =	[];
 		const FLIP =		`<i class="nf nf-oct-sync"></i>`;
 		const HUGE =		[...this.#list.at(-1)]
-		const check1 =		HUGE[1] === layer[0] && HUGE[3] === layer[2];
-		const check2 = 		HUGE[1] === layer[2] && HUGE[3] === layer[0];
+		let check1 =		HUGE[1] === layer[0] && HUGE[3] === layer[2];
+		let check2 = 		HUGE[1] === layer[2] && HUGE[3] === layer[0];
 		const crate =		[];
 		//const status =		{
 		//	size: layer,
@@ -715,14 +715,18 @@ export default class CraterStandard {
 		//	y2: 1,
 		//};
 
+		if (sized) {
+			check1 = HUGE[1] === sized[0] && HUGE[3] === sized[2];
+			check2 = HUGE[1] === sized[2] && HUGE[3] === sized[0];
+		}
 		if (!sized && check1 || check2) {
 			i++;
-			HUGE.push(FLIP);
+			HUGE[1] < HUGE[3] ? HUGE.push(FLIP) : 0;
 			this.#setLayer.call(i, emptyCrate, [HUGE]);
 			this.#list.splice(this.#list.indexOf(HUGE), 1)
 		}
 		else {
-			this.#list.reverse().map(art => {
+			structuredClone(this.#list).reverse().map(art => {
 				art[1] === sized[0] && art[3] === sized[2] ?
 					GETCANVAS.push(art) : false;
 			});
@@ -762,7 +766,7 @@ export default class CraterStandard {
 				checkLen =	this.#list.length === 1 && i === this.#maxLayers;
 			};
 		}
-		return(crate);
+		return({ crate, measure });
 	};
 
 	#checkOneCrate(list) {
@@ -780,7 +784,7 @@ export default class CraterStandard {
 
 	// HACK: improvement necessary to define the best crate size 'backtrack'.
 	#defineSizeBaseCrate(list) {
-		const CRATE1 =		this.#checkOneCrate(list);
+		const CRATE1 =		this.#checkOneCrate(structuredClone(list));
 		const MAXx =		250;
 		const MAXy =		132;
 		const SELECTED =	list.at(-1);
@@ -824,13 +828,11 @@ export default class CraterStandard {
 		if (!this.#list.length)
 			return;
 		this.#addXandYtimes();
-		const size =		this.#defineSizeBaseCrate(this.#list);
+		let size =		this.#defineSizeBaseCrate(this.#list);
 		const crateFilled =	this.#fillCrate(size);
 
-		crate.push(this.#defineFinalSize(size, crateFilled));
-		crate.push({ works: crateFilled })
-		console.log(`FIRST FIRST: ${crate[1].works[0].layer1[0]}`)
-		//console.log(crate[3].works[0].layer2[0])
+		crate.push(this.#defineFinalSize(crateFilled.measure, crateFilled.crate));
+		crate.push({ works: crateFilled.crate })
 		return(this.#provideCrate(crate));
 	};
 };
