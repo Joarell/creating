@@ -772,14 +772,12 @@ export default class CraterStandard {
 	#checkOneCrate(list) {
 		let AVG =		0;
 		const BIGGEST =	list.at(-1);
-		// const CHECKER =	list.filter(art => {
 		list.filter(art => {
 			AVG += art[4];
 			if(BIGGEST[4] >= art[4])
 				return (art);
 		});
 		return (!(+(AVG).toFixed(4) / list.length > BIGGEST));
-		// return (this.#list.length === CHECKER.length && Z <= MAXZ);
 	};
 
 	// HACK: improvement necessary to define the best crate size 'backtrack'.
