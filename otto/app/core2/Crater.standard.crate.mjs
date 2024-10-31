@@ -24,8 +24,9 @@ export default class CraterStandard {
 	#startCrate() {
 		const ARTS1 = this.#provideCrate([], 1, structuredClone(this.#list));
 		const ARTS2 = this.#provideCrate([], 0, structuredClone(this.#list));
-
-		switch(this.#selectTheBestSolution(ARTS1, ARTS2)) {
+		//
+		//switch(this.#selectTheBestSolution(ARTS1, ARTS2)) {
+		switch(1) {
 			case 1:
 				return(!this.#backUp ? { crates : ARTS1 }:
 					{ crates : ARTS1, backUp : structuredClone(ARTS1) }
