@@ -54,17 +54,28 @@ const list = [
 // │ Crater Mock │
 // ╰─────────────╯
 export const mockTest40 =	{
-		crates: [],
+	crates: [],
+	//	crates: [
+	//	[ 153, 22.5, 78, 44.752 ],
+	//	{ works:
+	//		[
+	//			[ '38388', 130, 5, 50, 0.033 ],
+	//			[ '18988', 130, 5, 50, 0.033 ],
+	//			[ '34733', 130, 5, 50, 0.033 ],
+	//			[ '75784', 130, 5, 50, 0.033 ]
+	//		]
+	//	}
+	//],
 		backUp: [
-		[ 53, 43, 58, 22.03 ],
-		{ works: [[
+		[ 53, 22.5, 58, 11.527 ],
+		{ works: [
 				[ '1111', 30, 3, 30, 0.003 ],
 				[ '71234', 30, 3, 30, 0.003 ],
 				[ '8980', 30, 3, 30, 0.003 ],
 				[ '2313', 30, 3, 30, 0.003 ]
-			]]
+			]
 		},
-		[ 153, 43, 78, 85.527 ],
+		[ 153, 22.5, 78, 44.752 ],
 		{ works:
 			[
 				[ '38388', 130, 5, 50, 0.033 ],
@@ -75,11 +86,11 @@ export const mockTest40 =	{
 		}
 	]
 };
-	
+
 
 export const mockTest41 =	{
 	crates: [
-		[ 183, 83, 188, 475.922 ],
+		[ 183, 51, 188, 292.434 ],
 		{
 			works: [
 				{ layer1: [ [ '8877', 160, 5, 160, 0.128 ] ] },
@@ -128,30 +139,30 @@ export const mockTest41 =	{
 		}
 	],
 	backUp: [
-		[ 183, 81, 188, 464.454 ],
+		[ 183, 51, 188, 292.434 ],
 		{
 			works: [
 				{ layer1: [ [ '8877', 160, 5, 160, 0.128 ] ] },
 				{
 					layer2: [
-						[ '5908', 150, 5, 90, 0.068, ' ' ],
-						[ '1112', 60, 5, 90, 0.027, ' ' ],
+						[ '5908', 150, 5, 90, 0.068 ],
+						[ '1112', 60, 5, 90, 0.027, '<i class="nf nf-oct-sync"></i>' ],
 						[ '777', 50, 3, 50, 0.007 ]
 					]
 				},
-				{ layer3: [ [ '8745', 130, 5, 100, 0.065, ' ' ] ] },
-				{ layer4: [ [ '8899', 120, 3, 100, 0.036, ' ' ] ] }
+				{ layer3: [ [ '8745', 130, 5, 100, 0.065 ] ] },
+				{ layer4: [ [ '8899', 120, 3, 100, 0.036 ] ] }
 			]
 		},
-		[ 203, 83, 128, 359.445 ],
-		{ 
+		[ 203, 53, 128, 229.525 ],
+		{
 			works: [
 				{ layer1: [ [ '1897', 180, 5, 100, 0.09 ] ] },
-				{ layer2: [ [ '9884', 100, 5, 120, 0.06, ' ' ] ] },
+				{ layer2: [ [ '9884', 100, 5, 120, 0.06, '<i class="nf nf-oct-sync"></i>' ] ] },
 				{
 					layer3: [
-						[ '90909', 100, 5, 90, 0.045, ' ' ],
-						[ '12345', 89, 5, 88, 0.039, ' ' ]
+						[ '90909', 100, 5, 90, 0.045 ],
+						[ '12345', 89, 5, 88, 0.039 ]
 					]
 				},
 				{ layer4: [ [ '9897', 75, 5, 80, 0.03 ] ] }
@@ -159,9 +170,9 @@ export const mockTest41 =	{
 		},
 	]
 };
-	
 
-export function mockOptios() {
+
+export function mockOptions() {
 	const BACKUP = true;
 	const crates = {};
 	const setCub = (sizes) => {
@@ -178,9 +189,9 @@ export function mockOptios() {
 			sizes.push(cubCrate);
 		};
 	};
-	
+
 	crates.sameSizeCrate = new CraterSameSize(findTubesTest().sameSize, BACKUP);
-	crates.standardCrate = new CraterStandard(findTubesTest().sorted, BACKUP);
+	crates.standardCrate = new CraterStandard(findTubesTest().sorted, BACKUP, 5);
 	crates.sameSizeCrate?.crates?.map(setCub);
 	crates.standardCrate?.crates?.map(setCub);
 	crates.sameSizeCrate?.backUp?.map(setCub);
@@ -192,15 +203,14 @@ export function mockOptios() {
 
 export function fakeCrater(works) {
 	const crates =		['crates ahead'];
-	const TOTALCUB =	4532.091;
-	const PAX =			6;
+	const TOTALCUB =	4133.705
+	const PAX =			3;
 	const CARGO =		2;
-	
+
 	crates.sameSizeCrate = new CraterSameSize(findTubesTest(works).sameSize);
 	crates.standardCrate = new CraterStandard(findTubesTest(works).sorted);
 	crates.airCubTotal = TOTALCUB;
-	crates.wichAirPort = [{ PAX }, { CARGO }];
-
+	crates.whichAirPort = [{ PAX }, { CARGO }];
 	return({ crates });
 };
 
@@ -220,7 +230,7 @@ export const standard1 = [
 	[ '1298', 120, 5, 100, 0.06 ],
 	[ '71234', 180, 3, 120, 0.065 ],
 	[ '5908', 150, 5, 90, 0.068 ],
-	[ '8383', 180, 3, 130, 0.07 ],
+	[ '8383', 130, 3, 180, 0.07 ],
 	[ '230202', 170, 7, 70, 0.083 ],
 	[ '88800', 170, 7, 70, 0.083 ]
 ];
@@ -249,46 +259,21 @@ export const standard4 = [
 	[ '8980', 130, 3, 130, 0.051 ],
 ];
 
-const common1 = [
-	[ '2313', 30, 3, 30, 0.003 ],
-	[ '1111', 30, 3, 30, 0.003 ],
-	[ '777', 50, 3, 50, 0.007 ],
-	[ '909', 100, 5, 20, 0.01 ],
-	[ '1112', 60, 5, 90, 0.027 ],
-	[ '8899', 120, 3, 100, 0.036 ],
+export const standard5 = [
+	[ '8899', 100, 5, 100, 0.036 ],
 	[ '123', 100, 5, 100, 0.05 ],
-	[ '8980', 130, 3, 130, 0.051 ],
-	[ '3231', 180, 3, 110, 0.059 ],
-	[ '1298', 120, 5, 100, 0.06 ],
-	[ '71234', 180, 3, 120, 0.065 ],
-	[ '5908', 150, 5, 90, 0.068 ],
-	[ '8383', 180, 3, 130, 0.07 ],
-	[ '230202', 170, 7, 70, 0.083 ],
-	[ '88800', 170, 7, 70, 0.083 ]
+	[ '136', 100, 5, 100, 0.07 ],
+	[ '8980', 100, 3, 100, 0.051 ],
+	[ '3231', 100, 3, 100, 0.059 ],
+	[ '1298', 50, 5, 50, 0.06 ],
+	[ '129800', 50, 5, 50, 0.06 ],
 ];
 
-const common2 = [
-	[ '71234', 180, 3, 120, 0.065 ],
-	[ '5908', 150, 5, 90, 0.068 ],
-	[ '8383', 180, 3, 130, 0.07 ],
-	[ '230202', 170, 7, 70, 0.083 ],
-	[ '88800', 170, 7, 70, 0.083 ]
-];
-
-const common3 = [
-	[ '8899', 120, 3, 100, 0.036 ],
-	[ '123', 100, 5, 100, 0.05 ],
-	[ '136', 140, 5, 100, 0.07 ],
-	[ '8980', 130, 3, 130, 0.051 ],
-	[ '3231', 180, 3, 110, 0.059 ],
-	[ '1298', 120, 5, 100, 0.06 ],
-];
-
-const common4 = [
-	[ '8899', 120, 3, 100, 0.036 ],
-	[ '123', 100, 5, 100, 0.05 ],
-	[ '136', 140, 5, 100, 0.07 ],
-	[ '8980', 130, 3, 130, 0.051 ],
+export const standard6 = [
+	[ '8899', 180, 5, 150, 0.036 ],
+	[ '8898', 130, 5, 160, 0.036 ],
+	[ '8890', 162, 5, 100, 0.036 ],
+	[ '8890', 135, 5, 115, 0.036 ],
 ];
 
 // ╭───────────────────────────────────╮
@@ -514,14 +499,14 @@ function defineSizeCrate(list) {
 	}
 	else
 		while(len--) {
-			(x + x + list[len][1]) <= MAXX ? x += list[len][1]: 
+			(x + x + list[len][1]) <= MAXX ? x += list[len][1]:
 				x < list[len][1] && list[len][1] <= MAXX ?
 					x = list[len][1]:
 				list[len][1] > MAXX ? x = list[len][3] : false;
-		
+
 			z = list[len][2] ?? z;
 
-			(y + y + list[len][3]) <= MAXY ? y += list[len][3]: 
+			(y + y + list[len][3]) <= MAXY ? y += list[len][3]:
 				y < list[len][3] && list[len][3] <= MAXY ? y = list[len][3]:
 				list[len][3] > MAXY ? y = list[len][3] : false;
 		};
@@ -567,32 +552,13 @@ export function addCub(list) {
 };
 
 
-export function conventionalWorks (opt) {
+export function conventionalWorks (works) {
 	const list =		largestWorks();
 	const { sorted } =	list;
 	const inCrate =	[];
-	let works;
-
-	switch(opt) {
-		case 1:
-			works = common1;
-			break ;
-		case 2:
-			works = common2;
-			break ;
-		case 3:
-			works = common3;
-			break ;
-		case 4:
-			works = common4;
-			break ;
-		case 5:
-			works = sorted;
-			break ;
-	};
 
 	solveList(works, inCrate);
-	return({ crates: inCrate, backUp : JSON.parse(JSON.stringify(inCrate)) });
+	return({ crates: inCrate, backUp : structuredClone(inCrate) });
 };
 
 // addCub(standard4);
@@ -605,16 +571,7 @@ export const canvas1 = [
 	['22222', 260, 10, 260],
 ];
 
-const largest1 = [
-	['22222', 260, 10, 260],
-];
-
 export const canvas2 = [
-	['22222', 260, 10, 260],
-	['22207', 260, 10, 260],
-];
-
-const largest2 = [
 	['22222', 260, 10, 260],
 	['22207', 260, 10, 260],
 ];
@@ -625,20 +582,7 @@ export const canvas3 = [
 	['22172', 260, 10, 260],
 ];
 
-const largest3 = [
-	['22222', 260, 10, 260],
-	['22207', 260, 10, 260],
-	['22172', 260, 10, 260],
-];
-
 export const canvas4 = [
-	['22222', 260, 10, 300],
-	['22207', 260, 10, 300],
-	['22172', 260, 10, 300],
-	['22172', 260, 10, 260],
-];
-
-const largest4 = [
 	['22222', 260, 10, 300],
 	['22207', 260, 10, 300],
 	['22172', 260, 10, 300],
@@ -655,24 +599,10 @@ export const canvas5 = [
 	['22172', 260, 10, 260],
 ];
 
-const largest5 = [
-	['22222', 360, 10, 300],
-	['22207', 360, 10, 300],
-	['22172', 360, 10, 300],
-	['22222', 360, 10, 300],
-	['22207', 260, 10, 300],
-	['22172', 260, 10, 300],
-	['22172', 260, 10, 260],
-];
-
 // ╭─────────────────╮
 // │ Tube variables. │
 // ╰─────────────────╯
 export const caseTube1 = [
-	['22222', 260, 20, 20],
-];
-
-const tube1 = [
 	['22222', 260, 20, 20],
 ];
 
@@ -681,18 +611,7 @@ export const caseTube2 = [
 	['22222', 260, 20, 20],
 ];
 
-const tube2 = [
-	['98888', 100, 30, 30],
-	['22222', 260, 20, 20],
-];
-
 export const caseTube3 = [
-	['98888', 100, 30, 30],
-	['22222', 260, 20, 20],
-	['33332', 260, 20, 20],
-];
-
-const tube3 = [
 	['98888', 100, 30, 30],
 	['22222', 260, 20, 20],
 	['33332', 260, 20, 20],
@@ -705,26 +624,7 @@ export const caseTube4 = [
 	['33333', 260, 20, 20],
 ];
 
-const tube4 = [
-	['98888', 100, 30, 30],
-	['11111', 260, 20, 20],
-	['22222', 260, 20, 20],
-	['33333', 260, 20, 20],
-];
-
 export const caseTube5 = [
-	['98888', 100, 30, 30],
-	['11111', 260, 20, 20],
-	['22222', 260, 20, 20],
-	['33330', 260, 20, 20],
-	['33331', 90, 20, 20],
-	['33328', 120, 40, 40],
-	['33319', 60, 20, 20],
-	['33319', 60, 20, 20],
-	['33269', 190, 35, 35],
-];
-
-const tube5 = [
 	['98888', 100, 30, 30],
 	['11111', 260, 20, 20],
 	['22222', 260, 20, 20],
@@ -748,25 +648,10 @@ export const caseTube6 = [
 	['33269', 280, 60, 60],
 ];
 
-const tube6 = [
-	['98888', 100, 60, 60],
-	['11111', 260, 60, 60],
-	['22222', 260, 60, 60],
-	['33330', 260, 60, 60],
-	['33331', 190, 50, 50],
-	['33328', 120, 50, 50],
-	['33319', 200, 50, 50],
-	['33319', 200, 50, 50],
-	['33269', 280, 60, 60],
-];
-
 // ╭────────────────────────────────────────────────────────────╮
 // │ Bellow you will find the mock functions to 'Crater' class. │
 // ╰────────────────────────────────────────────────────────────╯
 
-// ╭────────────╮
-// │ No canvas. │
-// ╰────────────╯
 // ╭──────────────────────╮
 // │ No canvas variables. │
 // ╰──────────────────────╯
@@ -780,26 +665,17 @@ export const furniture1 = [
 	['22126', 80, 80, 100],
 ];
 
-const sculptore0 = [
+export const sculptore0 = [
 	['22126', 80, 80, 100],
 ];
 
-let sculptore1 = [
+export const sculptore1 = [
 	['22222', 80, 80, 100],
 	['22207', 80, 80, 100],
 	['22126', 80, 80, 100],
 ];
 
 export const furniture2 = [
-	['22222', 80, 80, 100],
-	['22207', 80, 80, 100],
-	['22126', 80, 80, 100],
-	['22145', 80, 80, 70],
-	['22314', 80, 80, 70],
-	['22296', 80, 80, 70],
-];
-
-let sculptore2 = [
 	['22222', 80, 80, 100],
 	['22207', 80, 80, 100],
 	['22126', 80, 80, 100],
@@ -823,28 +699,7 @@ export const furniture3 = [
 	['22290', 80, 80, 70],
 ];
 
-let sculptore3 = [
-	['22222', 80, 80, 100],
-	['22207', 80, 80, 100],
-	['22126', 80, 80, 100],
-	['22120', 80, 80, 100],
-	['22206', 80, 80, 100],
-	['22124', 80, 80, 100],
-	['22145', 80, 80, 70],
-	['22314', 80, 80, 70],
-	['22296', 80, 80, 70],
-	['22141', 80, 80, 70],
-	['22309', 80, 80, 70],
-	['22290', 80, 80, 70],
-];
-
 export const furniture4 = [
-	['22222', 280, 180, 100],
-	['22207', 280, 180, 100],
-	['22126', 280, 180, 100],
-];
-
-let sculptore4 = [
 	['22222', 280, 180, 100],
 	['22207', 280, 180, 100],
 	['22126', 280, 180, 100],
@@ -857,15 +712,6 @@ export const furniture5 = [
 	['22124', 80, 70, 90],
 	['22145', 55, 80, 85],
 ];
-
-const sculptore5 = [
-	['22222', 280, 180, 100],
-	['22124', 80, 80, 100],
-	['22145', 80, 80, 70],
-	['22124', 80, 70, 90],
-	['22145', 55, 80, 85],
-];
-
 
 function splitCrate(works) {
 	let x =		0;
@@ -907,7 +753,7 @@ function defCrate(peces) {
 		x = splited.newX;
 		z = splited.newZ;
 	};
-	return (setPad([x, z, y]));
+	return (setPad([x, z, y], false));
 };
 
 
@@ -946,7 +792,7 @@ function defineMaxWorks(items) {
 		const check1 =	art[2] - items[0][2];
 		const check2 =	items[0][2] - art[2];
 		const check =	check1 > 0 && check1 <= PAD || check2 > 0 && check2 <= PAD;
-		
+
 		if (compare === true || check) {
 			equals++;
 			x += art[1];
@@ -992,30 +838,11 @@ function noCanvasTrail(list) {
 };
 
 
-export function provideNoCanvas(opt) {
+export function provideNoCanvas(noCanvas) {
 	let crate;
-	let noCanvas;
 
-	switch(opt) {
-		case 0:
-			noCanvas = sculptore0;
-			break ;
-		case 1:
-			noCanvas = sculptore1;
-			break ;
-		case 2:
-			noCanvas = sculptore2;
-			break ;
-		case 3:
-			noCanvas = sculptore3;
-			break ;
-		case 4:
-			noCanvas = sculptore4;
-			break ;
-		case 5:
-			noCanvas = sculptore5;
-			break ;
-	};
+	if(noCanvas.length == 0)
+		return({ noCanvas: false });
 	crate =	{ crates: noCanvasTrail(noCanvas) };
 	return (crate);
 };
@@ -1036,25 +863,7 @@ export const sameMeasure1 = [
 	['22172', 80, 5, 50],
 ];
 
-const sameSize1 = [
-	['22222', 80, 5, 50],
-	['22207', 80, 5, 50],
-	['22126', 80, 5, 50],
-	['22172', 80, 5, 50],
-];
-
 export const sameMeasure2 = [
-	['22222', 60, 5, 50],
-	['22207', 60, 5, 50],
-	['22172', 60, 5, 50],
-	['22222', 60, 5, 50],
-	['22207', 60, 5, 50],
-	['22161', 60, 5, 50],
-	['22172', 60, 5, 50],
-	['22125', 60, 5, 50],
-];
-
-const sameSize2 = [
 	['22222', 60, 5, 50],
 	['22207', 60, 5, 50],
 	['22172', 60, 5, 50],
@@ -1076,37 +885,7 @@ export const sameMeasure3 = [
 	['22222', 90, 5, 70],
 ];
 
-const sameSize3 = [
-	['22207', 90, 5, 80],
-	['22155', 90, 5, 80],
-	['22170', 90, 5, 80],
-	['22163', 90, 5, 80],
-	['22222', 90, 5, 70],
-	['22207', 90, 5, 70],
-	['22172', 90, 5, 70],
-	['22222', 90, 5, 70],
-];
-
 export const sameMeasure4 = [
-	['22207', 40, 5, 50],
-	['22155', 40, 5, 50],
-	['22170', 40, 5, 50],
-	['22163', 40, 5, 50],
-	['22198', 40, 5, 50],
-	['22110', 40, 5, 50],
-	['22129', 40, 5, 50],
-	['22162', 40, 5, 50],
-	['22222', 20, 5, 70],
-	['22207', 20, 5, 70],
-	['22172', 20, 5, 70],
-	['22222', 20, 5, 70],
-	['22218', 20, 5, 70],
-	['22202', 20, 5, 70],
-	['22167', 20, 5, 70],
-	['22153', 20, 5, 70],
-];
-
-const sameSize4 = [
 	['22207', 40, 5, 50],
 	['22155', 40, 5, 50],
 	['22170', 40, 5, 50],
@@ -1144,30 +923,12 @@ export const sameMeasure5 = [
 	['21992', 50, 5, 50],
 ];
 
-const sameSize5 = [
-	['22222', 50, 5, 50],
-	['22169', 50, 5, 50],
-	['22164', 50, 5, 50],
-	['22138', 50, 5, 50],
-	['22105', 50, 5, 50],
-	['22131', 50, 5, 50],
-	['22127', 50, 5, 50],
-	['22001', 50, 5, 50],
-	['22212', 50, 5, 50],
-	['22163', 50, 5, 50],
-	['22096', 50, 5, 50],
-	['22138', 50, 5, 50],
-	['22019', 50, 5, 50],
-	['22083', 50, 5, 50],
-	['22047', 50, 5, 50],
-	['21992', 50, 5, 50],
-];
-
-function setPad(innerCrate) {
-	const PAD =		23;
+function setPad(innerCrate, type = true) {
+	const PAD =		type ? 23 : 20;
 	const HIGHPAD =	28;
+	const LAYERPAD = type ? 2.5 : 20;
 	const X =		innerCrate[0] + PAD;
-	const Z =		innerCrate[1] + PAD;
+	const Z =		innerCrate[1] + LAYERPAD;
 	const Y =		innerCrate[2] + HIGHPAD;
 
 	return([X, Z, Y]);
@@ -1179,7 +940,7 @@ function checkComp(getter, test, baseLayer) {
 		const checkX = (value[0] + test[0]) <= baseLayer[0];
 		const checkZ = (value[1] + test[1]) <= baseLayer[1];
 		const checkY = (value[2] + test[2]) <= baseLayer[2];
-		
+
 		if (checkX && checkZ && checkY)
 			return(value);
 		return
@@ -1284,6 +1045,7 @@ function compCrate(tracks) {
 			else
 				baseCrate.unshift(false);
 		};
+		Array.isArray(works[0][0]) ? works = works.flat() : false;
 		crate.push(orderSizes(baseCrate, works));
 		crate.push({ works: works });
 	};
@@ -1313,7 +1075,7 @@ function countWorks(peces) {
 		};
 	});
 	sizes.push(works);
-	return (sizes[1].length >= 4 ? sizes : null);
+	return (sizes[1][0].length >= 4 ? sizes : null);
 };
 
 
@@ -1324,31 +1086,11 @@ function sameSizeTrail(list) {
 	return (crateDone);
 };
 
-export function provideSameSizeCanvas(opt) {
+export function provideSameSizeCanvas(work) {
 	let crate;
-	let sameSize;
-	let result;
+	let result = sameSizeTrail(work);
 
-	switch(opt) {
-		case 1:
-			sameSize = sameSize1;
-			break ;
-		case 2:
-			sameSize = sameSize2;
-			break ;
-		case 3:
-			sameSize = sameSize3;
-			break ;
-		case 4:
-			sameSize = sameSize4;
-			break ;
-		case 5:
-			sameSize = sameSize5;
-			break ;
-	};
-	result =	sameSizeTrail(sameSize);
-	crate =		{ crates : result, backUp : result };
-	sameSize =	null;
+	crate =		{ crates : result, backUp : structuredClone(result) };
 	return (crate);
 };
 
@@ -1420,29 +1162,10 @@ function largestCrateTrail(list) {
 };
 
 
-export function provideLargestCanvas(opt) {
-	let largest;
+export function provideLargestCanvas(list) {
 	let crate = [];
 
-	switch(opt) {
-		case 1:
-			largest = largest1;
-			break ;
-		case 2:
-			largest = largest2;
-			break ;
-		case 3:
-			largest = largest3;
-			break ;
-		case 4:
-			largest = largest4;
-			break ;
-		case 5:
-			largest = largest5;
-			break ;
-	};
-	crate = { crates: largestCrateTrail(largest) };
-	largest = null;
+	crate = { crates: largestCrateTrail(list) };
 	return (crate);
 };
 
@@ -1454,7 +1177,7 @@ function sizeComposer() {
 	let x = this[0][1];
 	let z = this[0][2];
 	let y = 0;
-	
+
 	this.map(tube => {
 		x = tube[1] > x ? tube[1] : x;
 		z = tube[2] > z ? tube[2] : z;
@@ -1521,7 +1244,7 @@ function hugeTubes(huges) {
 
 
 function checkHugeTubes () {
-	const DIAMETER =	40;
+	const DIAMETER =	35;
 	const getter =		this.filter(tube => {
 		if (tube[2] > DIAMETER)
 			return (tube);
@@ -1556,35 +1279,20 @@ function crateTubesOpt(tubes) {
 };
 
 
-export function provideTubeCrate(opt) {
-	let tubes;
+export function provideTubeCrate(tubes) {
 	let crate = [];
+	const DIAMETER =	35;
+	const checker =		tubes.filter(item => {
+		return(item[2] < DIAMETER ? item : false);
+	})
+	const list =		checker.find(data => data !== false);
 
-	switch(opt) {
-		case 1:
-			tubes = tube1;
-			break ;
-		case 2:
-			tubes = tube2;
-			break ;
-		case 3:
-			tubes = tube3;
-			break ;
-		case 4:
-			tubes = tube4;
-			break ;
-		case 5:
-			tubes = tube5;
-			break ;
-		case 6:
-			tubes = tube6;
-			break ;
-	};
-
+	if (!list)
+		return ({ tube: false });
 	if(tubes.length > 4)
 		return(crateTubesOpt(tubes));
 	else
-		crate = crateTubesOpt(tubes); 
+		crate = crateTubesOpt(tubes);
 	tubes = null;
 	return (crate);
 };
@@ -1718,7 +1426,7 @@ function secondTrialWorks() {
 
 		for(i in this) {
 			if (check(this[i]) && !sameSizeList.includes(this[i]))
-				getter.push(this[i]);	
+				getter.push(this[i]);
 		};
 		if (getter.length >= 4)
 			getter.map(element => {
@@ -1763,6 +1471,6 @@ export function artWorksCubed(works) {
 		cub.push(work.cubed)
 		return(cub);
 	})
-	
+
 	return (cubedList);
 };

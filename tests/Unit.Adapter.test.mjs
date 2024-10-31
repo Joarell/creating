@@ -10,14 +10,14 @@ describe("Testing the Unit Adapter class:", () => {
 		const current =		await new UnitAdapter('', 'cm');
 		const error =		`Please, provide a valid list.`;
 		const expected =	new TypeError(error);
-	
+
 		assert.deepStrictEqual(current, expected);
 	});
 
 	it("TEST-2: returns a Promise.", () => {
 		const current =		new UnitAdapter().constructor.name;
 		const expected =	'Promise';
-	
+
 		assert.deepStrictEqual(current, expected);
 	});
 
@@ -25,7 +25,7 @@ describe("Testing the Unit Adapter class:", () => {
 		const current =		new UnitAdapter('', 'cm');
 		const error =		`Please, provide a type of 'ArtWork' object list.`;
 		const expected =	Promise.resolve(new TypeError(error));
-	
+
 		assert.deepEqual(current, expected);
 	});
 
@@ -47,7 +47,7 @@ describe("Testing the Unit Adapter class:", () => {
 		const current =		await new UnitAdapter(list)
 		const error =		`Please, provide a type of 'ArtWork' object list.`
 		const expected =	new TypeError(error);
-	
+
 		assert.deepStrictEqual(current, expected);
 	});
 
@@ -78,12 +78,12 @@ describe("Testing the Unit Adapter class:", () => {
 			['90909', 100, 5, 90],
 			['12345', 89, 5, 88],
 		];
-	
+
 		const works =		mock.artWorksList(list);
 		const result =		await new UnitAdapter(works, 'cm');
 		const current =		result.hasOwnProperty('allCrates');
 		const expected =	true;
-	
+
 		assert.deepStrictEqual(current, expected);
 	});
 
@@ -106,7 +106,7 @@ describe("Testing the Unit Adapter class:", () => {
 		const works =		mock.artWorksList(list);
 		const current =		await new UnitAdapter(works, 'in');
 		const expected =	await new UnitAdapter(works, 'cm');
-	
+
 		assert.notEqual(current, expected);
 	});
 
@@ -118,14 +118,14 @@ describe("Testing the Unit Adapter class:", () => {
 		const works =		mock.artWorksList(list);
 		const result =		await new UnitAdapter(works, 'in');
 		const current =		result.standardCrate.crates;
-		const expected =	[ [ 68.11, 14.961, 46.457, 7.89 ],
+		const expected =	[ [ 68.11, 12.008, 46.457, 6.332 ],
 			{
 				works : [
-					{ layer1: [ '5908', 59.055, 1.969, 35.433, 5.492 ] }
+					{ layer1: [[ '5908', 59.055, 1.969, 35.433, 5.492 ]] }
 				]
 			}
 		];
-	
+
 		assert.deepStrictEqual(current, expected);
 	});
 
@@ -156,11 +156,10 @@ describe("Testing the Unit Adapter class:", () => {
 		const result =		await new UnitAdapter(works, 'in');
 		const current =		result.allCrates;
 		const expected =	[
-			[ 60.236, 16.929, 30.709, 5.219 ],
-			[ 79.921, 32.677, 74.016, 32.216 ],
-			[ 56.299, 37.795, 58.268, 20.664 ]
+			[ 107.48, 20.079, 74.016, 26.622 ],
+			[ 79.921, 17.913, 50.394, 12.024 ],
 		];
-	
+
 		assert.deepStrictEqual(current, expected);
 	});
 });
