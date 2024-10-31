@@ -42,7 +42,7 @@ export default class CraterStandard {
 		let overHeight =		0;
 		const THRESHOLDPAX =	160;
 		const THRESHOLDCARGO =	240;
-		const crates =			solved1.length < solved2.length ? 1 : 2;
+		const crates =			solved1.length <= solved2.length ? 1 : 2;
 		const airports1 =		[];
 		const airports2 =		[];
 
@@ -55,7 +55,7 @@ export default class CraterStandard {
 			if (i % 2 === 0 && crate[2] <= THRESHOLDPAX)
 				airports2.push(crate);
 		}, 0);
-		result = crates === 1 && airports1.length > airports2.length ? 1 : 2;
+		result = crates === 1 && airports1.length <= airports2.length ? 1 : 2;
 		return(result === 2 && overHeight === 0 ? 2 : 1);
 	}
 
@@ -823,9 +823,6 @@ export default class CraterStandard {
 		crate.z = list[len][2] ?? crate.z;
 
 		list[len][3] > crate.y ? crate.y = list[len][3] : false;
-		//(crate.y + list[len][3]) <= MAXy ? crate.y += list[len][3]:
-		//	crate.y < list[len][3] && list[len][3] <= MAXy ? crate.y = list[len][3]:
-		//			list[len][3] > MAXy ? crate.y = list[len][3] : false;
 
 		check1 = y1 < crate.y && crate.y > MAXy;
 		check2 = list[len][1] < list[len][3];
@@ -833,6 +830,7 @@ export default class CraterStandard {
 
 		return (this.#composeCrateSizes(crate, list, len - 1));
 	}
+
 	#defineSizeBaseCrate(list, large) {
 		const CRATE1 =		this.#checkOneCrate([...list]);
 		const SELECTED =	list.at(-1);
