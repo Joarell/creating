@@ -1,4 +1,3 @@
-
 /**
  * @class Class to comping the Crater class as a method towards solve canvas with different sizes.
 */
@@ -23,13 +22,42 @@ export default class CraterStandard {
 	}
 
 	#startCrate() {
-		const ARTS = [];
+		const ARTS1 = this.#provideCrate([], 1, structuredClone(this.#list));
+		const ARTS2 = this.#provideCrate([], 0, structuredClone(this.#list));
 
-		this.#provideCrate(ARTS);
-		if (!this.#backUp)
-			return ({ crates : ARTS });
-		return({ crates : ARTS, backUp : structuredClone(ARTS) });
+		switch(this.#selectTheBestSolution(ARTS1, ARTS2)) {
+			case 1:
+				return(!this.#backUp ? { crates : ARTS1 }:
+					{ crates : ARTS1, backUp : structuredClone(ARTS1) }
+				);
+			case 2:
+				return(!this.#backUp ? { crates : ARTS2 }:
+					{ crates : ARTS1, backUp : structuredClone(ARTS2) }
+				);
+		}
 	};
+
+	#selectTheBestSolution(solved1, solved2) {
+		let result;
+		let overHeight =		0;
+		const THRESHOLDPAX =	160;
+		const THRESHOLDCARGO =	240;
+		const crates =			solved1.length < solved2.length ? 1 : 2;
+		const airports1 =		[];
+		const airports2 =		[];
+
+		solved1.find((crate, i) => {
+			if (i % 2 === 0 && crate[2] <= THRESHOLDPAX)
+				airports1.push(crate);
+		}, 0);
+		solved2.find((crate, i) => {
+			crate[2] > THRESHOLDCARGO ? overHeight++ : 0;
+			if (i % 2 === 0 && crate[2] <= THRESHOLDPAX)
+				airports2.push(crate);
+		}, 0);
+		result = crates === 1 && airports1.length > airports2.length ? 1 : 2;
+		return(result === 2 && overHeight === 0 ? 2 : 1);
+	}
 
 	#quickSort(arts, pos) {
 		if (arts.length <= 1)
@@ -411,9 +439,8 @@ export default class CraterStandard {
 				if (code === work[0][0])
 					break;
 				layer.map((data, i) => {
-					if (i > 0)
-						if (data[0][0] === code)
-							valX += data[0].length > 5 ? data[0][3] : data[0][1];
+					if (i > 0 && data[0][0] === code)
+						valX += data[0].length > 5 ? data[0][3] : data[0][1];
 				}, 0);
 			};
 		}
@@ -422,9 +449,8 @@ export default class CraterStandard {
 				if (code === work[0][0])
 					break;
 				layer.map((data, i) => {
-					if (i > 0)
-						if (data[0][0] === code)
-							valY += data[0].length > 5 ? data[0][1] : data[0][3];
+					if (i > 0 && data[0][0] === code)
+						valY += data[0].length > 5 ? data[0][1] : data[0][3];
 				}, 0);
 			};
 		};
@@ -560,7 +586,7 @@ export default class CraterStandard {
 
 		switch (Number.isSafeInteger(prev)) {
 			case true:
-				return (this.#setGapsBasedOnPreviousWorkOnLayer(layer, i, layer[i], prev));
+				return(this.#setGapsBasedOnPreviousWorkOnLayer(layer, i, layer[i], prev));
 			default:
 				return(this.#setGapsOverTheFirstWorkOnLayer(layer));
 		};
@@ -574,7 +600,7 @@ export default class CraterStandard {
 	 */
 	// NOTE: Filter to the next work feat into the layer.
 	#searchWorkSpace(layer, workProp, i, result) {
-		const GAPS =	this.#extraAvailableGap(layer, i );
+		const GAPS =		this.#extraAvailableGap(layer, i );
 		const testX1 =		GAPS.gapY1 > 0 && GAPS.gapY1 >= workProp.sizeY; // layer
 		const testX2 =		GAPS.gapX2 > 0 && GAPS.gapX2 >= workProp.sizeX; // work index
 		const testY1 =		GAPS.gapX1 > 0 && GAPS.gapX1 >= workProp.sizeX; // layer
@@ -640,16 +666,16 @@ export default class CraterStandard {
 		return(layer);
 	};
 
-	#matchCanvasInLayer(matched, layer, len) {
+	#matchCanvasInLayer(matched, layer, len, list) {
 		const { x1, y1, x2, y2 } = layer[0];
 		const emptyLayer = (x1 === 1 && y1 === 1 && x2 === 1 && y2 === 1);
 
 		if(emptyLayer || len < 0) {
 			layer.map((work, i) => i > 0 ? matched.push(work[0]) : 0 , 0);
-			return ;
+			return(matched);
 		}
-		this.#metchCloseWorkOnLayer(this.#list[len], layer, layer[0]);
-		return (this.#matchCanvasInLayer(matched, layer, len - 1));
+		this.#metchCloseWorkOnLayer(list[len], layer);
+		return (this.#matchCanvasInLayer(matched, layer, len - 1, list));
 	};
 
 	//#setLayer(crate, works, status) {
@@ -676,34 +702,38 @@ export default class CraterStandard {
 		return(crate);
 	};
 
-	#defineCrateSize(size) {
+	#defineCrateSize(size, list) {
 		const COMPMAXSIZE =	230;
 		const LEN =			8
 		const THRESHOLDX =	180;
 		const THRESHOLDY =	132;
 		const PASS =		size[0] >= THRESHOLDX || size[2] >= THRESHOLDX;
-		const LIST =		structuredClone(this.#list)
-		let x = 0;
-		let z = 0;
-		let y = 0;
+		const LIST =		[...list];
+		let aux =			0;
+		let x =				0;
+		let z =				0;
+		let y =				0;
 
-		if (this.#list.length > LEN || PASS)
+		if (LIST.length > LEN || PASS)
 			return (false);
 		LIST.reverse().map(art => {
+			aux
 			x + art[1] <= COMPMAXSIZE ? x += art[1] : false;
 			z < art[2] ? z = art[2] : false;
 			y < art[3] && art[3] <= THRESHOLDY ? y = art[3] : false;
 			y + art[3] <= THRESHOLDY ? y += art[3] : false;
 		});
-		return (x !== size[0] || y !== size[2] ? [x, z, y] : false);
+		aux = (x * y) / list.length > size[0] * size[2];
+		return ((x !== size[0] || y !== size[2]) && aux ? [x, z, y] : false);
 	}
 
-	#hugeCanvasFirst(emptyCrate, layer) {
+	#hugeCanvasFirst(emptyCrate, layer, list) {
 		let i =				0;
-		let sized =			this.#defineCrateSize(layer);
+		let sized =			this.#defineCrateSize(layer, list);
 		const GETCANVAS =	[];
 		const FLIP =		`<i class="nf nf-oct-sync"></i>`;
-		const HUGE =		[...this.#list.at(-1)]
+		const HUGE =		list.at(-1);
+		const LIST =		[...list];
 		let check1 =		HUGE[1] === layer[0] && HUGE[3] === layer[2];
 		let check2 = 		HUGE[1] === layer[2] && HUGE[3] === layer[0];
 		const crate =		[];
@@ -723,10 +753,10 @@ export default class CraterStandard {
 			i++;
 			HUGE[1] < HUGE[3] ? HUGE.push(FLIP) : 0;
 			this.#setLayer.call(i, emptyCrate, [HUGE]);
-			this.#list.splice(this.#list.indexOf(HUGE), 1)
+			list.splice(list.indexOf(HUGE), 1)
 		}
 		else {
-			structuredClone(this.#list).reverse().map(art => {
+			LIST.reverse().map(art => {
 				art[1] === sized[0] && art[3] === sized[2] ?
 					GETCANVAS.push(art) : false;
 			});
@@ -734,103 +764,113 @@ export default class CraterStandard {
 				i++;
 				//this.#setLayer.call(i, crate, [canvas], status);
 				this.#setLayer.call(i, crate, [canvas]);
-				this.#list.splice(this.#list.indexOf(canvas), 1);
+				list.splice(list.indexOf(canvas), 1);
 			}): false;
 		};
-		return({ i, sized, emptyCrate });
+		return({ i, sized, emptyCrate, list });
 	};
 
-	#fillCrate(measure) {
+	#fillCrate(measure, works) {
 		const GC =			new WeakSet();
 		let crate =			[];
 		let greb =			[];
-		let { i, sized, emptyCrate } =	this.#hugeCanvasFirst(crate, measure);
+		let { i, sized, emptyCrate, list } =	this.#hugeCanvasFirst(crate, measure, works);
 		let len;
 		let innerCrate;
-		let checkLen =		this.#list.length > 0;
+		let checkLen =		list.length > 0;
 
 		emptyCrate.length > 0 ? crate = emptyCrate : 0;
 		Array.isArray(sized) ? measure = sized : false;
 		if (checkLen) {
-			while (i++ < this.#maxLayers || checkLen && this.#list.length) {
+			while (i++ < this.#maxLayers || checkLen && list.length) {
 				innerCrate = { size : measure, x1 : 0, y1 : 0, x2 : 0, y2 : 0 };
-				len = this.#list.length - 1;
-				this.#matchCanvasInLayer(greb, [innerCrate], len);
+				len = list.length - 1;
+				this.#matchCanvasInLayer(greb, [innerCrate], len, list);
 				if (greb.length > 0) {
-					greb.map(art => this.#list.splice(this.#list.indexOf(art), 1));
+					greb.map(art => list.splice(list.indexOf(art), 1));
 					this.#setLayer.call(i, crate, greb);
 					GC.add(innerCrate);
 					greb =	null;
 					greb =	[];
 				};
-				checkLen =	this.#list.length === 1 && i === this.#maxLayers;
+				checkLen =	list.length === 1 && i === this.#maxLayers;
 			};
 		}
-		return({ crate, measure });
+		return({ crate, measure, list });
 	};
 
 	#checkOneCrate(list) {
 		let AVG =		0;
 		const BIGGEST =	list.at(-1);
-		list.filter(art => {
-			AVG += art[4];
-			if(BIGGEST[4] >= art[4])
-				return (art);
-		});
-		return (!(+(AVG).toFixed(4) / list.length > BIGGEST));
+		list.map(art => AVG += art[4]);
+
+		return (!(+(AVG).toFixed(4) / list.length > BIGGEST[4]));
 	};
 
-	// HACK: improvement necessary to define the best crate size 'backtrack'.
-	#defineSizeBaseCrate(list) {
-		const CRATE1 =		this.#checkOneCrate(structuredClone(list));
-		const MAXx =		250;
-		const MAXy =		132;
+	#composeCrateSizes(crate, list, len) {
+		if (len < 0)
+			return (crate);
+		const MAXx =	250;
+		const MAXy =	200;
+		const y1 =		crate.y1 ?? 0;
+		let check1;
+		let check2;
+
+		(crate.x + list[len][1]) <= MAXx ? crate.x += list[len][1] :
+			crate.x < list[len][1] && list[len][1] <= MAXx ? crate.x = list[len][1]:
+				list[len][1] > MAXx ? crate.x = list[len][1] : false;
+
+		crate.z = list[len][2] ?? crate.z;
+
+		list[len][3] > crate.y ? crate.y = list[len][3] : false;
+		//(crate.y + list[len][3]) <= MAXy ? crate.y += list[len][3]:
+		//	crate.y < list[len][3] && list[len][3] <= MAXy ? crate.y = list[len][3]:
+		//			list[len][3] > MAXy ? crate.y = list[len][3] : false;
+
+		check1 = y1 < crate.y && crate.y > MAXy;
+		check2 = list[len][1] < list[len][3];
+		check1 && check2 ? [crate.x, crate.y] = [crate.y, crate.x]: 0;
+
+		return (this.#composeCrateSizes(crate, list, len - 1));
+	}
+	#defineSizeBaseCrate(list, large) {
+		const CRATE1 =		this.#checkOneCrate([...list]);
 		const SELECTED =	list.at(-1);
-		let len =			list.length;
 		let x =				0;
 		let z =				0;
 		let y =				0;
 
-		if (CRATE1) {
+		if (CRATE1 && large) {
 			return(SELECTED[1] < SELECTED[3] ?
 				[SELECTED[3], SELECTED[2], SELECTED[1]]:
 				[SELECTED[1], SELECTED[2], SELECTED[3]]
 			);
 		}
-		while(len--) {
-			(x + list[len][1]) <= MAXx ? x += list[len][1] :
-				x < list[len][1] && list[len][1] <= MAXx ? x = list[len][1]:
-					list[len][1] > MAXx ? x = list[len][1] : false;
-
-			z = list[len][2] ?? z;
-
-			(y + list[len][3]) <= MAXy ? y += list[len][3]:
-				y < list[len][3] && list[len][3] <= MAXy ? y = list[len][3]:
-					list[len][3] > MAXy ? y = list[len][3] : false;
-		};
-		return([x, z, y]);
+		const crate = this.#composeCrateSizes({ x, z, y }, list, list.length - 1);
+		return([crate.x, crate.z, crate.y]);
 	};
 
-	#addXandYtimes() {
-		let procList = this.#list.map(art => {
+	#addXandYtimes(list) {
+		let procList = list.map(art => {
 			art.push(art[1] * art[3])
 			return(art);
 		});
 
 		procList = this.#quickSort(procList, 5);
 		procList = procList.map(art => { art.pop(); return(art) });
-		return(this.#list = procList);
+		list = procList;
+		return(list);
 	};
 
-	#provideCrate(crate) {
-		if (!this.#list.length)
-			return;
-		this.#addXandYtimes();
-		let size =		this.#defineSizeBaseCrate(this.#list);
-		const crateFilled =	this.#fillCrate(size);
+	#provideCrate(crates, setup, works) {
+		if (!works.length)
+			return(crates);
+		works = this.#addXandYtimes(works);
+		const size =	this.#defineSizeBaseCrate(works, setup);
+		const { crate, measure, list } =	this.#fillCrate(size, works);
 
-		crate.push(this.#defineFinalSize(crateFilled.measure, crateFilled.crate));
-		crate.push({ works: crateFilled.crate })
-		return(this.#provideCrate(crate));
+		crates.push(this.#defineFinalSize(measure, crate));
+		crates.push({ works: crate })
+		return(this.#provideCrate(crates, setup, list));
 	};
 };
