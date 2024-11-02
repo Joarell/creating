@@ -41,7 +41,7 @@ export default class noCanvasRender {
 		RECT.setAttribute("x", POS.posX + INSET);
 		RECT.setAttribute("y", POS.posY + INSET);
 		X.at(-1) >= x || POS.posX + X.at(-1) + INSET >= x ?
-			RECT.setAttribute("width", X.at(-1) - PAD):
+			RECT.setAttribute("width", X.at(-1) - (PAD + 15.7)):
 			RECT.setAttribute("width", X.at(-1));
 		Y.at(-1) >= y || POS.posY + Y.at(-1) >= y ?
 			RECT.setAttribute("height", Y.at(-1) - PAD):
