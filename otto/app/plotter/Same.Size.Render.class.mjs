@@ -1,5 +1,3 @@
-
-
 import Converter from '../core2/Converter.class.mjs';
 import * as coord from './layer.coordinate.mjs';
 

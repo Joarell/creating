@@ -8,7 +8,6 @@ import ArrangerTube from "./Arranger.tube.class.mjs";
 
 export default class Arranger {
 	#works;
-	#procList;
 
 	constructor (list) {
 		this.#works = list;
@@ -16,10 +15,10 @@ export default class Arranger {
 
 		if(dataChecker && dataChecker.constructor.name === 'TypeError')
 			return (dataChecker);
-		this.#procList = Object.assign(Arranger, this.#solver());
-		return (this.#procList);
+		this.#solver();
+		return(Object.assign(Arranger, { list: this.#works }));
 	};
-	
+
 	#solver () {
 		this.#start();
 		this.#sameSizeTrail();
@@ -27,7 +26,7 @@ export default class Arranger {
 		this.#largestCanvasTrail();
 		this.#findTubes();
 
-		return(Object.assign(Arranger, { list: this.#works }));
+		return ;
 	};
 
 	#checkData () {

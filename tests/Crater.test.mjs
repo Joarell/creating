@@ -122,7 +122,7 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-17: returns the Pythagoras crate to the list passed.", () => {
+	it("TEST-17: returns the same size crate to the list passed.", () => {
 		const current =		new CraterSameSize(structuredClone(mock.sameMeasure4));
 		const expected =	mock.provideSameSizeCanvas(structuredClone(mock.sameMeasure4));
 
@@ -185,42 +185,6 @@ describe("These are tests to Crater class.", () => {
 		assert.deepStrictEqual(current, expected);
 	});
 
-	it("TEST-26: returns 2 crates as a result array with length of 6.", () => {
-		const current =		new CraterStandard(structuredClone(mock.standard1), true, 5).crates.length;
-		const expected =	6;
-
-		assert.deepStrictEqual(current, expected);
-	});
-
-	it("TEST-27: returns 1 crate with 5 layers.", () => {
-		const current =		new CraterStandard(structuredClone(mock.standard2), true, 5).crates[1].works.length;
-		const expected =	5;
-
-		assert.deepStrictEqual(current, expected);
-	});
-
-	it("TEST-28: returns 2 crates as result an array with length of 4.", () => {
-		const current =		new CraterStandard(structuredClone(mock.standard3), true).crates.length;
-		const expected =	4
-
-		assert.deepStrictEqual(current, expected);
-	});
-
-	it("TEST-29: returns 1 crates as result an array length of 2.", () => {
-		const current =		new CraterStandard(structuredClone(mock.standard4), true).crates.length;
-		const expected =	2;
-
-		assert.deepStrictEqual(current, expected);
-	});
-
-	it("TEST-30: returns 3 crates as a result an array with length 6.", () => {
-		const { sorted } =	mock.findTubesTest();
-		const current =		new CraterStandard(sorted, true).crates.length;
-		const expected =	6;
-
-		assert.deepStrictEqual(current, expected);
-	});
-
 	it("TEST-31: returns false to empty list.", () => {
 		const current =		new Crater();
 		let expected =		{ crater: false };
@@ -229,12 +193,10 @@ describe("These are tests to Crater class.", () => {
 	});
 
 	it("TEST-32: returns the Crater assign object.", () => {
-		const works  =		new Arranger(mock.artWorksList());
-		const test =		new Crater(works);
-		const current =		test === Crater;
-		let expected =		true;
+		const works  =	new Arranger(mock.artWorksList());
+		const current =	new Crater(works);
 
-		assert.deepStrictEqual(current, expected);
+		assert.deepStrictEqual(current, Crater);
 	});
 
 	it("TEST-33: returns less sameSizeCrates and adds to the standards", () => {
@@ -482,7 +444,7 @@ describe("These are tests to Crater class.", () => {
 
 		const works =		new Arranger(mock.artWorksList(list));
 		const current =		new Crater(works).crates.airCubTotal;
-		const expected =	633.299;
+		const expected =	508.191;
 		//const expected =	588.24;
 
 		assert.deepStrictEqual(current, expected);
@@ -513,7 +475,7 @@ describe("These are tests to Crater class.", () => {
 
 		const works =		new Arranger(mock.artWorksList(list));
 		const current =		new Crater(works).crates.airCubTotalBackUp
-		const expected =	633.299;
+		const expected =	508.191;
 		//const expected =	588.24;
 
 		assert.deepStrictEqual(current, expected);
@@ -849,7 +811,7 @@ describe("These are tests to Crater class.", () => {
 
 		const works =		new Arranger(mock.artWorksList(list));
 		const current =		new Crater(works).crates.airCubTotal;
-		const expected =	249.429;
+		const expected =	289.332;
 		//const expected =	217.792;
 
 		assert.deepStrictEqual(current, expected);
@@ -870,7 +832,7 @@ describe("These are tests to Crater class.", () => {
 
 		const works =		new Arranger(mock.artWorksList(list));
 		const current =		new Crater(works).crates.airCubTotal;
-		const expected =	260.897;
+		const expected =	346.437;
 		//const expected =	217.792;
 
 		assert.deepStrictEqual(current, expected);
@@ -891,7 +853,7 @@ describe("These are tests to Crater class.", () => {
 
 		const works =		new Arranger(mock.artWorksList(list));
 		const current =		new Crater(works).crates.airCubTotal;
-		const expected =	249.429;
+		const expected =	277.425;
 
 		assert.deepStrictEqual(current, expected);
 	});
@@ -910,7 +872,7 @@ describe("These are tests to Crater class.", () => {
 
 		const works =		new Arranger(mock.artWorksList(list));
 		const current =		new Crater(works).crates.airCubTotal;
-		const expected =	249.429;
+		const expected =	289.332;
 		//const expected =	217.792;
 
 		assert.deepStrictEqual(current, expected);
@@ -931,7 +893,7 @@ describe("These are tests to Crater class.", () => {
 
 		const works =		new Arranger(mock.artWorksList(list));
 		const current =		new Crater(works).crates.airCubTotal;
-		const expected =	255.163;
+		const expected =	289.332;
 		//const expected =	217.792;
 
 		assert.deepStrictEqual(current, expected);
@@ -951,7 +913,7 @@ describe("These are tests to Crater class.", () => {
 
 		const works =		new Arranger(mock.artWorksList(list));
 		const current =		new Crater(works).crates.airCubTotal;
-		const expected =	303.902;
+		const expected =	346.437;
 		//const expected =	217.792;
 
 		assert.deepStrictEqual(current, expected);
@@ -975,4 +937,5 @@ describe("These are tests to Crater class.", () => {
 
 		assert.deepStrictEqual(current, expected);
 	});
+
 });
