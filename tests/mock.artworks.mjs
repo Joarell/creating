@@ -191,7 +191,7 @@ export function mockOptions() {
 	};
 
 	crates.sameSizeCrate = new CraterSameSize(findTubesTest().sameSize, BACKUP);
-	crates.standardCrate = new CraterStandard(findTubesTest().sorted, BACKUP, 5);
+	crates.standardCrate = new CraterStandard(findTubesTest().sorted, BACKUP, 4);
 	crates.sameSizeCrate?.crates?.map(setCub);
 	crates.standardCrate?.crates?.map(setCub);
 	crates.sameSizeCrate?.backUp?.map(setCub);
@@ -203,8 +203,8 @@ export function mockOptions() {
 
 export function fakeCrater(works) {
 	const crates =		['crates ahead'];
-	const TOTALCUB =	4133.705
-	const PAX =			3;
+	const TOTALCUB =	3995.207
+	const PAX =			4;
 	const CARGO =		2;
 
 	crates.sameSizeCrate = new CraterSameSize(findTubesTest(works).sameSize);
@@ -926,6 +926,19 @@ export const sameMeasure5 = [
 	['21992', 50, 5, 50],
 ];
 
+export const sameMeasure6 = [
+	['22222', 50, 5, 50],
+	['22169', 50, 5, 50],
+	['22164', 50, 5, 50],
+	['22138', 60, 5, 60],
+	['22105', 60, 5, 60],
+	['22131', 60, 5, 60],
+	['22127', 60, 5, 60],
+];
+
+
+
+
 function setPad(innerCrate, type = true) {
 	const PAD =		type ? 23 : 20;
 	const HIGHPAD =	28;
@@ -956,7 +969,7 @@ function checkComp(getter, test, baseLayer) {
 
 
 function tryComposeLayer(baseSize, list) {
-	const PACKAGECM =	10;
+	const PACKAGECM =	5;
 	let getter =		[];
 	const compLayer =	list.map(size => {
 		const X =		size[0] === baseSize[0][0];
@@ -1057,7 +1070,7 @@ function compCrate(tracks) {
 
 
 function countWorks(peces) {
-	const MAXDEPTH =	10;
+	const MAXDEPTH =	14;
 	let x =				peces[0][1];
 	let z =				peces[0][2];
 	let y =				peces[0][3];
