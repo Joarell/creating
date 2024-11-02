@@ -1,5 +1,3 @@
-
-
 export default class CraterSameSize {
 	#peces;
 
@@ -141,7 +139,7 @@ export default class CraterSameSize {
 	};
 
 	#countWorks () {
-		const MAXDEPTH =	10;
+		const MAXDEPTH =	14;
 		let x =				this.#peces[0][1];
 		let z =				this.#peces[0][2];
 		let y =				this.#peces[0][3];

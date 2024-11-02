@@ -1,5 +1,3 @@
-
-
 import Arranger from './Arranger.class.mjs';
 import CraterPythagoras from "./Crater.largest.canvas.mjs";
 import CraterLastCheckReArranger from "./Crater.last.check.mjs";
@@ -74,7 +72,7 @@ export default class Crater {
 
 	#standardCrates() {
 		const BACKUP =	this.#crates.sameSizeCrate.hasOwnProperty('crates');
-		const std =		new CraterStandard(this.#works?.sorted, BACKUP, 5);
+		const std =		new CraterStandard(this.#works?.sorted, BACKUP);
 		this.#crates.standardCrate = std;
 	};
 
