@@ -704,7 +704,7 @@ export default class CraterStandard {
 	};
 
 	#defineNewCrateSize(size, list) {
-		const COMPMAXSIZE =	230;
+		const COMPMAXSIZE =	200;
 		const THRESHOLDY =	132;
 		const WEIGHT =		10;
 		const LIST =		[...list];
@@ -715,6 +715,8 @@ export default class CraterStandard {
 		let z =				0;
 		let y =				0;
 
+		if (size[0] > COMPMAXSIZE || size[2] > THRESHOLDY)
+			return(false)
 		LIST.reverse().map(art => {
 			art[3] > THRESHOLDY ? counterOverY++ : false;
 			x < art[1] ? x = art[1] : false;
@@ -825,8 +827,8 @@ export default class CraterStandard {
 	#composeCrateSizes(crate, list, len) {
 		if (len < 0)
 			return (crate);
-		const MAXx =	250;
-		const MAXy =	200;
+		const MAXx =	200;
+		const MAXy =	213;
 		const y1 =		crate.y1 ?? 0;
 		let check1;
 		let check2;
