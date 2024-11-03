@@ -9,11 +9,9 @@ export default class ArrangerLargestCanvas {
 	};
 
 	#finder () {
-		const MAXHEIGHT = 213;
-		const largestCanvas = this.filter(work => {
-			if(work[1] > MAXHEIGHT || work[3] > MAXHEIGHT)
-				return(work);
-			return ;
+		const MAXHEIGHT =		213;
+		const largestCanvas =	this.filter(work => {
+			return(work[1] >= MAXHEIGHT || work[3] >=MAXHEIGHT ? work : 0);
 		});
 
 		return(largestCanvas);
