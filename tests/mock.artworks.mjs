@@ -203,7 +203,8 @@ export function mockOptions() {
 
 export function fakeCrater(works) {
 	const crates =		['crates ahead'];
-	const TOTALCUB =	3995.207
+	const TOTALCUB =	3818.586;
+	//const TOTALCUB =	3665.885;
 	const PAX =			4;
 	const CARGO =		2;
 
@@ -279,6 +280,20 @@ export const standard6 = [
 	[ '8890', 100, 5, 30, 0.015 ],
 ];
 
+export const standard7 = [
+	[ '8899', 160, 5, 130 ],
+	[ '8899', 35, 5, 25 ],
+	[ '8898', 35, 5, 25 ],
+	[ '8848', 35, 7, 26 ],
+	[ '8848', 35, 7, 26 ],
+	[ '8848', 49, 5, 34 ],
+	[ '8890', 52, 6, 34 ],
+	[ '8835', 23, 6, 23 ],
+	[ '9049', 59, 6, 34 ],
+	[ '9A049', 33, 3, 23],
+	[ '9AA049', 183, 6, 183 ],
+];
+
 // ╭───────────────────────────────────╮
 // │ Sorted list - Conventional crate. │
 // ╰───────────────────────────────────╯
@@ -298,7 +313,7 @@ export const standard6 = [
 function defineExternalSize(innerSize, works) {
 	const DEFAULTPAD =	23;
 	const HIGHPAD =		28;
-	const LAYERPAD =	10;
+	const LAYERPAD =	2.5 + innerSize[1];
 	const X =			innerSize[0] + DEFAULTPAD;
 	const Y =			innerSize[2] + HIGHPAD;
 	let z =				works.length * LAYERPAD + DEFAULTPAD;
@@ -396,7 +411,7 @@ function matchCanvasInLayer(matched, layer, arts, len) {
 			crateReduceSize(layer, [x, y]);
 			if (i === 2 && arts[len].length < SPIN)
 				arts[len].push(" ");
-			else if (arts[len].lenght === SPIN)
+			else if (arts[len].length === SPIN)
 				arts[len].pop();
 			matched.push(arts[len]);
 			return (matchCanvasInLayer(matched, layer, arts, len - 1));
@@ -556,8 +571,6 @@ export function addCub(list) {
 
 
 export function conventionalWorks (works) {
-	const list =		largestWorks();
-	const { sorted } =	list;
 	const inCrate =	[];
 
 	solveList(works, inCrate);
@@ -744,7 +757,7 @@ function defCrate(peces) {
 	let x =				0;
 	let z =				0;
 	let y =				0;
-	let splited;
+	let split;
 
 	peces.map(item => {
 		x +=	item[1];
@@ -752,9 +765,9 @@ function defCrate(peces) {
 		y =		item[3] > y ? item[3] : y;
 	});
 	if (x > LENLIMIT || SPLIT) {
-		splited = splitCrate(peces);
-		x = splited.newX;
-		z = splited.newZ;
+		split = splitCrate(peces);
+		x = split.newX;
+		z = split.newZ;
 	};
 	return (setPad([x, z, y], false));
 };

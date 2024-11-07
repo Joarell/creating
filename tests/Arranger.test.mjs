@@ -115,4 +115,17 @@ describe("These are tests to Arranger class module.", () => {
 
 		assert.deepStrictEqual(current, expected);
 	});
+
+	it("TEST-14: returns a crate assuming the passed list.", () => {
+		const list = [
+			['ABC', 240, 10 , 240 ],
+			['CBA', 237, 10, 243 ]
+		];
+
+		const test =		mock.artWorksList(list);
+		const current =		new Arranger(mock.artWorksList(list)).list.largest.length;
+		const expected =	2;
+
+		assert.deepStrictEqual(current, expected);
+	});
 });

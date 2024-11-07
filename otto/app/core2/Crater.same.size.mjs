@@ -170,7 +170,6 @@ export default class CraterSameSize {
 		const crateDone =		this.#compCrate(countDiffSizes);
 
 		countDiffSizes =		null;
-		//console.log(crateDone)
 		return ({ crates : crateDone, backUp : structuredClone(crateDone) });
 	};
 };

@@ -11,54 +11,101 @@ export default class CraterStandard {
 	* @param {Array} backUp - The backUp from the first solved tried.
 	* @param {Number} maxLayer - The max number of layers to the crate.
 	*/
-	constructor(canvas, backUp, maxLayer) {
+	constructor(canvas, backUp, maxLayer, recheck) {
 		if(!canvas || canvas.length === 0)
 			return({ standard: false});
 
 		this.#list =		canvas;
 		this.#maxLayers =	maxLayer ?? 4;
 		this.#backUp =		backUp;
-		return(this.#startCrate());
+		return(this.#startCrate([], recheck));
 	}
 
-	#startCrate() {
-		const ARTS1 = this.#provideCrate([], 1, structuredClone(this.#list));
-		const ARTS2 = this.#provideCrate([], 0, structuredClone(this.#list));
-
-		//switch(this.#selectTheBestSolution(ARTS1, ARTS2)) {
-		switch(1) {
-			case 1:
+	#startCrate(ARTS1, recheck) {
+		switch(recheck) {
+			case false:
+				ARTS1 = this.#selectTheBestSolution();
 				return(!this.#backUp ? { crates : ARTS1 }:
 					{ crates : ARTS1, backUp : JSON.parse(JSON.stringify(ARTS1)) }
 				);
-			case 2:
-				return(!this.#backUp ? { crates : ARTS2 }:
-					{ crates : ARTS2, backUp : JSON.parse(JSON.stringify(ARTS2)) }
+			case true:
+				ARTS1 = this.#provideCrate([], 1, structuredClone(this.#list));
+				return(!this.#backUp ? { crates : ARTS1 }:
+					{ crates : ARTS1, backUp : JSON.parse(JSON.stringify(ARTS1)) }
 				);
-		}
+		};
 	};
 
-	//#selectTheBestSolution(solved1, solved2) {
-	//	let result;
-	//	let overHeight =		0;
-	//	const THRESHOLDPAX =	160;
-	//	const THRESHOLDCARGO =	240;
-	//	const crates =			solved1.length <= solved2.length ? 1 : 2;
-	//	const airports1 =		[];
-	//	const airports2 =		[];
-	//
-	//	solved1.find((crate, i) => {
-	//		if (i % 2 === 0 && crate[2] <= THRESHOLDPAX)
-	//			airports1.push(crate);
-	//	}, 0);
-	//	solved2.find((crate, i) => {
-	//		crate[2] > THRESHOLDCARGO ? overHeight++ : 0;
-	//		if (i % 2 === 0 && crate[2] <= THRESHOLDPAX)
-	//			airports2.push(crate);
-	//	}, 0);
-	//	result = crates === 1 && airports1.length <= airports2.length ? 1 : 2;
-	//	return(result === 2 && overHeight === 0 ? 2 : 1);
-	//}
+	#checkEqualLengths (list1, list2) {
+		let check1;
+		let check2;
+		let check3;
+		let check4;
+		let opt1 =		0;
+		let opt2 =		0;
+		let pos;
+
+		for (pos in list1) {
+			check1 = list1[pos][0] > list2[pos][0];
+			check2 = list1[pos][0] !== list2[pos][0];
+			check3 = list1[pos][2] > list2[pos][2];
+			check4 = list1[pos][2] !== list2[pos][2];
+
+			check1 && check2 ? opt1 += 1 : check2 ? opt2 += 1 : 0;
+			check3 && check4 ? opt1 += 1 : check4 ? opt2 += 1 : 0;
+		};
+		return({ opt1, opt2 });
+	};
+
+	#checkBestAirportOptions(list1, list2) {
+		const MAXx =	300;
+		const MAXy =	160;
+		let pax1 =		0;
+		let pax2 =		0;
+		let cargo1 =	0;
+		let cargo2 =	0;
+		let pax;
+		let cargo;
+		let bestArrange =	2;
+
+		list1.map(crate => crate[0] <= MAXx && crate[2] <= MAXy ? pax1++ : cargo1++);
+		list2.map(crate => crate[0] <= MAXx && crate[2] <= MAXy ? pax2++ : cargo2++);
+		if (cargo1 === cargo2)
+			bestArrange = pax1 <= pax2 ? 1 : 2;
+		else if (cargo1 < cargo2)
+			bestArrange  = pax1 >= pax2 ? 1 : 2;
+		return ({bestArrange});
+	};
+
+	#selectTheBestSolution() {
+		const results = {
+			opt1: this.#provideCrate([], 0, structuredClone(this.#list)),
+			opt2: this.#provideCrate([], 1, structuredClone(this.#list)),
+		};
+		const crates1 = [];
+		const crates2 = [];
+		const GC =		new WeakSet();
+		Object.entries(results).map(solution => {
+			solution[0] === "opt1" ?
+				solution[1].map((crate, i) => i % 2 === 0 ? crates1.push(crate): 0, 0):
+				solution[1].map((crate, i) => i % 2 === 0 ? crates2.push(crate): 0, 0);
+		});
+		const equalCrates =	crates1.length === crates2.length;
+		let count;
+		let bestOne;
+
+		equalCrates ?
+			count = this.#checkEqualLengths(crates1, crates2):
+			count = this.#checkBestAirportOptions(crates1, crates2);
+
+		if (count.hasOwnProperty('bestArrange'))
+			bestOne = count.bestArrange;
+		else
+			bestOne = count.opt1 <= count.opt2 ? 1 : 2;
+
+		GC.add(count);
+		return(bestOne === 1 ? results.opt1 : results.opt2);
+	}
 
 	#quickSort(arts, pos) {
 		if (arts.length <= 1)
@@ -77,7 +124,7 @@ export default class CraterStandard {
 	#defineFinalSize(innerSize, works) {
 		const DEFAULTPAD =	23;
 		const HIGHPAD =		28;
-		const LAYERPAD =	2.5;
+		const LAYERPAD =	2.5 + innerSize[1];
 		const X =			innerSize[0] + DEFAULTPAD;
 		const Y =			innerSize[2] + HIGHPAD;
 		let z =				works.length * LAYERPAD + DEFAULTPAD;
@@ -86,6 +133,8 @@ export default class CraterStandard {
 
 		for (i in works) {
 			Object.entries(works[i]).map(canvas => {
+				if (canvas.includes("status"))
+					return ;
 				canvas[1].map(art => {
 					art[2] > tmp ? tmp = art[2] : art;
 				});
@@ -188,10 +237,6 @@ export default class CraterStandard {
 
 		return({ X, Y });
 	};
-
-	//#adjacentWorkAux(layer, closeArt, ref) {
-	//
-	//}
 
 	#updateAdjacentWork(work, closeArt, layer, ref, code) {
 		const { size } =			layer[0];
@@ -599,13 +644,13 @@ export default class CraterStandard {
 	 * @param {Number} i - The index of the work reference to find space.
 	 * @param {Object} result - Gets the reference work and stop the while loop by #fitSizesCheckIn method.
 	 */
-	// NOTE: Filter to the next work feat into the layer.
+	// NOTE: Filter to the next work fits into the layer.
 	#searchWorkSpace(layer, workProp, i, result) {
-		const GAPS =		this.#extraAvailableGap(layer, i );
-		const testX1 =		GAPS.gapY1 > 0 && GAPS.gapY1 >= workProp.sizeY; // layer
-		const testX2 =		GAPS.gapX2 > 0 && GAPS.gapX2 >= workProp.sizeX; // work index
-		const testY1 =		GAPS.gapX1 > 0 && GAPS.gapX1 >= workProp.sizeX; // layer
-		const testY2 =		GAPS.gapY2 > 0 && GAPS.gapY2 >= workProp.sizeY; // work index
+		const GAPS =	this.#extraAvailableGap(layer, i );
+		const testX1 =	GAPS.gapY1 > 0 && GAPS.gapY1 >= workProp.sizeY; // layer
+		const testX2 =	GAPS.gapX2 > 0 && GAPS.gapX2 >= workProp.sizeX; // work index
+		const testY1 =	GAPS.gapX1 > 0 && GAPS.gapX1 >= workProp.sizeX; // layer
+		const testY2 =	GAPS.gapY2 > 0 && GAPS.gapY2 >= workProp.sizeY; // work index
 
 		if (testX1 && testX2 || testY1 && testY2) {
 			result.loop = false;
@@ -672,35 +717,12 @@ export default class CraterStandard {
 		const emptyLayer = (x1 === 1 && y1 === 1 && x2 === 1 && y2 === 1);
 
 		if(emptyLayer || len < 0) {
-			layer.map((work, i) => i > 0 ? matched.push(work[0]) : 0 , 0);
-			return(matched);
+			layer.splice(0, 1);
+			//layer.map((work, i) => i > 0 ? matched.push(work) : 0, 0);
+			return(matched.push(layer));
 		}
 		this.#metchCloseWorkOnLayer(list[len], layer);
 		return (this.#matchCanvasInLayer(matched, layer, len - 1, list));
-	};
-
-	//#setLayer(crate, works, status) {
-	#setLayer(crate, works) {
-		switch(this) {
-			case 1:
-				crate.unshift({ layer1 : works });
-				break ;
-			case 2:
-				crate.push({ layer2 : works });
-				break ;
-			case 3:
-				crate.push({ layer3 : works });
-				break ;
-			case 4:
-				crate.push({ layer4 : works });
-				break ;
-			case 5:
-				crate.push({ layer5 : works });
-				break ;
-			default:
-				return ;
-		};
-		return(crate);
 	};
 
 	#defineNewCrateSize(size, list) {
@@ -774,6 +796,30 @@ export default class CraterStandard {
 		return({ i, sized, emptyCrate, list });
 	};
 
+	#setLayer(crate, works) {
+	//#setLayer(crate, works) {
+		switch(this) {
+			case 1:
+				crate.unshift({ layer1 : works});
+				break ;
+			case 2:
+				crate.push({ layer2 : works });
+				break ;
+			case 3:
+				crate.push({ layer3 : works });
+				break ;
+			case 4:
+				crate.push({ layer4 : works });
+				break ;
+			case 5:
+				crate.push({ layer5 : works });
+				break ;
+			default:
+				return ;
+		};
+		return(crate);
+	};
+
 	#checkFifthLayerArea(size, list) {
 		let sum =			0;
 		const CRATEAREA =	size[0] * size[2] / 1_000_000;
@@ -803,7 +849,7 @@ export default class CraterStandard {
 				len = list.length - 1;
 				this.#matchCanvasInLayer(greb, [innerCrate], len, list);
 				if (greb.length > 0) {
-					greb.map(art => list.splice(list.indexOf(art), 1));
+					greb.map(art => list.splice(list.indexOf(art[0]), 1));
 					this.#setLayer.call(i, crate, greb);
 					GC.add(innerCrate);
 					greb =	null;
@@ -821,31 +867,26 @@ export default class CraterStandard {
 		const BIGGEST =	list.at(-1);
 		list.map(art => AVG += art[4]);
 
-		return (!(+(AVG).toFixed(4) / list.length > BIGGEST[4]));
+		return (!(AVG / list.length > BIGGEST[4]));
 	};
 
 	#composeCrateSizes(crate, list, len) {
-		if (len < 0)
+		if (len < 0) {
+			crate.x < crate.y ? [crate.x, crate.y] = [crate.y, crate.x]: 0;
 			return (crate);
-		const MAXx =	200;
-		const MAXy =	213;
-		const y1 =		crate.y1 ?? 0;
-		let check1;
-		let check2;
+		}
+		const THRESHOLDX = 180;
+		const THRESHOLDY = 132;
 
-		crate.x < list[len][1] ? crate.x = list[len][1] :
-		//crate.x + list[len][1] <= MAXx ? crate.x += list[len][1] :
-			crate.x < list[len][1] && list[len][1] <= MAXx ? crate.x = list[len][1]:
-				list[len][1] > MAXx ? crate.x = list[len][1] : false;
+		crate.x = crate.x < list[len][1] ? list[len][1] : crate.x;
+		crate.x = crate.x >= list[len][1] && crate.x + list[len][1] <= THRESHOLDX ?
+			crate.x + list[len][1]: crate.x;
 
-		crate.z = list[len][2] ?? crate.z;
+		crate.z = list[len][2] > crate.z ? list[len][2] : crate.z;
 
-		list[len][3] > crate.y ? crate.y = list[len][3] : false;
-
-		check1 = y1 < crate.y && crate.y > MAXy;
-		check2 = list[len][1] < list[len][3];
-		check1 && check2 ? [crate.x, crate.y] = [crate.y, crate.x]: 0;
-
+		crate.y = list[len][3] > crate.y ? list[len][3] : crate.y;
+		crate.y = crate.y >= list[len][3] && crate.y + list[len][3] <= THRESHOLDY ?
+			crate.y + list[len][3]: crate.y;
 		return(this.#composeCrateSizes(crate, list, len - 1));
 	}
 
@@ -853,10 +894,13 @@ export default class CraterStandard {
 		const CRATE1 =		this.#checkOneCrate([...list]);
 		const SELECTED =	list.at(-1);
 		const SIZES =		{ x: 0, z: 0, y: 0 };
+		const MAXLAYERS =	5;
 		const crate =		this.#composeCrateSizes(SIZES, list, list.length - 1);
-		const checkerSize = crate.x === SELECTED[1] && crate.y === SELECTED[3];
+		//const checkerSize = crate.x === SELECTED[1] && crate.y === SELECTED[3];
+		const sum =			list.reduce((sum, val) => sum + val[4], 0);
+		const crateArea =	((SELECTED[1] * SELECTED[2] * SELECTED[3]) / 1_000_000) * MAXLAYERS ;
 
-		if (CRATE1 && large && checkerSize) {
+		if (CRATE1 && crateArea > sum && !large) {
 			return(SELECTED[1] < SELECTED[3] ?
 				[SELECTED[3], SELECTED[2], SELECTED[1]]:
 				[SELECTED[1], SELECTED[2], SELECTED[3]]
