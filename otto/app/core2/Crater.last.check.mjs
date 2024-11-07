@@ -32,9 +32,11 @@ export default class CraterLastCheckReArranger {
 
 		works.map(layer => {
 			Object.entries(layer).map(arts => {
-				arts.length === 1 ?
-					list.push(arts[1].flat()) :
-					arts[1].map(works => list.push(works));
+				arts[1].map(layer => {
+					layer.length === 1 ?
+						list.push(layer[0][0]) :
+						layer.map(work => Array.isArray(work[0]) ? list.push(work[0]): 0);
+				})
 			});
 		});
 		return(structuredClone(list));
@@ -43,11 +45,12 @@ export default class CraterLastCheckReArranger {
 // ╭───────────────────────────────────────────────────────────────────────────╮
 // │ Simulates if the crate with 5 layer can consolidate all same size canvas. │
 // ╰───────────────────────────────────────────────────────────────────────────╯
+	// BUG: the same size crate are being drained, but the sizes of consolidated crate is the same.
 	#processingCratesList (listCrates, attCrate) {
 		const GC =			new WeakSet();
 		const LEN =			attCrate.works.length;
 		const CUBPOS =		4;
-		const MAXLAYER =	4;
+		const MAXLAYER =	5;
 		let i =				0;
 		let bool =			true;
 		let result;
@@ -59,8 +62,8 @@ export default class CraterLastCheckReArranger {
 					structuredClone(attCrate.works);
 				this.#removeCrate(listCrates, i, result);
 				result =	this.#quickSort(result, CUBPOS);
-				result =	new CraterStandard(result, false, MAXLAYER);
-				if (result.crates.length === 2) {
+				result =	new CraterStandard(result, false, MAXLAYER, true);
+				if (result.crates.length === listCrates.length) {
 					listCrates.splice(i, 1, result.crates[1]);
 					listCrates.splice(i - 1, 1, result.crates[0]);
 					bool =	false;
@@ -141,7 +144,7 @@ export default class CraterLastCheckReArranger {
 		for (layers in crates) {
 			if (!Array.isArray(crates[layers]) && count !== +list.info) {
 				newList = this.#newCrateSet(list.works, crates[layers]);
-				newCrate = new CraterStandard(newList, false, LIMITLAYER);
+				newCrate = new CraterStandard(newList, false, LIMITLAYER, true);
 				check = newCrate.crates.length === 2;
 				if (check) {
 					this.#updatesCrates(crates, count, newCrate, list.info);
