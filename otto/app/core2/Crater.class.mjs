@@ -72,7 +72,7 @@ export default class Crater {
 
 	#standardCrates() {
 		const BACKUP =	this.#crates.sameSizeCrate.hasOwnProperty('crates');
-		const std =		new CraterStandard(this.#works?.sorted, BACKUP);
+		const std =		new CraterStandard(this.#works?.sorted, BACKUP, 4, false);
 		this.#crates.standardCrate = std;
 	};
 
