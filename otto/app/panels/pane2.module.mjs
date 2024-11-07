@@ -151,7 +151,7 @@ function addHTMLLayerWorksLine({ works }, table, unit, kind, create) {
 		if (!Array.isArray(works[i])) {
 			for (layer in works[i]) {
 				table.innerHTML += works[i][layer].map(info => {
-					const data = Array.isArray(info) ? info : works[i][layer];
+					const data = Array.isArray(info[0]) ? info[0][0] : works[i][layer][0];
 					return layerInterface(data, i + 1, unit);
 				}).join("");
 			};
