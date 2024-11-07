@@ -67,12 +67,10 @@ export default class UnitAdapter {
 		const CHECK1 = data?.hasOwnProperty('crates');
 		const CHECK2 = data?.hasOwnProperty('backUp');
 
-		if(Array.isArray(data)) {
+		if(Array.isArray(data))
 			return(data = data.map(swapUnitReversion));
-		}
-		else if (!data?.hasOwnProperty('crates')) {
+		else if (!data?.hasOwnProperty('crates'))
 			return(data);
-		}
 		else if (CHECK1 || CHECK2) {
 			data.crates = data.crates.map(info => {
 				if (info.length === 4)
@@ -174,12 +172,7 @@ function swapUnitReversion(sizes) {
 function layerInterface(layer) {
 	let key = 0;
 
-	for (key in layer) {
-		if (layer[key].length === 1) {
-			layer[key] = [swapUnitReversion(layer[key][0])];
-		}
-		else
-			layer[key] = layer[key].map(swapUnitReversion);
-	};
+	for (key in layer[0])
+		layer[key] = [swapUnitReversion(layer[key][0])];
 	return(layer);
 };
