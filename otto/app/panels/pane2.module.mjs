@@ -151,8 +151,13 @@ function addHTMLLayerWorksLine({ works }, table, unit, kind, create) {
 		if (!Array.isArray(works[i])) {
 			for (layer in works[i]) {
 				table.innerHTML += works[i][layer].map(info => {
-					const data = Array.isArray(info[0]) ? info[0][0] : works[i][layer][0];
-					return layerInterface(data, i + 1, unit);
+					const data = info.flat();
+					if (!Array.isArray(data[0]))
+						return layerInterface(data, i + 1, unit);
+					return(data.map((peace, j) => {
+						if (j % 2 === 0)
+							return(layerInterface(peace, i + 1, unit));
+					}, 0).join(""));
 				}).join("");
 			};
 		} else if (kind === "sameSizeCrate") {
