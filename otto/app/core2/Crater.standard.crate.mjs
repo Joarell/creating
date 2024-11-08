@@ -849,7 +849,7 @@ export default class CraterStandard {
 				len = list.length - 1;
 				this.#matchCanvasInLayer(greb, [innerCrate], len, list);
 				if (greb.length > 0) {
-					greb.map(art => list.splice(list.indexOf(art[0]), 1));
+					greb[0].map(art => list.splice(list.indexOf(art[0]), 1));
 					this.#setLayer.call(i, crate, greb);
 					GC.add(innerCrate);
 					greb =	null;
@@ -857,6 +857,7 @@ export default class CraterStandard {
 				};
 				i === this.#maxLayers ?
 					checkLen = this.#checkFifthLayerArea(measure, list) : 0;
+				i = list.length > 0 ? i : this.#maxLayers;
 			};
 		}
 		return({ crate, measure, list });
@@ -896,7 +897,6 @@ export default class CraterStandard {
 		const SIZES =		{ x: 0, z: 0, y: 0 };
 		const MAXLAYERS =	5;
 		const crate =		this.#composeCrateSizes(SIZES, list, list.length - 1);
-		//const checkerSize = crate.x === SELECTED[1] && crate.y === SELECTED[3];
 		const sum =			list.reduce((sum, val) => sum + val[4], 0);
 		const crateArea =	((SELECTED[1] * SELECTED[2] * SELECTED[3]) / 1_000_000) * MAXLAYERS ;
 
