@@ -16,7 +16,7 @@ export default class StandardRender {
 		this.#filled.x2 =	this.#filled.x;
 		this.#filled.y2 = 	this.#filled.y;
 
-		return (this.#standardRender());
+		return (this.#getOnlyWorks());
 	};
 
 	#worksPositionLayer({ pos, values }) {
@@ -247,19 +247,18 @@ export default class StandardRender {
 		return (element);
 	};
 
-	#standardRender() {
+	#standardRender(list) {
 		let x;
 		let y;
-		const MAPWORK = {};
-		const ICON = `<i class="nf nf-oct-sync"></i>`;
-		const CODES = [];
+		const MAPWORK =	{};
+		const ICON =	`<i class="nf nf-oct-sync"></i>`;
+		const CODES =	[];
 		const unit =	localStorage
 			.getItem("metrica") === 'cm - centimeters' ? 'cm' : 'in';
 
-		this.#canvas.map(async art => {
+		list.map(async art => {
 			if (unit === 'in') {
 				const code = art[0];
-
 				art = Array.from(new Converter(art[1], art[2], art[3]).cmConvert);
 				art.unshift(code);
 			}
@@ -277,5 +276,17 @@ export default class StandardRender {
 			await this.#layoutArranger(MAPWORK, x, y, CODES);
 		}, 0);
 		return (this.#drawAndWrite(MAPWORK));
+	};
+
+	#getOnlyWorks() {
+		let works;
+
+		this.#canvas.map(async art => {
+			Array.isArray(art[0]) ? works = art.flat().filter((work, i) => {
+				if (i % 2 === 0)
+					return(work[0]);
+			}, 0) : works = [art];
+		});
+		return(this.#standardRender(works));
 	};
 };

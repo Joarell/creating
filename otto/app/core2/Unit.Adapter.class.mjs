@@ -170,9 +170,12 @@ function swapUnitReversion(sizes) {
 
 
 function layerInterface(layer) {
-	let key = 0;
+	let key;
 
-	for (key in layer[0])
-		layer[key] = [swapUnitReversion(layer[key][0])];
+	for (key in layer) {
+		Array.isArray(layer[key][0][0][0]) ?
+			layer[key][0].map(work =>  work.splice(0, 1, swapUnitReversion(work[0]))):
+			layer[key] = [swapUnitReversion(layer[key][0])];
+	}
 	return(layer);
 };
