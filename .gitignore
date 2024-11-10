@@ -1,21 +1,33 @@
-.envrc
-*.log
-.package.json.kate-swp
-builder.kdev4
-database
+# prod
+dist/
+
+# dev
+.yarn/
+!.yarn/releases
+.vscode/*
+!.vscode/launch.json
+!.vscode/*.code-snippets
+.idea/workspace.xml
+.idea/usage.statistics.xml
+.idea/shelf
+
+# deps
+node_modules/
+.wrangler
+
+# env
 .env
-result.test
-.eslintrc.js
-.eslintrc.json
-works.txt
-.vscode
-node_modules
-package-lock.json
-.vimspector.json
-DB
-data
-letsencrypt
-yarn.lock
-otto/app/responsive_sheet.css
-# docker/nginx.conf
-proxy
+.env.production
+.dev.vars
+
+# logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# misc
+.DS_Store
