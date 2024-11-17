@@ -26,10 +26,21 @@ const userSet =		require('./controllers/user.controller.js');
 const router =		express.Router();
 const path =		require('path');
 const log =			require('debug')('server:back');
+const bodyParser =	require('body-parser');
+const helmet =		require('helmet');
+const morgan =		require('morgan');
 
 // TODO: should send the home page when all be done.
 router.use(express.json());
-router.use(cors({origin: "https://ottocratesolver.com", Credential: true}));
+router.use(express.urlencoded({extended: false}));
+router.use(bodyParser.json());
+router.use(helmet());
+router.use(morgan('combined'));
+router.use(cors());
+router.use(cors({origin: [
+	"https://ottocratesolver.com",
+	"https://ottocratesolver.com/login",
+], Credential: true}));
 router.use(express.static(path.join(__dirname)));
 router.use(compression());
 

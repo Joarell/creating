@@ -39,11 +39,21 @@ const insertNewUser = async (req, res) => {
 	return(res.status(confirmation).send(req.body));
 };
 
+const extractUserInfo = (body => {
+	const user = {};
+	Object.entries(body).map(data => {
+		const { name, passFrase } = JSON.parse(data[0]);
+		user.name = name;
+		user.passFrase = passFrase;
+	})
+	return (user);
+});
 
 const userLoginValidation = async (req, res, next) => {
+	//const user = extractUserInfo(req.body);
 	const auth = await checker.checkUserAuthDB(req.body);
 
-	console.log("login", auth);
+	console.table(req.body.name)
 	switch (auth) {
 		case 404:
 			return(res.status(404).json({msg: "User not found"}));
@@ -204,4 +214,5 @@ module.exports = {
 	userTokenExpTime,
 	userTokenMatch,
 	userChecker,
+	extractUserInfo,
 }
