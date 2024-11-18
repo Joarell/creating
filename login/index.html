@@ -27,21 +27,21 @@
 		<!-- TODO: animated background (optional SVG rather than CANVAS). -->
 		<div class="login-box">
 			<h2>Otto Login</h2>
-			<form>
+			<form id="login" method="post" action="https://solver.ottocratesolver.com/start">
 				<div class="user-box">
-					<input id="user-name" type="text" name="username" placeholder="" minlength="6" required></input>
+					<input id="user-name" type="text" name="name" placeholder="" minlength="6" required></input>
 					<label>User Name</label>
 				</div>
 				<div class="user-box">
-					<input id="passFrase" type="password" name="password" placeholder="" minlength="11" required></input>
+					<input id="passFrase" type="password" name="passFrase" placeholder="" minlength="11" required></input>
 					<label>Password</label>
 				</div>
-				<a href="#" type="submit" onclick="globalThis.fns.loginInto()" rel="noopener">Get In
+				<button type="submit" rel="noopener">Get In
 					<span></span>
 					<span></span>
 					<span></span>
 					<span></span>
-				</a>
+				</button>
 			</form>
 			<svg width="0" height="0" class="hidden board-icon" preserveAspectRatio="none">
 				<symbol xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"
