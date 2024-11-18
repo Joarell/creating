@@ -34,13 +34,16 @@ const morgan =		require('morgan');
 router.use(express.json());
 router.use(express.urlencoded({extended: false}));
 router.use(bodyParser.json());
-router.use(helmet());
+router.use(helmet({
+	crossOriginResourcePolicy: false,
+}));
 router.use(morgan('combined'));
 router.use(cors());
-router.use(cors({origin: [
-	"https://ottocratesolver.com",
-	"https://ottocratesolver.com/login",
-], Credential: true}));
+router.use(cors({
+	origin: '*',
+	methods: ['GET', 'POST', 'PUT', 'DELETE'],
+	Credential: true
+}));
 router.use(express.static(path.join(__dirname)));
 router.use(compression());
 
@@ -72,7 +75,7 @@ router.post('/private/auth',
 router.post("/start", userSet.userLoginValidation, take.newLogin);
 
 
-router.post("/app", userSet.userLoginValidation, take.newLogin);
+router.get("/app", userSet.userLoginValidation, take.newLogin);
 
 
 router.get("/", (req, res) => {
@@ -104,7 +107,7 @@ router.get("/loginCheck/:session", take.checkLoginSession);
 router.get("/logout", take.logOutUser);
 
 
-router.get("/takeLogin/:name", take.takeLogin);
+router.get("/takeLogin/:name", cors(), take.takeLogin);
 
 
 router.get("/estimates/:ref_id", take.getDataEstimates);

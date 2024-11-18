@@ -102,9 +102,9 @@ const takeLogin = async (req, res) => {
 
 	await Promise.resolve(cache.del(user.name))
 	.then(cache.del(user.active_session))
-	.then(res.status(200).json({ msg: "caught" }))
-	.catch(err => console.error(`TAKED: ${err}`))
-	console.log(`DELETED: ${await cache.get(user.name)}`)
+	.then(res.status(205).json({ msg: "caught" }))
+	.catch(err => console.error(`TAKED: ${err}`));
+	console.log(`DELETED: ${await cache.get(user.name)}`);
 };
 
 
@@ -160,8 +160,8 @@ const newLogin = async (req, res) => {
 				msg: 'active', result, id : user.id, access: user.grant_access
 			})
 		);
-	}
-	return(res.status(201).json({ msg: "ended" }));
+	};
+	return(res.status(303).json({ msg: "ended" }));
 };
 
 

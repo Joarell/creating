@@ -39,6 +39,7 @@ const insertNewUser = async (req, res) => {
 	return(res.status(confirmation).send(req.body));
 };
 
+
 const extractUserInfo = (body => {
 	const user = {};
 	Object.entries(body).map(data => {
@@ -48,6 +49,7 @@ const extractUserInfo = (body => {
 	})
 	return (user);
 });
+
 
 const userLoginValidation = async (req, res, next) => {
 	//const user = extractUserInfo(req.body);
@@ -140,7 +142,7 @@ const userChecker = async (req, res) => {
 	console.log(`CHECKING USER: ${checking}`)
 	return (checking !== null ?
 		res.status(200).json({ msg: "active" }) :
-		res.status(201).json({ msg: "ended" })
+		res.status(401).json({ msg: "ended" })
 	);
 };
 
