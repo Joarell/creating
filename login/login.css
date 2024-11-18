@@ -61,6 +61,14 @@ main {
 }
 
 
+
+form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
 input:-webkit-autofill {
 	background-color: transparent;
 	background-image: none;
@@ -77,7 +85,7 @@ input:invalid:not(:placeholder-shown) {
 input:valid:not(:placeholder-shown) {
 	border-color: var(--color4);
 	& + a[type="submit"] {
-		--get-in: block;
+		--get-in: block;;
 	}
 }
 
@@ -187,25 +195,28 @@ dialog::backdrop {
 	&::after {
 		filter: blur(60px);
 	}
-	&  a {
+	&  button {
 		position: relative;
 		text-align: center;
 		display: var(--get-in);
-		padding: 1.5rem .2rem;
+		padding: 1.5rem 3rem;
 		color: var(--color1);
 		font-size: 1rem;
 		text-decoration: none;
 		text-transform: uppercase;
 		overflow: hidden;
 		transition: .5s;
+		justify-content: center;
 		/*margin-top: 1rem;*/
-		margin: 0 1rem;
+		/*margin: 0 1rem;*/
 		letter-spacing: 0.25rem;
+		background-color: transparent;
+		border: none;
 		& span {
 			position: absolute;
 		}
 	}
-	& a:hover{
+	& button:hover{
 		background: var(--color1);
 		color: #fff;
 		border-radius: 0.25rem;
@@ -214,7 +225,7 @@ dialog::backdrop {
 			0 0 5rem var(--color1),
 			0 0 8rem var(--color1),
 	}
-	& a span:nth-child(1) {
+	& button span:nth-child(1) {
 		top: 0;
 		left: -100%;
 		width: 100%;
@@ -222,7 +233,7 @@ dialog::backdrop {
 		background: linear-gradient(90deg, transparent, var(--color1));
 		animation: btn-anim1 1s linear infinite;
 	}
-	& a span:nth-child(2) {
+	& button span:nth-child(2) {
 		top: -100%;
 		right:0;
 		width: 2px;
@@ -231,7 +242,7 @@ dialog::backdrop {
 		animation: btn-anim2 1s linear infinite;
 		animation-delay: .25s;
 	}
-	& a span:nth-child(3) {
+	& button span:nth-child(3) {
 		bottom: 0;
 		right: -100%;
 		width: 100%;
@@ -240,7 +251,7 @@ dialog::backdrop {
 		animation: btn-anim3 1s linear infinite;
 		animation-delay: .5s;
 	}
-	& a span:nth-child(4) {
+	& button span:nth-child(4) {
 		bottom: -100;
 		left: 0%;
 		width: 2px;
@@ -366,3 +377,4 @@ dialog::backdrop {
 		align-self: center;
 	}
 }
+
