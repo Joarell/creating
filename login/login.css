@@ -195,7 +195,7 @@ dialog::backdrop {
 	&::after {
 		filter: blur(60px);
 	}
-	&  button {
+	& a {
 		position: relative;
 		text-align: center;
 		display: var(--get-in);
@@ -207,16 +207,15 @@ dialog::backdrop {
 		overflow: hidden;
 		transition: .5s;
 		justify-content: center;
-		/*margin-top: 1rem;*/
-		/*margin: 0 1rem;*/
 		letter-spacing: 0.25rem;
 		background-color: transparent;
 		border: none;
+		cursor: pointer;
 		& span {
 			position: absolute;
 		}
 	}
-	& button:hover{
+	& a:hover{
 		background: var(--color1);
 		color: #fff;
 		border-radius: 0.25rem;
@@ -225,7 +224,7 @@ dialog::backdrop {
 			0 0 5rem var(--color1),
 			0 0 8rem var(--color1),
 	}
-	& button span:nth-child(1) {
+	& a span:nth-child(1) {
 		top: 0;
 		left: -100%;
 		width: 100%;
@@ -233,7 +232,7 @@ dialog::backdrop {
 		background: linear-gradient(90deg, transparent, var(--color1));
 		animation: btn-anim1 1s linear infinite;
 	}
-	& button span:nth-child(2) {
+	& a span:nth-child(2) {
 		top: -100%;
 		right:0;
 		width: 2px;
@@ -242,7 +241,7 @@ dialog::backdrop {
 		animation: btn-anim2 1s linear infinite;
 		animation-delay: .25s;
 	}
-	& button span:nth-child(3) {
+	& a span:nth-child(3) {
 		bottom: 0;
 		right: -100%;
 		width: 100%;
@@ -251,7 +250,7 @@ dialog::backdrop {
 		animation: btn-anim3 1s linear infinite;
 		animation-delay: .5s;
 	}
-	& button span:nth-child(4) {
+	& a span:nth-child(4) {
 		bottom: -100;
 		left: 0%;
 		width: 2px;

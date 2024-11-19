@@ -1,6 +1,8 @@
-import { address } from './otto.address.mjs';
 
-//globalThis.fns = { loginInto };
+globalThis.fns = { loginInto };
+
+globalThis.onsubmit = () => loginInto();
+
 
 globalThis.onkeydown = (keyPress) => {
 	if (keyPress.key === 'Enter')
@@ -32,30 +34,27 @@ export function loginInto () {
 	alert(`Opss! Wrong credentials. Please try again!`);
 };
 
-async function takeLogin(userLogin) {
-	const url = `${address}/takeLogin/${userLogin.name}`;
 
-	if (confirm("This USER is already logged in. Would you like to take it?")){
+async function takeLogin(userLogin){
+	const url = `/takeLogin/${userLogin.name}`;
+
+	if (confirm("This USER is already logged in. Would you like to take it?")) {
 		await fetch(url, {
 			method: "GET",
-			mode: 'no-cors',
-			headers: {
-				'Content-Type': 'application/json; charset=UTF-8',
-				'Cross-Origin-Resource-Policy': 'same-site'
-			},
+			headers: { 'Content-Type': 'application/json; charset=UTF-8' },
 		}).then(body => body.status)
-		.then(status => status === 303 ? backEndLoginAuth(userLogin) : status)
-		.catch(err => console.error(`Check this out: ${err}`));
+		.then(status => status === 200 ? backEndLoginAuth(userLogin): false)
 	}
+	return;
 };
 
 
 async function setLogin(info, userData) {
-	switch (info.msg) {
+	switch(info.msg) {
 		case 'active':
-			return (await appAccessCheckIn(info));
+			return(await appAccessCheckIn(info));
 		case "ended":
-			return (await takeLogin(userData));
+			return (takeLogin(userData));
 		default:
 			alert('Wrong credentials. Please try again!');
 	};
@@ -64,49 +63,50 @@ async function setLogin(info, userData) {
 
 
 async function backEndLoginAuth(userInfo) {
-	const form =	document.getElementById('login');
-	const url =		new URL('https://solver.ottocratesolver.com/start');
-	const app =		new URL('https://solver.ottocratesolver.com/app');
+	const USER =	JSON.stringify(userInfo);
+	const url =		'/start';
 
-	console.count();
-	form.addEventListener('submit', async (e) => {
-		e.preventDefault();
-
-		await fetch(url, {
-			method: 'POST',
-			mode: 'no-cors',
-			body: JSON.stringify(userInfo),
-		}).then(serv => serv.status === 200 ? globalthis.location.assign(app) : serv)
-		.then(res => setLogin(res, userInfo))
-		.catch(await takeLogin(userInfo));
-	});
-	return;
+	await fetch (url, {
+		method: "POST",
+		body: USER,
+		headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+	}).then(body => body.json())
+	.then(data => setLogin(data, userInfo))
+	//.catch(takeLogin(userInfo));
 };
 
 
 async function appAccessCheckIn({ result, access }) {
-	const header = {
+	const header =	{
 		'Authorization': `Bearer ${result[0]}`,
 		'Content-Type': 'application/javascript',
 		'Accept': 'text/html; text/css; application/javascript',
 	};
-	const request = new Request(`${address}/app`, {
-		method: "POST",
-		mode: 'no-cors',
-		headers: header,
-		cache: 'default',
-		connection: 'keep-alive',
-		redirect: 'follow',
+	const request =		new Request(`/app`, {
+		Method: "POST",
+		Mode: 'cors',
+		Headers: header,
+		Cache: 'default',
+		Credentials: 'include',
+		Connection: 'keep-alive',
+		Redirect: 'follow',
 	});
-	const checkOut = await fetch(request).catch(err => alert(`Warning! ${err}`));
+	try {
+		const checkOut = await fetch(request)
+			.catch(err => alert(`Warning! ${err}`));
 
-	if (checkOut.status <= 201) {
-		globalThis.localStorage.setItem('tier', access);
-		globalThis.location.assign(checkOut.url);
+		if (checkOut.status <= 350) {
+			globalThis.localStorage.setItem('tier', access);
+			globalThis.location.assign(checkOut.url);
+		}
+		else {
+			alert("Not authorized. Please, try again!");
+			globalThis.location.reload();
+			throw new Error(checkOut.status);
+		};
 	}
-	else {
-		alert("Not authorized. Please, try again!");
-		globalThis.location.reload();
-		throw new Error(checkOut.status);
+	catch(err) {
+		alert(`Attention redirection: ${err}`);
 	};
 };
+;
