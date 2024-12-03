@@ -1,0 +1,110 @@
+
+
+header {
+	background: var(--gradient);
+	text-align: center;
+	height: 8rem;
+	font-family: 'Big Shoulders Stencil Display', cursive;
+	overflow: clip;
+	border-radius: 1rem;
+}
+
+
+footer {
+	position: relative;
+	place-items: center;
+	grid-area: header;
+	background: var(--gradient1);
+	text-align: center;
+	height: 8rem;
+	font-family: 'Big Shoulders Stencil Display', cursive;
+	overflow: clip;
+	border-radius: 1rem;
+}
+
+
+.header--title, .container__footer {
+	margin: 0 0;
+	font-size: 13rem;
+	opacity: .05;
+}
+
+
+/* ╭──────────────────────────────────────────────────────────╮
+   │                       Light Button                       │
+   ╰──────────────────────────────────────────────────────────╯
+*/
+
+.mode {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	transition: all .3s ease-in-out;
+	& {
+		width: 4rem;
+		height: 2.3rem;
+		border-radius: 1rem;
+		transition: .5s ease;
+	}
+	& > input:checked + label > svg {
+		transition: all .5s ease;
+		fill: var(--dark);
+		z-index: 5;
+	}
+	&:hover {
+		border: none;
+		box-shadow: var(--shadow1);
+	}
+}
+.mode--light, .mode--dark {
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+
+
+.mode--light, .mode--dark {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	&, & {
+		width: 2rem;
+		height: 1rem;
+		line-height: 0;
+		cursor: pointer;
+		color: var(--iframes-bg);
+		transition: all 5s ease;
+	}
+}
+
+
+.light, .dark {
+	padding: .1rem .1rem;
+	margin: .1rem .1rem;
+	display: none;
+}
+
+
+.mode--color {
+	position: absolute;
+	width: 1.5rem;
+	height: 1.5rem;
+	margin-right: 1.95rem;
+	border-radius: 40%;
+	pointer-events: none;
+	background: var(--menu-col);
+	border-bottom: .05rem solid var(--color4);
+	border-right: .05rem solid var(--color4);
+}
+
+
+.light:checked ~ .mode--color {
+	transform: translateX(0);
+	transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)
+}
+
+
+.dark:checked ~ .mode--color {
+	transform: translateX(1.9rem);
+	transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)
+}

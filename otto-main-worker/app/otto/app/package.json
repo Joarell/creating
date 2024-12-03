@@ -1,0 +1,30 @@
+{
+	"name": "Otto",
+	"version": "1",
+	"description": "Art work solver list and crater.",
+	"main": "main.mjs",
+	"scripts": {
+		"start": "nodemon server.app.js",
+		"dev": "vite",
+		"build": "vite build --watch",
+		"preview": "vite preview"
+	},
+	"keywords": [],
+	"author": "Joseph Joarell",
+	"license": "MIT",
+	"privaate": true,
+	"dependencies": {
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.3",
+		"express": "^4.18.2",
+		"jsonwebtoken": "^9.0.0",
+		"sequelize": "^6.28.0"
+	},
+	"devDependencies": {
+		"css-minify": "^2.0.0",
+		"nodemon": "^3.0.1",
+		"vite": "^5.2.11",
+		"vite-plugin-inspect": "^0.8.4"
+	},
+	"private": true
+}

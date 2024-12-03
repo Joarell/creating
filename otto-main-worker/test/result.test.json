@@ -1,0 +1,10 @@
+{
+  "reference": "TEST",
+  "list": [ { "code": "320809", "x": "100", "z": "10", "y": "100" } ],
+  "crates": {
+    "standardCrate": "{ crates: [Array] }",
+    "allCrates": "[ [Array] ]",
+    "airCubTotal": "119.392",
+    "whichAirPort": "[ [Object], [Object] ]"
+  }
+ }

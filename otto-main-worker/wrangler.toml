@@ -1,0 +1,126 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "otto-main-worker"
+main = "src/index.ts"
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2024-11-12"
+assets = { directory = "app/otto", binding = "ASSETS", not_found_handling = "404-page", html_handling = "auto-trailing-slash" }
+services = [
+	{ binding = "APP", service = "otto-app" }
+]
+# routes = [
+# 	{ pattern = "app.ottocratesolver.com", custom_domain = true },
+# 	{ pattern = "http://localhost:8787/app", zone_name = "http://localhost:8787/" },
+# ]
+
+# Workers Logs
+# Docs: https://developers.cloudflare.com/workers/observability/logs/workers-logs/
+# Configuration: https://developers.cloudflare.com/workers/observability/logs/workers-logs/#enable-workers-logs
+[observability]
+enabled = true
+
+# Automatically place your workloads in an optimal location to minimize latency.
+# If you are running back-end logic in a Worker, running it closer to your back-end infrastructure
+# rather than the end user may result in better performance.
+# Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
+# [placement]
+# mode = "smart"
+
+# Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)
+# Docs:
+# - https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
+# Note: Use secrets to store sensitive data.
+# - https://developers.cloudflare.com/workers/configuration/secrets/
+[vars]
+SECRET_TOKEN = "917910d08e47f27c33c7c53c746aa9f9fa11193cce2110ee619f928ee5c5491ef647f97c87a660cb3249a76525c362ff696c8333dff5648867702299e827fa23"
+REF_SECRET_TOKEN = "101255a9f4429cf2c7adcb70316acd05d12c8ff89310c3c3d32366e559804344b8ca1346de0830adc1abcaab78fc06f83cee88801a286219956577869fbd8207"
+API_KEY = "eyJhbGciOiJIUzI1NiJ9.U2FsdmFkb3I.b8j5EJcaxHRamaaIWfkFQ99GbNQg-HeqZsebtX44n6Y"
+API_KEY2 = "736523325468a9d45ba4bd21d24b5475"
+
+# Bind the Workers AI model catalog. Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#workers-ai
+# [ai]
+# binding = "AI"
+
+# Bind an Analytics Engine dataset. Use Analytics Engine to write analytics within your Pages Function.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#analytics-engine-datasets
+# [[analytics_engine_datasets]]
+# binding = "MY_DATASET"
+
+# Bind a headless browser instance running on Cloudflare's global network.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#browser-rendering
+# [browser]
+# binding = "MY_BROWSER"
+
+# Bind a D1 database. D1 is Cloudflare’s native serverless SQL database.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#d1-databases
+[[d1_databases]]
+binding = "DB"
+database_name = "d1-otto"
+database_id = "366ab161-9d42-4526-ae36-3a8ab9d189e0"
+# preview_database_id = "DB_TEST"
+
+# Bind a dispatch namespace. Use Workers for Platforms to deploy serverless functions programmatically on behalf of your customers.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#dispatch-namespace-bindings-workers-for-platforms
+# [[dispatch_namespaces]]
+# binding = "MY_DISPATCHER"
+# namespace = "my-namespace"
+
+# Bind a Durable Object. Durable objects are a scale-to-zero compute primitive based on the actor model.
+# Durable Objects can live for as long as needed. Use these when you need a long-running "server", such as in realtime apps.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#durable-objects
+# [[durable_objects.bindings]]
+# name = "MY_DURABLE_OBJECT"
+# class_name = "MyDurableObject"
+
+# Durable Object migrations.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#migrations
+# [[migrations]]
+# tag = "v1"
+# new_classes = ["MyDurableObject"]
+
+# Bind a Hyperdrive configuration. Use to accelerate access to your existing databases from Cloudflare Workers.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#hyperdrive
+# [[hyperdrive]]
+# binding = "MY_HYPERDRIVE"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# Bind a KV Namespace. Use KV as persistent storage for small key-value pairs.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#kv-namespaces
+[[kv_namespaces]]
+binding = "OTTO_USERS"
+id = "4fab5368eb2448598eb2436317b2838c"
+
+# Bind an mTLS certificate. Use to present a client certificate when communicating with another service.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#mtls-certificates
+# [[mtls_certificates]]
+# binding = "MY_CERTIFICATE"
+# certificate_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+# Bind a Queue producer. Use this binding to schedule an arbitrary task that may be processed later by a Queue consumer.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#queues
+# [[queues.producers]]
+# binding = "MY_QUEUE"
+# queue = "my-queue"
+
+# Bind a Queue consumer. Queue Consumers can retrieve tasks scheduled by Producers to act on them.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#queues
+# [[queues.consumers]]
+# queue = "my-queue"
+
+# Bind an R2 Bucket. Use R2 to store arbitrarily large blobs of data, such as files.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#r2-buckets
+# [[r2_buckets]]
+# binding = "MY_BUCKET"
+# bucket_name = "my-bucket"
+
+# Bind another Worker service. Use this binding to call another Worker without network overhead.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
+# [[services]]
+# binding = "MY_SERVICE"
+# service = "my-service"
+
+# Bind a Vectorize index. Use to store and query vector embeddings for semantic search, classification and other vector search use-cases.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#vectorize-indexes
+# [[vectorize]]
+# binding = "MY_INDEX"
+# index_name = "my-index"
