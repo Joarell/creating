@@ -4,14 +4,12 @@ interface Env {
 	ASSETS: Fetcher;
 }
 
-interface Env {
-	ASSETS: Fetcher;
-}
-
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
+		console.log(request)
 		const url = new URL(request.url);
 		const res = ctx.waitUntil(await fetch(request));
+
 		if (url.pathname.startsWith('/')) {
 			return new Response('Ok');
 		}

@@ -8,9 +8,9 @@ export default {
 
 		if (pathname === "/api/beverages") {
 			const { results } = await env.DB.prepare(
-				"SELECT * FROM Customers WHERE CompanyName = ?",
-			).bind("Bs Beverages").all();
-			return (Response.json(results));
+				"SELECT * FROM Customer WHERE CompanyName = ?",
+			).bind("Bs beverages").all();
+			return (new Response.json(results));
 		}
 		return (new Response(
 			"Call /api/beverages to see everyone who whorks at Bs Beverages",

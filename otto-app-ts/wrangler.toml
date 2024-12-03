@@ -1,12 +1,10 @@
 #:schema node_modules/wrangler/config-schema.json
-name = "otto-app-ts"
+name = "otto-app"
 main = "src/index.ts"
 compatibility_date = "2024-11-06"
 compatibility_flags = ["nodejs_compat"]
-assets = { directory = "otto", binding = "ASSETS", not_found_handling = "404-page", html_handling = "auto-trailing-slash" }
-routes = [
-	{ pattern = "app.ottocratesolver.com", custom_domain = true }
-]
+assets = { directory = "app/otto", binding = "ASSETS", not_found_handling = "404-page", html_handling = "auto-trailing-slash" }
+# routes = [{ pattern = "app.ottocratesolver.com", custom_domain = true }]
 
 # Workers Logs
 # Docs: https://developers.cloudflare.com/workers/observability/logs/workers-logs/
