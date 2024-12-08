@@ -803,16 +803,16 @@ export default class CraterStandard {
 				crate.unshift({ layer1 : works});
 				break ;
 			case 2:
-				crate.push({ layer2 : works });
+				crate.push({ layer2 : works.flat() });
 				break ;
 			case 3:
-				crate.push({ layer3 : works });
+				crate.push({ layer3 : works.flat() });
 				break ;
 			case 4:
-				crate.push({ layer4 : works });
+				crate.push({ layer4 : works.flat() });
 				break ;
 			case 5:
-				crate.push({ layer5 : works });
+				crate.push({ layer5 : works.flat() });
 				break ;
 			default:
 				return ;
@@ -834,7 +834,7 @@ export default class CraterStandard {
 
 	#fillCrate(measure, works) {
 		const GC =			new WeakSet();
-		let crate =			[];
+		let crate =			[]
 		let greb =			[];
 		let { i, sized, emptyCrate, list } =	this.#hugeCanvasFirst(crate, measure, works);
 		let len;
@@ -850,7 +850,7 @@ export default class CraterStandard {
 				this.#matchCanvasInLayer(greb, [innerCrate], len, list);
 				if (greb.length > 0) {
 					greb[0].map(art => list.splice(list.indexOf(art[0]), 1));
-					this.#setLayer.call(i, crate, greb);
+					this.#setLayer.call(i, crate, greb.flat());
 					GC.add(innerCrate);
 					greb =	null;
 					greb =	[];

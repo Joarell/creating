@@ -14,7 +14,6 @@
 		"@cloudflare/vitest-pool-workers": "^0.5.2",
 		"@cloudflare/workers-types": "^4.20241112.0",
 		"cloudflare": "^3.5.0",
-		"miniflare": "^3.20241106.1",
 		"vitest": "^2.1.5",
 		"wrangler": "^3.83.0",
 		"zod": "^3.23.8"

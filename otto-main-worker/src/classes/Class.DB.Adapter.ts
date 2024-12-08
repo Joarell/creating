@@ -12,9 +12,7 @@ export class OttoDBHandler extends OttoDB {
 	* @param request The worker properties to handle bindings.
 	*/
 	constructor(request: Context) {
-		if (!request)
-			return;
-		super(request);
+		return(!request ? false: super(request));
 	};
 
 	/**
@@ -64,7 +62,8 @@ export class OttoDBHandler extends OttoDB {
 	async saveEstimate(): Promise<Response> {
 		const request = await this.bindings.req.json();
 		const estimate = SolvedList.safeParse(await request);
-		console.log(request.crates.standardCrate.crates[1].works[1].layer2, estimate);
+		console.log(request.crates);
+		console.log(estimate.success ? estimate.data: estimate?.error?.issues);
 		return (new Response('ok', { status: 201 }));
 	};
 
@@ -81,4 +80,4 @@ export class OttoDBHandler extends OttoDB {
 	async storeSuspiciousTokens(token: string): Promise<boolean> {};
 
 	async addUserNewToken(name: UserInfo, token: string): Promise<boolean> {};
-}
+};

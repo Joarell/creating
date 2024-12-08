@@ -33,56 +33,70 @@ const ArtWork = z.object({
 });
 
 
+const ArtWorkInCrate = z.array(
+	z.string().or(z.number()),
+	z.number(),
+	z.number(),
+	z.number(),
+	z.number(),
+	z.string().optional(),
+);
+
 const Setup = z.object({
-	axioX: z.array(ArtWork).optional(),
-	axioY: z.array(ArtWork).optional(),
+	axioX: z.array(ArtWorkInCrate).or(z.undefined()),
+	axioY: z.array(ArtWorkInCrate).or(z.undefined()),
 	x1: z.number(),
 	y1: z.number(),
 	x2: z.number(),
 	y2: z.number(),
+	prev: z.number().optional(),
 });
 
-const ArtWorkCrated = z.tuple([
-	z.string(),
-	z.number(),
-	z.number(),
-	z.number(),
-	z.number(),
-	Setup,
-]);
+const Layer = z.array(ArtWorkInCrate.or(Setup));
 
-const ArtWorkCratedMany = z.array(z.tuple([
-	z.string(),
-	z.number(),
-	z.number(),
-	z.number(),
-	z.number(),
-	Setup,
-]));
+const stdWorks = z.array(
+	z.object({ layer1: Layer }).or(z.object({ layer2: Layer }))
+		.or(z.object({ layer3: Layer }))
+		.or(z.object({ layer4: Layer }))
+		.or(z.object({ layer5: Layer }))
+);
 
-const Works = z.tuple([
-	z.object({
-		layer1: z.array(ArtWorkCrated || ArtWorkCratedMany),
-		layer2: z.array(ArtWorkCrated || ArtWorkCratedMany).optional(),
-		layer3: z.array(ArtWorkCrated || ArtWorkCratedMany).optional(),
-		layer4: z.array(ArtWorkCrated || ArtWorkCratedMany).optional(),
-		layer5: z.array(ArtWorkCrated || ArtWorkCratedMany).optional(),
-	})
-]);
+const works = z.array(ArtWorkInCrate);
 
-const StandardCrate = z.tuple([
-	z.array(z.number()),
-	z.object({ Works })
-])
+const sameWorks = z.array(ArtWorkInCrate);
+
+const crates = z.array(z.array(z.number()).or(z.object({ works: stdWorks })));
+
+const sameSize = z.object({
+	crates: z.array(z.array(z.number())
+		.or(z.object({ works: sameWorks }))).optional(),
+	backUp: z.array(z.array(z.number())
+		.or(z.object({ works: sameWorks }))),
+});
+
+const solved = z.object({ crates: z.array(z.array(z.number()).or(z.object({ works }))) });
+
+const StandardCrate = z.object({ crates });
+
+const SameSizeCrate = sameSize;
 
 export const SolvedList = z.object({
 	reference: z.string(),
-	list: z.tuple([ArtWork]),
+	list: z.array(ArtWork),
 	crates: z.object({
-		StandardCrate: StandardCrate.optional(),
+		tubeCrate: solved.optional(),
+		noCanvasCrate: solved.optional(),
+		sameSizeCrate: SameSizeCrate.optional(),
+		standardCrate: StandardCrate.optional(),
+		largestCrate: solved.optional(),
+		allCrates: z.array(z.array(z.number())),
+		airCubTotal: z.number(),
+		whichAirPort: z.tuple([
+			z.object({ PAX: z.number() }), z.object({CARGO: z.number()})
+		]),
 	}),
 });
 
-export type Estimate = z.infer<typeof SolvedList>;
-export type User = z.infer<typeof UserInfo>;
-export type UserDB = z.infer<typeof DBUser>;
+export type Estimate =	z.infer<typeof SolvedList>;
+export type User =		z.infer<typeof UserInfo>;
+export type UserDB =	z.infer<typeof DBUser>;
