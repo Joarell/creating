@@ -279,13 +279,9 @@ export default class StandardRender {
 	};
 
 	#getOnlyWorks() {
-		let works;
-
-		this.#canvas.map(async art => {
-			Array.isArray(art[0]) ? works = art.flat().filter((work, i) => {
-				if (i % 2 === 0)
-					return(work[0]);
-			}, 0) : works = [art];
+		const works = this.#canvas.map(art => {
+			if(Array.isArray(art))
+				return (art);
 		});
 		return(this.#standardRender(works));
 	};

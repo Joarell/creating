@@ -80,6 +80,7 @@ export default class UnitAdapter {
 					info.works = info.works.map(layerInterface)
 				return (info);
 			});
+			console.log(data.crates);
 		}
 		return(data);
 	};
@@ -140,6 +141,7 @@ function swapUnitReversion(sizes) {
 	let z;
 	let y;
 
+	console.log(sizes)
 	switch(sizes.length) {
 		case 4 :
 			x =		sizes[0];

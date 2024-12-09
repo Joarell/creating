@@ -62,8 +62,6 @@ export class OttoDBHandler extends OttoDB {
 	async saveEstimate(): Promise<Response> {
 		const request = await this.bindings.req.json();
 		const estimate = SolvedList.safeParse(await request);
-		console.log(request.crates);
-		console.log(estimate.success ? estimate.data: estimate?.error?.issues);
 		return (new Response('ok', { status: 201 }));
 	};
 
