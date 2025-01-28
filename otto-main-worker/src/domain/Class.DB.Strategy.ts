@@ -1,10 +1,10 @@
-import { OttoDB } from './ClassDB';
-import { UserInfo, User, UserDB, Estimate, SolvedList } from '../types/type.schemas';
+import { OttoDB } from './repository/CommandModel';
+import { UserLogin } from './repository/models/userData';
 import { Context } from 'hono';
-import { UserOttoApp } from './ClassUser';
+import { UserOttoAppActions } from './ClassUser';
 
 /**
-* @class This class is  and ADAPTER pattern to prepare operations to the super Class OttoDB.
+* @class This class is  and STRATEGY pattern to prepare operations to the super Class OttoDB.
 */
 export class OttoDBHandler extends OttoDB {
 
@@ -37,7 +37,7 @@ export class OttoDBHandler extends OttoDB {
 	/**
 	* @method All procedures needed to authorize a new login and DB check-in.
 	*/
-	//TODO: set cookies to the success response.
+	// TODO: set cookies to the success response.
 	async newLogin(): Promise<Response> {
 		const user = UserInfo.safeParse(await this.bindings.req.json());
 		const check: UserDB | boolean = user.success ?
@@ -59,6 +59,9 @@ export class OttoDBHandler extends OttoDB {
 		return(new Response('Credentials is not valid!', { status: 500 }));
 	};
 
+	/**
+	* @method This the method to save estimates on DB.
+	*/
 	async saveEstimate(): Promise<Response> {
 		const request = await this.bindings.req.json();
 		const estimate = SolvedList.safeParse(await request);
@@ -78,4 +81,4 @@ export class OttoDBHandler extends OttoDB {
 	async storeSuspiciousTokens(token: string): Promise<boolean> {};
 
 	async addUserNewToken(name: UserInfo, token: string): Promise<boolean> {};
-};
+}// TODO: set cookies to the success response.

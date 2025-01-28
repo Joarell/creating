@@ -2,6 +2,7 @@
 dist/
 
 # dev
+yarn.lock
 .yarn/
 !.yarn/releases
 .vscode/*

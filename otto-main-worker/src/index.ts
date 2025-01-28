@@ -3,12 +3,11 @@
 // ╰─────────────────────────────────────────────────────────╯
 
 import { Hono } from 'hono';
-import { OttoDBHandler } from './classes/Class.DB.Adapter';
-import { getCurrency } from './currency.API';
-import { serveStatic } from 'hono/serve-static';
 import { logger } from 'hono/logger';
+import { ControllerAPI } from './controller';
+import { CloudFlareBindings } from '../worker-configuration';
 
-const app = new Hono<{ Bindings: CloudflareBindings }>();
+const app = new Hono<{ Bindings: CloudFlareBindings }>();
 app.use(logger());
 
 app.use(async (req, next) => {
@@ -16,23 +15,28 @@ app.use(async (req, next) => {
 	await next();
 });
 
-app.post('/api/v1/private/check', (c) => { });
+//app.post('/api/v1/private/check', (c) => { });
 
-app.post('/api/v1/private/auth', (c) => { });
+//app.post('/api/v1/private/auth', (c) => { });
 
 app.post('/api/v1/login', async (c) => {
-	console.log(await c.env.OTTO_USERS.get('TESTER'));
-	return(await new OttoDBHandler(c).newLogin());
+	const controller = new ControllerAPI(c);
+	return(await controller.login);
 });
 
-app.post('/api/v1/new/user', async (c) => {
-	return(await new OttoDBHandler(c).addNewUser());
+app.post('/api/v1/newUser', async (c) => {
+	const controller = new ControllerAPI(c);
+	return(await controller.addingNewUser);
 });
 
-app.post('/api/v1/shift/tokens', async (c) => { });
+app.post('/api/v1/shift/tokens', async (c) => {
+	const controller = new ControllerAPI(c);
+	return(await controller.updateTokens);
+});
 
 app.post('/api/v1/newEstimate', async (c) => {
-	return(await new OttoDBHandler(c).saveEstimate());
+	const controller = new ControllerAPI(c)
+	return(await controller.saveEstimateResult);
 });
 
 app.get('/', async (c) => {
@@ -42,23 +46,32 @@ app.get('/', async (c) => {
 	//await c.env.ASSETS.fetch(url);
 });
 
-app.post('/api/v1/Checks/:session', async (c) => { });
+//app.post('/api/v1/Checks/:session', async (c) => { });
 
-app.get('/api/v1/logout', async (c) => { });
+app.get('/api/v1/logout', async (c) => {
+	const controller = new ControllerAPI(c);
+	return(await controller.logOut);
+});
 
-app.get('/api/v1/takeLogins/:name', async (c) => { });
+//app.get('/api/v1/takeLogins/:name', async (c) => { });
 
-app.get('/api/v1/estimates/:ref_id', async (c) => { });
+app.get('/api/v1/estimates/:ref_id', async (c) => {
+	const controller = new ControllerAPI(c);
+	return(await controller.searchEstimate);
+});
 
 app.get('/api/v1/currencys', async (c) => {
-	return(await getCurrency(c.env.API_KEY2));
+	const controller = new ControllerAPI(c);
+	return(await controller.requestCurerncyAPI);
 });
 
-app.put('/api/v1/update/estimates', async (c) => { });
-
-app.get('/api/test', async (c) => {
-	return new Response(await new OttoDBHandler(c).test());
+app.put('/api/v1/update/estimates', async (c) => {
+	const controller = new ControllerAPI(c);
+	return(await controller.updatePrevEstimate);
 });
 
+//app.get('/api/test', async (c) => {
+//	return new Response(await new OttoDBHandler(c).test());
+//});
 
 export default app;

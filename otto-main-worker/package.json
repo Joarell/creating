@@ -8,7 +8,9 @@
 		"cf-typegen": "wrangler types --env-interface CloudflareBindings"
 	},
 	"dependencies": {
-		"hono": "^4.6.12"
+		"hono": "^4.6.12",
+		"ts-node": "^10.9.2",
+		"tsun": "^0.5.1"
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "^0.5.2",

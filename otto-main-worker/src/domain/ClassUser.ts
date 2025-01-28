@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { User } from '../types/type.schemas';
+import { UserLogin } from './repository/models/userData';
 import { Jwt } from 'hono/utils/jwt';
 import { Context } from 'hono';
 import { scryptSync, randomBytes } from "crypto";
@@ -8,15 +8,15 @@ import { scryptSync, randomBytes } from "crypto";
 /**
 * @class This class represents the user abstraction based on data and actions on the system.
 */
-export class UserOttoApp {
-	private userData: User;
+export class UserOttoAppActions {
+	private userData: UserLogin;
 	private bindings: Context;
 
 	/**
 	* @param user The user data from DB.
 	* @param bindings The context from Hono and Cloudflare worker.
 	*/
-	constructor(readonly user: User, readonly bindings: Context) {
+	constructor(readonly user: UserLogin, readonly bindings: Context) {
 		this.userData = user;
 		this.bindings = bindings;
 	};
@@ -53,8 +53,8 @@ export class UserOttoApp {
 		catch(e) {
 			console.error(`Pass encryption failed: ${e}`);
 			return(500);
-		}
-	}
+		};
+	};
 
 	/**
 	* @param userName the name of user to compose the new token.
