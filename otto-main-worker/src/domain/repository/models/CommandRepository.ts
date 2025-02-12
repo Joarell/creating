@@ -1,13 +1,15 @@
 import { SolvedList } from "./EstimateType";
-import { UserActiveData, UserInfoEntityData } from "./userData";
+import { UserActiveData, UserDataRequest, UserInfoEntityData } from "./userData";
 
 
 export interface iCommandDBService {
-	updateUserAuthorizationCommandDB(user: UserInfoEntityData, freshUser: UserActiveData): Promise<boolean>;
+	saveExpiredAndShiftedTokens(user: UserInfoEntityData): Promise<boolean>;
 	updateUserTokensCommandDB(user: UserInfoEntityData): Promise<UserInfoEntityData | boolean>;
+	updateUserPassPhraseDB(user: UserDataRequest, newPass: string): Promise<boolean>;
+	storeSuspiciousTokens(user: UserActiveData): Promise<boolean>;
 };
 
 export interface iCommandDBServiceEstimates {
-	saveEstimateCommandDB(estimate: SolvedList): Promise<boolean>;
-	updateEstimateCommandDB(estimate: SolvedList): Promise<boolean>;
+	saveEstimateCommandDB(estimate: SolvedList): Promise<boolean | string>;
+	updateEstimateCommandDB(estimate: SolvedList): Promise<boolean | string>;
 };

@@ -26,7 +26,7 @@ const Setup = z.object({
 	prev:	z.number().optional(),
 });
 
-const Layer = z.array(ArtWorkInCrate.or(Setup));
+const Layer = z.array(ArtWorkInCrate.or(Setup)).or(ArtWorkInCrate.or(Setup));
 
 const stdWorks = z.array(
 	z.object({ layer1: Layer }).or(z.object({ layer2: Layer }))
@@ -39,7 +39,11 @@ const works = z.array(ArtWorkInCrate);
 
 const sameWorks = z.array(ArtWorkInCrate);
 
-const crates = z.array(z.array(z.number()).or(z.object({ works: stdWorks })));
+const crateAndWorks = z.array(z.number()).or(z.object({ works: stdWorks }));
+
+const crates = z.object({
+	crates: z.array(crateAndWorks)
+});
 
 const sameSize = z.object({
 	crates: z.array(z.array(z.number()).or(z.object({ works: sameWorks }))).optional(),
@@ -48,7 +52,7 @@ const sameSize = z.object({
 
 const solved = z.object({ crates: z.array(z.array(z.number()).or(z.object({ works }))) });
 
-const StandardCrate = z.object({ crates });
+const StandardCrate = crates;
 
 const SameSizeCrate = sameSize;
 

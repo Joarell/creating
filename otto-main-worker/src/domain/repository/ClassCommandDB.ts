@@ -1,10 +1,10 @@
 import { iCommandDBServiceEstimates, iCommandDBService } from "./models/CommandRepository";
-import { UserInfoEntityData, UserActiveData, NewUser, UserLogin } from "./models/userData";
+import { UserInfoEntityData, UserActiveData, NewUser, UserLogin, UserDataRequest } from "./models/userData";
 import { SolvedList } from "./models/EstimateType";
 import { Context } from "hono";
 import { randomBytes } from "crypto";
 import SecurityProceduresServices, { NewUserSecurityProceduresServices } from "./SecureProceduresServices";
-import { QueryDBService } from "./ClassQueryDB";
+import { QueryDBService, QueryDBUserActions } from "./ClassQueryDB";
 
 
 /**
@@ -21,42 +21,49 @@ export class CommandDB implements iCommandDBService {
 		this.bindings = bindings;
 	};
 
-
 	/**
-	* @method update user token pairs.
-	* @param user information from the active user.
+	* @method saves the new pass phrase on DB.
+	* @param user object with the proper user name to be updated.
+	* @param newPass the new encrypted pass phrase.
 	*/
-	async updateUserAuthorizationCommandDB( user: UserInfoEntityData, freshUser: UserActiveData): Promise<boolean> {
-		const { active_session, id, auth_token, refresh_token  } = user;
-		const { session, authToken, refToken } = freshUser;
-		const data = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString("pt-BR");
-
-
+	async updateUserPassPhraseDB(user: UserDataRequest, newPass: string): Promise<boolean> {
 		try {
 			await this.bindings.env.DB1.prepare(`
-				INSERT INTO expired_tokens(
-					user_id,
-					session,
-					auth_token,
-					refresh_token,
-					expired_tokens
-				) Values (?1, ?2, ?3, ?4, ?5)
-			`).bind(
-				id,
-				active_session,
-				auth_token,
-				refresh_token,
-				data,
-			).run();
-			await this.bindings.env.DB1.prepare(`
-				UPDATE users SET auth_token = ?, refresh_token = ?, active_session = ?
-				WHERE id = ?
-			`).bind(authToken, refToken, session, user.id).run();
+				UPDATE users SET pass_phrase = ? WHERE name = ?;
+			`).bind(newPass, user.userName).run();
+
 			return(true);
 		}
 		catch(e) {
 			console.error(e);
 			return(false);
+		};
+	};
+
+	/**
+	* @method store the old tokens on DB.
+	* @param user object with all data needed.
+	*/
+	async saveExpiredAndShiftedTokens(user: UserInfoEntityData): Promise<boolean> {
+		try {
+			const date = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString("pt-BR");
+			await this.bindings.env.DB1.prepare(`
+				INSERT INTO '${user.company_name}_expired_tokens' (
+					user_id,
+					session,
+					auth_token,
+					refresh_token,
+					expired_date
+				) VALUES (?1, ?2, ?3, ?4, ?5);
+			`).bind(user.id, user.active_session, user.auth_token, user.refresh_token, date).run();
+			await this.bindings.env.DB1.prepare(`
+				SELECT * FROM '${user.company_name}_expired_tokens' WHERE session = '${user.active_session}'
+			`).all()
+			return(true)
+		}
+		catch(e) {
+			console.error(`Expired tokens error: ${e}`)
+			return(false)
 		}
 	};
 
@@ -64,24 +71,85 @@ export class CommandDB implements iCommandDBService {
 	* @method executes the switch tokens to the DB.
 	* @param user the object has the new tokens to add into DB.
 	*/
-	async updateUserTokensCommandDB(user: UserInfoEntityData): Promise<UserInfoEntityData | boolean> {
-		const secureProc =			new SecurityProceduresServices(user, this.bindings);
-		const token: string = 		await secureProc.authTokenGen();
-		const refToken: string =	await secureProc.refTokenGen();
+	async updateUserTokensCommandDB(user: UserInfoEntityData, login: boolean = false): Promise<UserInfoEntityData | boolean> {
+		const secureProc =	new SecurityProceduresServices(user, this.bindings);
+		const token = 		await secureProc.authTokenGen();
+		const refToken =	await secureProc.refTokenGen();
+		const session =		randomBytes(13).toString('hex');
 
 		try {
-			await this.bindings.env.DB1.prepare(`
-				UPDATE users SET auth_token = ?, refresh_token = ?
-				WHERE id = ?
-			`).bind(token, refToken, user.id).run();
-			user.auth_token =		token;
-			user.refresh_token =	refToken;
+			if (login) {
+				await this.bindings.env.DB1.prepare(`
+					UPDATE users SET auth_token = ?, refresh_token = ?
+					WHERE id = ?
+				`).bind(token, refToken, user.id).run();
 
-			return(user);
+				const storeTokens = await this.saveExpiredAndShiftedTokens(user);
+
+				user.auth_token =		structuredClone(token);
+				user.refresh_token =	structuredClone(refToken);
+				user.active_session =	session;
+				await this.userSessionUpdate(user);
+				return(storeTokens ? user : false);
+			};
+			await this.bindings.env.DB1.prepare(`
+				UPDATE users SET refresh_token = ?
+				WHERE id = ?
+			`).bind(refToken, user.id).run();
+
+			const storeTokens = await this.saveExpiredAndShiftedTokens(user);
+
+			user.refresh_token =	structuredClone(refToken);
+			return(storeTokens ? user : false);
 		}
 		catch(e) {
-			//console.error(e);
+			console.error(e);
 			return(false);
+		};
+	};
+
+	/**
+	* @method update the session id when user is logged in.
+	* @param user the object with all data needed.
+	*/
+	private async userSessionUpdate(user: UserInfoEntityData): Promise<void> {
+		try {
+			await this.bindings.env.DB1.prepare(`
+				UPDATE users SET active_session = ? WHERE name = ?;
+			`).bind(user.active_session, user.name).run()
+		}
+		catch(e) {
+			console.error(`Session save error: ${e}`)
+		}
+	};
+
+	/**
+	* @method store the user token pairs after a retry using the same token expired.
+	* @param user the object with all data needed to save a report.
+	*/
+	async storeSuspiciousTokens(user: UserActiveData): Promise<boolean> {
+		const date = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString("pt-BR");
+		try {
+			await this.bindings.env.DB1.prepare(`
+				INSERT INTO '${user.companyName}_suspicious_tokens' (
+					session,
+					user_id,
+					auth_token,
+					refresh_token,
+					event_date
+				) VALUES (?1, ?2, ?3, ?4, ?5);
+			`).bind(
+				user.session,
+				user.ID,
+				user.authToken,
+				user.refToken,
+				date,
+			).run();
+			return(true)
+		}
+		catch(e) {
+			console.error(`Suspicious table ERROR: ${e}`)
+			return(false)
 		};
 	};
 };
@@ -107,19 +175,62 @@ export class CommandDBNewUser {
 		this.checkIfTheUeserIsInDB();
 	};
 
-
 	/**
 	* @method returns a user if it exists on DB.
 	*/
 	private async checkIfTheUeserIsInDB(): Promise<boolean> {
-		const { userName, passFrase } = this.newUser;
-		const user =	UserLogin.safeParse({ userName, passFrase });
+		const { userName, passPhrase } = this.newUser;
+		const user =	UserLogin.safeParse({ userName, passPhrase });
 		const DB =		user.success ?
 			new QueryDBService(user.data, this.bindings): false;
 		const foundUser = DB ? await DB.retrieveUserQueryDB : false;
 
 		return (foundUser !== undefined);
 	};
+
+
+	/**
+	* @method creates the new data base for the first company user.
+	*/
+	private async setNewDataBase(): Promise<void> {
+		await Promise.resolve(
+			await this.bindings.env.DB1.prepare(`
+				CREATE TABLE IF NOT EXISTS '${ this.newUser.companyName }'(
+					reference_id TEXT PRIMARY KEY NOT NULL,
+					solved_list TEXT NOT NULL,
+					user_name TEXT NOT NULL,
+					user_id TEXT NOT NULL,
+					session TEXT NOT NULL,
+					last_update TEXT,
+					update_by TEXT,
+					FOREIGN KEY (user_id) REFERENCES users (id) ON UPDATE NO ACTION
+				);
+			`).run()
+		).then(async () => {
+			await this.bindings.env.DB1.prepare(`
+				CREATE TABLE IF NOT EXISTS '${ this.newUser.companyName }_expired_tokens'(
+					user_id TEXT NOT NULL,
+					session TEXT NOT NULL,
+					auth_token TEXT NOT NULL,
+					refresh_token TEXT NOT NULL,
+					expired_date TEXT NOT NULL,
+					FOREIGN KEY (user_id) REFERENCES users (id) ON UPDATE NO ACTION
+				);
+			`).run();
+		}).then(async () => {
+			await this.bindings.env.DB1.prepare(`
+				CREATE TABLE IF NOT EXISTS '${this.newUser.companyName}_suspicious_tokens'(
+					session TEXT NOT NULL,
+					user_id TEXT NOT NULL,
+					auth_token TEXT NOT NULL,
+					refresh_token TEXT NOT NULL,
+					event_date TEXT NOT NULL,
+					FOREIGN KEY (user_id) REFERENCES users (id) ON UPDATE NO ACTION
+				)
+			`).run();
+		}).catch(error => console.error(`Table creation ERROR: ${error}`));
+	};
+
 
 	/**
 	* @method starts all procedures to add and save a new user data on DB.
@@ -143,7 +254,7 @@ export class CommandDBNewUser {
 				company_name,
 				birth_date,
 				email,
-				pass_frase,
+				pass_phrase,
 				auth_token,
 				refresh_token,
 				created,
@@ -164,6 +275,7 @@ export class CommandDBNewUser {
 				"",
 				this.newUser.access,
 			).run();
+			await this.setNewDataBase();
 			return(true);
 		}
 		catch(e) {
@@ -187,6 +299,11 @@ export class CommandDBNewUser {
 export class CommandDBEstimates implements iCommandDBServiceEstimates {
 	private user: UserActiveData;
 	private bindings: Context;
+	private Message = {
+		dubplicate: "Estimate already exists!",
+		empty:		"Value not found!",
+		DBError:	"Incorrect data!",
+	}
 
 	constructor(user: UserActiveData, bindings: Context) {
 		this.user =		user;
@@ -197,29 +314,37 @@ export class CommandDBEstimates implements iCommandDBServiceEstimates {
 	* @method executes the procedures to save the solved results on DB.
 	* @param estimate the solved list data to be saved.
 	*/
-	async saveEstimateCommandDB(estimate: SolvedList): Promise<boolean> {
-		const data = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString("pt-BR");
+	async saveEstimateCommandDB(estimate: SolvedList): Promise<boolean | string> {
+		const data =			new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString("pt-BR");
+		const check =			new QueryDBUserActions(this.bindings);
+		const findEstimate =	await check.retrieveEstimateQueryDB(this.user, estimate.reference);
+		const solved =			JSON.stringify(estimate);
 
+		if (findEstimate !== undefined)
+			return(this.Message.dubplicate);
 		try {
 			await this.bindings.env.DB1.prepare(
-				`INSERT INTO ?1 (
-					reference
-				) VALUES (?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10);`)
-				.bind(
-				this.user.companyName,
-				estimate.reference,
-				estimate.list,
-				estimate.reference,
-				this.user.userName,
-				this.user.ID,
-				this.user.session,
-				data,
-				this.user.userName,
+				`INSERT INTO ${ this.user.companyName } (
+					reference_id,
+					solved_list,
+					user_name,
+					user_id,
+					session,
+					last_update,
+					update_by
+				) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)`).bind(
+					""+estimate.reference,
+					solved,
+					""+this.user.userName,
+					""+this.user.ID,
+					""+this.user.session,
+					data,
+					""+this.user.userName,
 			).run();
 			return(true);
 		}
 		catch(e) {
-			//console.error (`DB error: ${e}`);
+			console.error (`DB error: ${e}`);
 			return(false);
 		};
 	};
@@ -228,27 +353,23 @@ export class CommandDBEstimates implements iCommandDBServiceEstimates {
 	* @method executes the procedures to update the existent solved list.
 	* @param estimate the solved data to be updated.
 	*/
-	async updateEstimateCommandDB(estimate: SolvedList): Promise<boolean> {
-		const data = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString("pt-BR");
+	async updateEstimateCommandDB(estimate: SolvedList): Promise<boolean | string> {
+		const date = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString("pt-BR");
+		const updatedSolution = JSON.stringify(estimate);
 
 		try {
 			await this.bindings.env.DB1.prepare(
-				`INSERT INTO ?1 (
-					reference
-				) VALUES (?2, ?3, ?4, ?5, ?6, ?7, ?8);`)
-				.bind(
-				this.user.companyName,
-				estimate.reference,
-				estimate.list,
-				estimate.reference,
-				this.user.session,
-				data,
-				this.user.userName,
-			).run();
+				`UPDATE '${ this.user.companyName }'
+				SET solved_list =		'${ updatedSolution }',
+					session =			'${ ""+this.user.session }',
+					last_update =		'${ date }',
+					update_by =			'${ ""+this.user.userName }'
+				WHERE reference_id =	'${estimate.reference}';`)
+			.run();
 			return(true);
 		}
 		catch(e) {
-			//console.error (`DB error: ${e}`);
+			console.error (`DB updated error: ${e}`);
 			return(false);
 		};
 	};

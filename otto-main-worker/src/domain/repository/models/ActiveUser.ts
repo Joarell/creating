@@ -1,10 +1,11 @@
 import { SolvedList } from "./EstimateType";
-import { UserActiveData } from "./userData";
+import { Result } from "./ServiceDB";
+import { UserActiveData, UserDataRequest } from "./userData";
 
 export interface iUserActive {
-	saveEstimate(estimate: SolvedList): Promise<boolean>;
-	updateEstimate(estimate: SolvedList): Promise<boolean>;
-	searchEstimate(reference: string): Promise<SolvedList | undefined>;
-	shiftTokens(user: UserActiveData): Promise<UserActiveData | boolean>;
+	saveEstimate(estimate: SolvedList): Promise<Result>;
+	updateEstimate(estimate: SolvedList): Promise<Result>;
+	searchEstimate(reference: string): Promise<Result>;
+	shiftTokens(user: UserDataRequest): Promise<UserDataRequest | boolean>;
 	get userInfo(): UserActiveData;
 }

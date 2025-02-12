@@ -22,7 +22,7 @@ export class UserOttoAppActions {
 	};
 
 	/**
-	* @param pass The pass frase to encrypt;
+	* @param pass The pass phrase to encrypt;
 	* @param salt The increment to add in the encryption procedure;
 	*/
 	private encryptPassWord(pass: string, salt: string): string {
@@ -30,24 +30,24 @@ export class UserOttoAppActions {
 	};
 
 	/**
-	* @param pass Pass frase to be compare to the stored hash;
+	* @param pass Pass phrase to be compare to the stored hash;
 	* @param hash The hash setup to compare;
 	*/
 	private decryptChecker(hash: string): boolean {
 		const salt = hash.slice(64);
 		const originalPassHash = hash.slice(0, 64);
-		const currentPassHash = this.encryptPassWord(this.userData.passFrase, salt);
+		const currentPassHash = this.encryptPassWord(this.userData.passPhrase, salt);
 
 		return(originalPassHash === currentPassHash);
 	};
 
 	/**
-	* @param passFrase passFrase to be encrypted.
+	* @param passPhrase passPhrase to be encrypted.
 	*/
 	private passEncryptProcedure(): string | number {
 		try {
 			const salt = randomBytes(20).toString('hex');
-			const hashed = this.encryptPassWord(this.userData.passFrase, salt) + salt;
+			const hashed = this.encryptPassWord(this.userData.passPhrase, salt) + salt;
 			return(hashed)
 		}
 		catch(e) {

@@ -43,7 +43,7 @@ export class OttoDB {
 					company_name,
 					birth_date,
 					email,
-					pass_frase,
+					pass_phrase,
 					auth_token,
 					refresh_token,
 					created,

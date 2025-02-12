@@ -1,5 +1,5 @@
 import { iQueryDBService, iQueryDBUser } from "./models/QueryRespository";
-import { UserInfoEntityData, UserLogin } from "./models/userData";
+import { UserActiveData, UserDataRequest, UserInfoEntityData, UserLogin } from "./models/userData";
 import { Reference, SolvedList } from "./models/EstimateType";
 import { Context } from "hono";
 
@@ -9,9 +9,9 @@ import { Context } from "hono";
 */
 export class QueryDBService implements iQueryDBService {
 	private bindings: Context;
-	private userData: UserLogin;
+	private userData: UserDataRequest | UserLogin;
 
-	constructor(user: UserLogin, bindings: Context) {
+	constructor(user: UserDataRequest | UserLogin, bindings: Context) {
 		this.bindings = bindings;
 		this.userData = user;
 	};
@@ -54,19 +54,24 @@ export class QueryDBUserActions implements iQueryDBUser {
 	/**
 	* @method returns the available estimate/list entity on DB.
 	* @param value the estimate identification to be found on DB.
+	* @param user has the table name as the companyName
 	*/
-	async retrieveEstimateQueryDB(reference: Reference): Promise<SolvedList | undefined> {
+	async retrieveEstimateQueryDB(user: UserActiveData, reference: Reference): Promise<SolvedList | undefined> {
 		try{
 			const { results } = await this.bindings.env.DB1.prepare(`
-				SELECT * FROM users WHERE reference_id = ?;
-			`).bind(reference).all();
-			let estimate;
+				SELECT * FROM ${user.companyName} WHERE reference_id = '${reference}';
+			`).all();
 
-			results[0] ? estimate = SolvedList.safeParse(await results[0]).data: estimate;
-			return (estimate);
+			if (results.length > 0) {
+				const { solved_list } = results[0];
+				const solved =			JSON.parse(solved_list);
+				const estimate = SolvedList.safeParse(solved);
+
+				return(estimate.success ? estimate.data: undefined);
+			};
 		}
 		catch(e) {
-			//console.error(e);
+			console.error(`Query Error: ${e}`);
 			return(undefined)
 		};
 	};

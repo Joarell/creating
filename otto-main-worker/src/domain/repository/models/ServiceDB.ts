@@ -1,18 +1,20 @@
 import { Reference, SolvedList } from "./EstimateType";
-import { Session } from "./LoginState";
-import { NewUser, UserActiveData, UserInfoEntityData, UserLogin } from "./userData";
+import { UserActiveData, UserDataRequest, UserInfoEntityData, UserLogin } from "./userData";
+
+export type Result = string | number | boolean | SolvedList | undefined;
 
 export interface iServiceDB {
 	loginCommandDB(newLogin: UserLogin): Promise<UserActiveData | undefined>;
-	saveEstimateDB(estimate: SolvedList, user: UserActiveData): Promise<boolean>;
-	updateEstimateDB(estimate: SolvedList, user: UserActiveData): Promise<boolean>;
-	retrieveEstimateDB(reference: Reference): Promise<SolvedList | undefined>;
-	retrieveUserDB(user: UserLogin): Promise<UserInfoEntityData | undefined>;
-	updateUserTokenDB(user: UserActiveData): Promise<UserActiveData | boolean>;
+	tokenCheckerValidation(user: UserActiveData): Promise<boolean | number>;
+	saveEstimateDB(estimate: SolvedList, user: UserActiveData): Promise<Result>;
+	updateEstimateDB(estimate: SolvedList, user: UserActiveData): Promise<Result>;
+	retrieveEstimateDB(user: UserActiveData, reference: Reference): Promise<Result>;
+	retrieveUserDB(user: UserDataRequest | UserLogin): Promise<UserInfoEntityData | undefined>;
+	updateUserTokenDB(user: UserDataRequest): Promise<UserDataRequest | boolean>;
+	updateUserPassPhrase(user: UserDataRequest, nesPassPhrase: string): Promise<boolean>;
 
-	retrieveUserSession(session: Session): Promise<UserActiveData | undefined>;
-	addUserSession(activeUser: NewUser): Promise<boolean>;
+	retrieveUserSession(user: UserDataRequest): Promise<UserActiveData | undefined>;
 	logOutCommand(activeUser: UserActiveData): Promise<boolean>;
-	checkUserActive(user: UserLogin): Promise<boolean>;
+	checkUserActive(user: UserLogin): Promise<boolean | undefined>;
 	addingNewUser(newUser: UserActiveData): Promise<boolean>;
 };

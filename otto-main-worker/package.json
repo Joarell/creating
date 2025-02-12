@@ -1,5 +1,6 @@
 {
 	"name": "otto-main-worker",
+	"type": "module",
 	"description": "Art work solver list and crater.",
 	"scripts": {
 		"dev": "wrangler dev",
@@ -9,7 +10,6 @@
 	},
 	"dependencies": {
 		"hono": "^4.6.12",
-		"ts-node": "^10.9.2",
 		"tsun": "^0.5.1"
 	},
 	"devDependencies": {

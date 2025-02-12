@@ -46,7 +46,7 @@ export class OttoDBHandler extends OttoDB {
 		if (check && user.success) {
 			const passCheck: UserOttoApp = new UserOttoApp(user.data, this.bindings);
 
-			if (passCheck.decryptPass(check[0].pass_frase)) {
+			if (passCheck.decryptPass(check[0].pass_phrase)) {
 				const loginDB: boolean | string = await this.loginUpdateTokens(check, passCheck);
 
 				if (loginDB) {

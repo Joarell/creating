@@ -1,5 +1,5 @@
 import { Reference, SolvedList } from "./EstimateType";
-import { UserInfoEntityData } from "./userData";
+import { UserActiveData, UserInfoEntityData } from "./userData";
 
 
 export interface iQueryDBService {
@@ -7,5 +7,5 @@ export interface iQueryDBService {
 };
 
 export interface iQueryDBUser {
-	retrieveEstimateQueryDB(reference: Reference): Promise<SolvedList | undefined>;
+	retrieveEstimateQueryDB(user: UserActiveData,reference: Reference): Promise<SolvedList | undefined>;
 };

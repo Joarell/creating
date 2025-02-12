@@ -1,8 +1,9 @@
 import { iUserActive } from "./repository/models/ActiveUser";
-import { UserActiveData } from "./repository/models/userData";
+import { UserActiveData, UserDataRequest } from "./repository/models/userData";
 import { Reference, SolvedList } from "./repository/models/EstimateType";
 import { Context } from "hono";
 import { ServiceDB } from "./service/ServiceDB";
+import { Result } from "./repository/models/ServiceDB";
 
 
 /**
@@ -24,28 +25,28 @@ export class UserActive implements iUserActive {
 	/**
 	* @param estimate has the list to be saved on DB.
 	*/
-	async saveEstimate(estimate: SolvedList): Promise<boolean> {
+	async saveEstimate(estimate: SolvedList): Promise<Result> {
 		return(await this.services.saveEstimateDB(estimate, this.userAct));
 	};
 
 	/**
 	* @param estimate has the list to be updated on DB.
 	*/
-	async updateEstimate(estimate: SolvedList): Promise<boolean> {
+	async updateEstimate(estimate: SolvedList): Promise<Result> {
 		return(await this.services.updateEstimateDB(estimate, this.userAct));
 	};
 
 	/**
 	* @param reference is the string the found on DB.
 	*/
-	async searchEstimate(reference: Reference): Promise<SolvedList | undefined> {
-		return(await this.services.retrieveEstimateDB(reference));
+	async searchEstimate(reference: Reference): Promise<Result> {
+		return(await this.services.retrieveEstimateDB(this.userAct, reference));
 	};
 
 	/**
 	* @param user is the object with all information needed to update token pairs.
 	*/
-	async shiftTokens(user: UserActiveData): Promise<UserActiveData | boolean> {
+	async shiftTokens(user: UserDataRequest): Promise<UserDataRequest | boolean> {
 		return(await this.services.updateUserTokenDB(user));
 	};
 

@@ -3,6 +3,7 @@ dist/
 
 # dev
 yarn.lock
+*.posting.yml
 .yarn/
 !.yarn/releases
 .vscode/*

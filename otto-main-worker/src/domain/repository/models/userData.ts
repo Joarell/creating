@@ -7,7 +7,7 @@ export const UserInfoEntityData = z.object({
 	company_name:	z.string(),
 	birth_date:		z.string(),
 	email:			z.string(),
-	pass_frase:		z.string(),
+	pass_phrase:		z.string(),
 	auth_token:		z.string(),
 	refresh_token:	z.string(),
 	created:		z.string(),
@@ -17,14 +17,14 @@ export const UserInfoEntityData = z.object({
 
 export const UserLogin = z.object({
 	userName:		z.string(),
-	passFrase:		z.string(),
-})
+	passPhrase:		z.string(),
+});
 
 export const UserActiveData = z.object({
 	userName:		z.string(),
 	userLastName:	z.string(),
 	birthday:		z.string(),
-	passFrase:		z.string(),
+	passPhrase:		z.string(),
 	ID:				z.string().optional(),
 	companyName:	z.string(),
 	email:			z.string(),
@@ -32,20 +32,27 @@ export const UserActiveData = z.object({
 	authToken:		z.string(),
 	refToken:		z.string(),
 	session:		z.string(),
-	state:			z.boolean(),
 });
 
 export const NewUser = z.object({
 	userName:		z.string(),
 	userLastName:	z.string(),
-	passFrase:		z.string(),
+	passPhrase:		z.string(),
 	birthday:		z.string(),
 	email:			z.string(),
 	companyName:	z.string(),
 	access:			z.string(),
-})
+});
+
+export const UserDataRequest = z.object({
+	userName:	z.string(),
+	session:	z.string(),
+	authToken:	z.string(),
+	refToken:	z.string(),
+});
 
 export type NewUser =				z.infer<typeof NewUser>;
 export type UserLogin =				z.infer<typeof UserLogin>;
 export type UserActiveData =		z.infer<typeof UserActiveData>;
+export type UserDataRequest =		z.infer<typeof UserDataRequest>;
 export type UserInfoEntityData =	z.infer<typeof UserInfoEntityData>;
